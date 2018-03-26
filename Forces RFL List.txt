@@ -1,0 +1,729 @@
+w1a04_misc.pac
+	w1a04.rfl (24624)
+
+w1a04_obj.pac
+	obj_auratrain_param.rfl (8)
+
+w1x01_obj.pac
+	obj_flame_param.rfl (80)
+
+w2a01_misc.pac
+	w2a01.rfl (24624)
+	w2a01_appgfx.rfl (52)
+
+w2a01_obj.pac
+	obj_waterfall_param.rfl (32)
+
+w2a04_misc.pac
+	w2a04.rfl (24624)
+	w2a04_appgfx.rfl (52)
+
+w2x01_obj.pac
+	obj_flame_param.rfl (80)
+
+w3a01_misc.pac
+	w3a01.rfl (24624)
+
+w3a03_misc.pac
+	w3a03.rfl (24624)
+
+w3x01_obj.pac
+	obj_flame_param.rfl (80)
+
+w4x01_obj.pac
+	obj_flame_param.rfl (80)
+
+w5a02_misc.pac
+	w5a02.rfl (24624)
+
+w5a02_obj.pac
+	obj_giantcrab_debris_param.rfl (244)
+	obj_giantcrab_param.rfl (120)
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w5x01_obj.pac
+	obj_flame_param.rfl (80)
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w5x02_obj.pac
+	obj_flame_param.rfl (80)
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w6a01_misc.pac
+	w6a01.rfl (24624)
+
+w6a02_misc.pac
+	w6a02.rfl (24624)
+
+w6a03_misc.pac
+	w6a03.rfl (24624)
+	w6a03_appgfx.rfl (52)
+
+w6a03_obj.pac
+	obj_boxroad_param.rfl (140)
+
+w6b01_misc.pac
+	w6b01.rfl (24624)
+	w6b01_appgfx.rfl (52)
+
+w6x01_obj.pac
+	obj_flame_param.rfl (80)
+
+w7a01_misc.pac
+	w7a01.rfl (24624)
+
+w7a02_misc.pac
+	w7a02.rfl (24624)
+
+w7a03_misc.pac
+	w7a03.rfl (24624)
+	w7a03_appgfx.rfl (52)
+
+w7a03_obj.pac
+	obj_powerreactor_param.rfl (312)
+
+w7a04_misc.pac
+	w7a04.rfl (24624)
+
+w7b01_misc.pac
+	w7b01.rfl (24624)
+	w7b01_appgfx.rfl (52)
+
+w7b02_misc.pac
+	w7b02.rfl (24624)
+	w7b02_appgfx.rfl (52)
+
+w7b02_obj.pac
+	obj_boxroad_param.rfl (140)
+
+w7x01_obj.pac
+	obj_flame_param.rfl (80)
+
+score.pac
+	scoredata.rfl (32)
+
+Amy.pac
+	radio_camera_amy.rfl (52)
+
+Buddy.pac
+	buddy.rfl (328)
+	buddy_occ.rfl (1280)
+	buddy_topview.rfl (328)
+	gadget.rfl (1400)
+	gadget_topview.rfl (1400)
+	radio_camera_buddy.rfl (52)
+
+Captain.pac
+	radio_camera_captain.rfl (52)
+
+Charmy.pac
+	radio_camera_charmy.rfl (52)
+
+Eggman.pac
+	radio_camera_eggman.rfl (52)
+
+Espio.pac
+	radio_camera_espio.rfl (52)
+
+Infinite.pac
+	infinite_sway.rfl (1176)
+
+Knuckles.pac
+	radio_camera_knuckles.rfl (52)
+
+Omega.pac
+	radio_camera_omega.rfl (52)
+
+PlayerCommon.pac
+	customize_body.rfl (13824)
+	customize_face.rfl (2880)
+	customize_glass.rfl (6624)
+	customize_glove.rfl (10368)
+	customize_head.rfl (8928)
+	customize_pattern.rfl (14496)
+	customize_shoes.rfl (15264)
+	dressup_presets.rfl (10752)
+	exp_system.rfl (120)
+	gadget_database.rfl (1600)
+	player_common.rfl (2752)
+	player_common_classic.rfl (2752)
+	player_common_topview.rfl (2752)
+
+Rouge.pac
+	radio_camera_rouge.rfl (52)
+
+Signaler.pac
+	radio_camera_signaler.rfl (52)
+
+Silver.pac
+	radio_camera_silver.rfl (52)
+
+Soldier.pac
+	radio_camera_soldier.rfl (52)
+
+Sonic.pac
+	radio_camera_sonic.rfl (52)
+	sonic_modern.rfl (420)
+	sonic_modern_occ.rfl (1280)
+	sonic_modern_topview.rfl (420)
+	sonic_spin_occ.rfl (1280)
+
+SonicClassic.pac
+	radio_camera_classicsonic.rfl (52)
+	sonic_classic.rfl (932)
+	sonic_classic_occ.rfl (1280)
+
+Tails.pac
+	radio_camera_tails.rfl (52)
+
+Vector.pac
+	radio_camera_vector.rfl (52)
+
+BossBigZavok.pac
+	boss_bigzavok_param.rfl (112)
+
+BossEggDragoon.pac
+	boss_eggdragoon_param.rfl (44)
+	boss_eggdragoon_stoneattack.rfl (2000)
+
+BossFinalDeathEggRobot1.pac
+	boss_finaldeatheggrobo_debrisattack.rfl (2000)
+	boss_finaldeatheggrobo_param.rfl (1108)
+
+BossFinalDeathEggRobot2.pac
+	boss_finaldeatheggrobolast_bomb_param.rfl (11328)
+	boss_finaldeatheggrobolast_param.rfl (1120)
+
+BossInfinite1st.pac
+	boss_infinite1st_param.rfl (1152)
+	infinite1st_sway.rfl (1176)
+
+BossInfinite2nd.pac
+	boss_infinite2nd_param.rfl (544)
+	boss_infinite2nd_pillar_param.rfl (720)
+	infinite2nd_sway.rfl (1176)
+
+BossInfinite3rd.pac
+	boss_infinite3rd_param.rfl (2196)
+	infinite3rd_obj_virtronwave_param.rfl (12)
+	infinite3rd_sway.rfl (1176)
+
+BossQueenBeeton.pac
+	boss_queenbeeton_param.rfl (3680)
+
+EnemyBeeton.pac
+	enemy_beeton_param.rfl (60)
+
+EnemyEggChaser.pac
+	enemy_eggchaser_param.rfl (52)
+
+EnemyEggPawn.pac
+	enemy_eggpawn_param.rfl (156)
+
+EnemyEggTank.pac
+	enemy_eggtank_param.rfl (80)
+
+EnemyEggWalker.pac
+	enemy_eggwalker_param.rfl (72)
+
+EnemyMetalSonic.pac
+	enemy_metalsonic_param.rfl (2048)
+	obj_virtronwave_param.rfl (12)
+
+EnemyMotora02.pac
+	enemy_motora_param.rfl (48)
+
+EnemyMotoraSlider.pac
+	enemy_motoraslider_param.rfl (76)
+
+EnemyMotoraVlt.pac
+	enemy_virtron_motora_param.rfl (72)
+
+EnemyNarl.pac
+	enemy_narl_param.rfl (116)
+
+EnemyPotos.pac
+	enemy_potos_param.rfl (52)
+
+EnemyValKeen.pac
+	enemy_valkeen_param.rfl (40)
+
+ev0010cp.pac
+	ev0010cp_caption.rfl (832)
+	ev0010cp_caption_jp.rfl (848)
+
+ev0120cp.pac
+	ev0120cp_caption.rfl (996)
+
+ev0130cp.pac
+	ev0130cp_caption.rfl (952)
+
+ev0140cp.pac
+	ev0140cp_caption.rfl (932)
+
+ev0310cp.pac
+	ev0310cp_caption.rfl (964)
+
+ev0330cp.pac
+	ev0330cp_caption.rfl (804)
+
+ev0430cp.pac
+	ev0430cp_caption.rfl (804)
+
+ev0440cp.pac
+	ev0440cp_caption.rfl (756)
+
+ev0510cp.pac
+	ev0510cp_caption.rfl (864)
+
+ev0720cp.pac
+	ev0720cp_caption.rfl (1036)
+
+ev0730cp.pac
+	ev0730cp_caption.rfl (784)
+
+ev0820cp.pac
+	ev0820cp_caption.rfl (976)
+
+ev0840cp.pac
+	ev0840cp_caption.rfl (900)
+	ev0840cp_caption_ge.rfl (900)
+	ev0840cp_caption_jp.rfl (888)
+
+ev1120cp.pac
+	ev1120cp_caption.rfl (872)
+
+ev1220cp.pac
+	ev1220cp_caption.rfl (824)
+
+ev1330cp.pac
+	ev1330cp_caption.rfl (848)
+
+ev1340cp.pac
+	ev1340cp_caption.rfl (836)
+
+ev1530cp.pac
+	ev1530cp_caption.rfl (756)
+
+ev1830cp.pac
+	ev1830cp_caption.rfl (868)
+
+ev2010cp.pac
+	ev2010cp_caption.rfl (920)
+
+ev2030cp.pac
+	ev2030cp_caption.rfl (808)
+
+ev2120cp.pac
+	ev2120cp_caption.rfl (1088)
+
+ev2140cp.pac
+	ev2140cp_caption.rfl (868)
+
+ev2220cp.pac
+	ev2220cp_caption.rfl (788)
+
+ev2230cp.pac
+	ev2230cp_caption.rfl (784)
+
+ev2240cp.pac
+	ev2240cp_caption.rfl (836)
+
+ev2420cp.pac
+	ev2420cp_caption.rfl (980)
+
+ev2440cp.pac
+	ev2440cp_caption.rfl (1016)
+
+ev2510cp.pac
+	ev2510cp_caption.rfl (1012)
+
+caption_misc.pac
+	caption_param_ev0210w.rfl (8296)
+	caption_param_ev0410w.rfl (8392)
+	caption_param_ev0610w.rfl (8340)
+	caption_param_ev0710w.rfl (8232)
+	caption_param_ev0810w.rfl (8332)
+	caption_param_ev0910w.rfl (8268)
+	caption_param_ev0920w.rfl (8232)
+	caption_param_ev1010w.rfl (8128)
+	caption_param_ev1110w.rfl (8148)
+	caption_param_ev1210w.rfl (8192)
+	caption_param_ev1230w.rfl (8192)
+	caption_param_ev1310w.rfl (8268)
+	caption_param_ev1410w.rfl (8192)
+	caption_param_ev1420w.rfl (8224)
+	caption_param_ev1510w.rfl (8160)
+	caption_param_ev1610w.rfl (8300)
+	caption_param_ev1710w.rfl (8260)
+	caption_param_ev1810w.rfl (8248)
+	caption_param_ev1910w.rfl (8328)
+	caption_param_ev2110w.rfl (8312)
+	caption_param_w1a01.rfl (8388)
+	caption_param_w1a02.rfl (8312)
+	caption_param_w1a04.rfl (8252)
+	caption_param_w1b01.rfl (8200)
+	caption_param_w1x01.rfl (8076)
+	caption_param_w1x02.rfl (8076)
+	caption_param_w2a01.rfl (8276)
+	caption_param_w2a02.rfl (8316)
+	caption_param_w2a04.rfl (8200)
+	caption_param_w2x01.rfl (8076)
+	caption_param_w2x02.rfl (8076)
+	caption_param_w2x03.rfl (8076)
+	caption_param_w3a01.rfl (8252)
+	caption_param_w3a02.rfl (8356)
+	caption_param_w3a03.rfl (8304)
+	caption_param_w3a04.rfl (8216)
+	caption_param_w3x01.rfl (8076)
+	caption_param_w3x02.rfl (8076)
+	caption_param_w4a01.rfl (8304)
+	caption_param_w4a02.rfl (8320)
+	caption_param_w4a04.rfl (8216)
+	caption_param_w4b01.rfl (8200)
+	caption_param_w4x01.rfl (8076)
+	caption_param_w4x02.rfl (8076)
+	caption_param_w5a01.rfl (8372)
+	caption_param_w5a02.rfl (8328)
+	caption_param_w5a03.rfl (8396)
+	caption_param_w5a04.rfl (8200)
+	caption_param_w5b01.rfl (8248)
+	caption_param_w5x01.rfl (8076)
+	caption_param_w5x02.rfl (8076)
+	caption_param_w5x03.rfl (8076)
+	caption_param_w5x04.rfl (8076)
+	caption_param_w6a01.rfl (8284)
+	caption_param_w6a02.rfl (8412)
+	caption_param_w6a03.rfl (8312)
+	caption_param_w6b01.rfl (8180)
+	caption_param_w6x01.rfl (8076)
+	caption_param_w6x02.rfl (8076)
+	caption_param_w7a01.rfl (8300)
+	caption_param_w7a02.rfl (8356)
+	caption_param_w7a03.rfl (8344)
+	caption_param_w7a04.rfl (8268)
+	caption_param_w7b01.rfl (8208)
+	caption_param_w7b02.rfl (8276)
+	caption_param_w7x01.rfl (8076)
+
+event_movie_misc.pac
+	event_movie.rfl (2308)
+
+mission_misc.pac
+	AllMissionData.rfl (15984)
+	DailyMissionParameter.rfl (40)
+	MissionLabelData.rfl (2760)
+
+score_misc.pac
+	scoredata.rfl (32)
+
+score_record_misc.pac
+	game_score.rfl (560)
+	stage_score.rfl (5344)
+
+sos_misc.pac
+	sos_parameter.rfl (12)
+
+sound_common.pac
+	stage_sound_param.rfl (304)
+
+staffroll_misc.pac
+	StaffrollCreditsParam.rfl (32540)
+	StaffrollCutParam.rfl (768)
+
+ui_charamake_misc.pac
+	ui_charamake_param.rfl (272)
+
+ui_cockpit_misc.pac
+	cockpit_parameter.rfl (68)
+
+ui_mybuddy_misc.pac
+	ui_mybuddy_param.rfl (2176)
+
+ui_rendertexture_misc.pac
+	ui_rendertexture_fxparam.rfl (1536)
+	ui_rendertexture_param.rfl (48)
+
+ui_resultmenu_misc.pac
+	ui_resultmenu_param.rfl (2752)
+
+ui_weaponcustom_misc.pac
+	ui_weaponcustom_param.rfl (-48)
+
+unlock_misc.pac
+	UnlockExtraStage.rfl (320)
+
+vr_stage.pac
+	vr_stage_param.rfl (112)
+
+w1a01_misc.pac
+	w1a01.rfl (24624)
+
+w1a02_misc.pac
+	w1a02.rfl (24624)
+	w1a02_appgfx.rfl (52)
+
+w1b01_misc.pac
+	w1b01.rfl (24624)
+
+w1s01_misc.pac
+	w1s01.rfl (24624)
+
+w1x02_misc.pac
+	w1x02.rfl (24624)
+
+w1x02_obj.pac
+	obj_flame_param.rfl (80)
+
+w2a02_misc.pac
+	w2a02.rfl (24624)
+	w2a02_appgfx.rfl (52)
+
+w2s04_misc.pac
+	w2s04.rfl (24624)
+	w2s04_appgfx.rfl (52)
+
+w2x02_obj.pac
+	obj_flame_param.rfl (80)
+
+w3a02_misc.pac
+	w3a02.rfl (24624)
+
+w3a04_misc.pac
+	w3a04.rfl (24624)
+
+w3x02_obj.pac
+	obj_flame_param.rfl (80)
+
+w4a01_misc.pac
+	w4a01.rfl (24624)
+	w4a01_appgfx.rfl (52)
+
+w4a02_misc.pac
+	w4a02.rfl (24624)
+	w4a02_appgfx.rfl (52)
+
+w4a04_misc.pac
+	w4a04.rfl (24624)
+	w4a04_appgfx.rfl (52)
+
+w4a04_obj.pac
+	obj_bumper_param.rfl (24)
+	obj_hexbumper_param.rfl (24)
+	obj_tribumper_param.rfl (24)
+	obj_vanishbumper_param.rfl (24)
+
+w4b01_misc.pac
+	w4b01.rfl (24624)
+	w4b01_appgfx.rfl (52)
+
+w4s01_misc.pac
+	w4s01.rfl (24624)
+	w4s01_appgfx.rfl (52)
+
+w4x02_obj.pac
+	obj_flame_param.rfl (80)
+
+w5a01_misc.pac
+	w5a01.rfl (24624)
+
+w5a01_obj.pac
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w5a03_misc.pac
+	w5a03.rfl (24624)
+	w5a03_appgfx.rfl (52)
+
+w5a03_obj.pac
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w5a04_misc.pac
+	w5a04.rfl (24624)
+
+w5a04_obj.pac
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w5b01_misc.pac
+	w5b01.rfl (24624)
+
+w5b01_obj.pac
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w5s01_misc.pac
+	w5s01.rfl (24624)
+
+w5x03_obj.pac
+	obj_flame_param.rfl (80)
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w6s01_misc.pac
+	w6s01.rfl (24624)
+
+w6x02_obj.pac
+	obj_flame_param.rfl (80)
+
+w7s01_misc.pac
+	w7s01.rfl (24624)
+
+w9a01_misc.pac
+	w9a01.rfl (24624)
+
+w9a02_misc.pac
+	w9a02.rfl (24624)
+
+w9a03_misc.pac
+	w9a03.rfl (24624)
+
+w9a11_misc.pac
+	w9a11.rfl (24624)
+
+w9a12_misc.pac
+	w9a12.rfl (24624)
+
+w9a13_misc.pac
+	w9a13.rfl (24624)
+
+w9a31_misc.pac
+	w9a31.rfl (24624)
+
+w9a32_misc.pac
+	w9a32.rfl (24624)
+
+w9a51_misc.pac
+	w9a51.rfl (24624)
+
+w9a51_obj.pac
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w9a52_misc.pac
+	w9a52.rfl (24624)
+
+w9a52_obj.pac
+	palmtreeA_sway.rfl (1224)
+	palmtreeB_sway.rfl (1184)
+
+w9a61_misc.pac
+	w9a61.rfl (24624)
+
+w9a62_misc.pac
+	w9a62.rfl (24624)
+
+w9a71_misc.pac
+	w9a71.rfl (24624)
+
+InfiniteDLC.pac
+	radio_camera_infinite.rfl (52)
+
+OmegaDLC.pac
+	radio_camera_omega.rfl (52)
+
+ShadowDLC.pac
+	radio_camera_shadow.rfl (52)
+
+dlc01.pac
+	dlc01_param.rfl (84)
+	event_movie_031.rfl (80)
+	event_movie_032.rfl (68)
+	event_movie_033.rfl (68)
+	event_movie_034.rfl (68)
+	event_movie_035.rfl (68)
+	event_movie_036.rfl (80)
+	game_score_054.rfl (8)
+	game_score_055.rfl (8)
+	game_score_056.rfl (8)
+	stage_score_043.rfl (84)
+	stage_score_044.rfl (84)
+	stage_score_045.rfl (84)
+
+EnemyGalagabee.pac
+	enemy_galagabee_param.rfl (40)
+
+ev8090cp.pac
+	ev8090cp_caption.rfl (948)
+
+caption_misc_dlc.pac
+	caption_param_ev8000w.rfl (8096)
+	caption_param_ev8010w.rfl (8224)
+	caption_param_ev8030w.rfl (8204)
+	caption_param_ev8050w.rfl (8192)
+	caption_param_ev8070w.rfl (8348)
+	caption_param_ev8080w.rfl (8192)
+	caption_param_w3d01.rfl (8320)
+	caption_param_w4d01.rfl (8284)
+	caption_param_w5d01.rfl (8456)
+
+ui_worldmap_dlc_misc.pac
+	worldmap.rfl (240)
+	worldmap_camera.rfl (316)
+	worldmap_camera_dlc.rfl (316)
+	worldmap_discuss.rfl (2824)
+	worldmap_discuss_dlc.rfl (2824)
+	worldmap_dlc.rfl (240)
+
+w4d01_misc.pac
+	w4d01_appgfx.rfl (52)
+
+Shadow.pac
+	radio_camera_shadow.rfl (52)
+
+ui_worldmap_misc.pac
+	worldmap.rfl (240)
+	worldmap_camera.rfl (316)
+	worldmap_discuss.rfl (2796)
+
+dlc03.pac
+	customize_body_144.rfl (96)
+	customize_body_145.rfl (96)
+	customize_body_146.rfl (96)
+	customize_glass_069.rfl (96)
+	customize_glove_111.rfl (96)
+	customize_head_093.rfl (96)
+	customize_head_094.rfl (96)
+	customize_head_095.rfl (96)
+	customize_shoes_159.rfl (96)
+	customize_shoes_160.rfl (96)
+	customize_shoes_161.rfl (96)
+	dlc03_param.rfl (92)
+
+dlc04.pac
+	customize_body_148.rfl (96)
+	customize_body_149.rfl (96)
+	customize_body_150.rfl (96)
+	dlc04_param.rfl (92)
+
+dlc05.pac
+	customize_glove_108.rfl (96)
+	customize_glove_109.rfl (96)
+	customize_glove_110.rfl (96)
+	customize_head_096.rfl (96)
+	customize_head_097.rfl (96)
+	customize_head_098.rfl (96)
+	customize_pattern_151.rfl (96)
+	customize_pattern_152.rfl (96)
+	customize_pattern_153.rfl (96)
+	dlc05_param.rfl (92)
+
+dlc06.pac
+	customize_body_147.rfl (96)
+	customize_glass_070.rfl (96)
+	dlc06_param.rfl (92)
+
+SuperSonic.pac
+	super_sonic_modern.rfl (24)
+
+SuperSonicClassic.pac
+	super_sonic_classic.rfl (24)
+
+dlc02.pac
+	dlc02_param.rfl (56)
+	game_score_057.rfl (8)
+
