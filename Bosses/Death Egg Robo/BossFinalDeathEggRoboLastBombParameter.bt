@@ -4,7 +4,7 @@
 
 enum<byte> bool { False = 0, True = 1 };
 
-typedef struct { float x; float y; float z; float zero<hidden=true>; } Vector3;
+typedef struct { float x; float y; float z; float w<hidden=true>; } Vector3;
 
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
@@ -49,7 +49,7 @@ typedef struct {
 
 	FSeek(p + 0);     BombPositionListParameter bombPositionListParam;
 	FSeek(p + 1616);  BombLandingPattrnParameter bombLandingPattrnParam[6]<optimize=false>;
-	FSeek(p + 11312); int useLandingPattern;
+	FSeek(p + 11312); uint useLandingPattern;
 
 	FSeek(p + 11328);
 } BossFinalDeathEggRoboLastBombParameter;

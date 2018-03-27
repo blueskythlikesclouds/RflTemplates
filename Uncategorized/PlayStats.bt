@@ -90,7 +90,7 @@ enum<byte> GadgetSkillType {
 	NUM_GADGET_SKILLS  = 26,
 };
 
-typedef struct { float x; float y; float z; float zero<hidden=true>; } Vector3;
+typedef struct { float x; float y; float z; float w<hidden=true>; } Vector3;
 
 enum<byte> PlayType {
 	PLAY_NONE     = 0,

@@ -47,7 +47,7 @@ enum<byte> GadgetSkillType {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); byte no;
+	FSeek(p + 0); ubyte no;
 	FSeek(p + 1); GadgetType type;
 	FSeek(p + 2); GadgetSkillType skill[3]<optimize=false>;
 	FSeek(p + 6); short missionID;

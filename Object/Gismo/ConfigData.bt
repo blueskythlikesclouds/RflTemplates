@@ -14,7 +14,7 @@ string StringRead(StringPtr &ptr) {
 	return "";
 }
 
-typedef struct { float x; float y; float z; float zero<hidden=true>; } Vector3;
+typedef struct { float x; float y; float z; float w<hidden=true>; } Vector3;
 
 enum<byte> bool { False = 0, True = 1 };
 

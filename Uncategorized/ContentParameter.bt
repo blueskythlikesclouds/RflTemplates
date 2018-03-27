@@ -17,8 +17,8 @@ string StringRead(StringPtr &ptr) {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); byte recordNo;
-	FSeek(p + 1); byte numRecords;
+	FSeek(p + 0); ubyte recordNo;
+	FSeek(p + 1); ubyte numRecords;
 
 	FSeek(p + 2);
 } AddDatabaseInfo;

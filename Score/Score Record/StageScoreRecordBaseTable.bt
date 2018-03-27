@@ -17,11 +17,11 @@ string StringRead(StringPtr &ptr) {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  byte no;
-	FSeek(p + 4);  int timeMax;
-	FSeek(p + 8);  int timeDeduct;
-	FSeek(p + 12); int noMiss[6]<optimize=false>;
-	FSeek(p + 36); int rank[4]<optimize=false>;
+	FSeek(p + 0);  ubyte no;
+	FSeek(p + 4);  uint timeMax;
+	FSeek(p + 8);  uint timeDeduct;
+	FSeek(p + 12); uint noMiss[6]<optimize=false>;
+	FSeek(p + 36); uint rank[4]<optimize=false>;
 	FSeek(p + 56); StringPtr stageCode;
 
 	FSeek(p + 72);

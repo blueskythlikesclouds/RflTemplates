@@ -52,12 +52,12 @@ typedef struct {
 	FSeek(p + 0);  LauguageType language;
 	FSeek(p + 1);  PlayerType playerType;
 	FSeek(p + 2);  bool enabledCharacterChange;
-	FSeek(p + 3);  byte pad1;
+	FSeek(p + 3);  ubyte pad1;
 	FSeek(p + 4);  RaceType race;
 	FSeek(p + 5);  GadgetType gadgetType;
 	FSeek(p + 6);  short gadgetNo;
 	FSeek(p + 8);  bool existFriend;
-	FSeek(p + 9);  byte pad2[3]<optimize=false>;
+	FSeek(p + 9);  ubyte pad2[3]<optimize=false>;
 	FSeek(p + 12); RaceType raceFriend;
 	FSeek(p + 13); GadgetType gadgetTypeFriend;
 	FSeek(p + 14); short gadgetNoFriend;

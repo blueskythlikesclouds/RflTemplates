@@ -65,7 +65,7 @@ typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
 	FSeek(p + 0); bool enable;
-	FSeek(p + 1); byte padding;
+	FSeek(p + 1); ubyte padding;
 
 	FSeek(p + 2);
 } FxHDROption;
@@ -330,12 +330,12 @@ typedef struct {
 	FSeek(p + 48); float hlsLightnessOffset;
 	FSeek(p + 52); float hlsSaturationOffset;
 	FSeek(p + 56); int hlsColorOffset[3]<optimize=false>;
-	FSeek(p + 68); byte padding;
+	FSeek(p + 68); ubyte padding;
 
 	FSeek(p + 72);
 } FxColorContrastParameter;
 
-typedef struct { float x; float y; float z; float zero<hidden=true>; } Vector3;
+typedef struct { float x; float y; float z; float w<hidden=true>; } Vector3;
 
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
@@ -378,7 +378,7 @@ typedef struct {
 	FSeek(p + 64);
 } FxDOFParameter;
 
-typedef struct { float data[16]; } Matrix4;
+typedef struct { float data[16]; } Matrix4x4;
 
 enum<byte> ShadowFilter {
 	SHADOW_FILTER_POINT        = 0,
@@ -433,8 +433,8 @@ typedef struct {
 	FSeek(p + 60);  int blurSize;
 	FSeek(p + 64);  float bias;
 	FSeek(p + 68);  float fadeoutDistance;
-	FSeek(p + 80);  Matrix4 shadowCameraViewMatrix;
-	FSeek(p + 144); Matrix4 shadowCameraProjectionMatrix;
+	FSeek(p + 80);  Matrix4x4 shadowCameraViewMatrix;
+	FSeek(p + 144); Matrix4x4 shadowCameraProjectionMatrix;
 	FSeek(p + 208); float shadowCameraNearDepth;
 	FSeek(p + 212); float shadowCameraFarDepth;
 	FSeek(p + 216); float shadowCameraLookAtDepth;
@@ -550,7 +550,7 @@ typedef struct {
 	FSeek(p + 48);
 } FxScreenBlurParameter;
 
-typedef struct { char a; char r; char g; char b; } Color8;
+typedef struct { ubyte a; ubyte r; ubyte g; ubyte b; } Color8;
 
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
@@ -603,13 +603,13 @@ typedef struct {
 	FSeek(p + 32);
 } FxScreenSpaceGodrayParameter;
 
-typedef struct { Vector3 min; Vector3 max; } AABB;
+typedef struct { float data[12]; int padding[4]<hidden=true>; } Matrix3x4;
 
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
 	FSeek(p + 0);  bool enable;
-	FSeek(p + 16); AABB box;
+	FSeek(p + 16); Matrix3x4 box;
 	FSeek(p + 80); Vector3 color;
 	FSeek(p + 96); float num;
 

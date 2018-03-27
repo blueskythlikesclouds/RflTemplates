@@ -55,7 +55,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  int coreHp;
+	FSeek(p + 0);  uint coreHp;
 	FSeek(p + 4);  PRCoreNormalDamageParameter coreNormalDamageParam;
 	FSeek(p + 20); PRCoreGadgetDamageParameter coreGadgetDamageParam;
 	FSeek(p + 48); PRLaserWaveParameter laserWaveParam[3]<optimize=false>;

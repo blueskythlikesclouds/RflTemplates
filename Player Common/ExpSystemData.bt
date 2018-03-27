@@ -5,7 +5,7 @@
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); int nextLevelNecessaryPoint[29]<optimize=false>;
+	FSeek(p + 0); uint nextLevelNecessaryPoint[29]<optimize=false>;
 
 	FSeek(p + 116);
 } ExpLevelData;

@@ -5,13 +5,13 @@
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  int firstHalfHealthPoint;
-	FSeek(p + 4);  int latterHalfHealthPoint;
+	FSeek(p + 0);  uint firstHalfHealthPoint;
+	FSeek(p + 4);  uint latterHalfHealthPoint;
 	FSeek(p + 8);  float tailMoveCycleTime;
 	FSeek(p + 12); float shotTime;
 	FSeek(p + 16); float shotDelay;
 	FSeek(p + 20); float shotSpeed;
-	FSeek(p + 24); int drilNum;
+	FSeek(p + 24); uint drilNum;
 	FSeek(p + 28); float drilAttackTime;
 	FSeek(p + 32); float drilSpeed;
 	FSeek(p + 36); float boosHpGaugeTimeMobile;

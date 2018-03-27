@@ -21,8 +21,8 @@ typedef struct {
 	FSeek(p + 52);  float bulletScaleSV;
 	FSeek(p + 56);  float bulletMaxDistanceFV;
 	FSeek(p + 60);  float bulletMaxDistanceSV;
-	FSeek(p + 64);  int shotContinuousShotNum;
-	FSeek(p + 68);  int shotContinuousShotNumConst;
+	FSeek(p + 64);  uint shotContinuousShotNum;
+	FSeek(p + 68);  uint shotContinuousShotNumConst;
 	FSeek(p + 72);  float shotCoolDownTime;
 	FSeek(p + 76);  float shotCoolDownTimeConst;
 	FSeek(p + 80);  float damageCoolDownTime;
@@ -34,7 +34,7 @@ typedef struct {
 	FSeek(p + 104); float oneHandBulletScaleSV;
 	FSeek(p + 108); float oneHandBulletMaxDistanceFV;
 	FSeek(p + 112); float oneHandBulletMaxDistanceSV;
-	FSeek(p + 116); int oneHandShotContinuousShotNum;
+	FSeek(p + 116); uint oneHandShotContinuousShotNum;
 	FSeek(p + 120); float oneHandShotCoolDownTime;
 	FSeek(p + 124); float oneHandDamageCoolDownTime;
 	FSeek(p + 128); float oneHandShotInterval;

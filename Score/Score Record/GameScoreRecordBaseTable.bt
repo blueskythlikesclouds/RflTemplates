@@ -76,10 +76,10 @@ enum<byte> ScoreCategory {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); byte no;
+	FSeek(p + 0); ubyte no;
 	FSeek(p + 1); GameScoreType scoreType;
 	FSeek(p + 2); ScoreCategory categoryType;
-	FSeek(p + 4); int score;
+	FSeek(p + 4); uint score;
 
 	FSeek(p + 8);
 } GameScoreRecord;

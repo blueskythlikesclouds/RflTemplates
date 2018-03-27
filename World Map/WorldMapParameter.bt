@@ -10,13 +10,13 @@ typedef struct {
 	FSeek(p + 0);  float effectTime;
 	FSeek(p + 4);  float addValue1;
 	FSeek(p + 8);  float addValue2;
-	FSeek(p + 12); byte numEffects;
-	FSeek(p + 13); byte pad2[3]<optimize=false>;
+	FSeek(p + 12); ubyte numEffects;
+	FSeek(p + 13); ubyte pad2[3]<optimize=false>;
 
 	FSeek(p + 16);
 } StageDetailSosEvent;
 
-typedef struct { float x; float y; float z; float zero<hidden=true>; } Vector3;
+typedef struct { float x; float y; float z; float w<hidden=true>; } Vector3;
 
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
@@ -41,7 +41,7 @@ typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
 	FSeek(p + 0);  bool skipTransceiverEffectWhenFriendExists;
-	FSeek(p + 1);  byte pad[3]<optimize=false>;
+	FSeek(p + 1);  ubyte pad[3]<optimize=false>;
 	FSeek(p + 4);  float friendBuddyEffectTime;
 	FSeek(p + 8);  StageDetailSosEvent sosEvent;
 	FSeek(p + 32); StageDetailBuddyCameraParameter buddyCamera[2]<optimize=false>;

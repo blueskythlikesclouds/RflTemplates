@@ -27,11 +27,11 @@ enum<byte> ChunkType {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  byte no;
+	FSeek(p + 0);  ubyte no;
 	FSeek(p + 8);  StringPtr eventName;
 	FSeek(p + 24); DataType dataType;
 	FSeek(p + 32); StringPtr sceneName;
-	FSeek(p + 48); byte numNarrationTexts;
+	FSeek(p + 48); ubyte numNarrationTexts;
 	FSeek(p + 49); ChunkType chunkType;
 
 	FSeek(p + 56);

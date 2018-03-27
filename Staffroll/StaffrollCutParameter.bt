@@ -5,8 +5,8 @@
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); byte worldNo;
-	FSeek(p + 2); short cutNo;
+	FSeek(p + 0); ubyte worldNo;
+	FSeek(p + 2); ushort cutNo;
 	FSeek(p + 4); float waitTime;
 	FSeek(p + 8); float time;
 

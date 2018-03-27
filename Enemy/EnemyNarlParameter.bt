@@ -26,7 +26,7 @@ typedef struct {
 	FSeek(p + 72);  float shotRadiusSV;
 	FSeek(p + 76);  float shotDistanceFV;
 	FSeek(p + 80);  float shotDistanceSV;
-	FSeek(p + 84);  int shotNum;
+	FSeek(p + 84);  uint shotNum;
 	FSeek(p + 88);  float shotInterval;
 	FSeek(p + 92);  float flameSpeedFV;
 	FSeek(p + 96);  float flameSpeedSV;

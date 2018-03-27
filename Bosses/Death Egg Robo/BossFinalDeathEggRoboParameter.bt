@@ -33,7 +33,7 @@ enum<byte> bool { False = 0, True = 1 };
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); int shotNum;
+	FSeek(p + 0); uint shotNum;
 	FSeek(p + 4); float shotAngle;
 	FSeek(p + 8); float shotTime;
 
@@ -51,7 +51,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  int shotNum;
+	FSeek(p + 0);  uint shotNum;
 	FSeek(p + 4);  float shotAnimRate;
 	FSeek(p + 8);  float speed;
 	FSeek(p + 12); float homingParam;
@@ -71,7 +71,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  int debrisNum;
+	FSeek(p + 0);  uint debrisNum;
 	FSeek(p + 4);  bool isUse;
 	FSeek(p + 8);  float addDistance;
 	FSeek(p + 12); float throwingTime;
@@ -143,13 +143,13 @@ typedef struct {
 	FSeek(p + 32); float waveDamageRadius;
 	FSeek(p + 36); float waveSpeed;
 	FSeek(p + 40); float waveAddSpeed;
-	FSeek(p + 44); int waveNum;
-	FSeek(p + 48); int attackNumLv1R;
-	FSeek(p + 52); int attackNumLv2R;
-	FSeek(p + 56); int attackNumLv3R;
-	FSeek(p + 60); int attackNumLv1L;
-	FSeek(p + 64); int attackNumLv2L;
-	FSeek(p + 68); int attackNumLv3L;
+	FSeek(p + 44); uint waveNum;
+	FSeek(p + 48); uint attackNumLv1R;
+	FSeek(p + 52); uint attackNumLv2R;
+	FSeek(p + 56); uint attackNumLv3R;
+	FSeek(p + 60); uint attackNumLv1L;
+	FSeek(p + 64); uint attackNumLv2L;
+	FSeek(p + 68); uint attackNumLv3L;
 
 	FSeek(p + 72);
 } FDE2ndImpact;
@@ -159,7 +159,7 @@ typedef struct {
 
 	FSeek(p + 0); float shotTime;
 	FSeek(p + 4); float readyTime;
-	FSeek(p + 8); int attackNum;
+	FSeek(p + 8); uint attackNum;
 
 	FSeek(p + 12);
 } FDE2ndLaserAttackLvPattern;
@@ -175,8 +175,8 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  int shotNum;
-	FSeek(p + 4);  int attackNum;
+	FSeek(p + 0);  uint shotNum;
+	FSeek(p + 4);  uint attackNum;
 	FSeek(p + 8);  float speed;
 	FSeek(p + 12); float homingParam;
 	FSeek(p + 16); float homingLimitDistance;
@@ -228,8 +228,8 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);   int battle1stHealthPoint;
-	FSeek(p + 4);   int battle2ndHealthPoint;
+	FSeek(p + 0);   uint battle1stHealthPoint;
+	FSeek(p + 4);   uint battle2ndHealthPoint;
 	FSeek(p + 8);   float boosHpGaugeTime1st;
 	FSeek(p + 12);  float boosHpGaugeTime2nd;
 	FSeek(p + 16);  FDENormalDamageParameter normalDamageParam;

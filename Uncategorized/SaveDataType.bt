@@ -12,10 +12,10 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); int totalTime;
-	FSeek(p + 4); byte lastPlayStageNo;
-	FSeek(p + 5); byte lastPlayStageNoShadowDLC;
-	FSeek(p + 6); byte padding[2]<optimize=false>;
+	FSeek(p + 0); uint totalTime;
+	FSeek(p + 4); ubyte lastPlayStageNo;
+	FSeek(p + 5); ubyte lastPlayStageNoShadowDLC;
+	FSeek(p + 6); ubyte padding[2]<optimize=false>;
 
 	FSeek(p + 8);
 } GameInfoData;
@@ -23,8 +23,8 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  byte byteFlags[16]<optimize=false>;
-	FSeek(p + 16); int bitFlags[64]<optimize=false>;
+	FSeek(p + 0);  ubyte byteFlags[16]<optimize=false>;
+	FSeek(p + 16); uint bitFlags[64]<optimize=false>;
 
 	FSeek(p + 272);
 } FlagSetData;
@@ -32,7 +32,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); int bitFlags[256]<optimize=false>;
+	FSeek(p + 0); uint bitFlags[256]<optimize=false>;
 
 	FSeek(p + 1024);
 } CustomizeFlagSetData;
@@ -40,7 +40,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); int bitFlags[128]<optimize=false>;
+	FSeek(p + 0); uint bitFlags[128]<optimize=false>;
 
 	FSeek(p + 512);
 } MissionFlagSetData;
@@ -48,7 +48,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); short sosMissionClearCount;
+	FSeek(p + 0); ushort sosMissionClearCount;
 
 	FSeek(p + 2);
 } ChallengeMissionData;
@@ -61,9 +61,9 @@ typedef struct {
 	FSeek(p + 0);  int missionID[3]<optimize=false>;
 	FSeek(p + 12); bool cleared[3]<optimize=false>;
 	FSeek(p + 15); bool watchedCrearWindow[3]<optimize=false>;
-	FSeek(p + 24); int bonusIndex[3]<optimize=false>;
-	FSeek(p + 36); int missionStartTime;
-	FSeek(p + 40); int bonusStartTime;
+	FSeek(p + 24); uint bonusIndex[3]<optimize=false>;
+	FSeek(p + 36); uint missionStartTime;
+	FSeek(p + 40); uint bonusStartTime;
 	FSeek(p + 44); bool bonusStarted;
 	FSeek(p + 48); float bonusValue;
 	FSeek(p + 18); bool watchedNew[3]<optimize=false>;
@@ -93,25 +93,25 @@ typedef struct {
 
 	FSeek(p + 0);  SexType sex;
 	FSeek(p + 1);  RaceType race;
-	FSeek(p + 2);  byte rank;
-	FSeek(p + 3);  byte gadgetNo;
-	FSeek(p + 4);  byte head;
-	FSeek(p + 5);  byte eye;
-	FSeek(p + 6);  byte voice;
-	FSeek(p + 7);  byte baseColor;
-	FSeek(p + 8);  byte skinColor;
-	FSeek(p + 9);  byte beakColor;
-	FSeek(p + 10); byte eyeColor;
-	FSeek(p + 11); byte headPart;
-	FSeek(p + 12); byte glassPart;
-	FSeek(p + 13); byte facePart;
-	FSeek(p + 14); byte glovePart;
-	FSeek(p + 15); byte shoesPart;
-	FSeek(p + 16); byte bodyPart;
-	FSeek(p + 17); byte suitNo;
-	FSeek(p + 18); byte innerColor;
-	FSeek(p + 19); byte resultMotionNo;
-	FSeek(p + 20); int experiencePoint;
+	FSeek(p + 2);  ubyte rank;
+	FSeek(p + 3);  ubyte gadgetNo;
+	FSeek(p + 4);  ubyte head;
+	FSeek(p + 5);  ubyte eye;
+	FSeek(p + 6);  ubyte voice;
+	FSeek(p + 7);  ubyte baseColor;
+	FSeek(p + 8);  ubyte skinColor;
+	FSeek(p + 9);  ubyte beakColor;
+	FSeek(p + 10); ubyte eyeColor;
+	FSeek(p + 11); ubyte headPart;
+	FSeek(p + 12); ubyte glassPart;
+	FSeek(p + 13); ubyte facePart;
+	FSeek(p + 14); ubyte glovePart;
+	FSeek(p + 15); ubyte shoesPart;
+	FSeek(p + 16); ubyte bodyPart;
+	FSeek(p + 17); ubyte suitNo;
+	FSeek(p + 18); ubyte innerColor;
+	FSeek(p + 19); ubyte resultMotionNo;
+	FSeek(p + 20); uint experiencePoint;
 
 	FSeek(p + 24);
 } CustomizeData;
@@ -119,8 +119,8 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); byte dummy;
-	FSeek(p + 1); byte pad[3]<optimize=false>;
+	FSeek(p + 0); ubyte dummy;
+	FSeek(p + 1); ubyte pad[3]<optimize=false>;
 	FSeek(p + 4); CustomizeData customizeData;
 
 	FSeek(p + 28);
@@ -130,10 +130,10 @@ typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
 	FSeek(p + 0);  byte rank;
-	FSeek(p + 1);  byte correct;
-	FSeek(p + 2);  short flags;
-	FSeek(p + 4);  int score;
-	FSeek(p + 8);  int allTime;
+	FSeek(p + 1);  ubyte correct;
+	FSeek(p + 2);  ushort flags;
+	FSeek(p + 4);  uint score;
+	FSeek(p + 8);  uint allTime;
 	FSeek(p + 12); NetBuddyData myBuddy;
 	FSeek(p + 40); NetBuddyData rentalBuddy;
 
@@ -168,8 +168,8 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); byte level;
-	FSeek(p + 4); int experiencePoint;
+	FSeek(p + 0); ubyte level;
+	FSeek(p + 4); uint experiencePoint;
 
 	FSeek(p + 8);
 } RaceData;
@@ -180,8 +180,8 @@ typedef struct {
 	FSeek(p + 0);   BuddyData buddy[15]<optimize=false>;
 	FSeek(p + 360); ClosetData closet[15]<optimize=false>;
 	FSeek(p + 780); RaceData race[7]<optimize=false>;
-	FSeek(p + 836); int activeBuddyIndex;
-	FSeek(p + 840); int entryBuddyCount;
+	FSeek(p + 836); uint activeBuddyIndex;
+	FSeek(p + 840); uint entryBuddyCount;
 
 	FSeek(p + 844);
 } AllBuddyData;
@@ -189,7 +189,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); byte data[16]<optimize=false>;
+	FSeek(p + 0); ubyte data[16]<optimize=false>;
 
 	FSeek(p + 16);
 } PlatformData;
@@ -198,8 +198,8 @@ typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
 	FSeek(p + 0);   byte name[80]<optimize=false>;
-	FSeek(p + 80);  short country;
-	FSeek(p + 82);  byte padding[2]<optimize=false>;
+	FSeek(p + 80);  ushort country;
+	FSeek(p + 82);  ubyte padding[2]<optimize=false>;
 	FSeek(p + 84);  NetBuddyData buddyData;
 	FSeek(p + 112); PlatformData platformData;
 
@@ -297,7 +297,7 @@ typedef struct {
 	FSeek(p + 12); float m_musicVolume;
 	FSeek(p + 16); float m_sfxVolume;
 	FSeek(p + 20); AudioOutput m_outputChannels;
-	FSeek(p + 24); int m_outputAdapterIndex;
+	FSeek(p + 24); uint m_outputAdapterIndex;
 
 	FSeek(p + 28);
 } AudioSettingsData;
@@ -310,7 +310,7 @@ typedef struct {
 	FSeek(p + 2);   DifficultyType difficulty;
 	FSeek(p + 3);   byte m_vibrationIndex;
 	FSeek(p + 4);   DifficultyType difficultyDLC;
-	FSeek(p + 8);   int flags;
+	FSeek(p + 8);   uint flags;
 	FSeek(p + 12);  KeybindingData m_keybindings;
 	FSeek(p + 156); AudioSettingsData m_audio;
 

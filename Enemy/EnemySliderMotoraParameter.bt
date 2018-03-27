@@ -18,7 +18,7 @@ typedef struct {
 	FSeek(p + 32); float meanderingWidth;
 	FSeek(p + 36); float meanderingSpeed;
 	FSeek(p + 40); float impulsiveForce;
-	FSeek(p + 44); int hitPointGolden;
+	FSeek(p + 44); uint hitPointGolden;
 	FSeek(p + 48); float impulsiveForceGolden;
 	FSeek(p + 52); float impulsiveForceZGolden;
 	FSeek(p + 56); float impulsiveForceXGolden;

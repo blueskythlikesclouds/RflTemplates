@@ -5,13 +5,13 @@
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0);  int total;
-	FSeek(p + 4);  int grind;
-	FSeek(p + 8);  int graindStep;
-	FSeek(p + 12); int doubleBoost;
-	FSeek(p + 16); int quickStep;
-	FSeek(p + 20); int useGadget;
-	FSeek(p + 24); int getWisp;
+	FSeek(p + 0);  uint total;
+	FSeek(p + 4);  uint grind;
+	FSeek(p + 8);  uint graindStep;
+	FSeek(p + 12); uint doubleBoost;
+	FSeek(p + 16); uint quickStep;
+	FSeek(p + 20); uint useGadget;
+	FSeek(p + 24); uint getWisp;
 
 	FSeek(p + 28);
 } MaxScoreData;
@@ -20,7 +20,7 @@ typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
 	FSeek(p + 0);  MaxScoreData maxScore;
-	FSeek(p + 28); int resultRing;
+	FSeek(p + 28); uint resultRing;
 
 	FSeek(p + 32);
 } StageScoreData;

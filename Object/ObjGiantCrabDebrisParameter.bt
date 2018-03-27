@@ -19,7 +19,7 @@ typedef struct {
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
-	FSeek(p + 0); int debrisUseWaveNum;
+	FSeek(p + 0); uint debrisUseWaveNum;
 	FSeek(p + 4); GiantCrabDebrisData debrisData[30]<optimize=false>;
 
 	FSeek(p + 244);

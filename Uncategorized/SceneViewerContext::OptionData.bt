@@ -4,7 +4,7 @@
 
 enum<byte> bool { False = 0, True = 1 };
 
-typedef struct { char a; char r; char g; char b; } Color8;
+typedef struct { ubyte a; ubyte r; ubyte g; ubyte b; } Color8;
 
 typedef struct {
 	local uint64 p<hidden=true> = FTell();
@@ -32,7 +32,7 @@ typedef struct {
 	FSeek(p + 57); bool enableDrawCascade;
 	FSeek(p + 58); bool collapsedCaptureGroup;
 	FSeek(p + 59); bool collapsedMainGroup;
-	FSeek(p + 64); ??? captureOutputPath;
+	FSeek(p + 64); cstring captureOutputPath;
 
 	FSeek(p + 11);
 } SceneViewerContext::OptionData;

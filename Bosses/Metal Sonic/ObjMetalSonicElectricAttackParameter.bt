@@ -4,7 +4,7 @@
 
 enum<byte> bool { False = 0, True = 1 };
 
-typedef struct { float x; float y; float z; float zero<hidden=true>; } Vector3;
+typedef struct { float x; float y; float z; float w<hidden=true>; } Vector3;
 
 enum<byte> ErectricAttackType {
 	TYPE_POLE        = 0,
@@ -30,7 +30,7 @@ typedef struct {
 	FSeek(p + 1);  ErectricAttackType type;
 	FSeek(p + 16); Vector3 position;
 	FSeek(p + 32); float angle;
-	FSeek(p + 36); int count;
+	FSeek(p + 36); uint count;
 	FSeek(p + 40); LineType lineType;
 	FSeek(p + 44); float interval;
 	FSeek(p + 48); bool sniper;

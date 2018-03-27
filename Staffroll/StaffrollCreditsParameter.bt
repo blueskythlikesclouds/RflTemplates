@@ -37,7 +37,7 @@ typedef struct {
 	local uint64 p<hidden=true> = FTell();
 
 	FSeek(p + 0);  StringPtr labelName;
-	FSeek(p + 16); int partStaffNum;
+	FSeek(p + 16); uint partStaffNum;
 	FSeek(p + 20); float spacePrevPart;
 	FSeek(p + 24); float spacePartName;
 	FSeek(p + 28); float spaceStaffName;

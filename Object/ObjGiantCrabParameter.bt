@@ -23,10 +23,10 @@ typedef struct {
 	FSeek(p + 52);  float debrisRotateSpeed3;
 	FSeek(p + 56);  float damageSpeed;
 	FSeek(p + 60);  float damageTime;
-	FSeek(p + 64);  int debrisMode1Num;
+	FSeek(p + 64);  uint debrisMode1Num;
 	FSeek(p + 68);  float debrisMode1Interval;
 	FSeek(p + 72);  float waitMode1;
-	FSeek(p + 76);  int debrisMode2Num;
+	FSeek(p + 76);  uint debrisMode2Num;
 	FSeek(p + 80);  float debrisMode2Interval;
 	FSeek(p + 84);  float waitMode2;
 	FSeek(p + 88);  float debrisMode3Interval;
@@ -36,7 +36,7 @@ typedef struct {
 	FSeek(p + 104); float cameraShakeZRot;
 	FSeek(p + 108); float cameraShakeTime;
 	FSeek(p + 112); float cameraShakeMagn;
-	FSeek(p + 116); int cameraShakeFreq;
+	FSeek(p + 116); uint cameraShakeFreq;
 
 	FSeek(p + 120);
 } ObjGiantCrabParameter;
