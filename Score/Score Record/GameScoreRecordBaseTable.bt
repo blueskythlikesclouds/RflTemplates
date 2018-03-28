@@ -3,7 +3,7 @@
 //----------------------------------------//
 
 enum<byte> GameScoreType {
-	GAMESCORE_NONE                 = 4294967295,
+	GAMESCORE_NONE                 = -1,
 	GAMESCORE_VALUE                = 0,
 	GAMESCORE_QTE_GOOD             = 1,
 	GAMESCORE_QTE_GREAT            = 2,

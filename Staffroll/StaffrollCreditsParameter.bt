@@ -14,14 +14,14 @@ string StringRead(StringPtr &ptr) {
 	return "";
 }
 
-enum<byte> ColumnType {
+enum<short> ColumnType {
 	COLUMN_ONE   = 0,
 	COLUMN_TWO   = 1,
 	COLUMN_THREE = 2,
 	COLUMN_MAX   = 3,
 };
 
-enum<byte> ExpandSetting {
+enum<short> ExpandSetting {
 	EXPAND_NONE           = 0,
 	EXPAND_VOICE_ACTOR    = 1,
 	EXPAND_LOGO_SEGA      = 2,

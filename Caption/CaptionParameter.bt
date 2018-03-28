@@ -24,7 +24,7 @@ enum<byte> Type {
 };
 
 enum<byte> CharaType {
-	CHARATYPE_NONE            = 4294967295,
+	CHARATYPE_NONE            = -1,
 	CHARATYPE_AMY             = 0,
 	CHARATYPE_CHARMY          = 1,
 	CHARATYPE_EGGMAN          = 2,

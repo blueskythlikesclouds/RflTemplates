@@ -3,7 +3,7 @@
 //----------------------------------------//
 
 enum<byte> GadgetType {
-	GADGET_NONE      = 4294967295,
+	GADGET_NONE      = -1,
 	GADGET_ASTEROID  = 0,
 	GADGET_LIGHTNING = 1,
 	GADGET_CUBE      = 2,

@@ -16,7 +16,7 @@ string StringRead(StringPtr &ptr) {
 	return "";
 }
 
-enum<byte> EventID {
+enum<short> EventID {
 	EVENT_NONE                      = 0,
 	CHARA_CUSTOMIZE_GADGET          = 1,
 	CHARA_CUSTOMIZE_HEAD            = 2,

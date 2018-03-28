@@ -8,7 +8,7 @@ enum<byte> BloomRenderTargetSize {
 	RTSIZE_ONE_SIXTEENTH = 2,
 };
 
-enum<byte> DOFRenderTargetSize {
+enum<int> DOFRenderTargetSize {
 	RTSIZE_FULL_SCALE    = 0,
 	RTSIZE_HALF_SCALE    = 1,
 	RTSIZE_QUARTER_SCALE = 2,
@@ -301,7 +301,7 @@ typedef struct {
 	FSeek(p + 4);
 } FxExposureParameter;
 
-enum<byte> LutIndex {
+enum<int> LutIndex {
 	LUT_INDEX_DEFAULT = 0,
 	LUT_INDEX_WB      = 1,
 	LUT_INDEX_USER_0  = 2,
