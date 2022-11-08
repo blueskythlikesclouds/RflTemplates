@@ -1,0 +1,185 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MiniBossCommonConfig commonConfig;
+
+    FSeek(p + 64);
+} MiniBossStriderCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossStriderLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} MiniBossStriderLevelBand;
+
+typedef ubyte uint8;
+
+enum<uint8> MeansOfAttack
+{
+    Bullet = 0,
+    Laser = 1,
+    NumAttackTypes = 2,
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MeansOfAttack meansOfAttack;
+    FSeek(p + 1); bool enabled;
+    FSeek(p + 4); float attackInterval;
+
+    FSeek(p + 8);
+} AttackInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  AttackInfo attackInfos[2]<optimize=false>;
+    FSeek(p + 16); float triggeredHPRatio;
+
+    FSeek(p + 20);
+} AttackPhase;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   AttackPhase attackPhases[3]<optimize=false>;
+    FSeek(p + 60);  float initialAttackWaitBullet;
+    FSeek(p + 64);  float initialAttackWaitLaser;
+    FSeek(p + 68);  float attackableTime;
+    FSeek(p + 72);  float railBulletAttackInterval;
+    FSeek(p + 76);  float tentativePlatformTopYOffset;
+    FSeek(p + 80);  float tentativePlatformBottomYOffset;
+    FSeek(p + 84);  float tentativePlatformRadius;
+    FSeek(p + 88);  float cameraElevation;
+    FSeek(p + 92);  float cameraFovy;
+    FSeek(p + 96);  float cameraDistance;
+    FSeek(p + 100); float cameraDegreeForClockwiseMovement;
+    FSeek(p + 104); float cameraDegreeForCounterClockwiseMovement;
+    FSeek(p + 108); float cameraLookAtPointOffsetY;
+    FSeek(p + 112); float cameraMaxChangeableDegreeByStickInput;
+    FSeek(p + 116); float cameraMaxDegreeChangedByStickInputPerSec;
+    FSeek(p + 120); float attackableCameraElevation;
+    FSeek(p + 124); float attackableCameraDistance;
+    FSeek(p + 128); float attackableCameraInterpolationTime;
+    FSeek(p + 132); float attackableCameraDuration;
+    FSeek(p + 136); bool enableAttackableCamera;
+    FSeek(p + 137); bool enableStun;
+    FSeek(p + 138); bool enableStagger;
+
+    FSeek(p + 140);
+} MiniBossStriderParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius1;
+    FSeek(p + 4);  float radius2;
+    FSeek(p + 8);  float radius3;
+    FSeek(p + 12); float yOffset1;
+    FSeek(p + 16); float yOffset2;
+    FSeek(p + 20); float yOffset3;
+    FSeek(p + 24); uint8 numRailBulletsFiredAtOnce;
+    FSeek(p + 28); float railBulletPreAttackEffectTime;
+    FSeek(p + 32); float railBulletRadius;
+    FSeek(p + 36); float railBulletSearchDistance;
+    FSeek(p + 40); float maxJumpDistanceFromRailBullet;
+    FSeek(p + 44); float distToDestWithinWhichJumpIsDone;
+
+    FSeek(p + 48);
+} ObjStriderGrindRailParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float colliderRadius;
+    FSeek(p + 4); float colliderHeight;
+
+    FSeek(p + 8);
+} ObjStriderPlatformParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossStriderCommonParam commonParam;
+    FSeek(p + 64);  MiniBossStriderLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 344); MiniBossStriderLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 364); MiniBossStriderParam striderParam;
+    FSeek(p + 504); ObjStriderGrindRailParam grindRailParam;
+    FSeek(p + 552); ObjStriderPlatformParam platformParam;
+
+    FSeek(p + 560);
+} MiniBossStriderConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossStriderConfig data;

@@ -1,0 +1,36 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed;
+    FSeek(p + 4); float maxSpeed;
+    FSeek(p + 8); float acceleration;
+
+    FSeek(p + 12);
+} SpeedInfo;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  SpeedInfo speedInfoToSonic;
+    FSeek(p + 12); SpeedInfo speedInfoToBird;
+    FSeek(p + 24); float colliderLength;
+    FSeek(p + 28); float colliderRadius;
+    FSeek(p + 32); float lifeTime;
+    FSeek(p + 48); vector3 laserScale;
+
+    FSeek(p + 64);
+} ObjBirdLaserConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjBirdLaserConfig data;

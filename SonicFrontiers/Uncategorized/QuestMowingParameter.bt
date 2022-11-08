@@ -1,0 +1,97 @@
+typedef int sint32;
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float playerBoostRatio;
+
+    FSeek(p + 4);
+} QuestMowingPlayerParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 collisionNum;
+    FSeek(p + 4); uint32 pointLine;
+
+    FSeek(p + 8);
+} QuestMowingPointParameter;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeLimitSeconds;
+    FSeek(p + 4);  float cautionTime;
+    FSeek(p + 8);  float warningTime;
+    FSeek(p + 12); bool useCautionAnimation;
+    FSeek(p + 13); bool useWarningAnimation;
+
+    FSeek(p + 16);
+} QuestMowingTimerParameter;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float visibleSize;
+    FSeek(p + 4);  float visibleTime;
+    FSeek(p + 16); vector3 viewOffset;
+
+    FSeek(p + 32);
+} QuestMowingEarnedScoreParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float resultCameraEaseTime;
+
+    FSeek(p + 4);
+} QuestMowingResultCameraParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 applicableFailedCount;
+    FSeek(p + 4);   uint32 questClearPoint;
+    FSeek(p + 8);   QuestMowingPlayerParameter playerParam;
+    FSeek(p + 12);  uint32 pointParamNum;
+    FSeek(p + 16);  QuestMowingPointParameter pointParam[5]<optimize=false>;
+    FSeek(p + 56);  QuestMowingTimerParameter timerParam;
+    FSeek(p + 80);  QuestMowingEarnedScoreParameter scoreUIParam;
+    FSeek(p + 112); QuestMowingResultCameraParameter resultCameraParam;
+
+    FSeek(p + 128);
+} QuestMowingParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); QuestMowingParameterElement element[3]<optimize=false>;
+
+    FSeek(p + 384);
+} QuestMowingParameter;
+
+LittleEndian();
+
+FSeek(64);
+QuestMowingParameter data;

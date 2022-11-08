@@ -1,0 +1,133 @@
+typedef int sint32;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 clearKodamaNum;
+    FSeek(p + 4);  float modelScale;
+    FSeek(p + 8);  float capsuleRadius;
+    FSeek(p + 12); float capsuleHeight;
+    FSeek(p + 16); vector3 capsuleOffset;
+    FSeek(p + 32); float searchRadius;
+    FSeek(p + 36); float collectTime;
+
+    FSeek(p + 48);
+} QuestKodamaCollectionBaseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotationAnglePerSec;
+    FSeek(p + 4);  float moveSpeed;
+    FSeek(p + 8);  float moveStopSpeed;
+    FSeek(p + 12); float moveStopeTime;
+    FSeek(p + 16); float groupRadius;
+    FSeek(p + 20); float groupMoveAdjustRangeOffset;
+    FSeek(p + 24); float groupLeaderFixTime;
+    FSeek(p + 28); float returnToCenterDistance;
+    FSeek(p + 32); float returnToCenterRotationAngle;
+
+    FSeek(p + 36);
+} QuestKodamaCollectionMoveParameter;
+
+typedef ushort uint16;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bombSpawnTrialTime;
+    FSeek(p + 4);  uint16 numKodamasNeededForBombSpawnRate2;
+    FSeek(p + 6);  uint16 numKodamasNeededForBombSpawnRate3;
+    FSeek(p + 8);  float bombSpawnRate1;
+    FSeek(p + 12); float bombSpawnRate2;
+    FSeek(p + 16); float bombSpawnRate3;
+    FSeek(p + 20); uint8 maxAliveBombNum;
+    FSeek(p + 24); float bombSpawnRange;
+
+    FSeek(p + 28);
+} QuestKodamaCollectionBombParameter;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isTimeUp;
+    FSeek(p + 4);  float timeLimitSeconds;
+    FSeek(p + 8);  float cautionTime;
+    FSeek(p + 12); float warningTime;
+    FSeek(p + 16); bool useCautionAnimation;
+    FSeek(p + 17); bool useWarningAnimation;
+
+    FSeek(p + 20);
+} QuestKodamaCollectionTimerParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 applicableFailedCount;
+    FSeek(p + 16);  QuestKodamaCollectionBaseParameter baseParam;
+    FSeek(p + 64);  QuestKodamaCollectionMoveParameter moveParam;
+    FSeek(p + 100); QuestKodamaCollectionBombParameter bombParam;
+    FSeek(p + 128); QuestKodamaCollectionTimerParameter timerParam;
+
+    FSeek(p + 160);
+} ObjKodamaQuestGrassIslandParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  QuestKodamaCollectionBombParameter base;
+    FSeek(p + 28); float sandStormTime;
+    FSeek(p + 32); float noBombsTime;
+    FSeek(p + 36); float sandStormInLerpTime;
+    FSeek(p + 40); float sandStormOutLerpTime;
+
+    FSeek(p + 44);
+} QuestKodamaCollectionSandBombParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 applicableFailedCount;
+    FSeek(p + 16);  QuestKodamaCollectionBaseParameter baseParam;
+    FSeek(p + 64);  QuestKodamaCollectionMoveParameter moveParam;
+    FSeek(p + 100); QuestKodamaCollectionSandBombParameter bombParam;
+    FSeek(p + 144); QuestKodamaCollectionTimerParameter timerParam;
+
+    FSeek(p + 176);
+} ObjKodamaQuestDesertIslandParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   ObjKodamaQuestGrassIslandParameter grassIslandParam[3]<optimize=false>;
+    FSeek(p + 480); ObjKodamaQuestDesertIslandParameter desertIslandParam[3]<optimize=false>;
+
+    FSeek(p + 1008);
+} ObjKodamaQuestParameter;
+
+LittleEndian();
+
+FSeek(64);
+ObjKodamaQuestParameter data;

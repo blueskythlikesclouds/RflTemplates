@@ -1,0 +1,106 @@
+typedef int sint32;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 baseHp;
+    FSeek(p + 4);   sint32 lifeCount;
+    FSeek(p + 8);   sint32 lifeUpFailedCount[6]<optimize=false>;
+    FSeek(p + 32);  sint32 lifeMax;
+    FSeek(p + 36);  float gageUpVolume;
+    FSeek(p + 40);  float gageMax;
+    FSeek(p + 44);  sint32 laserNum;
+    FSeek(p + 48);  float laserInterval;
+    FSeek(p + 52);  float bulletInterval;
+    FSeek(p + 56);  float moveSpeed;
+    FSeek(p + 60);  float nodamageTime;
+    FSeek(p + 64);  float specialmoveTime;
+    FSeek(p + 68);  float bodyCol;
+    FSeek(p + 72);  float barrierCol;
+    FSeek(p + 76);  float attackRangeTime;
+    FSeek(p + 80);  float expandAttackCol;
+    FSeek(p + 96);  vector3 hitPos;
+    FSeek(p + 112); vector3 barrierPos;
+    FSeek(p + 128); vector3 expandAttackPos;
+
+    FSeek(p + 144);
+} PlayerMachineConfig;
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float length;
+    FSeek(p + 4); float minLength;
+    FSeek(p + 8); float texWidth;
+
+    FSeek(p + 12);
+} HomingLaserTrailConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float maxAccel;
+    FSeek(p + 12); float arrivalTime;
+    FSeek(p + 16); float lifeTime;
+    FSeek(p + 20); float minYaw;
+    FSeek(p + 24); float maxYaw;
+    FSeek(p + 28); float depthVelocity;
+    FSeek(p + 32); uint32 power;
+    FSeek(p + 36); HomingLaserTrailConfig trail;
+
+    FSeek(p + 48);
+} HomingLaserConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float scale;
+    FSeek(p + 12); uint32 power;
+
+    FSeek(p + 16);
+} ElementBulletConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float distance;
+    FSeek(p + 4); float gageUpVolumeFromMiss;
+    FSeek(p + 8); float hitViewScale;
+
+    FSeek(p + 12);
+} TheEndConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerMachineConfig machine;
+    FSeek(p + 144); HomingLaserConfig laser;
+    FSeek(p + 192); ElementBulletConfig bullet;
+    FSeek(p + 208); TheEndConfig TheEnd;
+
+    FSeek(p + 224);
+} ObjTheEndPlayerMachineConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjTheEndPlayerMachineConfig data;

@@ -1,0 +1,22 @@
+typedef ubyte uint8;
+
+enum<uint8> SequenceType
+{
+    SequenceSensor = 0,
+    ObjItem = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float suckedTime;
+    FSeek(p + 4); SequenceType sequenceType;
+
+    FSeek(p + 8);
+} SequenceParameter;
+
+LittleEndian();
+
+FSeek(64);
+SequenceParameter data;

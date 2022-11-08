@@ -1,0 +1,23 @@
+typedef byte sint8;
+
+enum<sint8> QualityType
+{
+    QUALITY_LOW = 0,
+    QUALITY_MEDIUM = 1,
+    QUALITY_HIGH = 2,
+    QUALITY_COUNT = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); QualityType qualityType;
+
+    FSeek(p + 1);
+} FxFXAAParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxFXAAParameter data;

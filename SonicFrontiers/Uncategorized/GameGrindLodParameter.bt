@@ -1,0 +1,14 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distances[4]<optimize=false>;
+    FSeek(p + 16); float cullingDistances[4]<optimize=false>;
+
+    FSeek(p + 32);
+} GameGrindLodParameter;
+
+LittleEndian();
+
+FSeek(64);
+GameGrindLodParameter data;

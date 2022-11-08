@@ -1,0 +1,19 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} TornadoRingParameter;
+
+LittleEndian();
+
+FSeek(64);
+TornadoRingParameter data;

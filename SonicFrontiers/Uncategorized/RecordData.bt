@@ -1,0 +1,110 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef byte sint8;
+
+enum<sint8> EventType
+{
+    KEY = 0,
+    INTERVAL = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); EventType type;
+    FSeek(p + 20); float inTime;
+    FSeek(p + 24); float outTime;
+
+    FSeek(p + 32);
+} EventData;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct quaternion {
+    float x;
+    float y;
+    float z;
+    float w;
+} quaternion;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 position;
+    FSeek(p + 16); quaternion rotation;
+    FSeek(p + 32); float time;
+
+    FSeek(p + 48);
+} NodeInfoInAnim;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); NodeInfoInAnim nodeInfos;
+
+    FSeek(p + 48);
+} NodeData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 position;
+    FSeek(p + 16); quaternion rotation;
+    FSeek(p + 32); float time;
+
+    FSeek(p + 48);
+} DeltaMotionInfoInAnim;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); DeltaMotionInfoInAnim deltaInfos;
+
+    FSeek(p + 32);
+} DeltaMotionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring name;
+    FSeek(p + 16);  EventData eventDatas;
+    FSeek(p + 48);  NodeData nodeDatas;
+    FSeek(p + 80);  DeltaMotionData deltaMotionData;
+    FSeek(p + 112); float maxTime;
+
+    FSeek(p + 120);
+} AnimData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); AnimData animDatas;
+
+    FSeek(p + 32);
+} RecordData;
+
+LittleEndian();
+
+FSeek(64);
+RecordData data;

@@ -1,0 +1,138 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 aabbMin;
+    FSeek(p + 16); vector3 aabbMax;
+
+    FSeek(p + 32);
+} World;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float voxelSize;
+    FSeek(p + 4); float voxelHeight;
+
+    FSeek(p + 8);
+} Rasterization;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float height;
+    FSeek(p + 8);  float maxClimb;
+    FSeek(p + 12); float maxSlope;
+
+    FSeek(p + 16);
+} Agent;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 minArea;
+    FSeek(p + 4); sint32 mergeArea;
+
+    FSeek(p + 8);
+} Region;
+
+typedef ubyte uint8;
+
+enum<uint8> Partition
+{
+    Watershed = 0,
+    Monotone = 1,
+    Layers = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); Partition type;
+
+    FSeek(p + 1);
+} Partitioning;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool lowHangingObstacles;
+    FSeek(p + 1); bool ledgeSpans;
+    FSeek(p + 2); bool walkableLowHeightSpans;
+
+    FSeek(p + 3);
+} Filtering;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float edgeMaxLength;
+    FSeek(p + 4); float maxSimplificationError;
+    FSeek(p + 8); sint32 vertsPerPoly;
+
+    FSeek(p + 12);
+} Polygonization;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float sampleDistance;
+    FSeek(p + 4); float sampleMaxError;
+
+    FSeek(p + 8);
+} DetailMesh;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float size;
+    FSeek(p + 4); sint32 maxTiles;
+    FSeek(p + 8); bool cache;
+
+    FSeek(p + 12);
+} Tiling;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  World world;
+    FSeek(p + 32); Rasterization rasterization;
+    FSeek(p + 40); Agent agent;
+    FSeek(p + 56); Region region;
+    FSeek(p + 64); Partitioning partitioning;
+    FSeek(p + 65); Filtering filtering;
+    FSeek(p + 68); Polygonization polygonization;
+    FSeek(p + 80); DetailMesh detailMesh;
+    FSeek(p + 88); Tiling tiling;
+
+    FSeek(p + 112);
+} NavMeshParameter;
+
+LittleEndian();
+
+FSeek(64);
+NavMeshParameter data;

@@ -1,0 +1,128 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float noiseTextureScrollSpeed;
+    FSeek(p + 8);  float blurScale;
+    FSeek(p + 12); float colorGain;
+    FSeek(p + 16); float noiseGain;
+
+    FSeek(p + 20);
+} AuraEffectLerpNode;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); AuraEffectLerpNode node[2]<optimize=false>;
+
+    FSeek(p + 56);
+} AuraEffectLerpParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); AuraEffectLerpParameter params[4]<optimize=false>;
+
+    FSeek(p + 224);
+} AuraEffectParameters;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float localLightIntensityScale;
+    FSeek(p + 4); bool dropPriorityEnabled;
+    FSeek(p + 5); sint8 dropPriority;
+
+    FSeek(p + 8);
+} EffectParameters;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 blockWeights[5]<optimize=false>;
+
+    FSeek(p + 5);
+} WeatherBlockParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 transitWeights[5]<optimize=false>;
+    FSeek(p + 5); WeatherBlockParameter blockParams[5]<optimize=false>;
+
+    FSeek(p + 30);
+} WeatherTypeParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 hour;
+    FSeek(p + 1); uint8 minute;
+
+    FSeek(p + 2);
+} WeatherTimeParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); WeatherTimeParameter sunriseBeginTime;
+    FSeek(p + 2); WeatherTimeParameter dayBeginTime;
+    FSeek(p + 4); WeatherTimeParameter sunsetBeginTime;
+    FSeek(p + 6); WeatherTimeParameter nightBeginTime;
+    FSeek(p + 8); WeatherTimeParameter blockTime;
+
+    FSeek(p + 10);
+} WeatherTimeControlParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   WeatherTypeParameter type[5]<optimize=false>;
+    FSeek(p + 150); WeatherTimeControlParameter timeControl;
+
+    FSeek(p + 160);
+} WeatherParameters;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   AuraEffectParameters aura;
+    FSeek(p + 224); EffectParameters effect;
+    FSeek(p + 232); WeatherParameters weather;
+
+    FSeek(p + 392);
+} GraphicsParameters;
+
+LittleEndian();
+
+FSeek(64);
+GraphicsParameters data;

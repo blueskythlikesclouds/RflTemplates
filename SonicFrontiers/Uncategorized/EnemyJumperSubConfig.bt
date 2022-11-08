@@ -1,0 +1,63 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float killWaitTime;
+    FSeek(p + 4);  float colliderRadius;
+    FSeek(p + 8);  float colliderHeight;
+    FSeek(p + 12); float damageColliderRadiusOffset;
+    FSeek(p + 16); float eyesightDistance;
+
+    FSeek(p + 20);
+} EnemyJumperSubCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} EnemyJumperSubCommonLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); EnemyJumperSubCommonLevelParam common;
+
+    FSeek(p + 16);
+} EnemyJumperSubLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} EnemyJumperSubLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyJumperSubCommonParam commonParam;
+    FSeek(p + 20);  EnemyJumperSubLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 100); EnemyJumperSubLevelBand levelBand[5]<optimize=false>;
+
+    FSeek(p + 120);
+} EnemyJumperSubConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyJumperSubConfig data;

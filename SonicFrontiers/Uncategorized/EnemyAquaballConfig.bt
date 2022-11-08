@@ -1,0 +1,119 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedMin;
+    FSeek(p + 4);  float rotateSpeedMax;
+    FSeek(p + 8);  float speedMin;
+    FSeek(p + 12); float speedMax;
+    FSeek(p + 16); float moveSpeed;
+    FSeek(p + 20); float bounceHeight;
+    FSeek(p + 24); float bounceInterval;
+    FSeek(p + 28); float movePointUpdateInterval;
+    FSeek(p + 32); float addForceOfHA;
+
+    FSeek(p + 36);
+} EnemyAquaballPatrolConfig;
+
+typedef int sint32;
+
+typedef struct vector2 {
+    float x;
+    float y;
+} vector2;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxSuccessCount;
+    FSeek(p + 4);  vector2 bounceSuccessTiming[3]<optimize=false>;
+    FSeek(p + 28); float captureLimitTime;
+    FSeek(p + 32); float captureLimitHeight;
+    FSeek(p + 36); float failLimitTime;
+    FSeek(p + 40); float failNoticeTime;
+
+    FSeek(p + 44);
+} EnemyAquaballActionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float killWaitTime;
+    FSeek(p + 4);  float colliderRadius;
+    FSeek(p + 8);  float colliderHeight;
+    FSeek(p + 12); float damageColliderRadiusOffset;
+    FSeek(p + 16); float hitPlayerColliderRadiusOffset;
+    FSeek(p + 20); float checkBarrierDistance;
+    FSeek(p + 24); float battleDistance;
+    FSeek(p + 28); RingParameter ringParam;
+    FSeek(p + 56); EnemyAquaballPatrolConfig patrolConfig;
+    FSeek(p + 92); EnemyAquaballActionConfig actionConfig;
+
+    FSeek(p + 136);
+} EnemyAquaballCommonParam;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} EnemyAquaballCommonLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); EnemyAquaballCommonLevelParam common;
+
+    FSeek(p + 16);
+} EnemyAquaballLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} EnemyAquaballLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyAquaballCommonParam commonParam;
+    FSeek(p + 136); EnemyAquaballLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 216); EnemyAquaballLevelBand levelBand[5]<optimize=false>;
+
+    FSeek(p + 236);
+} EnemyAquaballConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyAquaballConfig data;

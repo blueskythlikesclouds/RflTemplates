@@ -1,0 +1,94 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName;
+    FSeek(p + 16); float fadeInTime;
+    FSeek(p + 20); float fadeOutTime;
+
+    FSeek(p + 24);
+} AmbInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); cstring cueName;
+
+    FSeek(p + 16);
+} AmbBaseNoiseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName;
+    FSeek(p + 16); float speedThreshold;
+    FSeek(p + 20); float fadeTime;
+
+    FSeek(p + 24);
+} AmbRelativeWindParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName;
+    FSeek(p + 16); float sensorRebootTime;
+    FSeek(p + 20); float sensorRepositionTime;
+    FSeek(p + 24); float lifeAreaRadius;
+    FSeek(p + 28); float lifeTime;
+    FSeek(p + 32); float fadeTime;
+
+    FSeek(p + 40);
+} AmbNearPointParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName;
+    FSeek(p + 16); float sensorRadius;
+
+    FSeek(p + 24);
+} AmbRiverParameter_Nearest;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName;
+    FSeek(p + 16); float attenuationDistance;
+    FSeek(p + 20); float maxLevelPerPoint;
+
+    FSeek(p + 24);
+} AmbRiverParameter_Multiple3D;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   AmbInfo ambSoundInfo[8]<optimize=false>;
+    FSeek(p + 192); AmbBaseNoiseParameter baseNoise;
+    FSeek(p + 208); AmbRelativeWindParameter relativeWind;
+    FSeek(p + 232); AmbNearPointParameter insect;
+    FSeek(p + 272); AmbNearPointParameter grass;
+    FSeek(p + 312); AmbRiverParameter_Nearest riverNearest;
+    FSeek(p + 336); AmbRiverParameter_Multiple3D riverMultiple3D;
+
+    FSeek(p + 360);
+} AmbSoundParameter;
+
+LittleEndian();
+
+FSeek(64);
+AmbSoundParameter data;

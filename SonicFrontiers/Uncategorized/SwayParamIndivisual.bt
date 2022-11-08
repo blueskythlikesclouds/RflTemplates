@@ -1,0 +1,89 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float gravity;
+    FSeek(p + 8);  float resist;
+    FSeek(p + 12); float resist_decay;
+    FSeek(p + 16); float recover;
+    FSeek(p + 20); float recover_decay;
+    FSeek(p + 24); float spring;
+    FSeek(p + 28); float radius;
+    FSeek(p + 32); float transmit;
+    FSeek(p + 36); float inertia;
+    FSeek(p + 40); float angle_limit;
+    FSeek(p + 48); cstring nodeName;
+
+    FSeek(p + 64);
+} SwayParamNode;
+
+typedef byte sint8;
+
+enum<sint8> CollisionType
+{
+    SWAY_COLLISTION_TYPE_NONE = 0,
+    SWAY_COLLISTION_TYPE_SPHERE = 1,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  CollisionType type;
+    FSeek(p + 16); vector3 translation;
+    FSeek(p + 32); vector3 rotation;
+    FSeek(p + 48); vector3 scale;
+    FSeek(p + 64); sint32 modelPartId;
+    FSeek(p + 72); cstring modelNodeName;
+
+    FSeek(p + 96);
+} SwayParamCollision;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); SwayParamCollision collisionParam[8]<optimize=false>;
+
+    FSeek(p + 768);
+} SwayParamNodeCollision;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    cstring idName;
+    FSeek(p + 16);   SwayParamNode nodeParam[16]<optimize=false>;
+    FSeek(p + 1040); SwayParamNodeCollision collisionParam[16]<optimize=false>;
+
+    FSeek(p + 13328);
+} SwayParamIndivisual;
+
+LittleEndian();
+
+FSeek(64);
+SwayParamIndivisual data;

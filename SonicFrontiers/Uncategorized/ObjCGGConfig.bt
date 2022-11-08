@@ -1,0 +1,115 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float yOffset;
+    FSeek(p + 4);  float cameraElevation;
+    FSeek(p + 8);  float cameraDistance;
+    FSeek(p + 12); float cameraFovy;
+    FSeek(p + 16); float radius;
+    FSeek(p + 20); float cameraLookAtPointOffsetY;
+    FSeek(p + 24); float cameraDegreeForClockwiseMovement;
+    FSeek(p + 28); float cameraDegreeForCounterClockwiseMovement;
+    FSeek(p + 32); float cameraMaxChangeableDegreeByStickInput;
+    FSeek(p + 36); float cameraMaxDegreeChangedByStickInputPerSec;
+
+    FSeek(p + 40);
+} RailCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 16); vector3 offset;
+    FSeek(p + 32); color8 colorActive;
+    FSeek(p + 36); color8 colorDeactive;
+    FSeek(p + 40); float timerHeightOffset;
+    FSeek(p + 44); RailCameraParam twoRailCamera;
+    FSeek(p + 84); RailCameraParam threeRailCamera;
+
+    FSeek(p + 128);
+} ObjCGGRootConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  color8 color;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float waitFollowTime;
+    FSeek(p + 16); float followTime;
+    FSeek(p + 20); float waitKillTime;
+    FSeek(p + 24); float radiusBulletCircle;
+    FSeek(p + 28); float followLimitAngleHorizontal;
+    FSeek(p + 32); float followLimitAngleVertical;
+    FSeek(p + 36); float rotateDeceleration;
+    FSeek(p + 40); float muzzuleEffectLoopTime;
+
+    FSeek(p + 44);
+} ObjCGGBulletNormalConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float radius;
+    FSeek(p + 4); color8 color;
+    FSeek(p + 8); float timeToReachTimer;
+
+    FSeek(p + 12);
+} ObjCGGResetBindConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float radius;
+    FSeek(p + 4); float heightInterval;
+    FSeek(p + 8); color8 color;
+
+    FSeek(p + 12);
+} ObjCGGLaserConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float radius;
+    FSeek(p + 4); color8 color;
+
+    FSeek(p + 8);
+} ObjCGGAttachmentConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   ObjCGGRootConfig root;
+    FSeek(p + 128); ObjCGGBulletNormalConfig bulletNormal;
+    FSeek(p + 172); ObjCGGResetBindConfig resetBind;
+    FSeek(p + 184); ObjCGGLaserConfig laser;
+    FSeek(p + 196); ObjCGGAttachmentConfig attachment;
+
+    FSeek(p + 208);
+} ObjCGGConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjCGGConfig data;

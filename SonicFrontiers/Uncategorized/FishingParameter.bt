@@ -1,0 +1,254 @@
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float baseWaveThickness;
+    FSeek(p + 4);  float baseWaveSuccessRatioNormal;
+    FSeek(p + 8);  float baseWaveSuccessRatioHold;
+    FSeek(p + 12); float singleWaveThickness;
+    FSeek(p + 16); float baseWaveEdgeThickness;
+    FSeek(p + 20); float timingEdgeThickness;
+    FSeek(p + 24); uint32 fishShadowNum;
+    FSeek(p + 28); float fishApproachIntervalMin;
+    FSeek(p + 32); float fishApproachIntervalMax;
+    FSeek(p + 36); float fishEscapeDistance;
+    FSeek(p + 40); uint32 buoyTwitchNumMin;
+    FSeek(p + 44); uint32 buoyTwitchNumMax;
+    FSeek(p + 48); float buoyTwitchIntervalMin;
+    FSeek(p + 52); float buoyTwitchIntervalMax;
+    FSeek(p + 56); float inputValidTime;
+    FSeek(p + 60); float fishingCameraTransitDelay;
+    FSeek(p + 64); float cutinDelay;
+    FSeek(p + 68); float cutinDuration;
+    FSeek(p + 72); float successPullUpDelay;
+    FSeek(p + 76); uint32 goldenChestLimitNum;
+
+    FSeek(p + 80);
+} FishingCommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 successNum;
+    FSeek(p + 4); uint32 failureNum;
+
+    FSeek(p + 8);
+} FishingSuccessPatternParam;
+
+typedef byte sint8;
+
+enum<sint8> Type
+{
+    TYPE_INVALID = 0,
+    TYPE_NORMAL = 1,
+    TYPE_HOLD = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); Type type;
+    FSeek(p + 4); float radius;
+    FSeek(p + 8); float thickness;
+
+    FSeek(p + 12);
+} FishingWaveParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); FishingWaveParam waves[5]<optimize=false>;
+
+    FSeek(p + 60);
+} FishingWaveGroupParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float intervalMinFirst;
+    FSeek(p + 8);  float intervalMaxFirst;
+    FSeek(p + 12); float intervalMin;
+    FSeek(p + 16); float intervalMax;
+    FSeek(p + 20); float addRadiusMin;
+    FSeek(p + 24); float addRadiusMax;
+    FSeek(p + 28); uint32 waveGroupNum;
+    FSeek(p + 32); FishingWaveGroupParam waveGroups[10]<optimize=false>;
+
+    FSeek(p + 632);
+} FishingWavePatternParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float rate;
+
+    FSeek(p + 4);
+} FishingFishGroupParam;
+
+typedef int sint32;
+
+enum<sint8> FishShadowType
+{
+    SMALL = 0,
+    MEDIUM = 1,
+    LARGE = 2,
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+enum<sint8> CatchUpMotionType
+{
+    SHADOW_SIZE = 0,
+    LARGE_GOOD_FISH = 1,
+    LARGE_GOOD_ITEM = 2,
+    LARGE_BAD = 3,
+    LARGE = 4,
+    MEDIUM = 5,
+    SMALL = 6,
+    CHEST_GOOD = 7,
+    CHEST_VERYGOOD = 8,
+    SCROLL = 9,
+};
+
+enum<sint8> ToastType
+{
+    MOTION = 0,
+    PATTERN_1 = 1,
+    PATTERN_2 = 2,
+    PATTERN_3 = 3,
+    PATTERN_4 = 4,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 fishGroupId;
+    FSeek(p + 4);  FishShadowType shadowType;
+    FSeek(p + 8);  uint32 successPatternId;
+    FSeek(p + 12); uint32 wavePatternId;
+    FSeek(p + 16); uint32 expPoint;
+    FSeek(p + 20); uint32 tokenNum;
+    FSeek(p + 24); bool isRare;
+    FSeek(p + 25); CatchUpMotionType catchUpMotionType;
+    FSeek(p + 26); ToastType toastType;
+    FSeek(p + 32); vector3 catchUpOffsetPos;
+    FSeek(p + 48); vector3 catchUpOffsetRot;
+
+    FSeek(p + 64);
+} FishingFishParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 spawnFishId[20]<optimize=false>;
+
+    FSeek(p + 80);
+} FishingSpotSpawnFishParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 count;
+    FSeek(p + 4); sint32 fishId;
+
+    FSeek(p + 8);
+} FishingFixedResultParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 tableSize;
+    FSeek(p + 4); uint32 achievementUnlockCount;
+    FSeek(p + 8); FishingFixedResultParam fixedResultList[50]<optimize=false>;
+
+    FSeek(p + 408);
+} FishingSpotFixedResultParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    FishingSpotSpawnFishParam spawnFish[4]<optimize=false>;
+    FSeek(p + 320);  FishingSpotFixedResultParam fixedResults[4]<optimize=false>;
+    FSeek(p + 1952); uint32 useFishCoinNum[4]<optimize=false>;
+    FSeek(p + 1968); uint32 tokenRate[4]<optimize=false>;
+
+    FSeek(p + 1984);
+} FishingSpotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   uint32 singleWaveSuccessCount;
+    FSeek(p + 4);   uint32 holdWaveSuccessCount;
+    FSeek(p + 8);   FishingWavePatternParam singleWave;
+    FSeek(p + 640); FishingWavePatternParam holdWave;
+
+    FSeek(p + 1272);
+} FishingTutorialParam;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 sales[9]<optimize=false>;
+
+    FSeek(p + 9);
+} FishingTradeTableParma;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  FishingTradeTableParma spot[4]<optimize=false>;
+    FSeek(p + 36); uint8 prices[9]<optimize=false>;
+    FSeek(p + 45); uint8 counts[9]<optimize=false>;
+
+    FSeek(p + 54);
+} FishingTradeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     FishingCommonParam common;
+    FSeek(p + 80);    FishingSuccessPatternParam successPattern[10]<optimize=false>;
+    FSeek(p + 160);   FishingWavePatternParam wavePattern[10]<optimize=false>;
+    FSeek(p + 6480);  FishingFishGroupParam fishGroup[10]<optimize=false>;
+    FSeek(p + 6528);  FishingFishParam fish[130]<optimize=false>;
+    FSeek(p + 14848); FishingSpotParam spot;
+    FSeek(p + 16832); FishingTutorialParam tutorial;
+    FSeek(p + 18104); FishingTradeParam trade;
+
+    FSeek(p + 18160);
+} FishingParameter;
+
+LittleEndian();
+
+FSeek(64);
+FishingParameter data;

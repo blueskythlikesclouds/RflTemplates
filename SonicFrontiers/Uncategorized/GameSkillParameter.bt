@@ -1,0 +1,93 @@
+typedef ubyte uint8;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 unlockPoint;
+    FSeek(p + 1); uint8 addUnlockPoint;
+    FSeek(p + 2); bool present;
+
+    FSeek(p + 3);
+} SkillParam;
+
+typedef byte sint8;
+
+enum<sint8> Value
+{
+    Cyloop = 0,
+    Smash = 1,
+    QuickCyloop = 2,
+    AcceleLevel = 3,
+    ChargeAttack = 4,
+    RecoverySmash = 5,
+    AirTrick = 6,
+    SonicBoom = 7,
+    Crasher = 8,
+    LoopKick = 9,
+    SpinSlash = 10,
+    StompingAttack = 11,
+    HomingShot = 12,
+    CrossSlash = 13,
+    AutoCombo = 14,
+    Dummy0 = 15,
+    Dummy1 = 16,
+    Dummy2 = 17,
+    Dummy3 = 18,
+    Dummy4 = 19,
+    Num = 20,
+    NumUsed = 15,
+    Invalid = -1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool down;
+    FSeek(p + 1); bool left;
+    FSeek(p + 2); bool right;
+
+    FSeek(p + 3);
+} SkillLinkSetting;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+    FSeek(p + 1); Value skill;
+    FSeek(p + 2); SkillLinkSetting link;
+
+    FSeek(p + 5);
+} SkillNodeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   SkillNodeParam nodeParams[30]<optimize=false>;
+    FSeek(p + 150); sint8 startIndex;
+
+    FSeek(p + 151);
+} SkillTreeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  SkillParam skillParams[20]<optimize=false>;
+    FSeek(p + 60); SkillTreeParam treeParams;
+
+    FSeek(p + 211);
+} GameSkillParameter;
+
+LittleEndian();
+
+FSeek(64);
+GameSkillParameter data;

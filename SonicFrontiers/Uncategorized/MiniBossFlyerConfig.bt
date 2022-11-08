@@ -1,0 +1,343 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float interval;
+    FSeek(p + 4);  sint32 recordNumWander;
+    FSeek(p + 8);  sint32 recordNumWatch;
+    FSeek(p + 12); sint32 recordNumBattle;
+    FSeek(p + 16); float width;
+    FSeek(p + 20); float wallHeight;
+
+    FSeek(p + 24);
+} FlyerTrailParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed;
+
+    FSeek(p + 4);
+} FlyerWanderParam;
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float interval;
+    FSeek(p + 4);  float readyDuration;
+    FSeek(p + 8);  float shotAnimSpeed;
+    FSeek(p + 12); uint32 shotAnimNum;
+    FSeek(p + 16); float speed;
+    FSeek(p + 20); float lifeTime;
+
+    FSeek(p + 24);
+} FlyerWatchShotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed;
+    FSeek(p + 4); float changeWanderTime;
+    FSeek(p + 8); FlyerWatchShotParam shot;
+
+    FSeek(p + 32);
+} FlyerWatchParam;
+
+typedef byte sint8;
+
+enum<sint8> HorizontalType
+{
+    HorzCenter = 0,
+    HorzLeft = 1,
+    HorzRight = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); HorizontalType horz[6]<optimize=false>;
+
+    FSeek(p + 6);
+} FlyerEscapeShotTableData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   FlyerEscapeShotTableData posTable[16]<optimize=false>;
+    FSeek(p + 96);  float interval;
+    FSeek(p + 100); float waitAfterLoop;
+    FSeek(p + 104); float readyDuration;
+    FSeek(p + 108); float shotAnimSpeed;
+    FSeek(p + 112); uint32 shotAnimNum;
+    FSeek(p + 116); float initSpeed;
+    FSeek(p + 120); float maxSpeed;
+    FSeek(p + 124); float acc;
+    FSeek(p + 128); float lifeTime;
+    FSeek(p + 132); float nearest;
+
+    FSeek(p + 136);
+} FlyerEscapeShotParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+enum<sint8> PlayerOffsetType
+{
+    PLAYER_OFFSET_NORMAL = 0,
+    PLAYER_OFFSET_ABSOLUTE = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float fovy;
+    FSeek(p + 4);  float zRot;
+    FSeek(p + 8);  float distance;
+    FSeek(p + 12); float pathOffset;
+    FSeek(p + 16); bool usePathVerticalComponent;
+    FSeek(p + 17); bool usePathNormal;
+    FSeek(p + 20); float angleSensitivity;
+    FSeek(p + 24); float angleSensitivityBoost;
+    FSeek(p + 28); float azimuthOffsetDeg;
+    FSeek(p + 32); float elevationOffsetDeg;
+    FSeek(p + 36); float gravityOffset;
+    FSeek(p + 48); vector3 playerOffset;
+    FSeek(p + 64); PlayerOffsetType playerOffsetType;
+
+    FSeek(p + 80);
+} FlyerEscapeCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float boostSpeed;
+    FSeek(p + 12); float boostSpeedMax;
+
+    FSeek(p + 16);
+} FlyerEscapeQuickStepParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float startSpeed;
+    FSeek(p + 4);   float decrease;
+    FSeek(p + 8);   float minSpeed;
+    FSeek(p + 12);  float targetDisableTime;
+    FSeek(p + 16);  float resetByFallTime;
+    FSeek(p + 20);  float resetByDistance;
+    FSeek(p + 24);  FlyerEscapeShotParam shot;
+    FSeek(p + 160); FlyerEscapeCameraParam camera;
+    FSeek(p + 240); FlyerEscapeQuickStepParam quickStep;
+
+    FSeek(p + 256);
+} FlyerEscapeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float duration;
+    FSeek(p + 16); vector3 posOffset;
+    FSeek(p + 32); float fovy;
+    FSeek(p + 36); float interpolateTimePush;
+    FSeek(p + 40); float interpolateTimePop;
+
+    FSeek(p + 48);
+} FlyerNearStartCamParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float durationMin;
+    FSeek(p + 4); float durationMax;
+    FSeek(p + 8); uint32 selectRatio[2]<optimize=false>;
+
+    FSeek(p + 16);
+} FlyerIdlingNearParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float duration;
+
+    FSeek(p + 4);
+} FlyerGuardParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float lockonDistance;
+    FSeek(p + 4);  float unlockDistance;
+    FSeek(p + 8);  float distance;
+    FSeek(p + 12); float minElevation;
+    FSeek(p + 16); float maxElevation;
+    FSeek(p + 20); float panningSuspensionK;
+    FSeek(p + 24); float interiorPanningSuspensionK;
+
+    FSeek(p + 28);
+} FlyerAutoLockonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float outStrength;
+    FSeek(p + 4);  float inStrength;
+    FSeek(p + 8);  float outElev;
+    FSeek(p + 12); float inElev;
+    FSeek(p + 16); float speedMin;
+    FSeek(p + 20); float speedMax;
+    FSeek(p + 24); float speedMinLength;
+    FSeek(p + 28); float speedMaxLength;
+
+    FSeek(p + 32);
+} FlyerNearEndLaunchParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float duration;
+    FSeek(p + 4);   float startHABounceUp;
+    FSeek(p + 8);   float startHABounceBack;
+    FSeek(p + 12);  float preliminaryMotionSpeed;
+    FSeek(p + 16);  float resetByDistance;
+    FSeek(p + 32);  FlyerNearStartCamParam startCam;
+    FSeek(p + 80);  FlyerIdlingNearParam idling;
+    FSeek(p + 96);  FlyerGuardParam guard;
+    FSeek(p + 100); FlyerAutoLockonParam lockon;
+    FSeek(p + 128); FlyerNearEndLaunchParam launch;
+
+    FSeek(p + 160);
+} FlyerNearParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
+    FSeek(p + 64);  FlyerTrailParam trail;
+    FSeek(p + 88);  FlyerWanderParam wander;
+    FSeek(p + 92);  FlyerWatchParam watch;
+    FSeek(p + 128); FlyerEscapeParam escape;
+    FSeek(p + 384); FlyerNearParam nearRange;
+    FSeek(p + 544); float stunTime;
+
+    FSeek(p + 560);
+} MiniBossFlyerCommonParam;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossFlyerLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 id;
+    FSeek(p + 4); float interval;
+
+    FSeek(p + 8);
+} FlayerEscapeShotSequenceTable;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isUse;
+    FSeek(p + 4); FlayerEscapeShotSequenceTable table[8]<optimize=false>;
+
+    FSeek(p + 68);
+} FlayerEscapeShotSequenceTableData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); FlayerEscapeShotSequenceTableData sequence[16]<optimize=false>;
+
+    FSeek(p + 1092);
+} MiniBossFlyerLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossFlyerCommonParam commonParam;
+    FSeek(p + 560); MiniBossFlyerLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 840); MiniBossFlyerLevelBand levelBand[5]<optimize=false>;
+
+    FSeek(p + 6304);
+} MiniBossFlyerConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossFlyerConfig data;

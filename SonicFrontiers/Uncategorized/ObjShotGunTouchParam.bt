@@ -1,0 +1,44 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float targetRadius;
+    FSeek(p + 4);  float catchDistance;
+    FSeek(p + 8);  float linearDamping;
+    FSeek(p + 12); float angularDamping;
+    FSeek(p + 16); float appearDelay;
+
+    FSeek(p + 20);
+} ObjShotGunTouchTargetParam;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 cameraOffset;
+    FSeek(p + 16); float cameraHoldTime;
+
+    FSeek(p + 32);
+} ObjShotGunTouchCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ObjShotGunTouchTargetParam targetParam;
+    FSeek(p + 32); ObjShotGunTouchCameraParam cameraParam;
+
+    FSeek(p + 64);
+} ObjShotGunTouchParam;
+
+LittleEndian();
+
+FSeek(64);
+ObjShotGunTouchParam data;

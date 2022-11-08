@@ -1,0 +1,208 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float backRange;
+    FSeek(p + 4);  float standRange;
+    FSeek(p + 8);  float shortRange;
+    FSeek(p + 12); float middleRange;
+    FSeek(p + 16); float runEndDistance;
+    FSeek(p + 20); float dashEndDistance;
+    FSeek(p + 24); float parryRange;
+    FSeek(p + 28); float specialBeginDisappearTime;
+    FSeek(p + 32); float specialEndDisappearTime;
+    FSeek(p + 36); float endWarpWaitTime;
+    FSeek(p + 40); float shiftTimeMin;
+    FSeek(p + 44); float shiftTimeMax;
+
+    FSeek(p + 48);
+} MiniBossBladeCommonAIParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  MiniBossCommonConfig commonConfig;
+    FSeek(p + 64); MiniBossBladeCommonAIParam ai;
+
+    FSeek(p + 112);
+} MiniBossBladeCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float angryHpRatio;
+    FSeek(p + 4);  float stunTime;
+    FSeek(p + 8);  float downTime;
+    FSeek(p + 12); float strikeComboTimer;
+    FSeek(p + 16); float cyloopComboTimer;
+    FSeek(p + 20); float blowupComboTimer;
+    FSeek(p + 24); float attackMotionSpeed;
+    FSeek(p + 28); float preliminaryMotionSpeed;
+    FSeek(p + 32); float ghostPreliminaryMotionSpeed;
+
+    FSeek(p + 36);
+} MiniBossBladeLevelCommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float firstContactWait;
+    FSeek(p + 4);  float specialAttackInterval;
+    FSeek(p + 8);  float shortRangeIntervalMin;
+    FSeek(p + 12); float shortRangeIntervalMax;
+    FSeek(p + 16); float middleRangeIntervalMin;
+    FSeek(p + 20); float middleRangeIntervalMax;
+    FSeek(p + 24); float counterIntervalMin;
+    FSeek(p + 28); float counterIntervalMax;
+    FSeek(p + 32); float afterDashIntervalMin;
+    FSeek(p + 36); float afterDashIntervalMax;
+    FSeek(p + 40); float parryIntervalMin;
+    FSeek(p + 44); float parryIntervalMax;
+    FSeek(p + 48); float parryDuration;
+    FSeek(p + 52); float slashComboCoolTime;
+    FSeek(p + 56); float ghostDashSlashCoolTime;
+
+    FSeek(p + 60);
+} MiniBossBladeLevelAIParam;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 spawnNum;
+
+    FSeek(p + 1);
+} MiniBossBladeSpecialAttackParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 level;
+    FSeek(p + 4);   MiniBossLevelCommonConfig common;
+    FSeek(p + 56);  MiniBossBladeLevelCommonParam general;
+    FSeek(p + 92);  MiniBossBladeLevelAIParam ai;
+    FSeek(p + 152); MiniBossBladeSpecialAttackParam special;
+
+    FSeek(p + 156);
+} MiniBossBladeLevelParam;
+
+typedef uint uint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float verticalSlashRate;
+    FSeek(p + 4);  float horizontalSlashRate;
+    FSeek(p + 8);  float slashComboRate;
+    FSeek(p + 12); float backSlashRate;
+    FSeek(p + 16); float dashRate;
+    FSeek(p + 20); float dashSlashRate;
+    FSeek(p + 24); float ghostDashSlashRate;
+    FSeek(p + 28); float specialAttackRate;
+    FSeek(p + 32); bool useTimeStopAttack;
+    FSeek(p + 36); float guardBeginTime;
+    FSeek(p + 40); float guardJumpLaserRate;
+    FSeek(p + 44); float parryJumpLaserRate;
+    FSeek(p + 48); float cyloopJumpLaserRate;
+    FSeek(p + 52); float doubleJumpLaserRate;
+    FSeek(p + 56); bool useParry;
+
+    FSeek(p + 60);
+} MiniBossBladeLevelPhaseAction;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 level;
+    FSeek(p + 4); MiniBossBladeLevelPhaseAction phases[2]<optimize=false>;
+
+    FSeek(p + 124);
+} MiniBossBladeLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossBladeCommonParam commonParam;
+    FSeek(p + 112);  MiniBossBladeLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 892);  MiniBossBladeLevelBand levelBands[5]<optimize=false>;
+    FSeek(p + 1512); RingParameter ringParam;
+
+    FSeek(p + 1552);
+} MiniBossBladeConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossBladeConfig data;

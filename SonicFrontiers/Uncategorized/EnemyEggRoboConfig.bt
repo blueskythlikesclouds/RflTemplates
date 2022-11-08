@@ -1,0 +1,31 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scaleSv;
+    FSeek(p + 4);  float scaleFv;
+    FSeek(p + 8);  float appearEffTimer;
+    FSeek(p + 12); float colliderRadius;
+    FSeek(p + 16); float colliderHeight;
+    FSeek(p + 32); vector3 colliderOffset;
+    FSeek(p + 48); float laserColliderRadius;
+    FSeek(p + 52); float laserColliderHeight;
+    FSeek(p + 64); vector3 laserColliderSizeSV;
+    FSeek(p + 80); float missileColliderRadius;
+    FSeek(p + 84); float missileColliderHeight;
+    FSeek(p + 96); vector3 missileColliderOffset;
+
+    FSeek(p + 112);
+} EnemyEggRoboConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyEggRoboConfig data;

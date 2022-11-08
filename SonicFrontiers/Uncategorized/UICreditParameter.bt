@@ -1,0 +1,18 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float LicenseInterval;
+    FSeek(p + 4);  float NameInterval;
+    FSeek(p + 8);  float PostInterval;
+    FSeek(p + 12); float CompanyInterval;
+    FSeek(p + 16); float LogoInterval;
+    FSeek(p + 20); float WaitTime;
+
+    FSeek(p + 24);
+} UICreditParameter;
+
+LittleEndian();
+
+FSeek(64);
+UICreditParameter data;

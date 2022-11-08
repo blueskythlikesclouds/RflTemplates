@@ -1,0 +1,56 @@
+typedef byte sint8;
+
+enum<sint8> DisplayType
+{
+    Caption = 0,
+    Tutorial = 1,
+};
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  DisplayType display;
+    FSeek(p + 8);  cstring label;
+    FSeek(p + 24); float waitTime;
+
+    FSeek(p + 32);
+} LabelData;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LabelData labels[20]<optimize=false>;
+    FSeek(p + 640); bool isForcePlay;
+
+    FSeek(p + 648);
+} Discussion;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); Discussion discussions[10]<optimize=false>;
+
+    FSeek(p + 6480);
+} CaptionParameter;
+
+LittleEndian();
+
+FSeek(64);
+CaptionParameter data;

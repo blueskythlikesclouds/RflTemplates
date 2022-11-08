@@ -1,0 +1,45 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); float scale;
+    FSeek(p + 20); float time;
+    FSeek(p + 24); float easeOutTime;
+    FSeek(p + 28); float delayTime;
+    FSeek(p + 32); bool layerPlayer;
+    FSeek(p + 33); bool layerEnemy;
+    FSeek(p + 34); bool layerDamagedEnemy;
+    FSeek(p + 35); bool layerCamera;
+    FSeek(p + 36); bool layerOthers;
+
+    FSeek(p + 40);
+} GameHitStopParameterData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GameHitStopParameterData data[64]<optimize=false>;
+
+    FSeek(p + 2560);
+} GameHitStopParameter;
+
+LittleEndian();
+
+FSeek(64);
+GameHitStopParameter data;

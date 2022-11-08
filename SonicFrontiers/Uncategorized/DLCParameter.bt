@@ -1,0 +1,15 @@
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 dummy;
+
+    FSeek(p + 1);
+} DLCParameter;
+
+LittleEndian();
+
+FSeek(64);
+DLCParameter data;

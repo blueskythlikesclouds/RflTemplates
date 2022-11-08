@@ -1,0 +1,452 @@
+typedef uint uint32;
+
+typedef ubyte uint8;
+
+typedef byte sint8;
+
+enum<sint8> Status
+{
+    STATUS_ZERO_FILL = 0,
+    STATUS_INITIALIZED = 1,
+};
+
+enum<sint8> Sequence
+{
+    Island1 = 0,
+    Island2 = 1,
+    Island3 = 2,
+    Island4 = 3,
+    Island5 = 4,
+    FinalBossBefore = 5,
+    FinalBossAfter = 6,
+};
+
+enum<sint8> SaveDataIcon
+{
+    IconNoData = 0,
+    IconIsland1 = 1,
+    IconIsland2 = 2,
+    IconIsland3 = 3,
+    IconIsland4 = 4,
+    IconIsland5 = 5,
+    IconLastBoss = 6,
+};
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 signature;
+    FSeek(p + 4);  uint8 version;
+    FSeek(p + 5);  Status status;
+    FSeek(p + 6);  uint8 config;
+    FSeek(p + 7);  Sequence sequence;
+    FSeek(p + 8);  uint32 playTime;
+    FSeek(p + 12); SaveDataIcon icon;
+    FSeek(p + 13); uint8 reserved0;
+    FSeek(p + 14); uint16 reserved1;
+    FSeek(p + 16); uint32 saveDate;
+    FSeek(p + 20); uint8 index;
+    FSeek(p + 24); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 40);
+} HeaderData;
+
+enum<sint8> VoiceLanguageType
+{
+    VOICE_LANGUAGE_ENGLISH = 0,
+    VOICE_LANGUAGE_FRENCH = 1,
+    VOICE_LANGUAGE_ITALIAN = 2,
+    VOICE_LANGUAGE_GERMAN = 3,
+    VOICE_LANGUAGE_SPANISH = 4,
+    VOICE_LANGUAGE_JAPANESE = 5,
+    NUM_VOICE_LANGUAGES = 6,
+};
+
+enum<sint8> LanguageType
+{
+    LANGUAGE_ENGLISH = 0,
+    LANGUAGE_FRENCH = 1,
+    LANGUAGE_ITALIAN = 2,
+    LANGUAGE_GERMAN = 3,
+    LANGUAGE_SPANISH = 4,
+    LANGUAGE_POLISH = 5,
+    LANGUAGE_PORTUGUESE = 6,
+    LANGUAGE_RUSSIAN = 7,
+    LANGUAGE_JAPANESE = 8,
+    LANGUAGE_ZHONGWEN = 9,
+    LANGUAGE_ZHONGWEN_S = 10,
+    LANGUAGE_KOREAN = 11,
+    NUM_LANGUAGES = 12,
+};
+
+enum<sint8> VibrationLevel
+{
+    None = 0,
+    Low = 1,
+    Medium = 2,
+    High = 3,
+};
+
+enum<sint8> Value
+{
+    Easy = 0,
+    Normal = 1,
+    Hard = 2,
+    Num = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint8 initialSpeedRate;
+    FSeek(p + 1);  uint8 boostInitialSpeedRate;
+    FSeek(p + 2);  uint8 acceleRate;
+    FSeek(p + 3);  uint8 maxSpeedRate;
+    FSeek(p + 4);  uint8 minTurnSpeedRate;
+    FSeek(p + 5);  uint8 boostMinTurnSpeedRate;
+    FSeek(p + 6);  uint8 rotateForceRate;
+    FSeek(p + 7);  uint8 bumpJumpGravityRate;
+    FSeek(p + 8);  VoiceLanguageType speech;
+    FSeek(p + 9);  LanguageType text;
+    FSeek(p + 10); VibrationLevel vibrationLevel;
+    FSeek(p + 11); Value diffculty;
+    FSeek(p + 12); uint8 config;
+    FSeek(p + 13); uint8 padSensibilityRate;
+    FSeek(p + 14); uint8 mouseSensibilityRate;
+    FSeek(p + 15); uint8 padding0;
+    FSeek(p + 16); uint8 dlcSonicCostume;
+    FSeek(p + 17); uint8 dlcKodamaModel;
+    FSeek(p + 18); uint8 dlcRingSE;
+    FSeek(p + 19); uint8 dlcConfig;
+    FSeek(p + 20); uint8 reserved1[4]<optimize=false>;
+    FSeek(p + 24); uint32 reserved2[2]<optimize=false>;
+
+    FSeek(p + 32);
+} OptionGamePlayData;
+
+typedef int sint32;
+
+enum<sint32> InputKey
+{
+    Invalid = -1,
+    GamePad_DPadLeft = 0,
+    GamePad_DPadRight = 1,
+    GamePad_DPadUp = 2,
+    GamePad_DPadDown = 3,
+    GamePad_ButtonLeft = 4,
+    GamePad_ButtonRight = 5,
+    GamePad_ButtonTop = 6,
+    GamePad_ButtonBottom = 7,
+    GamePad_LeftX = 8,
+    GamePad_LeftY = 9,
+    GamePad_RightX = 10,
+    GamePad_RightY = 11,
+    GamePad_LeftShoulder = 12,
+    GamePad_LeftTrigger = 13,
+    GamePad_LeftClick = 14,
+    GamePad_RightShoulder = 15,
+    GamePad_RightTrigger = 16,
+    GamePad_RightClick = 17,
+    GamePad_LeftStickLeft = 18,
+    GamePad_LeftStickRight = 19,
+    GamePad_LeftStickUp = 20,
+    GamePad_LeftStickDown = 21,
+    GamePad_RightStickLeft = 22,
+    GamePad_RightStickRight = 23,
+    GamePad_RightStickUp = 24,
+    GamePad_RightStickDown = 25,
+    GamePad_Start = 26,
+    GamePad_Select = 27,
+    GamePad_LeftSideTriggerLeft = 28,
+    GamePad_LeftSideTriggerRight = 29,
+    GamePad_RightSideTriggerLeft = 30,
+    GamePad_RightSideTriggerRight = 31,
+    Keyboard_Nop = 32,
+    Keyboard_A = 33,
+    Keyboard_B = 34,
+    Keyboard_C = 35,
+    Keyboard_D = 36,
+    Keyboard_E = 37,
+    Keyboard_F = 38,
+    Keyboard_G = 39,
+    Keyboard_H = 40,
+    Keyboard_I = 41,
+    Keyboard_J = 42,
+    Keyboard_K = 43,
+    Keyboard_L = 44,
+    Keyboard_M = 45,
+    Keyboard_N = 46,
+    Keyboard_O = 47,
+    Keyboard_P = 48,
+    Keyboard_Q = 49,
+    Keyboard_R = 50,
+    Keyboard_S = 51,
+    Keyboard_T = 52,
+    Keyboard_U = 53,
+    Keyboard_V = 54,
+    Keyboard_W = 55,
+    Keyboard_X = 56,
+    Keyboard_Y = 57,
+    Keyboard_Z = 58,
+    Keyboard_1 = 59,
+    Keyboard_2 = 60,
+    Keyboard_3 = 61,
+    Keyboard_4 = 62,
+    Keyboard_5 = 63,
+    Keyboard_6 = 64,
+    Keyboard_7 = 65,
+    Keyboard_8 = 66,
+    Keyboard_9 = 67,
+    Keyboard_0 = 68,
+    Keyboard_Enter = 69,
+    Keyboard_Escape = 70,
+    Keyboard_BackSpace = 71,
+    Keyboard_Tab = 72,
+    Keyboard_Spacebar = 73,
+    Keyboard_Minus = 74,
+    Keyboard_Accent = 75,
+    Keyboard_Atmark = 76,
+    Keyboard_LeftBracket = 77,
+    Keyboard_BackSlash = 78,
+    Keyboard_RightBracket = 79,
+    Keyboard_SemiColon = 80,
+    Keyboard_Colon = 81,
+    Keyboard_Comma = 82,
+    Keyboard_Period = 83,
+    Keyboard_Slash = 84,
+    Keyboard_CapsLock = 85,
+    Keyboard_F1 = 86,
+    Keyboard_F2 = 87,
+    Keyboard_F3 = 88,
+    Keyboard_F4 = 89,
+    Keyboard_F5 = 90,
+    Keyboard_F6 = 91,
+    Keyboard_F7 = 92,
+    Keyboard_F8 = 93,
+    Keyboard_F9 = 94,
+    Keyboard_F10 = 95,
+    Keyboard_F11 = 96,
+    Keyboard_F12 = 97,
+    Keyboard_Insert = 98,
+    Keyboard_Home = 99,
+    Keyboard_PageUp = 100,
+    Keyboard_Delete = 101,
+    Keyboard_End = 102,
+    Keyboard_PageDown = 103,
+    Keyboard_LeftArrow = 104,
+    Keyboard_RightArrow = 105,
+    Keyboard_UpArrow = 106,
+    Keyboard_DownArrow = 107,
+    Keyboard_PadSlash = 108,
+    Keyboard_PadAsterisk = 109,
+    Keyboard_PadMinus = 110,
+    Keyboard_PadPlus = 111,
+    Keyboard_PadEnter = 112,
+    Keyboard_PadNum1 = 113,
+    Keyboard_PadNum2 = 114,
+    Keyboard_PadNum3 = 115,
+    Keyboard_PadNum4 = 116,
+    Keyboard_PadNum5 = 117,
+    Keyboard_PadNum6 = 118,
+    Keyboard_PadNum7 = 119,
+    Keyboard_PadNum8 = 120,
+    Keyboard_PadNum9 = 121,
+    Keyboard_PadNum0 = 122,
+    Keyboard_PadPeriod = 123,
+    Keyboard_LeftCtrl = 124,
+    Keyboard_RightCtrl = 125,
+    Keyboard_LeftShift = 126,
+    Keyboard_RightShift = 127,
+    Keyboard_LeftAlt = 128,
+    Keyboard_RightAlt = 129,
+    Keyboard_LeftGui = 130,
+    Keyboard_RightGui = 131,
+    Mouse_X = 132,
+    Mouse_Y = 133,
+    Mouse_ButtonLeft = 134,
+    Mouse_ButtonRight = 135,
+    Mouse_ButtonMiddle = 136,
+    Mouse_ButtonX1 = 137,
+    Mouse_ButtonX2 = 138,
+    Mouse_Wheel = 139,
+    Mouse_WheelUp = 140,
+    Mouse_WheelDown = 141,
+    Keyboard_Grave = 142,
+    Keyboard_Equals = 143,
+    Keyboard_Apostrophe = 144,
+    Keyboard_OEM_102 = 145,
+    Keyboard_ABNT_C1 = 146,
+    Keyboard_ABNT_C2 = 147,
+    Keyboard_Shift = 148,
+    Keyboard_Ctrl = 149,
+    NumAppKeys = 150,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   InputKey padMappings[62]<optimize=false>;
+    FSeek(p + 248); InputKey mainMappings[62]<optimize=false>;
+    FSeek(p + 496); InputKey subMappings[62]<optimize=false>;
+
+    FSeek(p + 744);
+} OptionControlsData;
+
+enum<sint8> MovementStyle
+{
+    PadSimulate = 0,
+    Aiming = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedPad;
+    FSeek(p + 4);  float rotateSpeedVertMouse;
+    FSeek(p + 8);  float rotateSpeedHorzMouse;
+    FSeek(p + 12); float reticleSpeedPad;
+    FSeek(p + 16); float reticleSpeedVertMouse;
+    FSeek(p + 20); float reticleSpeedHorzMouse;
+    FSeek(p + 24); uint8 rotateSpeedRate;
+    FSeek(p + 25); uint8 distanceRate;
+    FSeek(p + 26); uint8 fovyRate;
+    FSeek(p + 27); MovementStyle movementStyle;
+    FSeek(p + 28); uint8 config;
+    FSeek(p + 32); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 48);
+} OptionCameraData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 masterVolume;
+    FSeek(p + 1); uint8 sfxVolume;
+    FSeek(p + 2); uint8 musicVolume;
+    FSeek(p + 3); uint8 voiceVolume;
+    FSeek(p + 4); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 20);
+} OptionAudioData;
+
+enum<sint8> Resolution
+{
+    Reso3840x2160 = 0,
+    Reso2560x1440 = 1,
+    Reso1920x1080 = 2,
+    Reso1280x720 = 3,
+};
+
+enum<sint8> GraphicQuality
+{
+    High = 0,
+    Low = 1,
+    Custom = 2,
+};
+
+enum<sint8> FrameRate
+{
+    FPS60 = 0,
+    FPS30 = 1,
+    FPSNoLimit = 2,
+};
+
+enum<sint8> AntiAliasing
+{
+    TAA = 0,
+    FXAA = 1,
+    None = 2,
+};
+
+enum<sint8> AnisotropicFiltering
+{
+    None = 0,
+    Low = 1,
+    Medium = 2,
+    High = 3,
+};
+
+enum<sint8> DOF
+{
+    Disabled = 0,
+    Low = 1,
+    Medium = 2,
+    High = 3,
+};
+
+enum<sint8> Bloom
+{
+    High = 0,
+    Low = 1,
+};
+
+enum<sint8> Shadow
+{
+    High = 0,
+    Low = 1,
+};
+
+enum<sint8> VolumetricLight
+{
+    High = 0,
+    Low = 1,
+};
+
+enum<sint8> RederingScale
+{
+    High = 0,
+    Medium = 1,
+    Low = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Resolution resolution;
+    FSeek(p + 1);  GraphicQuality graphicQuality;
+    FSeek(p + 2);  FrameRate frameRate;
+    FSeek(p + 3);  uint8 brightness;
+    FSeek(p + 4);  AntiAliasing antiAliasing;
+    FSeek(p + 5);  AnisotropicFiltering anisotropicFiltering;
+    FSeek(p + 6);  DOF depthOfField;
+    FSeek(p + 7);  Bloom bloom;
+    FSeek(p + 8);  uint8 config;
+    FSeek(p + 9);  uint8 hudVisible;
+    FSeek(p + 10); Shadow shadow;
+    FSeek(p + 11); VolumetricLight volumetricLight;
+    FSeek(p + 12); RederingScale renderingScale;
+    FSeek(p + 13); uint8 reserved1;
+    FSeek(p + 14); uint16 width;
+    FSeek(p + 16); uint16 height;
+    FSeek(p + 18); uint16 padding0;
+    FSeek(p + 20); uint32 reserved[2]<optimize=false>;
+
+    FSeek(p + 28);
+} OptionGraphicsData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   HeaderData header;
+    FSeek(p + 40);  OptionGamePlayData gameplay;
+    FSeek(p + 72);  OptionControlsData controls;
+    FSeek(p + 816); OptionCameraData camera;
+    FSeek(p + 864); OptionAudioData audio;
+    FSeek(p + 884); OptionGraphicsData graphics;
+
+    FSeek(p + 912);
+} OptionData;
+
+LittleEndian();
+
+FSeek(64);
+OptionData data;

@@ -1,0 +1,150 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float baseHeight;
+    FSeek(p + 4);  float baseRadius;
+    FSeek(p + 8);  float baseOffset;
+    FSeek(p + 12); float poleHeight;
+    FSeek(p + 16); float poleRadius;
+    FSeek(p + 20); float rigidAdditionalHeight;
+    FSeek(p + 24); float ropeThicknessRigid;
+    FSeek(p + 28); float ropeThicknessDamage;
+    FSeek(p + 32); float ropeThicknessArea;
+
+    FSeek(p + 36);
+} ObjSumoPoleColliderConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float interpolationTime;
+    FSeek(p + 4); float height;
+    FSeek(p + 8); float fovy;
+
+    FSeek(p + 12);
+} ObjSumoPoleSlingShotLookDownCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float shotGuideMoveDistance;
+    FSeek(p + 4);  float shotRaycastLength;
+    FSeek(p + 8);  float sweepCapsuleHeight;
+    FSeek(p + 12); float shotMoveLengthMax;
+    FSeek(p + 16); sint32 shotReflectCountMax;
+    FSeek(p + 20); sint32 shotReflectOwnerCountMax;
+    FSeek(p + 24); float shotOffset;
+    FSeek(p + 28); float shotDirAngleLimit;
+    FSeek(p + 32); float shotDirAngleChangeSpeed;
+    FSeek(p + 36); float shotSpeedMin;
+    FSeek(p + 40); float shotSpeedMax;
+    FSeek(p + 44); float shotSpeedAdd;
+    FSeek(p + 48); float cancelSpeed;
+    FSeek(p + 52); float bendPullLength;
+    FSeek(p + 56); float aimTimeScale;
+    FSeek(p + 60); float aimLimitTime;
+    FSeek(p + 64); ObjSumoPoleSlingShotLookDownCameraConfig cameraLookDown;
+
+    FSeek(p + 76);
+} ObjSumoPoleSlingShotConfig;
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float width;
+    FSeek(p + 4);  float maxDistance;
+    FSeek(p + 8);  float tilingDistance;
+    FSeek(p + 12); float uvScrollSpeedMin;
+    FSeek(p + 16); float uvScrollSpeedMax;
+    FSeek(p + 20); sint32 reflectCountSpeedMax;
+    FSeek(p + 24); color8 colors[5]<optimize=false>;
+    FSeek(p + 44); float colorIntensity;
+    FSeek(p + 48); bool colorGradation;
+    FSeek(p + 49); bool colorChangeAll;
+
+    FSeek(p + 52);
+} ObjSumoPoleSlingshotLineConfig;
+
+typedef struct colorF {
+    float r;
+    float g;
+    float b;
+    float a;
+} colorF;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float width;
+    FSeek(p + 4);  float tilingDistance;
+    FSeek(p + 8);  float fluctuationPeriod;
+    FSeek(p + 12); float fluctuationAmplitude;
+    FSeek(p + 16); float uvScrollSpeed;
+    FSeek(p + 20); colorF colorPrimary;
+    FSeek(p + 36); color8 colorVertexEdge;
+    FSeek(p + 40); color8 colorVertexCenter;
+    FSeek(p + 44); float colorIntensityAnimTime;
+    FSeek(p + 48); float colorIntensityMin;
+    FSeek(p + 52); float colorIntensityMax;
+    FSeek(p + 56); float patternChangeIntervalTime;
+    FSeek(p + 60); float edgeWidthScale;
+    FSeek(p + 64); float edgeWidthScaleLength;
+    FSeek(p + 68); float roll;
+
+    FSeek(p + 72);
+} ObjSumoPoleRopeElectricConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeAppear;
+    FSeek(p + 4);  float timeDisappear;
+    FSeek(p + 8);  sint32 count;
+    FSeek(p + 12); float swingWidthMin;
+    FSeek(p + 16); float swingWidthMax;
+    FSeek(p + 20); float swingWidthReductionRate;
+    FSeek(p + 24); float swingTime;
+    FSeek(p + 28); float swingPeriod;
+    FSeek(p + 32); float swingReturnSlowTime;
+    FSeek(p + 36); ObjSumoPoleRopeElectricConfig electric;
+
+    FSeek(p + 108);
+} ObjSumoPoleRopeConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 electricDamageToEnemy;
+    FSeek(p + 4);   ObjSumoPoleColliderConfig collider;
+    FSeek(p + 40);  ObjSumoPoleSlingShotConfig slingShot;
+    FSeek(p + 116); ObjSumoPoleSlingshotLineConfig line;
+    FSeek(p + 168); ObjSumoPoleRopeConfig rope;
+
+    FSeek(p + 276);
+} ObjSumoPoleConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjSumoPoleConfig data;

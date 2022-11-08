@@ -1,0 +1,100 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bulletRadius;
+    FSeek(p + 4);  float bulletModelScale;
+    FSeek(p + 8);  float bulletRadiusLastBoss;
+    FSeek(p + 12); float bulletModelScaleLastBoss;
+    FSeek(p + 16); float bulletModelOffsetRateLastBoss;
+    FSeek(p + 20); float laserNormalRadius;
+    FSeek(p + 24); float laserThickRadius;
+
+    FSeek(p + 28);
+} HackingBulletParameter;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef ubyte uint8;
+
+enum<uint8> Type
+{
+    BulletFixed = 0,
+    BulletAimPlayer = 1,
+    LaserNormal = 2,
+    LaserThick = 3,
+    LaserAimPlayer = 4,
+};
+
+enum<uint8> ElementType
+{
+    Hacking1 = 0,
+    Hacking2 = 1,
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float angle;
+    FSeek(p + 4); float time;
+
+    FSeek(p + 8);
+} AnimationParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Type type;
+    FSeek(p + 1);  ElementType element;
+    FSeek(p + 4);  float startAngle;
+    FSeek(p + 8);  float endAngle;
+    FSeek(p + 12); uint8 shootNum;
+    FSeek(p + 16); float shootSpeed;
+    FSeek(p + 20); uint8 wayNum;
+    FSeek(p + 24); float wayAngle;
+    FSeek(p + 28); float laserLength;
+    FSeek(p + 32); float lifeTime;
+    FSeek(p + 36); bool animation;
+    FSeek(p + 40); AnimationParameter animParam[8]<optimize=false>;
+
+    FSeek(p + 104);
+} BulletPatternParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); BulletPatternParameter param;
+
+    FSeek(p + 120);
+} BulletPatternSetParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  HackingBulletParameter bulletParam;
+    FSeek(p + 32); BulletPatternSetParameter data[256]<optimize=false>;
+
+    FSeek(p + 30752);
+} BulletPatternSetParameters;
+
+LittleEndian();
+
+FSeek(64);
+BulletPatternSetParameters data;

@@ -1,0 +1,63 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef byte sint8;
+
+enum<sint8> VolumeType
+{
+    VOLUME_SPHERE = 0,
+    VOLUME_CAPSULE = 1,
+};
+
+typedef int sint32;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+enum<sint8> LODLevel
+{
+    LOD_HIGH = 0,
+    LOD_MIDDLE = 1,
+    LOD_LOW = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring type;
+    FSeek(p + 16);  VolumeType volume;
+    FSeek(p + 20);  sint32 priority;
+    FSeek(p + 32);  vector3 translation;
+    FSeek(p + 48);  vector3 rotation;
+    FSeek(p + 64);  vector3 scale;
+    FSeek(p + 80);  vector3 rate;
+    FSeek(p + 96);  float radius;
+    FSeek(p + 100); LODLevel lod;
+
+    FSeek(p + 112);
+} CapsuleParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CapsuleParam capsules[64]<optimize=false>;
+
+    FSeek(p + 7168);
+} OcclusionCapsuleList;
+
+LittleEndian();
+
+FSeek(64);
+OcclusionCapsuleList data;

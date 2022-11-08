@@ -1,0 +1,32 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bulletSpeed;
+    FSeek(p + 4);  float bulletRotDegPerSec;
+    FSeek(p + 8);  float jumpToCenterTime;
+    FSeek(p + 12); float jumpTime;
+    FSeek(p + 16); float jumpToCenterTangentY;
+    FSeek(p + 20); float jumpTangentMultiplier;
+    FSeek(p + 24); float jumpDestinationOffsetY;
+    FSeek(p + 28); float jumpDestinationOffsetXZ;
+    FSeek(p + 32); float jumpToFloorHeight;
+    FSeek(p + 36); float jumpToFloorOffset;
+    FSeek(p + 40); float jumpToFloorTime;
+    FSeek(p + 44); float bulletWaitTime;
+    FSeek(p + 48); float timeTilDisappear;
+    FSeek(p + 52); float segmentLength;
+    FSeek(p + 56); float collisionHeight;
+    FSeek(p + 60); float collisionRadiusAddend;
+    FSeek(p + 64); float initialEffectScaleY;
+    FSeek(p + 68); float initialEffectScaleXZ;
+    FSeek(p + 72); float maxEffectScaleXZ;
+    FSeek(p + 76); float timeToMaxEffectScale;
+
+    FSeek(p + 80);
+} ObjStriderGrindRailConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjStriderGrindRailConfig data;

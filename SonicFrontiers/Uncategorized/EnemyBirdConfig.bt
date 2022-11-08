@@ -1,0 +1,251 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   vector3 backColliderExtents;
+    FSeek(p + 16);  vector3 backColliderOffset;
+    FSeek(p + 32);  vector3 backDamageColliderExtents;
+    FSeek(p + 48);  vector3 backDamageColliderOffset;
+    FSeek(p + 64);  vector3 chargeColliderExtents;
+    FSeek(p + 80);  vector3 chargeColliderOffset;
+    FSeek(p + 96);  float eyesightAngle;
+    FSeek(p + 100); float eyesightDistance;
+
+    FSeek(p + 112);
+} EnemyBirdCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} EnemyBirdCommonLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); EnemyBirdCommonLevelParam common;
+
+    FSeek(p + 16);
+} EnemyBirdLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} EnemyBirdLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speedOnPath;
+    FSeek(p + 4); float speedToPath;
+    FSeek(p + 8); float eyesightDelayAfterBarAction;
+
+    FSeek(p + 12);
+} BirdWanderParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float maxSpeed;
+    FSeek(p + 8);  float acceleration;
+    FSeek(p + 12); float rotateDegreeToSonic;
+    FSeek(p + 16); float stopDistanceFromSonic;
+    FSeek(p + 32); vector3 offsetFromSonic;
+
+    FSeek(p + 48);
+} BirdApproachParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float laserInterval;
+    FSeek(p + 4); float rotateDegreeToSonic;
+
+    FSeek(p + 8);
+} BirdLaserStateParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float waitTime;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float maxSpeed;
+    FSeek(p + 12); float acceleration;
+    FSeek(p + 16); vector3 offsetFromSonic;
+    FSeek(p + 32); float duration;
+    FSeek(p + 36); float distance;
+    FSeek(p + 40); float minElevation;
+    FSeek(p + 44); float maxElevation;
+    FSeek(p + 48); float panningSuspensionK;
+    FSeek(p + 52); float interiorPanningSuspensionK;
+
+    FSeek(p + 64);
+} BirdChargeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float maxSpeed;
+    FSeek(p + 8);  float acceleration;
+    FSeek(p + 12); float backupTime;
+
+    FSeek(p + 16);
+} BirdBackupParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float haWaitTime;
+    FSeek(p + 4);  float degreeOnPath;
+    FSeek(p + 8);  float speedOnPath;
+    FSeek(p + 12); float speedToPath;
+    FSeek(p + 16); float splineTension;
+    FSeek(p + 20); float splineSpeed;
+    FSeek(p + 32); vector3 velocityOnFail;
+
+    FSeek(p + 48);
+} BirdBarParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveSpeed;
+    FSeek(p + 4);  float gidingVelocityY;
+    FSeek(p + 8);  float limitTime;
+    FSeek(p + 12); float rotateSpeed;
+    FSeek(p + 16); float rotateSpeedMin;
+    FSeek(p + 20); float rotateSpeedMax;
+    FSeek(p + 24); float rotateSpeedMaxSpeedMin;
+    FSeek(p + 28); float rotateSpeedMinSpeedMax;
+    FSeek(p + 32); float heightOfChangeShake;
+
+    FSeek(p + 36);
+} BirdGlidingParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minWaitTime;
+    FSeek(p + 4);  float maxWaitTime;
+    FSeek(p + 8);  float raycastDistance;
+    FSeek(p + 12); float fallSpeedOnStomp;
+    FSeek(p + 16); float maxFallSpeedOnStomp;
+    FSeek(p + 20); float fallAccelerationOnStomp;
+
+    FSeek(p + 24);
+} BirdDeadParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float distanceFront;
+    FSeek(p + 4); float distanceBack;
+    FSeek(p + 8); float distanceDown;
+
+    FSeek(p + 12);
+} BirdRaycastParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float distToConsiderSonicAsOnBird;
+    FSeek(p + 4); float distance;
+
+    FSeek(p + 8);
+} BirdOnBackCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float azimuth;
+    FSeek(p + 4);  float elevation;
+    FSeek(p + 8);  float distance;
+    FSeek(p + 12); float zRoll;
+    FSeek(p + 16); float fovy;
+    FSeek(p + 32); vector3 frameOffset;
+
+    FSeek(p + 48);
+} BirdCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   vector3 haColliderExtents;
+    FSeek(p + 16);  vector3 haColliderOffset;
+    FSeek(p + 32);  vector3 haTargetOffset;
+    FSeek(p + 48);  float haTargetRadius;
+    FSeek(p + 52);  float haTargetHeight;
+    FSeek(p + 56);  BirdWanderParam wanderParam;
+    FSeek(p + 80);  BirdApproachParam approachParam;
+    FSeek(p + 128); BirdLaserStateParam laserStateParam;
+    FSeek(p + 144); BirdChargeParam chargeParam;
+    FSeek(p + 208); BirdBackupParam backupParam;
+    FSeek(p + 224); BirdBarParam barParam;
+    FSeek(p + 272); BirdGlidingParam glidingParam;
+    FSeek(p + 308); BirdDeadParam deadParam;
+    FSeek(p + 332); BirdRaycastParam raycastParam;
+    FSeek(p + 344); bool useCamera;
+    FSeek(p + 348); BirdOnBackCameraParam onBackCameraParam;
+    FSeek(p + 368); BirdCameraParam cameraParam;
+
+    FSeek(p + 416);
+} EnemyBirdParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyBirdCommonParam commonParam;
+    FSeek(p + 112); EnemyBirdLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 192); EnemyBirdLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 224); EnemyBirdParam birdParam;
+
+    FSeek(p + 640);
+} EnemyBirdConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyBirdConfig data;

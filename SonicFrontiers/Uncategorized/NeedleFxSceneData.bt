@@ -1,0 +1,2273 @@
+typedef int sint32;
+
+enum<sint32> DOFRenderTargetSize
+{
+    DOF_RTSIZE_FULL_SCALE = 0,
+    DOF_RTSIZE_HALF_SCALE = 1,
+    DOF_RTSIZE_QUARTER_SCALE = 2,
+    DOF_RTSIZE_COUNT = 3,
+    DOF_RTSIZE_INVALID = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); DOFRenderTargetSize dofRenderTargetScale;
+    FSeek(p + 4); sint32 shadowMapWidth;
+    FSeek(p + 8); sint32 shadowMapHeight;
+
+    FSeek(p + 12);
+} FxRenderTargetSetting;
+
+typedef byte sint8;
+
+enum<sint8> AntiAliasingType
+{
+    AATYPE_NONE = 0,
+    AATYPE_TAA = 1,
+    AATYPE_FXAA = 2,
+    AATYPE_SMAA = 3,
+    AATYPE_LAST = 4,
+};
+
+enum<sint8> UpscaleType
+{
+    USTYPE_LINEAR = 0,
+    USTYPE_FSR_FAST = 1,
+    USTYPE_FSR_EASU = 2,
+    USTYPE_FSR_RCAS = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); AntiAliasingType aaType;
+    FSeek(p + 1); UpscaleType usType;
+    FSeek(p + 4); float fsrSharpness;
+
+    FSeek(p + 8);
+} FxAntiAliasing;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float illuminanceScale;
+
+    FSeek(p + 4);
+} StageCommonAtmosphereParameter;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enableDebugDrawLayerRange;
+    FSeek(p + 4); float layerRange[32]<optimize=false>;
+
+    FSeek(p + 132);
+} FxLODParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float detailDistance;
+    FSeek(p + 4); float detailFadeRange;
+
+    FSeek(p + 8);
+} FxDetailParameter;
+
+enum<sint8> Mode
+{
+    DISABLE = 0,
+    ENABLE = 1,
+    FIXED_RESOLUTION = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Mode mode;
+    FSeek(p + 4);  float fixedResolutionRatio;
+    FSeek(p + 8);  float minResolutionRatio;
+    FSeek(p + 12); float minTargetTimeDifference;
+    FSeek(p + 16); float maxTargetTimeDifference;
+    FSeek(p + 20); float increaseRate;
+    FSeek(p + 24); float decreaseRate;
+    FSeek(p + 28); float increaseMaxScaleDelta;
+    FSeek(p + 32); float decreaseMaxScaleDelta;
+    FSeek(p + 36); bool debugSineFluctuation;
+
+    FSeek(p + 40);
+} FxDynamicResolutionParameter;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 hour;
+    FSeek(p + 1); uint8 minute;
+
+    FSeek(p + 2);
+} HourMinuteData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); HourMinuteData beginTime;
+    FSeek(p + 2); HourMinuteData endTime;
+
+    FSeek(p + 4);
+} TimeIntervalData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); TimeIntervalData base;
+    FSeek(p + 4); float hourlyTime;
+
+    FSeek(p + 8);
+} ProgressTimePairData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 4);   float solarRadiusScale;
+    FSeek(p + 8);   float azimuthAngle;
+    FSeek(p + 12);  float latitude;
+    FSeek(p + 16);  float longitude;
+    FSeek(p + 20);  sint32 month;
+    FSeek(p + 24);  sint32 day;
+    FSeek(p + 28);  float time;
+    FSeek(p + 32);  float hourlyTime;
+    FSeek(p + 36);  ProgressTimePairData overrideSpeeds[8]<optimize=false>;
+    FSeek(p + 100); TimeIntervalData night;
+
+    FSeek(p + 104);
+} StageCommonTimeProgressParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+
+    FSeek(p + 1);
+} StageCommonWeatherProgressParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enableDrawGrid;
+
+    FSeek(p + 1);
+} FxTerrainParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool zprepass;
+    FSeek(p + 1); bool ditherAsBlueNoize;
+
+    FSeek(p + 2);
+} FxModelParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float cullingRange;
+
+    FSeek(p + 4);
+} StageCommonDecalModelParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float smallCullingThreshold;
+
+    FSeek(p + 4);
+} PerformanceSetting;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   FxRenderTargetSetting rendertarget;
+    FSeek(p + 12);  FxAntiAliasing antialiasing;
+    FSeek(p + 20);  StageCommonAtmosphereParameter atmosphere;
+    FSeek(p + 24);  FxLODParameter lod;
+    FSeek(p + 156); FxDetailParameter detail;
+    FSeek(p + 164); FxDynamicResolutionParameter dynamicResolution;
+    FSeek(p + 204); StageCommonTimeProgressParameter timeProgress;
+    FSeek(p + 308); StageCommonWeatherProgressParameter weatherProgress;
+    FSeek(p + 309); FxTerrainParameter terrain;
+    FSeek(p + 310); FxModelParameter modelParam;
+    FSeek(p + 312); StageCommonDecalModelParameter decalModelParam;
+    FSeek(p + 316); PerformanceSetting performance;
+
+    FSeek(p + 320);
+} NeedleFxSceneConfig;
+
+enum<sint8> DebugViewType
+{
+    DEBUG_VIEW_DEFAULT = 0,
+    DEBUG_VIEW_DIR_DIFFUSE = 1,
+    DEBUG_VIEW_DIR_SPECULAR = 2,
+    DEBUG_VIEW_AMB_DIFFUSE = 3,
+    DEBUG_VIEW_AMB_SPECULAR = 4,
+    DEBUG_VIEW_ONLY_IBL = 5,
+    DEBUG_VIEW_ONLY_IBL_SURF_NORMAL = 6,
+    DEBUG_VIEW_SHADOW = 7,
+    DEBUG_VIEW_WHITE_ALBEDO = 8,
+    DEBUG_VIEW_WHITE_ALBEDO_NO_AO = 9,
+    DEBUG_VIEW_USER0 = 10,
+    DEBUG_VIEW_USER1 = 11,
+    DEBUG_VIEW_USER2 = 12,
+    DEBUG_VIEW_USER3 = 13,
+    DEBUG_VIEW_ALBEDO = 14,
+    DEBUG_VIEW_ALBEDO_CHECK_OUTLIER = 15,
+    DEBUG_VIEW_OPACITY = 16,
+    DEBUG_VIEW_NORMAL = 17,
+    DEBUG_VIEW_ROUGHNESS = 18,
+    DEBUG_VIEW_AMBIENT = 19,
+    DEBUG_VIEW_CAVITY = 20,
+    DEBUG_VIEW_REFLECTANCE = 21,
+    DEBUG_VIEW_METALLIC = 22,
+    DEBUG_VIEW_LOCAL_LIGHT = 23,
+    DEBUG_VIEW_SCATTERING_FEX = 24,
+    DEBUG_VIEW_SCATTERING_LIN = 25,
+    DEBUG_VIEW_SSAO = 26,
+    DEBUG_VIEW_RLR = 27,
+    DEBUG_VIEW_IBL_DIFFUSE = 28,
+    DEBUG_VIEW_IBL_SPECULAR = 29,
+    DEBUG_VIEW_ENV_BRDF = 30,
+    DEBUG_VIEW_WORLD_POSITION = 31,
+    DEBUG_VIEW_SHADING_MODEL_ID = 32,
+    DEBUG_VIEW_IBL_CAPTURE = 33,
+    DEBUG_VIEW_IBL_SKY_TERRAIN = 34,
+    DEBUG_VIEW_WRITE_DEPTH_TO_ALPHA = 35,
+    DEBUG_VIEW_SMOOTHNESS = 36,
+    DEBUG_VIEW_OCCLUSION_CAPSULE = 37,
+    DEBUG_VIEW_PROBE = 38,
+    DEBUG_VIEW_COUNT = 39,
+    DEBUG_VIEW_INVALID = 39,
+};
+
+enum<sint8> Type
+{
+    NONE = 0,
+    SHADOW_LIGHT = 1,
+    SHADOW_AND_DISTANT_LIGHT = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); Type type;
+    FSeek(p + 4); float minLightElevationAngle;
+
+    FSeek(p + 8);
+} GlobalLightAngleLimit;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+    FSeek(p + 4); GlobalLightAngleLimit limit;
+
+    FSeek(p + 12);
+} GlobalLightParameter;
+
+enum<sint8> LocalLightCullingType
+{
+    LOCAL_LIGHT_CULLING_TYPE_NONE = 0,
+    LOCAL_LIGHT_CULLING_TYPE_CPU_TILE = 1,
+    LOCAL_LIGHT_CULLING_TYPE_GPU_TILE = 2,
+    LOCAL_LIGHT_CULLING_TYPE_GPU_CLUSTER = 3,
+    LOCAL_LIGHT_CULLING_TYPE_COUNT = 4,
+    LOCAL_LIGHT_CULLING_TYPE_DEFAULT = 0,
+};
+
+enum<sint8> TextureViewType
+{
+    TEXTURE_VIEW_NONE = 0,
+    TEXTURE_VIEW_DEPTH = 1,
+    TEXTURE_VIEW_LUMINANCE = 2,
+    TEXTURE_VIEW_DOF_BOKEH = 3,
+    TEXTURE_VIEW_DOF_BOKEH_NEAR = 4,
+    TEXTURE_VIEW_SSAO_SOURCE = 5,
+    TEXTURE_VIEW_DOWNSAMPLE = 6,
+    TEXTURE_VIEW_COUNT = 7,
+};
+
+enum<sint8> AmbientSpecularType
+{
+    AMBIENT_SPECULAR_NONE = 0,
+    AMBIENT_SPECULAR_SG = 1,
+    AMBIENT_SPECULAR_IBL = 2,
+    AMBIENT_SPECULAR_BLEND = 3,
+};
+
+enum<sint8> ChannelMode
+{
+    CHANNELMODE_RGB = 0,
+    CHANNELMODE_RRR = 1,
+    CHANNELMODE_GGG = 2,
+    CHANNELMODE_BBB = 3,
+    CHANNELMODE_AAA = 4,
+    CHANNELMODE_RG = 5,
+    CHANNELMODE_BA = 6,
+};
+
+enum<sint8> DebugScreenType
+{
+    DEBUG_SCREEN_GBUFFER0 = 0,
+    DEBUG_SCREEN_GBUFFER1 = 1,
+    DEBUG_SCREEN_GBUFFER2 = 2,
+    DEBUG_SCREEN_GBUFFER3 = 3,
+    DEBUG_SCREEN_DEPTHBUFFER = 4,
+    DEBUG_SCREEN_CSM0 = 5,
+    DEBUG_SCREEN_CSM1 = 6,
+    DEBUG_SCREEN_CSM2 = 7,
+    DEBUG_SCREEN_CSM3 = 8,
+    DEBUG_SCREEN_HDR = 9,
+    DEBUG_SCREEN_BLOOM = 10,
+    DEBUG_SCREEN_RLR = 11,
+    DEBUG_SCREEN_GODRAY = 12,
+    DEBUG_SCREEN_SSAO = 13,
+    DEBUG_SCREEN_CSM_CACHE0 = 14,
+    DEBUG_SCREEN_CSM_CACHE1 = 15,
+    DEBUG_SCREEN_CSM_CACHE2 = 16,
+    DEBUG_SCREEN_CSM_CACHE3 = 17,
+    DEBUG_SCREEN_CSM_CACHE4 = 18,
+    DEBUG_SCREEN_CSM_CACHE5 = 19,
+    DEBUG_SCREEN_CUSTOM0 = 20,
+    DEBUG_SCREEN_CUSTOM1 = 21,
+    DEBUG_SCREEN_CUSTOM2 = 22,
+    DEBUG_SCREEN_CUSTOM3 = 23,
+};
+
+enum<sint8> ErrorCheckType
+{
+    ERROR_CHECK_NONE = 0,
+    ERROR_CHECK_NAN = 1,
+    ERROR_CHECK_ALBEDO = 2,
+    ERROR_CHECK_NORMAL = 3,
+};
+
+enum<sint8> VisualizeMode
+{
+    DEFAULT = 0,
+    HEATMAP_TYPE0 = 1,
+    HEATMAP_TYPE1 = 2,
+    HEATMAP_TYPE2 = 3,
+    VECTOR2D_TYPE0 = 4,
+    VECTOR2D_TYPE1 = 5,
+    VECTOR2D_TYPE2 = 6,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool fullScreen;
+    FSeek(p + 2);  ChannelMode channelMode;
+    FSeek(p + 4);  float min;
+    FSeek(p + 8);  float max;
+    FSeek(p + 12); sint32 renderTargetType;
+    FSeek(p + 16); sint32 depthTargetType;
+    FSeek(p + 20); DebugScreenType screenType;
+    FSeek(p + 21); ErrorCheckType errorCheck;
+    FSeek(p + 22); VisualizeMode visualizeMode;
+
+    FSeek(p + 24);
+} DebugScreenOption;
+
+enum<sint8> DebugScreenView
+{
+    DEBUG_SCREEN_VIEW_DEFAULT = 0,
+    DEBUG_SCREEN_VIEW_ALL_ENABLE = 1,
+    DEBUG_SCREEN_VIEW_ALL_DISABLE = 2,
+};
+
+typedef struct vector4 {
+    float x;
+    float y;
+    float z;
+    float w;
+} vector4;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 16); vector4 value;
+
+    FSeek(p + 32);
+} GlobalUserParamOption;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   DebugViewType debugViewType;
+    FSeek(p + 1);   bool clearRenderTarget;
+    FSeek(p + 2);   bool enableDrawCubeProbe;
+    FSeek(p + 4);   GlobalLightParameter globalLight;
+    FSeek(p + 16);  bool enablePointLight;
+    FSeek(p + 17);  bool enableEffectDeformation;
+    FSeek(p + 18);  bool enablePreMergeIBL;
+    FSeek(p + 19);  bool enableLitePostEffect;
+    FSeek(p + 20);  LocalLightCullingType localLightCullingType;
+    FSeek(p + 24);  float localLightScale;
+    FSeek(p + 28);  float shadowIBLAttenuation;
+    FSeek(p + 32);  sint32 maxCubeProbe;
+    FSeek(p + 36);  bool debugEnableDrawLocalLight;
+    FSeek(p + 37);  TextureViewType debugTextureViewType;
+    FSeek(p + 38);  bool debugEnableOutputTextureView;
+    FSeek(p + 40);  sint32 debugScreenshotResolutionHeight;
+    FSeek(p + 44);  float debugScreenshotDepthNear;
+    FSeek(p + 48);  float debugScreenshotDepthFar;
+    FSeek(p + 52);  AmbientSpecularType debugAmbientSpecularType;
+    FSeek(p + 53);  bool debugEnableSGGIVer2nd;
+    FSeek(p + 54);  bool debugEnableAOGI;
+    FSeek(p + 56);  DebugScreenOption debugScreen[16]<optimize=false>;
+    FSeek(p + 440); DebugScreenView debugScreenView;
+    FSeek(p + 441); bool enableMSAA;
+    FSeek(p + 442); bool debugEnableDrawFrustumCullFrustum;
+    FSeek(p + 443); bool debugEnableFixFrustumCullFrustum;
+    FSeek(p + 444); sint32 debugDrawFrustumCullGroupSettingIndex;
+    FSeek(p + 448); bool debugEnableOcclusionCullingView;
+    FSeek(p + 452); sint32 debugOccluderVertThreshold;
+    FSeek(p + 464); GlobalUserParamOption globalUserParam[4]<optimize=false>;
+
+    FSeek(p + 592);
+} FxRenderOption;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float sgStartSmoothness;
+    FSeek(p + 4);  float sgEndSmoothness;
+    FSeek(p + 8);  float doStartSmoothness;
+    FSeek(p + 12); float doEndSmoothness;
+    FSeek(p + 16); float doOffset;
+    FSeek(p + 20); float aoOffset;
+
+    FSeek(p + 24);
+} FxSGGIParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool traceSky;
+    FSeek(p + 2);  bool useTrans;
+    FSeek(p + 3);  bool usePenet;
+    FSeek(p + 4);  bool useQuat;
+    FSeek(p + 5);  bool useNormal;
+    FSeek(p + 8);  float rayMarchingCount;
+    FSeek(p + 12); float planeNormalDist;
+    FSeek(p + 16); float traceThreshold;
+    FSeek(p + 20); float resolveReproj;
+    FSeek(p + 24); float overrideRatio;
+    FSeek(p + 28); float maxRoughness;
+    FSeek(p + 32); float roughnessLevel;
+    FSeek(p + 36); float uvOffsetScale;
+
+    FSeek(p + 40);
+} FxRLRParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool useDenoise;
+    FSeek(p + 4); float rayLength;
+
+    FSeek(p + 8);
+} FxSSGIDebugParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float intensity;
+    FSeek(p + 8);  bool useAlbedo;
+    FSeek(p + 9);  bool useParameter;
+    FSeek(p + 12); FxSSGIDebugParameter debugParam;
+
+    FSeek(p + 20);
+} FxSSGIParameter;
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 16); vector4 plane;
+    FSeek(p + 32); uint32 width;
+    FSeek(p + 36); uint32 height;
+
+    FSeek(p + 48);
+} FxPlanarReflectionParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool fast;
+    FSeek(p + 4);  float bloomScale;
+    FSeek(p + 8);  float sampleRadiusScale;
+    FSeek(p + 12); sint32 blurQuality;
+
+    FSeek(p + 16);
+} FxBloomParameter;
+
+enum<sint8> Exposure
+{
+    EXPOSURE_MANUAL = 0,
+    EXPOSURE_AUTO = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float exposureValue;
+
+    FSeek(p + 4);
+} FxManualExposureParameter;
+
+enum<sint8> LUMINANCE_RANGE
+{
+    LUMINANCE_RANGE_CLAMP = 0,
+    LUMINANCE_RANGE_CUTOFF = 1,
+    LUMINANCE_RANGE_CUTOFF_PCT_RATE = 2,
+    LUMINANCE_RANGE_CUTOFF_PCT_AREA = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float middleGray;
+    FSeek(p + 4);  float lumMax;
+    FSeek(p + 8);  float lumMin;
+    FSeek(p + 12); float cutMax;
+    FSeek(p + 16); float cutMin;
+    FSeek(p + 20); float pctMax;
+    FSeek(p + 24); float pctMin;
+    FSeek(p + 28); float adaptedRatio;
+    FSeek(p + 32); LUMINANCE_RANGE luminanceRangeType;
+
+    FSeek(p + 36);
+} FxAutoExposureParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); Exposure exposureType;
+    FSeek(p + 4); FxManualExposureParameter manualExposure;
+    FSeek(p + 8); FxAutoExposureParameter autoExposure;
+
+    FSeek(p + 44);
+} FxCameraControlParameter;
+
+enum<sint8> Tonemap
+{
+    TONEMAP_DISNEY = 0,
+    TONEMAP_FILMIC = 1,
+    TONEMAP_ACES = 2,
+    TONEMAP_GT = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float whitePoint;
+    FSeek(p + 4);  float toeStrength;
+    FSeek(p + 8);  float linearAngle;
+    FSeek(p + 12); float linearStrength;
+    FSeek(p + 16); float shoulderStrength;
+
+    FSeek(p + 20);
+} FxToneMapParameterFilmic;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxDisplayBrightness;
+    FSeek(p + 4);  float contrast;
+    FSeek(p + 8);  float linearSectionStart;
+    FSeek(p + 12); float linearSectionLength;
+    FSeek(p + 16); float black;
+
+    FSeek(p + 20);
+} FxToneMapParameterGT;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Tonemap tonemapType;
+    FSeek(p + 4);  FxToneMapParameterFilmic tonemapParamFilmic;
+    FSeek(p + 24); FxToneMapParameterGT tonemapParamGT;
+    FSeek(p + 44); bool updateLuminance;
+
+    FSeek(p + 48);
+} FxToneMapParameter;
+
+enum<sint32> LutIndex
+{
+    LUT_INDEX_DEFAULT = 0,
+    LUT_INDEX_WB = 1,
+    LUT_INDEX_USER_0 = 2,
+    LUT_INDEX_USER_1 = 3,
+    LUT_INDEX_USER_2 = 4,
+    LUT_INDEX_USER_3 = 5,
+    LUT_INDEX_USER_4 = 6,
+    LUT_INDEX_USER_5 = 7,
+    LUT_INDEX_COUNT = 8,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float contrast;
+    FSeek(p + 8);  float dynamicRange;
+    FSeek(p + 12); float crushShadows;
+    FSeek(p + 16); float crushHilights;
+    FSeek(p + 20); bool useLut;
+    FSeek(p + 24); LutIndex lutIndex0;
+    FSeek(p + 28); LutIndex lutIndex1;
+    FSeek(p + 32); float blendRatio;
+    FSeek(p + 36); float lutRatio;
+    FSeek(p + 40); bool useHlsCorrection;
+    FSeek(p + 44); float hlsHueOffset;
+    FSeek(p + 48); float hlsLightnessOffset;
+    FSeek(p + 52); float hlsSaturationOffset;
+    FSeek(p + 56); sint32 hlsColorOffset[3]<optimize=false>;
+    FSeek(p + 68); float hlsColorizeRate;
+    FSeek(p + 72); float hlsColorizeHue;
+
+    FSeek(p + 76);
+} FxColorContrastParameter;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 16); vector3 color;
+    FSeek(p + 32); float inScatteringScale;
+    FSeek(p + 48); vector3 betaRayleigh;
+    FSeek(p + 64); float betaMie;
+    FSeek(p + 68); float g;
+    FSeek(p + 72); float znear;
+    FSeek(p + 76); float zfar;
+    FSeek(p + 80); float depthScale;
+
+    FSeek(p + 96);
+} FxLightScatteringParameter;
+
+enum<sint32> RenderTargetSize
+{
+    RTSIZE_FULL_SCALE = 0,
+    RTSIZE_HALF_SCALE = 1,
+    RTSIZE_QUARTER_SCALE = 2,
+    RTSIZE_COUNT = 3,
+    RTSIZE_INVALID = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool useFocusLookAt;
+    FSeek(p + 4);  float foregroundBokehMaxDepth;
+    FSeek(p + 8);  float foregroundBokehStartDepth;
+    FSeek(p + 12); float backgroundBokehStartDepth;
+    FSeek(p + 16); float backgroundBokehMaxDepth;
+    FSeek(p + 20); bool enableCircleDOF;
+    FSeek(p + 24); float cocMaxRadius;
+    FSeek(p + 28); float bokehRadiusScale;
+    FSeek(p + 32); sint32 bokehSampleCount;
+    FSeek(p + 36); float skyFocusDistance;
+    FSeek(p + 40); float bokehBias;
+    FSeek(p + 44); bool drawFocalPlane;
+    FSeek(p + 48); RenderTargetSize rtScale;
+    FSeek(p + 52); bool enableSWA;
+    FSeek(p + 56); float swaFocus;
+    FSeek(p + 60); float swaFocusRange;
+    FSeek(p + 64); float swaNear;
+    FSeek(p + 68); float swaFar;
+    FSeek(p + 72); bool enableEnhancedForeBokeh;
+    FSeek(p + 76); float foreBokehScale;
+    FSeek(p + 80); float foreBokehMaxLuminance;
+
+    FSeek(p + 84);
+} FxDOFParameter;
+
+enum<sint8> ShadowRenderingType
+{
+    SHADOW_RENDERING_TYPE_SHADOW_MAP = 0,
+    SHADOW_RENDERING_TYPE_PLANAR_PROJECTION = 1,
+    SHADOW_RENDERING_TYPE_PLANAR_PROJECTION_SHADOW_MAP = 2,
+    SHADOW_RENDERING_TYPE_MULTI_SHADOW_MAP = 3,
+    SHADOW_RENDERING_TYPE_COUNT = 4,
+};
+
+enum<sint8> ShadowFilter
+{
+    SHADOW_FILTER_POINT = 0,
+    SHADOW_FILTER_PCF = 1,
+    SHADOW_FILTER_PCSS = 2,
+    SHADOW_FILTER_ESM = 3,
+    SHADOW_FILTER_MSM = 4,
+    SHADOW_FILTER_VSM_POINT = 5,
+    SHADOW_FILTER_VSM_LINEAR = 6,
+    SHADOW_FILTER_VSM_ANISO_2 = 7,
+    SHADOW_FILTER_VSM_ANISO_4 = 8,
+    SHADOW_FILTER_VSM_ANISO_8 = 9,
+    SHADOW_FILTER_VSM_ANISO_16 = 10,
+    SHADOW_FILTER_COUNT = 11,
+    SHADOW_FILTER_VSM_FIRST = 5,
+    SHADOW_FILTER_VSM_LAST = 10,
+};
+
+enum<sint8> ShadowRangeType
+{
+    SHADOW_RANGE_TYPE_CAMERA_LOOKAT = 0,
+    SHADOW_RANGE_TYPE_POSITION_MANUAL = 1,
+    SHADOW_RANGE_TYPE_FULL_MANUAL = 2,
+    SHADOW_RANGE_TYPE_COUNT = 3,
+    SHADOW_RANGE_TYPE_DEFAULT = 0,
+};
+
+enum<sint8> FitProjection
+{
+    FIT_PROJECTION_TO_CASCADES = 0,
+    FIT_PROJECTION_TO_SCENE = 1,
+    FIT_PROJECTION_TO_ROTATE_CASCADES = 2,
+};
+
+enum<sint8> FitNearFar
+{
+    FIT_NEARFAR_ZERO_ONE = 0,
+    FIT_NEARFAR_AABB = 1,
+    FIT_NEARFAR_SCENE_AABB = 2,
+};
+
+enum<sint8> PartitionType
+{
+    PARTITION_PSSM = 0,
+    PARTITION_MANUAL = 1,
+};
+
+typedef struct matrix44 {
+    float m[4 * 4];
+} matrix44;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   ShadowRenderingType renderingType;
+    FSeek(p + 1);   bool enable;
+    FSeek(p + 2);   ShadowFilter shadowFilter;
+    FSeek(p + 3);   ShadowRangeType shadowRangeType;
+    FSeek(p + 4);   FitProjection fitProjection;
+    FSeek(p + 5);   FitNearFar fitNearFar;
+    FSeek(p + 6);   PartitionType partitionType;
+    FSeek(p + 8);   float sceneRange;
+    FSeek(p + 12);  float sceneCenter[3]<optimize=false>;
+    FSeek(p + 24);  float manualLightPos[3]<optimize=false>;
+    FSeek(p + 36);  float pssmLambda;
+    FSeek(p + 40);  float cascadeOffset;
+    FSeek(p + 44);  sint32 cascadeLevel;
+    FSeek(p + 48);  float cascadeSplits[4]<optimize=false>;
+    FSeek(p + 64);  float cascadeBias[4]<optimize=false>;
+    FSeek(p + 80);  float bias;
+    FSeek(p + 84);  float offset;
+    FSeek(p + 88);  float normalBias;
+    FSeek(p + 92);  sint32 width;
+    FSeek(p + 96);  sint32 height;
+    FSeek(p + 100); sint32 blurQuality;
+    FSeek(p + 104); sint32 blurSize;
+    FSeek(p + 108); float fadeoutDistance;
+    FSeek(p + 112); float cascadeTransitionfadeDistance;
+    FSeek(p + 116); bool enableCSMCache;
+    FSeek(p + 120); float csmCacheMaxHeight;
+    FSeek(p + 124); float csmCacheMinHeight;
+    FSeek(p + 128); sint32 csmCacheMaxRenderPass;
+    FSeek(p + 132); float csmCacheFixedFovy;
+    FSeek(p + 136); float csmCacheLightDirectionThreshold;
+    FSeek(p + 140); bool csmCacheParallaxCorrectionEnabled;
+    FSeek(p + 144); float csmCacheParallaxCorrectionHorizontalBias;
+    FSeek(p + 148); float csmCacheParallaxCorrectionVerticalBias;
+    FSeek(p + 152); sint32 csmCacheFramesToRender[3]<optimize=false>;
+    FSeek(p + 164); float csmCacheFadeLightElevationAngle;
+    FSeek(p + 168); float csmCacheMinLightElevationAngle;
+    FSeek(p + 176); matrix44 shadowCameraViewMatrix;
+    FSeek(p + 240); matrix44 shadowCameraProjectionMatrix;
+    FSeek(p + 304); float shadowCameraNearDepth;
+    FSeek(p + 308); float shadowCameraFarDepth;
+    FSeek(p + 312); float shadowCameraLookAtDepth;
+    FSeek(p + 316); bool enableBackFaceShadow;
+    FSeek(p + 317); bool enableShadowCamera;
+    FSeek(p + 318); bool enableDrawSceneAABB;
+    FSeek(p + 319); bool enableDrawShadowFrustum;
+    FSeek(p + 320); bool enableDrawCascade;
+    FSeek(p + 321); bool enableDrawCameraFrustum;
+    FSeek(p + 322); bool enableDrawCSMCache;
+    FSeek(p + 323); bool enableClearOnCSMCacheIsInvalidated;
+    FSeek(p + 324); bool enablePauseCamera;
+
+    FSeek(p + 336);
+} FxShadowMapParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float bias;
+    FSeek(p + 8);  float distanceFalloff;
+    FSeek(p + 12); float heightFalloffMinHeight;
+    FSeek(p + 16); float heightFalloffDistance;
+
+    FSeek(p + 20);
+} FxShadowHeightMapParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+    FSeek(p + 1); bool isForceUseShadowmap;
+    FSeek(p + 2); bool isUseCloudShadow;
+    FSeek(p + 3); bool isUseHeightmapShadow;
+
+    FSeek(p + 4);
+} FxVolumetricShadowParameter;
+
+enum<sint8> SSAOType
+{
+    SSAO = 0,
+    HBAO = 1,
+    HBAO_SSS = 2,
+    SSS = 3,
+    TYPE_COUNT = 4,
+};
+
+enum<sint8> FxSSAOParameter_RenderTargetSize
+{
+    FxSSAOParameter_RTSIZE_SAME_AS_FRAMEBUFFER = 0,
+    FxSSAOParameter_RTSIZE_ONE_SECOND = 1,
+    FxSSAOParameter_RTSIZE_ONE_FORTH = 2,
+    FxSSAOParameter_RTSIZE_COUNT = 3,
+};
+
+enum<sint8> BLURType
+{
+    None = 1,
+    Gauss2x2 = 2,
+    Gauss3x3 = 3,
+    Gauss4x4 = 4,
+    Gauss5x5 = 5,
+    Gauss6x6 = 6,
+    Gauss7x7 = 7,
+    Gauss8x8 = 8,
+    Gauss9x9 = 9,
+    Bilateral = 10,
+    BLUR_COUNT = 11,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float intensity;
+    FSeek(p + 4);  float radius;
+    FSeek(p + 8);  float fadeoutDistance;
+    FSeek(p + 12); float fadeoutRadius;
+    FSeek(p + 16); float power;
+    FSeek(p + 20); float bias;
+    FSeek(p + 24); float occlusionDistance;
+    FSeek(p + 28); float directLightingInfluence;
+
+    FSeek(p + 32);
+} FxSSAO_Parameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float hbaoPower;
+    FSeek(p + 4);  float hbaoBias;
+    FSeek(p + 8);  float hbaoRadius;
+    FSeek(p + 12); float hbaoFalloff;
+    FSeek(p + 16); float hbaoSteps;
+    FSeek(p + 20); float hbaoGitter;
+    FSeek(p + 24); sint8 hbaoRaycount;
+    FSeek(p + 25); bool hbaoGiMaskEnable;
+
+    FSeek(p + 28);
+} FxHBAO_Parameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float sssRayLength;
+    FSeek(p + 4);  sint8 sssRaycount;
+    FSeek(p + 8);  float sssBias;
+    FSeek(p + 12); float sssIntensity;
+    FSeek(p + 16); float sssDepthMin;
+    FSeek(p + 20); float sssDepthMax;
+    FSeek(p + 24); float sssLightDistance;
+    FSeek(p + 28); float sssThickness;
+    FSeek(p + 32); bool sssGiMaskEnable;
+    FSeek(p + 36); float sssLimit;
+    FSeek(p + 40); bool sssDitherEnable;
+
+    FSeek(p + 44);
+} FxSSS_Parameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  SSAOType postType;
+    FSeek(p + 2);  FxSSAOParameter_RenderTargetSize renderTargetSize;
+    FSeek(p + 3);  BLURType blurStep;
+    FSeek(p + 4);  float bilateralThreshold;
+    FSeek(p + 8);  FxSSAO_Parameter ssaoParam;
+    FSeek(p + 40); FxHBAO_Parameter hbaoParam;
+    FSeek(p + 68); FxSSS_Parameter sssParam;
+
+    FSeek(p + 112);
+} FxSSAOParameter;
+
+enum<sint8> DebugDrawType
+{
+    DEBUG_DRAW_NONE = 0,
+    DEBUG_DRAW_ONLY_ENABLED = 1,
+    DEBUG_DRAW_ALL = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+    FSeek(p + 4); float blendRatio;
+
+    FSeek(p + 8);
+} FxLightFieldMergeParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  DebugDrawType debugDrawType;
+    FSeek(p + 2);  bool showSkyVisibility;
+    FSeek(p + 4);  float debugProbeSize;
+    FSeek(p + 16); vector3 multiplyColorUp;
+    FSeek(p + 32); vector3 multiplyColorDown;
+    FSeek(p + 48); float normalBias;
+    FSeek(p + 52); FxLightFieldMergeParameter lfMerge;
+
+    FSeek(p + 64);
+} FxSHLightFieldParameter;
+
+enum<sint8> BlurType
+{
+    BLURTYPE_PREV_SURFACE = 0,
+    BLURTYPE_RADIAL = 1,
+    BLURTYPE_CAMERA = 2,
+    BLURTYPE_COUNT = 3,
+};
+
+enum<sint8> FocusType
+{
+    FOCUSTYPE_CENTER = 0,
+    FOCUSTYPE_LOOKAT = 1,
+    FOCUSTYPE_USER_SETTING = 2,
+    FOCUSTYPE_COUNT = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  BlurType blurType;
+    FSeek(p + 4);  float blurPower;
+    FSeek(p + 8);  FocusType focusType;
+    FSeek(p + 16); vector3 focusPosition;
+    FSeek(p + 32); float focusRange;
+    FSeek(p + 36); float alphaSlope;
+    FSeek(p + 40); sint32 sampleNum;
+    FSeek(p + 44); bool singleDirectionOpt;
+
+    FSeek(p + 48);
+} FxScreenBlurParameter;
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 1);   bool enableOcclusion;
+    FSeek(p + 4);   color8 occlusionColor;
+    FSeek(p + 8);   float occlusionPower;
+    FSeek(p + 12);  bool enableSpecularOcclusion;
+    FSeek(p + 16);  float specularOcclusionAlpha;
+    FSeek(p + 20);  float specularOcclusionPower;
+    FSeek(p + 24);  float specularOcclusionConeAngle;
+    FSeek(p + 28);  bool enableShadow;
+    FSeek(p + 32);  color8 shadowColor;
+    FSeek(p + 36);  float shadowPower;
+    FSeek(p + 40);  float shadowConeAngle;
+    FSeek(p + 44);  float cullingDistance;
+    FSeek(p + 48);  bool enableManualLight;
+    FSeek(p + 52);  sint32 manualLightCount;
+    FSeek(p + 64);  vector3 manualLightPos[4]<optimize=false>;
+    FSeek(p + 128); bool debugDraw;
+
+    FSeek(p + 144);
+} FxOcclusionCapsuleParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float lightFieldColorCoefficient;
+    FSeek(p + 4);  float invTonemapCoefficient;
+    FSeek(p + 16); vector3 shadowColor;
+    FSeek(p + 32); vector3 directionalLightOverwrite;
+    FSeek(p + 48); float directionalLightIntensityOverwrite;
+    FSeek(p + 52); bool overwriteDirectionalLight;
+    FSeek(p + 56); float localLightIntensityScale;
+    FSeek(p + 60); float lodDistances[8]<optimize=false>;
+    FSeek(p + 92); bool enableVisualizeOverdraw;
+    FSeek(p + 93); bool renderWireframe;
+    FSeek(p + 94); bool upsampleBilateral;
+
+    FSeek(p + 96);
+} FxEffectParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float rayMarchingCount;
+    FSeek(p + 8);  float density;
+    FSeek(p + 12); float decay;
+    FSeek(p + 16); float threshold;
+    FSeek(p + 20); float lumMax;
+    FSeek(p + 24); float intensity;
+    FSeek(p + 28); bool enableDither;
+    FSeek(p + 32); vector3 lightPos;
+    FSeek(p + 48); vector3 lightDir;
+
+    FSeek(p + 64);
+} FxScreenSpaceGodrayParameter;
+
+typedef struct matrix34 {
+    float m[4 * 4];
+} matrix34;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enableVolumeTexture;
+    FSeek(p + 4);  float uvScale;
+    FSeek(p + 8);  float timeScale;
+    FSeek(p + 12); float animationAngle;
+
+    FSeek(p + 16);
+} FxGodrayVolumeTexture;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 1);   bool isUseShadowmap;
+    FSeek(p + 2);   bool isVariableStep;
+    FSeek(p + 16);  matrix44 shadow;
+    FSeek(p + 80);  matrix34 box;
+    FSeek(p + 144); vector3 color;
+    FSeek(p + 160); float density;
+    FSeek(p + 164); float anisotropy;
+    FSeek(p + 168); float range;
+    FSeek(p + 172); float rayMarchingCount;
+    FSeek(p + 176); float rayMarchingStep;
+    FSeek(p + 180); float shadowEdge;
+    FSeek(p + 184); bool isScanFromBack;
+    FSeek(p + 188); sint32 boxCount;
+    FSeek(p + 192); bool isNewMode;
+    FSeek(p + 196); FxGodrayVolumeTexture volumeTexture;
+    FSeek(p + 212); float transparency;
+    FSeek(p + 216); bool enable3d;
+    FSeek(p + 220); float reProject3d;
+    FSeek(p + 224); float logNear3d;
+
+    FSeek(p + 240);
+} FxGodrayParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float scale;
+    FSeek(p + 12); float cycle;
+    FSeek(p + 16); float nearDepth;
+    FSeek(p + 20); float farDepth;
+    FSeek(p + 24); float maxHeight;
+    FSeek(p + 28); float parallaxCorrectFactor;
+
+    FSeek(p + 32);
+} FxHeatHazeParameter;
+
+enum<sint8> SunPosType
+{
+    SUN_POS_TYPE_NONE = 0,
+    SUN_POS_TYPE_ANGLE = 1,
+    SUN_POS_TYPE_EARTH = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float azimuthAngle;
+    FSeek(p + 4); float elevationAngle;
+
+    FSeek(p + 8);
+} FxSunPosAngle;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float azimuthAngle;
+    FSeek(p + 4);  float latitude;
+    FSeek(p + 8);  float longitude;
+    FSeek(p + 12); sint32 month;
+    FSeek(p + 16); sint32 day;
+    FSeek(p + 20); float time;
+    FSeek(p + 24); bool enableAnimation;
+    FSeek(p + 28); float animationSpeed;
+
+    FSeek(p + 32);
+} FxSunPosEarth;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float solarRadiusScale;
+    FSeek(p + 4);  SunPosType sunPosType;
+    FSeek(p + 8);  FxSunPosAngle posTypeAngle;
+    FSeek(p + 16); FxSunPosEarth posTypeEarth;
+
+    FSeek(p + 48);
+} FxSun;
+
+enum<sint8> MoonPosType
+{
+    MOON_POS_TYPE_NONE = 0,
+    MOON_POS_TYPE_INV_SUN = 1,
+    MOON_POS_TYPE_EARTH = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MoonPosType moonPosType;
+
+    FSeek(p + 1);
+} FxMoon;
+
+enum<sint8> SkyModel
+{
+    BRUNETON = 0,
+    SEBASTIEN = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  SkyModel skyModel;
+    FSeek(p + 4);  float illuminanceScale;
+    FSeek(p + 8);  bool enableScattering;
+    FSeek(p + 12); float scatteringRatio;
+
+    FSeek(p + 16);
+} FxSkyCommon;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float lunarIntensityInSky;
+    FSeek(p + 4);  float starIntensityInSky;
+    FSeek(p + 8);  float lunarIntensityInCloud;
+    FSeek(p + 12); float lunarIntensity;
+    FSeek(p + 16); float skyIntensity;
+    FSeek(p + 20); color8 lunarLightColor;
+    FSeek(p + 32); vector4 lunarLightColorOffset;
+    FSeek(p + 48); float lunarLightPower;
+
+    FSeek(p + 64);
+} FxBrunetonSkyNight;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float illuminanceScale;
+    FSeek(p + 4);   color8 rayleighColor;
+    FSeek(p + 8);   color8 lightColorScale;
+    FSeek(p + 12);  float miePhaseFunctionG;
+    FSeek(p + 16);  color8 mieScatteringColor;
+    FSeek(p + 20);  float mieScatteringScale;
+    FSeek(p + 24);  color8 mieAbsorptionColor;
+    FSeek(p + 28);  float mieAbsorptionScale;
+    FSeek(p + 32);  color8 rayleighScatteringColor;
+    FSeek(p + 36);  float rayleighScatteringScale;
+    FSeek(p + 40);  color8 groundAlbedo;
+    FSeek(p + 44);  color8 groundIrradianceScale;
+    FSeek(p + 48);  color8 cubemapColorScale;
+    FSeek(p + 52);  float cubemapColorAngleRatio;
+    FSeek(p + 56);  bool enableScattering;
+    FSeek(p + 60);  float scatteringRatio;
+    FSeek(p + 64);  FxBrunetonSkyNight night;
+    FSeek(p + 128); bool enableLimitY;
+    FSeek(p + 132); float debugSkyCubeIntensity;
+
+    FSeek(p + 144);
+} FxBrunetonSky;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float miePhaseFunctionG;
+    FSeek(p + 4);   color8 mieScatteringColor;
+    FSeek(p + 16);  vector4 mieScatteringColorOffset;
+    FSeek(p + 32);  float mieScatteringScale;
+    FSeek(p + 36);  color8 mieAbsorptionColor;
+    FSeek(p + 48);  vector4 mieAbsorptionColorOffset;
+    FSeek(p + 64);  float mieAbsorptionScale;
+    FSeek(p + 68);  color8 rayleighScatteringColor;
+    FSeek(p + 80);  vector4 rayleighScatteringColorOffset;
+    FSeek(p + 96);  float rayleighScatteringScale;
+    FSeek(p + 100); color8 groundAlbedo;
+    FSeek(p + 112); vector4 groundAlbedoOffset;
+    FSeek(p + 128); bool enableGround;
+    FSeek(p + 132); sint32 numScatteringOrder;
+    FSeek(p + 136); bool enableScattering;
+    FSeek(p + 137); bool enableLimitY;
+
+    FSeek(p + 144);
+} FxSebastienSky;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 uvScale;
+    FSeek(p + 16); vector3 colorGamma;
+    FSeek(p + 32); vector3 colorScale;
+    FSeek(p + 48); vector3 colorOffset;
+
+    FSeek(p + 64);
+} FxCloudProcedural;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float probability;
+    FSeek(p + 8);  float cloudiness;
+    FSeek(p + 16); FxCloudProcedural proceduralCloud;
+
+    FSeek(p + 80);
+} FxCloudBlendParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 1);   bool enableAnimation;
+    FSeek(p + 4);   float animationFrame;
+    FSeek(p + 8);   float animationSpeed;
+    FSeek(p + 12);  float animationAngle;
+    FSeek(p + 16);  float animationSpeedCirrus;
+    FSeek(p + 20);  float animationAngleCirrus;
+    FSeek(p + 24);  float skyHorizonOffset;
+    FSeek(p + 28);  float cloudStartHeight;
+    FSeek(p + 32);  float cloudCoverageSpeed;
+    FSeek(p + 36);  float cloudTypeSpeed;
+    FSeek(p + 40);  float cloudWetnessSpeed;
+    FSeek(p + 44);  float miePhaseFunctionG;
+    FSeek(p + 48);  float silverIntensity;
+    FSeek(p + 52);  float silverSpread;
+    FSeek(p + 56);  float scale;
+    FSeek(p + 60);  float density;
+    FSeek(p + 64);  float densityThreshold;
+    FSeek(p + 68);  color8 cloudsExtinctionColor1;
+    FSeek(p + 80);  vector4 cloudsExtinctionColor1Offset;
+    FSeek(p + 96);  color8 cloudsExtinctionColor2;
+    FSeek(p + 112); vector4 cloudsExtinctionColor2Offset;
+    FSeek(p + 128); color8 cloudsExtinctionColor3;
+    FSeek(p + 144); vector4 cloudsExtinctionColor3Offset;
+    FSeek(p + 160); float cloudExtinctionBlend;
+    FSeek(p + 164); bool enableShadow;
+    FSeek(p + 168); sint32 shadowCoverage;
+    FSeek(p + 172); float shadowValueMin;
+    FSeek(p + 176); FxCloudBlendParameter blendParam;
+
+    FSeek(p + 256);
+} FxCloudParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float density;
+    FSeek(p + 8);  float decay;
+    FSeek(p + 12); float weight;
+
+    FSeek(p + 16);
+} FxCrepuscularRay;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 sunColor;
+    FSeek(p + 16); vector3 ambColor;
+
+    FSeek(p + 32);
+} FxManualHeightFog;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool enableFogMap;
+    FSeek(p + 4);  float heightScale;
+    FSeek(p + 8);  float distanceOffset;
+    FSeek(p + 12); float distanceScale;
+    FSeek(p + 16); vector3 rayleighScale;
+    FSeek(p + 32); vector3 mieScale;
+    FSeek(p + 48); float noiseBlend;
+    FSeek(p + 52); float noiseScale;
+    FSeek(p + 56); float noiseDistance;
+    FSeek(p + 60); float animationSpeed;
+    FSeek(p + 64); float animationAngle;
+    FSeek(p + 68); bool isAtmospheric;
+    FSeek(p + 80); FxManualHeightFog manualFog;
+
+    FSeek(p + 112);
+} FxHeightFog;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 4);   FxSun sunParam;
+    FSeek(p + 52);  FxMoon moonParam;
+    FSeek(p + 56);  FxSkyCommon commonSkyParam;
+    FSeek(p + 80);  FxBrunetonSky brunetonSkyParam;
+    FSeek(p + 224); FxSebastienSky sebastienSkyParam;
+    FSeek(p + 368); FxCloudParameter cloudParam;
+    FSeek(p + 624); FxCrepuscularRay crepuscularRayParam;
+    FSeek(p + 640); FxHeightFog heightFogParam;
+
+    FSeek(p + 752);
+} FxAtmosphereParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float heightThreshold;
+    FSeek(p + 4);  float slopeThreshold;
+    FSeek(p + 8);  float noiseScaleXZ;
+    FSeek(p + 12); float noiseScaleY;
+    FSeek(p + 16); float noiseThreshold;
+    FSeek(p + 20); float noiseAttenuationRange;
+
+    FSeek(p + 24);
+} FxPuddleParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float intensity;
+    FSeek(p + 4);  float uvScale;
+    FSeek(p + 8);  float timeScale;
+    FSeek(p + 12); float normalIntensity;
+
+    FSeek(p + 16);
+} FxRippleParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float uvScale;
+    FSeek(p + 4); float timeScale;
+    FSeek(p + 8); float normalIntensity;
+
+    FSeek(p + 12);
+} FxDropParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enableDrop;
+    FSeek(p + 1);   bool enableFilter;
+    FSeek(p + 2);   bool enableRipple;
+    FSeek(p + 4);   float intensity;
+    FSeek(p + 16);  vector4 dropColor;
+    FSeek(p + 32);  bool dropRotTarget;
+    FSeek(p + 33);  bool enableDropOcc;
+    FSeek(p + 36);  float dropCameraLerp;
+    FSeek(p + 40);  float dropCameraRate;
+    FSeek(p + 44);  float dropCameraRotation;
+    FSeek(p + 48);  float dropWidth;
+    FSeek(p + 52);  float dropLength;
+    FSeek(p + 56);  float dropWind;
+    FSeek(p + 60);  float dropRange;
+    FSeek(p + 64);  vector4 filterColor;
+    FSeek(p + 80);  float filterRange;
+    FSeek(p + 84);  float filterEdge;
+    FSeek(p + 88);  float filterAngle;
+    FSeek(p + 92);  FxRippleParameter ripple;
+    FSeek(p + 108); FxDropParameter drop;
+
+    FSeek(p + 128);
+} FxRainParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float wetness;
+    FSeek(p + 4);  FxPuddleParameter puddle;
+    FSeek(p + 32); FxRainParameter rain;
+
+    FSeek(p + 160);
+} FxWeatherParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float windRotationY;
+    FSeek(p + 4);  float windStrength;
+    FSeek(p + 8);  float windNoise;
+    FSeek(p + 12); float windAmplitude;
+    FSeek(p + 16); float windFrequencies[4]<optimize=false>;
+    FSeek(p + 32); bool enableTreadGrass;
+    FSeek(p + 48); vector4 grassLodDistance;
+    FSeek(p + 64); bool enableHighLight;
+    FSeek(p + 68); float highLightThreshold;
+    FSeek(p + 72); float highLightObjectAmbientScale;
+    FSeek(p + 76); float highLightObjectAlbedoHeighten;
+    FSeek(p + 80); float highLightCharaAmbientScale;
+    FSeek(p + 84); float highLightCharaAlbedoHeighten;
+    FSeek(p + 88); float highLightCharaFalloffScale;
+
+    FSeek(p + 96);
+} FxSceneEnvironmentParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enableUpscaling;
+    FSeek(p + 4);  float jitterScale;
+    FSeek(p + 8);  float mipBias;
+    FSeek(p + 12); float sharpnessPower;
+    FSeek(p + 16); float baseWeight;
+    FSeek(p + 20); float velocityVarianceBasedWeightBias;
+    FSeek(p + 24); float colorSpaceClippingScale;
+    FSeek(p + 28); float colorSpaceClippingScaleForStatic;
+    FSeek(p + 32); float velocityVarianceMin;
+    FSeek(p + 36); float velocityVarianceMax;
+    FSeek(p + 40); bool enableCharaStencilMask;
+    FSeek(p + 41); bool enableLiteMode;
+    FSeek(p + 42); bool enablePassThrough;
+    FSeek(p + 43); bool debugVisualizeVelcotiyVariance;
+    FSeek(p + 48); vector4 debug;
+
+    FSeek(p + 64);
+} FxTAAParameter;
+
+enum<sint8> PlacementType
+{
+    CirclePacking = 0,
+    RandomPos = 1,
+    PT_COUNT = 2,
+};
+
+enum<sint8> ShadowCullingType
+{
+    Normal = 0,
+    AabbUpScale2 = 1,
+    ShadowFrustum = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float lodRatio;
+    FSeek(p + 4);  float lodRise;
+    FSeek(p + 8);  float lodDecrease;
+    FSeek(p + 12); float lodThreshold;
+    FSeek(p + 16); bool lodFadeEnable;
+
+    FSeek(p + 20);
+} FxDensityLodParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool underSelect;
+    FSeek(p + 4);   float factor;
+    FSeek(p + 8);   float unit[32]<optimize=false>;
+    FSeek(p + 136); sint8 chunk[32]<optimize=false>;
+    FSeek(p + 168); float lodAddition;
+    FSeek(p + 172); sint32 chunkAddition;
+    FSeek(p + 176); float drawLimitLenght;
+    FSeek(p + 180); bool drawCallReduction;
+    FSeek(p + 181); bool enableDither;
+    FSeek(p + 184); sint32 ditherGrass;
+    FSeek(p + 188); sint32 ditherOther;
+    FSeek(p + 192); sint32 ditherPreComputeGrass;
+    FSeek(p + 196); sint32 ditherPreComputeOther;
+    FSeek(p + 200); sint32 computeMode;
+
+    FSeek(p + 204);
+} FxDensityDebugParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool precomputeEnable;
+    FSeek(p + 2);  bool cameraUpdate;
+    FSeek(p + 3);  PlacementType placement;
+    FSeek(p + 4);  float placementScale;
+    FSeek(p + 8);  bool alphaEnable;
+    FSeek(p + 12); float alphaThreshold;
+    FSeek(p + 16); float alphaScale;
+    FSeek(p + 20); bool complementEnable;
+    FSeek(p + 21); bool disableCut;
+    FSeek(p + 22); ShadowCullingType shadowCulling;
+    FSeek(p + 23); bool occlusionCulling;
+    FSeek(p + 24); float occlusionSize;
+    FSeek(p + 28); float occlusionShadowSize;
+    FSeek(p + 32); float occlusionBias;
+    FSeek(p + 36); FxDensityLodParameter lodParam;
+    FSeek(p + 56); bool angleCulling;
+    FSeek(p + 60); float angleCullingParam;
+    FSeek(p + 64); FxDensityDebugParameter debugParam;
+
+    FSeek(p + 268);
+} FxDensityParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float offsetR;
+    FSeek(p + 8);  float offsetG;
+    FSeek(p + 12); float offsetB;
+    FSeek(p + 16); float curve;
+    FSeek(p + 20); float scaleX;
+    FSeek(p + 24); float scaleY;
+    FSeek(p + 28); float centerX;
+    FSeek(p + 32); float centerY;
+
+    FSeek(p + 36);
+} FxChromaticAberrationParameter;
+
+enum<sint8> GradationMode
+{
+    GRADATION_MODE_CIRCLE = 0,
+    GRADATION_MODE_LINE = 1,
+};
+
+enum<sint8> BlendMode
+{
+    BLEND_MODE_ALPHA_BLEND = 0,
+    BLEND_MODE_ADD = 1,
+    BLEND_MODE_MUL = 2,
+    BLEND_MODE_SCREEN = 3,
+    BLEND_MODE_OVERLAY = 4,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float centerX;
+    FSeek(p + 4);  float centerY;
+    FSeek(p + 8);  float scaleX;
+    FSeek(p + 12); float scaleY;
+    FSeek(p + 16); float scale;
+    FSeek(p + 20); float rotation;
+
+    FSeek(p + 24);
+} FxVfImageCircleParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float centerX;
+    FSeek(p + 4);  float centerY;
+    FSeek(p + 8);  float directionX;
+    FSeek(p + 12); float directionY;
+    FSeek(p + 16); float rotation;
+
+    FSeek(p + 20);
+} FxVfLineParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float minPenumbraScale;
+    FSeek(p + 8);  float maxPenumbraScale;
+    FSeek(p + 12); float bokehScale;
+    FSeek(p + 16); float minDofOpacityScale;
+    FSeek(p + 20); float maxDofOpacityScale;
+    FSeek(p + 24); float minOpacityScale;
+    FSeek(p + 28); float maxOpacityScale;
+    FSeek(p + 32); float minOpacityDist;
+    FSeek(p + 36); float maxOpacityDist;
+
+    FSeek(p + 40);
+} FxVfDepthParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  GradationMode gradationType;
+    FSeek(p + 2);  BlendMode blendMode;
+    FSeek(p + 16); vector3 color;
+    FSeek(p + 32); float opacity;
+    FSeek(p + 36); FxVfImageCircleParameter imageCircle;
+    FSeek(p + 60); FxVfLineParameter line;
+    FSeek(p + 80); float penumbraScale;
+    FSeek(p + 84); float intensity;
+    FSeek(p + 88); FxVfDepthParameter depth;
+
+    FSeek(p + 128);
+} FxVignetteParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool debugEnable;
+    FSeek(p + 1);  bool debugSpace;
+    FSeek(p + 2);  bool debugGlobal;
+    FSeek(p + 3);  bool debugGlobalMap;
+    FSeek(p + 4);  bool debugSpaceAll;
+    FSeek(p + 8);  sint32 spaceIndex;
+    FSeek(p + 12); float spaceThreshold;
+    FSeek(p + 16); float min;
+    FSeek(p + 20); float max;
+
+    FSeek(p + 24);
+} FxWindComputeDebugParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enableAll;
+    FSeek(p + 1);   bool enableDynamicWind;
+    FSeek(p + 2);   bool enableGlobalWind;
+    FSeek(p + 4);   float timeScale;
+    FSeek(p + 8);   float decreaseRate;
+    FSeek(p + 16);  vector3 globalWind;
+    FSeek(p + 32);  float globalWindPower;
+    FSeek(p + 36);  float globalWindSpeed;
+    FSeek(p + 40);  float globalWindOffset;
+    FSeek(p + 48);  vector3 globalSecondWind;
+    FSeek(p + 64);  float globalSecondWindPower;
+    FSeek(p + 68);  float globalSecondWindSpeed;
+    FSeek(p + 72);  float globalSecondWindOffset;
+    FSeek(p + 80);  vector3 globalWindMapSize;
+    FSeek(p + 96);  vector3 globalWindMapCenter;
+    FSeek(p + 112); vector3 globalWindMapOffset;
+    FSeek(p + 128); float globalWindMapPower;
+    FSeek(p + 132); float globalWindMapTimeScale;
+    FSeek(p + 136); FxWindComputeDebugParameter debugParam;
+
+    FSeek(p + 160);
+} FxWindComputeParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float blendPower;
+    FSeek(p + 8);  float blendHightPower;
+    FSeek(p + 12); float cullingDistance;
+
+    FSeek(p + 16);
+} FxTerrainMaterialBlendingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+    FSeek(p + 1); bool collisionEnable;
+    FSeek(p + 4); float threshold;
+
+    FSeek(p + 8);
+} FxInteractionDebugParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float power;
+    FSeek(p + 8);  float decrease;
+    FSeek(p + 12); float timeScale;
+    FSeek(p + 16); FxInteractionDebugParameter debug;
+    FSeek(p + 24); float tremorPower;
+    FSeek(p + 28); float tremorSpeed;
+    FSeek(p + 32); float tremorScaleCriterion;
+    FSeek(p + 36); float tremorScaleReduce;
+
+    FSeek(p + 40);
+} FxInteractionParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float grassDitherStart;
+    FSeek(p + 4);  float grassDitherEnd;
+    FSeek(p + 8);  FxInteractionParameter interaction;
+    FSeek(p + 48); bool enableZoomBias;
+    FSeek(p + 52); float zoomBias;
+
+    FSeek(p + 56);
+} FxGpuEnvironmentParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool enableDebugDisplay;
+    FSeek(p + 4);  float waveDamping;
+    FSeek(p + 8);  float waveReduceRange;
+    FSeek(p + 12); float waveSpeed;
+    FSeek(p + 16); float simurationScale;
+    FSeek(p + 20); float playerMaxSpeed;
+    FSeek(p + 24); bool isInWaterDummy;
+
+    FSeek(p + 28);
+} FxInteractiveWaveParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float tileX;
+    FSeek(p + 8);  float tileY;
+    FSeek(p + 12); float tileScrollSpeed;
+    FSeek(p + 16); float noiseScrollSpeed;
+    FSeek(p + 20); float thresholdSpeed;
+    FSeek(p + 24); float thredholdMin;
+    FSeek(p + 28); float thredholdMax;
+    FSeek(p + 32); float selectRate;
+    FSeek(p + 36); float scanLineRSpeed;
+    FSeek(p + 40); float scanLineRBlend;
+    FSeek(p + 44); float scanLineGSpeed;
+    FSeek(p + 48); float scanLineGBlend;
+    FSeek(p + 52); float rgbLineScale;
+    FSeek(p + 56); float rgbLineBlend;
+
+    FSeek(p + 60);
+} FxCyberNoiseEffectParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+    FSeek(p + 24); float pixelShiftIntensity;
+
+    FSeek(p + 28);
+} UVShift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSize;
+    FSeek(p + 4);  float blockHNoiseSize;
+    FSeek(p + 8);  float bNoiseHighRate;
+    FSeek(p + 12); float intensity;
+
+    FSeek(p + 16);
+} ColorShift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSize;
+    FSeek(p + 4);  float blockHNoiseSize;
+    FSeek(p + 8);  float bNoiseHighRate;
+    FSeek(p + 12); float intensity;
+    FSeek(p + 16); float dropout;
+
+    FSeek(p + 20);
+} InterlaceNoise;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+
+    FSeek(p + 24);
+} ColorDropout;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+    FSeek(p + 24); float invertAllRate;
+
+    FSeek(p + 28);
+} InvertColor;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+    FSeek(p + 24); float invertAllRate;
+
+    FSeek(p + 28);
+} GlayScaleColor;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 4);   UVShift uvShift;
+    FSeek(p + 32);  ColorShift colorShift;
+    FSeek(p + 48);  InterlaceNoise interlaceNoise;
+    FSeek(p + 68);  ColorDropout colorDrop;
+    FSeek(p + 92);  InvertColor invertColor;
+    FSeek(p + 120); GlayScaleColor glayscaleColor;
+    FSeek(p + 148); float noiseSpeed;
+    FSeek(p + 152); float noiseBias;
+    FSeek(p + 156); float noiseWaveAmplitude;
+    FSeek(p + 160); float noiseWaveCycle;
+
+    FSeek(p + 164);
+} FxCyberSpaceStartNoiseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+
+    FSeek(p + 1);
+} FxCyberNPCSSEffectRenderParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 16); vector3 centerPos;
+    FSeek(p + 32); color8 color;
+    FSeek(p + 36); float radius1;
+    FSeek(p + 40); float radius2;
+    FSeek(p + 44); float radius3;
+    FSeek(p + 48); float intensity1;
+    FSeek(p + 52); float intensity2;
+    FSeek(p + 56); float intensity3;
+    FSeek(p + 60); float gridIntensity;
+    FSeek(p + 64); float innerWidth;
+    FSeek(p + 68); float gridLineWidth;
+    FSeek(p + 72); float gridLineSpan;
+
+    FSeek(p + 80);
+} FxFieldScanEffectRenderParameter;
+
+enum<sint8> ColorblinidSimulationType
+{
+    COLORBLIND_SIM_NONE = 0,
+    COLORBLIND_SIM_PROTANOPIA = 1,
+    COLORBLIND_SIM_DEUTERANOPIA = 2,
+    COLORBLIND_SIM_TRITANOPIA = 3,
+    COLORBLIND_SIM_ALL = 4,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float daltonizeFactor;
+    FSeek(p + 8);  float protanopiaFactor;
+    FSeek(p + 12); float deuteranopiaFactor;
+    FSeek(p + 16); float tritanopiaFactor;
+    FSeek(p + 20); float brightness;
+    FSeek(p + 24); float contrast;
+    FSeek(p + 28); float maskIntensity[5]<optimize=false>;
+    FSeek(p + 48); ColorblinidSimulationType simulationType;
+
+    FSeek(p + 52);
+} FxColorAccessibilityFilterParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float simRadius;
+    FSeek(p + 8);  float dentDepth;
+    FSeek(p + 12); float normalIntensity;
+    FSeek(p + 16); float edgeBulge;
+    FSeek(p + 20); float fade;
+
+    FSeek(p + 24);
+} FxDentParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 4);  float width;
+    FSeek(p + 8);  float normalOffset;
+    FSeek(p + 12); float blurOffsetMax;
+    FSeek(p + 16); vector4 strength[16]<optimize=false>;
+
+    FSeek(p + 272);
+} FxSeparableSSSParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    FxRenderOption renderOption;
+    FSeek(p + 592);  FxSGGIParameter sggi;
+    FSeek(p + 616);  FxRLRParameter rlr;
+    FSeek(p + 656);  FxSSGIParameter ssgi;
+    FSeek(p + 688);  FxPlanarReflectionParameter planarReflection;
+    FSeek(p + 736);  FxBloomParameter bloom;
+    FSeek(p + 752);  FxCameraControlParameter cameraControl;
+    FSeek(p + 796);  FxToneMapParameter tonemap;
+    FSeek(p + 844);  FxColorContrastParameter colorContrast;
+    FSeek(p + 928);  FxLightScatteringParameter lightscattering;
+    FSeek(p + 1024); FxDOFParameter dof;
+    FSeek(p + 1120); FxShadowMapParameter shadowmap;
+    FSeek(p + 1456); FxShadowHeightMapParameter shadowHeightMap;
+    FSeek(p + 1476); FxVolumetricShadowParameter volShadow;
+    FSeek(p + 1480); FxSSAOParameter ssao;
+    FSeek(p + 1600); FxSHLightFieldParameter shlightfield;
+    FSeek(p + 1664); FxScreenBlurParameter blur;
+    FSeek(p + 1712); FxOcclusionCapsuleParameter occlusionCapsule;
+    FSeek(p + 1856); FxEffectParameter effect;
+    FSeek(p + 1952); FxScreenSpaceGodrayParameter ssGodray;
+    FSeek(p + 2016); FxGodrayParameter godray;
+    FSeek(p + 2256); FxHeatHazeParameter heatHaze;
+    FSeek(p + 2288); FxAtmosphereParameter atmosphere;
+    FSeek(p + 3040); FxWeatherParameter weather;
+    FSeek(p + 3200); FxSceneEnvironmentParameter sceneEnv;
+    FSeek(p + 3296); FxTAAParameter taa;
+    FSeek(p + 3360); FxDensityParameter density;
+    FSeek(p + 3628); FxChromaticAberrationParameter chromaticAberration;
+    FSeek(p + 3664); FxVignetteParameter vignette;
+    FSeek(p + 3792); FxWindComputeParameter wind;
+    FSeek(p + 3952); FxTerrainMaterialBlendingParameter terrainBlend;
+    FSeek(p + 3968); FxGpuEnvironmentParameter gpuEnvironment;
+    FSeek(p + 4024); FxInteractiveWaveParameter interactiveWave;
+    FSeek(p + 4052); FxCyberNoiseEffectParameter cyberNoise;
+    FSeek(p + 4112); FxCyberSpaceStartNoiseParameter cyberStartNoise;
+    FSeek(p + 4276); FxCyberNPCSSEffectRenderParameter cyberNPCSS;
+    FSeek(p + 4288); FxFieldScanEffectRenderParameter fieldScan;
+    FSeek(p + 4368); FxColorAccessibilityFilterParameter colorAccessibility;
+    FSeek(p + 4420); FxDentParameter dent;
+    FSeek(p + 4448); FxSeparableSSSParameter ssss;
+
+    FSeek(p + 4720);
+} NeedleFxParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   FxSkyCommon commonSkyParam;
+    FSeek(p + 16);  FxBrunetonSky brunetonSkyParam;
+    FSeek(p + 160); FxSebastienSky sebastienSkyParam;
+    FSeek(p + 304); FxCloudParameter cloudParam;
+    FSeek(p + 560); FxCrepuscularRay crepuscularRayParam;
+    FSeek(p + 576); FxHeightFog heightFogParam;
+
+    FSeek(p + 688);
+} TimeProgressAtmosphereParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    bool enable;
+    FSeek(p + 4);    float time;
+    FSeek(p + 8);    FxBloomParameter bloom;
+    FSeek(p + 24);   FxCameraControlParameter cameraControl;
+    FSeek(p + 68);   FxCameraControlParameter cameraControlEvent;
+    FSeek(p + 112);  FxToneMapParameter tonemap;
+    FSeek(p + 160);  FxColorContrastParameter colorContrast;
+    FSeek(p + 240);  FxLightScatteringParameter lightscattering;
+    FSeek(p + 336);  FxEffectParameter effect;
+    FSeek(p + 432);  FxScreenSpaceGodrayParameter ssGodray;
+    FSeek(p + 496);  FxGodrayParameter godray;
+    FSeek(p + 736);  FxHeatHazeParameter heatHaze;
+    FSeek(p + 768);  TimeProgressAtmosphereParameter atmosphere;
+    FSeek(p + 1456); FxWeatherParameter weather;
+
+    FSeek(p + 1616);
+} TimeProgressNeedleFxParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    bool enable;
+    FSeek(p + 4);    FxBloomParameter bloom;
+    FSeek(p + 20);   FxCameraControlParameter cameraControl;
+    FSeek(p + 64);   FxCameraControlParameter cameraControlEvent;
+    FSeek(p + 108);  FxToneMapParameter tonemap;
+    FSeek(p + 156);  FxColorContrastParameter colorContrast;
+    FSeek(p + 240);  FxLightScatteringParameter lightscattering;
+    FSeek(p + 336);  FxEffectParameter effect;
+    FSeek(p + 432);  FxScreenSpaceGodrayParameter ssGodray;
+    FSeek(p + 496);  FxGodrayParameter godray;
+    FSeek(p + 736);  FxHeatHazeParameter heatHaze;
+    FSeek(p + 768);  TimeProgressAtmosphereParameter atmosphere;
+    FSeek(p + 1456); FxWeatherParameter weather;
+    FSeek(p + 1616); FxWindComputeParameter wind;
+
+    FSeek(p + 1776);
+} WeatherFxParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float deadline;
+    FSeek(p + 4); float oceanSurface;
+    FSeek(p + 8); float deadFallTime;
+
+    FSeek(p + 12);
+} StageCommonParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float zNear;
+    FSeek(p + 4); float zFar;
+    FSeek(p + 8); float fovy;
+
+    FSeek(p + 12);
+} StageCameraParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float heightRange;
+
+    FSeek(p + 4);
+} StageTerrainPrecisionParameter;
+
+typedef struct vector2 {
+    float x;
+    float y;
+} vector2;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float uvScaleDetail;
+    FSeek(p + 4);  float uvScaleBase;
+    FSeek(p + 8);  float detailDistance;
+    FSeek(p + 12); float detailFadeRange;
+
+    FSeek(p + 16);
+} StageTerrainMaterialParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool useHeightMapTerrain;
+    FSeek(p + 1);  bool useHalfPrecision;
+    FSeek(p + 4);  StageTerrainPrecisionParameter precision;
+    FSeek(p + 8);  sint32 worldSize;
+    FSeek(p + 12); sint32 heightMapTexelDensity;
+    FSeek(p + 16); float heightScale;
+    FSeek(p + 20); float smallestCellSize;
+    FSeek(p + 24); float slopeClipThrethold;
+    FSeek(p + 28); vector2 aabbMin;
+    FSeek(p + 36); vector2 aabbMax;
+    FSeek(p + 44); StageTerrainMaterialParameter material;
+    FSeek(p + 60); bool enableGbufferBlending;
+
+    FSeek(p + 64);
+} StageTerrainParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  StageCommonParameter common;
+    FSeek(p + 12); StageCameraParameter camera;
+    FSeek(p + 24); StageTerrainParameter terrain;
+
+    FSeek(p + 88);
+} StageConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);      NeedleFxSceneConfig config;
+    FSeek(p + 320);    NeedleFxParameter items[16]<optimize=false>;
+    FSeek(p + 75840);  TimeProgressNeedleFxParam timeItems[24]<optimize=false>;
+    FSeek(p + 114624); WeatherFxParameter weatherItems[7]<optimize=false>;
+    FSeek(p + 127056); StageConfig stageConfig;
+
+    FSeek(p + 127152);
+} NeedleFxSceneData;
+
+LittleEndian();
+
+FSeek(64);
+NeedleFxSceneData data;

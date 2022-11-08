@@ -1,0 +1,297 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedMin;
+    FSeek(p + 4);  float rotateSpeedMax;
+    FSeek(p + 8);  float rotateSpeedMaxSpeedMin;
+    FSeek(p + 12); float rotateSpeedMinSpeedMax;
+
+    FSeek(p + 16);
+} Movement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float distance;
+    FSeek(p + 4); float angle;
+
+    FSeek(p + 8);
+} Eyesight;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float attackRange;
+    FSeek(p + 4); float attackAngle;
+    FSeek(p + 8); float attackSpeed;
+
+    FSeek(p + 12);
+} Fight;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Movement movement;
+    FSeek(p + 16); Eyesight eyesight;
+    FSeek(p + 24); Fight fight;
+    FSeek(p + 36); float transformRate;
+
+    FSeek(p + 40);
+} EnemyJellymanModeConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  EnemyJellymanModeConfig common;
+    FSeek(p + 40); float actionDistance[5]<optimize=false>;
+
+    FSeek(p + 60);
+} JellymanHumanCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef int sint32;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef byte sint8;
+
+enum<sint8> VolumeShape
+{
+    SPHERE = 0,
+    BOX = 1,
+    CYLINDER = 2,
+    CAPSULE = 3,
+    NUM = 4,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 volumeSize;
+    FSeek(p + 16); vector3 volumeOffset;
+    FSeek(p + 32); vector3 volumeRotation;
+
+    FSeek(p + 48);
+} VolumeInfo;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring tagName;
+    FSeek(p + 16);  sint8 pieceNum;
+    FSeek(p + 20);  float pieceFuncFactor;
+    FSeek(p + 24);  VolumeShape volumeShape;
+    FSeek(p + 32);  cstring humanNodeName;
+    FSeek(p + 48);  VolumeInfo humanVolume;
+    FSeek(p + 96);  cstring eggNodeName;
+    FSeek(p + 112); VolumeInfo eggVolume;
+    FSeek(p + 160); bool effectActive;
+    FSeek(p + 161); bool debugDraw;
+    FSeek(p + 162); bool debugDrawVolumeAxis;
+    FSeek(p + 163); bool debugDrawAxis;
+
+    FSeek(p + 176);
+} MappingPairInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   JellymanHumanCommonConfig human;
+    FSeek(p + 60);  RingParameter ringParam;
+    FSeek(p + 88);  sint32 codeDropNumMin;
+    FSeek(p + 92);  sint32 codeDropNumMax;
+    FSeek(p + 96);  sint32 codeXDropNumMin;
+    FSeek(p + 100); sint32 codeXDropNumMax;
+    FSeek(p + 112); MappingPairInfo mappingPairInfo[32]<optimize=false>;
+
+    FSeek(p + 5744);
+} EnemyCommonConfig;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float stunTime;
+    FSeek(p + 48); float attackRate;
+    FSeek(p + 52); float attackMotionSpeed;
+    FSeek(p + 56); uint16 expItemNum;
+    FSeek(p + 58); uint16 exp;
+
+    FSeek(p + 60);
+} JellymanCommonLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float wallTime;
+    FSeek(p + 4);  sint32 wallLife;
+    FSeek(p + 8);  float guardTime;
+    FSeek(p + 12); float guardCoolTime;
+
+    FSeek(p + 16);
+} JellymanHumanLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 level;
+    FSeek(p + 4);  JellymanCommonLevelConfig common;
+    FSeek(p + 64); JellymanHumanLevelConfig human;
+
+    FSeek(p + 80);
+} EnemyLevelConfig;
+
+enum<sint8> SuperArmorType
+{
+    None = 0,
+    Attack = 1,
+    Always = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); SuperArmorType superArmor;
+    FSeek(p + 1); bool isTransform;
+    FSeek(p + 4); float downTime;
+
+    FSeek(p + 8);
+} JellymanCommonActionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float actionRate[5]<optimize=false>;
+
+    FSeek(p + 20);
+} JellymanHumanActionRate;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   JellymanHumanActionRate rateTable[4]<optimize=false>;
+    FSeek(p + 80);  float coolTime[5]<optimize=false>;
+    FSeek(p + 100); float attackCoolTime;
+    FSeek(p + 104); float nearRange;
+    FSeek(p + 108); sint32 nearRateId;
+    FSeek(p + 112); sint32 farRateId;
+    FSeek(p + 116); bool isCounterGuard;
+    FSeek(p + 117); bool isCounterWall;
+    FSeek(p + 118); bool isSpikeWall;
+    FSeek(p + 120); sint32 waveNum;
+    FSeek(p + 124); float waveUpTime;
+    FSeek(p + 128); float waveLifeTime;
+    FSeek(p + 132); float waveDownTime;
+    FSeek(p + 136); float waveRadius;
+    FSeek(p + 140); float waveAddRadius;
+    FSeek(p + 144); float waveSpawnTime;
+    FSeek(p + 148); float waveKeepRadius;
+    FSeek(p + 152); float waveHeight;
+    FSeek(p + 156); sint32 rushNum;
+
+    FSeek(p + 160);
+} JellymanHumanActionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 level;
+    FSeek(p + 4);  JellymanCommonActionConfig common;
+    FSeek(p + 12); JellymanHumanActionConfig human;
+
+    FSeek(p + 172);
+} EnemyLevelBandConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 level;
+    FSeek(p + 4);  sint32 maxActionCount;
+    FSeek(p + 8);  float spAttackWaitTime;
+    FSeek(p + 12); sint32 humanMaxActionCount[5]<optimize=false>;
+
+    FSeek(p + 32);
+} EnemySquadAvarageLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); EnemySquadAvarageLevelConfig averageLevelConfig[5]<optimize=false>;
+
+    FSeek(p + 160);
+} EnemySquadConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    EnemyCommonConfig commonParams;
+    FSeek(p + 5744); EnemyLevelConfig levelParams[8]<optimize=false>;
+    FSeek(p + 6384); EnemyLevelBandConfig levelBands[5]<optimize=false>;
+    FSeek(p + 7244); EnemySquadConfig squadParams;
+
+    FSeek(p + 7408);
+} EnemyJellymanConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyJellymanConfig data;

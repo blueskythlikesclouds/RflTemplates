@@ -1,0 +1,1191 @@
+typedef uint uint32;
+
+typedef ushort uint16;
+
+typedef struct csetobjectid {
+    long id;
+    long group;
+} csetobjectid;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  array initPositions;
+    FSeek(p + 32); cstring heightTargetNodeName;
+    FSeek(p + 48); float heightMoveSpeed;
+    FSeek(p + 52); float bossToPlayerDistanceMin;
+    FSeek(p + 56); float bossToPlayerDistanceMax;
+    FSeek(p + 60); float offsetHeightMin;
+    FSeek(p + 64); float offsetHeightMax;
+    FSeek(p + 68); float areaDistanceMin;
+    FSeek(p + 72); float areaDistanceMax;
+    FSeek(p + 76); float playerSpawnDistance;
+    FSeek(p + 80); float playerRespawnDistance;
+    FSeek(p + 84); float playerRespawnDistance2;
+
+    FSeek(p + 88);
+} PlayerMoveableRangeParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isUse;
+    FSeek(p + 1); bool isUsePillar;
+    FSeek(p + 4); float phaseChangeHpRatio;
+
+    FSeek(p + 8);
+} BossPhaseParam;
+
+typedef byte sint8;
+
+enum<sint8> EaseType
+{
+    ET_Sin = 0,
+    ET_Cubic = 1,
+    ET_Quadratic = 2,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float easeTime;
+    FSeek(p + 4);  EaseType easeType;
+    FSeek(p + 8);  cstring mainLookAtNodeName;
+    FSeek(p + 32); vector3 mainLookOffsetPos;
+    FSeek(p + 48); cstring subLookAtNodeName;
+    FSeek(p + 64); vector3 subLookOffsetPos;
+    FSeek(p + 80); float distance;
+    FSeek(p + 96); vector3 playerOffsetPos;
+
+    FSeek(p + 112);
+} BossLockOnCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   uint32 healthPoint;
+    FSeek(p + 4);   float stunTime;
+    FSeek(p + 8);   float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 20);  float maxStaggerPoint[5]<optimize=false>;
+    FSeek(p + 40);  uint16 exp;
+    FSeek(p + 48);  PlayerMoveableRangeParam moveRangeParam;
+    FSeek(p + 136); PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
+    FSeek(p + 224); BossPhaseParam phaseParams[8]<optimize=false>;
+    FSeek(p + 288); BossLockOnCameraParam cameraParam;
+    FSeek(p + 400); bool isDebugDraw;
+    FSeek(p + 404); uint32 debugDrawPhaseIndex;
+
+    FSeek(p + 416);
+} BossStatusConfig;
+
+enum<sint8> GimmickType
+{
+    GT_A = 0,
+    GT_B = 1,
+    GT_C = 2,
+    GT_D = 3,
+    GT_E = 4,
+    NUM_GIMMICK_TYPE = 5,
+};
+
+enum<sint8> AttackType
+{
+    AT_A = 0,
+    AT_B = 1,
+    AT_C = 2,
+    AT_D = 3,
+    AT_E = 4,
+    NUM_ATTACK_TYPE = 5,
+};
+
+enum<sint8> BossPillarParam_GimmickType
+{
+    BossPillarParam_GT_A = 0,
+    BossPillarParam_GT_B = 1,
+    BossPillarParam_GT_C = 2,
+    BossPillarParam_GT_D = 3,
+    BossPillarParam_GT_E = 4,
+    BossPillarParam_NUM_GIMMICK_TYPE = 5,
+};
+
+enum<sint8> BossPillarParam_AttackType
+{
+    BossPillarParam_AT_A = 0,
+    BossPillarParam_AT_B = 1,
+    BossPillarParam_AT_C = 2,
+    BossPillarParam_AT_D = 3,
+    BossPillarParam_AT_E = 4,
+    BossPillarParam_NUM_ATTACK_TYPE = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 4);  float gimmickPhaseTime;
+    FSeek(p + 8);  float attackPhaseTime;
+    FSeek(p + 12); bool isUnique;
+    FSeek(p + 13); BossPillarParam_GimmickType gimmickType;
+    FSeek(p + 16); float gimmickIntervalTime;
+    FSeek(p + 20); BossPillarParam_AttackType attackType;
+    FSeek(p + 24); float attackIntervalTime;
+
+    FSeek(p + 28);
+} BossPillarParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GimmickType gimmickTypeAll;
+    FSeek(p + 4);   float gimmickIntervalTimeAll;
+    FSeek(p + 8);   AttackType attackTypeAll;
+    FSeek(p + 12);  float attackIntervalTimeAll;
+    FSeek(p + 16);  BossPillarParam pillars[32]<optimize=false>;
+    FSeek(p + 912); cstring spawnPositionName;
+    FSeek(p + 928); uint32 pillarHealthPoint;
+    FSeek(p + 932); uint32 pillarBreakDamage;
+    FSeek(p + 936); float pillarBreakStun;
+    FSeek(p + 940); bool isDebugDraw;
+    FSeek(p + 944); uint32 DebugDrawType;
+
+    FSeek(p + 952);
+} BossPillarConfig;
+
+typedef short sint16;
+
+enum<sint8> CollisionType
+{
+    CT_SPHERE = 0,
+    CT_CAPSULE = 1,
+    CT_CYLINDER = 2,
+    CT_BOX = 3,
+    NUM_COLLISION_TYPE = 4,
+};
+
+enum<sint8> ColliderActiveType
+{
+    Always = 0,
+    OnContactActive = 1,
+    OnContactInactive = 2,
+    OnMotionActive = 3,
+    OnMotionInactive = 4,
+    Manual = 5,
+    NUM_COLLIDER_ACTIVE_TYPE = 6,
+};
+
+enum<sint16> ColliderProperty
+{
+    CpNone = 0,
+    CpBattleUse = 1,
+    CpBattleUnuse = 2,
+    CpRestPoint = 3,
+    CpHomingTarget = 4,
+    CpPerceive = 5,
+    CpDamage = 6,
+    CpAttack = 7,
+    CpContactActive = 8,
+    CpContactInactive = 9,
+    CpMotionActive = 10,
+    CpMotionInactive = 11,
+    CpManual = 12,
+    CpUpperSide = 13,
+    CpLowerSide = 14,
+    CpFrontSide = 15,
+    CpBackSide = 16,
+    CpLeftSide = 17,
+    CpRightSide = 18,
+    CpPointA = 19,
+    CpPointB = 20,
+    CpPointC = 21,
+    CpPointD = 22,
+    CpCyloopDownUnuse = 23,
+    CpDummyDamage = 24,
+    NUM_COLLIDER_PROPERTY = 25,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ColliderActiveType type;
+    FSeek(p + 2);  ColliderProperty propertys[4]<optimize=false>;
+    FSeek(p + 16); cstring text;
+
+    FSeek(p + 32);
+} BossColliderStatus;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isUse;
+    FSeek(p + 2);   sint16 priority;
+    FSeek(p + 4);   CollisionType type;
+    FSeek(p + 8);   cstring attachNodeName;
+    FSeek(p + 24);  cstring name;
+    FSeek(p + 40);  BossColliderStatus status;
+    FSeek(p + 80);  vector3 size;
+    FSeek(p + 96);  vector3 offset;
+    FSeek(p + 112); vector3 rotation;
+
+    FSeek(p + 128);
+} BossPerceiveCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossPerceiveCollisionParam perceiveCollisions[64]<optimize=false>;
+    FSeek(p + 8192); bool isDebugDraw;
+
+    FSeek(p + 8208);
+} BossPerceivePartsWithCollisionConfig;
+
+enum<sint8> PointType
+{
+    PT_HOMINGPOINT = 0,
+    PT_HEROSAGE = 1,
+    PT_MINIONGENERATOR = 2,
+    PT_TRIGGER = 3,
+    PT_ANCHOR = 4,
+    PT_DAMAGEPOINT = 5,
+    PT_STICK = 6,
+    PT_DAMAGEEFFECT = 7,
+    PT_DASHCIRCLE = 8,
+    NUM_POINT_TYPE = 9,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  BossColliderStatus status;
+    FSeek(p + 32); float distance;
+    FSeek(p + 36); float nextSearchDistance;
+
+    FSeek(p + 40);
+} BossHomingPointParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 num;
+    FSeek(p + 4);  float interval;
+    FSeek(p + 8);  float liveTime;
+    FSeek(p + 12); float waitTime;
+
+    FSeek(p + 16);
+} BossMinionParam;
+
+enum<sint8> Shape
+{
+    SHAPE_BOX = 0,
+    SHAPE_SPHERE = 1,
+    SHAPE_CYLINDER = 2,
+    SHAPE_CAPSULE = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Shape ShapeType;
+    FSeek(p + 4);  float CollisionWidth;
+    FSeek(p + 8);  float CollisionHeight;
+    FSeek(p + 12); float CollisionDepth;
+
+    FSeek(p + 16);
+} BossTrigerParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float phaseTime;
+
+    FSeek(p + 4);
+} BossStickParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isCyloopDownUnuse;
+    FSeek(p + 8); cstring text;
+
+    FSeek(p + 24);
+} BossDamagePointParam;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 focusGeometryIndex;
+    FSeek(p + 4);  sint32 focusTriangleIndex;
+    FSeek(p + 8);  float sizeScale;
+    FSeek(p + 12); float impulseSpeed;
+    FSeek(p + 16); float ocTime;
+    FSeek(p + 20); float slowRateBoss;
+    FSeek(p + 24); float slowRatePlayer;
+    FSeek(p + 28); float slowTime;
+    FSeek(p + 32); float slowEaseInTime;
+    FSeek(p + 36); float slowEaseOutTime;
+
+    FSeek(p + 40);
+} BossDashCirclPointParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isUse;
+    FSeek(p + 4);   uint32 geometryIndex;
+    FSeek(p + 8);   uint32 triangleIndex;
+    FSeek(p + 12);  PointType type;
+    FSeek(p + 16);  BossHomingPointParam homingPoint;
+    FSeek(p + 56);  BossMinionParam minionParam;
+    FSeek(p + 72);  BossTrigerParam trigger;
+    FSeek(p + 88);  BossStickParam stickParam;
+    FSeek(p + 96);  BossDamagePointParam damagePoint;
+    FSeek(p + 120); BossDashCirclPointParam dashCirclPoint;
+    FSeek(p + 160); sint32 linkNums[5]<optimize=false>;
+    FSeek(p + 192); vector3 offsetPos;
+    FSeek(p + 208); vector3 offsetRot;
+
+    FSeek(p + 224);
+} BossMeshFrameParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossMeshFrameParam meshShapeKeyFrames[256]<optimize=false>;
+    FSeek(p + 57344); bool isDebugDraw;
+    FSeek(p + 57345); bool isDebugDrawPoint;
+    FSeek(p + 57346); bool isDebugDrawMesh;
+    FSeek(p + 57347); bool isDebugDrawMeshIndivid;
+    FSeek(p + 57348); float debugDrawMeshTriangleDistance;
+    FSeek(p + 57352); uint32 debugDrawMeshTriangleNum;
+
+    FSeek(p + 57360);
+} BossMeshFrameConfig;
+
+enum<sint8> BossAttackCollisionParam_AttackType
+{
+    BossAttackCollisionParam_AT_NONE = 0,
+    BossAttackCollisionParam_AT_BLOWOFF = 1,
+    BossAttackCollisionParam_AT_SLAMDOWNWARD = 2,
+    BossAttackCollisionParam_AT_KILLING = 3,
+    BossAttackCollisionParam_AT_NOTPARRY = 4,
+    BossAttackCollisionParam_AT_NOTDAMAGE = 5,
+    BossAttackCollisionParam_NUM_ATTACK_TYPE = 6,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 8);  cstring attachNodeName;
+    FSeek(p + 24); float damageVelocityRaito;
+    FSeek(p + 28); BossAttackCollisionParam_AttackType types[4]<optimize=false>;
+    FSeek(p + 32); BossColliderStatus status;
+    FSeek(p + 64); float size;
+    FSeek(p + 80); vector3 offset;
+    FSeek(p + 96); cstring parryCounterTargetCollisionName;
+
+    FSeek(p + 112);
+} BossAttackCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossAttackCollisionParam attackCollisions[64]<optimize=false>;
+    FSeek(p + 7168); bool isDebugDraw;
+
+    FSeek(p + 7184);
+} BossAttackCollisionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 8);  cstring attachNodeName;
+    FSeek(p + 24); cstring name;
+    FSeek(p + 40); float size;
+    FSeek(p + 48); vector3 offset;
+    FSeek(p + 64); vector3 rotation;
+    FSeek(p + 80); bool isParryActive;
+    FSeek(p + 84); float cyloopRadius;
+    FSeek(p + 88); bool onlyRigidBody;
+
+    FSeek(p + 96);
+} BossBattlePhaseCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossBattlePhaseCollisionParam battleCollisions[16]<optimize=false>;
+    FSeek(p + 1536); bool isDebugDraw;
+
+    FSeek(p + 1552);
+} BossBattlePhaseCollisionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 ringNumQuickCyloopUp;
+    FSeek(p + 4);  uint32 ringNumQuickCyloopDown;
+    FSeek(p + 8);  uint32 ringNumSonicSpecial;
+    FSeek(p + 12); float ringSpawnDistance;
+    FSeek(p + 16); float ringSuckedVelocity;
+
+    FSeek(p + 20);
+} BossDropRingConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossStatusConfig status;
+    FSeek(p + 416);   BossPillarConfig pillar;
+    FSeek(p + 1376);  BossPerceivePartsWithCollisionConfig perceivPartsWithCollision;
+    FSeek(p + 9584);  BossMeshFrameConfig meshShapeKeyFrame;
+    FSeek(p + 66944); BossAttackCollisionConfig attackCollision;
+    FSeek(p + 74128); BossBattlePhaseCollisionConfig battleCollision;
+    FSeek(p + 75680); BossDropRingConfig dropRing;
+
+    FSeek(p + 75712);
+} BossBaseConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); cstring parentFrame;
+    FSeek(p + 32); vector3 size;
+    FSeek(p + 48); vector3 localPosition;
+    FSeek(p + 64); vector3 localRotation;
+
+    FSeek(p + 80);
+} BossDragonCollisionParamBase;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  BossDragonCollisionParamBase base;
+    FSeek(p + 80); vector3 damageVelocity;
+
+    FSeek(p + 96);
+} BossDragonHitBoxParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   BossDragonCollisionParamBase base;
+    FSeek(p + 80);  bool isEnableHoming;
+    FSeek(p + 88);  cstring homingNode;
+    FSeek(p + 104); cstring homingNodeMirror;
+    FSeek(p + 128); vector3 homingPosition;
+
+    FSeek(p + 144);
+} BossDragonHurtBoxParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float aimTime;
+    FSeek(p + 4); float stunTime;
+
+    FSeek(p + 8);
+} BossDragonScratchParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float maxSpeed;
+    FSeek(p + 12); float accel;
+    FSeek(p + 16); float reflectSpeedScale;
+    FSeek(p + 20); float intervalTime;
+    FSeek(p + 24); float lifeTime;
+    FSeek(p + 28); float pitchOffsetRange;
+    FSeek(p + 32); float yawOffsetRange;
+    FSeek(p + 36); bool isBound;
+
+    FSeek(p + 40);
+} BossDragonReflectShotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float intervalTime;
+    FSeek(p + 12); float lifeTime;
+    FSeek(p + 16); float pitchOffsetRange;
+    FSeek(p + 20); float yawOffsetRange;
+    FSeek(p + 24); sint32 count;
+    FSeek(p + 28); float waitTime;
+
+    FSeek(p + 32);
+} BossDragonShotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float intervalTime;
+    FSeek(p + 12); float lifeTime;
+    FSeek(p + 16); float pitchSpeed;
+    FSeek(p + 20); float yawSpeed;
+    FSeek(p + 24); float circleIntervalTime;
+    FSeek(p + 28); sint32 count;
+    FSeek(p + 32); sint32 parriableCount;
+    FSeek(p + 36); float waitTime;
+
+    FSeek(p + 40);
+} BossDragonSpiralShotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float gravity;
+    FSeek(p + 12); float intervalTime;
+    FSeek(p + 16); float lifeTime;
+    FSeek(p + 20); float pitch;
+    FSeek(p + 24); float pitchInterval;
+    FSeek(p + 28); float yawInterval;
+    FSeek(p + 32); sint32 count;
+    FSeek(p + 36); sint32 parriableCount;
+    FSeek(p + 40); float waitTime;
+
+    FSeek(p + 44);
+} BossDragonSplashShotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float maxAccel;
+    FSeek(p + 12); float intervalTime;
+    FSeek(p + 16); float arrivalTime;
+    FSeek(p + 20); float lifeTime;
+    FSeek(p + 24); float minPitchOffset;
+    FSeek(p + 28); float maxPitchOffset;
+    FSeek(p + 32); float yawOffsetRange;
+    FSeek(p + 36); sint32 count;
+    FSeek(p + 40); float waitTime;
+
+    FSeek(p + 44);
+} BossDragonHomingLaserParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float length;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float intervalTime;
+    FSeek(p + 16); float lifeTime;
+    FSeek(p + 20); float minPitchOffset;
+    FSeek(p + 24); float maxPitchOffset;
+    FSeek(p + 28); float yawOffsetRange;
+    FSeek(p + 32); sint32 count;
+    FSeek(p + 36); float waitTime;
+
+    FSeek(p + 40);
+} BossDragonHomingMissileParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float innerRadius;
+    FSeek(p + 4);  float outerRadius;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float intervalTime;
+    FSeek(p + 16); float lifeTime;
+    FSeek(p + 20); float pitchOffsetRange;
+    FSeek(p + 24); float yawOffsetRange;
+    FSeek(p + 28); sint32 count;
+    FSeek(p + 32); sint32 parriableCount;
+    FSeek(p + 36); float intervalTimeInGroup;
+    FSeek(p + 40); sint32 countInGroup;
+    FSeek(p + 44); float waitTime;
+
+    FSeek(p + 48);
+} BossDragonRippleLaserParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float innerRadius;
+    FSeek(p + 4);  float outerRadius;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float intervalTime;
+    FSeek(p + 16); float lifeTime;
+    FSeek(p + 20); float maxPitch;
+    FSeek(p + 24); float maxYaw;
+    FSeek(p + 28); sint32 verticalCount;
+    FSeek(p + 32); sint32 horizontalCount;
+    FSeek(p + 36); sint32 extraFrontCount;
+    FSeek(p + 40); sint32 parriableCount;
+    FSeek(p + 44); float intervalTimeInGroup;
+    FSeek(p + 48); sint32 countInGroup;
+    FSeek(p + 52); float waitTime;
+
+    FSeek(p + 56);
+} BossDragonRippleLaserRageParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float innerRadius;
+    FSeek(p + 4);  float outerRadius;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float intervalTime;
+    FSeek(p + 16); float lifeTime;
+    FSeek(p + 20); float pitchOffsetRange;
+    FSeek(p + 24); float yawOffsetRange;
+    FSeek(p + 28); sint32 count;
+    FSeek(p + 32); float intervalTimeInGroup;
+    FSeek(p + 36); sint32 countInGroup;
+
+    FSeek(p + 40);
+} BossDragonRippleLaserDummyParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float rotSpeed;
+    FSeek(p + 8);  float accel;
+    FSeek(p + 12); float rotAccel;
+    FSeek(p + 16); float intervalTime;
+    FSeek(p + 20); float lifeTime;
+    FSeek(p + 24); sint32 segmentCount;
+    FSeek(p + 28); float waveRate;
+    FSeek(p + 32); sint32 count;
+    FSeek(p + 36); float waitTime;
+
+    FSeek(p + 40);
+} BossDragonWaveParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float length;
+    FSeek(p + 8);  float rotSpeed;
+    FSeek(p + 12); float rotAccel;
+    FSeek(p + 16); float roll;
+    FSeek(p + 20); float intervalTime;
+    FSeek(p + 24); float standbyTime;
+    FSeek(p + 28); sint32 count;
+    FSeek(p + 32); float waitTime;
+
+    FSeek(p + 36);
+} BossDragonLaserParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float radius;
+    FSeek(p + 4); float speed;
+    FSeek(p + 8); float lifeTime;
+
+    FSeek(p + 12);
+} BossDragonCounterLaserParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 missileNum;
+    FSeek(p + 4); float missileWaitTime;
+
+    FSeek(p + 8);
+} BossDragonRingSupplyMissileParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 playerPosition;
+    FSeek(p + 16); float moveTime;
+    FSeek(p + 20); float moveRange;
+    FSeek(p + 24); float rotSpeed;
+    FSeek(p + 28); BossDragonRingSupplyMissileParam missile[3]<optimize=false>;
+
+    FSeek(p + 64);
+} BossDragonRingSupplyParam;
+
+enum<sint8> BossDragonLayoutParam_EaseType
+{
+    BossDragonLayoutParam_SMOOTH = 0,
+    BossDragonLayoutParam_EASE_IN = 1,
+    BossDragonLayoutParam_EASE_OUT = 2,
+    BossDragonLayoutParam_EASE_IN_OUT = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 bossPosition;
+    FSeek(p + 16); float bossYaw;
+    FSeek(p + 20); BossDragonLayoutParam_EaseType bossEaseType;
+    FSeek(p + 24); float bossEaseTime;
+    FSeek(p + 32); vector3 playerPosition;
+    FSeek(p + 48); float playerFieldRange;
+    FSeek(p + 52); float playerFieldHeight;
+    FSeek(p + 56); float playerFieldYaw;
+    FSeek(p + 60); BossDragonLayoutParam_EaseType playerEaseType;
+    FSeek(p + 64); float playerEaseTime;
+
+    FSeek(p + 80);
+} BossDragonLayoutParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring gazeFrame;
+    FSeek(p + 16); cstring gazeFrameMirror;
+    FSeek(p + 32); vector3 gazeOffset;
+    FSeek(p + 48); float distance;
+    FSeek(p + 64); vector3 playerOffset;
+    FSeek(p + 80); float elevationOffset;
+    FSeek(p + 96); vector3 followRate;
+
+    FSeek(p + 112);
+} BossDragonCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   vector3 playerNodes[8]<optimize=false>;
+    FSeek(p + 128); vector3 bossNodes[8]<optimize=false>;
+    FSeek(p + 256); sint32 playerNodeCount;
+    FSeek(p + 260); sint32 bossNodeCount;
+    FSeek(p + 264); float time;
+
+    FSeek(p + 272);
+} BossDragonMoveParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float radius;
+    FSeek(p + 4); float length;
+    FSeek(p + 8); float rotSpeed;
+
+    FSeek(p + 12);
+} BossDragonFireBarParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 vertRatio[3]<optimize=false>;
+    FSeek(p + 12); float initSpeed;
+    FSeek(p + 16); float maxSpeed;
+    FSeek(p + 20); float acc;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} BossDragonEscapeShotParam;
+
+enum<sint8> Type
+{
+    None = 0,
+    FireBar = 1,
+    FireBar4 = 2,
+    Spark = 3,
+};
+
+enum<sint8> Location
+{
+    Left = 0,
+    Center = 1,
+    Right = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float distance;
+    FSeek(p + 4); Type type;
+    FSeek(p + 5); Location location;
+
+    FSeek(p + 8);
+} BossDragonObstacleParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float start;
+    FSeek(p + 4); float end;
+
+    FSeek(p + 8);
+} BossDragonHoleParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float interval;
+    FSeek(p + 4);   sint32 recordNum;
+    FSeek(p + 8);   float width;
+    FSeek(p + 12);  BossDragonFireBarParam fireBar;
+    FSeek(p + 24);  BossDragonEscapeShotParam shot;
+    FSeek(p + 52);  BossDragonObstacleParam obstacles[64]<optimize=false>;
+    FSeek(p + 564); BossDragonHoleParam holes[16]<optimize=false>;
+
+    FSeek(p + 692);
+} BossDragonRoadParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float outStrength;
+    FSeek(p + 4);   float inStrength;
+    FSeek(p + 8);   float outElev;
+    FSeek(p + 12);  float inElev;
+    FSeek(p + 16);  float speed;
+    FSeek(p + 32);  vector3 targetOffset;
+    FSeek(p + 48);  float launchCameraInterpolateTime;
+    FSeek(p + 64);  vector3 launchCameraPos;
+    FSeek(p + 80);  vector3 launchCameraTarget;
+    FSeek(p + 96);  float launchCameraRoll;
+    FSeek(p + 100); float launchCameraTime;
+    FSeek(p + 104); float fallCameraInterpolateTime;
+    FSeek(p + 108); float fallCameraDistance;
+    FSeek(p + 112); float fallCameraElavation;
+    FSeek(p + 116); float landingCameraInterpolateTime;
+    FSeek(p + 120); float landingCameraDistance;
+    FSeek(p + 124); float landingCameraElavation;
+    FSeek(p + 128); float landingCameraAzimuth;
+    FSeek(p + 132); float landingCameraChangeDistance;
+    FSeek(p + 136); float landingCameraNearInterpolateTime;
+    FSeek(p + 140); float landingCameraNearDistance;
+    FSeek(p + 144); float landingCameraNearElavation;
+    FSeek(p + 148); float landingCameraNearAzimuth;
+
+    FSeek(p + 160);
+} BossDragonLaunchParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed;
+    FSeek(p + 4); float boostSpeed;
+    FSeek(p + 8); float boostSpeedMax;
+
+    FSeek(p + 12);
+} BossDragonQuickStepParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float goalOffset;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float boostSpeed;
+    FSeek(p + 16); float width;
+    FSeek(p + 20); float height;
+    FSeek(p + 24); float closeDistance;
+    FSeek(p + 28); float closeSpeedScale;
+    FSeek(p + 32); float fastMoveDistance;
+    FSeek(p + 36); float stunTime;
+    FSeek(p + 40); float stunSpeedScale;
+    FSeek(p + 44); float superBoostDelayTime;
+    FSeek(p + 48); float superBoostTime;
+    FSeek(p + 52); float superBoostSpeed;
+
+    FSeek(p + 56);
+} BossDragonChaseParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isValid;
+    FSeek(p + 4);  float rotForce;
+    FSeek(p + 8);  float maxRotForce;
+    FSeek(p + 12); float rotForceSpeed;
+    FSeek(p + 16); float rotDamper;
+    FSeek(p + 20); float straightTime;
+
+    FSeek(p + 24);
+} BossDragonMissileIndividualParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float hpRatioThreshold;
+    FSeek(p + 4);  sint32 count;
+    FSeek(p + 8);  float intervalTime;
+    FSeek(p + 12); float waitTime;
+    FSeek(p + 16); float badRatio;
+
+    FSeek(p + 20);
+} BossDragonMissileFirePattern;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float radius;
+    FSeek(p + 4);   float length;
+    FSeek(p + 8);   float speed;
+    FSeek(p + 12);  float maxSpeed;
+    FSeek(p + 16);  float accel;
+    FSeek(p + 20);  float lifeTime;
+    FSeek(p + 24);  BossDragonMissileIndividualParam individuals[16]<optimize=false>;
+    FSeek(p + 408); BossDragonMissileIndividualParam badIndividuals[8]<optimize=false>;
+    FSeek(p + 600); BossDragonMissileFirePattern firePatterns[8]<optimize=false>;
+
+    FSeek(p + 760);
+} BossDragonMissileParam;
+
+enum<sint8> BossDragonSequence
+{
+    NOP = 0,
+    BITE = 1,
+    LIGHT_SCRATCH = 2,
+    SCRATCH = 3,
+    SHOOT = 4,
+    SHOOT_NORMAL = 5,
+    SHOOT_SPIRAL = 6,
+    SHOOT_SPIRAL_ALTERNATE = 7,
+    SHOOT_SPIRAL_VERTICAL = 8,
+    SHOOT_SPLASH = 9,
+    SHOOT_HOMING_LASER = 10,
+    SHOOT_HOMING_MISSILE = 11,
+    SHOOT_RIPPLE_LASER = 12,
+    SHOOT_RIPPLE_LASER_RAGE = 13,
+    SHOOT_WAVE = 14,
+    SHOOT_LASER_WINDER = 15,
+    SHOOT_RANDOM_LASER = 16,
+    SHOOT_END = 17,
+    SWAP_SIDE = 18,
+    CHASE = 19,
+};
+
+enum<sint8> BossDragonInterrupt
+{
+    NOP = 0,
+    RAGE = 1,
+    SPECIAL_ATTACK = 2,
+    SPECIAL_ATTACK2 = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float hpRatio;
+    FSeek(p + 4); BossDragonInterrupt interrupt;
+    FSeek(p + 5); bool forceInterrupt;
+
+    FSeek(p + 8);
+} BossDragonInterruptParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float postCameraTime[4]<optimize=false>;
+
+    FSeek(p + 16);
+} BossDragonCyloopBindParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scale;
+    FSeek(p + 4);  float time;
+    FSeek(p + 8);  float easeOutTime;
+    FSeek(p + 12); bool cameraSlow;
+
+    FSeek(p + 16);
+} BossDragonParrySlowParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); BossDragonParrySlowParam slowParams[2]<optimize=false>;
+
+    FSeek(p + 32);
+} BossDragonParryParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float delayTime[6]<optimize=false>;
+
+    FSeek(p + 24);
+} BossDragonAttackSignParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool usePracticeNotifier;
+    FSeek(p + 1); sint8 practiceNo;
+    FSeek(p + 2); sint8 tipsNo;
+
+    FSeek(p + 3);
+} EnemyPracticeNotifierConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); EnemyPracticeNotifierConfig notifierConfigClimb;
+    FSeek(p + 3); EnemyPracticeNotifierConfig notifierConfigBattle;
+
+    FSeek(p + 6);
+} BossDragonNotifierParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossBaseConfig base;
+    FSeek(p + 75712); float cruisePathSpeed;
+    FSeek(p + 75716); float patrolPathSpeed;
+    FSeek(p + 75720); float approachPathSpeedMin;
+    FSeek(p + 75724); float approachPathSpeedMax;
+    FSeek(p + 75728); float climbPathSpeed;
+    FSeek(p + 75732); float pathSpeed;
+    FSeek(p + 75736); float ringSupplyPathSpeed;
+    FSeek(p + 75740); float sideDistance;
+    FSeek(p + 75744); float shootEndTime;
+    FSeek(p + 75748); sint32 staggerPoint;
+    FSeek(p + 75752); sint32 staggerPointRage;
+    FSeek(p + 75756); float staggerTime;
+    FSeek(p + 75760); float biteParriedTime;
+    FSeek(p + 75764); float scratchParriedTime;
+    FSeek(p + 75768); sint32 knockBackStaggerCount;
+    FSeek(p + 75772); sint32 knockBackPoint;
+    FSeek(p + 75776); float knockBackTime;
+    FSeek(p + 75780); float hardStunTime;
+    FSeek(p + 75784); float cyloopBindTime;
+    FSeek(p + 75788); float cyloopBind2Time;
+    FSeek(p + 75792); float cyloopEscapeHpRatio;
+    FSeek(p + 75796); float cyloopEscapeTime;
+    FSeek(p + 75800); float fallDeadHeight;
+    FSeek(p + 75804); sint32 specialAttackDamage;
+    FSeek(p + 75808); sint32 qte1Damage;
+    FSeek(p + 75816); cstring accessNodeNames[16]<optimize=false>;
+    FSeek(p + 76080); BossDragonHitBoxParam hitBoxes[32]<optimize=false>;
+    FSeek(p + 79152); BossDragonHurtBoxParam hurtBoxes[32]<optimize=false>;
+    FSeek(p + 83760); BossDragonScratchParam scratch;
+    FSeek(p + 83768); BossDragonReflectShotParam reflect;
+    FSeek(p + 83808); BossDragonShotParam shot;
+    FSeek(p + 83840); BossDragonSpiralShotParam spiral;
+    FSeek(p + 83880); BossDragonSpiralShotParam spiralAlternate;
+    FSeek(p + 83920); BossDragonSpiralShotParam spiralVertical;
+    FSeek(p + 83960); BossDragonSplashShotParam splash;
+    FSeek(p + 84004); BossDragonHomingLaserParam homingLaser;
+    FSeek(p + 84048); BossDragonHomingMissileParam homingMissile;
+    FSeek(p + 84088); BossDragonRippleLaserParam rippleLaser;
+    FSeek(p + 84136); BossDragonRippleLaserRageParam rippleLaserRage;
+    FSeek(p + 84192); BossDragonRippleLaserDummyParam rippleLaserDummy;
+    FSeek(p + 84232); BossDragonWaveParam wave;
+    FSeek(p + 84272); BossDragonLaserParam laserWinder;
+    FSeek(p + 84308); BossDragonLaserParam randomLaser;
+    FSeek(p + 84344); BossDragonCounterLaserParam counterLaser;
+    FSeek(p + 84368); BossDragonRingSupplyParam ringSupply;
+    FSeek(p + 84432); float damageRates[4]<optimize=false>;
+    FSeek(p + 84448); BossDragonLayoutParam layouts[46]<optimize=false>;
+    FSeek(p + 88128); BossDragonCameraParam cameras[47]<optimize=false>;
+    FSeek(p + 93392); BossDragonMoveParam swapMove;
+    FSeek(p + 93664); BossDragonRoadParam road;
+    FSeek(p + 94368); BossDragonLaunchParam launch;
+    FSeek(p + 94528); BossDragonQuickStepParam quickStep;
+    FSeek(p + 94540); BossDragonChaseParam chase;
+    FSeek(p + 94596); BossDragonMissileParam missile;
+    FSeek(p + 95356); BossDragonSequence seq[16]<optimize=false>;
+    FSeek(p + 95372); BossDragonSequence seq2[16]<optimize=false>;
+    FSeek(p + 95388); BossDragonInterruptParam interrupts[8]<optimize=false>;
+    FSeek(p + 95452); BossDragonCyloopBindParam cyloopBind;
+    FSeek(p + 95468); BossDragonParryParam parry[4]<optimize=false>;
+    FSeek(p + 95596); BossDragonAttackSignParam attackSign;
+    FSeek(p + 95620); BossDragonNotifierParam notifier;
+
+    FSeek(p + 95632);
+} BossDragonConfig;
+
+LittleEndian();
+
+FSeek(64);
+BossDragonConfig data;

@@ -1,0 +1,128 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isEnable;
+    FSeek(p + 1); sint8 useKeyNum;
+
+    FSeek(p + 2);
+} ChaosEmeraldStorageParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); ChaosEmeraldStorageParam storages[7]<optimize=false>;
+
+    FSeek(p + 14);
+} IslandParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float takableRange;
+    FSeek(p + 4);  float fadeTime;
+    FSeek(p + 8);  float chestJumpOutFadeTime;
+    FSeek(p + 12); float tutorialDelayTime;
+
+    FSeek(p + 16);
+} KodamaCommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint8 maxFollowNum;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float rotateSpeed;
+    FSeek(p + 12); float stopDistance;
+    FSeek(p + 16); float vanishDistance;
+    FSeek(p + 20); float respawnStandTime;
+
+    FSeek(p + 24);
+} KodamaFollowParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  KodamaCommonParam common;
+    FSeek(p + 16); KodamaFollowParam follow;
+
+    FSeek(p + 40);
+} KodamaNormalParam;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 levelupKodamaNum[3]<optimize=false>;
+
+    FSeek(p + 12);
+} KodamaElderParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 difficulty[3]<optimize=false>;
+
+    FSeek(p + 12);
+} KodamaHermitLvUpParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); KodamaHermitLvUpParam levelupSeedNum[99]<optimize=false>;
+
+    FSeek(p + 1188);
+} KodamaHermitParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  KodamaNormalParam normal;
+    FSeek(p + 40); KodamaElderParam elder;
+    FSeek(p + 52); KodamaHermitParam hermit;
+
+    FSeek(p + 1240);
+} KodamaParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 inputSequenceItemNumShort;
+    FSeek(p + 4); sint32 inputSequenceItemNumMiddle;
+
+    FSeek(p + 8);
+} NpcParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    IslandParam islands[5]<optimize=false>;
+    FSeek(p + 72);   KodamaParam kodama;
+    FSeek(p + 1312); NpcParam npc;
+    FSeek(p + 1320); sint32 portalExtraKeyNum;
+
+    FSeek(p + 1324);
+} IslandParameter;
+
+LittleEndian();
+
+FSeek(64);
+IslandParameter data;

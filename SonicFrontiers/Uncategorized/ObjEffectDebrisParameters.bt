@@ -1,0 +1,73 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 centerPosOffsetMin;
+    FSeek(p + 16); vector3 centerPosOffsetMax;
+    FSeek(p + 32); float range;
+    FSeek(p + 36); float powerMin;
+    FSeek(p + 40); float powerMax;
+
+    FSeek(p + 48);
+} ExplosionParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 impulseDir;
+    FSeek(p + 16); float powerMin;
+    FSeek(p + 20); float powerMax;
+
+    FSeek(p + 32);
+} ImpulseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float marginTime;
+    FSeek(p + 4);  float nextTime;
+    FSeek(p + 8);  float gravity;
+    FSeek(p + 12); float moveStopTime;
+    FSeek(p + 16); bool damping;
+    FSeek(p + 32); ExplosionParameter explosionParam;
+    FSeek(p + 80); ImpulseParameter impulseParam;
+
+    FSeek(p + 112);
+} DebrisPhaseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); DebrisPhaseParameter debrisPhaseParameters[3]<optimize=false>;
+
+    FSeek(p + 336);
+} EffectDebrisParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); EffectDebrisParameter effectDebrisParameters[10]<optimize=false>;
+
+    FSeek(p + 3360);
+} ObjEffectDebrisParameters;
+
+LittleEndian();
+
+FSeek(64);
+ObjEffectDebrisParameters data;

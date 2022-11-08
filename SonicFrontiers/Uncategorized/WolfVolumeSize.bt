@@ -1,0 +1,15 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float width;
+    FSeek(p + 4); float height;
+    FSeek(p + 8); float depth;
+
+    FSeek(p + 12);
+} WolfVolumeSize;
+
+LittleEndian();
+
+FSeek(64);
+WolfVolumeSize data;

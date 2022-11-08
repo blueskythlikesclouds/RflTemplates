@@ -1,0 +1,31 @@
+typedef byte sint8;
+
+enum<sint8> ContactDamageType
+{
+    CONTACT_DAMAGE_NONE = 0,
+    CONTACT_DAMAGE_LOW_SPEED = 1,
+    CONTACT_DAMAGE_MIDDLE_SPEED = 2,
+    CONTACT_DAMAGE_HIGH_SPEED = 3,
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); ContactDamageType contactDamageType;
+    FSeek(p + 1); bool noneDamageSpin;
+    FSeek(p + 2); bool rideOnDamage;
+    FSeek(p + 3); bool aerialBounce;
+
+    FSeek(p + 4);
+} GismoConfigPlanData;
+
+LittleEndian();
+
+FSeek(64);
+GismoConfigPlanData data;

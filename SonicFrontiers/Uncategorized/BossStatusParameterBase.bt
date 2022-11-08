@@ -1,0 +1,15 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 maxHp;
+
+    FSeek(p + 4);
+} BossStatusParameterBase;
+
+LittleEndian();
+
+FSeek(64);
+BossStatusParameterBase data;

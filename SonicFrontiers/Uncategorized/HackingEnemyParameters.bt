@@ -1,0 +1,41 @@
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint16 hpS;
+    FSeek(p + 2);  uint16 hpM;
+    FSeek(p + 4);  uint16 hpL;
+    FSeek(p + 8);  float colliderRadius;
+    FSeek(p + 12); float colliderHeight;
+    FSeek(p + 16); float modelScale;
+
+    FSeek(p + 20);
+} HackingEnemyParameterNormal;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float colliderRadius;
+    FSeek(p + 4); float colliderHeight;
+    FSeek(p + 8); float modelScale;
+
+    FSeek(p + 12);
+} HackingEnemyParameterCore;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  HackingEnemyParameterNormal normalEnemyParam;
+    FSeek(p + 20); HackingEnemyParameterCore coreEnemyParam;
+
+    FSeek(p + 32);
+} HackingEnemyParameters;
+
+LittleEndian();
+
+FSeek(64);
+HackingEnemyParameters data;

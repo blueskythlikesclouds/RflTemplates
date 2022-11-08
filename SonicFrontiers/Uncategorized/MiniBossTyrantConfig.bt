@@ -1,0 +1,362 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  MiniBossCommonConfig commonConfig;
+    FSeek(p + 64); float nonBattleRange;
+    FSeek(p + 68); float miniDamageRange;
+    FSeek(p + 72); float miniComboRange;
+    FSeek(p + 76); float miniOffsetY;
+    FSeek(p + 80); float bodyDamageRange;
+    FSeek(p + 84); float bodyComboRange;
+    FSeek(p + 88); float bodyOffsetY;
+
+    FSeek(p + 96);
+} MiniBossTyrantCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossTyrantLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} MiniBossTyrantLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float time;
+    FSeek(p + 8);  float waitTime;
+    FSeek(p + 12); float rotSpeed;
+
+    FSeek(p + 16);
+} MiniBossTyrantAttackSpinParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed;
+    FSeek(p + 4); sint32 attackNum;
+
+    FSeek(p + 8);
+} MiniBossTyrantAttackAirSpinParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float time;
+
+    FSeek(p + 4);
+} MiniBossTyrantAttackRouletteParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 muzzlePosOffset;
+    FSeek(p + 16); float time;
+    FSeek(p + 20); float rotSpeed;
+    FSeek(p + 24); float waitTime;
+
+    FSeek(p + 32);
+} MiniBossTyrantAttackLaserParam;
+
+typedef byte sint8;
+
+enum<sint8> BarrageType
+{
+    TYPE_AIM_PLAYER = 0,
+    TYPE_NO_AIM = 1,
+};
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  BarrageType type;
+    FSeek(p + 8);  cstring damageTag;
+    FSeek(p + 24); float startSpeed;
+    FSeek(p + 28); float decelePower;
+    FSeek(p + 32); float minSpeed;
+    FSeek(p + 36); float lifeTime;
+    FSeek(p + 40); float waitTime;
+    FSeek(p + 44); float lineTime;
+    FSeek(p + 48); float scale;
+    FSeek(p + 52); float hitVelocity;
+    FSeek(p + 56); float parriedSpeed;
+    FSeek(p + 60); sint32 parriedDamage;
+    FSeek(p + 64); float parriedStaggerValue;
+    FSeek(p + 68); float parriedStunValue;
+
+    FSeek(p + 72);
+} MiniBossTyrantBarrageParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 barrageIndex;
+    FSeek(p + 4);  float yOffset;
+    FSeek(p + 8);  float zOffset;
+    FSeek(p + 12); bool isFollowPlayer;
+    FSeek(p + 16); float shotIntarval;
+    FSeek(p + 20); float maxAngle;
+    FSeek(p + 24); float yAngleOffset;
+    FSeek(p + 28); float shotTime;
+    FSeek(p + 32); float addSpeedMax;
+    FSeek(p + 36); float startWaitTime;
+    FSeek(p + 40); float endWaitTime;
+
+    FSeek(p + 44);
+} MiniBossTyrantShotgunBullet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 barrageIndex;
+    FSeek(p + 4);  float yOffset;
+    FSeek(p + 8);  float zOffset;
+    FSeek(p + 12); bool isFollowPlayer;
+    FSeek(p + 16); float shotIntarval;
+    FSeek(p + 20); float maxAngle;
+    FSeek(p + 24); float rotateSpeed;
+    FSeek(p + 28); float rotateAngle;
+    FSeek(p + 32); float barrageAngleDiff;
+    FSeek(p + 36); float startWaitTime;
+    FSeek(p + 40); float endWaitTime;
+
+    FSeek(p + 44);
+} MiniBossTyrantWinderBullet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 barrageIndex;
+    FSeek(p + 4);  float yOffset;
+    FSeek(p + 8);  float zOffset;
+    FSeek(p + 12); sint32 num;
+    FSeek(p + 16); float waitTime;
+    FSeek(p + 20); bool isFollowPlayer;
+    FSeek(p + 24); float startWaitTime;
+    FSeek(p + 28); float endWaitTime;
+
+    FSeek(p + 32);
+} MiniBossTyrantLineBullet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 barrageIndex;
+    FSeek(p + 4);  float yOffset;
+    FSeek(p + 8);  float zOffset;
+    FSeek(p + 12); bool isFollowPlayer;
+    FSeek(p + 16); float waitTime;
+    FSeek(p + 20); float sideAngle;
+    FSeek(p + 24); sint32 arrayNum;
+    FSeek(p + 28); float arrayTime;
+    FSeek(p + 32); float startWaitTime;
+    FSeek(p + 36); float endWaitTime;
+
+    FSeek(p + 40);
+} MiniBossTyrantWaveBullet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 barrageIndex;
+    FSeek(p + 4);  float yOffset;
+    FSeek(p + 8);  float zOffset;
+    FSeek(p + 12); sint32 num;
+    FSeek(p + 16); float speed;
+    FSeek(p + 20); float rotSpeed;
+    FSeek(p + 24); sint32 arrayNum;
+    FSeek(p + 28); float arrayTime;
+    FSeek(p + 32); float startWaitTime;
+    FSeek(p + 36); float endWaitTime;
+
+    FSeek(p + 40);
+} MiniBossTyrantAttackCircleBullet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float airBattleRate;
+    FSeek(p + 4);  float nextRoundRate;
+    FSeek(p + 8);  float airBattleRateSecond;
+    FSeek(p + 12); float chanceTime;
+    FSeek(p + 16); float chanceTimeSecond;
+    FSeek(p + 20); bool isSpin;
+    FSeek(p + 21); bool isSecondAttack;
+
+    FSeek(p + 24);
+} MiniBossTyrantSequenceParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float upPower;
+    FSeek(p + 4);  float upTime;
+    FSeek(p + 8);  float attackTime;
+    FSeek(p + 12); float downPower;
+
+    FSeek(p + 16);
+} MiniBossTyrantCyloopDamageParameter;
+
+enum<sint8> ActionType
+{
+    ACTION_TYPE_NONE = 0,
+    ACTION_TYPE_SPIN = 1,
+    ACTION_TYPE_ROULETTE = 2,
+    ACTION_TYPE_LASER = 3,
+    ACTION_TYPE_SHOTGUN = 4,
+    ACTION_TYPE_WINDER = 5,
+    ACTION_TYPE_LINE = 6,
+    ACTION_TYPE_WAVE = 7,
+    ACTION_TYPE_CIRCLE = 8,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossTyrantAttackSpinParam spin;
+    FSeek(p + 16);   MiniBossTyrantAttackAirSpinParam airSpin;
+    FSeek(p + 24);   MiniBossTyrantAttackRouletteParam roulette;
+    FSeek(p + 32);   MiniBossTyrantAttackLaserParam laser;
+    FSeek(p + 64);   float rotSpeed;
+    FSeek(p + 72);   MiniBossTyrantBarrageParam barrage[16]<optimize=false>;
+    FSeek(p + 1224); MiniBossTyrantShotgunBullet shotgunBullet;
+    FSeek(p + 1268); MiniBossTyrantWinderBullet winderBullet;
+    FSeek(p + 1312); MiniBossTyrantLineBullet lineBullet;
+    FSeek(p + 1344); MiniBossTyrantWaveBullet waveBullet;
+    FSeek(p + 1384); MiniBossTyrantAttackCircleBullet circleBullet;
+    FSeek(p + 1424); MiniBossTyrantSequenceParameter sequenceParam;
+    FSeek(p + 1448); MiniBossTyrantCyloopDamageParameter cyloopParam;
+    FSeek(p + 1464); ActionType actionListGround[10]<optimize=false>;
+    FSeek(p + 1474); ActionType actionListAir[10]<optimize=false>;
+
+    FSeek(p + 1488);
+} MiniBossTyrantAttackParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float accel;
+    FSeek(p + 8);  float rotate_speed_min;
+    FSeek(p + 12); float rotate_speed_max;
+    FSeek(p + 16); float rotate_speed_fast;
+    FSeek(p + 20); float rotate_accel;
+    FSeek(p + 24); float life;
+    FSeek(p + 28); float spawn_offset;
+    FSeek(p + 32); float spawn_interval;
+    FSeek(p + 36); sint32 spawn_num;
+
+    FSeek(p + 40);
+} MiniBossTyrantDebrisParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MiniBossTyrantDebrisParam debris;
+
+    FSeek(p + 40);
+} MiniBossTyrantStormEffectParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossTyrantCommonParam commonParam;
+    FSeek(p + 96);   MiniBossTyrantLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 376);  MiniBossTyrantLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 400);  MiniBossTyrantAttackParam attackParam;
+    FSeek(p + 1888); MiniBossTyrantStormEffectParam stormEffectParam;
+
+    FSeek(p + 1936);
+} MiniBossTyrantConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossTyrantConfig data;

@@ -1,0 +1,43 @@
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 no;
+
+    FSeek(p + 1);
+} Record;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); Record base;
+    FSeek(p + 8); cstring emitterSetName[2]<optimize=false>;
+
+    FSeek(p + 40);
+} EffectRecord;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); EffectRecord data[100]<optimize=false>;
+
+    FSeek(p + 4000);
+} EffectRecordBaseTable;
+
+LittleEndian();
+
+FSeek(64);
+EffectRecordBaseTable data;

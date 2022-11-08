@@ -1,0 +1,50 @@
+typedef byte sint8;
+
+enum<sint8> Condition
+{
+    Time = 0,
+    Animation = 1,
+};
+
+enum<sint8> Shape
+{
+    Sphere = 0,
+    Cylinder = 1,
+    Box = 2,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Condition condition;
+    FSeek(p + 1);  sint8 count;
+    FSeek(p + 4);  float spanTime;
+    FSeek(p + 8);  Shape shape;
+    FSeek(p + 16); vector3 shapeSize;
+    FSeek(p + 32); vector3 shapeOffset;
+
+    FSeek(p + 48);
+} PlayerParamAttackCollider;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamAttackCollider hit;
+    FSeek(p + 48); float ignoreSwingingTime;
+
+    FSeek(p + 64);
+} PlayerParamPursuitFinish;
+
+LittleEndian();
+
+FSeek(64);
+PlayerParamPursuitFinish data;

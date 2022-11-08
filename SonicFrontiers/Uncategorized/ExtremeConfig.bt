@@ -1,0 +1,48 @@
+typedef byte sint8;
+
+enum<sint8> LineType
+{
+    LINE3 = 0,
+    LINE5 = 1,
+    LINE_INF = 2,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  LineType lineType;
+    FSeek(p + 4);  float lineWidth;
+    FSeek(p + 8);  float roadLength;
+    FSeek(p + 12); float speed;
+    FSeek(p + 16); float barricadeInterval;
+    FSeek(p + 20); float emergencyDistance;
+    FSeek(p + 32); vector3 barricadeSize;
+    FSeek(p + 48); color8 roadColor;
+    FSeek(p + 52); color8 barricadeColor;
+    FSeek(p + 56); float cameraFovy;
+    FSeek(p + 60); float cameraDistance;
+    FSeek(p + 64); float cameraUpOffset;
+    FSeek(p + 68); float cameraShakeOffset;
+
+    FSeek(p + 80);
+} ExtremeConfig;
+
+LittleEndian();
+
+FSeek(64);
+ExtremeConfig data;

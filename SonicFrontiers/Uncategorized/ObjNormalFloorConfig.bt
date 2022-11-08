@@ -1,0 +1,24 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float length;
+    FSeek(p + 4); float width;
+    FSeek(p + 8); float height;
+
+    FSeek(p + 12);
+} NormalFloorSize;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); NormalFloorSize sizeInfo[10]<optimize=false>;
+
+    FSeek(p + 120);
+} ObjNormalFloorConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjNormalFloorConfig data;

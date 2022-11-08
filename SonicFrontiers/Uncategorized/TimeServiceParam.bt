@@ -1,0 +1,17 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed;
+    FSeek(p + 4); float timeMagnification;
+    FSeek(p + 8); sint32 addMinuteReturnFromCyber;
+
+    FSeek(p + 12);
+} TimeServiceParam;
+
+LittleEndian();
+
+FSeek(64);
+TimeServiceParam data;

@@ -1,0 +1,2534 @@
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint16 pointMin;
+    FSeek(p + 2);  uint16 pointMax;
+    FSeek(p + 4);  float damageRandomRate;
+    FSeek(p + 8);  float damageRandomRateSS;
+    FSeek(p + 12); float shapeDamageRate;
+    FSeek(p + 16); float shapeStunRate;
+    FSeek(p + 20); float shapeStaggerRate;
+
+    FSeek(p + 24);
+} PlayerParamOffensive;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 rateMin;
+    FSeek(p + 1); uint8 rateMax;
+    FSeek(p + 2); uint16 infimumDropRings;
+
+    FSeek(p + 4);
+} PlayerParamDefensive;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamOffensive offensive;
+    FSeek(p + 24); PlayerParamDefensive defensive;
+    FSeek(p + 28); float criticalDamageRate;
+    FSeek(p + 32); float criticalRate;
+    FSeek(p + 36); float criticalRateSS;
+    FSeek(p + 40); float downedDamageRate;
+
+    FSeek(p + 44);
+} PlayerParamAttackCommon;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef byte sint8;
+
+enum<sint8> HitSE
+{
+    SE_None = -1,
+    Weak = 0,
+    Strong = 1,
+    VeryStrong = 2,
+};
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float damageRate;
+    FSeek(p + 4);   float damageRateSS;
+    FSeek(p + 8);   float damageRateAcceleMode;
+    FSeek(p + 12);  float damageRateManual;
+    FSeek(p + 16);  float stunPoint;
+    FSeek(p + 20);  float staggerPoint;
+    FSeek(p + 32);  vector3 velocity;
+    FSeek(p + 48);  float velocityKeepTime;
+    FSeek(p + 52);  float addComboValue;
+    FSeek(p + 56);  float addComboValueAccele;
+    FSeek(p + 60);  float addComboValueSS;
+    FSeek(p + 64);  float addComboValueAcceleSS;
+    FSeek(p + 68);  float addQuickCyloopEnergy;
+    FSeek(p + 72);  float addQuickCyloopEnergyAccele;
+    FSeek(p + 76);  float addQuickCyloopEnergySS;
+    FSeek(p + 80);  float addQuickCyloopEnergyAcceleSS;
+    FSeek(p + 84);  float addQuickCyloopEnergyGuard;
+    FSeek(p + 88);  float addQuickCyloopEnergyAcceleGuard;
+    FSeek(p + 96);  vector3 gimmickVelocity;
+    FSeek(p + 112); float ignoreTime;
+    FSeek(p + 116); uint16 attributes;
+    FSeek(p + 118); HitSE se;
+    FSeek(p + 120); cstring hitEffectName;
+    FSeek(p + 136); cstring hitEffectNameSS;
+    FSeek(p + 152); cstring hitStopName;
+    FSeek(p + 168); cstring hitStopNameDead;
+    FSeek(p + 184); cstring hitStopNameDeadBoss;
+    FSeek(p + 200); cstring hitStopNameSS;
+    FSeek(p + 216); cstring hitStopNameDeadSS;
+    FSeek(p + 232); cstring hitCameraShakeName;
+    FSeek(p + 248); cstring hitCameraShakeNameDead;
+    FSeek(p + 264); cstring hitCameraShakeNameDeadBoss;
+    FSeek(p + 280); cstring hitCameraShakeNameSS;
+    FSeek(p + 296); cstring hitCameraShakeNameDeadSS;
+    FSeek(p + 312); cstring hitVibrationName;
+    FSeek(p + 328); cstring hitVibrationNameSS;
+
+    FSeek(p + 352);
+} PlayerParamAttackData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     PlayerParamAttackCommon common;
+    FSeek(p + 48);    PlayerParamAttackData spinAttack;
+    FSeek(p + 400);   PlayerParamAttackData spinDash;
+    FSeek(p + 752);   PlayerParamAttackData homingAttack;
+    FSeek(p + 1104);  PlayerParamAttackData homingAttackAir;
+    FSeek(p + 1456);  PlayerParamAttackData pursuitKick;
+    FSeek(p + 1808);  PlayerParamAttackData stomping;
+    FSeek(p + 2160);  PlayerParamAttackData stompingAttack;
+    FSeek(p + 2512);  PlayerParamAttackData boundStompingLast;
+    FSeek(p + 2864);  PlayerParamAttackData sliding;
+    FSeek(p + 3216);  PlayerParamAttackData loopKick;
+    FSeek(p + 3568);  PlayerParamAttackData crasher;
+    FSeek(p + 3920);  PlayerParamAttackData spinSlashHoming;
+    FSeek(p + 4272);  PlayerParamAttackData spinSlash;
+    FSeek(p + 4624);  PlayerParamAttackData spinSlashLast;
+    FSeek(p + 4976);  PlayerParamAttackData sonicBoom;
+    FSeek(p + 5328);  PlayerParamAttackData crossSlash;
+    FSeek(p + 5680);  PlayerParamAttackData homingShot;
+    FSeek(p + 6032);  PlayerParamAttackData chargeAttack;
+    FSeek(p + 6384);  PlayerParamAttackData chargeAttackLast;
+    FSeek(p + 6736);  PlayerParamAttackData cyloop;
+    FSeek(p + 7088);  PlayerParamAttackData cyloopQuick;
+    FSeek(p + 7440);  PlayerParamAttackData cyloopAerial;
+    FSeek(p + 7792);  PlayerParamAttackData accele1;
+    FSeek(p + 8144);  PlayerParamAttackData accele2;
+    FSeek(p + 8496);  PlayerParamAttackData aerialAccele1;
+    FSeek(p + 8848);  PlayerParamAttackData aerialAccele2;
+    FSeek(p + 9200);  PlayerParamAttackData comboFinish;
+    FSeek(p + 9552);  PlayerParamAttackData comboFinishF;
+    FSeek(p + 9904);  PlayerParamAttackData comboFinishB;
+    FSeek(p + 10256); PlayerParamAttackData comboFinishL;
+    FSeek(p + 10608); PlayerParamAttackData comboFinishR;
+    FSeek(p + 10960); PlayerParamAttackData acceleComboFinish;
+    FSeek(p + 11312); PlayerParamAttackData acceleComboFinishF;
+    FSeek(p + 11664); PlayerParamAttackData acceleComboFinishB;
+    FSeek(p + 12016); PlayerParamAttackData acceleComboFinishL;
+    FSeek(p + 12368); PlayerParamAttackData acceleComboFinishR;
+    FSeek(p + 12720); PlayerParamAttackData smash;
+    FSeek(p + 13072); PlayerParamAttackData smashLast;
+    FSeek(p + 13424); PlayerParamAttackData slingShot;
+
+    FSeek(p + 13776);
+} PlayerParamAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float horzAngle;
+    FSeek(p + 4); float vertAngle;
+    FSeek(p + 8); float distanceRatio;
+
+    FSeek(p + 12);
+} PlayerParamAcceleHitEffect;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerParamAcceleHitEffect hitEffect[5]<optimize=false>;
+
+    FSeek(p + 60);
+} PlayerParamAcceleLevel;
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float declineSpeed;
+    FSeek(p + 4);  float declineSpeedAccele;
+    FSeek(p + 8);  float lossDamaged;
+    FSeek(p + 12); float lossDamagedAccele;
+    FSeek(p + 16); uint32 comboRateAccele;
+
+    FSeek(p + 20);
+} PlayerParamAcceleMode;
+
+enum<sint8> Condition
+{
+    Time = 0,
+    Animation = 1,
+};
+
+enum<sint8> Shape
+{
+    Sphere = 0,
+    Cylinder = 1,
+    Box = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Condition condition;
+    FSeek(p + 1);  sint8 count;
+    FSeek(p + 4);  float spanTime;
+    FSeek(p + 8);  Shape shape;
+    FSeek(p + 16); vector3 shapeSize;
+    FSeek(p + 32); vector3 shapeOffset;
+
+    FSeek(p + 48);
+} PlayerParamAttackCollider;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamAttackCollider hit;
+    FSeek(p + 48); float motionSpeedRatio;
+    FSeek(p + 52); float motionSpeedRatioAccele;
+
+    FSeek(p + 64);
+} PlayerParamAcceleCombo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamAcceleCombo sonic;
+    FSeek(p + 64);  PlayerParamAcceleCombo superSonic1;
+    FSeek(p + 128); PlayerParamAcceleCombo superSonic2;
+
+    FSeek(p + 192);
+} PlayerParamAcceleComboSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float loopRadius;
+    FSeek(p + 4);  float loopTime;
+    FSeek(p + 8);  float loopSpeedCurveRatio;
+    FSeek(p + 12); float loopEndStopTime;
+    FSeek(p + 16); float loopEndSpeed;
+    FSeek(p + 20); float kickSpeed;
+    FSeek(p + 24); float failSafeTime;
+    FSeek(p + 32); vector3 offset;
+    FSeek(p + 48); cstring cameraName;
+
+    FSeek(p + 64);
+} PlayerParamLoopKick;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamLoopKick sonic;
+    FSeek(p + 64);  PlayerParamLoopKick superSonic1;
+    FSeek(p + 128); PlayerParamLoopKick superSonic2;
+
+    FSeek(p + 192);
+} PlayerParamLoopKickSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float startWait;
+    FSeek(p + 4);   float distanceRatios[5]<optimize=false>;
+    FSeek(p + 24);  float angles[5]<optimize=false>;
+    FSeek(p + 44);  float radii[5]<optimize=false>;
+    FSeek(p + 64);  float distanceMax;
+    FSeek(p + 68);  float zigzagBeginOneStepTime;
+    FSeek(p + 72);  float zigzagEndOneStepTime;
+    FSeek(p + 76);  float crasherSpeed;
+    FSeek(p + 80);  float failSafeTime;
+    FSeek(p + 84);  float cameraDistance;
+    FSeek(p + 88);  float cameraOffsetElevation;
+    FSeek(p + 92);  float cameraOffsetAzimuth;
+    FSeek(p + 96);  float cameraRoll;
+    FSeek(p + 112); vector3 offset;
+    FSeek(p + 128); cstring cameraName;
+
+    FSeek(p + 144);
+} PlayerParamCrasher;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamCrasher sonic;
+    FSeek(p + 144); PlayerParamCrasher superSonic1;
+    FSeek(p + 288); PlayerParamCrasher superSonic2;
+
+    FSeek(p + 432);
+} PlayerParamCrasherSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamAttackCollider hit;
+    FSeek(p + 48);  PlayerParamAttackCollider hitLast;
+    FSeek(p + 96);  float chargeTime;
+    FSeek(p + 100); float homingSpeed;
+    FSeek(p + 104); float bounceTime;
+    FSeek(p + 108); float radius;
+    FSeek(p + 112); float slashTime;
+    FSeek(p + 116); sint8 numSlashs;
+    FSeek(p + 120); float angle;
+    FSeek(p + 124); float lastHitTime;
+    FSeek(p + 128); float slowRatio0;
+    FSeek(p + 132); float slowRatio1;
+    FSeek(p + 144); vector3 offset;
+    FSeek(p + 160); cstring cameraName;
+    FSeek(p + 176); cstring cameraNamePost;
+    FSeek(p + 192); cstring cameraShakeName;
+
+    FSeek(p + 208);
+} PlayerParamSpinSlash;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamSpinSlash sonic;
+    FSeek(p + 208); PlayerParamSpinSlash superSonic1;
+    FSeek(p + 416); PlayerParamSpinSlash superSonic2;
+
+    FSeek(p + 624);
+} PlayerParamSpinSlashSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamAttackCollider hit;
+    FSeek(p + 48);  PlayerParamAttackCollider hitLast;
+    FSeek(p + 96);  float ignoreSwingingTime;
+    FSeek(p + 100); float riseSlowRatio;
+    FSeek(p + 104); float riseTime;
+    FSeek(p + 108); float riseDistance;
+    FSeek(p + 112); float preRiseDistance;
+    FSeek(p + 116); float postRiseDistance;
+    FSeek(p + 120); float lastVelocity;
+    FSeek(p + 124); float spiralRadius;
+    FSeek(p + 128); float spiralRadiusEaseInTime;
+    FSeek(p + 132); float spiralRadiusEaseOutTime;
+    FSeek(p + 136); float spiralAngularSpeed;
+    FSeek(p + 140); float lastHitTime;
+    FSeek(p + 144); cstring cameraName;
+
+    FSeek(p + 160);
+} PlayerParamChargeAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamChargeAttack sonic;
+    FSeek(p + 160); PlayerParamChargeAttack superSonic1;
+    FSeek(p + 320); PlayerParamChargeAttack superSonic2;
+
+    FSeek(p + 480);
+} PlayerParamChargeAttackSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamAttackCollider hit;
+    FSeek(p + 48);  PlayerParamAttackCollider hitLast;
+    FSeek(p + 96);  float riseTime;
+    FSeek(p + 100); float flipSpeed;
+    FSeek(p + 104); float motionTime;
+    FSeek(p + 108); float lastHitTime;
+    FSeek(p + 112); float slowRatio;
+    FSeek(p + 116); float minPressTime;
+    FSeek(p + 120); float minPressTimeHeight;
+    FSeek(p + 124); float maxPressTime;
+    FSeek(p + 128); float maxPressTimeHeight;
+    FSeek(p + 144); vector3 offset;
+    FSeek(p + 160); vector3 offsetAsura;
+    FSeek(p + 176); cstring cameraName;
+    FSeek(p + 192); cstring cameraNameBarrage;
+
+    FSeek(p + 208);
+} PlayerParamStompingAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamStompingAttack sonic;
+    FSeek(p + 208); PlayerParamStompingAttack superSonic1;
+    FSeek(p + 416); PlayerParamStompingAttack superSonic2;
+
+    FSeek(p + 624);
+} PlayerParamStompingAttackSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamAttackCollider hit;
+    FSeek(p + 48); float ignoreSwingingTime;
+
+    FSeek(p + 64);
+} PlayerParamComboFinish;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamComboFinish sonic;
+    FSeek(p + 64);  PlayerParamComboFinish superSonic1;
+    FSeek(p + 128); PlayerParamComboFinish superSonic2;
+
+    FSeek(p + 192);
+} PlayerParamComboFinishSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float waitTime;
+    FSeek(p + 4);  float spanTime;
+    FSeek(p + 8);  float fallSpeed;
+    FSeek(p + 12); float autoContinueTime;
+    FSeek(p + 16); float speed;
+    FSeek(p + 20); float maxSpeed;
+    FSeek(p + 24); float accele;
+    FSeek(p + 28); float slowRatio;
+    FSeek(p + 32); vector3 offset;
+    FSeek(p + 48); cstring cameraName;
+
+    FSeek(p + 64);
+} PlayerParamSonicBoom;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamSonicBoom sonic;
+    FSeek(p + 64);  PlayerParamSonicBoom superSonic1;
+    FSeek(p + 128); PlayerParamSonicBoom superSonic2;
+
+    FSeek(p + 192);
+} PlayerParamSonicBoomSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float spanTime;
+    FSeek(p + 4);   float attackTime;
+    FSeek(p + 8);   float moveAngle;
+    FSeek(p + 12);  float stopTime;
+    FSeek(p + 16);  float slowRatio;
+    FSeek(p + 20);  float spinPhase;
+    FSeek(p + 24);  float spinRadius;
+    FSeek(p + 28);  float spinSpeed;
+    FSeek(p + 32);  float spawnDelayTime[2]<optimize=false>;
+    FSeek(p + 48);  vector3 spawnLocalTranslation[2]<optimize=false>;
+    FSeek(p + 80);  vector3 spawnLocalAngle[2]<optimize=false>;
+    FSeek(p + 112); float speed;
+    FSeek(p + 116); float maxSpeed;
+    FSeek(p + 120); float accele;
+    FSeek(p + 128); vector3 offset;
+    FSeek(p + 144); cstring cameraName;
+    FSeek(p + 160); cstring launchCameraShakeName;
+
+    FSeek(p + 176);
+} PlayerParamCrossSlash;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamCrossSlash sonic;
+    FSeek(p + 176); PlayerParamCrossSlash superSonic1;
+    FSeek(p + 352); PlayerParamCrossSlash superSonic2;
+
+    FSeek(p + 528);
+} PlayerParamCrossSlashSet;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float appearTime;
+    FSeek(p + 4);   float appearPhaseTime;
+    FSeek(p + 8);   float spinRadius;
+    FSeek(p + 12);  float spinSpeed;
+    FSeek(p + 16);  float spinSpeedPostLaunch;
+    FSeek(p + 20);  float chargeTime;
+    FSeek(p + 24);  float spawnTime;
+    FSeek(p + 28);  float launchPreWaitTime;
+    FSeek(p + 32);  float spanTime;
+    FSeek(p + 36);  bool launchRandomize;
+    FSeek(p + 40);  float launchWaitTime;
+    FSeek(p + 44);  float beginAngleX;
+    FSeek(p + 48);  float tangent0;
+    FSeek(p + 52);  float tangent1;
+    FSeek(p + 56);  float spiralWaitTime;
+    FSeek(p + 60);  float spiralAngularSpeed;
+    FSeek(p + 64);  float spiralAngularSpeedMax;
+    FSeek(p + 68);  float spiralAngularSpeedAccele;
+    FSeek(p + 72);  uint8 numShots;
+    FSeek(p + 76);  float speed;
+    FSeek(p + 80);  float maxSpeed;
+    FSeek(p + 84);  float accele;
+    FSeek(p + 88);  float whiteoutBeginTime;
+    FSeek(p + 92);  float whiteoutFadeOutTime;
+    FSeek(p + 96);  float whiteoutFadingTime;
+    FSeek(p + 100); float whiteoutFadeInTime;
+    FSeek(p + 112); vector3 offset;
+    FSeek(p + 128); cstring cameraName;
+
+    FSeek(p + 144);
+} PlayerParamHomingShot;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamHomingShot sonic;
+    FSeek(p + 144); PlayerParamHomingShot superSonic1;
+    FSeek(p + 288); PlayerParamHomingShot superSonic2;
+
+    FSeek(p + 432);
+} PlayerParamHomingShotSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamAttackCollider hit1;
+    FSeek(p + 48); PlayerParamAttackCollider hit2;
+    FSeek(p + 96); vector3 offsets[16]<optimize=false>;
+
+    FSeek(p + 352);
+} PlayerParamSmash;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamSmash sonic;
+    FSeek(p + 352); PlayerParamSmash superSonic1;
+    FSeek(p + 704); PlayerParamSmash superSonic2;
+
+    FSeek(p + 1056);
+} PlayerParamSmashSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveTime;
+    FSeek(p + 4);  float moveTimeSS;
+    FSeek(p + 8);  float tangentScale;
+    FSeek(p + 12); float waitTime;
+    FSeek(p + 16); float cameraTurnRatio;
+
+    FSeek(p + 20);
+} PlayerParamBehind;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float longPressTime;
+
+    FSeek(p + 4);
+} PlayerParamComboCommon;
+
+enum<uint8> ComboMoveType
+{
+    Homing = 0,
+    Step = 1,
+    None = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ComboMoveType moveType;
+    FSeek(p + 4);  float moveInitialSpeed;
+    FSeek(p + 8);  float moveMaxSpeed;
+    FSeek(p + 12); float moveAccele;
+    FSeek(p + 16); float timeout;
+
+    FSeek(p + 20);
+} PlayerParamComboMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float moveSpeed;
+    FSeek(p + 4); float rotateSpeed;
+
+    FSeek(p + 8);
+} PlayerParamComboMoveCorrection;
+
+enum<sint8> Action
+{
+    Root = 0,
+    HomingAttack = 1,
+    AerialHomingAttack = 2,
+    Pursuit = 3,
+    Stomping = 4,
+    LoopKick = 5,
+    Crasher = 6,
+    SpinSlash = 7,
+    SonicBoom = 8,
+    CrossSlash = 9,
+    HomingShot = 10,
+    ChargeAttack = 11,
+    QuickCyloop = 12,
+    AerialQuickCyloop = 13,
+    AcceleCombo1 = 14,
+    AcceleCombo2 = 15,
+    AcceleCombo3 = 16,
+    AcceleCombo4 = 17,
+    AerialAcceleCombo1 = 18,
+    AerialAcceleCombo2 = 19,
+    AerialAcceleCombo3 = 20,
+    AerialAcceleCombo4 = 21,
+    ComboFinish = 22,
+    SpinJump = 23,
+    Smash = 24,
+    Behind = 25,
+    Guarded = 26,
+    Avoid = 27,
+    AirBoost = 28,
+    AfterAirBoost = 29,
+    ActionNum = 30,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Action transitExistTarget[6]<optimize=false>;
+    FSeek(p + 6);  Action transitInAir[6]<optimize=false>;
+    FSeek(p + 12); Action transitNotExistTarget[6]<optimize=false>;
+
+    FSeek(p + 18);
+} PlayerParamComboTransit;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamComboTransit root;
+    FSeek(p + 18);  PlayerParamComboTransit homingAttack;
+    FSeek(p + 36);  PlayerParamComboTransit aerialHoming;
+    FSeek(p + 54);  PlayerParamComboTransit pursuit;
+    FSeek(p + 72);  PlayerParamComboTransit stomping;
+    FSeek(p + 90);  PlayerParamComboTransit loopKick;
+    FSeek(p + 108); PlayerParamComboTransit crasher;
+    FSeek(p + 126); PlayerParamComboTransit spinSlash;
+    FSeek(p + 144); PlayerParamComboTransit sonicBoom;
+    FSeek(p + 162); PlayerParamComboTransit crossSlash;
+    FSeek(p + 180); PlayerParamComboTransit homingShot;
+    FSeek(p + 198); PlayerParamComboTransit chargeAttack;
+    FSeek(p + 216); PlayerParamComboTransit quickCyloop;
+    FSeek(p + 234); PlayerParamComboTransit aerialQuickCyloop;
+    FSeek(p + 252); PlayerParamComboTransit acceleCombo1;
+    FSeek(p + 270); PlayerParamComboTransit acceleCombo2;
+    FSeek(p + 288); PlayerParamComboTransit acceleCombo3;
+    FSeek(p + 306); PlayerParamComboTransit acceleCombo4;
+    FSeek(p + 324); PlayerParamComboTransit aerialAcceleCombo1;
+    FSeek(p + 342); PlayerParamComboTransit aerialAcceleCombo2;
+    FSeek(p + 360); PlayerParamComboTransit aerialAcceleCombo3;
+    FSeek(p + 378); PlayerParamComboTransit aerialAcceleCombo4;
+    FSeek(p + 396); PlayerParamComboTransit behind;
+    FSeek(p + 414); PlayerParamComboTransit guarded;
+    FSeek(p + 432); PlayerParamComboTransit avoid;
+    FSeek(p + 450); PlayerParamComboTransit airBoost;
+    FSeek(p + 468); PlayerParamComboTransit afterAirBoost;
+
+    FSeek(p + 486);
+} PlayerParamComboTransitTable;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamComboCommon common;
+    FSeek(p + 4);  PlayerParamComboMove comboMoveSonic;
+    FSeek(p + 24); PlayerParamComboMove comboMoveSupersonic;
+    FSeek(p + 44); PlayerParamComboMoveCorrection comboMoveCorrection;
+    FSeek(p + 52); PlayerParamComboTransitTable comboTable;
+
+    FSeek(p + 540);
+} PlayerParamCombo;
+
+typedef int sint32;
+
+typedef struct vector2 {
+    float x;
+    float y;
+} vector2;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 m_divideCircle;
+    FSeek(p + 4);  float m_circleRadius;
+    FSeek(p + 8);  float m_circleWaveCycle;
+    FSeek(p + 12); float m_circleWaveWidth;
+    FSeek(p + 16); float m_circleWaveSpeed;
+    FSeek(p + 20); vector2 m_scale;
+    FSeek(p + 32); cstring m_textureName;
+    FSeek(p + 48); float m_flowSpeed;
+    FSeek(p + 52); float m_twistCycle;
+    FSeek(p + 56); float m_rollCycle;
+    FSeek(p + 60); float m_rollPhase;
+    FSeek(p + 64); float m_alphaHeadDistance;
+    FSeek(p + 68); float m_alphaTailDistance;
+    FSeek(p + 72); float m_offsetCycle;
+    FSeek(p + 76); float m_offsetPhase;
+    FSeek(p + 80); float m_offsetRadius;
+
+    FSeek(p + 88);
+} CyloopSlashEffectBaseParameter;
+
+typedef struct colorF {
+    float r;
+    float g;
+    float b;
+    float a;
+} colorF;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CyloopSlashEffectBaseParameter base;
+    FSeek(p + 88);  colorF m_color0;
+    FSeek(p + 104); colorF m_color1;
+    FSeek(p + 120); float m_luminance;
+    FSeek(p + 124); colorF m_flashColor0;
+    FSeek(p + 140); colorF m_flashColor1;
+    FSeek(p + 156); float m_flashLuminance;
+    FSeek(p + 160); float m_flashTime;
+
+    FSeek(p + 168);
+} CyloopTransparentLocusParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float scale;
+    FSeek(p + 4); float speedX;
+    FSeek(p + 8); float speedY;
+
+    FSeek(p + 12);
+} OpaqueLineUvCell;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CyloopSlashEffectBaseParameter base;
+    FSeek(p + 88);  colorF m_color;
+    FSeek(p + 104); float m_alphaThreshold;
+    FSeek(p + 108); OpaqueLineUvCell m_uvCells[2]<optimize=false>;
+    FSeek(p + 132); float m_uvLineScaleX;
+    FSeek(p + 136); float m_uvLineScaleY;
+    FSeek(p + 140); colorF m_flashColor;
+    FSeek(p + 156); float m_flashTime;
+
+    FSeek(p + 160);
+} CyloopOpaqueLocusParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring m_textureNamePattern;
+    FSeek(p + 16);  cstring m_textureNameDist;
+    FSeek(p + 32);  colorF startColor;
+    FSeek(p + 48);  colorF endColor;
+    FSeek(p + 64);  float startColorLuminance;
+    FSeek(p + 68);  float endColorLuminance;
+    FSeek(p + 72);  colorF startColorFlash;
+    FSeek(p + 88);  colorF endColorFlash;
+    FSeek(p + 104); float startColorLuminanceFlash;
+    FSeek(p + 108); float endColorLuminanceFlash;
+    FSeek(p + 112); float flashTime;
+    FSeek(p + 116); float patternDepth;
+    FSeek(p + 120); float patternScrollSpeed;
+    FSeek(p + 124); float patternDarkness;
+    FSeek(p + 128); float patternScale;
+    FSeek(p + 132); float glitchResX;
+    FSeek(p + 136); float glitchResY;
+    FSeek(p + 140); float glitchOffset;
+    FSeek(p + 144); float glitchMaxLength;
+    FSeek(p + 148); float startGlitchScrollSpeed;
+    FSeek(p + 152); float startGlitchChangeSpeed;
+    FSeek(p + 156); float startGlitchShift;
+    FSeek(p + 160); float startGlitchContrust;
+    FSeek(p + 164); float endGlitchScrollSpeed;
+    FSeek(p + 168); float endGlitchChangeSpeed;
+    FSeek(p + 172); float endGlitchShift;
+    FSeek(p + 176); float endGlitchContrust;
+    FSeek(p + 180); float lineWidth;
+    FSeek(p + 184); float lineDisplayWidth;
+    FSeek(p + 188); float lineBlackEdgeWidth;
+    FSeek(p + 192); float lineBlackEdgeIntensity;
+    FSeek(p + 196); float lineBlackEdgeNormalFade;
+    FSeek(p + 200); float distNoiseScale;
+    FSeek(p + 204); float distLowNoiseScale;
+    FSeek(p + 208); float distHighNoiseScale;
+    FSeek(p + 212); float distNoiseRate;
+    FSeek(p + 216); float distScrollSpeed;
+    FSeek(p + 220); float distIntensity;
+    FSeek(p + 224); float dissolve;
+    FSeek(p + 228); float dissolveRate;
+    FSeek(p + 232); float heightOffset;
+
+    FSeek(p + 240);
+} CyloopCrossLineParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    sint32 m_numTransparentLines;
+    FSeek(p + 8);    CyloopTransparentLocusParameter m_transparentLines[3]<optimize=false>;
+    FSeek(p + 512);  sint32 m_numOpaqueLines;
+    FSeek(p + 520);  CyloopOpaqueLocusParameter m_opaqueLines[3]<optimize=false>;
+    FSeek(p + 1000); sint32 m_numCrossLines;
+    FSeek(p + 1008); CyloopCrossLineParameter m_crossline;
+
+    FSeek(p + 1248);
+} CyloopLocusParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 noneWeight;
+    FSeek(p + 4);  uint32 ring10Weight;
+    FSeek(p + 8);  uint32 powerSeedWeight;
+    FSeek(p + 12); uint32 guardSeedWeight;
+    FSeek(p + 16); uint32 sequenceItemWeight;
+    FSeek(p + 20); uint32 portalBitWeight;
+    FSeek(p + 24); uint32 skillPieceWeight;
+
+    FSeek(p + 28);
+} CyloopDropItemWeightParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  CyloopDropItemWeightParameter weight;
+    FSeek(p + 28); CyloopDropItemWeightParameter weight2;
+    FSeek(p + 56); uint32 numRings;
+    FSeek(p + 60); uint32 numRings2;
+    FSeek(p + 64); uint32 num10Rings;
+    FSeek(p + 68); uint32 numSkillPieces;
+    FSeek(p + 72); uint32 skillPieceExp;
+    FSeek(p + 76); float rareDropCoolTime;
+
+    FSeek(p + 80);
+} CyloopDropItemParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float damageRate;
+    FSeek(p + 4);  float stunRate;
+    FSeek(p + 8);  float staggerRate;
+    FSeek(p + 12); float velocityRate;
+
+    FSeek(p + 16);
+} CyloopShapeWindCountParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CyloopShapeWindCountParameter param[5]<optimize=false>;
+
+    FSeek(p + 80);
+} CyloopShapeWindEffectParaemter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CyloopShapeWindEffectParaemter wind;
+
+    FSeek(p + 80);
+} CyloopShapeEffectParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    CyloopLocusParameter locus;
+    FSeek(p + 1248); CyloopLocusParameter locusQuick;
+    FSeek(p + 2496); CyloopLocusParameter locusSuperSonic;
+    FSeek(p + 3744); CyloopLocusParameter locusSuperSonicQuick;
+    FSeek(p + 4992); colorF auraColor;
+    FSeek(p + 5008); CyloopDropItemParameter dropItem;
+    FSeek(p + 5088); float needSpeed;
+    FSeek(p + 5092); CyloopShapeEffectParameter shapeEffect;
+    FSeek(p + 5172); float lossQuickCyloopEnergy;
+    FSeek(p + 5176); float recoveryQuickCyloopEnergyByTime;
+    FSeek(p + 5180); float recoveryQuickCyloopEnergyByTimeInMinigame;
+
+    FSeek(p + 5184);
+} PlayerParamCyloop;
+
+enum<sint8> Part
+{
+    PunchR = 0,
+    PunchL = 1,
+    KickR = 2,
+    KickL = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); Part part;
+    FSeek(p + 32); vector3 begin;
+    FSeek(p + 48); vector3 end;
+    FSeek(p + 64); float scale;
+    FSeek(p + 68); float roll;
+    FSeek(p + 72); float moveTime;
+    FSeek(p + 76); float fadeoutTime;
+
+    FSeek(p + 80);
+} PlayerParamSuperSonicShapeAttackData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 numRings;
+    FSeek(p + 4);  float decreaseSec;
+    FSeek(p + 8);  float inletRadius;
+    FSeek(p + 12); float moveSoundSpeed;
+    FSeek(p + 16); PlayerParamSuperSonicShapeAttackData shapeEffects[32]<optimize=false>;
+
+    FSeek(p + 2576);
+} PlayerParamSuperSonic;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float resistRate;
+    FSeek(p + 4);  float breatheBrake;
+    FSeek(p + 8);  float breatheTime;
+    FSeek(p + 12); float breatheGravity;
+
+    FSeek(p + 16);
+} PlayerParamWaterAct;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float baseSpeed;
+    FSeek(p + 4);  float upSpeed;
+    FSeek(p + 8);  float upSpeedAir;
+    FSeek(p + 12); float edgeSpeed;
+    FSeek(p + 16); float airActionTime;
+    FSeek(p + 20); float wallMoveTime;
+
+    FSeek(p + 24);
+} PlayerParamBaseJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxSpeed;
+    FSeek(p + 4);  float slidePower;
+    FSeek(p + 8);  float brakeForce;
+    FSeek(p + 12); float slidePowerSlalom;
+    FSeek(p + 16); float brakeForceSlalom;
+    FSeek(p + 20); float releaseSpeed;
+    FSeek(p + 24); bool useInput;
+
+    FSeek(p + 28);
+} PlayerParamBallMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blowDeceleForce;
+    FSeek(p + 4);  float blowDeceleForceOnGround;
+    FSeek(p + 8);  float blowGravityScale;
+    FSeek(p + 12); float blowTransitTime;
+    FSeek(p + 16); float blowDownTime;
+    FSeek(p + 20); float pylonBlowUpSize;
+    FSeek(p + 24); float pylonBlowSpeed;
+    FSeek(p + 32); cstring pylonHitStop;
+
+    FSeek(p + 48);
+} PlayerParamSandSki;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float meanderCycle;
+    FSeek(p + 4);  float meanderAngle;
+    FSeek(p + 8);  float minSpeed;
+    FSeek(p + 12); float maxSpeed;
+    FSeek(p + 16); float time;
+
+    FSeek(p + 20);
+} PlayerParamRunawayBee;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 numKodamas;
+    FSeek(p + 4);  float initialSpeed;
+    FSeek(p + 8);  float minSpeed;
+    FSeek(p + 12); float maxSpeed;
+    FSeek(p + 16); float jumpForce;
+
+    FSeek(p + 20);
+} PlayerParamRunWithKodamaParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 maxKodamas;
+    FSeek(p + 4); float gravitySize;
+    FSeek(p + 8); PlayerParamRunWithKodamaParam params[8]<optimize=false>;
+
+    FSeek(p + 168);
+} PlayerParamRunWithKodama;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float width;
+    FSeek(p + 4);  float distance;
+    FSeek(p + 8);  float u0;
+    FSeek(p + 12); float u1;
+
+    FSeek(p + 16);
+} PlayerParamLocusData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerParamLocusData data[4]<optimize=false>;
+
+    FSeek(p + 64);
+} PlayerParamLocus;
+
+enum<sint8> CameraShakeTiming
+{
+    StartCameraInterpolation = 0,
+    EndCameraInterpolation = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeScaleInMove;
+    FSeek(p + 4);  float hitStartRestTime;
+    FSeek(p + 16); vector3 hitCameraOffset;
+    FSeek(p + 32); float hitCameraTimeEaseIn;
+    FSeek(p + 36); float hitCameraFovyAngle;
+    FSeek(p + 40); float hitTimeScaleValue;
+    FSeek(p + 44); float hitTimeScaleTimeEaseIn;
+    FSeek(p + 48); float resetCameraEaseOutTime;
+    FSeek(p + 52); float resetTimeScaleEaseOutTime;
+    FSeek(p + 56); float timeScaleKeepTime;
+    FSeek(p + 60); float shotEffOffset;
+    FSeek(p + 64); float hitEffOffset;
+    FSeek(p + 68); CameraShakeTiming cameraShakeTiming;
+    FSeek(p + 72); cstring cameraShakeName;
+
+    FSeek(p + 96);
+} PlayerParamSlingshot;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float effectSpanTime;
+    FSeek(p + 4);  float effectLifeTime;
+    FSeek(p + 8);  float effectOffsetDistance;
+    FSeek(p + 12); float effectOverlapDistance;
+
+    FSeek(p + 16);
+} PlayerParamAuraTrain;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 ringsLevel;
+    FSeek(p + 1); uint8 speedLevel;
+    FSeek(p + 2); uint8 offensiveLevel;
+    FSeek(p + 3); uint8 defensiveLevel;
+
+    FSeek(p + 4);
+} PlayerParamLevel;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float coolTime;
+
+    FSeek(p + 4);
+} PlayerParamBarrierWall;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float rates[5]<optimize=false>;
+
+    FSeek(p + 20);
+} PlayerParamDamageRateLevel;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerParamDamageRateLevel diffculties[3]<optimize=false>;
+
+    FSeek(p + 60);
+} PlayerParamDamageRate;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     PlayerParamAttack attack;
+    FSeek(p + 13776); PlayerParamAcceleLevel acceleLevel;
+    FSeek(p + 13836); PlayerParamAcceleMode acceleMode;
+    FSeek(p + 13856); PlayerParamAcceleCombo acceleCombo;
+    FSeek(p + 13920); PlayerParamAcceleComboSet acceleComboSet;
+    FSeek(p + 14112); PlayerParamLoopKick loopKick;
+    FSeek(p + 14176); PlayerParamLoopKickSet loopKickSet;
+    FSeek(p + 14368); PlayerParamCrasher crasher;
+    FSeek(p + 14512); PlayerParamCrasherSet crasherSet;
+    FSeek(p + 14944); PlayerParamSpinSlash spinSlash;
+    FSeek(p + 15152); PlayerParamSpinSlashSet spinSlashSet;
+    FSeek(p + 15776); PlayerParamChargeAttack chargeAtack;
+    FSeek(p + 15936); PlayerParamChargeAttackSet chargeAtackSet;
+    FSeek(p + 16416); PlayerParamStompingAttack stompingAttack;
+    FSeek(p + 16624); PlayerParamStompingAttackSet stompingAttackSet;
+    FSeek(p + 17248); PlayerParamComboFinish comboFinish;
+    FSeek(p + 17312); PlayerParamComboFinishSet comboFinishSet;
+    FSeek(p + 17504); PlayerParamSonicBoom sonicboom;
+    FSeek(p + 17568); PlayerParamSonicBoomSet sonicboomSet;
+    FSeek(p + 17760); PlayerParamCrossSlash crossSlash;
+    FSeek(p + 17936); PlayerParamCrossSlashSet crossSlashSet;
+    FSeek(p + 18464); PlayerParamHomingShot homingShot;
+    FSeek(p + 18608); PlayerParamHomingShotSet homingShotSet;
+    FSeek(p + 19040); PlayerParamSmash smash;
+    FSeek(p + 19392); PlayerParamSmashSet smashSet;
+    FSeek(p + 20448); PlayerParamBehind behind;
+    FSeek(p + 20468); PlayerParamCombo combo;
+    FSeek(p + 21008); PlayerParamCyloop cyloop;
+    FSeek(p + 26192); PlayerParamSuperSonic supersonic;
+    FSeek(p + 28768); PlayerParamWaterAct wateract;
+    FSeek(p + 28784); PlayerParamBaseJump basejump;
+    FSeek(p + 28808); PlayerParamBallMove ballmove;
+    FSeek(p + 28840); PlayerParamSandSki sandski;
+    FSeek(p + 28888); PlayerParamRunawayBee runawayBee;
+    FSeek(p + 28908); PlayerParamRunWithKodama runWithKodama;
+    FSeek(p + 29076); PlayerParamLocus locus;
+    FSeek(p + 29152); PlayerParamSlingshot slingshot;
+    FSeek(p + 29248); PlayerParamAuraTrain auratrain;
+    FSeek(p + 29264); PlayerParamLevel level;
+    FSeek(p + 29268); PlayerParamBarrierWall barrierWall;
+    FSeek(p + 29272); PlayerParamDamageRate damageRate;
+
+    FSeek(p + 29344);
+} CommonPackage;
+
+enum<sint8> SupportedPlane
+{
+    Flat = 0,
+    Slope = 1,
+    Wall = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float movableMaxSlope;
+    FSeek(p + 4);  float activeLandingSlope;
+    FSeek(p + 8);  float activeLandingSlopeInBoost;
+    FSeek(p + 12); float landingMaxSlope;
+    FSeek(p + 16); float slidingMaxSlope;
+    FSeek(p + 20); float wallAngleMaxSlope;
+    FSeek(p + 24); SupportedPlane onStand;
+    FSeek(p + 25); SupportedPlane onRunInAir;
+    FSeek(p + 26); SupportedPlane onRun;
+    FSeek(p + 27); bool moveHolding;
+    FSeek(p + 28); bool wallSlideSlowInBoost;
+    FSeek(p + 29); bool attrWallOnGround;
+    FSeek(p + 32); float priorityInputTime;
+    FSeek(p + 36); sint32 capacityRings;
+    FSeek(p + 40); sint32 capacityRingsLvMax;
+    FSeek(p + 44); float collectRingRange;
+
+    FSeek(p + 48);
+} PlayerParamCommon;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initial;
+    FSeek(p + 4);  float min;
+    FSeek(p + 8);  float max;
+    FSeek(p + 12); float minTurn;
+
+    FSeek(p + 16);
+} PlayerParamSpeedData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float force;
+    FSeek(p + 4);  float force2;
+    FSeek(p + 8);  float damperRange;
+    FSeek(p + 12); float jerkMin;
+    FSeek(p + 16); float jerkMax;
+
+    FSeek(p + 20);
+} PlayerParamSpeedAcceleData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamSpeedData normal;
+    FSeek(p + 16);  PlayerParamSpeedData normal2;
+    FSeek(p + 32);  PlayerParamSpeedData boost;
+    FSeek(p + 48);  PlayerParamSpeedData boost2;
+    FSeek(p + 64);  PlayerParamSpeedData boostLvMax;
+    FSeek(p + 80);  PlayerParamSpeedData boostLvMax2;
+    FSeek(p + 96);  float maxSpeedOver;
+    FSeek(p + 100); float opitonMaxSpeedLimitMin;
+    FSeek(p + 104); float opitonMaxSpeedLimitMax;
+    FSeek(p + 108); float thresholdStopSpeed;
+    FSeek(p + 112); float maxFallSpeed;
+    FSeek(p + 116); PlayerParamSpeedAcceleData accele;
+    FSeek(p + 136); PlayerParamSpeedAcceleData decele;
+    FSeek(p + 156); float acceleAuto;
+    FSeek(p + 160); float deceleAuto;
+    FSeek(p + 164); float turnDeceleAngleMin;
+    FSeek(p + 168); float turnDeceleAngleMax;
+    FSeek(p + 172); float maxGravityAccele;
+    FSeek(p + 176); float maxGravityDecele;
+    FSeek(p + 180); float deceleSquat;
+    FSeek(p + 184); float acceleSensitive;
+    FSeek(p + 188); float boostAnimSpeedInWater;
+
+    FSeek(p + 192);
+} PlayerParamSpeed;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float baseRotateForce;
+    FSeek(p + 4);  float baseRotateForce2;
+    FSeek(p + 8);  float baseRotateForceSpeed;
+    FSeek(p + 12); float minRotateForce;
+    FSeek(p + 16); float maxRotateForce;
+    FSeek(p + 20); bool angleRotateForceDecayEnabled;
+    FSeek(p + 24); float frontRotateRatio;
+    FSeek(p + 28); float rotationForceDecaySpeed;
+    FSeek(p + 32); float rotationForceDecayRate;
+    FSeek(p + 36); float rotationForceDecayMax;
+    FSeek(p + 40); float autorunRotateForce;
+
+    FSeek(p + 44);
+} PlayerParamRotation;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float walkSpeed;
+    FSeek(p + 4);  float sneakingSpeed;
+    FSeek(p + 8);  float animSpeedSneak;
+    FSeek(p + 12); float animSpeedWalk;
+    FSeek(p + 16); float animSpeedRun;
+    FSeek(p + 20); float animSpeedBoost;
+    FSeek(p + 24); float animLRBlendSampleTime;
+    FSeek(p + 28); float animLRBlendAngleMin;
+    FSeek(p + 32); float animLRBlendAngleMax;
+    FSeek(p + 36); float animLRBlendSpeed;
+    FSeek(p + 40); float animLRBlendSpeedToCenter;
+    FSeek(p + 44); float minChangeWalkTime;
+    FSeek(p + 48); float fallAnimationAngle;
+
+    FSeek(p + 52);
+} PlayerParamRunning;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedMinFB;
+    FSeek(p + 4);  float rotateSpeedMaxFB;
+    FSeek(p + 8);  float rotateSpeedMinLR;
+    FSeek(p + 12); float rotateSpeedMaxLR;
+
+    FSeek(p + 16);
+} PlayerParamBalanceData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamBalanceData standard;
+    FSeek(p + 16); PlayerParamBalanceData loop;
+
+    FSeek(p + 32);
+} PlayerParamBalance;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSpeedRatio;
+    FSeek(p + 4);  float maxSpeed;
+    FSeek(p + 8);  float forceLand;
+    FSeek(p + 12); float forceAir;
+    FSeek(p + 16); float endSpeed;
+    FSeek(p + 20); float stopTime;
+
+    FSeek(p + 24);
+} PlayerParamBrake;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float thresholdSpeed;
+    FSeek(p + 4);  float thresholdAngle;
+    FSeek(p + 8);  float turnAfterSpeed;
+    FSeek(p + 12); bool stopEdge;
+
+    FSeek(p + 16);
+} PlayerParamTurn;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float preActionTime;
+    FSeek(p + 4);  float longPressTime;
+    FSeek(p + 8);  float addForceTime;
+    FSeek(p + 12); float force;
+    FSeek(p + 16); float addForce;
+    FSeek(p + 20); float forceMin;
+    FSeek(p + 24); float gravitySize;
+
+    FSeek(p + 28);
+} PlayerParamJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float acceleForce;
+    FSeek(p + 4);  float deceleForce;
+    FSeek(p + 8);  float deceleNeutralForce;
+    FSeek(p + 12); float deceleBackForce;
+    FSeek(p + 16); float limitMin;
+    FSeek(p + 20); float limitUpSpeed;
+    FSeek(p + 24); float rotationForce;
+    FSeek(p + 28); float rotationForceDecaySpeed;
+    FSeek(p + 32); float rotationForceDecayRate;
+    FSeek(p + 36); float rotationForceDecayMax;
+
+    FSeek(p + 40);
+} PlayerParamJumpSpeed;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float initialSpeed;
+    FSeek(p + 4); float bounceSpeed;
+    FSeek(p + 8); float limitSpeedMin;
+
+    FSeek(p + 12);
+} PlayerParamDoubleJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float thresholdVertSpeed;
+    FSeek(p + 4);  float tolerateJumpTime;
+    FSeek(p + 8);  float fallEndDelayTime;
+    FSeek(p + 12); float fallEndFadeTime;
+    FSeek(p + 16); float acceleForce;
+    FSeek(p + 20); float deceleForce;
+    FSeek(p + 24); float overSpeedDeceleForce;
+    FSeek(p + 28); float rotationForce;
+    FSeek(p + 32); float rotationForceDecaySpeed;
+    FSeek(p + 36); float rotationForceDecayRate;
+    FSeek(p + 40); float rotationForceDecayMax;
+
+    FSeek(p + 44);
+} PlayerParamFall;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float invincibleTime;
+
+    FSeek(p + 4);
+} PlayerParamDamageCommon;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialHorzSpeed;
+    FSeek(p + 4);  float initialVertSpeed;
+    FSeek(p + 8);  float deceleForce;
+    FSeek(p + 12); float transitFallTime;
+    FSeek(p + 16); float gravityScale;
+
+    FSeek(p + 20);
+} PlayerParamDamageNormal;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float fixedTime;
+
+    FSeek(p + 4);
+} PlayerParamDamageTurnBack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialHorzSpeed;
+    FSeek(p + 4);  float initialVertSpeed;
+    FSeek(p + 8);  float deceleForceInAir;
+    FSeek(p + 12); float deceleForceOnGround;
+    FSeek(p + 16); float gravityScale;
+    FSeek(p + 20); float downTime;
+    FSeek(p + 24); float transitTime;
+
+    FSeek(p + 28);
+} PlayerParamDamageBlowOff;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float vertSpeed;
+    FSeek(p + 4);  float horzSpeed;
+    FSeek(p + 8);  float deceleForce;
+    FSeek(p + 12); float transitTime;
+
+    FSeek(p + 16);
+} PlayerParamDamageGuarded;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float actionTime;
+    FSeek(p + 4);  float minSpeed;
+    FSeek(p + 8);  float lossSpeed;
+    FSeek(p + 12); float lossTime;
+
+    FSeek(p + 16);
+} PlayerParamDamageRunning;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float actionTime;
+
+    FSeek(p + 4);
+} PlayerParamDamageQuake;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 jumpVelocity;
+    FSeek(p + 16); float gravitySize;
+    FSeek(p + 20); float invincibleTime;
+    FSeek(p + 24); float noActionTime;
+
+    FSeek(p + 32);
+} PlayerParamDamageLava;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamDamageCommon common;
+    FSeek(p + 4);   PlayerParamDamageNormal normal;
+    FSeek(p + 24);  PlayerParamDamageTurnBack turnBack;
+    FSeek(p + 28);  PlayerParamDamageBlowOff blowOff;
+    FSeek(p + 56);  PlayerParamDamageGuarded guarded;
+    FSeek(p + 72);  PlayerParamDamageGuarded guardedSS;
+    FSeek(p + 88);  PlayerParamDamageRunning running;
+    FSeek(p + 104); PlayerParamDamageQuake quake;
+    FSeek(p + 112); PlayerParamDamageLava lava;
+
+    FSeek(p + 144);
+} PlayerParamDamage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float invincibleTime;
+    FSeek(p + 4); float initialHorzSpeed;
+    FSeek(p + 8); float initialVertSpeed;
+
+    FSeek(p + 12);
+} PlayerParamDeadNormal;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerParamDeadNormal normal;
+
+    FSeek(p + 12);
+} PlayerParamDead;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minSpeed;
+    FSeek(p + 4);  float endSpeed;
+    FSeek(p + 8);  float deceleJerk;
+    FSeek(p + 12); float deceleJerkContinue;
+    FSeek(p + 16); float deceleForceMax;
+    FSeek(p + 20); float baseRotateForce;
+    FSeek(p + 24); float baseRotateForceSpeed;
+    FSeek(p + 28); float maxRotateForce;
+    FSeek(p + 32); float frontRotateRatio;
+    FSeek(p + 36); float rotationForceAutoRun;
+    FSeek(p + 40); float movableMaxSlope;
+    FSeek(p + 44); float gravitySize;
+    FSeek(p + 48); float minContinueTime;
+    FSeek(p + 52); float maxAutoRunTime;
+    FSeek(p + 56); float endSpeedAutoRun;
+    FSeek(p + 60); float loopKickTransitTime;
+
+    FSeek(p + 64);
+} PlayerParamSliding;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSpeed;
+    FSeek(p + 4);  float initialAccele;
+    FSeek(p + 8);  float maxAccele;
+    FSeek(p + 12); float jerk;
+    FSeek(p + 16); float maxFallSpeed;
+    FSeek(p + 20); float angle;
+    FSeek(p + 24); float landingCancelTime;
+    FSeek(p + 28); float boundStompingCollisionScale;
+
+    FSeek(p + 32);
+} PlayerParamStomping;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxSpeed;
+    FSeek(p + 4);  float maxBoostSpeed;
+    FSeek(p + 8);  float acceleForce;
+    FSeek(p + 12); float deceleForce;
+    FSeek(p + 16); float limitSpeedMin;
+
+    FSeek(p + 20);
+} PlayerParamGrind;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSpeed;
+    FSeek(p + 4);  float maxSpeed;
+    FSeek(p + 8);  float brakeAngle;
+    FSeek(p + 12); float highBrakeAngle;
+    FSeek(p + 16); float brakeForce;
+    FSeek(p + 20); float brakeForceHigh;
+    FSeek(p + 24); float gravitySize;
+    FSeek(p + 28); float gravitySizeAir;
+    FSeek(p + 32); float endSpeedFront;
+    FSeek(p + 36); float endSpeedBack;
+    FSeek(p + 40); float reverseFallTime;
+    FSeek(p + 44); float fallToSlipTime;
+    FSeek(p + 48); float slipIdlingTime;
+    FSeek(p + 52); float minSlipTime;
+
+    FSeek(p + 56);
+} PlayerParamFallSlope;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float thresholdSpeed;
+    FSeek(p + 4); float maxSpeed;
+    FSeek(p + 8); float flipAngle;
+
+    FSeek(p + 12);
+} PlayerParamFallFlip;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enabled;
+    FSeek(p + 4);   float sideSpinAngle;
+    FSeek(p + 8);   float initialVertSpeed;
+    FSeek(p + 12);  float gravitySize;
+    FSeek(p + 16);  float gravitySize2;
+    FSeek(p + 20);  float deceleForceInAir;
+    FSeek(p + 24);  float minSpeedInAir;
+    FSeek(p + 28);  float rotateEaseTimeLeftRight;
+    FSeek(p + 32);  float rotateEaseTimeFrontBack;
+    FSeek(p + 36);  float rotateSpeedMinLeftRight;
+    FSeek(p + 40);  float rotateSpeedMaxLeftRight;
+    FSeek(p + 44);  float rotateSpeedMinFrontBack;
+    FSeek(p + 48);  float rotateSpeedMaxFrontBack;
+    FSeek(p + 52);  float angleLeftRightStagger;
+    FSeek(p + 56);  float angleLeftRightRoll;
+    FSeek(p + 60);  float angleFrontBackRoll;
+    FSeek(p + 64);  float angleBigRoll;
+    FSeek(p + 68);  float inRunTime;
+    FSeek(p + 72);  float inAirTime;
+    FSeek(p + 76);  float rollSpeedFront;
+    FSeek(p + 80);  float bigRollVelocityRatio;
+    FSeek(p + 84);  float dropDashHoldTime;
+    FSeek(p + 88);  float airBrakeVertSpeed;
+    FSeek(p + 92);  float airBrakeForce;
+    FSeek(p + 96);  float airTrickHeight;
+    FSeek(p + 100); float airTrickTime;
+
+    FSeek(p + 104);
+} PlayerParamTumble;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float jumpForce;
+    FSeek(p + 4);  float jumpAddForce;
+    FSeek(p + 8);  float addTime;
+    FSeek(p + 12); float acceleForce;
+    FSeek(p + 16); float deceleForce;
+    FSeek(p + 20); float brakeForce;
+    FSeek(p + 24); float limitSpeedMin;
+    FSeek(p + 28); float limitSpeedMax;
+
+    FSeek(p + 32);
+} PlayerParamSpinAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed;
+
+    FSeek(p + 4);
+} PlayerParamHomingAttackData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bounceVertSpeed;
+    FSeek(p + 4);  float bounceHorzSpeed;
+    FSeek(p + 8);  float bounceAcceleForce;
+    FSeek(p + 12); float bounceDeceleForce;
+    FSeek(p + 16); float bounceAngleWidth;
+    FSeek(p + 20); float bounceTime;
+    FSeek(p + 24); float attackDownTime;
+    FSeek(p + 28); float attackDownTimeForStomp;
+
+    FSeek(p + 32);
+} PlayerParamHomingBounceData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamHomingAttackData sonic;
+    FSeek(p + 4);   PlayerParamHomingAttackData supersonic;
+    FSeek(p + 8);   PlayerParamHomingBounceData sonicBounce;
+    FSeek(p + 40);  PlayerParamHomingBounceData sonicBounceWeak;
+    FSeek(p + 72);  PlayerParamHomingBounceData sonicBounceStorm;
+    FSeek(p + 104); PlayerParamHomingBounceData sonicBounceStormSwirl;
+    FSeek(p + 136); PlayerParamHomingBounceData supersonicBounce;
+    FSeek(p + 168); float cameraEaseInTime;
+    FSeek(p + 172); float cameraEaseOutTime;
+
+    FSeek(p + 176);
+} PlayerParamHomingAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bounceVertSpeed;
+    FSeek(p + 4);  float bounceHorzSpeed;
+    FSeek(p + 8);  float attackDownTime;
+    FSeek(p + 12); float enableHomingTime;
+
+    FSeek(p + 16);
+} PlayerParamHitEnemy;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxVertSpeed;
+    FSeek(p + 4);  float acceleVertForce;
+    FSeek(p + 8);  float maxHorzSpeed;
+    FSeek(p + 12); float acceleHorzForce;
+
+    FSeek(p + 16);
+} SpeedParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  SpeedParam normal;
+    FSeek(p + 16); SpeedParam fast;
+    FSeek(p + 32); SpeedParam damaged;
+    FSeek(p + 48); SpeedParam ringdash;
+    FSeek(p + 64); float startHeight;
+    FSeek(p + 68); float startSpeed;
+    FSeek(p + 72); float deceleVertForce;
+    FSeek(p + 76); float deceleHorzForce;
+    FSeek(p + 80); float deceleNeutralForce;
+    FSeek(p + 84); float damageTime;
+    FSeek(p + 88); float ringdashTime;
+
+    FSeek(p + 92);
+} PlayerParamDiving;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float acceleForce;
+    FSeek(p + 4);  float deceleForce;
+    FSeek(p + 8);  float gravityRate;
+    FSeek(p + 12); float releaseSpeed;
+
+    FSeek(p + 16);
+} PlayerParamPinBall;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float damperV;
+    FSeek(p + 4);  float damperH;
+    FSeek(p + 8);  float accelRate;
+    FSeek(p + 12); float moveForceFV;
+    FSeek(p + 16); float moveForceSV;
+    FSeek(p + 20); float jumpCheckSpeed;
+
+    FSeek(p + 24);
+} PlayerParamFan;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float damperV;
+    FSeek(p + 4);  float damperH;
+    FSeek(p + 8);  float brake;
+    FSeek(p + 12); float accelRate;
+    FSeek(p + 16); float moveForce;
+    FSeek(p + 20); float maxSpeedH;
+    FSeek(p + 24); float maxSpeedV;
+    FSeek(p + 28); float rotateSpeed;
+    FSeek(p + 32); float rotateAngularSpeed;
+    FSeek(p + 36); float minDrawSpeed;
+    FSeek(p + 40); float maxDrawSpeed;
+    FSeek(p + 44); float minDrawSpeedDistance;
+    FSeek(p + 48); float maxDrawSpeedDistance;
+    FSeek(p + 52); float damageTime;
+    FSeek(p + 56); float damageNoBrakeTime;
+    FSeek(p + 60); float forceHomingReaction;
+    FSeek(p + 64); float forceHomingReaction2;
+
+    FSeek(p + 68);
+} PlayerParamStorm;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float acceleForce;
+    FSeek(p + 4);  float deceleForce;
+    FSeek(p + 8);  float overSpeedDeceleForce;
+    FSeek(p + 12); float rotationForce;
+    FSeek(p + 16); float rotationForceDecaySpeed;
+    FSeek(p + 20); float rotationForceDecayRate;
+    FSeek(p + 24); float rotationForceDecayMax;
+
+    FSeek(p + 28);
+} PlayerParamCloudJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float fallAccel;
+    FSeek(p + 4);  float damper;
+    FSeek(p + 8);  float jumpSpeed;
+    FSeek(p + 12); float stompingSpeed;
+    FSeek(p + 16); float boundSpeed;
+
+    FSeek(p + 20);
+} PlayerParamAquaBall;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 amount;
+
+    FSeek(p + 4);
+} PlayerParamAirTrick;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float startAngle;
+    FSeek(p + 4);   float endSpeed;
+    FSeek(p + 8);   float minSpeed;
+    FSeek(p + 12);  float minSpeedMax;
+    FSeek(p + 16);  float maxSpeed;
+    FSeek(p + 20);  float maxSpeedMax;
+    FSeek(p + 24);  float minBoostSpeed;
+    FSeek(p + 28);  float minBoostSpeedMax;
+    FSeek(p + 32);  float maxBoostSpeed;
+    FSeek(p + 36);  float maxBoostSpeedMax;
+    FSeek(p + 40);  float accel;
+    FSeek(p + 44);  float brake;
+    FSeek(p + 48);  float maxSteerAngle;
+    FSeek(p + 52);  float steerAccel;
+    FSeek(p + 56);  float maxSteerSpeed;
+    FSeek(p + 60);  float neutralSteerAccel;
+    FSeek(p + 64);  float maxNeutralSteerSpeed;
+    FSeek(p + 68);  float maxRotateSpeed;
+    FSeek(p + 72);  float recoverTime;
+    FSeek(p + 76);  float maxChargeTime;
+    FSeek(p + 80);  float minDashSpeed;
+    FSeek(p + 84);  float maxDashSpeed;
+    FSeek(p + 88);  float minDashJumpSpeed;
+    FSeek(p + 92);  float maxDashJumpSpeed;
+    FSeek(p + 96);  float jumpSpeed;
+    FSeek(p + 100); float checkFallTime;
+
+    FSeek(p + 104);
+} PlayerParamDrift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startAngle;
+    FSeek(p + 4);  float endSpeed;
+    FSeek(p + 8);  float minSpeed;
+    FSeek(p + 12); float maxSpeed;
+    FSeek(p + 16); float accel;
+    FSeek(p + 20); float brake;
+    FSeek(p + 24); float maxSteerAngle;
+    FSeek(p + 28); float steerAccel;
+    FSeek(p + 32); float maxSteerSpeed;
+    FSeek(p + 36); float neutralSteerAccel;
+    FSeek(p + 40); float maxNeutralSteerSpeed;
+    FSeek(p + 44); float maxRotateSpeed;
+    FSeek(p + 48); float recoverTime;
+
+    FSeek(p + 52);
+} PlayerParamDriftAir;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxSpeed;
+    FSeek(p + 4);  float brake;
+    FSeek(p + 8);  float steeringSpeed1;
+    FSeek(p + 12); float steeringSpeed2;
+    FSeek(p + 16); float startSteeringSpeed;
+    FSeek(p + 20); float endSteeringSpeed;
+    FSeek(p + 24); float outOfControlSpeed;
+    FSeek(p + 28); float checkDashSpeed;
+    FSeek(p + 32); float checkDashTime;
+
+    FSeek(p + 36);
+} PlayerParamDriftDash;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxChargeTime;
+    FSeek(p + 4);  float minDashSpeed;
+    FSeek(p + 8);  float minDashSpeedMax;
+    FSeek(p + 12); float maxDashSpeed;
+    FSeek(p + 16); float maxDashSpeedMax;
+    FSeek(p + 20); float tumbleDashSpeed;
+    FSeek(p + 24); float maxSpeed;
+    FSeek(p + 28); float brake;
+    FSeek(p + 32); float steeringSpeed1;
+    FSeek(p + 36); float steeringSpeed2;
+    FSeek(p + 40); float startSteeringSpeed;
+    FSeek(p + 44); float endSteeringSpeed;
+    FSeek(p + 48); float outOfControlSpeed;
+    FSeek(p + 52); float checkDashSpeed;
+    FSeek(p + 56); float checkDashTime;
+
+    FSeek(p + 60);
+} PlayerParamDropDash;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startSpeed;
+    FSeek(p + 4);  float jumpRate1;
+    FSeek(p + 8);  float jumpRate2;
+    FSeek(p + 12); float jumpRate3;
+    FSeek(p + 16); float inoperableTime;
+
+    FSeek(p + 20);
+} PlayerParamBounceJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float dashSpeed;
+    FSeek(p + 4);  float dashSpeedMax;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float speedMax;
+    FSeek(p + 16); float accel;
+    FSeek(p + 20); float brake;
+
+    FSeek(p + 24);
+} PlayerParamLightDash;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float jumpSpeed;
+    FSeek(p + 4);  float backSpeed;
+    FSeek(p + 8);  float downAccel;
+    FSeek(p + 12); float damperV;
+    FSeek(p + 16); float damperH;
+    FSeek(p + 20); float time;
+
+    FSeek(p + 24);
+} PlayerParamBackflip;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startSpeed;
+    FSeek(p + 4);  float maxSpeed;
+    FSeek(p + 8);  float accel;
+    FSeek(p + 12); float brake;
+    FSeek(p + 16); float steeringSpeed1;
+    FSeek(p + 20); float steeringSpeed2;
+    FSeek(p + 24); float startSteeringSpeed;
+    FSeek(p + 28); float endSteeringSpeed;
+
+    FSeek(p + 32);
+} PlayerParamSquatMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startSpeed;
+    FSeek(p + 4);  float maxSpeed;
+    FSeek(p + 8);  float accel;
+    FSeek(p + 12); float brake;
+    FSeek(p + 16); float damageSpeed;
+    FSeek(p + 20); float damageBrake;
+    FSeek(p + 24); float steeringSpeed;
+    FSeek(p + 28); float endSteeringSpeed;
+
+    FSeek(p + 32);
+} PlayerParamSlowMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float time;
+    FSeek(p + 4); float minSpeed;
+    FSeek(p + 8); float deceleForce;
+
+    FSeek(p + 12);
+} PlayerParamSpinDash;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startSlopeAngle;
+    FSeek(p + 4);  float endSlopeAngle;
+    FSeek(p + 8);  float startSpeed;
+    FSeek(p + 12); float endSpeed;
+    FSeek(p + 16); float stickAngle;
+    FSeek(p + 20); float brake;
+    FSeek(p + 24); float forceBrake;
+    FSeek(p + 28); float maxSpeed;
+
+    FSeek(p + 32);
+} PlayerParamSpin;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float maxSpeed;
+    FSeek(p + 4);   float walkSpeed;
+    FSeek(p + 8);   float walkSpeedMax;
+    FSeek(p + 12);  float runSpeed;
+    FSeek(p + 16);  float runSpeedMax;
+    FSeek(p + 20);  float walkSpeedOnMesh;
+    FSeek(p + 24);  float walkSpeedOnMeshMax;
+    FSeek(p + 28);  float runSpeedOnMesh;
+    FSeek(p + 32);  float runSpeedOnMeshMax;
+    FSeek(p + 36);  float minAccessSpeed;
+    FSeek(p + 40);  float stickSpeed;
+    FSeek(p + 44);  float gravity;
+    FSeek(p + 48);  float accel;
+    FSeek(p + 52);  float brake;
+    FSeek(p + 56);  float stopBrake;
+    FSeek(p + 60);  float fallSpeed;
+    FSeek(p + 64);  float steeringSpeed1;
+    FSeek(p + 68);  float steeringSpeed2;
+    FSeek(p + 72);  float startSteeringSpeed;
+    FSeek(p + 76);  float endSteeringSpeed;
+    FSeek(p + 80);  float startTime;
+    FSeek(p + 84);  float useEnergySpeedBase;
+    FSeek(p + 88);  float useEnergySpeedBaseOnMesh;
+    FSeek(p + 92);  float useEnergySpeedVal;
+    FSeek(p + 96);  float useEnergySpeedValOnMesh;
+    FSeek(p + 100); float useEnergyAngle;
+    FSeek(p + 104); float useEnergyAngleOnMesh;
+    FSeek(p + 108); float brakeStartEnergy;
+    FSeek(p + 112); float brakeStartEnergyOnMesh;
+    FSeek(p + 116); float homingSearchDistanceNear;
+    FSeek(p + 120); float homingSearchDistanceFar;
+    FSeek(p + 124); float wallBumpHeightUpper;
+    FSeek(p + 128); float wallBumpHeightUnder;
+    FSeek(p + 132); float recoveryCheckTime;
+
+    FSeek(p + 136);
+} PlayerParamWallMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float gravitySize;
+    FSeek(p + 4);  float minTime;
+    FSeek(p + 8);  float maxTime;
+    FSeek(p + 12); float stopTime;
+    FSeek(p + 16); float maxDownSpeed;
+    FSeek(p + 20); float fallGroundDistance;
+    FSeek(p + 24); float frontForce;
+    FSeek(p + 28); float upForce;
+    FSeek(p + 32); float impulseTime;
+
+    FSeek(p + 36);
+} PlayerParamWallJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float stepSpeedFront;
+    FSeek(p + 4);  float stepSpeedFrontDash;
+    FSeek(p + 8);  float stepSpeedSide;
+    FSeek(p + 12); float stepSpeedSideDash;
+    FSeek(p + 16); float stepSpeedBack;
+    FSeek(p + 20); float stepDashRate;
+    FSeek(p + 24); float maxAnimSpeed;
+    FSeek(p + 28); float exhaustAngle;
+    FSeek(p + 32); float exhaustAngleOnMesh;
+    FSeek(p + 36); float exhaustBase;
+    FSeek(p + 40); float exhaustBaseOnMesh;
+    FSeek(p + 44); float exhaustRate;
+    FSeek(p + 48); float exhaustRateOnMesh;
+    FSeek(p + 52); float useGrabGaugeSpeed;
+    FSeek(p + 56); float useGrabGaugeSpeedOnMesh;
+    FSeek(p + 60); float useGrabGaugeTurbo;
+    FSeek(p + 64); float useGrabGaugeTurboOnMesh;
+    FSeek(p + 68); float homingSearchDistanceNear;
+    FSeek(p + 72); float homingSearchDistanceFar;
+    FSeek(p + 76); float resetAngle;
+    FSeek(p + 80); float recoveryCheckTime;
+
+    FSeek(p + 84);
+} PlayerParamClimbing;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time;
+    FSeek(p + 4);  float speed;
+    FSeek(p + 8);  float speedOnMesh;
+    FSeek(p + 12); float accel;
+    FSeek(p + 16); float brake;
+    FSeek(p + 20); float brakeOnMesh;
+
+    FSeek(p + 24);
+} PlayerParamSlideDown;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float maxSpeed;
+    FSeek(p + 4);   float minSpeed;
+    FSeek(p + 8);   float damageSpeed;
+    FSeek(p + 12);  float accel;
+    FSeek(p + 16);  float damageBrake;
+    FSeek(p + 20);  float damageBrakeTime;
+    FSeek(p + 24);  float damageMotionTime;
+    FSeek(p + 28);  float damageInvicibleTime;
+    FSeek(p + 32);  float damper;
+    FSeek(p + 36);  float airDamperV;
+    FSeek(p + 40);  float airDamperH;
+    FSeek(p + 44);  float gravity;
+    FSeek(p + 48);  float airJumpSpeed;
+    FSeek(p + 52);  float groundJumpSpeed;
+    FSeek(p + 56);  float airAccel;
+    FSeek(p + 60);  float maxAirAddSpeed;
+    FSeek(p + 64);  float downForceRate;
+    FSeek(p + 68);  float steeringSpeed1;
+    FSeek(p + 72);  float steeringSpeed2;
+    FSeek(p + 76);  float steeringSpeed3;
+    FSeek(p + 80);  float startSteeringSpeed;
+    FSeek(p + 84);  float endSteeringSpeed;
+    FSeek(p + 88);  float startSpeed;
+    FSeek(p + 92);  float startSlope;
+    FSeek(p + 96);  float staticStartSlope;
+    FSeek(p + 100); float finishSlope;
+    FSeek(p + 104); float finishTime;
+    FSeek(p + 108); float bigLandTime;
+
+    FSeek(p + 112);
+} PlayerParamBoarding;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float consumptionRate;
+    FSeek(p + 4);  float consumptionRateSS;
+    FSeek(p + 8);  float recoveryRate;
+    FSeek(p + 12); float recoveryRateSS;
+    FSeek(p + 16); float reigniteRatio;
+    FSeek(p + 20); float recoveryByRing;
+    FSeek(p + 24); float recoveryByAttack;
+    FSeek(p + 28); float blurPowers[3]<optimize=false>;
+    FSeek(p + 40); float blurEaseInTime;
+    FSeek(p + 44); float blurEaseOutTime;
+    FSeek(p + 48); float endSpeed;
+    FSeek(p + 52); float powerBoostCoolTime;
+    FSeek(p + 56); float infinityBoostTime;
+
+    FSeek(p + 60);
+} PlayerParamBoost;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startHSpeed;
+    FSeek(p + 4);  float startHSpeedMax;
+    FSeek(p + 8);  float startVSpeed;
+    FSeek(p + 12); float minHSpeed;
+    FSeek(p + 16); float minHSpeedMax;
+    FSeek(p + 20); float brakeTime;
+    FSeek(p + 24); float minKeepTime;
+    FSeek(p + 28); float maxKeepTime;
+    FSeek(p + 32); float maxTime;
+    FSeek(p + 36); float gravityRate;
+    FSeek(p + 40); float steeringSpeed;
+    FSeek(p + 44); float additionalTransitTime;
+    FSeek(p + 48); float supersonicTime;
+
+    FSeek(p + 52);
+} PlayerParamAirBoost;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSideSpeed;
+    FSeek(p + 4);  float acceleSideForce;
+    FSeek(p + 8);  float deceleSideForce;
+    FSeek(p + 12); float maxSideSpeed;
+
+    FSeek(p + 16);
+} PlayerParamAutorun;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float frontAccel;
+    FSeek(p + 4);  float frontBrake;
+    FSeek(p + 8);  float sideBrake;
+    FSeek(p + 12); float damageBrake;
+    FSeek(p + 16); float defaultRotateSpeed;
+    FSeek(p + 20); float rotateSpeed;
+    FSeek(p + 24); float rotateSpeedAir;
+    FSeek(p + 28); float gravity;
+
+    FSeek(p + 32);
+} PlayerParamSlider;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float brakeForce;
+    FSeek(p + 8);  float motionSpeedRatio;
+    FSeek(p + 12); float stepSpeed;
+    FSeek(p + 16); float maxStepDistance;
+    FSeek(p + 20); float minStepDistance;
+    FSeek(p + 24); float maxStepSpeed;
+    FSeek(p + 28); float minStepSpeed;
+
+    FSeek(p + 32);
+} PlayerParamSideStep;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float brakeForce;
+    FSeek(p + 8);  float motionSpeedRatio;
+    FSeek(p + 12); float stepSpeed;
+    FSeek(p + 16); float maxStepDistance;
+    FSeek(p + 20); float minStepDistance;
+    FSeek(p + 24); float maxStepSpeed;
+    FSeek(p + 28); float minStepSpeed;
+
+    FSeek(p + 32);
+} PlayerParamSideStep2;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float needSpeed;
+    FSeek(p + 4);  float acceleForce;
+    FSeek(p + 8);  float acceleSideForce;
+    FSeek(p + 12); float stepInitialSpeed;
+    FSeek(p + 16); float avoidForce;
+    FSeek(p + 20); float justBoostForce;
+    FSeek(p + 24); float justBoostMax;
+    FSeek(p + 28); float justBoostTime;
+    FSeek(p + 32); float justBoostBrake;
+
+    FSeek(p + 36);
+} PlayerParamQuickStep;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minRecieveTime;
+    FSeek(p + 4);  float maxRecieveTime;
+    FSeek(p + 8);  float frozenTime;
+    FSeek(p + 12); float justEffectEasein;
+    FSeek(p + 16); float justEffectEaseout;
+    FSeek(p + 20); float justEffectTime;
+    FSeek(p + 24); float justEffectEasein2;
+    FSeek(p + 28); float justEffectEaseout2;
+    FSeek(p + 32); float justEffectTime2;
+
+    FSeek(p + 36);
+} PlayerParamParry;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float damper;
+    FSeek(p + 8);  float parryTime;
+    FSeek(p + 12); float invincibleTime;
+
+    FSeek(p + 16);
+} PlayerParamAvoidData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float time;
+    FSeek(p + 4);   float fixedTime;
+    FSeek(p + 8);   float reentryInputPriorityTime;
+    FSeek(p + 12);  float reentryTime;
+    FSeek(p + 16);  float frontAngle;
+    FSeek(p + 20);  float backAngle;
+    FSeek(p + 24);  float addFallSpeed;
+    FSeek(p + 28);  PlayerParamAvoidData data[7]<optimize=false>;
+    FSeek(p + 140); float baseDistance;
+    FSeek(p + 144); float limitAngle;
+
+    FSeek(p + 148);
+} PlayerParamAvoid;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxSpeed;
+    FSeek(p + 4);  float maxDashSpeed;
+    FSeek(p + 8);  float accel;
+    FSeek(p + 12); float dashAccel;
+    FSeek(p + 16); float brake;
+    FSeek(p + 20); float minRotateSpeed;
+    FSeek(p + 24); float maxRotateSpeed;
+    FSeek(p + 28); float blowOffTime;
+    FSeek(p + 32); float blowOffAngle;
+    FSeek(p + 36); float turnBrake;
+    FSeek(p + 40); float turnRotateSpeed;
+    FSeek(p + 44); float quickTurnThresholdAngle;
+    FSeek(p + 48); float quickTurnStartSpeed;
+    FSeek(p + 52); float quickTurnBrake;
+    FSeek(p + 56); float quickTurnRotateSpeed;
+    FSeek(p + 60); float comboTime;
+
+    FSeek(p + 64);
+} PlayerParamFly;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxSpeed1D;
+    FSeek(p + 4);  float accel1D;
+    FSeek(p + 8);  float brake1D;
+    FSeek(p + 12); float fixAccel1D;
+    FSeek(p + 16); float fixSpeed1D;
+    FSeek(p + 20); float fixAccelQuick;
+    FSeek(p + 24); float fixSpeedQuick;
+    FSeek(p + 28); float rotateSpeed1D;
+    FSeek(p + 32); float maxSpeed2D;
+    FSeek(p + 36); float accel2D;
+    FSeek(p + 40); float brake2D;
+    FSeek(p + 44); float fixSpeed2D;
+    FSeek(p + 48); float rotateSpeed2D;
+
+    FSeek(p + 52);
+} PlayerParamLimitedFly;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    PlayerParamCommon common;
+    FSeek(p + 48);   PlayerParamSpeed speed;
+    FSeek(p + 240);  PlayerParamRotation rotation;
+    FSeek(p + 284);  PlayerParamRunning running;
+    FSeek(p + 336);  PlayerParamBalance balance;
+    FSeek(p + 368);  PlayerParamBrake brake;
+    FSeek(p + 392);  PlayerParamTurn turn;
+    FSeek(p + 408);  PlayerParamJump jump;
+    FSeek(p + 436);  PlayerParamJumpSpeed jumpSpeed;
+    FSeek(p + 476);  PlayerParamDoubleJump doubleJump;
+    FSeek(p + 488);  PlayerParamFall fall;
+    FSeek(p + 544);  PlayerParamDamage damage;
+    FSeek(p + 688);  PlayerParamDead dead;
+    FSeek(p + 700);  PlayerParamSliding sliding;
+    FSeek(p + 764);  PlayerParamStomping stomping;
+    FSeek(p + 796);  PlayerParamGrind grind;
+    FSeek(p + 816);  PlayerParamFallSlope fallSlope;
+    FSeek(p + 872);  PlayerParamFallFlip fallFlip;
+    FSeek(p + 884);  PlayerParamTumble tumble;
+    FSeek(p + 988);  PlayerParamSpinAttack spinAttack;
+    FSeek(p + 1020); PlayerParamHomingAttack homingAttack;
+    FSeek(p + 1196); PlayerParamHitEnemy hitEnemy;
+    FSeek(p + 1212); PlayerParamDiving diving;
+    FSeek(p + 1304); PlayerParamPinBall pinball;
+    FSeek(p + 1320); PlayerParamFan fan;
+    FSeek(p + 1344); PlayerParamStorm storm;
+    FSeek(p + 1412); PlayerParamCloudJump cloudJump;
+    FSeek(p + 1440); PlayerParamAquaBall aquaball;
+    FSeek(p + 1460); PlayerParamAirTrick airtrick;
+    FSeek(p + 1464); PlayerParamDrift drift;
+    FSeek(p + 1568); PlayerParamDriftAir driftair;
+    FSeek(p + 1620); PlayerParamDriftDash driftDash;
+    FSeek(p + 1656); PlayerParamDropDash dropDash;
+    FSeek(p + 1716); PlayerParamBounceJump bounceJump;
+    FSeek(p + 1736); PlayerParamLightDash lightDash;
+    FSeek(p + 1760); PlayerParamBackflip backflip;
+    FSeek(p + 1784); PlayerParamSquatMove squatmove;
+    FSeek(p + 1816); PlayerParamSlowMove slowmove;
+    FSeek(p + 1848); PlayerParamSpinDash spindash;
+    FSeek(p + 1860); PlayerParamSpin spin;
+    FSeek(p + 1892); PlayerParamWallMove wallmove;
+    FSeek(p + 2028); PlayerParamWallJump walljump;
+    FSeek(p + 2064); PlayerParamClimbing climbing;
+    FSeek(p + 2148); PlayerParamSlideDown slidedown;
+    FSeek(p + 2172); PlayerParamBoarding boarding;
+    FSeek(p + 2284); PlayerParamBoost boost;
+    FSeek(p + 2344); PlayerParamAirBoost airboost;
+    FSeek(p + 2396); PlayerParamAutorun autorun;
+    FSeek(p + 2412); PlayerParamSlider slider;
+    FSeek(p + 2444); PlayerParamSideStep sidestep;
+    FSeek(p + 2476); PlayerParamSideStep2 sidestep2;
+    FSeek(p + 2508); PlayerParamQuickStep quickstep;
+    FSeek(p + 2544); PlayerParamParry parry;
+    FSeek(p + 2580); PlayerParamAvoid avoid;
+    FSeek(p + 2728); PlayerParamFly fly;
+    FSeek(p + 2792); PlayerParamLimitedFly limitedfly;
+
+    FSeek(p + 2848);
+} ModePackage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamSpeed speed;
+    FSeek(p + 192); PlayerParamJump jump;
+    FSeek(p + 220); PlayerParamJumpSpeed jumpSpeed;
+    FSeek(p + 260); PlayerParamDoubleJump doubleJump;
+    FSeek(p + 272); PlayerParamBoost boost;
+    FSeek(p + 332); PlayerParamAirBoost airboost;
+
+    FSeek(p + 384);
+} WaterModePackage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     CommonPackage common;
+    FSeek(p + 29344); ModePackage forwardView;
+    FSeek(p + 32192); WaterModePackage water;
+    FSeek(p + 32576); ModePackage cyberspace;
+    FSeek(p + 35424); ModePackage cyberspaceSV;
+
+    FSeek(p + 38272);
+} PlayerParameters;
+
+LittleEndian();
+
+FSeek(64);
+PlayerParameters data;

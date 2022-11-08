@@ -1,0 +1,219 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MiniBossCommonConfig commonConfig;
+
+    FSeek(p + 64);
+} MiniBossAshuraCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossAshuraLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} MiniBossAshuraLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotationSpeed;
+    FSeek(p + 4);  float moveRadiusMin;
+    FSeek(p + 8);  float moveRadiusMax;
+    FSeek(p + 12); float initKeepTime;
+    FSeek(p + 16); float scaleUpTime;
+    FSeek(p + 20); float scaleUpKeepTime;
+    FSeek(p + 24); float scaleDownTime;
+    FSeek(p + 28); float scaleDownKeepTime;
+    FSeek(p + 32); sint32 num;
+
+    FSeek(p + 36);
+} MiniBossAshuraObjectCircleLaser;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 createNum;
+    FSeek(p + 4);  sint32 createParkourNum;
+    FSeek(p + 8);  float createCycleTime;
+    FSeek(p + 12); float moveSpeed;
+    FSeek(p + 16); float lifeTime;
+    FSeek(p + 20); float homingMaxAngle;
+    FSeek(p + 24); float homingStartTime;
+    FSeek(p + 28); float homingPowerMaxTime;
+    FSeek(p + 32); float meanderingPower;
+    FSeek(p + 36); float meanderingCycleTime;
+
+    FSeek(p + 40);
+} MiniBossAshuraObjectCrawlSpark;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float ocTime;
+    FSeek(p + 4);  float dashSpeed;
+    FSeek(p + 8);  float ocTimeOnGround;
+    FSeek(p + 12); float dashSpeedOnGround;
+
+    FSeek(p + 16);
+} MiniBossAshuraObjectDashCircleBulletParamByType;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveSpeed;
+    FSeek(p + 4);  float lifeTime;
+    FSeek(p + 8);  MiniBossAshuraObjectDashCircleBulletParamByType frontType;
+    FSeek(p + 24); MiniBossAshuraObjectDashCircleBulletParamByType backType;
+
+    FSeek(p + 40);
+} MiniBossAshuraObjectDashCircleBullet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float blowOffRadius;
+    FSeek(p + 4); float blowOffHeight;
+    FSeek(p + 8); float killRadius;
+
+    FSeek(p + 12);
+} MiniBossAshuraObjectSlamWave;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossAshuraObjectCircleLaser circleLaser;
+    FSeek(p + 36);  MiniBossAshuraObjectCrawlSpark crawlSpark;
+    FSeek(p + 76);  MiniBossAshuraObjectDashCircleBullet dashCircleBullet;
+    FSeek(p + 116); MiniBossAshuraObjectSlamWave slamWave;
+
+    FSeek(p + 128);
+} MiniBossAshuraObjectParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> OnArmCircleBulletType
+{
+    CBT_NONE = 0,
+    CBT_FRONT = 1,
+    CBT_BACK = 2,
+    NUM_CBT = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  OnArmCircleBulletType left;
+    FSeek(p + 1);  OnArmCircleBulletType center;
+    FSeek(p + 2);  OnArmCircleBulletType right;
+    FSeek(p + 4);  float leftOffsetAngle;
+    FSeek(p + 8);  float centerOffsetAngle;
+    FSeek(p + 12); float rightOffsetAngle;
+
+    FSeek(p + 16);
+} MiniBossAshuraPhaseOnArmCircleBulletPos;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isCircleLaser;
+    FSeek(p + 1);   bool isCrawlSpark;
+    FSeek(p + 2);   bool isAttackArmWave;
+    FSeek(p + 3);   bool isAttackArmCircleBulletOnArm;
+    FSeek(p + 4);   MiniBossAshuraPhaseOnArmCircleBulletPos onArmCircleBullets[8]<optimize=false>;
+    FSeek(p + 132); bool isAttackArmCircleBullet;
+    FSeek(p + 136); sint32 circleBulletBackTypeFreq;
+    FSeek(p + 140); sint32 circleBulletCreateNum;
+    FSeek(p + 144); float circleBulletCreateAngle;
+    FSeek(p + 148); float circleJumpTargetDistace;
+    FSeek(p + 152); float circleBulletCreateIntervalTime;
+    FSeek(p + 156); sint32 armAttackConsecutiveNum;
+
+    FSeek(p + 160);
+} MiniBossAshuraPhaseParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossAshuraCommonParam commonParam;
+    FSeek(p + 64);  MiniBossAshuraLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 344); MiniBossAshuraLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 364); MiniBossAshuraObjectParam objectParam;
+    FSeek(p + 492); MiniBossAshuraPhaseParam phaseParam[3]<optimize=false>;
+
+    FSeek(p + 976);
+} MiniBossAshuraConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossAshuraConfig data;

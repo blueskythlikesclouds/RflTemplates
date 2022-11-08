@@ -1,0 +1,36 @@
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 rawToken;
+    FSeek(p + 4);  uint32 rawBurnToken;
+    FSeek(p + 8);  uint32 brownedToken;
+    FSeek(p + 12); uint32 charredToken;
+
+    FSeek(p + 16);
+} DLCMhrBarbecueTokenParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rawTime;
+    FSeek(p + 4);  float rawBurnTime;
+    FSeek(p + 8);  float brownedTime;
+    FSeek(p + 12); float charredTime;
+    FSeek(p + 16); float startwaitTime;
+    FSeek(p + 20); float successTime;
+    FSeek(p + 24); float missTime;
+    FSeek(p + 28); float resultUIDelaySuccess;
+    FSeek(p + 32); float resultUIDelayFaild;
+    FSeek(p + 36); DLCMhrBarbecueTokenParam tokenParam[4]<optimize=false>;
+
+    FSeek(p + 100);
+} DLCMhrBarbecueParameter;
+
+LittleEndian();
+
+FSeek(64);
+DLCMhrBarbecueParameter data;

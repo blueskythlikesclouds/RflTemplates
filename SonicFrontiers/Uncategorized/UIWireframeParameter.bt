@@ -1,0 +1,71 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int sint32;
+
+enum<sint32> RenderTargetSize
+{
+    RTSIZE_FULL_SCALE = 0,
+    RTSIZE_HALF_SCALE = 1,
+    RTSIZE_QUARTER_SCALE = 2,
+    RTSIZE_COUNT = 3,
+    RTSIZE_INVALID = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool useFocusLookAt;
+    FSeek(p + 4);  float foregroundBokehMaxDepth;
+    FSeek(p + 8);  float foregroundBokehStartDepth;
+    FSeek(p + 12); float backgroundBokehStartDepth;
+    FSeek(p + 16); float backgroundBokehMaxDepth;
+    FSeek(p + 20); bool enableCircleDOF;
+    FSeek(p + 24); float cocMaxRadius;
+    FSeek(p + 28); float bokehRadiusScale;
+    FSeek(p + 32); sint32 bokehSampleCount;
+    FSeek(p + 36); float skyFocusDistance;
+    FSeek(p + 40); float bokehBias;
+    FSeek(p + 44); bool drawFocalPlane;
+    FSeek(p + 48); RenderTargetSize rtScale;
+    FSeek(p + 52); bool enableSWA;
+    FSeek(p + 56); float swaFocus;
+    FSeek(p + 60); float swaFocusRange;
+    FSeek(p + 64); float swaNear;
+    FSeek(p + 68); float swaFar;
+    FSeek(p + 72); bool enableEnhancedForeBokeh;
+    FSeek(p + 76); float foreBokehScale;
+    FSeek(p + 80); float foreBokehMaxLuminance;
+
+    FSeek(p + 84);
+} FxDOFParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 camerapos;
+    FSeek(p + 16); float lineAlpha;
+    FSeek(p + 20); float noiseScale;
+    FSeek(p + 24); float noiseSpeed;
+    FSeek(p + 28); float moveWidth;
+    FSeek(p + 32); FxDOFParameter dofparam;
+
+    FSeek(p + 128);
+} UIWireframeParameter;
+
+LittleEndian();
+
+FSeek(64);
+UIWireframeParameter data;

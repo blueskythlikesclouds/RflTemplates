@@ -1,0 +1,15 @@
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 intervalMinuntes;
+
+    FSeek(p + 4);
+} ScriptParameter;
+
+LittleEndian();
+
+FSeek(64);
+ScriptParameter data;

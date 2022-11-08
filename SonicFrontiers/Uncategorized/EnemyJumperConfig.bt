@@ -1,0 +1,164 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedMin;
+    FSeek(p + 4);  float rotateSpeedMax;
+    FSeek(p + 8);  float speedMin;
+    FSeek(p + 12); float speedMax;
+    FSeek(p + 16); float changeTimeIdlePatrolMin;
+    FSeek(p + 20); float changeTimeIdlePatrolMax;
+    FSeek(p + 24); float lockonDistance;
+    FSeek(p + 28); float unlockDistance;
+    FSeek(p + 32); float distance;
+    FSeek(p + 36); float minElevation;
+    FSeek(p + 40); float maxElevation;
+    FSeek(p + 44); float panningSuspensionK;
+    FSeek(p + 48); float interiorPanningSuspensionK;
+
+    FSeek(p + 52);
+} EnemyJumperPatrolConfig;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float lockOnMinDistance;
+    FSeek(p + 16); vector3 playerOffset;
+
+    FSeek(p + 32);
+} EnemyJumperAutoLockonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float killWaitTime;
+    FSeek(p + 4);  float colliderRadius;
+    FSeek(p + 8);  float colliderHeight;
+    FSeek(p + 12); float headRadius;
+    FSeek(p + 16); float headHeight;
+    FSeek(p + 20); float damageColliderRadiusOffset;
+    FSeek(p + 24); float eyesightDistance;
+    FSeek(p + 28); float maxSpeed;
+    FSeek(p + 32); float checkBarrierDistance;
+    FSeek(p + 36); EnemyJumperPatrolConfig patrolConfig;
+    FSeek(p + 96); EnemyJumperAutoLockonParam lockonCamera;
+
+    FSeek(p + 128);
+} EnemyJumperCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} EnemyJumperCommonLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); EnemyJumperCommonLevelParam common;
+
+    FSeek(p + 16);
+} EnemyJumperLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} EnemyJumperLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float height;
+    FSeek(p + 4);  float radius;
+    FSeek(p + 16); vector3 offset;
+    FSeek(p + 32); vector3 scale;
+
+    FSeek(p + 48);
+} CharacterControllerCollision;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedMin;
+    FSeek(p + 4);  float rotateSpeedMax;
+    FSeek(p + 8);  float speedMin;
+    FSeek(p + 12); float speedMax;
+
+    FSeek(p + 16);
+} MovementParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float velocity;
+    FSeek(p + 4); float targetCursorMaxDistance;
+
+    FSeek(p + 8);
+} SpringPlayer;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float stompingRange;
+    FSeek(p + 4);  float stompingTotalNum;
+    FSeek(p + 8);  float interpalTimeFinal;
+    FSeek(p + 12); float range;
+    FSeek(p + 16); float riseDistance;
+    FSeek(p + 20); float riseTime;
+    FSeek(p + 24); float upLoopTime;
+    FSeek(p + 28); float chaseSpeed;
+    FSeek(p + 32); float speed;
+    FSeek(p + 36); float groundImpactRadius;
+    FSeek(p + 40); SpringPlayer springPlayer;
+
+    FSeek(p + 48);
+} BattleParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyJumperCommonParam commonParam;
+    FSeek(p + 128); EnemyJumperLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 208); EnemyJumperLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 240); CharacterControllerCollision characterControllerCollision;
+    FSeek(p + 288); MovementParam movement;
+    FSeek(p + 304); BattleParam battleParam;
+
+    FSeek(p + 352);
+} EnemyJumperConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyJumperConfig data;

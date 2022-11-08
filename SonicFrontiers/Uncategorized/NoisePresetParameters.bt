@@ -1,0 +1,121 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+    FSeek(p + 24); float pixelShiftIntensity;
+
+    FSeek(p + 28);
+} UVShift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSize;
+    FSeek(p + 4);  float blockHNoiseSize;
+    FSeek(p + 8);  float bNoiseHighRate;
+    FSeek(p + 12); float intensity;
+
+    FSeek(p + 16);
+} ColorShift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSize;
+    FSeek(p + 4);  float blockHNoiseSize;
+    FSeek(p + 8);  float bNoiseHighRate;
+    FSeek(p + 12); float intensity;
+    FSeek(p + 16); float dropout;
+
+    FSeek(p + 20);
+} InterlaceNoise;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+
+    FSeek(p + 24);
+} ColorDropout;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+    FSeek(p + 24); float invertAllRate;
+
+    FSeek(p + 28);
+} InvertColor;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockLNoiseSizeX;
+    FSeek(p + 4);  float blockLNoiseSizeY;
+    FSeek(p + 8);  float blockHNoiseSizeX;
+    FSeek(p + 12); float blockHNoiseSizeY;
+    FSeek(p + 16); float bNoiseHighRate;
+    FSeek(p + 20); float intensity;
+    FSeek(p + 24); float invertAllRate;
+
+    FSeek(p + 28);
+} GlayScaleColor;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 4);   UVShift uvShift;
+    FSeek(p + 32);  ColorShift colorShift;
+    FSeek(p + 48);  InterlaceNoise interlaceNoise;
+    FSeek(p + 68);  ColorDropout colorDrop;
+    FSeek(p + 92);  InvertColor invertColor;
+    FSeek(p + 120); GlayScaleColor glayscaleColor;
+    FSeek(p + 148); float noiseSpeed;
+    FSeek(p + 152); float noiseBias;
+    FSeek(p + 156); float noiseWaveAmplitude;
+    FSeek(p + 160); float noiseWaveCycle;
+
+    FSeek(p + 164);
+} FxCyberSpaceStartNoiseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); FxCyberSpaceStartNoiseParameter presets[8]<optimize=false>;
+
+    FSeek(p + 1312);
+} NoisePresetParameters;
+
+LittleEndian();
+
+FSeek(64);
+NoisePresetParameters data;

@@ -1,0 +1,403 @@
+typedef uint uint32;
+
+typedef ubyte uint8;
+
+typedef byte sint8;
+
+enum<sint8> Status
+{
+    STATUS_ZERO_FILL = 0,
+    STATUS_INITIALIZED = 1,
+};
+
+enum<sint8> Sequence
+{
+    Island1 = 0,
+    Island2 = 1,
+    Island3 = 2,
+    Island4 = 3,
+    Island5 = 4,
+    FinalBossBefore = 5,
+    FinalBossAfter = 6,
+};
+
+enum<sint8> SaveDataIcon
+{
+    IconNoData = 0,
+    IconIsland1 = 1,
+    IconIsland2 = 2,
+    IconIsland3 = 3,
+    IconIsland4 = 4,
+    IconIsland5 = 5,
+    IconLastBoss = 6,
+};
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 signature;
+    FSeek(p + 4);  uint8 version;
+    FSeek(p + 5);  Status status;
+    FSeek(p + 6);  uint8 config;
+    FSeek(p + 7);  Sequence sequence;
+    FSeek(p + 8);  uint32 playTime;
+    FSeek(p + 12); SaveDataIcon icon;
+    FSeek(p + 13); uint8 reserved0;
+    FSeek(p + 14); uint16 reserved1;
+    FSeek(p + 16); uint32 saveDate;
+    FSeek(p + 20); uint8 index;
+    FSeek(p + 24); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 40);
+} HeaderData;
+
+enum<sint8> GamePlayData_Status
+{
+    GamePlayData_STATUS_NEWGAME = 0,
+    GamePlayData_STATUS_CONTINUE = 1,
+};
+
+enum<sint8> SequenceDeprecated
+{
+    Island1 = 0,
+    Island2 = 1,
+    Island3 = 2,
+    Island4 = 3,
+    Island5 = 4,
+    FinalBossBefore = 5,
+    FinalBossAfter = 6,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct quaternion {
+    float x;
+    float y;
+    float z;
+    float w;
+} quaternion;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  GamePlayData_Status status;
+    FSeek(p + 1);  sint8 lastPlayedStageNo;
+    FSeek(p + 2);  uint8 flags;
+    FSeek(p + 3);  SequenceDeprecated sequence;
+    FSeek(p + 16); vector3 position;
+    FSeek(p + 32); quaternion rotation;
+    FSeek(p + 48); uint32 day;
+    FSeek(p + 52); uint32 hour;
+    FSeek(p + 56); uint32 minute;
+    FSeek(p + 60); float second;
+    FSeek(p + 64); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 80);
+} GamePlayData;
+
+typedef short sint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint16 numRings;
+    FSeek(p + 2);  uint8 ringLevel;
+    FSeek(p + 3);  uint8 speedLevel;
+    FSeek(p + 4);  uint8 obtainChaosEmeralds;
+    FSeek(p + 5);  uint8 hasChaosEmeralds;
+    FSeek(p + 6);  uint8 skillLevel[30]<optimize=false>;
+    FSeek(p + 36); uint8 skillPointOld;
+    FSeek(p + 37); uint8 levelOld;
+    FSeek(p + 40); uint32 expPoint;
+    FSeek(p + 44); uint8 powerLevel;
+    FSeek(p + 45); uint8 guardLevel;
+    FSeek(p + 48); uint32 numPowerSeeds;
+    FSeek(p + 52); uint32 numGuardSeeds;
+    FSeek(p + 56); uint16 numFishCoins;
+    FSeek(p + 58); uint16 numFishTokens;
+    FSeek(p + 60); uint16 numGoldCards;
+    FSeek(p + 62); uint16 numSlotStars;
+    FSeek(p + 64); float quickCyloopGauge;
+    FSeek(p + 68); uint32 practiceMaxCleared;
+    FSeek(p + 72); uint32 practiceMaxCombos;
+    FSeek(p + 76); uint32 flags;
+    FSeek(p + 80); sint16 skillPoint;
+    FSeek(p + 82); sint16 level;
+    FSeek(p + 84); uint32 dlcrsvExpPoint;
+    FSeek(p + 88); uint32 dlcrsvNumPowerSeeds;
+    FSeek(p + 92); uint32 dlcrsvNumGuardSeeds;
+
+    FSeek(p + 96);
+} CharacterData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 x;
+    FSeek(p + 1); uint8 y;
+
+    FSeek(p + 2);
+} IslandMapGridData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   IslandMapGridData grid[136]<optimize=false>;
+    FSeek(p + 272); uint16 numReleaseGrids;
+
+    FSeek(p + 274);
+} IslandMapData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   vector3 destination;
+    FSeek(p + 16);  uint32 flags;
+    FSeek(p + 20);  IslandMapData map;
+    FSeek(p + 296); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 320);
+} IslandStageData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandStageData islands[5]<optimize=false>;
+
+    FSeek(p + 1600);
+} IslandStageContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint16 flags;
+    FSeek(p + 4); uint32 bestTime;
+    FSeek(p + 8); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 24);
+} CyberStageData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CyberStageData actStages[32]<optimize=false>;
+
+    FSeek(p + 768);
+} CyberStageContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   uint32 bitFlags[24]<optimize=false>;
+    FSeek(p + 96);  sint8 byteFlags[128]<optimize=false>;
+    FSeek(p + 224); uint32 intDatas[16]<optimize=false>;
+
+    FSeek(p + 288);
+} FlagContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    uint32 bitFlags[1024]<optimize=false>;
+    FSeek(p + 4096); sint8 byteFlags[1024]<optimize=false>;
+    FSeek(p + 5120); uint32 intDatas[512]<optimize=false>;
+
+    FSeek(p + 7168);
+} WorldFlagData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     WorldFlagData worldDatas[5]<optimize=false>;
+    FSeek(p + 35840); WorldFlagData debugWorldData;
+
+    FSeek(p + 43008);
+} WorldFlagContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint16 time;
+    FSeek(p + 2); uint16 x;
+    FSeek(p + 4); uint16 z;
+
+    FSeek(p + 6);
+} PlayLogCoordData;
+
+enum<sint8> EventType
+{
+    InvalidEvent = -1,
+    Dead = 0,
+    BeginStage = 1,
+    EndStage = 2,
+    ReleaseLightPillar = 3,
+    ObtainChaosEmerald = 4,
+    ContactMiniboss = 5,
+    DefeatMiniboss = 6,
+    BeginCyberStage = 7,
+    EndCyberStage = 8,
+    CompleteCyberStage = 9,
+    RestartCyberStage = 10,
+    GiveupCyberStage = 11,
+    OpenTreasureChest = 12,
+    AccessRingSensor = 13,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayLogCoordData coord;
+    FSeek(p + 6); EventType eventType;
+    FSeek(p + 7); sint8 option;
+
+    FSeek(p + 8);
+} PlayLogEventData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);      uint32 numFootMarks;
+    FSeek(p + 4);      uint32 footMarksIndex;
+    FSeek(p + 8);      PlayLogCoordData footmarks[36000]<optimize=false>;
+    FSeek(p + 216008); uint32 numEvents;
+    FSeek(p + 216012); uint32 eventsIndex;
+    FSeek(p + 216016); PlayLogEventData events[50000]<optimize=false>;
+
+    FSeek(p + 616016);
+} PlayLogData;
+
+typedef int sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 value;
+    FSeek(p + 4); bool assigned;
+
+    FSeek(p + 8);
+} StatValue;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); StatValue stats[3393]<optimize=false>;
+
+    FSeek(p + 27144);
+} StatsContainerData;
+
+enum<sint8> Type
+{
+    Sunny = 0,
+    Cloudy = 1,
+    Rainy = 2,
+    SandStorm = 3,
+    MeteorShower = 4,
+    Num = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float duration;
+    FSeek(p + 4); float time;
+
+    FSeek(p + 8);
+} WeatherTimerData;
+
+enum<sint8> WeatherBlockData_Type
+{
+    WeatherBlockData_Sunny = 0,
+    WeatherBlockData_Cloudy = 1,
+    WeatherBlockData_Rainy = 2,
+    WeatherBlockData_SandStorm = 3,
+    WeatherBlockData_MeteorShower = 4,
+    WeatherBlockData_Num = 5,
+};
+
+enum<sint8> WeatherBlockData_Status
+{
+    WeatherBlockData_None = 0,
+    WeatherBlockData_Wait = 1,
+    WeatherBlockData_Active = 2,
+    WeatherBlockData_External = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  WeatherBlockData_Type weather;
+    FSeek(p + 4);  uint32 hour;
+    FSeek(p + 8);  uint32 minute;
+    FSeek(p + 12); float second;
+    FSeek(p + 16); WeatherBlockData_Status status;
+
+    FSeek(p + 20);
+} WeatherBlockData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Type currentWeather;
+    FSeek(p + 1);  Type prevWeather;
+    FSeek(p + 4);  WeatherTimerData timer;
+    FSeek(p + 12); WeatherBlockData block;
+    FSeek(p + 32); sint32 stageNo;
+    FSeek(p + 36); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 52);
+} WeatherData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);      HeaderData header;
+    FSeek(p + 48);     GamePlayData gameplay;
+    FSeek(p + 128);    CharacterData character;
+    FSeek(p + 224);    IslandStageContainerData islands;
+    FSeek(p + 1824);   CyberStageContainerData stages;
+    FSeek(p + 2592);   FlagContainerData flags;
+    FSeek(p + 2880);   WorldFlagContainerData worldFlags;
+    FSeek(p + 45888);  PlayLogData playlog;
+    FSeek(p + 661904); StatsContainerData stats;
+    FSeek(p + 689048); WeatherData weather;
+
+    FSeek(p + 689104);
+} GameData;
+
+LittleEndian();
+
+FSeek(64);
+GameData data;

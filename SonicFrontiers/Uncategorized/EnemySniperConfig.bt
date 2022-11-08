@@ -1,0 +1,113 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  RingParameter ringParam;
+    FSeek(p + 28); sint32 codeDropNumMin;
+    FSeek(p + 32); sint32 codeDropNumMax;
+    FSeek(p + 36); sint32 codeXDropNumMin;
+    FSeek(p + 40); sint32 codeXDropNumMax;
+    FSeek(p + 44); float eyesightDistancePatrol;
+    FSeek(p + 48); float eyesightDistanceBattle;
+    FSeek(p + 52); float hideCoreDistance;
+    FSeek(p + 56); float showCoreDistance;
+    FSeek(p + 60); float guardShotWaitTime;
+    FSeek(p + 64); float guardShotAngle;
+    FSeek(p + 68); float aimBendSpeed;
+    FSeek(p + 72); float muzzleShrinkStartDist;
+    FSeek(p + 76); float muzzleShrinkEndDist;
+    FSeek(p + 80); float snipeMaxAngle;
+    FSeek(p + 84); float guardMaxAngle;
+
+    FSeek(p + 88);
+} EnemySniperCommonConfig;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  sint32 maxGuardPoint;
+    FSeek(p + 8);  float stunTime;
+    FSeek(p + 12); float attackRate;
+    FSeek(p + 16); uint16 expItemNum;
+    FSeek(p + 18); uint16 exp;
+    FSeek(p + 20); float snipeRotateSpeed;
+    FSeek(p + 24); float chargeRotateSpeed;
+    FSeek(p + 28); float predictRotateSpeed;
+    FSeek(p + 32); float snipeWaitTime;
+    FSeek(p + 36); float snipeShotSpeed;
+    FSeek(p + 40); float snipeIntervalTime;
+    FSeek(p + 44); float predictTime;
+    FSeek(p + 48); float predictAngleRange;
+    FSeek(p + 52); float guardShotSpeed;
+    FSeek(p + 56); float guardShotRotateSpeed;
+    FSeek(p + 60); float guardShotMotionSpeed;
+    FSeek(p + 64); float guardShotLifeTime;
+
+    FSeek(p + 68);
+} SniperCommonLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); SniperCommonLevelConfig common;
+
+    FSeek(p + 72);
+} EnemySniperLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy;
+
+    FSeek(p + 4);
+} SniperCommonActionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); SniperCommonActionConfig common;
+
+    FSeek(p + 8);
+} EnemySniperLevelBandConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemySniperCommonConfig commonParams;
+    FSeek(p + 88);  EnemySniperLevelConfig levelParams[5]<optimize=false>;
+    FSeek(p + 448); EnemySniperLevelBandConfig levelBands[5]<optimize=false>;
+
+    FSeek(p + 488);
+} EnemySniperConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemySniperConfig data;

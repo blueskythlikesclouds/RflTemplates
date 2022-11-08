@@ -1,0 +1,72 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  RingParameter ringParam;
+    FSeek(p + 28); float eyesightDistance;
+    FSeek(p + 32); float idlingSpeed;
+    FSeek(p + 36); float chasingSpeed;
+    FSeek(p + 40); float escapeSpeed;
+    FSeek(p + 44); float escapeSpeedPlayerOnPath;
+    FSeek(p + 48); float onBoardSpeed;
+    FSeek(p + 52); float restTime;
+    FSeek(p + 56); float railMaxLength;
+
+    FSeek(p + 60);
+} EnemyRobberCommonConfig;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} RobbberCommonLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); RobbberCommonLevelConfig common;
+
+    FSeek(p + 16);
+} EnemyRobberLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  EnemyRobberCommonConfig commonParams;
+    FSeek(p + 60); EnemyRobberLevelConfig levelParams[5]<optimize=false>;
+
+    FSeek(p + 140);
+} EnemyRobberConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyRobberConfig data;

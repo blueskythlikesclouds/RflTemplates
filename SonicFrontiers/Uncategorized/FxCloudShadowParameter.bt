@@ -1,0 +1,22 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enableShadow;
+    FSeek(p + 4); sint32 shadowCoverage;
+    FSeek(p + 8); float shadowValueMin;
+
+    FSeek(p + 12);
+} FxCloudShadowParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxCloudShadowParameter data;

@@ -1,0 +1,43 @@
+typedef int sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeLimitSeconds;
+    FSeek(p + 4);  float cautionTime;
+    FSeek(p + 8);  float warningTime;
+    FSeek(p + 12); bool useCautionAnimation;
+    FSeek(p + 13); bool useWarningAnimation;
+
+    FSeek(p + 16);
+} QuestDrawBridgeTimerParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 applicableFailedCount;
+    FSeek(p + 4); QuestDrawBridgeTimerParameter timerParam;
+
+    FSeek(p + 20);
+} QuestDrawBridgeParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); QuestDrawBridgeParameterElement element[3]<optimize=false>;
+
+    FSeek(p + 60);
+} QuestDrawBridgeParameter;
+
+LittleEndian();
+
+FSeek(64);
+QuestDrawBridgeParameter data;

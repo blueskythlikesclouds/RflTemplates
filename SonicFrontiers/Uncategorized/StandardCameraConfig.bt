@@ -1,0 +1,185 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float distance;
+    FSeek(p + 4);   float distanceSuspensionK;
+    FSeek(p + 8);   float minElevation;
+    FSeek(p + 12);  float maxElevation;
+    FSeek(p + 16);  float azimuthSensitivity;
+    FSeek(p + 20);  float elevationUpSensitivity;
+    FSeek(p + 24);  float elevationDownSensitivity;
+    FSeek(p + 28);  float elevationOffset;
+    FSeek(p + 32);  float targetUpOffset;
+    FSeek(p + 36);  float targetMinUpOffsetLimit;
+    FSeek(p + 40);  float targetMaxUpOffsetLimit;
+    FSeek(p + 44);  float targetMinUpOffsetLimitDistance;
+    FSeek(p + 48);  float targetMaxUpOffsetLimitDistance;
+    FSeek(p + 52);  float targetOffsetSuspensionK;
+    FSeek(p + 56);  float delayAllowDistance;
+    FSeek(p + 60);  float delayLimitDistance;
+    FSeek(p + 64);  float delaySuspensionK;
+    FSeek(p + 68);  float autocontrolDisabledTime;
+    FSeek(p + 72);  float chaseSegmentSuspensionK;
+    FSeek(p + 76);  float chaseSegmentShortenSpeed;
+    FSeek(p + 80);  sint32 chaseSegmentMaxCount;
+    FSeek(p + 84);  float inertiaMinDecel;
+    FSeek(p + 88);  float inertiaOvershootAngle;
+    FSeek(p + 92);  float resetSuspensionK;
+    FSeek(p + 96);  float downDirectionDotThreshold;
+    FSeek(p + 100); float baseUpLeanRate;
+
+    FSeek(p + 104);
+} StandardCameraCommonParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minDistance;
+    FSeek(p + 4);  float maxDistance;
+    FSeek(p + 8);  float minDistanceAccel;
+    FSeek(p + 12); float maxDistanceAccel;
+    FSeek(p + 16); float distanceSuspensionK;
+    FSeek(p + 20); float elevationOffset;
+    FSeek(p + 24); float azimuthSensitivity;
+    FSeek(p + 28); float targetOffsetSuspensionK;
+    FSeek(p + 32); float targetUpOffset;
+    FSeek(p + 36); float delayAllowDistance;
+    FSeek(p + 40); float delayLimitDistance;
+    FSeek(p + 44); float delaySuspensionK;
+
+    FSeek(p + 48);
+} StandardCameraDashParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minDistance;
+    FSeek(p + 4);  float maxDistance;
+    FSeek(p + 8);  float elevationOffset;
+    FSeek(p + 12); float azimuthSensitivity;
+    FSeek(p + 16); float elevationUpSensitivity;
+    FSeek(p + 20); float elevationDownSensitivity;
+    FSeek(p + 24); float targetUpOffset;
+    FSeek(p + 28); float minDelayLimitDistance;
+    FSeek(p + 32); float maxDelayLimitDistance;
+
+    FSeek(p + 36);
+} StandardCameraCyloopParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float minElevation;
+    FSeek(p + 8);  float maxElevation;
+    FSeek(p + 12); float elevationOffset;
+    FSeek(p + 16); float minElevationCyloop;
+    FSeek(p + 20); float maxElevationCyloop;
+    FSeek(p + 24); float elevationOffsetCyloop;
+    FSeek(p + 28); float targetUpOffset;
+    FSeek(p + 32); float delayAllowDistance;
+    FSeek(p + 36); float delayLimitDistance;
+    FSeek(p + 40); float delaySuspensionK;
+    FSeek(p + 44); float panningSuspensionK;
+    FSeek(p + 48); float interiorPanningDistance;
+    FSeek(p + 52); float interiorPanningSuspensionK;
+
+    FSeek(p + 56);
+} StandardCameraLockonParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float distance;
+    FSeek(p + 4); float targetUpOffset;
+
+    FSeek(p + 8);
+} StandardCameraWallParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float azimuthSensitivity;
+    FSeek(p + 4);  float elevationUpSensitivity;
+    FSeek(p + 8);  float elevationDownSensitivity;
+    FSeek(p + 12); float targetUpOffset;
+    FSeek(p + 16); float baseUpLeanRate;
+
+    FSeek(p + 20);
+} StandardCameraLoopParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float distanceSuspensionK;
+    FSeek(p + 8);  float elevationOffset;
+    FSeek(p + 12); float azimuthMinOffset;
+    FSeek(p + 16); float azimuthMaxOffset;
+    FSeek(p + 20); float azimuthMinOffsetDistance;
+    FSeek(p + 24); float azimuthMaxOffsetDistance;
+    FSeek(p + 28); float azimuthSensitivity;
+    FSeek(p + 32); float targetOffsetSuspensionK;
+    FSeek(p + 36); float targetMinUpOffset;
+    FSeek(p + 40); float targetMaxUpOffset;
+    FSeek(p + 44); float targetFrontOffset;
+    FSeek(p + 48); float delayAllowDistance;
+    FSeek(p + 52); float delayLimitDistance;
+    FSeek(p + 56); float delaySuspensionK;
+    FSeek(p + 60); float manualControlTime;
+
+    FSeek(p + 64);
+} StandardCameraBattleParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minManualRotationSpeed;
+    FSeek(p + 4);  float maxManualRotationSpeed;
+    FSeek(p + 8);  float minDistanceScale;
+    FSeek(p + 12); float maxDistanceScale;
+    FSeek(p + 16); float maxElevationAddOffset;
+    FSeek(p + 20); float minTargetUpOffsetScale;
+    FSeek(p + 24); float maxTargetUpOffsetScale;
+    FSeek(p + 28); float minFovyRate;
+    FSeek(p + 32); float minLimitFovy;
+
+    FSeek(p + 36);
+} StandardCameraOptionParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   StandardCameraCommonParameter common;
+    FSeek(p + 104); StandardCameraDashParameter dash;
+    FSeek(p + 152); StandardCameraCyloopParameter cyloop;
+    FSeek(p + 188); StandardCameraCyloopParameter cyloopSnipe;
+    FSeek(p + 224); StandardCameraLockonParameter lockon;
+    FSeek(p + 280); StandardCameraLockonParameter lockonCharger;
+    FSeek(p + 336); StandardCameraLockonParameter lockonSpider;
+    FSeek(p + 392); StandardCameraLockonParameter lockonDaruma;
+    FSeek(p + 448); StandardCameraLockonParameter lockonNinja;
+    FSeek(p + 504); StandardCameraLockonParameter lockonSumo;
+    FSeek(p + 560); StandardCameraWallParameter wall;
+    FSeek(p + 568); StandardCameraLoopParameter loop;
+    FSeek(p + 588); StandardCameraBattleParameter battle;
+    FSeek(p + 652); StandardCameraOptionParameter option;
+
+    FSeek(p + 688);
+} StandardCameraConfig;
+
+LittleEndian();
+
+FSeek(64);
+StandardCameraConfig data;

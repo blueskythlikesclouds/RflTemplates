@@ -1,0 +1,149 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float value;
+    FSeek(p + 4); float delayTime;
+    FSeek(p + 8); float fadeTime;
+
+    FSeek(p + 12);
+} BGMVolumeChangeInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  BGMVolumeChangeInfo playerStop;
+    FSeek(p + 12); BGMVolumeChangeInfo playerWalk;
+    FSeek(p + 24); BGMVolumeChangeInfo playerRun;
+    FSeek(p + 36); BGMVolumeChangeInfo fishingHitIn;
+    FSeek(p + 48); BGMVolumeChangeInfo fishingHitOut;
+    FSeek(p + 60); BGMVolumeChangeInfo musicBoxIn;
+    FSeek(p + 72); BGMVolumeChangeInfo musicBoxOut;
+
+    FSeek(p + 84);
+} BGMVolumeChangeInfoList;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float value;
+    FSeek(p + 4); float fadeTime;
+
+    FSeek(p + 8);
+} AisacChangeInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  AisacChangeInfo sunny;
+    FSeek(p + 8);  AisacChangeInfo cloudy;
+    FSeek(p + 16); AisacChangeInfo rainy;
+    FSeek(p + 24); AisacChangeInfo beginUnderWater;
+    FSeek(p + 32); AisacChangeInfo finishUnderWater;
+
+    FSeek(p + 40);
+} AisacChangeInfoList;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef int sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> Priority
+{
+    PRIORITY_LOW = 0,
+    PRIORITY_DEFAULT = 1,
+    PRIORITY_HIGH = 2,
+    PRIORITY_SUPER_HIGH = 3,
+    NUM_PRIORITY = 4,
+    PRIORITY_INVALID = -1,
+};
+
+enum<sint8> InterruptType
+{
+    INTERRUPT_TYPE_STOP = 0,
+    INTERRUPT_TYPE_PAUSE = 1,
+    INTERRUPT_TYPE_OVERLAP = 2,
+    NUM_INTERRUPT_TYPE = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName;
+    FSeek(p + 16); sint32 blockId;
+    FSeek(p + 20); float fadeInTime;
+    FSeek(p + 24); float fadeOutTime;
+    FSeek(p + 28); float delayTime;
+    FSeek(p + 32); cstring aisacName;
+    FSeek(p + 48); float aisacValue;
+    FSeek(p + 52); float aisacFadeTime;
+    FSeek(p + 56); bool isVolumeControl;
+    FSeek(p + 57); bool isOverlapPlay;
+    FSeek(p + 58); Priority priority;
+    FSeek(p + 59); InterruptType interruptType;
+
+    FSeek(p + 64);
+} BGMInfo;
+
+enum<sint8> BGMTransitInfo_InterruptType
+{
+    BGMTransitInfo_INTERRUPT_TYPE_STOP = 0,
+    BGMTransitInfo_INTERRUPT_TYPE_PAUSE = 1,
+    BGMTransitInfo_INTERRUPT_TYPE_OVERLAP = 2,
+    BGMTransitInfo_NUM_INTERRUPT_TYPE = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring tagName;
+    FSeek(p + 16); sint32 beforeId;
+    FSeek(p + 20); sint32 beforeIdMax;
+    FSeek(p + 24); sint32 afterId;
+    FSeek(p + 28); BGMTransitInfo_InterruptType type;
+    FSeek(p + 32); float fadeOutTime;
+    FSeek(p + 36); float fadeInTime;
+    FSeek(p + 40); float delayTime;
+
+    FSeek(p + 48);
+} BGMTransitInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    float pauseFadeOutTime;
+    FSeek(p + 4);    float pauseFadeInTime;
+    FSeek(p + 8);    float enterCyberFadeOutTime;
+    FSeek(p + 12);   float leaveCyberResultFadeOutTime;
+    FSeek(p + 16);   BGMVolumeChangeInfoList bgmVolumeInfo;
+    FSeek(p + 100);  AisacChangeInfoList aisacInfo;
+    FSeek(p + 144);  BGMInfo changeBgmInfo[128]<optimize=false>;
+    FSeek(p + 8336); BGMTransitInfo transitBgmInfo[128]<optimize=false>;
+
+    FSeek(p + 14480);
+} SoundCommonParameter;
+
+LittleEndian();
+
+FSeek(64);
+SoundCommonParameter data;

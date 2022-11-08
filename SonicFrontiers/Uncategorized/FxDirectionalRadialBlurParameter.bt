@@ -1,0 +1,34 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 16); vector3 center;
+    FSeek(p + 32); vector3 direction;
+    FSeek(p + 48); float blurPowerMax;
+    FSeek(p + 52); float blurPowerMin;
+    FSeek(p + 56); float focusRange;
+    FSeek(p + 60); float alphaSlope;
+    FSeek(p + 64); sint32 sampleNum;
+
+    FSeek(p + 80);
+} FxDirectionalRadialBlurParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxDirectionalRadialBlurParameter data;

@@ -1,0 +1,113 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  RingParameter ringParam;
+    FSeek(p + 28); sint32 codeDropNumMin;
+    FSeek(p + 32); sint32 codeDropNumMax;
+    FSeek(p + 36); sint32 codeXDropNumMin;
+    FSeek(p + 40); sint32 codeXDropNumMax;
+    FSeek(p + 44); float closeDistance;
+    FSeek(p + 48); float cameraDistance;
+    FSeek(p + 52); float cameraElevation;
+    FSeek(p + 56); float pullStartHeight;
+    FSeek(p + 60); float pullEndHeight;
+
+    FSeek(p + 64);
+} EnemyUmbrellaCommonConfig;
+
+typedef ushort uint16;
+
+typedef ubyte uint8;
+
+enum<uint8> BarrageType
+{
+    BOX = 0,
+    CONE = 1,
+    FAN = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+    FSeek(p + 12); float backJumpHeight;
+    FSeek(p + 16); float backJumpDistance;
+    FSeek(p + 20); float flyingDuration;
+    FSeek(p + 24); BarrageType barrageType;
+    FSeek(p + 28); float barrageHeight;
+    FSeek(p + 32); float barrageWidth;
+    FSeek(p + 36); float barrageDistance;
+    FSeek(p + 40); float bombRatio;
+    FSeek(p + 44); float barrageFallSpeed;
+    FSeek(p + 48); float barrageLifeTime;
+    FSeek(p + 52); float barrageLifePassPower;
+
+    FSeek(p + 56);
+} UmbrellaCommonLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); UmbrellaCommonLevelConfig common;
+
+    FSeek(p + 60);
+} EnemyUmbrellaLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy;
+
+    FSeek(p + 4);
+} UmbrellaCommonActionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); UmbrellaCommonActionConfig common;
+
+    FSeek(p + 8);
+} EnemyUmbrellaLevelBandConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyUmbrellaCommonConfig commonParams;
+    FSeek(p + 64);  EnemyUmbrellaLevelConfig levelParams[5]<optimize=false>;
+    FSeek(p + 364); EnemyUmbrellaLevelBandConfig levelBands[5]<optimize=false>;
+
+    FSeek(p + 404);
+} EnemyUmbrellaConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyUmbrellaConfig data;

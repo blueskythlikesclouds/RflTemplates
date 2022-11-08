@@ -1,0 +1,664 @@
+typedef uint uint32;
+
+typedef ushort uint16;
+
+typedef struct csetobjectid {
+    long id;
+    long group;
+} csetobjectid;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  array initPositions;
+    FSeek(p + 32); cstring heightTargetNodeName;
+    FSeek(p + 48); float heightMoveSpeed;
+    FSeek(p + 52); float bossToPlayerDistanceMin;
+    FSeek(p + 56); float bossToPlayerDistanceMax;
+    FSeek(p + 60); float offsetHeightMin;
+    FSeek(p + 64); float offsetHeightMax;
+    FSeek(p + 68); float areaDistanceMin;
+    FSeek(p + 72); float areaDistanceMax;
+    FSeek(p + 76); float playerSpawnDistance;
+    FSeek(p + 80); float playerRespawnDistance;
+    FSeek(p + 84); float playerRespawnDistance2;
+
+    FSeek(p + 88);
+} PlayerMoveableRangeParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isUse;
+    FSeek(p + 1); bool isUsePillar;
+    FSeek(p + 4); float phaseChangeHpRatio;
+
+    FSeek(p + 8);
+} BossPhaseParam;
+
+typedef byte sint8;
+
+enum<sint8> EaseType
+{
+    ET_Sin = 0,
+    ET_Cubic = 1,
+    ET_Quadratic = 2,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float easeTime;
+    FSeek(p + 4);  EaseType easeType;
+    FSeek(p + 8);  cstring mainLookAtNodeName;
+    FSeek(p + 32); vector3 mainLookOffsetPos;
+    FSeek(p + 48); cstring subLookAtNodeName;
+    FSeek(p + 64); vector3 subLookOffsetPos;
+    FSeek(p + 80); float distance;
+    FSeek(p + 96); vector3 playerOffsetPos;
+
+    FSeek(p + 112);
+} BossLockOnCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   uint32 healthPoint;
+    FSeek(p + 4);   float stunTime;
+    FSeek(p + 8);   float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 20);  float maxStaggerPoint[5]<optimize=false>;
+    FSeek(p + 40);  uint16 exp;
+    FSeek(p + 48);  PlayerMoveableRangeParam moveRangeParam;
+    FSeek(p + 136); PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
+    FSeek(p + 224); BossPhaseParam phaseParams[8]<optimize=false>;
+    FSeek(p + 288); BossLockOnCameraParam cameraParam;
+    FSeek(p + 400); bool isDebugDraw;
+    FSeek(p + 404); uint32 debugDrawPhaseIndex;
+
+    FSeek(p + 416);
+} BossStatusConfig;
+
+enum<sint8> GimmickType
+{
+    GT_A = 0,
+    GT_B = 1,
+    GT_C = 2,
+    GT_D = 3,
+    GT_E = 4,
+    NUM_GIMMICK_TYPE = 5,
+};
+
+enum<sint8> AttackType
+{
+    AT_A = 0,
+    AT_B = 1,
+    AT_C = 2,
+    AT_D = 3,
+    AT_E = 4,
+    NUM_ATTACK_TYPE = 5,
+};
+
+enum<sint8> BossPillarParam_GimmickType
+{
+    BossPillarParam_GT_A = 0,
+    BossPillarParam_GT_B = 1,
+    BossPillarParam_GT_C = 2,
+    BossPillarParam_GT_D = 3,
+    BossPillarParam_GT_E = 4,
+    BossPillarParam_NUM_GIMMICK_TYPE = 5,
+};
+
+enum<sint8> BossPillarParam_AttackType
+{
+    BossPillarParam_AT_A = 0,
+    BossPillarParam_AT_B = 1,
+    BossPillarParam_AT_C = 2,
+    BossPillarParam_AT_D = 3,
+    BossPillarParam_AT_E = 4,
+    BossPillarParam_NUM_ATTACK_TYPE = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 4);  float gimmickPhaseTime;
+    FSeek(p + 8);  float attackPhaseTime;
+    FSeek(p + 12); bool isUnique;
+    FSeek(p + 13); BossPillarParam_GimmickType gimmickType;
+    FSeek(p + 16); float gimmickIntervalTime;
+    FSeek(p + 20); BossPillarParam_AttackType attackType;
+    FSeek(p + 24); float attackIntervalTime;
+
+    FSeek(p + 28);
+} BossPillarParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GimmickType gimmickTypeAll;
+    FSeek(p + 4);   float gimmickIntervalTimeAll;
+    FSeek(p + 8);   AttackType attackTypeAll;
+    FSeek(p + 12);  float attackIntervalTimeAll;
+    FSeek(p + 16);  BossPillarParam pillars[32]<optimize=false>;
+    FSeek(p + 912); cstring spawnPositionName;
+    FSeek(p + 928); uint32 pillarHealthPoint;
+    FSeek(p + 932); uint32 pillarBreakDamage;
+    FSeek(p + 936); float pillarBreakStun;
+    FSeek(p + 940); bool isDebugDraw;
+    FSeek(p + 944); uint32 DebugDrawType;
+
+    FSeek(p + 952);
+} BossPillarConfig;
+
+typedef short sint16;
+
+enum<sint8> CollisionType
+{
+    CT_SPHERE = 0,
+    CT_CAPSULE = 1,
+    CT_CYLINDER = 2,
+    CT_BOX = 3,
+    NUM_COLLISION_TYPE = 4,
+};
+
+enum<sint8> ColliderActiveType
+{
+    Always = 0,
+    OnContactActive = 1,
+    OnContactInactive = 2,
+    OnMotionActive = 3,
+    OnMotionInactive = 4,
+    Manual = 5,
+    NUM_COLLIDER_ACTIVE_TYPE = 6,
+};
+
+enum<sint16> ColliderProperty
+{
+    CpNone = 0,
+    CpBattleUse = 1,
+    CpBattleUnuse = 2,
+    CpRestPoint = 3,
+    CpHomingTarget = 4,
+    CpPerceive = 5,
+    CpDamage = 6,
+    CpAttack = 7,
+    CpContactActive = 8,
+    CpContactInactive = 9,
+    CpMotionActive = 10,
+    CpMotionInactive = 11,
+    CpManual = 12,
+    CpUpperSide = 13,
+    CpLowerSide = 14,
+    CpFrontSide = 15,
+    CpBackSide = 16,
+    CpLeftSide = 17,
+    CpRightSide = 18,
+    CpPointA = 19,
+    CpPointB = 20,
+    CpPointC = 21,
+    CpPointD = 22,
+    CpCyloopDownUnuse = 23,
+    CpDummyDamage = 24,
+    NUM_COLLIDER_PROPERTY = 25,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ColliderActiveType type;
+    FSeek(p + 2);  ColliderProperty propertys[4]<optimize=false>;
+    FSeek(p + 16); cstring text;
+
+    FSeek(p + 32);
+} BossColliderStatus;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isUse;
+    FSeek(p + 2);   sint16 priority;
+    FSeek(p + 4);   CollisionType type;
+    FSeek(p + 8);   cstring attachNodeName;
+    FSeek(p + 24);  cstring name;
+    FSeek(p + 40);  BossColliderStatus status;
+    FSeek(p + 80);  vector3 size;
+    FSeek(p + 96);  vector3 offset;
+    FSeek(p + 112); vector3 rotation;
+
+    FSeek(p + 128);
+} BossPerceiveCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossPerceiveCollisionParam perceiveCollisions[64]<optimize=false>;
+    FSeek(p + 8192); bool isDebugDraw;
+
+    FSeek(p + 8208);
+} BossPerceivePartsWithCollisionConfig;
+
+enum<sint8> PointType
+{
+    PT_HOMINGPOINT = 0,
+    PT_HEROSAGE = 1,
+    PT_MINIONGENERATOR = 2,
+    PT_TRIGGER = 3,
+    PT_ANCHOR = 4,
+    PT_DAMAGEPOINT = 5,
+    PT_STICK = 6,
+    PT_DAMAGEEFFECT = 7,
+    PT_DASHCIRCLE = 8,
+    NUM_POINT_TYPE = 9,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  BossColliderStatus status;
+    FSeek(p + 32); float distance;
+    FSeek(p + 36); float nextSearchDistance;
+
+    FSeek(p + 40);
+} BossHomingPointParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 num;
+    FSeek(p + 4);  float interval;
+    FSeek(p + 8);  float liveTime;
+    FSeek(p + 12); float waitTime;
+
+    FSeek(p + 16);
+} BossMinionParam;
+
+enum<sint8> Shape
+{
+    SHAPE_BOX = 0,
+    SHAPE_SPHERE = 1,
+    SHAPE_CYLINDER = 2,
+    SHAPE_CAPSULE = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Shape ShapeType;
+    FSeek(p + 4);  float CollisionWidth;
+    FSeek(p + 8);  float CollisionHeight;
+    FSeek(p + 12); float CollisionDepth;
+
+    FSeek(p + 16);
+} BossTrigerParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float phaseTime;
+
+    FSeek(p + 4);
+} BossStickParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isCyloopDownUnuse;
+    FSeek(p + 8); cstring text;
+
+    FSeek(p + 24);
+} BossDamagePointParam;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 focusGeometryIndex;
+    FSeek(p + 4);  sint32 focusTriangleIndex;
+    FSeek(p + 8);  float sizeScale;
+    FSeek(p + 12); float impulseSpeed;
+    FSeek(p + 16); float ocTime;
+    FSeek(p + 20); float slowRateBoss;
+    FSeek(p + 24); float slowRatePlayer;
+    FSeek(p + 28); float slowTime;
+    FSeek(p + 32); float slowEaseInTime;
+    FSeek(p + 36); float slowEaseOutTime;
+
+    FSeek(p + 40);
+} BossDashCirclPointParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isUse;
+    FSeek(p + 4);   uint32 geometryIndex;
+    FSeek(p + 8);   uint32 triangleIndex;
+    FSeek(p + 12);  PointType type;
+    FSeek(p + 16);  BossHomingPointParam homingPoint;
+    FSeek(p + 56);  BossMinionParam minionParam;
+    FSeek(p + 72);  BossTrigerParam trigger;
+    FSeek(p + 88);  BossStickParam stickParam;
+    FSeek(p + 96);  BossDamagePointParam damagePoint;
+    FSeek(p + 120); BossDashCirclPointParam dashCirclPoint;
+    FSeek(p + 160); sint32 linkNums[5]<optimize=false>;
+    FSeek(p + 192); vector3 offsetPos;
+    FSeek(p + 208); vector3 offsetRot;
+
+    FSeek(p + 224);
+} BossMeshFrameParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossMeshFrameParam meshShapeKeyFrames[256]<optimize=false>;
+    FSeek(p + 57344); bool isDebugDraw;
+    FSeek(p + 57345); bool isDebugDrawPoint;
+    FSeek(p + 57346); bool isDebugDrawMesh;
+    FSeek(p + 57347); bool isDebugDrawMeshIndivid;
+    FSeek(p + 57348); float debugDrawMeshTriangleDistance;
+    FSeek(p + 57352); uint32 debugDrawMeshTriangleNum;
+
+    FSeek(p + 57360);
+} BossMeshFrameConfig;
+
+enum<sint8> BossAttackCollisionParam_AttackType
+{
+    BossAttackCollisionParam_AT_NONE = 0,
+    BossAttackCollisionParam_AT_BLOWOFF = 1,
+    BossAttackCollisionParam_AT_SLAMDOWNWARD = 2,
+    BossAttackCollisionParam_AT_KILLING = 3,
+    BossAttackCollisionParam_AT_NOTPARRY = 4,
+    BossAttackCollisionParam_AT_NOTDAMAGE = 5,
+    BossAttackCollisionParam_NUM_ATTACK_TYPE = 6,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 8);  cstring attachNodeName;
+    FSeek(p + 24); float damageVelocityRaito;
+    FSeek(p + 28); BossAttackCollisionParam_AttackType types[4]<optimize=false>;
+    FSeek(p + 32); BossColliderStatus status;
+    FSeek(p + 64); float size;
+    FSeek(p + 80); vector3 offset;
+    FSeek(p + 96); cstring parryCounterTargetCollisionName;
+
+    FSeek(p + 112);
+} BossAttackCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossAttackCollisionParam attackCollisions[64]<optimize=false>;
+    FSeek(p + 7168); bool isDebugDraw;
+
+    FSeek(p + 7184);
+} BossAttackCollisionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 8);  cstring attachNodeName;
+    FSeek(p + 24); cstring name;
+    FSeek(p + 40); float size;
+    FSeek(p + 48); vector3 offset;
+    FSeek(p + 64); vector3 rotation;
+    FSeek(p + 80); bool isParryActive;
+    FSeek(p + 84); float cyloopRadius;
+    FSeek(p + 88); bool onlyRigidBody;
+
+    FSeek(p + 96);
+} BossBattlePhaseCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossBattlePhaseCollisionParam battleCollisions[16]<optimize=false>;
+    FSeek(p + 1536); bool isDebugDraw;
+
+    FSeek(p + 1552);
+} BossBattlePhaseCollisionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 ringNumQuickCyloopUp;
+    FSeek(p + 4);  uint32 ringNumQuickCyloopDown;
+    FSeek(p + 8);  uint32 ringNumSonicSpecial;
+    FSeek(p + 12); float ringSpawnDistance;
+    FSeek(p + 16); float ringSuckedVelocity;
+
+    FSeek(p + 20);
+} BossDropRingConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossStatusConfig status;
+    FSeek(p + 416);   BossPillarConfig pillar;
+    FSeek(p + 1376);  BossPerceivePartsWithCollisionConfig perceivPartsWithCollision;
+    FSeek(p + 9584);  BossMeshFrameConfig meshShapeKeyFrame;
+    FSeek(p + 66944); BossAttackCollisionConfig attackCollision;
+    FSeek(p + 74128); BossBattlePhaseCollisionConfig battleCollision;
+    FSeek(p + 75680); BossDropRingConfig dropRing;
+
+    FSeek(p + 75712);
+} BossBaseConfig;
+
+enum<sint8> ActionType
+{
+    AT_NONE = 0,
+    AT_HAND_L = 1,
+    AT_HAND_R = 2,
+    AT_BACKHAND_L = 3,
+    AT_BACKHAND_R = 4,
+    AT_HEAD = 5,
+    AT_HOWL = 6,
+    AT_LASER = 7,
+    AT_COUNTER_NORMAL = 8,
+    AT_COUNTER_SP_01 = 9,
+    AT_COUNTER_SP_02 = 10,
+    AT_COUNTER_SP_03 = 11,
+    AT_ROTATION = 12,
+    AT_STEP = 13,
+    AT_JUMP = 14,
+    AT_TURN = 15,
+    NUM_ACTION_TYPE = 16,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float attackWaitTime;
+    FSeek(p + 4);  float attackSpeedRatio;
+    FSeek(p + 8);  uint32 knockbackCountMax;
+    FSeek(p + 12); ActionType attackTypes[16]<optimize=false>;
+
+    FSeek(p + 28);
+} BossGiantPhaseParam;
+
+enum<sint8> ActionAttribute
+{
+    AA_NONE = 0,
+    AA_ALL = 1,
+    AA_FRONT = 2,
+    AA_BACK = 3,
+    AA_LEFT = 4,
+    AA_RIGHT = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ActionAttribute attribute1;
+    FSeek(p + 1);  ActionAttribute attribute2;
+    FSeek(p + 4);  float useDistanceMin;
+    FSeek(p + 8);  float useDistanceMax;
+    FSeek(p + 12); float useHeightMin;
+    FSeek(p + 16); float useHeightMax;
+    FSeek(p + 20); float useAngleMin;
+    FSeek(p + 24); float useAngleMax;
+    FSeek(p + 28); float useAbsAngleOver;
+    FSeek(p + 32); float useHpRatioMin;
+    FSeek(p + 36); float useHpRatioMax;
+    FSeek(p + 40); float useAreaOver;
+    FSeek(p + 44); uint32 priority;
+    FSeek(p + 48); float coolTime;
+    FSeek(p + 52); float initCoolTime;
+    FSeek(p + 56); float readyTime;
+    FSeek(p + 60); uint32 consecutiveUsesLimit;
+    FSeek(p + 64); float consecutiveUsesLimitCoolTime;
+    FSeek(p + 68); bool isCounterUse;
+    FSeek(p + 69); bool isCounterOnly;
+
+    FSeek(p + 72);
+} BossGiantPhaseAttackActionParam;
+
+enum<sint8> BossGiantBattleParam_ActionType
+{
+    BossGiantBattleParam_AT_NONE = 0,
+    BossGiantBattleParam_AT_HAND_L = 1,
+    BossGiantBattleParam_AT_HAND_R = 2,
+    BossGiantBattleParam_AT_BACKHAND_L = 3,
+    BossGiantBattleParam_AT_BACKHAND_R = 4,
+    BossGiantBattleParam_AT_HEAD = 5,
+    BossGiantBattleParam_AT_HOWL = 6,
+    BossGiantBattleParam_AT_LASER = 7,
+    BossGiantBattleParam_AT_COUNTER_NORMAL = 8,
+    BossGiantBattleParam_AT_COUNTER_SP_01 = 9,
+    BossGiantBattleParam_AT_COUNTER_SP_02 = 10,
+    BossGiantBattleParam_AT_COUNTER_SP_03 = 11,
+    BossGiantBattleParam_AT_ROTATION = 12,
+    BossGiantBattleParam_AT_STEP = 13,
+    BossGiantBattleParam_AT_JUMP = 14,
+    BossGiantBattleParam_AT_TURN = 15,
+    BossGiantBattleParam_NUM_ACTION_TYPE = 16,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float landingCounterHPRatio;
+    FSeek(p + 4); float floatCounterHPRatio;
+
+    FSeek(p + 8);
+} BossGiantCyloopFloatActionParam;
+
+enum<sint8> LaserType
+{
+    LT_NONE = 0,
+    LT_STRAIGHT = 1,
+    LT_HOMING = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float hpRatio;
+    FSeek(p + 4); LaserType type;
+
+    FSeek(p + 8);
+} BossGiantThresholdRingSupplyParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossGiantPhaseParam giantPhaseParams[4]<optimize=false>;
+    FSeek(p + 112);  BossGiantPhaseAttackActionParam actionParams[15]<optimize=false>;
+    FSeek(p + 1192); BossGiantBattleParam_ActionType immediateActions[20]<optimize=false>;
+    FSeek(p + 1212); BossGiantCyloopFloatActionParam cyloopFloatAction;
+    FSeek(p + 1220); BossGiantThresholdRingSupplyParam thresholdRingSupply[3]<optimize=false>;
+    FSeek(p + 1244); float thresholdDamageEffectHPRatio[3]<optimize=false>;
+    FSeek(p + 1256); bool isDebugDraw;
+
+    FSeek(p + 1260);
+} BossGiantBattleParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool usePracticeNotifier;
+    FSeek(p + 1); sint8 practiceNo;
+    FSeek(p + 2); sint8 tipsNo;
+
+    FSeek(p + 3);
+} EnemyPracticeNotifierConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); EnemyPracticeNotifierConfig notifierConfigClimb;
+    FSeek(p + 3); EnemyPracticeNotifierConfig notifierConfigBattle;
+
+    FSeek(p + 6);
+} BossGiantNotifierParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossBaseConfig base;
+    FSeek(p + 75712); BossGiantBattleParam battleParam;
+    FSeek(p + 76972); BossGiantNotifierParam notifierParam;
+
+    FSeek(p + 76992);
+} BossGiantConfig;
+
+LittleEndian();
+
+FSeek(64);
+BossGiantConfig data;

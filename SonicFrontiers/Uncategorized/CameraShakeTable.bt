@@ -1,0 +1,53 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef ubyte uint8;
+
+enum<uint8> ShakeType
+{
+    Directional = 0,
+    WorldY = 1,
+    Random = 2,
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); ShakeType type;
+    FSeek(p + 20); float zRot;
+    FSeek(p + 24); float duration;
+    FSeek(p + 28); float frequency;
+    FSeek(p + 32); float amplitude;
+    FSeek(p + 36); float timeAttenuationRate;
+    FSeek(p + 40); bool enableDistanceAttenuation;
+    FSeek(p + 44); float attenuationDistance;
+
+    FSeek(p + 48);
+} CameraShakeRecord;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CameraShakeRecord records[64]<optimize=false>;
+
+    FSeek(p + 3072);
+} CameraShakeTable;
+
+LittleEndian();
+
+FSeek(64);
+CameraShakeTable data;

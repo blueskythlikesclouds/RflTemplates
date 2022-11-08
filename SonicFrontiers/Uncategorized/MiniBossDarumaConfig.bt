@@ -1,0 +1,354 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef int sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 count;
+    FSeek(p + 4);  float intervalTime;
+    FSeek(p + 8);  float pitchMin;
+    FSeek(p + 12); float pitchMax;
+    FSeek(p + 16); float pitchOffsetMin;
+    FSeek(p + 20); float pitchOffsetMax;
+    FSeek(p + 24); float yawOffsetRange;
+    FSeek(p + 28); bool sweepFire;
+    FSeek(p + 29); bool predict;
+    FSeek(p + 32); float radius;
+    FSeek(p + 36); float speed;
+    FSeek(p + 40); float lifeTime;
+    FSeek(p + 44); float waitTime;
+
+    FSeek(p + 48);
+} MiniBossDarumaShotParam;
+
+typedef byte sint8;
+
+enum<sint8> ScatterType
+{
+    RANDOM = 0,
+    HOMING = 1,
+    SPIRAL = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 count;
+    FSeek(p + 4);  float intervalTime;
+    FSeek(p + 8);  float shootPitchMin;
+    FSeek(p + 12); float shootPitchMax;
+    FSeek(p + 16); float initialSpeedMin;
+    FSeek(p + 20); float initialSpeedMax;
+    FSeek(p + 24); float maxAngle;
+    FSeek(p + 28); float moveRadius;
+    FSeek(p + 32); float maxMoveSpeed;
+    FSeek(p + 36); float accel;
+    FSeek(p + 40); float waitTime;
+    FSeek(p + 44); float featherLifeTime;
+    FSeek(p + 48); ScatterType m_scatterTypeTable[6]<optimize=false>;
+
+    FSeek(p + 56);
+} MiniBossDarumaSpecialShotParamBase;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase base;
+    FSeek(p + 56); float explosionRadius;
+    FSeek(p + 60); float explosionEffectScale;
+    FSeek(p + 64); float explosionTime;
+
+    FSeek(p + 68);
+} MiniBossDarumaBombParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase base;
+    FSeek(p + 56); float burnLifeTime;
+
+    FSeek(p + 60);
+} MiniBossDarumaFlamePillarParam;
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase base;
+    FSeek(p + 56); float burnLifeTime;
+    FSeek(p + 60); float cycleTime;
+    FSeek(p + 64); float cycleDistance;
+    FSeek(p + 68); float homingLimitAngle;
+    FSeek(p + 72); float maxTurnAngle;
+    FSeek(p + 76); uint32 cycleCount;
+
+    FSeek(p + 80);
+} MiniBossDarumaWaveBombParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float range;
+    FSeek(p + 4);   float riseDistance;
+    FSeek(p + 8);   float riseTime;
+    FSeek(p + 12);  float chaseSpeed;
+    FSeek(p + 16);  float chaseTime;
+    FSeek(p + 20);  float speed;
+    FSeek(p + 24);  float rotationSpeed;
+    FSeek(p + 28);  float timingGap;
+    FSeek(p + 32);  float spinTime;
+    FSeek(p + 36);  float ringRiseTime;
+    FSeek(p + 40);  float waitTime;
+    FSeek(p + 44);  float staggerTime;
+    FSeek(p + 48);  float staggerDistance;
+    FSeek(p + 52);  float groundImpactRadius;
+    FSeek(p + 56);  float waveRadius;
+    FSeek(p + 60);  float waveAppearRadius;
+    FSeek(p + 64);  float waveKeepRadius;
+    FSeek(p + 68);  float waveDisappearRadius;
+    FSeek(p + 72);  float waveHeightMin;
+    FSeek(p + 76);  float waveHeightMax;
+    FSeek(p + 80);  float waveLifeTime;
+    FSeek(p + 84);  float waveVelocityX;
+    FSeek(p + 88);  float waveVelocityY;
+    FSeek(p + 92);  float laserRadius;
+    FSeek(p + 96);  float laserLength;
+    FSeek(p + 100); float laserTime;
+    FSeek(p + 104); float laserRotationInitialSpeed;
+    FSeek(p + 108); float laserRotationAccel;
+    FSeek(p + 112); float laserRotationMaxSpeed;
+    FSeek(p + 116); float laserAccelDelayTime;
+
+    FSeek(p + 120);
+} MiniBossDarumaStompingParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 targetOffSet;
+    FSeek(p + 16); float azimuth;
+    FSeek(p + 20); float elevation;
+    FSeek(p + 24); float distance;
+    FSeek(p + 28); float zRoll;
+    FSeek(p + 32); float fovy;
+    FSeek(p + 48); vector3 cameraMoveDir;
+    FSeek(p + 64); float cameraMoveSpeed;
+    FSeek(p + 68); float interpolateTime;
+    FSeek(p + 72); float bodyBreakWaitTime;
+    FSeek(p + 76); float changeStateWaitTime;
+
+    FSeek(p + 80);
+} MiniBossDarumaCyloopReactionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float lifeTime;
+    FSeek(p + 4);  float forceScale;
+    FSeek(p + 8);  float forceMin;
+    FSeek(p + 12); float forceMax;
+    FSeek(p + 16); float forceCyloopExplode;
+    FSeek(p + 20); float gravity;
+    FSeek(p + 24); float weight;
+    FSeek(p + 28); float friction;
+    FSeek(p + 32); sint8 maxPieceNum;
+    FSeek(p + 48); vector3 centerOffset;
+
+    FSeek(p + 64);
+} MiniBossDarumaDebrisBodySmallParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float damageVelocityScale;
+    FSeek(p + 4);  float minSpeed;
+    FSeek(p + 8);  float maxSpeed;
+    FSeek(p + 16); MiniBossDarumaDebrisBodySmallParam body;
+    FSeek(p + 80); MiniBossDarumaDebrisBodySmallParam cyloop;
+
+    FSeek(p + 144);
+} MiniBossDarumaDebrisParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time;
+    FSeek(p + 4);  float magnitude;
+    FSeek(p + 8);  sint32 freq;
+    FSeek(p + 12); float attnRatio;
+    FSeek(p + 16); float shakeRange;
+
+    FSeek(p + 20);
+} MiniBossDarumaCameraShakeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossCommonConfig commonConfig;
+    FSeek(p + 64);   float headHeight;
+    FSeek(p + 68);   sint32 bodyMaxHealthPoint;
+    FSeek(p + 72);   float bodyRadius;
+    FSeek(p + 76);   float bodyHeight;
+    FSeek(p + 80);   float baseHeight;
+    FSeek(p + 84);   float partSpace;
+    FSeek(p + 88);   float ringRadius;
+    FSeek(p + 92);   float ringHeight;
+    FSeek(p + 96);   float ringRotationSpeed;
+    FSeek(p + 100);  float gravity;
+    FSeek(p + 104);  float stunTime;
+    FSeek(p + 108);  float maxSpeed;
+    FSeek(p + 112);  float stompingTransitRange;
+    FSeek(p + 116);  sint32 questKodamaMaxNum[3]<optimize=false>;
+    FSeek(p + 128);  MiniBossDarumaShotParam shot;
+    FSeek(p + 176);  MiniBossDarumaShotParam shot3way;
+    FSeek(p + 224);  MiniBossDarumaShotParam shot5way;
+    FSeek(p + 272);  MiniBossDarumaBombParam bomb;
+    FSeek(p + 340);  MiniBossDarumaFlamePillarParam flamePillar;
+    FSeek(p + 400);  MiniBossDarumaWaveBombParam waveBomb;
+    FSeek(p + 480);  MiniBossDarumaStompingParam stomping;
+    FSeek(p + 600);  MiniBossDarumaStompingParam stompingThorn;
+    FSeek(p + 720);  MiniBossDarumaStompingParam stompingQuest[3]<optimize=false>;
+    FSeek(p + 1080); MiniBossDarumaStompingParam stompingQuestHigh[3]<optimize=false>;
+    FSeek(p + 1440); MiniBossDarumaStompingParam stompingQuest2[3]<optimize=false>;
+    FSeek(p + 1800); MiniBossDarumaStompingParam stompingQuest2High[3]<optimize=false>;
+    FSeek(p + 2160); MiniBossDarumaCyloopReactionParam cyloopReaction;
+    FSeek(p + 2240); MiniBossDarumaShotParam shotBerserk;
+    FSeek(p + 2288); MiniBossDarumaShotParam shotBerserk3way;
+    FSeek(p + 2336); MiniBossDarumaShotParam shotBerserk5way;
+    FSeek(p + 2384); MiniBossDarumaStompingParam hop;
+    FSeek(p + 2504); MiniBossDarumaStompingParam stompingBerserk;
+    FSeek(p + 2624); MiniBossDarumaFlamePillarParam flamePillarBerserk;
+    FSeek(p + 2688); MiniBossDarumaDebrisParam debris;
+    FSeek(p + 2832); MiniBossDarumaCameraShakeParam cameraShakeStomping;
+    FSeek(p + 2852); MiniBossDarumaCameraShakeParam cameraShakeStompingQuest;
+    FSeek(p + 2872); MiniBossDarumaCameraShakeParam cameraShakeStompingQuest2;
+    FSeek(p + 2892); MiniBossDarumaCameraShakeParam cameraShakeDrop;
+
+    FSeek(p + 2912);
+} MiniBossDarumaCommonParam;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossDarumaLevelParam;
+
+enum<sint8> StompingType
+{
+    WEEK = 0,
+    WAVE = 1,
+};
+
+enum<sint8> BulletType
+{
+    NORMAL = 0,
+    THREE_WAY = 1,
+    FIVE_WAY = 2,
+};
+
+enum<sint8> SpecialBulletType
+{
+    BOMB = 0,
+    PILLAR = 1,
+    WAVE_BOMB = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 level;
+    FSeek(p + 4);  StompingType stompingType;
+    FSeek(p + 5);  sint8 laserCount;
+    FSeek(p + 6);  bool isBarrier;
+    FSeek(p + 7);  StompingType stompingTypeThorn;
+    FSeek(p + 8);  sint8 laserCountThorn;
+    FSeek(p + 9);  bool isBarrierThorn;
+    FSeek(p + 10); BulletType bulletType;
+    FSeek(p + 11); SpecialBulletType specialBulletType;
+    FSeek(p + 12); sint8 stompingMaxBreakBodyCount;
+    FSeek(p + 13); bool isThorn;
+    FSeek(p + 16); vector3 headRigidColliderExtents;
+    FSeek(p + 32); vector3 headRigidCollHeightOffset;
+
+    FSeek(p + 48);
+} MiniBossDarumaLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossDarumaCommonParam commonParam;
+    FSeek(p + 2912); MiniBossDarumaLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 3200); MiniBossDarumaLevelBand levelBands[5]<optimize=false>;
+    FSeek(p + 3440); MiniBossDarumaLevelParam levelParamQuest;
+    FSeek(p + 3504); MiniBossDarumaLevelBand levelBandQuest;
+
+    FSeek(p + 3552);
+} MiniBossDarumaConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossDarumaConfig data;

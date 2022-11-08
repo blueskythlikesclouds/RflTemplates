@@ -1,0 +1,16 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotLaserVanishTime;
+    FSeek(p + 4);  float rotLaserOmenTime;
+    FSeek(p + 8);  float bigLaserVanishTime;
+    FSeek(p + 12); float bigLaserOmenTime;
+
+    FSeek(p + 16);
+} EnemyLaserConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyLaserConfig data;

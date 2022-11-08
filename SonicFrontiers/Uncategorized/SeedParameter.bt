@@ -1,0 +1,22 @@
+typedef ubyte uint8;
+
+enum<uint8> SeedType
+{
+    SeedSensor = 0,
+    ObjItem = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float suckedTime;
+    FSeek(p + 4); SeedType seedType;
+
+    FSeek(p + 8);
+} SeedParameter;
+
+LittleEndian();
+
+FSeek(64);
+SeedParameter data;

@@ -1,0 +1,47 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef ushort uint16;
+
+typedef ubyte uint8;
+
+enum<uint8> OffMeshLinkDirection
+{
+    OffMeshLinkUnidirectional = 0,
+    OffMeshLinkBidirectional = 1,
+};
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 source;
+    FSeek(p + 16); vector3 destination;
+    FSeek(p + 32); float radius;
+    FSeek(p + 36); uint16 flags;
+    FSeek(p + 38); uint8 area;
+    FSeek(p + 39); OffMeshLinkDirection direction;
+    FSeek(p + 40); uint32 userID;
+
+    FSeek(p + 48);
+} OffMeshLinkElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); OffMeshLinkElement elements;
+
+    FSeek(p + 32);
+} OffMeshLinkParameter;
+
+LittleEndian();
+
+FSeek(64);
+OffMeshLinkParameter data;

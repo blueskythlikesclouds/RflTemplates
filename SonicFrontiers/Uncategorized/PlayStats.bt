@@ -1,0 +1,72 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring stagecode;
+    FSeek(p + 16); sint32 highTime;
+    FSeek(p + 20); sint32 highScore;
+
+    FSeek(p + 24);
+} PlayStatsSummary;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring stagecode;
+    FSeek(p + 16); cstring play;
+    FSeek(p + 32); cstring option;
+    FSeek(p + 48); vector3 position;
+    FSeek(p + 64); float time;
+
+    FSeek(p + 80);
+} PlayLog;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 enemies;
+    FSeek(p + 4);  sint32 damages;
+    FSeek(p + 8);  sint32 misses;
+    FSeek(p + 12); sint32 retry;
+    FSeek(p + 16); sint32 restart;
+    FSeek(p + 24); PlayLog logs;
+
+    FSeek(p + 56);
+} PlayStatsData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring username;
+    FSeek(p + 16); cstring time;
+    FSeek(p + 32); PlayStatsSummary summaries;
+    FSeek(p + 64); PlayStatsData playLog;
+
+    FSeek(p + 120);
+} PlayStats;
+
+LittleEndian();
+
+FSeek(64);
+PlayStats data;

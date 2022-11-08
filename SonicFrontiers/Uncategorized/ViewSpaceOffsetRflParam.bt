@@ -1,0 +1,21 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 targetOffset;
+    FSeek(p + 16); vector3 eyeOffset;
+
+    FSeek(p + 32);
+} ViewSpaceOffsetRflParam;
+
+LittleEndian();
+
+FSeek(64);
+ViewSpaceOffsetRflParam data;

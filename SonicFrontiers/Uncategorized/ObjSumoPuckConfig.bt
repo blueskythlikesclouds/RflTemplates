@@ -1,0 +1,28 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float mass;
+    FSeek(p + 4);  float slopeAngleMax;
+    FSeek(p + 8);  float stairHeightMax;
+    FSeek(p + 12); float colliderRigidHeight;
+    FSeek(p + 16); float colliderRigidRadius;
+    FSeek(p + 20); float colliderEventHeight;
+    FSeek(p + 24); float colliderEventRadius;
+    FSeek(p + 28); float colliderOffsetHeightSlingshot;
+    FSeek(p + 32); float explodeRadius;
+    FSeek(p + 36); float bumperBlowSpeed;
+    FSeek(p + 40); float bumperOCTime;
+    FSeek(p + 44); sint32 damageToEnemy;
+    FSeek(p + 48); float lifeTimeParried;
+    FSeek(p + 52); float decelerationParried;
+
+    FSeek(p + 56);
+} ObjSumoPuckConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjSumoPuckConfig data;

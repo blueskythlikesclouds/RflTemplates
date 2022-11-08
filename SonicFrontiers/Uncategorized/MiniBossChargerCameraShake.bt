@@ -1,0 +1,19 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time;
+    FSeek(p + 4);  float magnitude;
+    FSeek(p + 8);  sint32 freq;
+    FSeek(p + 12); float attnRatio;
+    FSeek(p + 16); float shakeRange;
+
+    FSeek(p + 20);
+} MiniBossChargerCameraShake;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossChargerCameraShake data;

@@ -1,0 +1,58 @@
+typedef int sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeLimitSeconds;
+    FSeek(p + 4);  float cautionTime;
+    FSeek(p + 8);  float warningTime;
+    FSeek(p + 12); bool useCautionAnimation;
+    FSeek(p + 13); bool useWarningAnimation;
+
+    FSeek(p + 16);
+} QuestCollectitemTimerParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float azimuthSensitivity;
+    FSeek(p + 8);  float elevationUpSensitivity;
+    FSeek(p + 12); float elevationDownSensitivity;
+    FSeek(p + 16); float elevationOffset;
+
+    FSeek(p + 20);
+} QuestCameraParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 applicableFailedCount;
+    FSeek(p + 4);  sint32 RequestItemNum;
+    FSeek(p + 8);  QuestCollectitemTimerParameter timerParam;
+    FSeek(p + 24); QuestCameraParameter cameraParam;
+
+    FSeek(p + 44);
+} QuestCollectItemParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); QuestCollectItemParameterElement element[3]<optimize=false>;
+
+    FSeek(p + 132);
+} QuestCollectItemParameter;
+
+LittleEndian();
+
+FSeek(64);
+QuestCollectItemParameter data;

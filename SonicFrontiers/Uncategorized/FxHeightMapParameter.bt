@@ -1,0 +1,35 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef uint uint32;
+
+typedef struct matrix44 {
+    float m[4 * 4];
+} matrix44;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  bool enableMultiHeightmap;
+    FSeek(p + 2);  bool debugDrawFrustum;
+    FSeek(p + 3);  bool reprojection;
+    FSeek(p + 4);  uint32 renderTargetWidth;
+    FSeek(p + 8);  uint32 renderTargetHeight;
+    FSeek(p + 12); float referenceValue;
+    FSeek(p + 16); float heightScale;
+    FSeek(p + 20); float fadeTime;
+    FSeek(p + 24); float colorMask;
+    FSeek(p + 32); matrix44 viewMatrix;
+    FSeek(p + 96); matrix44 projMatrix;
+
+    FSeek(p + 160);
+} FxHeightMapParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxHeightMapParameter data;

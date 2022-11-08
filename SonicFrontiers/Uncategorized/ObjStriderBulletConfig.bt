@@ -1,0 +1,77 @@
+typedef ubyte uint8;
+
+enum<uint8> ShootingDirection
+{
+    Sonic = 0,
+    Random = 1,
+    NumShootingDirections = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ShootingDirection shootingDirection;
+    FSeek(p + 4);  float lifeTime;
+    FSeek(p + 8);  float speedToRail;
+    FSeek(p + 12); float speed;
+    FSeek(p + 16); float yOffset;
+
+    FSeek(p + 20);
+} CommonBulletParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  CommonBulletParam base;
+    FSeek(p + 20); float railChangeDelay;
+    FSeek(p + 24); float turnaroundTime;
+    FSeek(p + 28); float splinePositionDistance;
+    FSeek(p + 32); bool changesRails;
+
+    FSeek(p + 36);
+} HomingBulletParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  CommonBulletParam base;
+    FSeek(p + 20); float railChangeDelay;
+    FSeek(p + 24); float turnaroundTime;
+    FSeek(p + 28); float splinePositionDistance;
+    FSeek(p + 32); bool changesRails;
+
+    FSeek(p + 36);
+} ReverseHomingBulletParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonBulletParam base;
+
+    FSeek(p + 20);
+} SameBodyRailBulletParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  HomingBulletParam homingBulletParam;
+    FSeek(p + 36); ReverseHomingBulletParam reverseHomingBulletParam;
+    FSeek(p + 72); SameBodyRailBulletParam sameBodyRailBulletParam;
+
+    FSeek(p + 92);
+} ObjStriderBulletConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjStriderBulletConfig data;

@@ -1,0 +1,107 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring modelName;
+    FSeek(p + 16); cstring animName;
+    FSeek(p + 32); vector3 scale;
+    FSeek(p + 48); cstring stageName;
+    FSeek(p + 64); vector3 stagePos;
+
+    FSeek(p + 80);
+} BossResourceInfo;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring nodeName;
+    FSeek(p + 16); vector3 offset;
+    FSeek(p + 32); vector3 rot;
+    FSeek(p + 48); cstring tagName;
+    FSeek(p + 64); sint32 nextPointId;
+
+    FSeek(p + 80);
+} HoldPoint;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); HoldPoint holdPoints[128]<optimize=false>;
+
+    FSeek(p + 10240);
+} HoldPointParameter;
+
+typedef byte sint8;
+
+enum<sint8> Shape
+{
+    SHAPE_SPHERER = 0,
+    SHAPE_BOX = 1,
+    SHAPE_CYLINDER = 2,
+    SHAPE_CAPCULE = 3,
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring nodeName;
+    FSeek(p + 16); Shape shape;
+    FSeek(p + 17); bool isPhysics;
+    FSeek(p + 32); vector3 size;
+    FSeek(p + 48); vector3 offset;
+    FSeek(p + 64); vector3 rot;
+    FSeek(p + 80); cstring tagName;
+
+    FSeek(p + 96);
+} CollisionPart;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CollisionPart colParts[32]<optimize=false>;
+
+    FSeek(p + 3072);
+} CollisionPartParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossResourceInfo resource;
+    FSeek(p + 80);    HoldPointParameter holdParam;
+    FSeek(p + 10320); CollisionPartParameter colParam;
+
+    FSeek(p + 13392);
+} BossCommonParameters;
+
+LittleEndian();
+
+FSeek(64);
+BossCommonParameters data;

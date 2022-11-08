@@ -1,0 +1,163 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float rangeMin;
+    FSeek(p + 4); float rangeMax;
+
+    FSeek(p + 8);
+} LargeBitLaserParameter;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bulletRadius;
+    FSeek(p + 4);  float bulletMoveLimitDistance;
+    FSeek(p + 8);  float bitHp;
+    FSeek(p + 12); float rotDamageAngleSpeed;
+    FSeek(p + 16); float rotDamageSize;
+    FSeek(p + 20); float hitDamageNotAttackTime;
+    FSeek(p + 24); float blowoffSpeed;
+    FSeek(p + 28); float outOfControlTime;
+    FSeek(p + 32); float keepVelocity;
+    FSeek(p + 36); float muzzleEffectMinTime;
+    FSeek(p + 40); uint8 dropRingNum;
+
+    FSeek(p + 44);
+} SmallBitLaserBulletParameter;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+enum<uint8> BulletType
+{
+    Normal = 0,
+    Normal2 = 1,
+    Laser = 2,
+    Homing = 3,
+};
+
+enum<uint8> RotType
+{
+    Rotation = 0,
+    RoundTrip = 1,
+    Aim = 2,
+    Fix = 3,
+};
+
+typedef uint uint32;
+
+enum<uint8> CameraId
+{
+    Invalid = 0,
+    Rotate = 1,
+    Trace = 2,
+    Sub = 3,
+    Num = 4,
+};
+
+enum<uint8> FormationId
+{
+    Default = 0,
+    FanShaped = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isParry;
+    FSeek(p + 4);  float time;
+    FSeek(p + 8);  float angleSpeed;
+    FSeek(p + 12); BulletType bulletType;
+    FSeek(p + 13); RotType rotType;
+    FSeek(p + 16); float rotAngle;
+    FSeek(p + 20); float phaseRotTime;
+    FSeek(p + 24); uint32 shootNum;
+    FSeek(p + 28); float shootSpeed;
+    FSeek(p + 32); float addShootSpeed;
+    FSeek(p + 36); float shootAccel;
+    FSeek(p + 40); float shootAccelMax;
+    FSeek(p + 44); float shootAccelDelay;
+    FSeek(p + 48); uint8 wayNum;
+    FSeek(p + 52); float wayAngle;
+    FSeek(p + 56); float shootTime;
+    FSeek(p + 60); float phaseShootTime;
+    FSeek(p + 64); uint32 periodShootCool;
+    FSeek(p + 68); float periodShootCoolTime;
+    FSeek(p + 72); float homingAccuracy;
+    FSeek(p + 76); float homingDelay;
+    FSeek(p + 80); float homingLimitAngle;
+    FSeek(p + 84); bool isHomingLowFly;
+    FSeek(p + 85); CameraId overlookingId;
+    FSeek(p + 88); float waveRotationSpeed;
+    FSeek(p + 92); float flyMoveSpeed;
+    FSeek(p + 96); FormationId formationId;
+
+    FSeek(p + 100);
+} SmallBitAttackPatternParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring text;
+    FSeek(p + 16); SmallBitAttackPatternParameter param;
+
+    FSeek(p + 120);
+} SmallBitSetPatternParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float height;
+    FSeek(p + 8);  float radius;
+    FSeek(p + 12); float angleMax;
+
+    FSeek(p + 16);
+} SmallBitFormationFanShaped;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float changeTime;
+    FSeek(p + 4);  float changeDelay;
+    FSeek(p + 8);  float changeOffsetHeight;
+    FSeek(p + 12); SmallBitFormationFanShaped fanShaped;
+
+    FSeek(p + 28);
+} SmallBitFormationParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    LargeBitLaserParameter largeBitLaserParam;
+    FSeek(p + 8);    SmallBitLaserBulletParameter smallBitLaserParam;
+    FSeek(p + 56);   SmallBitSetPatternParameter smallBitPatternDatas[64]<optimize=false>;
+    FSeek(p + 7736); SmallBitFormationParameter smallBitFormation;
+
+    FSeek(p + 7768);
+} BossBitConfig;
+
+LittleEndian();
+
+FSeek(64);
+BossBitConfig data;

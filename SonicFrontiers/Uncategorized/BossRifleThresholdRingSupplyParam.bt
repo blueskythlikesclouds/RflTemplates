@@ -1,0 +1,23 @@
+typedef byte sint8;
+
+enum<sint8> LaserType
+{
+    LT_NONE = 0,
+    LT_STRAIGHT = 1,
+    LT_HOMING = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float hpRatio;
+    FSeek(p + 4); LaserType type;
+
+    FSeek(p + 8);
+} BossRifleThresholdRingSupplyParam;
+
+LittleEndian();
+
+FSeek(64);
+BossRifleThresholdRingSupplyParam data;

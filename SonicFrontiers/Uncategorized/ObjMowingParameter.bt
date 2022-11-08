@@ -1,0 +1,76 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float radius;
+
+    FSeek(p + 4);
+} ObjMowingGrassParameter;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float modelScale;
+    FSeek(p + 4);  float capsuleRadiusSprouts;
+    FSeek(p + 8);  float capsuleRadiusFlower;
+    FSeek(p + 12); float capsuleHeightSprouts;
+    FSeek(p + 16); float capsuleHeightFlower;
+    FSeek(p + 32); vector3 effectOffsetSprouts;
+    FSeek(p + 48); vector3 effectOffsetFlower;
+    FSeek(p + 64); float beeAttractDist;
+    FSeek(p + 68); float efficacyTimeFlower;
+
+    FSeek(p + 80);
+} ObjBeeFlowerParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 targetOffset;
+    FSeek(p + 16); vector3 targetOffsetFlower;
+    FSeek(p + 32); float collRadius;
+    FSeek(p + 36); float modelScale;
+    FSeek(p + 40); float beeMoveSpeed;
+    FSeek(p + 44); float reflectionAngle;
+    FSeek(p + 48); float coefAverage;
+    FSeek(p + 52); float coefCenter;
+    FSeek(p + 56); float coefRepulse;
+    FSeek(p + 60); float waitTimeAfterAttack;
+    FSeek(p + 64); float waitTimeAfterFlower;
+
+    FSeek(p + 80);
+} ObjBeeSwarmParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ObjMowingGrassParameter grassParam;
+    FSeek(p + 16); ObjBeeFlowerParameter beeFlowerParam;
+    FSeek(p + 96); ObjBeeSwarmParameter beeSwarm;
+
+    FSeek(p + 176);
+} ObjMowingParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); ObjMowingParameterElement element[3]<optimize=false>;
+
+    FSeek(p + 528);
+} ObjMowingParameter;
+
+LittleEndian();
+
+FSeek(64);
+ObjMowingParameter data;

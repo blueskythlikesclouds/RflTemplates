@@ -1,0 +1,389 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float mass;
+    FSeek(p + 4);  float slopeAngleMax;
+    FSeek(p + 8);  float timeStun;
+    FSeek(p + 12); float timeExpend;
+    FSeek(p + 16); float timeGuardBreak;
+    FSeek(p + 20); float visualOffset;
+    FSeek(p + 32); vector3 hpGaugeOffset;
+    FSeek(p + 48); float guardEffectCoolTime;
+
+    FSeek(p + 64);
+} MiniBossSumoBaseConfig;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef uint uint32;
+
+enum<uint32> ColliderProperty
+{
+    None = 0,
+    Damaged = 1,
+    DamageToPlayer = 2,
+    Block = 4,
+    DetectPuck = 8,
+    Cyloop = 16,
+    BlockBody = 32,
+    SensorArm = 64,
+    PressBlow = 128,
+    PressBlowBody = 256,
+    PressBlowArm = 512,
+};
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enabled;
+    FSeek(p + 4);  float height;
+    FSeek(p + 8);  float radius;
+    FSeek(p + 16); cstring attachNodeName;
+    FSeek(p + 32); vector3 offset;
+    FSeek(p + 48); vector3 rotation;
+    FSeek(p + 64); cstring tag;
+    FSeek(p + 80); ColliderProperty properties[2]<optimize=false>;
+    FSeek(p + 88); bool debugDraw;
+    FSeek(p + 92); color8 color;
+
+    FSeek(p + 96);
+} MiniBossSumoColliderParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossSumoColliderParam damaged[6]<optimize=false>;
+    FSeek(p + 576);  MiniBossSumoColliderParam damage[2]<optimize=false>;
+    FSeek(p + 768);  MiniBossSumoColliderParam detectPuck;
+    FSeek(p + 864);  MiniBossSumoColliderParam cyloop;
+    FSeek(p + 960);  MiniBossSumoColliderParam pressBlow[3]<optimize=false>;
+    FSeek(p + 1248); MiniBossSumoColliderParam sensorArm[2]<optimize=false>;
+    FSeek(p + 1440); MiniBossSumoColliderParam simpleBody;
+    FSeek(p + 1536); float moveRadius;
+    FSeek(p + 1540); float moveHeight;
+    FSeek(p + 1552); vector3 targetMarkerOffset;
+    FSeek(p + 1568); float comboRadiusMin;
+    FSeek(p + 1572); float comboRadiusMax;
+    FSeek(p + 1576); float comboHeight;
+
+    FSeek(p + 1584);
+} MiniBossSumoColliderConfig;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float coolDownTimeToChangeElectric;
+    FSeek(p + 4);  float timeToWaitChangeAfterDamage;
+    FSeek(p + 8);  float blowOffSpeedDamagedElectricRope;
+    FSeek(p + 12); float decelerationDamagedElectricRope;
+    FSeek(p + 16); float timeElectricReaction;
+    FSeek(p + 20); sint32 damageByReflectCount[5]<optimize=false>;
+    FSeek(p + 40); float bendLengthOnHit;
+    FSeek(p + 44); sint32 expansionBoundCount;
+    FSeek(p + 48); float blowOffSpeedExpansionBoundRope;
+    FSeek(p + 52); float decelerationExpansionBoundRope;
+    FSeek(p + 56); float lockonPanningSuspensionKExpansionBoundRope;
+    FSeek(p + 60); float reflectAngleMaxExpansionBoundRope;
+
+    FSeek(p + 64);
+} MiniBossSumoRopeConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float backInitialSpeeds[5]<optimize=false>;
+    FSeek(p + 20); float backDeccelation;
+    FSeek(p + 24); float frontAngle;
+    FSeek(p + 28); float timeTurn;
+
+    FSeek(p + 32);
+} MiniBossSumoSlingShotConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float moveHorzLimitAngle;
+    FSeek(p + 4); float moveRotateDeceleration;
+
+    FSeek(p + 8);
+} MiniBossSumoMoveConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distanceThrow;
+    FSeek(p + 4);  float coolTime;
+    FSeek(p + 16); vector3 attachOffset;
+    FSeek(p + 32); vector3 attachRotateL;
+    FSeek(p + 48); vector3 attachRotateR;
+    FSeek(p + 64); float throwAngleLimit;
+    FSeek(p + 80); vector3 throwOffsetMulti;
+
+    FSeek(p + 96);
+} MiniBossSumoThrowPuckParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 count;
+    FSeek(p + 4); bool reflectBack;
+    FSeek(p + 8); float reflectRagWidth;
+
+    FSeek(p + 12);
+} MiniBossSumoSlingshotComboParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   vector3 kneeAxisLS;
+    FSeek(p + 16);  vector3 footEndLS;
+    FSeek(p + 32);  float footPlantedAnkleHeightMS;
+    FSeek(p + 36);  float footRaisedAnkleHeightMS;
+    FSeek(p + 40);  float maxAnkleHeightMS;
+    FSeek(p + 44);  float minAnkleHeightMS;
+    FSeek(p + 48);  float maxKneeAngleDegrees;
+    FSeek(p + 52);  float minKneeAngleDegrees;
+    FSeek(p + 56);  float onOffGain;
+    FSeek(p + 60);  float groundAscendingGain;
+    FSeek(p + 64);  float groundDescendingGain;
+    FSeek(p + 68);  float footPlantedGain;
+    FSeek(p + 72);  float footRaisedGain;
+    FSeek(p + 76);  float footLockingGain;
+    FSeek(p + 80);  float ankleRotationGain;
+    FSeek(p + 88);  cstring hipName;
+    FSeek(p + 104); cstring kneeName;
+    FSeek(p + 120); cstring ankleName;
+    FSeek(p + 136); cstring toeName;
+
+    FSeek(p + 160);
+} MiniBossSumoIKFootParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 elbowAxisLS;
+    FSeek(p + 16); vector3 handOffsetLS;
+    FSeek(p + 32); vector3 backHandNormalLS;
+    FSeek(p + 48); float maxElbowAngleDegrees;
+    FSeek(p + 52); float minElbowAngleDegrees;
+    FSeek(p + 56); bool enforceWristRotation;
+    FSeek(p + 64); cstring shoulderName;
+    FSeek(p + 80); cstring elbowName;
+    FSeek(p + 96); cstring wristName;
+
+    FSeek(p + 112);
+} MiniBossSumoIKHandParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float footRaycastDistanceUp;
+    FSeek(p + 4);   float footRaycastDistanceDown;
+    FSeek(p + 16);  MiniBossSumoIKFootParam feet[2]<optimize=false>;
+    FSeek(p + 336); float handRaycastDistanceUp;
+    FSeek(p + 340); float handRaycastDistanceDown;
+    FSeek(p + 344); float handSweepRadius;
+    FSeek(p + 348); float handGain;
+    FSeek(p + 352); float easeInTimeHandIk;
+    FSeek(p + 356); float easeOutTimeHandIk;
+    FSeek(p + 368); MiniBossSumoIKHandParam hands[2]<optimize=false>;
+
+    FSeek(p + 592);
+} MiniBossSumoIKParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float puckSpeed;
+    FSeek(p + 4);  float puckTimeStartDecelerate;
+    FSeek(p + 8);  float puckDeceleration;
+    FSeek(p + 12); float puckLifeTime;
+
+    FSeek(p + 16);
+} MiniBossSumoCyloopConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float minElevation;
+    FSeek(p + 8);  float maxElevation;
+    FSeek(p + 12); float elevationOffset;
+
+    FSeek(p + 16);
+} MiniBossSumoLockonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossCommonConfig common;
+    FSeek(p + 64);   MiniBossSumoBaseConfig base;
+    FSeek(p + 128);  MiniBossSumoColliderConfig collider;
+    FSeek(p + 1712); MiniBossSumoRopeConfig rope;
+    FSeek(p + 1776); MiniBossSumoSlingShotConfig slingShot;
+    FSeek(p + 1808); MiniBossSumoMoveConfig move;
+    FSeek(p + 1824); MiniBossSumoThrowPuckParam throwPuck;
+    FSeek(p + 1920); MiniBossSumoSlingshotComboParam combo;
+    FSeek(p + 1936); MiniBossSumoIKParam ik;
+    FSeek(p + 2528); MiniBossSumoCyloopConfig cyloop;
+    FSeek(p + 2544); MiniBossSumoLockonConfig lockon;
+
+    FSeek(p + 2560);
+} MiniBossSumoCommonParam;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossSumoLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 puckCount;
+    FSeek(p + 4); float speed;
+    FSeek(p + 8); float lifeTime;
+
+    FSeek(p + 12);
+} MiniBossSumoPuckParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enabled;
+    FSeek(p + 1); bool electriced[8]<optimize=false>;
+
+    FSeek(p + 9);
+} MiniBossSumoElectricRopePattern;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MiniBossSumoElectricRopePattern patterns[10]<optimize=false>;
+
+    FSeek(p + 90);
+} MiniBossSumoRotationElectricRopeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 rateHp;
+    FSeek(p + 4);   MiniBossSumoPuckParam puck;
+    FSeek(p + 16);  MiniBossSumoRotationElectricRopeParam rotation8;
+    FSeek(p + 106); MiniBossSumoRotationElectricRopeParam rotation7;
+    FSeek(p + 196); MiniBossSumoRotationElectricRopeParam rotation6;
+    FSeek(p + 286); MiniBossSumoRotationElectricRopeParam rotation5;
+    FSeek(p + 376); MiniBossSumoRotationElectricRopeParam rotation4;
+
+    FSeek(p + 468);
+} MiniBossSumoBehaviorHPRateParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossSumoBehaviorHPRateParam hpRateParams[3]<optimize=false>;
+
+    FSeek(p + 1408);
+} MiniBossSumoLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossSumoCommonParam commonParam;
+    FSeek(p + 2560); MiniBossSumoLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 2840); MiniBossSumoLevelBand levelBand[5]<optimize=false>;
+
+    FSeek(p + 9888);
+} MiniBossSumoConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossSumoConfig data;

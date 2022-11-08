@@ -1,0 +1,31 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 position;
+    FSeek(p + 16); vector3 target;
+    FSeek(p + 32); float fovy;
+
+    FSeek(p + 48);
+} FishCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); FishCameraParam fishList[105]<optimize=false>;
+
+    FSeek(p + 5040);
+} UIFishiGuideConfig;
+
+LittleEndian();
+
+FSeek(64);
+UIFishiGuideConfig data;

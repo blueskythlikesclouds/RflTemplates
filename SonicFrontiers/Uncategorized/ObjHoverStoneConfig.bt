@@ -1,0 +1,15 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float hoverUpSpeed;
+    FSeek(p + 4); float fallSpeed;
+    FSeek(p + 8); float homingAttackBounce;
+
+    FSeek(p + 12);
+} ObjHoverStoneConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjHoverStoneConfig data;

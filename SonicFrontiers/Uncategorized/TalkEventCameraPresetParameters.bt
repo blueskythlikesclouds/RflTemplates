@@ -1,0 +1,47 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> GazePositionType
+{
+    Base = 0,
+    Head = 1,
+    Eye = 2,
+    Center = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  GazePositionType primaryTarget;
+    FSeek(p + 2);  GazePositionType secondaryTarget;
+    FSeek(p + 4);  float targetRatio;
+    FSeek(p + 8);  float rotateDegreePitch;
+    FSeek(p + 12); float rotateDegreeYaw;
+    FSeek(p + 16); float cameraOffsetRatio;
+    FSeek(p + 20); float fovy;
+    FSeek(p + 24); float targetOffsetX;
+    FSeek(p + 28); float targetOffsetY;
+    FSeek(p + 32); float targetOffsetZ;
+
+    FSeek(p + 36);
+} TalkEventCameraPresetParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); TalkEventCameraPresetParameter param[16]<optimize=false>;
+
+    FSeek(p + 576);
+} TalkEventCameraPresetParameters;
+
+LittleEndian();
+
+FSeek(64);
+TalkEventCameraPresetParameters data;

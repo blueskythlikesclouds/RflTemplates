@@ -1,0 +1,26 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float colliderHeight;
+    FSeek(p + 4);  float colliderRadius;
+    FSeek(p + 16); vector3 colliderOffset;
+    FSeek(p + 32); float explodeRadius;
+    FSeek(p + 36); float distanceStartCurve;
+    FSeek(p + 40); float distanceEndCurve;
+    FSeek(p + 44); float inducedExplosionTimePerDistance;
+
+    FSeek(p + 48);
+} ObjSkierMissileConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjSkierMissileConfig data;

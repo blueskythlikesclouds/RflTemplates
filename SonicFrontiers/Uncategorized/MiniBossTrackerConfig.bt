@@ -1,0 +1,247 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MiniBossCommonConfig commonConfig;
+
+    FSeek(p + 64);
+} MiniBossTrackerCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossTrackerLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} MiniBossTrackerLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time;
+    FSeek(p + 4);  float distance;
+    FSeek(p + 8);  float minElevation;
+    FSeek(p + 12); float maxElevation;
+    FSeek(p + 16); float panningSuspensionK;
+    FSeek(p + 20); float interiorPanningSuspensionK;
+
+    FSeek(p + 24);
+} MiniBossTrackerCameraLockOn;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float facingSpeed;
+    FSeek(p + 4);  float facingSpeed2;
+    FSeek(p + 8);  float steeringSpeed;
+    FSeek(p + 12); float chaseSpeed;
+    FSeek(p + 16); float roundSpeed;
+    FSeek(p + 20); float changeBaseSpeed;
+    FSeek(p + 24); float returnSpeed;
+    FSeek(p + 28); float minSpeed;
+    FSeek(p + 32); float turnSpeed;
+    FSeek(p + 36); float accel;
+    FSeek(p + 40); float brake;
+    FSeek(p + 44); float brakeDistance;
+    FSeek(p + 48); float damper;
+    FSeek(p + 52); float springFactor;
+    FSeek(p + 56); float verticalWidth;
+    FSeek(p + 60); float verticalDamper;
+    FSeek(p + 64); float verticalSpringFactor;
+    FSeek(p + 68); float verticalRotateSpeed;
+    FSeek(p + 72); float checkChaseRadius;
+    FSeek(p + 76); float checkRoundRadius;
+    FSeek(p + 80); float checkReturnRadius;
+    FSeek(p + 84); float chaseRadius;
+    FSeek(p + 88); float chaseHeight;
+    FSeek(p + 92); float chaseWaitTime;
+
+    FSeek(p + 96);
+} MiniBossTrackerMoveParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time;
+    FSeek(p + 4);  float interval;
+    FSeek(p + 8);  float speed;
+    FSeek(p + 12); float steeringSpeed;
+    FSeek(p + 16); float startSteeringTime;
+    FSeek(p + 20); float life;
+
+    FSeek(p + 24);
+} MiniBossTrackerBulletParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 num;
+    FSeek(p + 4);  sint32 num2;
+    FSeek(p + 8);  float height;
+    FSeek(p + 12); float deviationTime;
+    FSeek(p + 16); float searchRadius;
+    FSeek(p + 20); float playerRadius;
+    FSeek(p + 24); float playerHeight;
+    FSeek(p + 28); float setInterval;
+    FSeek(p + 32); float life;
+    FSeek(p + 36); float lifeEx;
+    FSeek(p + 40); float timer;
+    FSeek(p + 44); float explosionLife;
+    FSeek(p + 48); float targetEffectiveDistance;
+
+    FSeek(p + 52);
+} MiniBossTrackerMineParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minRadius;
+    FSeek(p + 4);  float maxRadius;
+    FSeek(p + 8);  float maxDistance;
+    FSeek(p + 12); float minHeight;
+    FSeek(p + 16); float maxHeight;
+    FSeek(p + 20); float deviationTime;
+    FSeek(p + 24); float maxSpeed;
+    FSeek(p + 28); float minSpeed;
+    FSeek(p + 32); float accel;
+    FSeek(p + 36); float stopTime;
+    FSeek(p + 40); float damperDistance;
+    FSeek(p + 44); float damper;
+    FSeek(p + 48); float chaseRadius;
+    FSeek(p + 52); float chaseSpeed;
+    FSeek(p + 56); float disappearTime;
+    FSeek(p + 60); float life;
+    FSeek(p + 64); float interval;
+    FSeek(p + 68); float radius;
+    FSeek(p + 72); float targetEffectiveDistance;
+
+    FSeek(p + 76);
+} MiniBossTrackerRingHoleParam;
+
+typedef byte sint8;
+
+enum<sint8> ActionType
+{
+    BULLET = 0,
+    MINE = 1,
+    BASEMINE = 2,
+    RINGHOLE = 3,
+    LOOP = 4,
+    END = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float intervalTable[20]<optimize=false>;
+    FSeek(p + 80);  ActionType actionTable[20]<optimize=false>;
+    FSeek(p + 100); sint32 nextPoint;
+
+    FSeek(p + 104);
+} MiniBossTrackerActionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 hp;
+    FSeek(p + 4);  float lossRingTime;
+    FSeek(p + 8);  float pursuitTime;
+    FSeek(p + 12); sint32 baseDebuffCount;
+    FSeek(p + 16); sint32 addDebuffCount;
+    FSeek(p + 20); float cameraDistance;
+    FSeek(p + 24); float cameraDistance2;
+    FSeek(p + 28); float cameraMinElevation;
+    FSeek(p + 32); float cameraMaxElevation;
+    FSeek(p + 36); float cameraTargetUpOffset;
+    FSeek(p + 40); float cameraTargetUpOffset2;
+
+    FSeek(p + 44);
+} MiniBossTrackerGameParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossTrackerCommonParam commonParam;
+    FSeek(p + 64);   MiniBossTrackerLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 344);  MiniBossTrackerLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 364);  MiniBossTrackerCameraLockOn cameraLockDamage;
+    FSeek(p + 388);  MiniBossTrackerMoveParam move;
+    FSeek(p + 484);  MiniBossTrackerBulletParam bullet;
+    FSeek(p + 508);  MiniBossTrackerMineParam mine;
+    FSeek(p + 560);  MiniBossTrackerRingHoleParam ringHole;
+    FSeek(p + 636);  MiniBossTrackerActionParam action1;
+    FSeek(p + 740);  MiniBossTrackerActionParam action2;
+    FSeek(p + 844);  MiniBossTrackerActionParam action3;
+    FSeek(p + 948);  MiniBossTrackerActionParam action4;
+    FSeek(p + 1052); MiniBossTrackerActionParam action5;
+    FSeek(p + 1156); MiniBossTrackerGameParam game;
+
+    FSeek(p + 1200);
+} MiniBossTrackerConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossTrackerConfig data;

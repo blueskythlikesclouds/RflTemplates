@@ -1,0 +1,29 @@
+typedef byte sint8;
+
+enum<sint8> Preset
+{
+    PRESET_SPEED = 0,
+    PRESET_QUALITY = 1,
+};
+
+enum<sint8> TestMode
+{
+    TEST_MODE_DISABLE = 0,
+    TEST_MODE_1 = 1,
+    TEST_MODE_2 = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); Preset preset;
+    FSeek(p + 1); TestMode testMode;
+
+    FSeek(p + 2);
+} FxSMAAParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxSMAAParameter data;

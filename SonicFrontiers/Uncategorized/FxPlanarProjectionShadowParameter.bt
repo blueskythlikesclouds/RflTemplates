@@ -1,0 +1,42 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct vector4 {
+    float x;
+    float y;
+    float z;
+    float w;
+} vector4;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef byte sint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable;
+    FSeek(p + 16);  vector4 projectionPlane;
+    FSeek(p + 32);  vector3 lightPosition[4]<optimize=false>;
+    FSeek(p + 96);  sint8 lightCount;
+    FSeek(p + 100); float vanishStart;
+    FSeek(p + 104); float vanishDistance;
+    FSeek(p + 108); float projectionBias;
+    FSeek(p + 112); vector3 shadowMapBoxSize;
+    FSeek(p + 128); vector3 shadowMapBoxOffset;
+
+    FSeek(p + 144);
+} FxPlanarProjectionShadowParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxPlanarProjectionShadowParameter data;

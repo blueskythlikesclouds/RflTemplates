@@ -1,0 +1,106 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef int sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> Priority
+{
+    PRIORITY_LOW = 0,
+    PRIORITY_DEFAULT = 1,
+    PRIORITY_HIGH = 2,
+    PRIORITY_SUPER_HIGH = 3,
+    NUM_PRIORITY = 4,
+    PRIORITY_INVALID = -1,
+};
+
+enum<sint8> InterruptType
+{
+    INTERRUPT_TYPE_STOP = 0,
+    INTERRUPT_TYPE_PAUSE = 1,
+    INTERRUPT_TYPE_OVERLAP = 2,
+    NUM_INTERRUPT_TYPE = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName;
+    FSeek(p + 16); sint32 blockId;
+    FSeek(p + 20); float fadeInTime;
+    FSeek(p + 24); float fadeOutTime;
+    FSeek(p + 28); float delayTime;
+    FSeek(p + 32); cstring aisacName;
+    FSeek(p + 48); float aisacValue;
+    FSeek(p + 52); float aisacFadeTime;
+    FSeek(p + 56); bool isVolumeControl;
+    FSeek(p + 57); bool isOverlapPlay;
+    FSeek(p + 58); Priority priority;
+    FSeek(p + 59); InterruptType interruptType;
+
+    FSeek(p + 64);
+} BGMInfo;
+
+enum<sint8> BGMTransitInfo_InterruptType
+{
+    BGMTransitInfo_INTERRUPT_TYPE_STOP = 0,
+    BGMTransitInfo_INTERRUPT_TYPE_PAUSE = 1,
+    BGMTransitInfo_INTERRUPT_TYPE_OVERLAP = 2,
+    BGMTransitInfo_NUM_INTERRUPT_TYPE = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring tagName;
+    FSeek(p + 16); sint32 beforeId;
+    FSeek(p + 20); sint32 beforeIdMax;
+    FSeek(p + 24); sint32 afterId;
+    FSeek(p + 28); BGMTransitInfo_InterruptType type;
+    FSeek(p + 32); float fadeOutTime;
+    FSeek(p + 36); float fadeInTime;
+    FSeek(p + 40); float delayTime;
+
+    FSeek(p + 48);
+} BGMTransitInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring sceneName;
+    FSeek(p + 16); sint32 bgmId;
+    FSeek(p + 20); bool disableSameBgmId;
+
+    FSeek(p + 24);
+} BGMSceneInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BGMInfo changeBgmInfo[32]<optimize=false>;
+    FSeek(p + 2048); BGMTransitInfo transitBgmInfo[32]<optimize=false>;
+    FSeek(p + 3584); BGMSceneInfo sceneBgmInfo[4]<optimize=false>;
+
+    FSeek(p + 3680);
+} BGMInfoParameter;
+
+LittleEndian();
+
+FSeek(64);
+BGMInfoParameter data;

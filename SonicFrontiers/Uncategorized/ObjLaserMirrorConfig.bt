@@ -1,0 +1,34 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float interoplateTimeActivate;
+    FSeek(p + 4);  float interoplateTimeDeactivate;
+    FSeek(p + 16); vector3 targetOffset;
+    FSeek(p + 32); vector3 cameraPosOffset;
+
+    FSeek(p + 48);
+} GimmickCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  GimmickCameraParam rotateMirrorH;
+    FSeek(p + 48); GimmickCameraParam rotateMirrorV;
+    FSeek(p + 96); GimmickCameraParam moveMirror;
+
+    FSeek(p + 144);
+} ObjLaserMirrorConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjLaserMirrorConfig data;

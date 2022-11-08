@@ -1,0 +1,88 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 m_maxNumPieces;
+    FSeek(p + 4);  float gravity;
+    FSeek(p + 8);  float lifeTime;
+    FSeek(p + 12); float force;
+
+    FSeek(p + 16);
+} DebrisParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  RingParameter ringParam;
+    FSeek(p + 28); float rigidColliderRadius;
+    FSeek(p + 32); float damageColliderRadius;
+    FSeek(p + 36); float battleDistance;
+    FSeek(p + 40); float cyloopHeight;
+    FSeek(p + 44); float rotateSpeed;
+    FSeek(p + 48); bool useUniqueDebrisSetting;
+    FSeek(p + 52); DebrisParameter debris;
+
+    FSeek(p + 68);
+} EnemyTwisterCommonConfig;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} TwisterCommonLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); TwisterCommonLevelConfig common;
+
+    FSeek(p + 16);
+} EnemyTwisterLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  EnemyTwisterCommonConfig commonParams;
+    FSeek(p + 68); EnemyTwisterLevelConfig levelParams[5]<optimize=false>;
+
+    FSeek(p + 148);
+} EnemyTwisterConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyTwisterConfig data;

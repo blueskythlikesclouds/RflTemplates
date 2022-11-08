@@ -1,0 +1,51 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 challengeID[40]<optimize=false>;
+
+    FSeek(p + 160);
+} ChallengeID1DimParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); ChallengeID1DimParameter challengeIDHorizonGridGroup[40]<optimize=false>;
+
+    FSeek(p + 6400);
+} IslandMapParameter;
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 id;
+    FSeek(p + 4); color8 color;
+
+    FSeek(p + 8);
+} IDColor;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     IslandMapParameter islandMapParam[5]<optimize=false>;
+    FSeek(p + 32000); IDColor idColors[136]<optimize=false>;
+
+    FSeek(p + 33088);
+} UIMapParameter;
+
+LittleEndian();
+
+FSeek(64);
+UIMapParameter data;

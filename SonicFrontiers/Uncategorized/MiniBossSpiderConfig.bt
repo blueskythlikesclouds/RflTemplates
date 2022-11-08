@@ -1,0 +1,342 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time;
+    FSeek(p + 4);  float magnitude;
+    FSeek(p + 8);  sint32 freq;
+    FSeek(p + 12); float attnRatio;
+    FSeek(p + 16); float shakeRange;
+
+    FSeek(p + 20);
+} MiniBossSpiderCameraShake;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 4);  float appearRadius;
+    FSeek(p + 8);  float keepRadius;
+    FSeek(p + 12); float disappearRadius;
+    FSeek(p + 16); float heightMin;
+    FSeek(p + 20); float heightMax;
+    FSeek(p + 24); float lifeTime;
+    FSeek(p + 28); float pauseBeginTime;
+    FSeek(p + 32); float pauseTime;
+
+    FSeek(p + 36);
+} MiniBossSpiderWaveParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time;
+    FSeek(p + 4);  float distance;
+    FSeek(p + 8);  float minElevation;
+    FSeek(p + 12); float maxElevation;
+    FSeek(p + 16); float panningSuspensionK;
+    FSeek(p + 20); float interiorPanningSuspensionK;
+
+    FSeek(p + 24);
+} MiniBossSpiderCameraLockOn;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 m_maxNumPieces;
+    FSeek(p + 4);  float gravity;
+    FSeek(p + 8);  float lifeTime;
+    FSeek(p + 12); float force;
+
+    FSeek(p + 16);
+} DebrisParameter;
+
+typedef byte sint8;
+
+enum<sint8> MiniBossSpiderBreakType
+{
+    BREAK_NONE = 0,
+    BREAK_LEG = 1,
+    BREAK_AIR_LEG = 2,
+    BREAK_BOUNCE_LEG = 3,
+    BREAK_GIMMICK = 4,
+    BREAK_ALL = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float pressRate;
+    FSeek(p + 4);  float stompRate;
+    FSeek(p + 8);  float shotRate;
+    FSeek(p + 12); float chainRate;
+    FSeek(p + 16); float traceRate;
+    FSeek(p + 20); float laserStraightRate;
+    FSeek(p + 24); float laserTraceRate;
+    FSeek(p + 28); float jumpRate;
+
+    FSeek(p + 32);
+} MiniBossSpiderLevelBandRate;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float pressInterval;
+    FSeek(p + 4);  float stompInterval;
+    FSeek(p + 8);  float shotInterval;
+    FSeek(p + 12); float chainInterval;
+    FSeek(p + 16); float traceInterval;
+    FSeek(p + 20); float laserStaightInterval;
+    FSeek(p + 24); float laserTraceInterval;
+    FSeek(p + 28); float jumpInterval;
+
+    FSeek(p + 32);
+} MiniBossSpiderLevelBandInterval;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float nearRange;
+    FSeek(p + 4);   MiniBossSpiderLevelBandRate nearRates[2]<optimize=false>;
+    FSeek(p + 68);  MiniBossSpiderLevelBandRate farRates[2]<optimize=false>;
+    FSeek(p + 132); MiniBossSpiderLevelBandInterval interval[2]<optimize=false>;
+
+    FSeek(p + 196);
+} MiniBossSpiderActionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
+    FSeek(p + 64);  float patrolWalkWaitTimeMin;
+    FSeek(p + 68);  float patrolWalkWaitTimeMax;
+    FSeek(p + 72);  float jumpSpeed;
+    FSeek(p + 76);  float pressDistance;
+    FSeek(p + 80);  float waveDistance;
+    FSeek(p + 84);  float waveModelScale;
+    FSeek(p + 88);  float waveModelDiameter;
+    FSeek(p + 92);  float waveWaitTime;
+    FSeek(p + 96);  float mineDistance;
+    FSeek(p + 100); float shotWaitTime;
+    FSeek(p + 104); float walkWaitTime;
+    FSeek(p + 108); float laserStraightDistance;
+    FSeek(p + 112); float laserStraightPrepairTime;
+    FSeek(p + 116); float laserStraightTime;
+    FSeek(p + 120); float laserStraightAngle;
+    FSeek(p + 124); float laserStraightWaitTime;
+    FSeek(p + 128); float laserTraceDistance;
+    FSeek(p + 132); float laserTracePrepairTime;
+    FSeek(p + 136); float laserTraceTime;
+    FSeek(p + 140); float laserTraceSpeed;
+    FSeek(p + 144); float laserTraceWaitTime;
+    FSeek(p + 148); float chainDistance;
+    FSeek(p + 152); float chainJumpDistance;
+    FSeek(p + 156); float chainWaitTime;
+    FSeek(p + 160); float traceDistance;
+    FSeek(p + 164); float traceJumpDistance;
+    FSeek(p + 168); float traceSpeed;
+    FSeek(p + 172); float traceRotSpeed;
+    FSeek(p + 176); float traceLifeTime;
+    FSeek(p + 180); float traceWidth;
+    FSeek(p + 184); float traceHeight;
+    FSeek(p + 188); float traceAppearDistance;
+    FSeek(p + 192); float traceKeepDistance;
+    FSeek(p + 196); float traceDisappearDistance;
+    FSeek(p + 200); float traceWaitTime;
+    FSeek(p + 204); float thornSpawnSpeed;
+    FSeek(p + 208); float thornSpawnRadiusMax;
+    FSeek(p + 212); float thornLifeTime;
+    FSeek(p + 216); float thornFlyingSpeed;
+    FSeek(p + 220); sint32 protecterHp;
+    FSeek(p + 224); MiniBossSpiderCameraShake cameraShakeWalk;
+    FSeek(p + 244); MiniBossSpiderCameraShake cameraShakeAttack;
+    FSeek(p + 264); RingParameter ringParam;
+    FSeek(p + 292); MiniBossSpiderWaveParam waveParams[8]<optimize=false>;
+    FSeek(p + 580); MiniBossSpiderCameraLockOn cameraLockBreakArmor;
+    FSeek(p + 604); MiniBossSpiderCameraLockOn cameraLockBlownUp;
+    FSeek(p + 628); MiniBossSpiderCameraLockOn cameraLockBlownDown;
+    FSeek(p + 652); MiniBossSpiderCameraLockOn cameraLockFootUp;
+    FSeek(p + 676); MiniBossSpiderCameraLockOn cameraLockFall;
+    FSeek(p + 700); DebrisParameter debrisSet;
+    FSeek(p + 716); MiniBossSpiderBreakType rotationTypeTable[8]<optimize=false>;
+    FSeek(p + 724); MiniBossSpiderActionParam rotationActionTable[4]<optimize=false>;
+
+    FSeek(p + 1520);
+} MiniBossSpiderCommonParam;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 level;
+    FSeek(p + 4);  MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 56); float attackRate;
+    FSeek(p + 60); float stunTime;
+    FSeek(p + 64); float downTime;
+    FSeek(p + 68); float downTime2;
+    FSeek(p + 72); float reProtectWaitTime;
+    FSeek(p + 76); float patrolWalkWaitTimeMin;
+    FSeek(p + 80); float patrolWalkWaitTimeMax;
+
+    FSeek(p + 84);
+} MiniBossSpiderLevelParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+enum<sint8> MiniBossSpiderLevelBand_MiniBossSpiderBreakType
+{
+    MiniBossSpiderLevelBand_BREAK_NONE = 0,
+    MiniBossSpiderLevelBand_BREAK_LEG = 1,
+    MiniBossSpiderLevelBand_BREAK_AIR_LEG = 2,
+    MiniBossSpiderLevelBand_BREAK_BOUNCE_LEG = 3,
+    MiniBossSpiderLevelBand_BREAK_GIMMICK = 4,
+    MiniBossSpiderLevelBand_BREAK_ALL = 5,
+};
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint8 pressType;
+    FSeek(p + 1); uint8 pressNum;
+    FSeek(p + 4); float pressWaitTime;
+    FSeek(p + 8); sint8 stompType;
+
+    FSeek(p + 12);
+} MiniBossSpiderLevelPhaseAction;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float divingEndHeight;
+
+    FSeek(p + 4);
+} MiniBossSpiderLevelPhaseDiving;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 level;
+    FSeek(p + 4);   float phaseChangeHpRatio;
+    FSeek(p + 8);   sint32 walkWaveId;
+    FSeek(p + 12);  sint32 stompWaveId;
+    FSeek(p + 16);  sint32 pressWaveId;
+    FSeek(p + 20);  bool enableCounterKick;
+    FSeek(p + 21);  MiniBossSpiderLevelBand_MiniBossSpiderBreakType breakType;
+    FSeek(p + 24);  float mineRadius;
+    FSeek(p + 28);  float mineExplodeRadius;
+    FSeek(p + 32);  sint32 mineNum;
+    FSeek(p + 36);  float mineStartSpeed;
+    FSeek(p + 40);  float mineDecelePower;
+    FSeek(p + 44);  float mineMinSpeed;
+    FSeek(p + 48);  float mineParriedSpeed;
+    FSeek(p + 52);  float mineLifeTime;
+    FSeek(p + 56);  float mineEnableParryRate;
+    FSeek(p + 60);  sint32 mineHorizonMaxNum;
+    FSeek(p + 64);  sint32 mineVerticalNum;
+    FSeek(p + 68);  sint32 shotCount;
+    FSeek(p + 72);  float chainLifeTime;
+    FSeek(p + 76);  float chainTraceTime;
+    FSeek(p + 80);  float chainSpeed;
+    FSeek(p + 84);  float chainWaitTime;
+    FSeek(p + 88);  float chainRotateSpeed;
+    FSeek(p + 92);  sint32 chainWaveNum;
+    FSeek(p + 96);  bool enableReProtect;
+    FSeek(p + 100); float nearRange;
+    FSeek(p + 104); MiniBossSpiderLevelBandRate nearRates[2]<optimize=false>;
+    FSeek(p + 168); MiniBossSpiderLevelBandRate farRates[2]<optimize=false>;
+    FSeek(p + 232); MiniBossSpiderLevelPhaseAction phases[2]<optimize=false>;
+    FSeek(p + 256); MiniBossSpiderLevelBandInterval interval[2]<optimize=false>;
+    FSeek(p + 320); MiniBossSpiderLevelPhaseDiving diving[2]<optimize=false>;
+    FSeek(p + 328); float slowRate[2]<optimize=false>;
+
+    FSeek(p + 336);
+} MiniBossSpiderLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MiniBossSpiderCommonParam commonParam;
+    FSeek(p + 1520); MiniBossSpiderLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 1940); MiniBossSpiderLevelBand levelBands[5]<optimize=false>;
+
+    FSeek(p + 3632);
+} MiniBossSpiderConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossSpiderConfig data;

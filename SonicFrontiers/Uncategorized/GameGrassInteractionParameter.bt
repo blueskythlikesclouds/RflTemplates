@@ -1,0 +1,40 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); float radius;
+    FSeek(p + 20); float height;
+    FSeek(p + 24); float power;
+    FSeek(p + 28); bool moveHitEnabled;
+
+    FSeek(p + 32);
+} GameGrassInteractionParameterData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GameGrassInteractionParameterData data[32]<optimize=false>;
+
+    FSeek(p + 1024);
+} GameGrassInteractionParameter;
+
+LittleEndian();
+
+FSeek(64);
+GameGrassInteractionParameter data;

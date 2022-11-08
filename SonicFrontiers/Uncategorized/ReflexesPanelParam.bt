@@ -1,0 +1,41 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float interoplateTimeActivate;
+    FSeek(p + 4); float interoplateTimeDeactivate;
+
+    FSeek(p + 8);
+} ReflexesPanelCameraParam;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 collisionHalfExtents;
+    FSeek(p + 16); vector3 collisionOffset;
+
+    FSeek(p + 32);
+} ReflexesPanelPanelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ReflexesPanelCameraParam cameraParam;
+    FSeek(p + 16); ReflexesPanelPanelParam panelParam;
+
+    FSeek(p + 48);
+} ReflexesPanelParam;
+
+LittleEndian();
+
+FSeek(64);
+ReflexesPanelParam data;

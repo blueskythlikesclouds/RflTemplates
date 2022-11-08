@@ -1,0 +1,57 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float playSpanTime;
+    FSeek(p + 8); cstring labelNames[24]<optimize=false>;
+
+    FSeek(p + 392);
+} MonologueIslandParameters;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); cstring labelNames[4]<optimize=false>;
+
+    FSeek(p + 64);
+} MonologueMultiTextParameters;
+
+typedef byte sint8;
+
+enum<sint8> Value
+{
+    SteppeIsland1 = 0,
+    DesertIsland = 1,
+    VolcanicIsland = 2,
+    TowerIsland = 3,
+    SteppeIsland2 = 4,
+    Num = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MonologueIslandParameters islands[5]<optimize=false>;
+    FSeek(p + 1960); MonologueMultiTextParameters multiText;
+    FSeek(p + 2024); sint8 firstTheEndNotifyCount;
+    FSeek(p + 2025); sint8 theEndNotifyCount;
+    FSeek(p + 2026); Value dummy;
+
+    FSeek(p + 2032);
+} MonologueParameters;
+
+LittleEndian();
+
+FSeek(64);
+MonologueParameters data;

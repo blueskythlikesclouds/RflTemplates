@@ -1,0 +1,53 @@
+typedef ubyte uint8;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 columns[5]<optimize=false>;
+
+    FSeek(p + 5);
+} FSRow;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); FSRow rows[5]<optimize=false>;
+
+    FSeek(p + 25);
+} FSLayer;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint8 numLayers;
+    FSeek(p + 1);  uint8 numRows;
+    FSeek(p + 2);  uint8 numColumns;
+    FSeek(p + 16); vector3 offsetToTopLeft;
+    FSeek(p + 32); FSLayer layers[5]<optimize=false>;
+
+    FSeek(p + 160);
+} FreeShape;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); FreeShape freeShapes[19]<optimize=false>;
+
+    FSeek(p + 3040);
+} Obj3DPuzzleBlockConfig;
+
+LittleEndian();
+
+FSeek(64);
+Obj3DPuzzleBlockConfig data;

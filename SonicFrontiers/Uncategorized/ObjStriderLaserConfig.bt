@@ -1,0 +1,59 @@
+typedef ubyte uint8;
+
+typedef struct colorF {
+    float r;
+    float g;
+    float b;
+    float a;
+} colorF;
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float arrivalTime;
+    FSeek(p + 4);  uint8 numPatterns;
+    FSeek(p + 8);  float radius;
+    FSeek(p + 12); float tilingDistance;
+    FSeek(p + 16); float fluctuationPeriod;
+    FSeek(p + 20); float fluctuationAmplitude;
+    FSeek(p + 24); float uvScrollSpeed;
+    FSeek(p + 28); colorF colorPrimary;
+    FSeek(p + 44); color8 colorVertexEdge;
+    FSeek(p + 48); color8 colorVertexCenter;
+    FSeek(p + 52); float colorIntensity;
+    FSeek(p + 56); float patternChangeIntervalTime;
+    FSeek(p + 60); float edgeWidthScale;
+    FSeek(p + 64); float edgeWidthScaleLength;
+
+    FSeek(p + 68);
+} ArcLaserConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float lifeTime;
+    FSeek(p + 4);  float degreeVelocityPrePostLaser;
+    FSeek(p + 8);  float degreeVelocity;
+    FSeek(p + 12); float degreeToRotate;
+    FSeek(p + 16); float radius;
+    FSeek(p + 20); float collisionRadius;
+    FSeek(p + 24); float minStartingPointOffset;
+    FSeek(p + 28); float maxStartingPointOffset;
+    FSeek(p + 32); ArcLaserConfig arcLaserConfig;
+
+    FSeek(p + 100);
+} ObjStriderLaserConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjStriderLaserConfig data;

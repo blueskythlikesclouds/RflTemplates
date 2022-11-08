@@ -1,0 +1,304 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float blockRadius;
+    FSeek(p + 4);  float blockHeight;
+    FSeek(p + 8);  float damageRadius;
+    FSeek(p + 12); float damagedBlockRadius;
+    FSeek(p + 16); float damagedBlockHeight;
+    FSeek(p + 20); float returnRadius;
+    FSeek(p + 24); float returnBlockRadius;
+    FSeek(p + 28); float returnHeight;
+    FSeek(p + 32); float weakPointRadius;
+    FSeek(p + 36); float grabRadius;
+    FSeek(p + 40); float attackRadius;
+
+    FSeek(p + 44);
+} MiniBossSkierColliderParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float tailRotateMinSpeed;
+    FSeek(p + 4); float tailRotateMaxSpeed;
+    FSeek(p + 8); float tailRotateAddSpeed;
+
+    FSeek(p + 12);
+} MiniBossSkeirTailMoveParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float tailExtendTime;
+    FSeek(p + 4);  float tailNodeLenthMin;
+    FSeek(p + 8);  float tailNodeLenthMax;
+    FSeek(p + 12); float checkGroundStartDistanceOnSkiing;
+    FSeek(p + 16); float checkGroundEndDistanceOnSkiing;
+    FSeek(p + 20); float checkGroundEndDistanceOnSkiingJump;
+    FSeek(p + 24); float checkGroundEndDistanceOnSkiingCamera;
+    FSeek(p + 28); MiniBossSkeirTailMoveParam rotateParamNormal;
+    FSeek(p + 40); MiniBossSkeirTailMoveParam rotateParamAttack;
+
+    FSeek(p + 52);
+} MiniBossSkierTailParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float LRFBNormalRatioSpeed;
+    FSeek(p + 4);  float LRDangerAngle;
+    FSeek(p + 8);  float LRDangerTime;
+    FSeek(p + 12); float LRInputInterfere;
+    FSeek(p + 16); float LRRecoverSpeed;
+    FSeek(p + 20); float LRDragSpeed;
+    FSeek(p + 24); float LRRecoverEndRatio;
+
+    FSeek(p + 28);
+} MiniBossSkeirPlayerControlLR;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float UDSafeRatio;
+    FSeek(p + 4); float UDRecoverSpeed;
+    FSeek(p + 8); float UDDragSpeed;
+
+    FSeek(p + 12);
+} MiniBossSkeirPlayerControlUD;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float tailRatioChangeSpeed;
+    FSeek(p + 4);  float tailRatioRecoverSpeed;
+    FSeek(p + 8);  float tailAddSpeedMax;
+    FSeek(p + 12); float tailAddSpeedAttenuation;
+
+    FSeek(p + 16);
+} MiniBossSkeirPlayerControlTail;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float timeExplodePassed;
+    FSeek(p + 4); float timeExplodeAuto;
+
+    FSeek(p + 8);
+} MiniBossSkierMissileParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float interoplateTimeActivate;
+    FSeek(p + 4);  float interoplateTimeDeactivate;
+    FSeek(p + 16); vector3 targetOffset;
+    FSeek(p + 32); vector3 cameraPosOffset;
+
+    FSeek(p + 48);
+} MiniBossSkierCustomCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
+    FSeek(p + 64);  MiniBossSkierColliderParam colliderParam;
+    FSeek(p + 108); MiniBossSkierTailParam tailParam;
+    FSeek(p + 160); MiniBossSkeirPlayerControlLR LRControlParam;
+    FSeek(p + 188); MiniBossSkeirPlayerControlUD UDControlParam;
+    FSeek(p + 200); MiniBossSkeirPlayerControlTail tailControlParam;
+    FSeek(p + 216); MiniBossSkierMissileParam missileParam;
+    FSeek(p + 224); MiniBossSkierCustomCameraParam customCameraParam;
+    FSeek(p + 272); MiniBossSkierCustomCameraParam skiCameraParam;
+
+    FSeek(p + 320);
+} MiniBossSkierCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossSkierLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float NoActionRate;
+    FSeek(p + 4);  float SnakeMoveRate;
+    FSeek(p + 8);  float JumpHighRate;
+    FSeek(p + 12); float JumpLowRate;
+    FSeek(p + 16); float PylonRate;
+    FSeek(p + 20); float MissileRate;
+
+    FSeek(p + 24);
+} MiniBossSkierSkiAcitionRate;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float HPRate;
+    FSeek(p + 4);  MiniBossSkierSkiAcitionRate actionRate;
+    FSeek(p + 28); float showWeaknessTimeReTry;
+
+    FSeek(p + 32);
+} MiniBossSkierBattlePhaseParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float attackInterval;
+    FSeek(p + 4);  float attackSensorRange;
+    FSeek(p + 8);  float returnToWanderTime;
+    FSeek(p + 12); float pathPosAngleLimit;
+
+    FSeek(p + 16);
+} MiniBossSkierJumpOutParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float showWeaknessTime;
+    FSeek(p + 4);  float skiMoveSpeed;
+    FSeek(p + 8);  float skiWeakMoveSpeed;
+    FSeek(p + 12); float skiReturnSpeed;
+    FSeek(p + 16); float homingSpeed;
+    FSeek(p + 20); float jumpHighSpeed;
+    FSeek(p + 24); float jumpLowSpeed;
+    FSeek(p + 28); float struggleTime;
+    FSeek(p + 32); float returnUndergroundTime;
+
+    FSeek(p + 36);
+} MiniBossSkierSkiParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float snakeMoveAmplitude;
+    FSeek(p + 4);  float snakeMovePeriod;
+    FSeek(p + 8);  float snakeMovePrepareTime;
+    FSeek(p + 12); float snakeMoveReturnTime;
+    FSeek(p + 16); float snakeMoveDangerAngleOffset;
+
+    FSeek(p + 20);
+} MiniBossSkierSnakeMoveParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float signSpeed;
+    FSeek(p + 4);  float attackMinSpeed;
+    FSeek(p + 8);  float attackMaxSpeed;
+    FSeek(p + 12); float maxWaitTime;
+    FSeek(p + 16); float driftLenth;
+    FSeek(p + 20); float driftLenthUIOffset;
+    FSeek(p + 24); float rotStartAngularSpeed;
+    FSeek(p + 28); float rotEndAngularSpeed;
+    FSeek(p + 32); float avoidObjCalMargePylon;
+    FSeek(p + 36); float avoidObjCalMargeMissile;
+
+    FSeek(p + 40);
+} MiniBossSkierTailAttackParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float signSpeed;
+    FSeek(p + 4);  float signTime;
+    FSeek(p + 8);  float pylonAppearTime;
+    FSeek(p + 12); float pylonDisappearTime;
+
+    FSeek(p + 16);
+} MiniBossSkierTailAttackPylonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 level;
+    FSeek(p + 4);   MiniBossSkierBattlePhaseParam phaseParam[3]<optimize=false>;
+    FSeek(p + 100); MiniBossSkierJumpOutParam jumpOutParam;
+    FSeek(p + 116); MiniBossSkierSkiParam skiParam;
+    FSeek(p + 152); MiniBossSkierSnakeMoveParam snakeMoveParam;
+    FSeek(p + 172); MiniBossSkierTailAttackParam tailAttackParam;
+    FSeek(p + 212); MiniBossSkierTailAttackPylonParam pylonParam;
+
+    FSeek(p + 228);
+} MiniBossSkierLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossSkierCommonParam commonParam;
+    FSeek(p + 320); MiniBossSkierLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 600); MiniBossSkierLevelBand levelBand[5]<optimize=false>;
+
+    FSeek(p + 1744);
+} MiniBossSkierConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossSkierConfig data;

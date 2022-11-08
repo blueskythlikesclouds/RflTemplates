@@ -1,0 +1,156 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotationDeceleration;
+    FSeek(p + 4);  float rotationAngleMax;
+    FSeek(p + 8);  float changeTimeIdlePatrolMin;
+    FSeek(p + 12); float changeTimeIdlePatrolMax;
+
+    FSeek(p + 16);
+} EnemyBommerPatrolConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveDecerleration;
+    FSeek(p + 4);  float rotationAngleMax;
+    FSeek(p + 8);  float chargeTime;
+    FSeek(p + 12); float rotateSpeed;
+
+    FSeek(p + 16);
+} EnemyBommerAimingConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveVelocity;
+    FSeek(p + 4);  float moveDecerleration;
+    FSeek(p + 8);  float moveDecelerationDamaged;
+    FSeek(p + 12); float cooldownTime;
+    FSeek(p + 16); float colliderOffsetRate;
+
+    FSeek(p + 20);
+} EnemyBommerAttackConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveVelocity;
+    FSeek(p + 4);  float moveAccerleration;
+    FSeek(p + 8);  float amplitude;
+    FSeek(p + 12); float period;
+    FSeek(p + 16); float rotateSpeedInFront;
+    FSeek(p + 20); float rotateSpeedOnBack;
+    FSeek(p + 24); float chaseTime;
+    FSeek(p + 28); float parriedMoveDistance;
+    FSeek(p + 32); float parriedShortenTime;
+    FSeek(p + 36); float parriedCoolDownTime;
+    FSeek(p + 40); float colliderOffsetRate;
+    FSeek(p + 44); float cameraDistance;
+    FSeek(p + 48); float cameraElevation;
+
+    FSeek(p + 52);
+} EnemyBommerChaseConfig;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 m_maxNumPieces;
+    FSeek(p + 4);  float gravity;
+    FSeek(p + 8);  float lifeTime;
+    FSeek(p + 12); float force;
+
+    FSeek(p + 16);
+} DebrisParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   RingParameter ringParam;
+    FSeek(p + 28);  float mass;
+    FSeek(p + 32);  float slopeAngleMax;
+    FSeek(p + 36);  float checkBarrierDistance;
+    FSeek(p + 40);  float colliderRadius;
+    FSeek(p + 44);  float colliderHeight;
+    FSeek(p + 48);  float damageColliderRadiusOffset;
+    FSeek(p + 52);  float eyesightDistance;
+    FSeek(p + 56);  float eyesightDistanceMargin;
+    FSeek(p + 60);  EnemyBommerPatrolConfig patrolConfig;
+    FSeek(p + 76);  EnemyBommerAimingConfig aimingConfig;
+    FSeek(p + 92);  EnemyBommerAttackConfig attackConfig;
+    FSeek(p + 112); EnemyBommerChaseConfig chaseConfig;
+    FSeek(p + 164); float explodeSignalTime;
+    FSeek(p + 168); float explodeColliderRadius;
+    FSeek(p + 172); bool useUniqueDebrisSetting;
+    FSeek(p + 176); DebrisParameter debrisExplode;
+    FSeek(p + 192); DebrisParameter debrisCyloop;
+
+    FSeek(p + 208);
+} EnemyBommerCommonConfig;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} BommerCommonLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); BommerCommonLevelConfig common;
+
+    FSeek(p + 16);
+} EnemyBommerLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyBommerCommonConfig commonParams;
+    FSeek(p + 208); EnemyBommerLevelConfig levelParams[5]<optimize=false>;
+
+    FSeek(p + 288);
+} EnemyBommerConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyBommerConfig data;

@@ -1,0 +1,36 @@
+typedef int sint32;
+
+enum<sint32> StatsType
+{
+    TYPE_INVALID = 0,
+    TYPE_UINT64 = 1,
+    TYPE_UINT32 = 2,
+    TYPE_SINT32 = 3,
+    TYPE_FLOAT = 4,
+};
+
+typedef ulong uint64;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); StatsType type;
+    FSeek(p + 8); uint64 value;
+
+    FSeek(p + 16);
+} StatsDataValue;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); StatsDataValue data;
+
+    FSeek(p + 32);
+} StatsDataContainer;
+
+LittleEndian();
+
+FSeek(64);
+StatsDataContainer data;

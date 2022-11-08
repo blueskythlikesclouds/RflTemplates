@@ -1,0 +1,1187 @@
+typedef uint uint32;
+
+typedef ushort uint16;
+
+typedef struct csetobjectid {
+    long id;
+    long group;
+} csetobjectid;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  array initPositions;
+    FSeek(p + 32); cstring heightTargetNodeName;
+    FSeek(p + 48); float heightMoveSpeed;
+    FSeek(p + 52); float bossToPlayerDistanceMin;
+    FSeek(p + 56); float bossToPlayerDistanceMax;
+    FSeek(p + 60); float offsetHeightMin;
+    FSeek(p + 64); float offsetHeightMax;
+    FSeek(p + 68); float areaDistanceMin;
+    FSeek(p + 72); float areaDistanceMax;
+    FSeek(p + 76); float playerSpawnDistance;
+    FSeek(p + 80); float playerRespawnDistance;
+    FSeek(p + 84); float playerRespawnDistance2;
+
+    FSeek(p + 88);
+} PlayerMoveableRangeParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isUse;
+    FSeek(p + 1); bool isUsePillar;
+    FSeek(p + 4); float phaseChangeHpRatio;
+
+    FSeek(p + 8);
+} BossPhaseParam;
+
+typedef byte sint8;
+
+enum<sint8> EaseType
+{
+    ET_Sin = 0,
+    ET_Cubic = 1,
+    ET_Quadratic = 2,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float easeTime;
+    FSeek(p + 4);  EaseType easeType;
+    FSeek(p + 8);  cstring mainLookAtNodeName;
+    FSeek(p + 32); vector3 mainLookOffsetPos;
+    FSeek(p + 48); cstring subLookAtNodeName;
+    FSeek(p + 64); vector3 subLookOffsetPos;
+    FSeek(p + 80); float distance;
+    FSeek(p + 96); vector3 playerOffsetPos;
+
+    FSeek(p + 112);
+} BossLockOnCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   uint32 healthPoint;
+    FSeek(p + 4);   float stunTime;
+    FSeek(p + 8);   float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 20);  float maxStaggerPoint[5]<optimize=false>;
+    FSeek(p + 40);  uint16 exp;
+    FSeek(p + 48);  PlayerMoveableRangeParam moveRangeParam;
+    FSeek(p + 136); PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
+    FSeek(p + 224); BossPhaseParam phaseParams[8]<optimize=false>;
+    FSeek(p + 288); BossLockOnCameraParam cameraParam;
+    FSeek(p + 400); bool isDebugDraw;
+    FSeek(p + 404); uint32 debugDrawPhaseIndex;
+
+    FSeek(p + 416);
+} BossStatusConfig;
+
+enum<sint8> GimmickType
+{
+    GT_A = 0,
+    GT_B = 1,
+    GT_C = 2,
+    GT_D = 3,
+    GT_E = 4,
+    NUM_GIMMICK_TYPE = 5,
+};
+
+enum<sint8> AttackType
+{
+    AT_A = 0,
+    AT_B = 1,
+    AT_C = 2,
+    AT_D = 3,
+    AT_E = 4,
+    NUM_ATTACK_TYPE = 5,
+};
+
+enum<sint8> BossPillarParam_GimmickType
+{
+    BossPillarParam_GT_A = 0,
+    BossPillarParam_GT_B = 1,
+    BossPillarParam_GT_C = 2,
+    BossPillarParam_GT_D = 3,
+    BossPillarParam_GT_E = 4,
+    BossPillarParam_NUM_GIMMICK_TYPE = 5,
+};
+
+enum<sint8> BossPillarParam_AttackType
+{
+    BossPillarParam_AT_A = 0,
+    BossPillarParam_AT_B = 1,
+    BossPillarParam_AT_C = 2,
+    BossPillarParam_AT_D = 3,
+    BossPillarParam_AT_E = 4,
+    BossPillarParam_NUM_ATTACK_TYPE = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 4);  float gimmickPhaseTime;
+    FSeek(p + 8);  float attackPhaseTime;
+    FSeek(p + 12); bool isUnique;
+    FSeek(p + 13); BossPillarParam_GimmickType gimmickType;
+    FSeek(p + 16); float gimmickIntervalTime;
+    FSeek(p + 20); BossPillarParam_AttackType attackType;
+    FSeek(p + 24); float attackIntervalTime;
+
+    FSeek(p + 28);
+} BossPillarParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GimmickType gimmickTypeAll;
+    FSeek(p + 4);   float gimmickIntervalTimeAll;
+    FSeek(p + 8);   AttackType attackTypeAll;
+    FSeek(p + 12);  float attackIntervalTimeAll;
+    FSeek(p + 16);  BossPillarParam pillars[32]<optimize=false>;
+    FSeek(p + 912); cstring spawnPositionName;
+    FSeek(p + 928); uint32 pillarHealthPoint;
+    FSeek(p + 932); uint32 pillarBreakDamage;
+    FSeek(p + 936); float pillarBreakStun;
+    FSeek(p + 940); bool isDebugDraw;
+    FSeek(p + 944); uint32 DebugDrawType;
+
+    FSeek(p + 952);
+} BossPillarConfig;
+
+typedef short sint16;
+
+enum<sint8> CollisionType
+{
+    CT_SPHERE = 0,
+    CT_CAPSULE = 1,
+    CT_CYLINDER = 2,
+    CT_BOX = 3,
+    NUM_COLLISION_TYPE = 4,
+};
+
+enum<sint8> ColliderActiveType
+{
+    Always = 0,
+    OnContactActive = 1,
+    OnContactInactive = 2,
+    OnMotionActive = 3,
+    OnMotionInactive = 4,
+    Manual = 5,
+    NUM_COLLIDER_ACTIVE_TYPE = 6,
+};
+
+enum<sint16> ColliderProperty
+{
+    CpNone = 0,
+    CpBattleUse = 1,
+    CpBattleUnuse = 2,
+    CpRestPoint = 3,
+    CpHomingTarget = 4,
+    CpPerceive = 5,
+    CpDamage = 6,
+    CpAttack = 7,
+    CpContactActive = 8,
+    CpContactInactive = 9,
+    CpMotionActive = 10,
+    CpMotionInactive = 11,
+    CpManual = 12,
+    CpUpperSide = 13,
+    CpLowerSide = 14,
+    CpFrontSide = 15,
+    CpBackSide = 16,
+    CpLeftSide = 17,
+    CpRightSide = 18,
+    CpPointA = 19,
+    CpPointB = 20,
+    CpPointC = 21,
+    CpPointD = 22,
+    CpCyloopDownUnuse = 23,
+    CpDummyDamage = 24,
+    NUM_COLLIDER_PROPERTY = 25,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ColliderActiveType type;
+    FSeek(p + 2);  ColliderProperty propertys[4]<optimize=false>;
+    FSeek(p + 16); cstring text;
+
+    FSeek(p + 32);
+} BossColliderStatus;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isUse;
+    FSeek(p + 2);   sint16 priority;
+    FSeek(p + 4);   CollisionType type;
+    FSeek(p + 8);   cstring attachNodeName;
+    FSeek(p + 24);  cstring name;
+    FSeek(p + 40);  BossColliderStatus status;
+    FSeek(p + 80);  vector3 size;
+    FSeek(p + 96);  vector3 offset;
+    FSeek(p + 112); vector3 rotation;
+
+    FSeek(p + 128);
+} BossPerceiveCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossPerceiveCollisionParam perceiveCollisions[64]<optimize=false>;
+    FSeek(p + 8192); bool isDebugDraw;
+
+    FSeek(p + 8208);
+} BossPerceivePartsWithCollisionConfig;
+
+enum<sint8> PointType
+{
+    PT_HOMINGPOINT = 0,
+    PT_HEROSAGE = 1,
+    PT_MINIONGENERATOR = 2,
+    PT_TRIGGER = 3,
+    PT_ANCHOR = 4,
+    PT_DAMAGEPOINT = 5,
+    PT_STICK = 6,
+    PT_DAMAGEEFFECT = 7,
+    PT_DASHCIRCLE = 8,
+    NUM_POINT_TYPE = 9,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  BossColliderStatus status;
+    FSeek(p + 32); float distance;
+    FSeek(p + 36); float nextSearchDistance;
+
+    FSeek(p + 40);
+} BossHomingPointParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 num;
+    FSeek(p + 4);  float interval;
+    FSeek(p + 8);  float liveTime;
+    FSeek(p + 12); float waitTime;
+
+    FSeek(p + 16);
+} BossMinionParam;
+
+enum<sint8> Shape
+{
+    SHAPE_BOX = 0,
+    SHAPE_SPHERE = 1,
+    SHAPE_CYLINDER = 2,
+    SHAPE_CAPSULE = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Shape ShapeType;
+    FSeek(p + 4);  float CollisionWidth;
+    FSeek(p + 8);  float CollisionHeight;
+    FSeek(p + 12); float CollisionDepth;
+
+    FSeek(p + 16);
+} BossTrigerParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float phaseTime;
+
+    FSeek(p + 4);
+} BossStickParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isCyloopDownUnuse;
+    FSeek(p + 8); cstring text;
+
+    FSeek(p + 24);
+} BossDamagePointParam;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 focusGeometryIndex;
+    FSeek(p + 4);  sint32 focusTriangleIndex;
+    FSeek(p + 8);  float sizeScale;
+    FSeek(p + 12); float impulseSpeed;
+    FSeek(p + 16); float ocTime;
+    FSeek(p + 20); float slowRateBoss;
+    FSeek(p + 24); float slowRatePlayer;
+    FSeek(p + 28); float slowTime;
+    FSeek(p + 32); float slowEaseInTime;
+    FSeek(p + 36); float slowEaseOutTime;
+
+    FSeek(p + 40);
+} BossDashCirclPointParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isUse;
+    FSeek(p + 4);   uint32 geometryIndex;
+    FSeek(p + 8);   uint32 triangleIndex;
+    FSeek(p + 12);  PointType type;
+    FSeek(p + 16);  BossHomingPointParam homingPoint;
+    FSeek(p + 56);  BossMinionParam minionParam;
+    FSeek(p + 72);  BossTrigerParam trigger;
+    FSeek(p + 88);  BossStickParam stickParam;
+    FSeek(p + 96);  BossDamagePointParam damagePoint;
+    FSeek(p + 120); BossDashCirclPointParam dashCirclPoint;
+    FSeek(p + 160); sint32 linkNums[5]<optimize=false>;
+    FSeek(p + 192); vector3 offsetPos;
+    FSeek(p + 208); vector3 offsetRot;
+
+    FSeek(p + 224);
+} BossMeshFrameParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossMeshFrameParam meshShapeKeyFrames[256]<optimize=false>;
+    FSeek(p + 57344); bool isDebugDraw;
+    FSeek(p + 57345); bool isDebugDrawPoint;
+    FSeek(p + 57346); bool isDebugDrawMesh;
+    FSeek(p + 57347); bool isDebugDrawMeshIndivid;
+    FSeek(p + 57348); float debugDrawMeshTriangleDistance;
+    FSeek(p + 57352); uint32 debugDrawMeshTriangleNum;
+
+    FSeek(p + 57360);
+} BossMeshFrameConfig;
+
+enum<sint8> BossAttackCollisionParam_AttackType
+{
+    BossAttackCollisionParam_AT_NONE = 0,
+    BossAttackCollisionParam_AT_BLOWOFF = 1,
+    BossAttackCollisionParam_AT_SLAMDOWNWARD = 2,
+    BossAttackCollisionParam_AT_KILLING = 3,
+    BossAttackCollisionParam_AT_NOTPARRY = 4,
+    BossAttackCollisionParam_AT_NOTDAMAGE = 5,
+    BossAttackCollisionParam_NUM_ATTACK_TYPE = 6,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 8);  cstring attachNodeName;
+    FSeek(p + 24); float damageVelocityRaito;
+    FSeek(p + 28); BossAttackCollisionParam_AttackType types[4]<optimize=false>;
+    FSeek(p + 32); BossColliderStatus status;
+    FSeek(p + 64); float size;
+    FSeek(p + 80); vector3 offset;
+    FSeek(p + 96); cstring parryCounterTargetCollisionName;
+
+    FSeek(p + 112);
+} BossAttackCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossAttackCollisionParam attackCollisions[64]<optimize=false>;
+    FSeek(p + 7168); bool isDebugDraw;
+
+    FSeek(p + 7184);
+} BossAttackCollisionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isUse;
+    FSeek(p + 8);  cstring attachNodeName;
+    FSeek(p + 24); cstring name;
+    FSeek(p + 40); float size;
+    FSeek(p + 48); vector3 offset;
+    FSeek(p + 64); vector3 rotation;
+    FSeek(p + 80); bool isParryActive;
+    FSeek(p + 84); float cyloopRadius;
+    FSeek(p + 88); bool onlyRigidBody;
+
+    FSeek(p + 96);
+} BossBattlePhaseCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossBattlePhaseCollisionParam battleCollisions[16]<optimize=false>;
+    FSeek(p + 1536); bool isDebugDraw;
+
+    FSeek(p + 1552);
+} BossBattlePhaseCollisionConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 ringNumQuickCyloopUp;
+    FSeek(p + 4);  uint32 ringNumQuickCyloopDown;
+    FSeek(p + 8);  uint32 ringNumSonicSpecial;
+    FSeek(p + 12); float ringSpawnDistance;
+    FSeek(p + 16); float ringSuckedVelocity;
+
+    FSeek(p + 20);
+} BossDropRingConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossStatusConfig status;
+    FSeek(p + 416);   BossPillarConfig pillar;
+    FSeek(p + 1376);  BossPerceivePartsWithCollisionConfig perceivPartsWithCollision;
+    FSeek(p + 9584);  BossMeshFrameConfig meshShapeKeyFrame;
+    FSeek(p + 66944); BossAttackCollisionConfig attackCollision;
+    FSeek(p + 74128); BossBattlePhaseCollisionConfig battleCollision;
+    FSeek(p + 75680); BossDropRingConfig dropRing;
+
+    FSeek(p + 75712);
+} BossBaseConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float runSpeed;
+
+    FSeek(p + 4);
+} KnightIdleConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float moveIntervalAfterSlam;
+    FSeek(p + 4); float moveIntervalAfterMove;
+    FSeek(p + 8); float moveIntervalAfterFall;
+
+    FSeek(p + 12);
+} KnightClimbIdleConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speedAvg;
+    FSeek(p + 4);  float angle1Min;
+    FSeek(p + 8);  float angle1Max;
+    FSeek(p + 12); float angle2Min;
+    FSeek(p + 16); float angle2Max;
+    FSeek(p + 20); float move2WaitDuration;
+
+    FSeek(p + 24);
+} KnightClimbMoveConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float duration;
+    FSeek(p + 4);  float lockonDistance;
+    FSeek(p + 8);  float unlockDistance;
+    FSeek(p + 12); float distance;
+    FSeek(p + 16); float minElevation;
+    FSeek(p + 20); float maxElevation;
+    FSeek(p + 24); float panningSuspensionK;
+    FSeek(p + 28); float interiorPanningSuspensionK;
+
+    FSeek(p + 32);
+} KnightClimbSlamLookupCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float interval;
+    FSeek(p + 4);  uint32 generateNum;
+    FSeek(p + 8);  float coolTime;
+    FSeek(p + 12); float radius;
+    FSeek(p + 16); float appearRadius;
+    FSeek(p + 20); float keepRadius;
+    FSeek(p + 24); float disappearRadius;
+    FSeek(p + 28); float heightMin;
+    FSeek(p + 32); float heightMax;
+    FSeek(p + 36); float lifeTime;
+    FSeek(p + 40); float modelScale;
+    FSeek(p + 44); float modelDiameter;
+    FSeek(p + 48); float effectDistance;
+
+    FSeek(p + 52);
+} KnightClimbSlamWaveConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedBeforeSlam;
+    FSeek(p + 4);  float slamAnimSpeed;
+    FSeek(p + 8);  float waitTimeAfterSlam;
+    FSeek(p + 12); float liftUpStartAnimSpeed;
+    FSeek(p + 16); float liftUpEndAnimSpeed;
+    FSeek(p + 20); float liftUpStartAnimSpeedMiss;
+    FSeek(p + 24); float liftUpEndAnimSpeedMiss;
+    FSeek(p + 28); KnightClimbSlamLookupCameraConfig lookupCam;
+    FSeek(p + 60); KnightClimbSlamWaveConfig wave;
+
+    FSeek(p + 112);
+} KnightClimbSlamConfig;
+
+enum<sint8> PlayerOffsetType
+{
+    PLAYER_OFFSET_NORMAL = 0,
+    PLAYER_OFFSET_ABSOLUTE = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float fovy;
+    FSeek(p + 4);  float zRot;
+    FSeek(p + 8);  float distance;
+    FSeek(p + 12); float pathOffset;
+    FSeek(p + 16); bool usePathVerticalComponent;
+    FSeek(p + 17); bool usePathNormal;
+    FSeek(p + 20); float angleSensitivity;
+    FSeek(p + 24); float angleSensitivityBoost;
+    FSeek(p + 28); float azimuthOffsetDeg;
+    FSeek(p + 32); float elevationOffsetDeg;
+    FSeek(p + 36); float gravityOffset;
+    FSeek(p + 48); vector3 playerOffset;
+    FSeek(p + 64); PlayerOffsetType playerOffsetType;
+
+    FSeek(p + 80);
+} KnightGrindCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 damage;
+    FSeek(p + 4); bool blowOff;
+
+    FSeek(p + 8);
+} KnightGrindTrapConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 lookAtOffset;
+    FSeek(p + 16); vector3 eyeOffset;
+    FSeek(p + 32); float duration;
+    FSeek(p + 36); float easeTimeBegin;
+    FSeek(p + 40); float easeTimeEnd;
+
+    FSeek(p + 48);
+} KnightGrindLaunchCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float outStrength;
+    FSeek(p + 4);  float inStrength;
+    FSeek(p + 8);  float outElev;
+    FSeek(p + 12); float inElev;
+    FSeek(p + 16); float speed;
+    FSeek(p + 24); cstring landFrameName;
+    FSeek(p + 48); vector3 landOffset;
+    FSeek(p + 64); vector3 landRayOffset;
+    FSeek(p + 80); vector3 landOffsetAfterRaycast;
+    FSeek(p + 96); KnightGrindLaunchCameraConfig camera;
+
+    FSeek(p + 144);
+} KnightGrindLaunchConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  KnightGrindCameraConfig camera;
+    FSeek(p + 80); float playerSpeed;
+    FSeek(p + 84); KnightGrindTrapConfig trap;
+    FSeek(p + 96); KnightGrindLaunchConfig launch;
+
+    FSeek(p + 240);
+} KnightClimbGrindConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float traceSpeed;
+    FSeek(p + 4);  float traceRotSpeed;
+    FSeek(p + 8);  float traceLifeTime;
+    FSeek(p + 12); float traceWidth;
+    FSeek(p + 16); float traceHeight;
+    FSeek(p + 20); float traceAppearDistance;
+    FSeek(p + 24); float traceKeepDistance;
+    FSeek(p + 28); float traceDisappearDistance;
+    FSeek(p + 32); float traceModelScale;
+    FSeek(p + 36); float traceModelDiameter;
+    FSeek(p + 40); float traceModelInterval;
+    FSeek(p + 44); float traceCollisionDistance;
+
+    FSeek(p + 48);
+} KnightClimbTraceWaveConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   KnightClimbIdleConfig idle;
+    FSeek(p + 12);  KnightClimbMoveConfig move;
+    FSeek(p + 36);  KnightClimbSlamConfig slam;
+    FSeek(p + 160); KnightClimbGrindConfig grind;
+    FSeek(p + 400); float climbTimeLimit;
+    FSeek(p + 404); KnightClimbTraceWaveConfig trace;
+
+    FSeek(p + 464);
+} KnightClimbConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float moveInterval;
+
+    FSeek(p + 4);
+} KnightBattle1IdleConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speedAvg;
+    FSeek(p + 4);  float angle1Min;
+    FSeek(p + 8);  float angle1Max;
+    FSeek(p + 12); float angle2Min;
+    FSeek(p + 16); float angle2Max;
+    FSeek(p + 20); float move2WaitDuration;
+
+    FSeek(p + 24);
+} KnightBattle1MoveConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float guardStaggerMax;
+    FSeek(p + 4); float damageStaggerMax;
+
+    FSeek(p + 8);
+} KnightBattle1GuardConfig;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float startDistance;
+    FSeek(p + 4);   float startXOffset;
+    FSeek(p + 8);   float startYOffset;
+    FSeek(p + 12);  float startAngle;
+    FSeek(p + 16);  float speed;
+    FSeek(p + 20);  float turnAcc;
+    FSeek(p + 24);  float turnSpeedMax;
+    FSeek(p + 28);  float areaRadius;
+    FSeek(p + 32);  float windPowerMin;
+    FSeek(p + 36);  float windPowerMax;
+    FSeek(p + 40);  float windTimeMin;
+    FSeek(p + 44);  float windTimeMax;
+    FSeek(p + 48);  float windInterval;
+    FSeek(p + 52);  float camRideElevation;
+    FSeek(p + 56);  float camRideDistance;
+    FSeek(p + 64);  vector3 camRideOffset;
+    FSeek(p + 80);  float camCompeteElevation;
+    FSeek(p + 84);  float camCompeteAzimuth;
+    FSeek(p + 88);  float camCompeteDistance;
+    FSeek(p + 92);  float camHitElevation;
+    FSeek(p + 96);  float camHitAzimuth;
+    FSeek(p + 100); float camHitDistance;
+    FSeek(p + 104); float camShakeHitLoopMagnitude;
+    FSeek(p + 108); sint32 camShakeHitLoopFreq;
+    FSeek(p + 112); float camShakeRejectLoopMagnitude;
+    FSeek(p + 116); sint32 camShakeRejectLoopFreq;
+    FSeek(p + 120); uint8 missileNum;
+    FSeek(p + 124); float missileInterval;
+    FSeek(p + 128); float missileStartTime;
+    FSeek(p + 132); float missileSpeed;
+    FSeek(p + 136); float missileRotateSpeed;
+    FSeek(p + 140); float missileMidPosDistance;
+    FSeek(p + 144); float missileMidPosHeightOffset;
+    FSeek(p + 148); float missileShotAngle;
+    FSeek(p + 152); float missileShotStartWait;
+    FSeek(p + 156); float missileRiseSpeed;
+    FSeek(p + 160); float missileRiseTime;
+    FSeek(p + 164); float missileHideTime;
+    FSeek(p + 168); float missileAppearDistance;
+    FSeek(p + 172); float missileAppearHeight;
+    FSeek(p + 176); float missileAppearWidth;
+    FSeek(p + 180); float missileLifeTime;
+    FSeek(p + 184); float missileLifeTimeNoHit;
+    FSeek(p + 188); float missileHitPower;
+    FSeek(p + 192); float missileHitPowerRateDown;
+    FSeek(p + 196); float missileHitPowerKeepTime;
+    FSeek(p + 200); float missileHeightShakeMax;
+    FSeek(p + 204); float missileHeightShakeMin;
+    FSeek(p + 208); float missileWidthShake;
+    FSeek(p + 212); float rejectCompeteDuration;
+    FSeek(p + 216); float hitShaveDamageSum;
+    FSeek(p + 220); uint32 hitShaveHitNum;
+    FSeek(p + 224); float hitShaveHitInterval;
+    FSeek(p + 228); float damageRatio;
+    FSeek(p + 232); float staggerValue;
+    FSeek(p + 236); float knockbackDistance;
+    FSeek(p + 240); float durationAfterHit;
+    FSeek(p + 244); uint32 missileHitPattern[10]<optimize=false>;
+
+    FSeek(p + 288);
+} KnightShieldRideConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float parriedDuration;
+    FSeek(p + 4);  float slowRate;
+    FSeek(p + 8);  float slowTime;
+    FSeek(p + 12); float cameraOffset;
+    FSeek(p + 16); float cameraFade;
+
+    FSeek(p + 20);
+} KnightBattle1InterruptConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float height;
+    FSeek(p + 4);  float riseDuration;
+    FSeek(p + 8);  float floatDuration;
+    FSeek(p + 12); float fallDuration;
+    FSeek(p + 16); float cyFallDuration;
+    FSeek(p + 20); float cyFallDelay;
+    FSeek(p + 24); float downDuration;
+    FSeek(p + 28); float enableDownCounterHPRatio;
+    FSeek(p + 32); float enableGuardHPRatio;
+
+    FSeek(p + 36);
+} KnightBattle1CyFloat;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float hpRatio;
+    FSeek(p + 4); sint32 missileNum;
+    FSeek(p + 8); float missileWaitTime;
+
+    FSeek(p + 12);
+} KnightThresholdRingSupplyParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float interpolateTimeBegin;
+    FSeek(p + 4); float interpolateTimeEnd;
+
+    FSeek(p + 8);
+} KnightRageShieldAttackCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float modelScale;
+    FSeek(p + 4);   float hitEffectScale;
+    FSeek(p + 8);   float actionGuideOffsetX;
+    FSeek(p + 12);  float actionGuideOffsetY;
+    FSeek(p + 16);  float heightOffset;
+    FSeek(p + 20);  float flySpeed;
+    FSeek(p + 24);  float flyLineWidth;
+    FSeek(p + 28);  float flyLineAfterHitWallLength;
+    FSeek(p + 32);  float flyLineDuration;
+    FSeek(p + 36);  float hitWallTargetingStart;
+    FSeek(p + 40);  float hitWallTargetingAdd;
+    FSeek(p + 44);  float hitWallTargetingSub;
+    FSeek(p + 48);  float hitWallTargeting;
+    FSeek(p + 52);  uint8 hitWallTargetingCycle;
+    FSeek(p + 56);  float hitWallTargetAreaRadius;
+    FSeek(p + 60);  float hitWallStopDuration;
+    FSeek(p + 64);  float hitWallFlySpeed;
+    FSeek(p + 68);  float hitWallAccStartTime;
+    FSeek(p + 72);  float hitWallAccDuration;
+    FSeek(p + 76);  float parryTargetRange;
+    FSeek(p + 80);  float parryTargetAngVel;
+    FSeek(p + 84);  float parryTargetTimeLimit;
+    FSeek(p + 88);  float parryTargetLineWidth;
+    FSeek(p + 92);  float parryTargetLineLength;
+    FSeek(p + 96);  float parryFlySpeedStart;
+    FSeek(p + 100); float parryFlySpeed;
+    FSeek(p + 104); float parryAccStartTime;
+    FSeek(p + 108); float parryAccDuration;
+    FSeek(p + 112); float parryFlyLineWidth;
+    FSeek(p + 116); float parryFlyLineDuration;
+    FSeek(p + 120); float parryFlySuspendDuration;
+    FSeek(p + 124); float parryFlySuspendEndDistance;
+    FSeek(p + 128); KnightRageShieldAttackCameraConfig attackCamera;
+    FSeek(p + 136); float damageRatio;
+    FSeek(p + 140); float damageVelocity;
+
+    FSeek(p + 144);
+} KnightRageShieldConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float azimuth;
+    FSeek(p + 4);  float elevation;
+    FSeek(p + 8);  float distance;
+    FSeek(p + 12); float zRoll;
+    FSeek(p + 16); float fovy;
+    FSeek(p + 32); vector3 offset;
+    FSeek(p + 48); float followPlayerRatio;
+    FSeek(p + 52); float lookCenterRatio;
+    FSeek(p + 56); float interpolateTimeBegin;
+    FSeek(p + 60); float interpolateTimeEnd;
+    FSeek(p + 64); float controlAngAcc;
+    FSeek(p + 68); float controlAngVel;
+
+    FSeek(p + 80);
+} KnightRageOverlookCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   KnightRageShieldConfig shield;
+    FSeek(p + 144); KnightRageOverlookCameraConfig normalCamera;
+    FSeek(p + 224); KnightRageOverlookCameraConfig targetingCamera;
+    FSeek(p + 304); float moveRestartAnimSpeed;
+
+    FSeek(p + 320);
+} KnightBattle1Rage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float downTime;
+    FSeek(p + 4);  float downCutChangeTime[2]<optimize=false>;
+    FSeek(p + 16); vector3 downCamOffset;
+    FSeek(p + 32); float riseTime;
+    FSeek(p + 48); vector3 riseCamOffset;
+
+    FSeek(p + 64);
+} KnightAerialCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float closedAreaRadius;
+    FSeek(p + 4);   KnightBattle1IdleConfig idle;
+    FSeek(p + 8);   KnightBattle1MoveConfig move;
+    FSeek(p + 32);  KnightBattle1GuardConfig guard;
+    FSeek(p + 48);  KnightShieldRideConfig shieldRide;
+    FSeek(p + 336); KnightBattle1InterruptConfig interrupt;
+    FSeek(p + 356); float normalKnockbackDistance;
+    FSeek(p + 360); KnightBattle1CyFloat cyFloat;
+    FSeek(p + 396); KnightThresholdRingSupplyParam ringSupply[3]<optimize=false>;
+    FSeek(p + 432); KnightBattle1Rage rage;
+    FSeek(p + 752); float rageHPRatio;
+    FSeek(p + 756); float atkSpecialHPRatio;
+    FSeek(p + 768); KnightAerialCamera aerialCamera;
+    FSeek(p + 832); float damageEventTime;
+
+    FSeek(p + 848);
+} KnightBattle1Config;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float azimuth;
+    FSeek(p + 4);  float elevation;
+    FSeek(p + 8);  float distance;
+    FSeek(p + 12); float zRoll;
+    FSeek(p + 16); float fovy;
+    FSeek(p + 32); vector3 frameOffset;
+
+    FSeek(p + 48);
+} KnightBattle2RunCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed;
+    FSeek(p + 4);  float moveWidth;
+    FSeek(p + 8);  float moveHeight;
+    FSeek(p + 16); vector3 playerOffset;
+    FSeek(p + 32); vector3 playerOffsetFar;
+    FSeek(p + 48); vector3 playerOffsetNear;
+    FSeek(p + 64); vector3 playerOffsetTackle;
+    FSeek(p + 80); float attackInterval;
+    FSeek(p + 84); float attackIntervalDelayOnHit;
+    FSeek(p + 96); KnightBattle2RunCamera camera;
+
+    FSeek(p + 144);
+} KnightBattle2RunConfig;
+
+enum<uint8> XType
+{
+    Zero = 0,
+    HitPosX = 1,
+    Indivisual = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 1);  XType xType;
+    FSeek(p + 4);  float xIndivisual;
+    FSeek(p + 8);  float y;
+    FSeek(p + 12); float z;
+
+    FSeek(p + 16);
+} KnightBattle2ShieldSplineNode;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float duration;
+    FSeek(p + 4); float interpolateTimeBegin;
+    FSeek(p + 8); float interpolateTimeEnd;
+
+    FSeek(p + 12);
+} KnightBattle2ShieldUTurnCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   KnightBattle2ShieldSplineNode nodesStraight[8]<optimize=false>;
+    FSeek(p + 128); float stopPosRatioStraight;
+    FSeek(p + 132); float stopDecStartPosRatioStraight;
+    FSeek(p + 136); float stopAccEndPosRatioStraight;
+    FSeek(p + 140); float stopDurationStraight;
+    FSeek(p + 144); float speedStraight1;
+    FSeek(p + 148); float speedStraight2;
+    FSeek(p + 152); float hitPosXStraight;
+    FSeek(p + 156); float uTurnEndPosStraight;
+    FSeek(p + 160); float swordDelayStraight;
+    FSeek(p + 164); KnightBattle2ShieldSplineNode nodesSlalom[8]<optimize=false>;
+    FSeek(p + 292); float stopPosRatioSlalom;
+    FSeek(p + 296); float stopDecStartPosRatioSlalom;
+    FSeek(p + 300); float stopAccEndPosRatioSlalom;
+    FSeek(p + 304); float stopDurationSlalom;
+    FSeek(p + 308); float speedSlalom1;
+    FSeek(p + 312); float speedSlalom2;
+    FSeek(p + 316); float hitPosXSlalom;
+    FSeek(p + 320); float uTurnEndPosSlalom;
+    FSeek(p + 324); float magnitudeSlalomFar;
+    FSeek(p + 328); float magnitudeSlalomNear;
+    FSeek(p + 332); uint8 slalomNumMin;
+    FSeek(p + 333); uint8 slalomNumMax;
+    FSeek(p + 336); float slalomEndPosRatio;
+    FSeek(p + 340); float swordDelaySlalom;
+    FSeek(p + 344); float uTurnSpeedRatioDuringCam;
+    FSeek(p + 348); float uTurnSpeedRatioAfterCam;
+    FSeek(p + 352); KnightBattle2ShieldUTurnCameraConfig uTurnCamera;
+    FSeek(p + 364); float attackLineWidth;
+
+    FSeek(p + 368);
+} KnightBattle2ShieldConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float parriedDuration;
+    FSeek(p + 4); float animSpeedOnDoubleAtkParried;
+
+    FSeek(p + 8);
+} KnightBattle2SwordConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float parriedDuration;
+
+    FSeek(p + 4);
+} KnightBattle2InterruptConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float height;
+    FSeek(p + 4);  float riseDuration;
+    FSeek(p + 8);  float floatDuration;
+    FSeek(p + 12); float fallDuration;
+    FSeek(p + 16); float cyFallDuration;
+    FSeek(p + 20); float cyFallDelay;
+    FSeek(p + 24); float downDuration;
+    FSeek(p + 28); float enableDownCounterHPRatio;
+    FSeek(p + 32); float enableGuardHPRatio;
+
+    FSeek(p + 36);
+} KnightBattle2CyFloat;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   KnightBattle2RunConfig run;
+    FSeek(p + 144); KnightBattle2ShieldConfig shield;
+    FSeek(p + 512); KnightBattle2SwordConfig sword;
+    FSeek(p + 520); KnightBattle2InterruptConfig interrupt;
+    FSeek(p + 524); float knockbackDistance;
+    FSeek(p + 528); KnightBattle2CyFloat cyFloat;
+    FSeek(p + 576); KnightAerialCamera aerialCamera;
+
+    FSeek(p + 640);
+} KnightBattle2Config;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float damageRatio;
+
+    FSeek(p + 4);
+} KnightSonicSpecialConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   vector3 upOffset[8]<optimize=false>;
+    FSeek(p + 128); vector3 upRotationAngle[8]<optimize=false>;
+    FSeek(p + 256); float upMoveDistanceOffset;
+    FSeek(p + 272); vector3 downOffset;
+    FSeek(p + 288); float downMoveDelay;
+    FSeek(p + 292); float downMoveDistance[3]<optimize=false>;
+    FSeek(p + 304); float downMoveDuration[3]<optimize=false>;
+
+    FSeek(p + 320);
+} KnightCyFloatSpearConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float delayTime[6]<optimize=false>;
+
+    FSeek(p + 24);
+} KnightAttackSignParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool usePracticeNotifier;
+    FSeek(p + 1); sint8 practiceNo;
+    FSeek(p + 2); sint8 tipsNo;
+
+    FSeek(p + 3);
+} EnemyPracticeNotifierConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); EnemyPracticeNotifierConfig notifierConfigClimb;
+    FSeek(p + 3); EnemyPracticeNotifierConfig notifierConfigBattle1;
+    FSeek(p + 6); EnemyPracticeNotifierConfig notifierConfigBattle2;
+
+    FSeek(p + 9);
+} BossKnightNotifierParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BossBaseConfig base;
+    FSeek(p + 75712); KnightIdleConfig idle;
+    FSeek(p + 75728); KnightClimbConfig climb;
+    FSeek(p + 76192); KnightBattle1Config battle1;
+    FSeek(p + 77040); KnightBattle2Config battle2;
+    FSeek(p + 77680); KnightSonicSpecialConfig sonicSpecial;
+    FSeek(p + 77696); KnightCyFloatSpearConfig cyFloatSpear;
+    FSeek(p + 78016); uint8 knockbackStaggerCount;
+    FSeek(p + 78020); float thresholdDamageEffectHPRatio[3]<optimize=false>;
+    FSeek(p + 78032); KnightAttackSignParam attackSign;
+    FSeek(p + 78056); BossKnightNotifierParam notifier;
+
+    FSeek(p + 78080);
+} BossKnightConfig;
+
+LittleEndian();
+
+FSeek(64);
+BossKnightConfig data;

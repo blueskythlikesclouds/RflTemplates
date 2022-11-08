@@ -1,0 +1,56 @@
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 16); vector3 color;
+    FSeek(p + 32); float intensity;
+    FSeek(p + 36); float nearDist;
+    FSeek(p + 40); float farDist;
+    FSeek(p + 44); float influence;
+
+    FSeek(p + 48);
+} FxDistanceFogParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable;
+    FSeek(p + 16); vector3 color;
+    FSeek(p + 32); float intensity;
+    FSeek(p + 36); float minHeight;
+    FSeek(p + 40); float maxHeight;
+    FSeek(p + 44); float nearDist;
+    FSeek(p + 48); float farDist;
+    FSeek(p + 52); float influence;
+
+    FSeek(p + 64);
+} FxHeightFogParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  FxDistanceFogParameter distanceFogParam;
+    FSeek(p + 48); FxHeightFogParameter heightFogParam;
+
+    FSeek(p + 112);
+} FxFogParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxFogParameter data;

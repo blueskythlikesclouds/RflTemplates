@@ -1,0 +1,77 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef ubyte uint8;
+
+enum<uint8> CameraType
+{
+    None = 0,
+    Fixed = 1,
+    Offset = 2,
+    Follow = 3,
+    Pan = 4,
+    StaticPan = 5,
+    PanUpByFront = 6,
+};
+
+enum<uint8> CameraCoordType
+{
+    Orthgonal = 0,
+    Spherical = 1,
+};
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  CameraType type;
+    FSeek(p + 4);  float time;
+    FSeek(p + 8);  float easeinTime;
+    FSeek(p + 12); CameraCoordType lookAtCoord;
+    FSeek(p + 16); vector3 localLookAtOffset;
+    FSeek(p + 32); vector3 worldLookAtOffset;
+    FSeek(p + 48); CameraCoordType eyeCoord;
+    FSeek(p + 64); vector3 localEyeOffset;
+    FSeek(p + 80); vector3 worldEyeOffset;
+    FSeek(p + 96); float roll;
+
+    FSeek(p + 112);
+} PlayerCameraParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); float easeoutTime;
+    FSeek(p + 32); PlayerCameraParameter param[8]<optimize=false>;
+
+    FSeek(p + 928);
+} PlayerCameraSetParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerCameraSetParameter data[45]<optimize=false>;
+
+    FSeek(p + 41760);
+} PlayerCameraSetParameters;
+
+LittleEndian();
+
+FSeek(64);
+PlayerCameraSetParameters data;

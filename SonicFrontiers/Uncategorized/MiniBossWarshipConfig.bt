@@ -1,0 +1,318 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scoutDistance;
+    FSeek(p + 4);  float scoutDistanceOutside;
+    FSeek(p + 8);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float highSpeed;
+    FSeek(p + 4);  float lowSpeed;
+    FSeek(p + 8);  float changeLowSpeedDistance;
+    FSeek(p + 12); float disableDistanceMaxSpeed;
+    FSeek(p + 16); float relativeSpeedDisableDistance;
+    FSeek(p + 20); float speedOnJump;
+    FSeek(p + 24); float speedDownOnJumpDistance;
+
+    FSeek(p + 28);
+} MiniBossWarshipSpeedParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float min;
+    FSeek(p + 4); float max;
+
+    FSeek(p + 8);
+} MiniBossWarshipAccelSpeed;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float zoomDistance;
+    FSeek(p + 16); vector3 zoomOffset;
+    FSeek(p + 32); vector3 zoomAngle;
+    FSeek(p + 48); float zoomFov;
+
+    FSeek(p + 64);
+} MiniBossWarshipWarpCameraParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float fovy;
+    FSeek(p + 4);  float zRot;
+    FSeek(p + 8);  float distance;
+    FSeek(p + 12); float pathOffset;
+    FSeek(p + 16); bool usePathVerticalComponent;
+    FSeek(p + 17); bool usePathNormal;
+    FSeek(p + 20); float angleSensitivity;
+    FSeek(p + 24); float angleSensitivityBoost;
+    FSeek(p + 28); float azimuthOffsetDeg;
+    FSeek(p + 32); float elevationOffsetDeg;
+    FSeek(p + 36); float gravityOffset;
+    FSeek(p + 48); vector3 playerOffset;
+
+    FSeek(p + 64);
+} MiniBossWarshipEscapeCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float dashRingAppearDistance;
+    FSeek(p + 4);  float dashRingDisappearDistance;
+    FSeek(p + 8);  float birdAppearDistance;
+    FSeek(p + 12); float birdDisappearDistance;
+    FSeek(p + 16); float bulletAppearDistance;
+    FSeek(p + 20); float bulletDisappearDistance;
+
+    FSeek(p + 24);
+} MiniBossWarshipObjectParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float outStrength;
+    FSeek(p + 4);  float inStrength;
+    FSeek(p + 8);  float outElev;
+    FSeek(p + 12); float inElev;
+    FSeek(p + 16); float speedMin;
+    FSeek(p + 20); float speedMax;
+    FSeek(p + 24); float speedMinLength;
+    FSeek(p + 28); float speedMaxLength;
+
+    FSeek(p + 32);
+} WarshipNearLaunchParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
+    FSeek(p + 64);  MiniBossWarshipSpeedParam speedParam;
+    FSeek(p + 92);  MiniBossWarshipAccelSpeed normalSpeedParam;
+    FSeek(p + 100); MiniBossWarshipAccelSpeed boostSpeedParam;
+    FSeek(p + 112); MiniBossWarshipWarpCameraParam warpCameraParam;
+    FSeek(p + 176); MiniBossWarshipEscapeCameraParam escapeCameraParam;
+    FSeek(p + 240); MiniBossWarshipObjectParam objectParam;
+    FSeek(p + 264); WarshipNearLaunchParam launchParam;
+
+    FSeek(p + 304);
+} MiniBossWarshipCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime;
+    FSeek(p + 20); float stunDecreaseSpeed;
+    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime;
+    FSeek(p + 40); float staggerDecreaseSpeed;
+    FSeek(p + 44); float attackRate;
+    FSeek(p + 48); uint16 expItemNum;
+    FSeek(p + 50); uint16 exp;
+
+    FSeek(p + 52);
+} MiniBossLevelCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+
+    FSeek(p + 56);
+} MiniBossWarshipLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} MiniBossWarshipLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float normal;
+    FSeek(p + 4); float boost;
+
+    FSeek(p + 8);
+} MiniBossWarshipRecoverBoostGaugeParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveSpeed;
+    FSeek(p + 4);  float bombDropSpeed;
+    FSeek(p + 8);  float bombInterval;
+    FSeek(p + 12); float explosionRadius;
+    FSeek(p + 16); float bombPreDistEffectRange;
+    FSeek(p + 20); float lifeTime;
+    FSeek(p + 24); float preBombTime;
+    FSeek(p + 28); float preBombStateSpeed;
+
+    FSeek(p + 32);
+} MiniBossWarshipAttackStateParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float firstFinishTimer;
+    FSeek(p + 4); float finishTimer;
+    FSeek(p + 8); float disableHomingTime;
+
+    FSeek(p + 12);
+} MiniBossWarshipBattleFlagParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float distance;
+    FSeek(p + 4);  float minElevation;
+    FSeek(p + 8);  float maxElevation;
+    FSeek(p + 12); float targetUpOffset;
+    FSeek(p + 16); float targetMinUpOffsetLimit;
+    FSeek(p + 20); float targetMaxUpOffsetLimit;
+
+    FSeek(p + 24);
+} MiniBossWarshipNearBattleCameraParam;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable;
+    FSeek(p + 4); float start;
+    FSeek(p + 8); float end;
+
+    FSeek(p + 12);
+} WarshipPathSectionInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring followPaths;
+    FSeek(p + 16);  WarshipPathSectionInfo usePathInfo[50]<optimize=false>;
+    FSeek(p + 616); WarshipPathSectionInfo accelInfo[50]<optimize=false>;
+
+    FSeek(p + 1216);
+} WarshipEscapePathInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); WarshipEscapePathInfo escapePathInfo[5]<optimize=false>;
+
+    FSeek(p + 6080);
+} MiniBossWarshipEscapePathParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float lockonDistance;
+    FSeek(p + 4);  float unlockDistance;
+    FSeek(p + 8);  float duration;
+    FSeek(p + 12); float distance;
+    FSeek(p + 16); float minElevation;
+    FSeek(p + 20); float maxElevation;
+    FSeek(p + 24); float lockonFrameYOffset;
+
+    FSeek(p + 28);
+} MiniBossWarshipBombAttackCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float midCameraPosOffset;
+    FSeek(p + 4);  MiniBossWarshipBombAttackCameraParam firstCamera;
+    FSeek(p + 32); MiniBossWarshipBombAttackCameraParam secondCamera;
+
+    FSeek(p + 60);
+} MiniBossWarshipAttackStateCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     MiniBossWarshipCommonParam commonParam;
+    FSeek(p + 304);   MiniBossWarshipLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 584);   MiniBossWarshipLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 604);   float wanderMoveSpeed;
+    FSeek(p + 608);   float railMaxLength;
+    FSeek(p + 612);   MiniBossWarshipSpeedParam shiftStateMoveSpeedParam;
+    FSeek(p + 640);   float locatorDistance;
+    FSeek(p + 644);   float distanceEscapePathToStart;
+    FSeek(p + 648);   MiniBossWarshipRecoverBoostGaugeParam boostGaugeParam;
+    FSeek(p + 656);   MiniBossWarshipAttackStateParam attackStateParam;
+    FSeek(p + 688);   MiniBossWarshipBattleFlagParam battleFlagParam;
+    FSeek(p + 700);   MiniBossWarshipNearBattleCameraParam nearBattleCameraParam;
+    FSeek(p + 724);   float disableGimmickDistance;
+    FSeek(p + 728);   float warpTime;
+    FSeek(p + 732);   float cameraChangeTime;
+    FSeek(p + 736);   float cameraAppearTime;
+    FSeek(p + 740);   float spreadHomingDistance;
+    FSeek(p + 744);   MiniBossWarshipEscapePathParam escapePathID[5]<optimize=false>;
+    FSeek(p + 31144); MiniBossWarshipAttackStateCameraParam bombAttackCameraParam[5]<optimize=false>;
+
+    FSeek(p + 31456);
+} MiniBossWarshipConfig;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossWarshipConfig data;

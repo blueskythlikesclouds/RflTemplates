@@ -1,0 +1,39 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float duration;
+    FSeek(p + 4);  float distance;
+    FSeek(p + 8);  float minElevation;
+    FSeek(p + 12); float maxElevation;
+    FSeek(p + 16); float panningSuspensionK;
+    FSeek(p + 20); float interiorPanningSuspensionK;
+
+    FSeek(p + 24);
+} FocusCameraConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  FocusCameraConfig focusCamera;
+    FSeek(p + 24); float shotInterval;
+    FSeek(p + 28); float shotInterval_Parried;
+    FSeek(p + 32); float shotInterval_Reborn;
+    FSeek(p + 36); float shotInterval_First;
+    FSeek(p + 40); float shotInterval_NoReborn;
+    FSeek(p + 44); float stunTime;
+    FSeek(p + 48); float approachWait;
+    FSeek(p + 52); float dispWait;
+    FSeek(p + 56); float rollWait;
+    FSeek(p + 60); float reactionTime;
+    FSeek(p + 64); float controlDelay;
+    FSeek(p + 68); float shotAngle;
+
+    FSeek(p + 72);
+} ObjWolfManagerConfig;
+
+LittleEndian();
+
+FSeek(64);
+ObjWolfManagerConfig data;

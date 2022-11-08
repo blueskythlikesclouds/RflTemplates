@@ -1,0 +1,45 @@
+typedef int sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeLimitSeconds;
+    FSeek(p + 4);  float cautionTime;
+    FSeek(p + 8);  float warningTime;
+    FSeek(p + 12); bool useCautionAnimation;
+    FSeek(p + 13); bool useWarningAnimation;
+
+    FSeek(p + 16);
+} QuestDarumaTimerParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 applicableFailedCount;
+    FSeek(p + 4);  float collectionColliderRadius;
+    FSeek(p + 8);  float collectionColliderHeight;
+    FSeek(p + 12); QuestDarumaTimerParameter timerParam;
+
+    FSeek(p + 28);
+} QuestDarumaBattleParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); QuestDarumaBattleParameterElement element[3]<optimize=false>;
+
+    FSeek(p + 84);
+} QuestDarumaBattleParameter;
+
+LittleEndian();
+
+FSeek(64);
+QuestDarumaBattleParameter data;

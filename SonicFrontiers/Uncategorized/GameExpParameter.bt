@@ -1,0 +1,16 @@
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 maxExpPointBase;
+    FSeek(p + 4); uint32 maxExpPointAdd;
+
+    FSeek(p + 8);
+} GameExpParameter;
+
+LittleEndian();
+
+FSeek(64);
+GameExpParameter data;

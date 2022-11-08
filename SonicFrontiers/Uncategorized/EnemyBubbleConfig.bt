@@ -1,0 +1,128 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float moveMinDistance;
+    FSeek(p + 4); float moveSpeedMax;
+
+    FSeek(p + 8);
+} EnemyBubbleApproachConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveMinDistance;
+    FSeek(p + 4);  float moveSpeedMax;
+    FSeek(p + 8);  float blitzProtectionMaxDistance;
+    FSeek(p + 12); float blitzProtectionReadyTime;
+
+    FSeek(p + 16);
+} EnemyBubbleBlitzProtectionReadyConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float moveMinDistance;
+    FSeek(p + 4);  float moveSpeedMax;
+    FSeek(p + 8);  float blitzProtectionAttackTime;
+    FSeek(p + 12); float blitzProtectionIntervalTime;
+
+    FSeek(p + 16);
+} EnemyBubbleBlitzProtectionConfig;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float baseHeight;
+    FSeek(p + 4);  float innerDistance;
+    FSeek(p + 8);  float outerDistance;
+    FSeek(p + 12); float innerRadius;
+    FSeek(p + 16); float outerRadius;
+    FSeek(p + 20); float innerAccelMax;
+    FSeek(p + 24); float outerAccelMax;
+    FSeek(p + 28); float innerSpeedMax;
+    FSeek(p + 32); float outerSpeedMax;
+    FSeek(p + 36); uint8 innerNum;
+    FSeek(p + 37); uint8 outerNum;
+
+    FSeek(p + 40);
+} EnemyBubbleShellConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float killWaitTime;
+    FSeek(p + 4);  float colliderRadius;
+    FSeek(p + 8);  float damageColliderRadiusOffset;
+    FSeek(p + 12); float attackColliderRadiusOffset;
+    FSeek(p + 16); float eyesightDistance;
+    FSeek(p + 20); float moveAccerleration;
+    FSeek(p + 24); float moveDeceleration;
+    FSeek(p + 28); float rotationAngleMax;
+    FSeek(p + 32); float mass;
+    FSeek(p + 36); float slopeAngleMax;
+    FSeek(p + 40); float knockBackTime;
+    FSeek(p + 44); EnemyBubbleApproachConfig approachConfig;
+    FSeek(p + 52); EnemyBubbleBlitzProtectionReadyConfig blitzReadyConfig;
+    FSeek(p + 68); EnemyBubbleBlitzProtectionConfig blitzConfig;
+    FSeek(p + 84); EnemyBubbleShellConfig shellConfig;
+
+    FSeek(p + 124);
+} EnemyBubbleCommonParam;
+
+typedef int sint32;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} EnemyBubbleCommonLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); EnemyBubbleCommonLevelParam common;
+
+    FSeek(p + 16);
+} EnemyBubbleLevelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+
+    FSeek(p + 4);
+} EnemyBubbleLevelBand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyBubbleCommonParam commonParam;
+    FSeek(p + 124); EnemyBubbleLevelParam levelParams[5]<optimize=false>;
+    FSeek(p + 204); EnemyBubbleLevelBand levelBand[5]<optimize=false>;
+
+    FSeek(p + 224);
+} EnemyBubbleConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyBubbleConfig data;

@@ -1,0 +1,98 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float suckedTime;
+    FSeek(p + 4);  float launchAngle;
+    FSeek(p + 8);  float launchMaxSpeed;
+    FSeek(p + 12); float launchMinSpeed;
+    FSeek(p + 16); float randomRangeMin;
+    FSeek(p + 20); float randomRangeMax;
+    FSeek(p + 24); float lifeTime;
+
+    FSeek(p + 28);
+} RingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float changeTimeIdlePatrolMin;
+    FSeek(p + 4); float changeTimeIdlePatrolMax;
+
+    FSeek(p + 8);
+} EnemyDefenderPatrolConfig;
+
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   RingParameter ringParam;
+    FSeek(p + 28);  float mass;
+    FSeek(p + 32);  float slopeAngleMax;
+    FSeek(p + 36);  float checkBarrierDistance;
+    FSeek(p + 40);  float colliderRadius;
+    FSeek(p + 44);  float colliderHeight;
+    FSeek(p + 48);  float damageColliderRadiusOffset;
+    FSeek(p + 52);  float boomerangColliderRadius;
+    FSeek(p + 56);  float boomerangColliderHeight;
+    FSeek(p + 60);  float boomerangColliderOffset;
+    FSeek(p + 64);  float boomerangCameraKeepTimeMin;
+    FSeek(p + 68);  float eyesightDistance;
+    FSeek(p + 72);  float eyesightLostDelayTime;
+    FSeek(p + 76);  EnemyDefenderPatrolConfig patrolConfig;
+    FSeek(p + 84);  float shieldBlowUpTime;
+    FSeek(p + 88);  float shieldBlowUpHeight;
+    FSeek(p + 92);  float shieldBoomerangSpeed;
+    FSeek(p + 96);  float shieldBoomerangMinDistance;
+    FSeek(p + 100); float shieldBoomerangMaxDistance;
+    FSeek(p + 104); float killWaitTime;
+    FSeek(p + 108); float cameraDistance;
+    FSeek(p + 112); float cameraElevation;
+    FSeek(p + 116); sint32 parryBoomerangRound;
+    FSeek(p + 120); float parryBoomerangOffset;
+    FSeek(p + 124); float parryBoomerangSpeed;
+
+    FSeek(p + 128);
+} EnemyDefenderCommonConfig;
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 maxHealthPoint;
+    FSeek(p + 4);  float attackRate;
+    FSeek(p + 8);  uint16 expItemNum;
+    FSeek(p + 10); uint16 exp;
+
+    FSeek(p + 12);
+} DefenderCommonLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 level;
+    FSeek(p + 4); DefenderCommonLevelConfig common;
+
+    FSeek(p + 16);
+} EnemyDefenderLevelConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   EnemyDefenderCommonConfig commonParams;
+    FSeek(p + 128); EnemyDefenderLevelConfig levelParams[5]<optimize=false>;
+
+    FSeek(p + 208);
+} EnemyDefenderConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyDefenderConfig data;

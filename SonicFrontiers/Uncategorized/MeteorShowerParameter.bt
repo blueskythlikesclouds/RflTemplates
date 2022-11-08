@@ -1,0 +1,164 @@
+typedef uint uint32;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float spawnIntervalMax;
+    FSeek(p + 4);  float spawnIntervalMin;
+    FSeek(p + 8);  float spawnHeightMax;
+    FSeek(p + 12); float spawnHeightMin;
+    FSeek(p + 16); float spawnHorizonMax;
+    FSeek(p + 20); float spawnHorizonMin;
+    FSeek(p + 24); float speedMax;
+    FSeek(p + 28); float speedMin;
+    FSeek(p + 32); float lengthMax;
+    FSeek(p + 36); float lengthMin;
+    FSeek(p + 40); float width;
+    FSeek(p + 44); float angleMax;
+    FSeek(p + 48); float angleMin;
+    FSeek(p + 52); float moveTimeMax;
+    FSeek(p + 56); float moveTimeMin;
+    FSeek(p + 60); float fadeTimeMax;
+    FSeek(p + 64); float fadeTimeMin;
+    FSeek(p + 68); float spawnAngle;
+    FSeek(p + 80); vector3 color;
+
+    FSeek(p + 96);
+} MeteorShowerEffectParameter;
+
+typedef byte sint8;
+
+enum<sint8> Symbol
+{
+    Invalid = -1,
+    Seven = 0,
+    Bar = 1,
+    Fruit = 2,
+    Bell = 3,
+    NumSymbols = 4,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Symbol symbols[16]<optimize=false>;
+    FSeek(p + 16); float spinSpeedMin;
+    FSeek(p + 20); float spinSpeedMax;
+    FSeek(p + 24); float autoStopTimeMin;
+    FSeek(p + 28); float autoStopTimeMax;
+
+    FSeek(p + 32);
+} ReelParam;
+
+enum<sint8> RateInfo_Symbol
+{
+    RateInfo_Invalid = -1,
+    RateInfo_Seven = 0,
+    RateInfo_Bar = 1,
+    RateInfo_Fruit = 2,
+    RateInfo_Bell = 3,
+    RateInfo_NumSymbols = 4,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); RateInfo_Symbol symbols[3]<optimize=false>;
+    FSeek(p + 4); float rate;
+
+    FSeek(p + 8);
+} RateInfo;
+
+enum<sint8> CeilingInfo_Symbol
+{
+    CeilingInfo_Invalid = -1,
+    CeilingInfo_Seven = 0,
+    CeilingInfo_Bar = 1,
+    CeilingInfo_Fruit = 2,
+    CeilingInfo_Bell = 3,
+    CeilingInfo_NumSymbols = 4,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CeilingInfo_Symbol symbols[3]<optimize=false>;
+    FSeek(p + 4); uint32 rollCount;
+
+    FSeek(p + 8);
+} CeilingInfo;
+
+enum<sint8> PayoutInfo_Symbol
+{
+    PayoutInfo_Invalid = -1,
+    PayoutInfo_Seven = 0,
+    PayoutInfo_Bar = 1,
+    PayoutInfo_Fruit = 2,
+    PayoutInfo_Bell = 3,
+    PayoutInfo_NumSymbols = 4,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PayoutInfo_Symbol symbols[3]<optimize=false>;
+    FSeek(p + 4); uint32 payout;
+
+    FSeek(p + 8);
+} PayoutInfo;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   ReelParam reelParams[3]<optimize=false>;
+    FSeek(p + 96);  float spinInterval;
+    FSeek(p + 100); RateInfo rateInfos[4]<optimize=false>;
+    FSeek(p + 132); CeilingInfo ceilingInfos[4]<optimize=false>;
+    FSeek(p + 164); PayoutInfo payoutInfos[4]<optimize=false>;
+    FSeek(p + 196); uint32 payoutOnBlank;
+    FSeek(p + 200); bool WinEvenWithPush;
+    FSeek(p + 204); float retrySpeed;
+    FSeek(p + 208); float backSpeed;
+    FSeek(p + 212); float stepSpeed;
+
+    FSeek(p + 216);
+} ObjBonusSlotConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float rangeFromSonicObjectsDontRespawn;
+    FSeek(p + 4);   uint32 intervalDay;
+    FSeek(p + 8);   uint32 startHour;
+    FSeek(p + 12);  uint32 startMinute;
+    FSeek(p + 16);  uint32 durationHour;
+    FSeek(p + 20);  uint32 durationMinute;
+    FSeek(p + 32);  MeteorShowerEffectParameter effect;
+    FSeek(p + 128); ObjBonusSlotConfig bonusSlotConfig;
+
+    FSeek(p + 352);
+} MeteorShowerParameter;
+
+LittleEndian();
+
+FSeek(64);
+MeteorShowerParameter data;

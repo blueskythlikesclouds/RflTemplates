@@ -1,0 +1,29 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float dropBoxProbabilly;
+    FSeek(p + 4);  float boxHpSmall;
+    FSeek(p + 8);  float boxHpMiddle;
+    FSeek(p + 12); float boxHpLarge;
+    FSeek(p + 16); float friction;
+    FSeek(p + 20); float mass;
+    FSeek(p + 24); float gravity;
+    FSeek(p + 28); float linearDamping;
+    FSeek(p + 32); float angularDamping;
+    FSeek(p + 48); vector3 maxSpeed;
+
+    FSeek(p + 64);
+} ObjQuestBoxParameter;
+
+LittleEndian();
+
+FSeek(64);
+ObjQuestBoxParameter data;

@@ -1,0 +1,77 @@
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float radius;
+    FSeek(p + 16); vector3 pos;
+
+    FSeek(p + 32);
+} HeliDamageCol;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float followRotateSpeed;
+    FSeek(p + 16); HeliDamageCol damageCol;
+
+    FSeek(p + 48);
+} HeliCommon;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float life;
+    FSeek(p + 4); float attackInterval;
+
+    FSeek(p + 8);
+} HeliAttackBase;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  HeliAttackBase base;
+    FSeek(p + 8);  float bulletSpeed;
+    FSeek(p + 12); float gunRotateSpeed;
+    FSeek(p + 16); uint8 attackChainNum;
+    FSeek(p + 20); float attackChainInterval;
+
+    FSeek(p + 24);
+} HeliBullet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); HeliAttackBase base;
+    FSeek(p + 8); float bombSpeed;
+
+    FSeek(p + 12);
+} HeliBomb;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  HeliCommon common;
+    FSeek(p + 48); HeliBullet attackBullet;
+    FSeek(p + 72); HeliBomb attackBomb;
+
+    FSeek(p + 96);
+} EnemyHelicopterConfig;
+
+LittleEndian();
+
+FSeek(64);
+EnemyHelicopterConfig data;

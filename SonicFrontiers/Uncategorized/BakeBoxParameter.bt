@@ -1,0 +1,31 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); vector3 center;
+    FSeek(p + 32); vector3 halfExtents;
+
+    FSeek(p + 48);
+} BakeBoxParameter;
+
+LittleEndian();
+
+FSeek(64);
+BakeBoxParameter data;

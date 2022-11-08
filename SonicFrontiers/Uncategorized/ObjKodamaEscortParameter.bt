@@ -1,0 +1,60 @@
+typedef int sint32;
+
+typedef struct vector3 {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 applicableFailedCount;
+    FSeek(p + 4);   float stackingHeight;
+    FSeek(p + 8);   float blowAwayLengthMin;
+    FSeek(p + 12);  float blowAwayLengthMax;
+    FSeek(p + 16);  float blowAwayHeightMin;
+    FSeek(p + 20);  float blowAwayHeightMax;
+    FSeek(p + 24);  float modelScale;
+    FSeek(p + 28);  float modelScaleSticking;
+    FSeek(p + 32);  float capsuleRadius;
+    FSeek(p + 36);  float capsuleHeight;
+    FSeek(p + 48);  vector3 capsuleOffset;
+    FSeek(p + 64);  float searchRadius;
+    FSeek(p + 68);  float rotationAnglePerSec;
+    FSeek(p + 72);  float verticalJumpSpeedMin;
+    FSeek(p + 76);  float verticalJumpSpeedMax;
+    FSeek(p + 80);  float horizontalJumpSpeedMin;
+    FSeek(p + 84);  float horizontalJumpSpeedMax;
+    FSeek(p + 88);  float jumpInterval;
+    FSeek(p + 92);  float contactRadius;
+    FSeek(p + 96);  float collectTime;
+    FSeek(p + 100); float splineVelocityY;
+    FSeek(p + 104); float splineVelocityMultiplier;
+    FSeek(p + 108); float splineJumpTime;
+    FSeek(p + 112); float flockRange;
+    FSeek(p + 116); float spaceHA;
+    FSeek(p + 120); float maxTiltOfEachKodamaBending;
+    FSeek(p + 124); float bendingTimeDuringStop;
+    FSeek(p + 128); float maxTiltOfEachKodamaBendingStop;
+    FSeek(p + 132); float bendingCycleTimeDuringStay;
+    FSeek(p + 136); float maxTiltOfEachKodamaBendingStay;
+
+    FSeek(p + 144);
+} ObjKodamaEscortParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); ObjKodamaEscortParameterElement element[3]<optimize=false>;
+
+    FSeek(p + 432);
+} ObjKodamaEscortParameter;
+
+LittleEndian();
+
+FSeek(64);
+ObjKodamaEscortParameter data;

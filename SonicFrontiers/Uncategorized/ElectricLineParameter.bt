@@ -1,0 +1,36 @@
+typedef int sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 challengeNo0;
+    FSeek(p + 4); sint32 challengeNo1;
+
+    FSeek(p + 8);
+} ElectricLineConnectData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 challengeNo0;
+    FSeek(p + 4); sint32 challengeNo1;
+    FSeek(p + 8); ElectricLineConnectData data[3]<optimize=false>;
+
+    FSeek(p + 32);
+} ElectricLineConnectParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); ElectricLineConnectParameter connect[200]<optimize=false>;
+
+    FSeek(p + 6400);
+} ElectricLineParameter;
+
+LittleEndian();
+
+FSeek(64);
+ElectricLineParameter data;

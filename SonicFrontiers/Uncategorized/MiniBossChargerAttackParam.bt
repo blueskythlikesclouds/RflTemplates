@@ -1,0 +1,42 @@
+typedef int sint32;
+
+enum<sint32> AttackType
+{
+    AttackTypeInvalid = 0,
+    AttackSimpleRotateBullet = 1,
+    AttackFollowLaser = 2,
+    AttackVortexLaser = 3,
+    AttackCrossLaser = 4,
+    AttackCrossBullet = 5,
+    AttackMassLaser = 6,
+    AttackVerticalRoundBullet = 7,
+    AttackPyramidRoundBullet = 8,
+    AttackPlaneUpDownBullet = 9,
+    AttackTriangleBatteryBullet = 10,
+    AttackPlayerFallBullet = 11,
+    AttackGatlingRevolverBullet = 12,
+    AttackWinderBullet = 13,
+    AttackShotgunBullet = 14,
+    AttackAirDropBullet = 15,
+    AttackChaseShotObject = 16,
+    AttackDiffuseLaser = 17,
+    AttackChaseShot = 18,
+    AttackTypeNum = 19,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  AttackType type;
+    FSeek(p + 4);  sint32 index;
+    FSeek(p + 8);  float rate;
+    FSeek(p + 12); float restTime;
+
+    FSeek(p + 16);
+} MiniBossChargerAttackParam;
+
+LittleEndian();
+
+FSeek(64);
+MiniBossChargerAttackParam data;

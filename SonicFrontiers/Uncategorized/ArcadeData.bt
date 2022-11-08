@@ -1,0 +1,97 @@
+typedef uint uint32;
+
+typedef ubyte uint8;
+
+typedef byte sint8;
+
+enum<sint8> Status
+{
+    STATUS_ZERO_FILL = 0,
+    STATUS_INITIALIZED = 1,
+};
+
+enum<sint8> Sequence
+{
+    Island1 = 0,
+    Island2 = 1,
+    Island3 = 2,
+    Island4 = 3,
+    Island5 = 4,
+    FinalBossBefore = 5,
+    FinalBossAfter = 6,
+};
+
+enum<sint8> SaveDataIcon
+{
+    IconNoData = 0,
+    IconIsland1 = 1,
+    IconIsland2 = 2,
+    IconIsland3 = 3,
+    IconIsland4 = 4,
+    IconIsland5 = 5,
+    IconLastBoss = 6,
+};
+
+typedef ushort uint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 signature;
+    FSeek(p + 4);  uint8 version;
+    FSeek(p + 5);  Status status;
+    FSeek(p + 6);  uint8 config;
+    FSeek(p + 7);  Sequence sequence;
+    FSeek(p + 8);  uint32 playTime;
+    FSeek(p + 12); SaveDataIcon icon;
+    FSeek(p + 13); uint8 reserved0;
+    FSeek(p + 14); uint16 reserved1;
+    FSeek(p + 16); uint32 saveDate;
+    FSeek(p + 20); uint8 index;
+    FSeek(p + 24); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 40);
+} HeaderData;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint16 flags;
+    FSeek(p + 4); uint32 bestTime;
+    FSeek(p + 8); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 24);
+} CyberStageData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CyberStageData actStages[32]<optimize=false>;
+
+    FSeek(p + 768);
+} CyberStageContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   HeaderData header;
+    FSeek(p + 40);  bool unlocked;
+    FSeek(p + 44);  CyberStageContainerData stages;
+    FSeek(p + 812); uint32 reserved[4]<optimize=false>;
+
+    FSeek(p + 828);
+} ArcadeData;
+
+LittleEndian();
+
+FSeek(64);
+ArcadeData data;

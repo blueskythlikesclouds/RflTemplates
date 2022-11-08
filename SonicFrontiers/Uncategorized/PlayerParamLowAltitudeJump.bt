@@ -1,0 +1,18 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float upSpeed;
+    FSeek(p + 4);  float frontSpeed;
+    FSeek(p + 8);  float damperV;
+    FSeek(p + 12); float damperH;
+    FSeek(p + 16); float gravity;
+    FSeek(p + 20); float time;
+
+    FSeek(p + 24);
+} PlayerParamLowAltitudeJump;
+
+LittleEndian();
+
+FSeek(64);
+PlayerParamLowAltitudeJump data;

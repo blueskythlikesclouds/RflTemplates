@@ -1,0 +1,130 @@
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct color8 {
+    ubyte r;
+    ubyte g;
+    ubyte b;
+    ubyte a;
+} color8;
+
+typedef byte sint8;
+
+enum<sint8> Orientation
+{
+    ORIENTATION_NONE = 0,
+    ORIENTATION_HORIZONTAL = 1,
+    ORIENTATION_VERTICAL = 2,
+    ORIENTATION_DIAGONAL = 3,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Orientation orientation;
+    FSeek(p + 1);  sint8 srcPosX;
+    FSeek(p + 2);  sint8 srcPosY;
+    FSeek(p + 3);  sint8 dstPosX;
+    FSeek(p + 4);  sint8 dstPosY;
+    FSeek(p + 8);  color8 srcColor;
+    FSeek(p + 12); color8 dstColor;
+
+    FSeek(p + 16);
+} DecoGradationParam;
+
+enum<sint8> DecoLayerBlendOp
+{
+    DECO_LAYER_BLEND_OP_BLEND = 0,
+    DECO_LAYER_BLEND_OP_SUBTRACT_ALPHA = 1,
+};
+
+typedef int sint32;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); color8 color;
+    FSeek(p + 4); uint8 size;
+    FSeek(p + 5); uint8 spread;
+    FSeek(p + 6); sint8 distanceX;
+    FSeek(p + 7); sint8 distanceY;
+
+    FSeek(p + 8);
+} DecoDropShadowParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  color8 color;
+    FSeek(p + 4);  sint32 thickness;
+    FSeek(p + 8);  sint32 offsetX;
+    FSeek(p + 12); sint32 offsetY;
+
+    FSeek(p + 16);
+} DecoRimParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 radius;
+
+    FSeek(p + 4);
+} DecoBlurParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  DecoDropShadowParam dropShadow;
+    FSeek(p + 8);  DecoRimParam rim;
+    FSeek(p + 24); DecoGradationParam gradation;
+    FSeek(p + 40); DecoBlurParam blur;
+    FSeek(p + 44); bool avoidEdgeArtifact;
+
+    FSeek(p + 48);
+} DecoPassParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name;
+    FSeek(p + 16); color8 fontColor;
+    FSeek(p + 20); DecoGradationParam fontGradParam;
+    FSeek(p + 36); DecoLayerBlendOp layerBlendOp;
+    FSeek(p + 40); sint32 numPasses;
+    FSeek(p + 44); DecoPassParam passParams[5]<optimize=false>;
+
+    FSeek(p + 288);
+} DecoTechParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); DecoTechParam params[512]<optimize=false>;
+
+    FSeek(p + 147456);
+} DecoTechParams;
+
+LittleEndian();
+
+FSeek(64);
+DecoTechParams data;

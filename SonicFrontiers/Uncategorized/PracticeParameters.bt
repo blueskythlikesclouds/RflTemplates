@@ -1,0 +1,193 @@
+typedef byte sint8;
+
+enum<sint8> Checker
+{
+    InvalidChecker = -1,
+    CountActions = 0,
+    CountAirTrick = 1,
+    CountControlCamera = 2,
+    CountInfinityCombo = 3,
+    CountFiveCombo = 4,
+    NumCheckers = 5,
+};
+
+typedef ubyte uint8;
+
+enum<uint8> Type
+{
+    None = 0,
+    ControlCamera = 1,
+    Cyloop = 2,
+    QuickCyloop = 3,
+    FocusCamera = 4,
+    Parry = 5,
+    Avoid = 6,
+    AcceleCombo = 7,
+    Crasher = 8,
+    HomingShot = 9,
+    StompingAttack = 10,
+    SonicBoom = 11,
+    SpinSlash = 12,
+    LoopKick = 13,
+    CrossSlash = 14,
+    ChargeAttack = 15,
+    Smash = 16,
+    RecoverySmash = 17,
+    Jump = 18,
+    DoubleJump = 19,
+    HomingAttack = 20,
+    Boost = 21,
+    Stomping = 22,
+    BoundStomping = 23,
+    AirBoost = 24,
+    QuickStep = 25,
+    LightDash = 26,
+    DropDash = 27,
+    Sliding = 28,
+    WallRun = 29,
+    Discontinued = 30,
+    AirTrick = 31,
+    AirTrickEnd = 32,
+    CancelHomingAttackBounceStomping = 33,
+    CancelAirBoostStomping = 34,
+    Num = 35,
+};
+
+enum<sint8> Judge
+{
+    Succeed = 0,
+    Failed = 1,
+    Skiped = 2,
+    Waiting = 3,
+    Unknown = 4,
+    NumJudges = 5,
+};
+
+typedef ulong uint64;
+
+typedef struct {
+    long pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Type action;
+    FSeek(p + 1);  Judge dummy;
+    FSeek(p + 8);  uint64 skipableActions;
+    FSeek(p + 16); cstring label;
+
+    FSeek(p + 32);
+} PracticeAction;
+
+typedef int sint32;
+
+typedef uint uint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 skill;
+    FSeek(p + 8);  uint64 clearedSubject;
+    FSeek(p + 16); uint64 clearedSubject2;
+
+    FSeek(p + 24);
+} PracticePrerequisite;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   Checker checker;
+    FSeek(p + 8);   PracticeAction actions[6]<optimize=false>;
+    FSeek(p + 200); sint32 count;
+    FSeek(p + 208); PracticePrerequisite prerequisite;
+    FSeek(p + 232); uint8 options;
+
+    FSeek(p + 240);
+} PracticeSubject;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); cstring labels[10]<optimize=false>;
+
+    FSeek(p + 160);
+} PracticeText;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float readyTime;
+    FSeek(p + 4);  float countTime;
+    FSeek(p + 8);  float subjectViewTime;
+    FSeek(p + 12); float clearedPostTime;
+    FSeek(p + 16); float fadeoutWaitTime;
+    FSeek(p + 20); float rebuildWaitTime1;
+    FSeek(p + 24); float rebuildWaitTime2;
+
+    FSeek(p + 28);
+} PracticeTime;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 skill;
+    FSeek(p + 4); bool tutorialCleared;
+
+    FSeek(p + 8);
+} PracticeTipsPrerequisite;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PracticeTipsPrerequisite prerequisite;
+
+    FSeek(p + 8);
+} PracticeTips;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint8 subjects[20]<optimize=false>;
+    FSeek(p + 20); sint8 tips[100]<optimize=false>;
+
+    FSeek(p + 120);
+} PracticeSet;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     PracticeSubject subjects[100]<optimize=false>;
+    FSeek(p + 24000); PracticeText text;
+    FSeek(p + 24160); PracticeTime time;
+    FSeek(p + 24188); float notifyTime;
+    FSeek(p + 24192); PracticeTips tips[128]<optimize=false>;
+    FSeek(p + 25216); float tipsMinViewTime;
+    FSeek(p + 25220); PracticeSet sets[81]<optimize=false>;
+
+    FSeek(p + 34944);
+} PracticeParameters;
+
+LittleEndian();
+
+FSeek(64);
+PracticeParameters data;

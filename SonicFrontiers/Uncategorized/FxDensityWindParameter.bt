@@ -1,0 +1,20 @@
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float windDir;
+    FSeek(p + 4);  float windPower;
+    FSeek(p + 8);  float windLenght;
+    FSeek(p + 12); float windSpeed;
+    FSeek(p + 16); float windRalenght;
+    FSeek(p + 20); float windRaamp;
+    FSeek(p + 24); float windRalevel;
+    FSeek(p + 28); float windRtpower;
+
+    FSeek(p + 32);
+} FxDensityWindParameter;
+
+LittleEndian();
+
+FSeek(64);
+FxDensityWindParameter data;
