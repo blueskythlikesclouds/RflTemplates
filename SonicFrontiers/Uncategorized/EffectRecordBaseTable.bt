@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef ubyte uint8;
 
 typedef struct
@@ -10,11 +12,11 @@ typedef struct
 } Record;
 
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
@@ -22,7 +24,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); Record base;
+    FSeek(p + 0); Record record;
     FSeek(p + 8); cstring emitterSetName[2]<optimize=false>;
 
     FSeek(p + 40);
@@ -39,5 +41,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-EffectRecordBaseTable data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EffectRecordBaseTable effectRecordBaseTable;

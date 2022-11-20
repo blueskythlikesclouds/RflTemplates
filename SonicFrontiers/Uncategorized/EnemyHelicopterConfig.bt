@@ -1,4 +1,6 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -41,7 +43,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  HeliAttackBase base;
+    FSeek(p + 0);  HeliAttackBase heliAttackBase;
     FSeek(p + 8);  float bulletSpeed;
     FSeek(p + 12); float gunRotateSpeed;
     FSeek(p + 16); uint8 attackChainNum;
@@ -54,7 +56,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); HeliAttackBase base;
+    FSeek(p + 0); HeliAttackBase heliAttackBase;
     FSeek(p + 8); float bombSpeed;
 
     FSeek(p + 12);
@@ -73,5 +75,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-EnemyHelicopterConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyHelicopterConfig enemyHelicopterConfig;

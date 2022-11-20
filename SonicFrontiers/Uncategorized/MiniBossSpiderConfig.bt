@@ -1,4 +1,6 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -19,7 +21,7 @@ typedef struct
     FSeek(p + 64);
 } MiniBossCommonConfig;
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -209,8 +211,6 @@ typedef struct
     FSeek(p + 1520);
 } MiniBossSpiderCommonParam;
 
-typedef ushort uint16;
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -253,12 +253,12 @@ enum<byte> bool {
 
 enum<sint8> MiniBossSpiderLevelBand_MiniBossSpiderBreakType
 {
-    MiniBossSpiderLevelBand_BREAK_NONE = 0,
-    MiniBossSpiderLevelBand_BREAK_LEG = 1,
-    MiniBossSpiderLevelBand_BREAK_AIR_LEG = 2,
-    MiniBossSpiderLevelBand_BREAK_BOUNCE_LEG = 3,
-    MiniBossSpiderLevelBand_BREAK_GIMMICK = 4,
-    MiniBossSpiderLevelBand_BREAK_ALL = 5,
+    MiniBossSpiderLevelBand_MiniBossSpiderBreakType_BREAK_NONE = 0,
+    MiniBossSpiderLevelBand_MiniBossSpiderBreakType_BREAK_LEG = 1,
+    MiniBossSpiderLevelBand_MiniBossSpiderBreakType_BREAK_AIR_LEG = 2,
+    MiniBossSpiderLevelBand_MiniBossSpiderBreakType_BREAK_BOUNCE_LEG = 3,
+    MiniBossSpiderLevelBand_MiniBossSpiderBreakType_BREAK_GIMMICK = 4,
+    MiniBossSpiderLevelBand_MiniBossSpiderBreakType_BREAK_ALL = 5,
 };
 
 typedef ubyte uint8;
@@ -338,5 +338,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-MiniBossSpiderConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MiniBossSpiderConfig miniBossSpiderConfig;

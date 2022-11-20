@@ -1,6 +1,6 @@
-typedef uint uint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -61,12 +61,12 @@ typedef struct
 
 enum<sint8> RateInfo_Symbol
 {
-    RateInfo_Invalid = -1,
-    RateInfo_Seven = 0,
-    RateInfo_Bar = 1,
-    RateInfo_Fruit = 2,
-    RateInfo_Bell = 3,
-    RateInfo_NumSymbols = 4,
+    RateInfo_Symbol_Invalid = -1,
+    RateInfo_Symbol_Seven = 0,
+    RateInfo_Symbol_Bar = 1,
+    RateInfo_Symbol_Fruit = 2,
+    RateInfo_Symbol_Bell = 3,
+    RateInfo_Symbol_NumSymbols = 4,
 };
 
 typedef struct
@@ -81,12 +81,12 @@ typedef struct
 
 enum<sint8> CeilingInfo_Symbol
 {
-    CeilingInfo_Invalid = -1,
-    CeilingInfo_Seven = 0,
-    CeilingInfo_Bar = 1,
-    CeilingInfo_Fruit = 2,
-    CeilingInfo_Bell = 3,
-    CeilingInfo_NumSymbols = 4,
+    CeilingInfo_Symbol_Invalid = -1,
+    CeilingInfo_Symbol_Seven = 0,
+    CeilingInfo_Symbol_Bar = 1,
+    CeilingInfo_Symbol_Fruit = 2,
+    CeilingInfo_Symbol_Bell = 3,
+    CeilingInfo_Symbol_NumSymbols = 4,
 };
 
 typedef struct
@@ -101,12 +101,12 @@ typedef struct
 
 enum<sint8> PayoutInfo_Symbol
 {
-    PayoutInfo_Invalid = -1,
-    PayoutInfo_Seven = 0,
-    PayoutInfo_Bar = 1,
-    PayoutInfo_Fruit = 2,
-    PayoutInfo_Bell = 3,
-    PayoutInfo_NumSymbols = 4,
+    PayoutInfo_Symbol_Invalid = -1,
+    PayoutInfo_Symbol_Seven = 0,
+    PayoutInfo_Symbol_Bar = 1,
+    PayoutInfo_Symbol_Fruit = 2,
+    PayoutInfo_Symbol_Bell = 3,
+    PayoutInfo_Symbol_NumSymbols = 4,
 };
 
 typedef struct
@@ -160,5 +160,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-MeteorShowerParameter data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MeteorShowerParameter meteorShowerParameter;

@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef ubyte uint8;
 
 enum<uint8> ShootingDirection
@@ -29,7 +31,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  CommonBulletParam base;
+    FSeek(p + 0);  CommonBulletParam commonBulletParam;
     FSeek(p + 20); float railChangeDelay;
     FSeek(p + 24); float turnaroundTime;
     FSeek(p + 28); float splinePositionDistance;
@@ -42,7 +44,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  CommonBulletParam base;
+    FSeek(p + 0);  CommonBulletParam commonBulletParam;
     FSeek(p + 20); float railChangeDelay;
     FSeek(p + 24); float turnaroundTime;
     FSeek(p + 28); float splinePositionDistance;
@@ -55,7 +57,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); CommonBulletParam base;
+    FSeek(p + 0); CommonBulletParam commonBulletParam;
 
     FSeek(p + 20);
 } SameBodyRailBulletParam;
@@ -73,5 +75,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-ObjStriderBulletConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjStriderBulletConfig objStriderBulletConfig;

@@ -1,4 +1,4 @@
-typedef ushort uint16;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
 typedef struct
 {
@@ -42,7 +42,7 @@ typedef struct
     FSeek(p + 44);
 } PlayerParamAttackCommon;
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -60,11 +60,11 @@ enum<sint8> HitSE
 };
 
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
@@ -179,8 +179,6 @@ typedef struct
 
     FSeek(p + 60);
 } PlayerParamAcceleLevel;
-
-typedef uint uint32;
 
 typedef struct
 {
@@ -715,9 +713,9 @@ typedef struct
     FSeek(p + 540);
 } PlayerParamCombo;
 
-typedef int sint32;
+typedef int32 sint32;
 
-typedef struct vector2 {
+typedef struct {
     float x;
     float y;
 } vector2;
@@ -746,18 +744,18 @@ typedef struct
     FSeek(p + 88);
 } CyloopSlashEffectBaseParameter;
 
-typedef struct colorF {
-    float r;
-    float g;
-    float b;
-    float a;
+typedef struct {
+    float alpha;
+    float red;
+    float green;
+    float blue;
 } colorF;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   CyloopSlashEffectBaseParameter base;
+    FSeek(p + 0);   CyloopSlashEffectBaseParameter cyloopSlashEffectBaseParameter;
     FSeek(p + 88);  colorF m_color0;
     FSeek(p + 104); colorF m_color1;
     FSeek(p + 120); float m_luminance;
@@ -784,7 +782,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   CyloopSlashEffectBaseParameter base;
+    FSeek(p + 0);   CyloopSlashEffectBaseParameter cyloopSlashEffectBaseParameter;
     FSeek(p + 88);  colorF m_color;
     FSeek(p + 104); float m_alphaThreshold;
     FSeek(p + 108); OpaqueLineUvCell m_uvCells[2]<optimize=false>;
@@ -2530,5 +2528,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-PlayerParameters data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PlayerParameters playerParameters;

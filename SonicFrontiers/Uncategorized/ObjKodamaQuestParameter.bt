@@ -1,6 +1,8 @@
-typedef int sint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
-typedef struct vector3 {
+typedef int32 sint32;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -38,8 +40,6 @@ typedef struct
 
     FSeek(p + 36);
 } QuestKodamaCollectionMoveParameter;
-
-typedef ushort uint16;
 
 typedef ubyte uint8;
 
@@ -95,7 +95,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  QuestKodamaCollectionBombParameter base;
+    FSeek(p + 0);  QuestKodamaCollectionBombParameter questKodamaCollectionBombParameter;
     FSeek(p + 28); float sandStormTime;
     FSeek(p + 32); float noBombsTime;
     FSeek(p + 36); float sandStormInLerpTime;
@@ -129,5 +129,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-ObjKodamaQuestParameter data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjKodamaQuestParameter objKodamaQuestParameter;

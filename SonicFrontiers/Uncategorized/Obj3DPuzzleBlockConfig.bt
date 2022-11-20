@@ -1,6 +1,8 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef ubyte uint8;
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -49,5 +51,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-Obj3DPuzzleBlockConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+Obj3DPuzzleBlockConfig obj3DPuzzleBlockConfig;

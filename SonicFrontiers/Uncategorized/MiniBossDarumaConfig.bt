@@ -1,4 +1,6 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -19,7 +21,7 @@ typedef struct
     FSeek(p + 64);
 } MiniBossCommonConfig;
 
-typedef int sint32;
+typedef int32 sint32;
 
 enum<byte> bool {
     False = 0,
@@ -81,7 +83,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase base;
+    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
     FSeek(p + 56); float explosionRadius;
     FSeek(p + 60); float explosionEffectScale;
     FSeek(p + 64); float explosionTime;
@@ -93,19 +95,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase base;
+    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
     FSeek(p + 56); float burnLifeTime;
 
     FSeek(p + 60);
 } MiniBossDarumaFlamePillarParam;
 
-typedef uint uint32;
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase base;
+    FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
     FSeek(p + 56); float burnLifeTime;
     FSeek(p + 60); float cycleTime;
     FSeek(p + 64); float cycleDistance;
@@ -264,8 +264,6 @@ typedef struct
     FSeek(p + 2912);
 } MiniBossDarumaCommonParam;
 
-typedef ushort uint16;
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -350,5 +348,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-MiniBossDarumaConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MiniBossDarumaConfig miniBossDarumaConfig;

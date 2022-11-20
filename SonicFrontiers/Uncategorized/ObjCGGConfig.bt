@@ -1,15 +1,17 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
     float w<hidden=true>;
 } vector3;
 
-typedef struct color8 {
-    ubyte r;
-    ubyte g;
-    ubyte b;
-    ubyte a;
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
 } color8;
 
 typedef struct
@@ -111,5 +113,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-ObjCGGConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjCGGConfig objCGGConfig;

@@ -1,4 +1,6 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -41,15 +43,13 @@ enum<byte> bool {
 };
 
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
-
-typedef uint uint32;
 
 enum<uint32> ColliderProperty
 {
@@ -66,11 +66,11 @@ enum<uint32> ColliderProperty
     PressBlowArm = 512,
 };
 
-typedef struct color8 {
-    ubyte r;
-    ubyte g;
-    ubyte b;
-    ubyte a;
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
 } color8;
 
 typedef struct
@@ -112,7 +112,7 @@ typedef struct
     FSeek(p + 1584);
 } MiniBossSumoColliderConfig;
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -287,8 +287,6 @@ typedef struct
     FSeek(p + 2560);
 } MiniBossSumoCommonParam;
 
-typedef ushort uint16;
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -385,5 +383,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-MiniBossSumoConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MiniBossSumoConfig miniBossSumoConfig;

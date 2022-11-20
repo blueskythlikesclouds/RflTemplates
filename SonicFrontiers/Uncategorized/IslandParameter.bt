@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 enum<byte> bool {
     False = 0,
     True = 1,
@@ -60,7 +62,7 @@ typedef struct
     FSeek(p + 40);
 } KodamaNormalParam;
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -124,5 +126,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-IslandParameter data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+IslandParameter islandParameter;

@@ -1,4 +1,4 @@
-typedef uint uint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
 typedef ubyte uint8;
 
@@ -31,8 +31,6 @@ enum<sint8> SaveDataIcon
     IconIsland5 = 5,
     IconLastBoss = 6,
 };
-
-typedef ushort uint16;
 
 typedef struct
 {
@@ -128,7 +126,7 @@ typedef struct
     FSeek(p + 32);
 } OptionGamePlayData;
 
-typedef int sint32;
+typedef int32 sint32;
 
 enum<sint32> InputKey
 {
@@ -346,8 +344,8 @@ enum<sint8> Resolution
 
 enum<sint8> GraphicQuality
 {
-    High = 0,
-    Low = 1,
+    GraphicQuality_High = 0,
+    GraphicQuality_Low = 1,
     Custom = 2,
 };
 
@@ -362,48 +360,48 @@ enum<sint8> AntiAliasing
 {
     TAA = 0,
     FXAA = 1,
-    None = 2,
+    AntiAliasing_None = 2,
 };
 
 enum<sint8> AnisotropicFiltering
 {
-    None = 0,
-    Low = 1,
-    Medium = 2,
-    High = 3,
+    AnisotropicFiltering_None = 0,
+    AnisotropicFiltering_Low = 1,
+    AnisotropicFiltering_Medium = 2,
+    AnisotropicFiltering_High = 3,
 };
 
 enum<sint8> DOF
 {
     Disabled = 0,
-    Low = 1,
-    Medium = 2,
-    High = 3,
+    DOF_Low = 1,
+    DOF_Medium = 2,
+    DOF_High = 3,
 };
 
 enum<sint8> Bloom
 {
-    High = 0,
-    Low = 1,
+    Bloom_High = 0,
+    Bloom_Low = 1,
 };
 
 enum<sint8> Shadow
 {
-    High = 0,
-    Low = 1,
+    Shadow_High = 0,
+    Shadow_Low = 1,
 };
 
 enum<sint8> VolumetricLight
 {
-    High = 0,
-    Low = 1,
+    VolumetricLight_High = 0,
+    VolumetricLight_Low = 1,
 };
 
 enum<sint8> RederingScale
 {
-    High = 0,
-    Medium = 1,
-    Low = 2,
+    RederingScale_High = 0,
+    RederingScale_Medium = 1,
+    RederingScale_Low = 2,
 };
 
 typedef struct
@@ -448,5 +446,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-OptionData data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+OptionData optionData;

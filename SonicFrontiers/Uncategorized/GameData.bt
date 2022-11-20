@@ -1,4 +1,4 @@
-typedef uint uint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
 typedef ubyte uint8;
 
@@ -32,8 +32,6 @@ enum<sint8> SaveDataIcon
     IconLastBoss = 6,
 };
 
-typedef ushort uint16;
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -56,29 +54,29 @@ typedef struct
 
 enum<sint8> GamePlayData_Status
 {
-    GamePlayData_STATUS_NEWGAME = 0,
-    GamePlayData_STATUS_CONTINUE = 1,
+    STATUS_NEWGAME = 0,
+    STATUS_CONTINUE = 1,
 };
 
 enum<sint8> SequenceDeprecated
 {
-    Island1 = 0,
-    Island2 = 1,
-    Island3 = 2,
-    Island4 = 3,
-    Island5 = 4,
-    FinalBossBefore = 5,
-    FinalBossAfter = 6,
+    SequenceDeprecated_Island1 = 0,
+    SequenceDeprecated_Island2 = 1,
+    SequenceDeprecated_Island3 = 2,
+    SequenceDeprecated_Island4 = 3,
+    SequenceDeprecated_Island5 = 4,
+    SequenceDeprecated_FinalBossBefore = 5,
+    SequenceDeprecated_FinalBossAfter = 6,
 };
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
     float w<hidden=true>;
 } vector3;
 
-typedef struct quaternion {
+typedef struct {
     float x;
     float y;
     float z;
@@ -104,7 +102,7 @@ typedef struct
     FSeek(p + 80);
 } GamePlayData;
 
-typedef short sint16;
+typedef int16 sint16;
 
 typedef struct
 {
@@ -288,7 +286,7 @@ typedef struct
     FSeek(p + 616016);
 } PlayLogData;
 
-typedef int sint32;
+typedef int32 sint32;
 
 enum<byte> bool {
     False = 0,
@@ -336,20 +334,20 @@ typedef struct
 
 enum<sint8> WeatherBlockData_Type
 {
-    WeatherBlockData_Sunny = 0,
-    WeatherBlockData_Cloudy = 1,
-    WeatherBlockData_Rainy = 2,
-    WeatherBlockData_SandStorm = 3,
-    WeatherBlockData_MeteorShower = 4,
-    WeatherBlockData_Num = 5,
+    WeatherBlockData_Type_Sunny = 0,
+    WeatherBlockData_Type_Cloudy = 1,
+    WeatherBlockData_Type_Rainy = 2,
+    WeatherBlockData_Type_SandStorm = 3,
+    WeatherBlockData_Type_MeteorShower = 4,
+    WeatherBlockData_Type_Num = 5,
 };
 
 enum<sint8> WeatherBlockData_Status
 {
-    WeatherBlockData_None = 0,
-    WeatherBlockData_Wait = 1,
-    WeatherBlockData_Active = 2,
-    WeatherBlockData_External = 3,
+    None = 0,
+    Wait = 1,
+    Active = 2,
+    External = 3,
 };
 
 typedef struct
@@ -399,5 +397,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-GameData data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameData gameData;

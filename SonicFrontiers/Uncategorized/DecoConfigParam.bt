@@ -1,8 +1,10 @@
-typedef struct color8 {
-    ubyte r;
-    ubyte g;
-    ubyte b;
-    ubyte a;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
 } color8;
 
 typedef ubyte uint8;
@@ -21,5 +23,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-DecoConfigParam data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+DecoConfigParam decoConfigParam;

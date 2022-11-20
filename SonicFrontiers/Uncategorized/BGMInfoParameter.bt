@@ -1,13 +1,15 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
-typedef int sint32;
+typedef int32 sint32;
 
 enum<byte> bool {
     False = 0,
@@ -56,10 +58,10 @@ typedef struct
 
 enum<sint8> BGMTransitInfo_InterruptType
 {
-    BGMTransitInfo_INTERRUPT_TYPE_STOP = 0,
-    BGMTransitInfo_INTERRUPT_TYPE_PAUSE = 1,
-    BGMTransitInfo_INTERRUPT_TYPE_OVERLAP = 2,
-    BGMTransitInfo_NUM_INTERRUPT_TYPE = 3,
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_STOP = 0,
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_PAUSE = 1,
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_OVERLAP = 2,
+    BGMTransitInfo_InterruptType_NUM_INTERRUPT_TYPE = 3,
 };
 
 typedef struct
@@ -102,5 +104,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-BGMInfoParameter data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BGMInfoParameter bGMInfoParameter;

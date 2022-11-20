@@ -1,4 +1,6 @@
-typedef int sint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
 
 typedef struct
 {
@@ -13,5 +15,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-TimeServiceParam data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+TimeServiceParam timeServiceParam;

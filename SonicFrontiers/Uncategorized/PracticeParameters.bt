@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef byte sint8;
 
 enum<sint8> Checker
@@ -63,14 +65,12 @@ enum<sint8> Judge
     NumJudges = 5,
 };
 
-typedef ulong uint64;
-
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
@@ -86,9 +86,7 @@ typedef struct
     FSeek(p + 32);
 } PracticeAction;
 
-typedef int sint32;
-
-typedef uint uint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -189,5 +187,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-PracticeParameters data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PracticeParameters practiceParameters;

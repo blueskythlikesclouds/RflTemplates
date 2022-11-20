@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -35,7 +37,7 @@ typedef struct
     FSeek(p + 8);
 } WolfEyesightParam;
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -43,11 +45,11 @@ typedef struct vector3 {
 } vector3;
 
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
@@ -115,9 +117,7 @@ typedef struct
     FSeek(p + 3680);
 } EnemyWolfCommonParam;
 
-typedef int sint32;
-
-typedef ushort uint16;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -163,5 +163,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-EnemyWolfConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyWolfConfig enemyWolfConfig;

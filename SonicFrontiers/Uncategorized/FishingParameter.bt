@@ -1,4 +1,4 @@
-typedef uint uint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
 typedef struct
 {
@@ -93,7 +93,7 @@ typedef struct
     FSeek(p + 4);
 } FishingFishGroupParam;
 
-typedef int sint32;
+typedef int32 sint32;
 
 enum<sint8> FishShadowType
 {
@@ -113,9 +113,9 @@ enum<sint8> CatchUpMotionType
     LARGE_GOOD_FISH = 1,
     LARGE_GOOD_ITEM = 2,
     LARGE_BAD = 3,
-    LARGE = 4,
-    MEDIUM = 5,
-    SMALL = 6,
+    CatchUpMotionType_LARGE = 4,
+    CatchUpMotionType_MEDIUM = 5,
+    CatchUpMotionType_SMALL = 6,
     CHEST_GOOD = 7,
     CHEST_VERYGOOD = 8,
     SCROLL = 9,
@@ -130,7 +130,7 @@ enum<sint8> ToastType
     PATTERN_4 = 4,
 };
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -250,5 +250,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-FishingParameter data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FishingParameter fishingParameter;

@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 enum<byte> bool {
     False = 0,
     True = 1,
@@ -117,5 +119,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-NoisePresetParameters data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+NoisePresetParameters noisePresetParameters;

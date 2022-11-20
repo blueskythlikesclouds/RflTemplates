@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef byte sint8;
 
 enum<sint8> LaserType
@@ -19,5 +21,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-BossRifleThresholdRingSupplyParam data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossRifleThresholdRingSupplyParam bossRifleThresholdRingSupplyParam;

@@ -1,9 +1,11 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
@@ -27,14 +29,26 @@ typedef struct
     FSeek(p + 32);
 } EventData;
 
-typedef struct vector3 {
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        EventData data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_EventData;
+
+typedef struct {
     float x;
     float y;
     float z;
     float w<hidden=true>;
 } vector3;
 
-typedef struct quaternion {
+typedef struct {
     float x;
     float y;
     float z;
@@ -52,15 +66,39 @@ typedef struct
     FSeek(p + 48);
 } NodeInfoInAnim;
 
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        NodeInfoInAnim data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_NodeInfoInAnim;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  cstring name;
-    FSeek(p + 16); NodeInfoInAnim nodeInfos;
+    FSeek(p + 16); array_NodeInfoInAnim nodeInfos;
 
     FSeek(p + 48);
 } NodeData;
+
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        NodeData data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_NodeData;
 
 typedef struct
 {
@@ -73,11 +111,23 @@ typedef struct
     FSeek(p + 48);
 } DeltaMotionInfoInAnim;
 
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        DeltaMotionInfoInAnim data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_DeltaMotionInfoInAnim;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); DeltaMotionInfoInAnim deltaInfos;
+    FSeek(p + 0); array_DeltaMotionInfoInAnim deltaInfos;
 
     FSeek(p + 32);
 } DeltaMotionData;
@@ -87,24 +137,41 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);   cstring name;
-    FSeek(p + 16);  EventData eventDatas;
-    FSeek(p + 48);  NodeData nodeDatas;
+    FSeek(p + 16);  array_EventData eventDatas;
+    FSeek(p + 48);  array_NodeData nodeDatas;
     FSeek(p + 80);  DeltaMotionData deltaMotionData;
     FSeek(p + 112); float maxTime;
 
     FSeek(p + 120);
 } AnimData;
 
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        AnimData data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_AnimData;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); AnimData animDatas;
+    FSeek(p + 0); array_AnimData animDatas;
 
     FSeek(p + 32);
 } RecordData;
 
 LittleEndian();
 
-FSeek(64);
-RecordData data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+RecordData recordData;

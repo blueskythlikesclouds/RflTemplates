@@ -1,4 +1,6 @@
-typedef int sint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
 
 enum<sint32> StatsType
 {
@@ -8,8 +10,6 @@ enum<sint32> StatsType
     TYPE_SINT32 = 3,
     TYPE_FLOAT = 4,
 };
-
-typedef ulong uint64;
 
 typedef struct
 {
@@ -21,16 +21,33 @@ typedef struct
     FSeek(p + 16);
 } StatsDataValue;
 
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        StatsDataValue data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_StatsDataValue;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); StatsDataValue data;
+    FSeek(p + 0); array_StatsDataValue data;
 
     FSeek(p + 32);
 } StatsDataContainer;
 
 LittleEndian();
 
-FSeek(64);
-StatsDataContainer data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+StatsDataContainer statsDataContainer;

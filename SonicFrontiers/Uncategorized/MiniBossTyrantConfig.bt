@@ -1,4 +1,6 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -35,9 +37,7 @@ typedef struct
     FSeek(p + 96);
 } MiniBossTyrantCommonParam;
 
-typedef int sint32;
-
-typedef ushort uint16;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -128,11 +128,11 @@ enum<sint8> BarrageType
 };
 
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
@@ -358,5 +358,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-MiniBossTyrantConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MiniBossTyrantConfig miniBossTyrantConfig;

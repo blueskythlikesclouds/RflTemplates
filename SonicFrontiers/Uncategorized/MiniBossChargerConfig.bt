@@ -1,4 +1,6 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -31,15 +33,15 @@ enum<sint8> BarrageType
 };
 
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -445,8 +447,6 @@ typedef struct
     FSeek(p + 5568);
 } MiniBossChargerCommonParam;
 
-typedef ushort uint16;
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -531,26 +531,26 @@ typedef struct
 
 enum<sint32> MiniBossChargerLevel1_AttackType
 {
-    MiniBossChargerLevel1_AttackTypeInvalid = 0,
-    MiniBossChargerLevel1_AttackSimpleRotateBullet = 1,
-    MiniBossChargerLevel1_AttackFollowLaser = 2,
-    MiniBossChargerLevel1_AttackVortexLaser = 3,
-    MiniBossChargerLevel1_AttackCrossLaser = 4,
-    MiniBossChargerLevel1_AttackCrossBullet = 5,
-    MiniBossChargerLevel1_AttackMassLaser = 6,
-    MiniBossChargerLevel1_AttackVerticalRoundBullet = 7,
-    MiniBossChargerLevel1_AttackPyramidRoundBullet = 8,
-    MiniBossChargerLevel1_AttackPlaneUpDownBullet = 9,
-    MiniBossChargerLevel1_AttackTriangleBatteryBullet = 10,
-    MiniBossChargerLevel1_AttackPlayerFallBullet = 11,
-    MiniBossChargerLevel1_AttackGatlingRevolverBullet = 12,
-    MiniBossChargerLevel1_AttackWinderBullet = 13,
-    MiniBossChargerLevel1_AttackShotgunBullet = 14,
-    MiniBossChargerLevel1_AttackAirDropBullet = 15,
-    MiniBossChargerLevel1_AttackChaseShotObject = 16,
-    MiniBossChargerLevel1_AttackDiffuseLaser = 17,
-    MiniBossChargerLevel1_AttackChaseShot = 18,
-    MiniBossChargerLevel1_AttackTypeNum = 19,
+    MiniBossChargerLevel1_AttackType_AttackTypeInvalid = 0,
+    MiniBossChargerLevel1_AttackType_AttackSimpleRotateBullet = 1,
+    MiniBossChargerLevel1_AttackType_AttackFollowLaser = 2,
+    MiniBossChargerLevel1_AttackType_AttackVortexLaser = 3,
+    MiniBossChargerLevel1_AttackType_AttackCrossLaser = 4,
+    MiniBossChargerLevel1_AttackType_AttackCrossBullet = 5,
+    MiniBossChargerLevel1_AttackType_AttackMassLaser = 6,
+    MiniBossChargerLevel1_AttackType_AttackVerticalRoundBullet = 7,
+    MiniBossChargerLevel1_AttackType_AttackPyramidRoundBullet = 8,
+    MiniBossChargerLevel1_AttackType_AttackPlaneUpDownBullet = 9,
+    MiniBossChargerLevel1_AttackType_AttackTriangleBatteryBullet = 10,
+    MiniBossChargerLevel1_AttackType_AttackPlayerFallBullet = 11,
+    MiniBossChargerLevel1_AttackType_AttackGatlingRevolverBullet = 12,
+    MiniBossChargerLevel1_AttackType_AttackWinderBullet = 13,
+    MiniBossChargerLevel1_AttackType_AttackShotgunBullet = 14,
+    MiniBossChargerLevel1_AttackType_AttackAirDropBullet = 15,
+    MiniBossChargerLevel1_AttackType_AttackChaseShotObject = 16,
+    MiniBossChargerLevel1_AttackType_AttackDiffuseLaser = 17,
+    MiniBossChargerLevel1_AttackType_AttackChaseShot = 18,
+    MiniBossChargerLevel1_AttackType_AttackTypeNum = 19,
 };
 
 typedef struct
@@ -578,5 +578,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-MiniBossChargerConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MiniBossChargerConfig miniBossChargerConfig;

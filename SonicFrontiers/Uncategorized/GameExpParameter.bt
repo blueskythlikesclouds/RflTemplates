@@ -1,4 +1,4 @@
-typedef uint uint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
 typedef struct
 {
@@ -12,5 +12,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-GameExpParameter data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameExpParameter gameExpParameter;

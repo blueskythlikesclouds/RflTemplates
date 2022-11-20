@@ -1,11 +1,11 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
     float w<hidden=true>;
 } vector3;
-
-typedef ushort uint16;
 
 typedef ubyte uint8;
 
@@ -14,8 +14,6 @@ enum<uint8> OffMeshLinkDirection
     OffMeshLinkUnidirectional = 0,
     OffMeshLinkBidirectional = 1,
 };
-
-typedef uint uint32;
 
 typedef struct
 {
@@ -32,16 +30,33 @@ typedef struct
     FSeek(p + 48);
 } OffMeshLinkElement;
 
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        OffMeshLinkElement data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_OffMeshLinkElement;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); OffMeshLinkElement elements;
+    FSeek(p + 0); array_OffMeshLinkElement elements;
 
     FSeek(p + 32);
 } OffMeshLinkParameter;
 
 LittleEndian();
 
-FSeek(64);
-OffMeshLinkParameter data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+OffMeshLinkParameter offMeshLinkParameter;

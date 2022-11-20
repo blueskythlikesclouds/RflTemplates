@@ -1,4 +1,6 @@
-typedef struct vector3 {
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -143,9 +145,7 @@ typedef struct
     FSeek(p + 320);
 } MiniBossSkierCommonParam;
 
-typedef int sint32;
-
-typedef ushort uint16;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -300,5 +300,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-MiniBossSkierConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MiniBossSkierConfig miniBossSkierConfig;

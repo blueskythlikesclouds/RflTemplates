@@ -1,13 +1,15 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -20,7 +22,19 @@ typedef struct
     FSeek(p + 24);
 } PlayStatsSummary;
 
-typedef struct vector3 {
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        PlayStatsSummary data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_PlayStatsSummary;
+
+typedef struct {
     float x;
     float y;
     float z;
@@ -40,6 +54,18 @@ typedef struct
     FSeek(p + 80);
 } PlayLog;
 
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        PlayLog data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_PlayLog;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -49,7 +75,7 @@ typedef struct
     FSeek(p + 8);  sint32 misses;
     FSeek(p + 12); sint32 retry;
     FSeek(p + 16); sint32 restart;
-    FSeek(p + 24); PlayLog logs;
+    FSeek(p + 24); array_PlayLog logs;
 
     FSeek(p + 56);
 } PlayStatsData;
@@ -60,7 +86,7 @@ typedef struct
 
     FSeek(p + 0);  cstring username;
     FSeek(p + 16); cstring time;
-    FSeek(p + 32); PlayStatsSummary summaries;
+    FSeek(p + 32); array_PlayStatsSummary summaries;
     FSeek(p + 64); PlayStatsData playLog;
 
     FSeek(p + 120);
@@ -68,5 +94,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-PlayStats data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PlayStats playStats;

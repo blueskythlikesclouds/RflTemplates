@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -13,8 +15,6 @@ typedef struct
     FSeek(p + 28);
 } RingParameter;
 
-typedef uint uint32;
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -29,5 +29,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-ObjBossRingSupplyConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjBossRingSupplyConfig objBossRingSupplyConfig;

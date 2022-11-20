@@ -1,4 +1,6 @@
-typedef int sint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
 
 enum<sint32> DOFRenderTargetSize
 {
@@ -135,7 +137,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); TimeIntervalData base;
+    FSeek(p + 0); TimeIntervalData timeIntervalData;
     FSeek(p + 4); float hourlyTime;
 
     FSeek(p + 8);
@@ -411,7 +413,7 @@ enum<sint8> DebugScreenView
     DEBUG_SCREEN_VIEW_ALL_DISABLE = 2,
 };
 
-typedef struct vector4 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -524,8 +526,6 @@ typedef struct
 
     FSeek(p + 20);
 } FxSSGIParameter;
-
-typedef uint uint32;
 
 typedef struct
 {
@@ -687,7 +687,7 @@ typedef struct
     FSeek(p + 76);
 } FxColorContrastParameter;
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -806,7 +806,7 @@ enum<sint8> PartitionType
     PARTITION_MANUAL = 1,
 };
 
-typedef struct matrix44 {
+typedef struct {
     float m[4 * 4];
 } matrix44;
 
@@ -904,10 +904,10 @@ enum<sint8> SSAOType
 
 enum<sint8> FxSSAOParameter_RenderTargetSize
 {
-    FxSSAOParameter_RTSIZE_SAME_AS_FRAMEBUFFER = 0,
-    FxSSAOParameter_RTSIZE_ONE_SECOND = 1,
-    FxSSAOParameter_RTSIZE_ONE_FORTH = 2,
-    FxSSAOParameter_RTSIZE_COUNT = 3,
+    RTSIZE_SAME_AS_FRAMEBUFFER = 0,
+    RTSIZE_ONE_SECOND = 1,
+    RTSIZE_ONE_FORTH = 2,
+    FxSSAOParameter_RenderTargetSize_RTSIZE_COUNT = 3,
 };
 
 enum<sint8> BLURType
@@ -1058,11 +1058,11 @@ typedef struct
     FSeek(p + 48);
 } FxScreenBlurParameter;
 
-typedef struct color8 {
-    ubyte r;
-    ubyte g;
-    ubyte b;
-    ubyte a;
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
 } color8;
 
 typedef struct
@@ -1127,7 +1127,7 @@ typedef struct
     FSeek(p + 64);
 } FxScreenSpaceGodrayParameter;
 
-typedef struct matrix34 {
+typedef struct {
     float m[4 * 4];
 } matrix34;
 
@@ -2206,7 +2206,7 @@ typedef struct
     FSeek(p + 4);
 } StageTerrainPrecisionParameter;
 
-typedef struct vector2 {
+typedef struct {
     float x;
     float y;
 } vector2;
@@ -2269,5 +2269,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-NeedleFxSceneData data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+NeedleFxSceneData needleFxSceneData;

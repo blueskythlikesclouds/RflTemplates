@@ -1,17 +1,19 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef struct {
-    long pointer;
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
-typedef struct color8 {
-    ubyte r;
-    ubyte g;
-    ubyte b;
-    ubyte a;
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
 } color8;
 
 typedef byte sint8;
@@ -45,7 +47,7 @@ enum<sint8> DecoLayerBlendOp
     DECO_LAYER_BLEND_OP_SUBTRACT_ALPHA = 1,
 };
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef ubyte uint8;
 
@@ -126,5 +128,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-DecoTechParams data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+DecoTechParams decoTechParams;

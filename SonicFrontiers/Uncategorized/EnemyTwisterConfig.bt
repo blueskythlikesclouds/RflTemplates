@@ -1,3 +1,5 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -18,7 +20,7 @@ enum<byte> bool {
     True = 1,
 };
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -47,8 +49,6 @@ typedef struct
 
     FSeek(p + 68);
 } EnemyTwisterCommonConfig;
-
-typedef ushort uint16;
 
 typedef struct
 {
@@ -84,5 +84,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-EnemyTwisterConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyTwisterConfig enemyTwisterConfig;

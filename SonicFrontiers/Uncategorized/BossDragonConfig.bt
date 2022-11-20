@@ -1,18 +1,27 @@
-typedef uint uint32;
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
 
-typedef ushort uint16;
-
-typedef struct csetobjectid {
-    long id;
-    long group;
+typedef struct {
+    ubyte guid[16];
 } csetobjectid;
 
 typedef struct {
-    long pointer;
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        csetobjectid data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_csetobjectid;
+
+typedef struct {
+    uint64 pointer;
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(64 + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
     return "(null)";
 }
 
@@ -20,7 +29,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  array initPositions;
+    FSeek(p + 0);  array_csetobjectid initPositions;
     FSeek(p + 32); cstring heightTargetNodeName;
     FSeek(p + 48); float heightMoveSpeed;
     FSeek(p + 52); float bossToPlayerDistanceMin;
@@ -61,7 +70,7 @@ enum<sint8> EaseType
     ET_Quadratic = 2,
 };
 
-typedef struct vector3 {
+typedef struct {
     float x;
     float y;
     float z;
@@ -125,22 +134,22 @@ enum<sint8> AttackType
 
 enum<sint8> BossPillarParam_GimmickType
 {
-    BossPillarParam_GT_A = 0,
-    BossPillarParam_GT_B = 1,
-    BossPillarParam_GT_C = 2,
-    BossPillarParam_GT_D = 3,
-    BossPillarParam_GT_E = 4,
-    BossPillarParam_NUM_GIMMICK_TYPE = 5,
+    BossPillarParam_GimmickType_GT_A = 0,
+    BossPillarParam_GimmickType_GT_B = 1,
+    BossPillarParam_GimmickType_GT_C = 2,
+    BossPillarParam_GimmickType_GT_D = 3,
+    BossPillarParam_GimmickType_GT_E = 4,
+    BossPillarParam_GimmickType_NUM_GIMMICK_TYPE = 5,
 };
 
 enum<sint8> BossPillarParam_AttackType
 {
-    BossPillarParam_AT_A = 0,
-    BossPillarParam_AT_B = 1,
-    BossPillarParam_AT_C = 2,
-    BossPillarParam_AT_D = 3,
-    BossPillarParam_AT_E = 4,
-    BossPillarParam_NUM_ATTACK_TYPE = 5,
+    BossPillarParam_AttackType_AT_A = 0,
+    BossPillarParam_AttackType_AT_B = 1,
+    BossPillarParam_AttackType_AT_C = 2,
+    BossPillarParam_AttackType_AT_D = 3,
+    BossPillarParam_AttackType_AT_E = 4,
+    BossPillarParam_AttackType_NUM_ATTACK_TYPE = 5,
 };
 
 typedef struct
@@ -178,7 +187,7 @@ typedef struct
     FSeek(p + 952);
 } BossPillarConfig;
 
-typedef short sint16;
+typedef int16 sint16;
 
 enum<sint8> CollisionType
 {
@@ -344,7 +353,7 @@ typedef struct
     FSeek(p + 24);
 } BossDamagePointParam;
 
-typedef int sint32;
+typedef int32 sint32;
 
 typedef struct
 {
@@ -402,13 +411,13 @@ typedef struct
 
 enum<sint8> BossAttackCollisionParam_AttackType
 {
-    BossAttackCollisionParam_AT_NONE = 0,
-    BossAttackCollisionParam_AT_BLOWOFF = 1,
-    BossAttackCollisionParam_AT_SLAMDOWNWARD = 2,
-    BossAttackCollisionParam_AT_KILLING = 3,
-    BossAttackCollisionParam_AT_NOTPARRY = 4,
-    BossAttackCollisionParam_AT_NOTDAMAGE = 5,
-    BossAttackCollisionParam_NUM_ATTACK_TYPE = 6,
+    AT_NONE = 0,
+    AT_BLOWOFF = 1,
+    AT_SLAMDOWNWARD = 2,
+    AT_KILLING = 3,
+    AT_NOTPARRY = 4,
+    AT_NOTDAMAGE = 5,
+    BossAttackCollisionParam_AttackType_NUM_ATTACK_TYPE = 6,
 };
 
 typedef struct
@@ -509,7 +518,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  BossDragonCollisionParamBase base;
+    FSeek(p + 0);  BossDragonCollisionParamBase bossDragonCollisionParamBase;
     FSeek(p + 80); vector3 damageVelocity;
 
     FSeek(p + 96);
@@ -519,7 +528,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   BossDragonCollisionParamBase base;
+    FSeek(p + 0);   BossDragonCollisionParamBase bossDragonCollisionParamBase;
     FSeek(p + 80);  bool isEnableHoming;
     FSeek(p + 88);  cstring homingNode;
     FSeek(p + 104); cstring homingNodeMirror;
@@ -777,10 +786,10 @@ typedef struct
 
 enum<sint8> BossDragonLayoutParam_EaseType
 {
-    BossDragonLayoutParam_SMOOTH = 0,
-    BossDragonLayoutParam_EASE_IN = 1,
-    BossDragonLayoutParam_EASE_OUT = 2,
-    BossDragonLayoutParam_EASE_IN_OUT = 3,
+    SMOOTH = 0,
+    EASE_IN = 1,
+    EASE_OUT = 2,
+    EASE_IN_OUT = 3,
 };
 
 typedef struct
@@ -1038,7 +1047,7 @@ enum<sint8> BossDragonSequence
 
 enum<sint8> BossDragonInterrupt
 {
-    NOP = 0,
+    BossDragonInterrupt_NOP = 0,
     RAGE = 1,
     SPECIAL_ATTACK = 2,
     SPECIAL_ATTACK2 = 3,
@@ -1119,7 +1128,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     BossBaseConfig base;
+    FSeek(p + 0);     BossBaseConfig bossBaseConfig;
     FSeek(p + 75712); float cruisePathSpeed;
     FSeek(p + 75716); float patrolPathSpeed;
     FSeek(p + 75720); float approachPathSpeedMin;
@@ -1187,5 +1196,10 @@ typedef struct
 
 LittleEndian();
 
-FSeek(64);
-BossDragonConfig data;
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossDragonConfig bossDragonConfig;
