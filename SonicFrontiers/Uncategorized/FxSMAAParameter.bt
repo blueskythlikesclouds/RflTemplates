@@ -19,8 +19,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); Preset preset;
-    FSeek(p + 1); TestMode testMode;
+    FSeek(p + 0); Preset preset<comment="プリセット">;
+    FSeek(p + 1); TestMode testMode<comment="TestMode">;
 
     FSeek(p + 2);
 } FxSMAAParameter;

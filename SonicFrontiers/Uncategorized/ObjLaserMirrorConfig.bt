@@ -11,10 +11,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float interoplateTimeActivate;
-    FSeek(p + 4);  float interoplateTimeDeactivate;
-    FSeek(p + 16); vector3 targetOffset;
-    FSeek(p + 32); vector3 cameraPosOffset;
+    FSeek(p + 0);  float interoplateTimeActivate<comment="カメラ起動時補間時間">;
+    FSeek(p + 4);  float interoplateTimeDeactivate<comment="カメラ終了時補間時間">;
+    FSeek(p + 16); vector3 targetOffset<comment="注視点オフセット">;
+    FSeek(p + 32); vector3 cameraPosOffset<comment="カメラオフセット">;
 
     FSeek(p + 48);
 } GimmickCameraParam;
@@ -23,9 +23,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  GimmickCameraParam rotateMirrorH;
-    FSeek(p + 48); GimmickCameraParam rotateMirrorV;
-    FSeek(p + 96); GimmickCameraParam moveMirror;
+    FSeek(p + 0);  GimmickCameraParam rotateMirrorH<comment="横回転鏡">;
+    FSeek(p + 48); GimmickCameraParam rotateMirrorV<comment="縦回転鏡">;
+    FSeek(p + 96); GimmickCameraParam moveMirror<comment="移動鏡">;
 
     FSeek(p + 144);
 } ObjLaserMirrorConfig;

@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -21,16 +21,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  RingParameter ringParam;
-    FSeek(p + 28); sint32 codeDropNumMin;
-    FSeek(p + 32); sint32 codeDropNumMax;
-    FSeek(p + 36); sint32 codeXDropNumMin;
-    FSeek(p + 40); sint32 codeXDropNumMax;
-    FSeek(p + 44); float closeDistance;
-    FSeek(p + 48); float cameraDistance;
-    FSeek(p + 52); float cameraElevation;
-    FSeek(p + 56); float pullStartHeight;
-    FSeek(p + 60); float pullEndHeight;
+    FSeek(p + 0);  RingParameter ringParam<comment="ドロップリング">;
+    FSeek(p + 28); sint32 codeDropNumMin<comment="[コード]最小ドロップ数">;
+    FSeek(p + 32); sint32 codeDropNumMax<comment="[コード]最大ドロップ数">;
+    FSeek(p + 36); sint32 codeXDropNumMin<comment="[コードX]最大ドロップ数">;
+    FSeek(p + 40); sint32 codeXDropNumMax<comment="[コードX]最大ドロップ数">;
+    FSeek(p + 44); float closeDistance<comment="接近検知距離">;
+    FSeek(p + 48); float cameraDistance<comment="俯瞰カメラ距離">;
+    FSeek(p + 52); float cameraElevation<comment="俯瞰カメラ仰角">;
+    FSeek(p + 56); float pullStartHeight<comment="俯瞰カメラ開始高さ">;
+    FSeek(p + 60); float pullEndHeight<comment="俯瞰カメラ終了高さ">;
 
     FSeek(p + 64);
 } EnemyUmbrellaCommonConfig;
@@ -48,21 +48,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
-    FSeek(p + 12); float backJumpHeight;
-    FSeek(p + 16); float backJumpDistance;
-    FSeek(p + 20); float flyingDuration;
-    FSeek(p + 24); BarrageType barrageType;
-    FSeek(p + 28); float barrageHeight;
-    FSeek(p + 32); float barrageWidth;
-    FSeek(p + 36); float barrageDistance;
-    FSeek(p + 40); float bombRatio;
-    FSeek(p + 44); float barrageFallSpeed;
-    FSeek(p + 48); float barrageLifeTime;
-    FSeek(p + 52); float barrageLifePassPower;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
+    FSeek(p + 12); float backJumpHeight<comment="飛び下がり高さ">;
+    FSeek(p + 16); float backJumpDistance<comment="飛び下がり水平距離">;
+    FSeek(p + 20); float flyingDuration<comment="滞空時間">;
+    FSeek(p + 24); BarrageType barrageType<comment="弾幕配置">;
+    FSeek(p + 28); float barrageHeight<comment="弾幕高さ">;
+    FSeek(p + 32); float barrageWidth<comment="弾幕幅">;
+    FSeek(p + 36); float barrageDistance<comment="平均弾間隔">;
+    FSeek(p + 40); float bombRatio<comment="爆弾の割合(%)">;
+    FSeek(p + 44); float barrageFallSpeed<comment="弾落下速度">;
+    FSeek(p + 48); float barrageLifeTime<comment="弾寿命">;
+    FSeek(p + 52); float barrageLifePassPower<comment="弾寿命経過倍率">;
 
     FSeek(p + 56);
 } UmbrellaCommonLevelConfig;
@@ -71,8 +71,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); UmbrellaCommonLevelConfig common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); UmbrellaCommonLevelConfig common<comment="共通設定">;
 
     FSeek(p + 60);
 } EnemyUmbrellaLevelConfig;
@@ -81,7 +81,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 dummy;
+    FSeek(p + 0); sint32 dummy<comment="dummy">;
 
     FSeek(p + 4);
 } UmbrellaCommonActionConfig;
@@ -90,8 +90,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); UmbrellaCommonActionConfig common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); UmbrellaCommonActionConfig common<comment="共通設定">;
 
     FSeek(p + 8);
 } EnemyUmbrellaLevelBandConfig;
@@ -100,9 +100,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyUmbrellaCommonConfig commonParams;
-    FSeek(p + 64);  EnemyUmbrellaLevelConfig levelParams[5]<optimize=false>;
-    FSeek(p + 364); EnemyUmbrellaLevelBandConfig levelBands[5]<optimize=false>;
+    FSeek(p + 0);   EnemyUmbrellaCommonConfig commonParams<comment="共通パラメータ">;
+    FSeek(p + 64);  EnemyUmbrellaLevelConfig levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 364); EnemyUmbrellaLevelBandConfig levelBands[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 404);
 } EnemyUmbrellaConfig;

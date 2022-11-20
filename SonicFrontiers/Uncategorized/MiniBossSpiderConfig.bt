@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -27,11 +27,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float time;
-    FSeek(p + 4);  float magnitude;
-    FSeek(p + 8);  sint32 freq;
-    FSeek(p + 12); float attnRatio;
-    FSeek(p + 16); float shakeRange;
+    FSeek(p + 0);  float time<comment="有効時間">;
+    FSeek(p + 4);  float magnitude<comment="振幅の大きさ">;
+    FSeek(p + 8);  sint32 freq<comment="周波数">;
+    FSeek(p + 12); float attnRatio<comment="振幅の減衰率">;
+    FSeek(p + 16); float shakeRange<comment="振動が伝わる距離">;
 
     FSeek(p + 20);
 } MiniBossSpiderCameraShake;
@@ -40,13 +40,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -55,15 +55,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float appearRadius;
-    FSeek(p + 8);  float keepRadius;
-    FSeek(p + 12); float disappearRadius;
-    FSeek(p + 16); float heightMin;
-    FSeek(p + 20); float heightMax;
-    FSeek(p + 24); float lifeTime;
-    FSeek(p + 28); float pauseBeginTime;
-    FSeek(p + 32); float pauseTime;
+    FSeek(p + 0);  float radius<comment="最大半径">;
+    FSeek(p + 4);  float appearRadius<comment="上昇演出幅[m]">;
+    FSeek(p + 8);  float keepRadius<comment="ダメージ発生幅[m]">;
+    FSeek(p + 12); float disappearRadius<comment="下降演出幅[m]">;
+    FSeek(p + 16); float heightMin<comment="コリジョンの高さ">;
+    FSeek(p + 20); float heightMax<comment="モデル最大高さ">;
+    FSeek(p + 24); float lifeTime<comment="演出時間">;
+    FSeek(p + 28); float pauseBeginTime<comment="一時停止開始時間[0以下で無効]">;
+    FSeek(p + 32); float pauseTime<comment="一時停止維持時間">;
 
     FSeek(p + 36);
 } MiniBossSpiderWaveParam;
@@ -72,12 +72,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float time;
-    FSeek(p + 4);  float distance;
-    FSeek(p + 8);  float minElevation;
-    FSeek(p + 12); float maxElevation;
-    FSeek(p + 16); float panningSuspensionK;
-    FSeek(p + 20); float interiorPanningSuspensionK;
+    FSeek(p + 0);  float time<comment="有効時間">;
+    FSeek(p + 4);  float distance<comment="距離">;
+    FSeek(p + 8);  float minElevation<comment="仰角最小値">;
+    FSeek(p + 12); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 16); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 20); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
 
     FSeek(p + 24);
 } MiniBossSpiderCameraLockOn;
@@ -86,10 +86,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 m_maxNumPieces;
-    FSeek(p + 4);  float gravity;
-    FSeek(p + 8);  float lifeTime;
-    FSeek(p + 12); float force;
+    FSeek(p + 0);  sint32 m_maxNumPieces<comment="破片最大生成数. 負の値で最大">;
+    FSeek(p + 4);  float gravity<comment="重力加速度">;
+    FSeek(p + 8);  float lifeTime<comment="生存時間">;
+    FSeek(p + 12); float force<comment="拡散力">;
 
     FSeek(p + 16);
 } DebrisParameter;
@@ -110,14 +110,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float pressRate;
-    FSeek(p + 4);  float stompRate;
-    FSeek(p + 8);  float shotRate;
-    FSeek(p + 12); float chainRate;
-    FSeek(p + 16); float traceRate;
-    FSeek(p + 20); float laserStraightRate;
-    FSeek(p + 24); float laserTraceRate;
-    FSeek(p + 28); float jumpRate;
+    FSeek(p + 0);  float pressRate<comment="突き発動率">;
+    FSeek(p + 4);  float stompRate<comment="ストンプ発動率">;
+    FSeek(p + 8);  float shotRate<comment="弾放出発動率">;
+    FSeek(p + 12); float chainRate<comment="連鎖弾発動率">;
+    FSeek(p + 16); float traceRate<comment="追跡ウェーブ発動率">;
+    FSeek(p + 20); float laserStraightRate<comment="直線レーザー発動率">;
+    FSeek(p + 24); float laserTraceRate<comment="追跡レーザー発動率">;
+    FSeek(p + 28); float jumpRate<comment="バックジャンプ発動率">;
 
     FSeek(p + 32);
 } MiniBossSpiderLevelBandRate;
@@ -126,14 +126,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float pressInterval;
-    FSeek(p + 4);  float stompInterval;
-    FSeek(p + 8);  float shotInterval;
-    FSeek(p + 12); float chainInterval;
-    FSeek(p + 16); float traceInterval;
-    FSeek(p + 20); float laserStaightInterval;
-    FSeek(p + 24); float laserTraceInterval;
-    FSeek(p + 28); float jumpInterval;
+    FSeek(p + 0);  float pressInterval<comment="突き">;
+    FSeek(p + 4);  float stompInterval<comment="ストンプ">;
+    FSeek(p + 8);  float shotInterval<comment="弾">;
+    FSeek(p + 12); float chainInterval<comment="連鎖弾">;
+    FSeek(p + 16); float traceInterval<comment="追跡ウェーブ">;
+    FSeek(p + 20); float laserStaightInterval<comment="直線レーザー">;
+    FSeek(p + 24); float laserTraceInterval<comment="追跡レーザー">;
+    FSeek(p + 28); float jumpInterval<comment="バックジャンプ">;
 
     FSeek(p + 32);
 } MiniBossSpiderLevelBandInterval;
@@ -142,10 +142,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float nearRange;
-    FSeek(p + 4);   MiniBossSpiderLevelBandRate nearRates[2]<optimize=false>;
-    FSeek(p + 68);  MiniBossSpiderLevelBandRate farRates[2]<optimize=false>;
-    FSeek(p + 132); MiniBossSpiderLevelBandInterval interval[2]<optimize=false>;
+    FSeek(p + 0);   float nearRange<comment="近距離とみなす距離">;
+    FSeek(p + 4);   MiniBossSpiderLevelBandRate nearRates[2]<comment="近距離発動率",optimize=false>;
+    FSeek(p + 68);  MiniBossSpiderLevelBandRate farRates[2]<comment="遠距離発動率",optimize=false>;
+    FSeek(p + 132); MiniBossSpiderLevelBandInterval interval[2]<comment="行動後インターバル",optimize=false>;
 
     FSeek(p + 196);
 } MiniBossSpiderActionParam;
@@ -154,59 +154,59 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
-    FSeek(p + 64);  float patrolWalkWaitTimeMin;
-    FSeek(p + 68);  float patrolWalkWaitTimeMax;
-    FSeek(p + 72);  float jumpSpeed;
-    FSeek(p + 76);  float pressDistance;
-    FSeek(p + 80);  float waveDistance;
-    FSeek(p + 84);  float waveModelScale;
-    FSeek(p + 88);  float waveModelDiameter;
-    FSeek(p + 92);  float waveWaitTime;
-    FSeek(p + 96);  float mineDistance;
-    FSeek(p + 100); float shotWaitTime;
-    FSeek(p + 104); float walkWaitTime;
-    FSeek(p + 108); float laserStraightDistance;
-    FSeek(p + 112); float laserStraightPrepairTime;
-    FSeek(p + 116); float laserStraightTime;
-    FSeek(p + 120); float laserStraightAngle;
-    FSeek(p + 124); float laserStraightWaitTime;
-    FSeek(p + 128); float laserTraceDistance;
-    FSeek(p + 132); float laserTracePrepairTime;
-    FSeek(p + 136); float laserTraceTime;
-    FSeek(p + 140); float laserTraceSpeed;
-    FSeek(p + 144); float laserTraceWaitTime;
-    FSeek(p + 148); float chainDistance;
-    FSeek(p + 152); float chainJumpDistance;
-    FSeek(p + 156); float chainWaitTime;
-    FSeek(p + 160); float traceDistance;
-    FSeek(p + 164); float traceJumpDistance;
-    FSeek(p + 168); float traceSpeed;
-    FSeek(p + 172); float traceRotSpeed;
-    FSeek(p + 176); float traceLifeTime;
-    FSeek(p + 180); float traceWidth;
-    FSeek(p + 184); float traceHeight;
-    FSeek(p + 188); float traceAppearDistance;
-    FSeek(p + 192); float traceKeepDistance;
-    FSeek(p + 196); float traceDisappearDistance;
-    FSeek(p + 200); float traceWaitTime;
-    FSeek(p + 204); float thornSpawnSpeed;
-    FSeek(p + 208); float thornSpawnRadiusMax;
-    FSeek(p + 212); float thornLifeTime;
-    FSeek(p + 216); float thornFlyingSpeed;
-    FSeek(p + 220); sint32 protecterHp;
-    FSeek(p + 224); MiniBossSpiderCameraShake cameraShakeWalk;
-    FSeek(p + 244); MiniBossSpiderCameraShake cameraShakeAttack;
-    FSeek(p + 264); RingParameter ringParam;
-    FSeek(p + 292); MiniBossSpiderWaveParam waveParams[8]<optimize=false>;
-    FSeek(p + 580); MiniBossSpiderCameraLockOn cameraLockBreakArmor;
-    FSeek(p + 604); MiniBossSpiderCameraLockOn cameraLockBlownUp;
-    FSeek(p + 628); MiniBossSpiderCameraLockOn cameraLockBlownDown;
-    FSeek(p + 652); MiniBossSpiderCameraLockOn cameraLockFootUp;
-    FSeek(p + 676); MiniBossSpiderCameraLockOn cameraLockFall;
-    FSeek(p + 700); DebrisParameter debrisSet;
-    FSeek(p + 716); MiniBossSpiderBreakType rotationTypeTable[8]<optimize=false>;
-    FSeek(p + 724); MiniBossSpiderActionParam rotationActionTable[4]<optimize=false>;
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64);  float patrolWalkWaitTimeMin<comment="[徘徊]最小移動待機時間">;
+    FSeek(p + 68);  float patrolWalkWaitTimeMax<comment="[徘徊]最大移動待機時間">;
+    FSeek(p + 72);  float jumpSpeed<comment="[ジャンプ]移動速度">;
+    FSeek(p + 76);  float pressDistance<comment="[突き]攻撃開始距離">;
+    FSeek(p + 80);  float waveDistance<comment="[波]攻撃開始距離">;
+    FSeek(p + 84);  float waveModelScale<comment="[波]モデルスケール">;
+    FSeek(p + 88);  float waveModelDiameter<comment="[波]針モデル１つ辺りの設置半径">;
+    FSeek(p + 92);  float waveWaitTime<comment="[波]クールタイム">;
+    FSeek(p + 96);  float mineDistance<comment="[弾]攻撃開始距離">;
+    FSeek(p + 100); float shotWaitTime<comment="[弾]クールタイム">;
+    FSeek(p + 104); float walkWaitTime<comment="[弾]発射後移動禁止時間">;
+    FSeek(p + 108); float laserStraightDistance<comment="[直線レーザー]攻撃開始距離">;
+    FSeek(p + 112); float laserStraightPrepairTime<comment="[直線レーザー]予兆時間">;
+    FSeek(p + 116); float laserStraightTime<comment="[直線レーザー]持続時間">;
+    FSeek(p + 120); float laserStraightAngle<comment="[直線レーザー]左右角度">;
+    FSeek(p + 124); float laserStraightWaitTime<comment="[直線レーザー]クール時間">;
+    FSeek(p + 128); float laserTraceDistance<comment="[追跡レーザー]攻撃開始距離">;
+    FSeek(p + 132); float laserTracePrepairTime<comment="[追跡レーザー]予兆時間">;
+    FSeek(p + 136); float laserTraceTime<comment="[追跡レーザー]持続時間">;
+    FSeek(p + 140); float laserTraceSpeed<comment="[追跡レーザー]追跡速度">;
+    FSeek(p + 144); float laserTraceWaitTime<comment="[追跡レーザー]予兆時間">;
+    FSeek(p + 148); float chainDistance<comment="[連鎖弾]攻撃開始距離">;
+    FSeek(p + 152); float chainJumpDistance<comment="[連鎖弾]ジャンプ開始距離">;
+    FSeek(p + 156); float chainWaitTime<comment="[連鎖弾]クールタイム">;
+    FSeek(p + 160); float traceDistance<comment="[追跡ウェーブ]攻撃開始距離">;
+    FSeek(p + 164); float traceJumpDistance<comment="[追跡ウェーブ]ジャンプ開始距離">;
+    FSeek(p + 168); float traceSpeed<comment="[追跡ウェーブ]速度">;
+    FSeek(p + 172); float traceRotSpeed<comment="[追跡ウェーブ]回転速度[deg/sec]">;
+    FSeek(p + 176); float traceLifeTime<comment="[追跡ウェーブ]針生成時間">;
+    FSeek(p + 180); float traceWidth<comment="[追跡ウェーブ]幅">;
+    FSeek(p + 184); float traceHeight<comment="[追跡ウェーブ]判定高さ">;
+    FSeek(p + 188); float traceAppearDistance<comment="[追跡ウェーブ]上昇演出幅[m]">;
+    FSeek(p + 192); float traceKeepDistance<comment="[追跡ウェーブ]ダメージ発生幅[m]">;
+    FSeek(p + 196); float traceDisappearDistance<comment="[追跡ウェーブ]下降演出幅[m]">;
+    FSeek(p + 200); float traceWaitTime<comment="[追跡ウェーブ]]クールタイム">;
+    FSeek(p + 204); float thornSpawnSpeed<comment="[トゲ爆弾]生成時間">;
+    FSeek(p + 208); float thornSpawnRadiusMax<comment="[トゲ爆弾]最大生成半径">;
+    FSeek(p + 212); float thornLifeTime<comment="[トゲ爆弾]出現後生存時間">;
+    FSeek(p + 216); float thornFlyingSpeed<comment="[トゲ爆弾]飛行速度">;
+    FSeek(p + 220); sint32 protecterHp<comment="[トゲ爆弾]プロテクター破壊までの必要ヒット数">;
+    FSeek(p + 224); MiniBossSpiderCameraShake cameraShakeWalk<comment="移動時のカメラ振動">;
+    FSeek(p + 244); MiniBossSpiderCameraShake cameraShakeAttack<comment="攻撃時のカメラ振動">;
+    FSeek(p + 264); RingParameter ringParam<comment="ドロップリング">;
+    FSeek(p + 292); MiniBossSpiderWaveParam waveParams[8]<comment="ウェーブ攻撃設定",optimize=false>;
+    FSeek(p + 580); MiniBossSpiderCameraLockOn cameraLockBreakArmor<comment="[カメラ注視]アーマー破壊">;
+    FSeek(p + 604); MiniBossSpiderCameraLockOn cameraLockBlownUp<comment="[カメラ注視]打ち上げ">;
+    FSeek(p + 628); MiniBossSpiderCameraLockOn cameraLockBlownDown<comment="[カメラ注視]撃ち落とし">;
+    FSeek(p + 652); MiniBossSpiderCameraLockOn cameraLockFootUp<comment="[カメラ注視]脚跳ね上げ">;
+    FSeek(p + 676); MiniBossSpiderCameraLockOn cameraLockFall<comment="[カメラ注視]空中落下">;
+    FSeek(p + 700); DebrisParameter debrisSet<comment="専用破片設定">;
+    FSeek(p + 716); MiniBossSpiderBreakType rotationTypeTable[8]<comment="[総集編]行動タイプテーブル",optimize=false>;
+    FSeek(p + 724); MiniBossSpiderActionParam rotationActionTable[4]<comment="[総集編]行動タイプ詳細設定",optimize=false>;
 
     FSeek(p + 1520);
 } MiniBossSpiderCommonParam;
@@ -215,16 +215,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -233,15 +233,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 level;
-    FSeek(p + 4);  MiniBossLevelCommonConfig commonConfig;
-    FSeek(p + 56); float attackRate;
-    FSeek(p + 60); float stunTime;
-    FSeek(p + 64); float downTime;
-    FSeek(p + 68); float downTime2;
-    FSeek(p + 72); float reProtectWaitTime;
-    FSeek(p + 76); float patrolWalkWaitTimeMin;
-    FSeek(p + 80); float patrolWalkWaitTimeMax;
+    FSeek(p + 0);  sint32 level<comment="レベル">;
+    FSeek(p + 4);  MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 56); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 60); float stunTime<comment="スタン時間">;
+    FSeek(p + 64); float downTime<comment="片足ダウン時間">;
+    FSeek(p + 68); float downTime2<comment="完全ダウン時間">;
+    FSeek(p + 72); float reProtectWaitTime<comment="プロテクター再装填までの時間">;
+    FSeek(p + 76); float patrolWalkWaitTimeMin<comment="[徘徊]最小移動待機時間">;
+    FSeek(p + 80); float patrolWalkWaitTimeMax<comment="[徘徊]最大移動待機時間">;
 
     FSeek(p + 84);
 } MiniBossSpiderLevelParam;
@@ -267,10 +267,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint8 pressType;
-    FSeek(p + 1); uint8 pressNum;
-    FSeek(p + 4); float pressWaitTime;
-    FSeek(p + 8); sint8 stompType;
+    FSeek(p + 0); sint8 pressType<comment="突き種類 0:通常 1:ウェーブ">;
+    FSeek(p + 1); uint8 pressNum<comment="突き攻撃回数">;
+    FSeek(p + 4); float pressWaitTime<comment="連続突きの間隔">;
+    FSeek(p + 8); sint8 stompType<comment="ストンプ種類 0:通常 1:ウェーブ">;
 
     FSeek(p + 12);
 } MiniBossSpiderLevelPhaseAction;
@@ -279,7 +279,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float divingEndHeight;
+    FSeek(p + 0); float divingEndHeight<comment="ダイビング終了高さ">;
 
     FSeek(p + 4);
 } MiniBossSpiderLevelPhaseDiving;
@@ -288,39 +288,39 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 level;
-    FSeek(p + 4);   float phaseChangeHpRatio;
-    FSeek(p + 8);   sint32 walkWaveId;
-    FSeek(p + 12);  sint32 stompWaveId;
-    FSeek(p + 16);  sint32 pressWaveId;
-    FSeek(p + 20);  bool enableCounterKick;
-    FSeek(p + 21);  MiniBossSpiderLevelBand_MiniBossSpiderBreakType breakType;
-    FSeek(p + 24);  float mineRadius;
-    FSeek(p + 28);  float mineExplodeRadius;
-    FSeek(p + 32);  sint32 mineNum;
-    FSeek(p + 36);  float mineStartSpeed;
-    FSeek(p + 40);  float mineDecelePower;
-    FSeek(p + 44);  float mineMinSpeed;
-    FSeek(p + 48);  float mineParriedSpeed;
-    FSeek(p + 52);  float mineLifeTime;
-    FSeek(p + 56);  float mineEnableParryRate;
-    FSeek(p + 60);  sint32 mineHorizonMaxNum;
-    FSeek(p + 64);  sint32 mineVerticalNum;
-    FSeek(p + 68);  sint32 shotCount;
-    FSeek(p + 72);  float chainLifeTime;
-    FSeek(p + 76);  float chainTraceTime;
-    FSeek(p + 80);  float chainSpeed;
-    FSeek(p + 84);  float chainWaitTime;
-    FSeek(p + 88);  float chainRotateSpeed;
-    FSeek(p + 92);  sint32 chainWaveNum;
-    FSeek(p + 96);  bool enableReProtect;
-    FSeek(p + 100); float nearRange;
-    FSeek(p + 104); MiniBossSpiderLevelBandRate nearRates[2]<optimize=false>;
-    FSeek(p + 168); MiniBossSpiderLevelBandRate farRates[2]<optimize=false>;
-    FSeek(p + 232); MiniBossSpiderLevelPhaseAction phases[2]<optimize=false>;
-    FSeek(p + 256); MiniBossSpiderLevelBandInterval interval[2]<optimize=false>;
-    FSeek(p + 320); MiniBossSpiderLevelPhaseDiving diving[2]<optimize=false>;
-    FSeek(p + 328); float slowRate[2]<optimize=false>;
+    FSeek(p + 0);   sint32 level<comment="レベル">;
+    FSeek(p + 4);   float phaseChangeHpRatio<comment="フェーズを切り替えるHP割合">;
+    FSeek(p + 8);   sint32 walkWaveId<comment="歩行ウェーブの設定ID">;
+    FSeek(p + 12);  sint32 stompWaveId<comment="ストンプウェーブの設定ID">;
+    FSeek(p + 16);  sint32 pressWaveId<comment="プレスウェーブの設定ID">;
+    FSeek(p + 20);  bool enableCounterKick<comment="アーマーなし時足囲みに反撃するか">;
+    FSeek(p + 21);  MiniBossSpiderLevelBand_MiniBossSpiderBreakType breakType<comment="囲み攻略タイプ">;
+    FSeek(p + 24);  float mineRadius<comment="[弾]半径">;
+    FSeek(p + 28);  float mineExplodeRadius<comment="[弾]爆破半径">;
+    FSeek(p + 32);  sint32 mineNum<comment="[弾]発射数[片側]">;
+    FSeek(p + 36);  float mineStartSpeed<comment="[弾]初速">;
+    FSeek(p + 40);  float mineDecelePower<comment="[弾]減速力">;
+    FSeek(p + 44);  float mineMinSpeed<comment="[弾]最低速度">;
+    FSeek(p + 48);  float mineParriedSpeed<comment="[弾]パリィ後の弾丸速度">;
+    FSeek(p + 52);  float mineLifeTime<comment="[弾]最小生存時間">;
+    FSeek(p + 56);  float mineEnableParryRate<comment="[弾]パリィ可能弾の割合[0.0~1.0]">;
+    FSeek(p + 60);  sint32 mineHorizonMaxNum<comment="[弾]弾丸最大数[横軸]">;
+    FSeek(p + 64);  sint32 mineVerticalNum<comment="[弾]弾丸数[縦軸]">;
+    FSeek(p + 68);  sint32 shotCount<comment="[弾]連続発射回数">;
+    FSeek(p + 72);  float chainLifeTime<comment="[連鎖弾]寿命時間">;
+    FSeek(p + 76);  float chainTraceTime<comment="[連鎖弾]追従時間">;
+    FSeek(p + 80);  float chainSpeed<comment="[連鎖弾]弾速">;
+    FSeek(p + 84);  float chainWaitTime<comment="[連鎖弾]発射間隔">;
+    FSeek(p + 88);  float chainRotateSpeed<comment="[連鎖弾]回転速度">;
+    FSeek(p + 92);  sint32 chainWaveNum<comment="[連鎖弾]弾列合計数">;
+    FSeek(p + 96);  bool enableReProtect<comment="アーマー再装填有効">;
+    FSeek(p + 100); float nearRange<comment="近距離とみなす距離">;
+    FSeek(p + 104); MiniBossSpiderLevelBandRate nearRates[2]<comment="近距離発動率",optimize=false>;
+    FSeek(p + 168); MiniBossSpiderLevelBandRate farRates[2]<comment="遠距離発動率",optimize=false>;
+    FSeek(p + 232); MiniBossSpiderLevelPhaseAction phases[2]<comment="行動設定",optimize=false>;
+    FSeek(p + 256); MiniBossSpiderLevelBandInterval interval[2]<comment="行動後インターバル",optimize=false>;
+    FSeek(p + 320); MiniBossSpiderLevelPhaseDiving diving[2]<comment="ダイビング設定",optimize=false>;
+    FSeek(p + 328); float slowRate[2]<comment="突き攻撃後スロー倍率",optimize=false>;
 
     FSeek(p + 336);
 } MiniBossSpiderLevelBand;
@@ -329,9 +329,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossSpiderCommonParam commonParam;
-    FSeek(p + 1520); MiniBossSpiderLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 1940); MiniBossSpiderLevelBand levelBands[5]<optimize=false>;
+    FSeek(p + 0);    MiniBossSpiderCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 1520); MiniBossSpiderLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 1940); MiniBossSpiderLevelBand levelBands[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 3632);
 } MiniBossSpiderConfig;

@@ -4,7 +4,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float baseHeight;
+    FSeek(p + 0); float baseHeight<comment="ベース部分の高さ">;
 
     FSeek(p + 4);
 } ObjWarshipDashRingConfig;

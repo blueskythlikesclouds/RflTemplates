@@ -4,8 +4,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float moveMinDistance;
-    FSeek(p + 4); float moveSpeedMax;
+    FSeek(p + 0); float moveMinDistance<comment="最接近距離">;
+    FSeek(p + 4); float moveSpeedMax<comment="移動速度">;
 
     FSeek(p + 8);
 } EnemyBubbleApproachConfig;
@@ -14,10 +14,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveMinDistance;
-    FSeek(p + 4);  float moveSpeedMax;
-    FSeek(p + 8);  float blitzProtectionMaxDistance;
-    FSeek(p + 12); float blitzProtectionReadyTime;
+    FSeek(p + 0);  float moveMinDistance<comment="最接近距離">;
+    FSeek(p + 4);  float moveSpeedMax<comment="移動速度">;
+    FSeek(p + 8);  float blitzProtectionMaxDistance<comment="電撃防御最大距離">;
+    FSeek(p + 12); float blitzProtectionReadyTime<comment="電撃防御予兆時間">;
 
     FSeek(p + 16);
 } EnemyBubbleBlitzProtectionReadyConfig;
@@ -26,10 +26,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveMinDistance;
-    FSeek(p + 4);  float moveSpeedMax;
-    FSeek(p + 8);  float blitzProtectionAttackTime;
-    FSeek(p + 12); float blitzProtectionIntervalTime;
+    FSeek(p + 0);  float moveMinDistance<comment="最接近距離">;
+    FSeek(p + 4);  float moveSpeedMax<comment="移動速度">;
+    FSeek(p + 8);  float blitzProtectionAttackTime<comment="電撃防御発生時間">;
+    FSeek(p + 12); float blitzProtectionIntervalTime<comment="電撃防御再発生待機時間">;
 
     FSeek(p + 16);
 } EnemyBubbleBlitzProtectionConfig;
@@ -40,17 +40,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float baseHeight;
-    FSeek(p + 4);  float innerDistance;
-    FSeek(p + 8);  float outerDistance;
-    FSeek(p + 12); float innerRadius;
-    FSeek(p + 16); float outerRadius;
-    FSeek(p + 20); float innerAccelMax;
-    FSeek(p + 24); float outerAccelMax;
-    FSeek(p + 28); float innerSpeedMax;
-    FSeek(p + 32); float outerSpeedMax;
-    FSeek(p + 36); uint8 innerNum;
-    FSeek(p + 37); uint8 outerNum;
+    FSeek(p + 0);  float baseHeight<comment="基準点高さ：コア中心">;
+    FSeek(p + 4);  float innerDistance<comment="内殻と本体の配置座標の距離">;
+    FSeek(p + 8);  float outerDistance<comment="外殻と本体の配置座標の距離">;
+    FSeek(p + 12); float innerRadius<comment="内殻半径：安定隣接距離">;
+    FSeek(p + 16); float outerRadius<comment="外殻半径：安定隣接距離">;
+    FSeek(p + 20); float innerAccelMax<comment="内殻ローカル挙動最大加速度">;
+    FSeek(p + 24); float outerAccelMax<comment="外殻ローカル挙動最大加速度">;
+    FSeek(p + 28); float innerSpeedMax<comment="内殻ローカル挙動最大速度">;
+    FSeek(p + 32); float outerSpeedMax<comment="外殻ローカル挙動最大速度">;
+    FSeek(p + 36); uint8 innerNum<comment="内殻数">;
+    FSeek(p + 37); uint8 outerNum<comment="外殻数">;
 
     FSeek(p + 40);
 } EnemyBubbleShellConfig;
@@ -59,21 +59,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float killWaitTime;
-    FSeek(p + 4);  float colliderRadius;
-    FSeek(p + 8);  float damageColliderRadiusOffset;
-    FSeek(p + 12); float attackColliderRadiusOffset;
-    FSeek(p + 16); float eyesightDistance;
-    FSeek(p + 20); float moveAccerleration;
-    FSeek(p + 24); float moveDeceleration;
-    FSeek(p + 28); float rotationAngleMax;
-    FSeek(p + 32); float mass;
-    FSeek(p + 36); float slopeAngleMax;
-    FSeek(p + 40); float knockBackTime;
-    FSeek(p + 44); EnemyBubbleApproachConfig approachConfig;
-    FSeek(p + 52); EnemyBubbleBlitzProtectionReadyConfig blitzReadyConfig;
-    FSeek(p + 68); EnemyBubbleBlitzProtectionConfig blitzConfig;
-    FSeek(p + 84); EnemyBubbleShellConfig shellConfig;
+    FSeek(p + 0);  float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 4);  float colliderRadius<comment="本体円コリジョン半径">;
+    FSeek(p + 8);  float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 12); float attackColliderRadiusOffset<comment="攻撃コリジョンの半径オフセット">;
+    FSeek(p + 16); float eyesightDistance<comment="視野距離">;
+    FSeek(p + 20); float moveAccerleration<comment="移動加速度">;
+    FSeek(p + 24); float moveDeceleration<comment="移動減速度">;
+    FSeek(p + 28); float rotationAngleMax<comment="方向転換角度制限">;
+    FSeek(p + 32); float mass<comment="質量">;
+    FSeek(p + 36); float slopeAngleMax<comment="登れるスロープの角度">;
+    FSeek(p + 40); float knockBackTime<comment="ダメージ後停止時間">;
+    FSeek(p + 44); EnemyBubbleApproachConfig approachConfig<comment="接近移動設定">;
+    FSeek(p + 52); EnemyBubbleBlitzProtectionReadyConfig blitzReadyConfig<comment="電撃防御予兆設定">;
+    FSeek(p + 68); EnemyBubbleBlitzProtectionConfig blitzConfig<comment="電撃防御設定">;
+    FSeek(p + 84); EnemyBubbleShellConfig shellConfig<comment="内殻・外殻設定">;
 
     FSeek(p + 124);
 } EnemyBubbleCommonParam;
@@ -84,10 +84,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } EnemyBubbleCommonLevelParam;
@@ -96,8 +96,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); EnemyBubbleCommonLevelParam common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); EnemyBubbleCommonLevelParam common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyBubbleLevelParam;
@@ -106,7 +106,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } EnemyBubbleLevelBand;
@@ -115,9 +115,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyBubbleCommonParam commonParam;
-    FSeek(p + 124); EnemyBubbleLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 204); EnemyBubbleLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 0);   EnemyBubbleCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 124); EnemyBubbleLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 204); EnemyBubbleLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 224);
 } EnemyBubbleConfig;

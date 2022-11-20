@@ -4,9 +4,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float width;
-    FSeek(p + 4); float height;
-    FSeek(p + 8); float depth;
+    FSeek(p + 0); float width<comment="幅/半径">;
+    FSeek(p + 4); float height<comment="高さ">;
+    FSeek(p + 8); float depth<comment="奥行き">;
 
     FSeek(p + 12);
 } VolumeSize;

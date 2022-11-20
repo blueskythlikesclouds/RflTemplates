@@ -6,7 +6,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float playerBoostRatio;
+    FSeek(p + 0); float playerBoostRatio<comment="ブースト消費倍率">;
 
     FSeek(p + 4);
 } QuestMowingPlayerParameter;
@@ -15,8 +15,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint32 collisionNum;
-    FSeek(p + 4); uint32 pointLine;
+    FSeek(p + 0); uint32 collisionNum<comment="一度に囲んだコリジョン数">;
+    FSeek(p + 4); uint32 pointLine<comment="獲得ポイント">;
 
     FSeek(p + 8);
 } QuestMowingPointParameter;
@@ -30,11 +30,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float timeLimitSeconds;
-    FSeek(p + 4);  float cautionTime;
-    FSeek(p + 8);  float warningTime;
-    FSeek(p + 12); bool useCautionAnimation;
-    FSeek(p + 13); bool useWarningAnimation;
+    FSeek(p + 0);  float timeLimitSeconds<comment="制限時間(秒)">;
+    FSeek(p + 4);  float cautionTime<comment="Cautionアニメ開始残り時間(秒)">;
+    FSeek(p + 8);  float warningTime<comment="(Cautionの後に再生する)Warningアニメ開始残り時間(秒)">;
+    FSeek(p + 12); bool useCautionAnimation<comment="Cautionアニメを使うか">;
+    FSeek(p + 13); bool useWarningAnimation<comment="Warningアニメを使うか">;
 
     FSeek(p + 16);
 } QuestMowingTimerParameter;
@@ -50,9 +50,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float visibleSize;
-    FSeek(p + 4);  float visibleTime;
-    FSeek(p + 16); vector3 viewOffset;
+    FSeek(p + 0);  float visibleSize<comment="表示サイズ(1-25段階)">;
+    FSeek(p + 4);  float visibleTime<comment="表示時間(秒)">;
+    FSeek(p + 16); vector3 viewOffset<comment="表示オフセット">;
 
     FSeek(p + 32);
 } QuestMowingEarnedScoreParameter;
@@ -61,7 +61,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float resultCameraEaseTime;
+    FSeek(p + 0); float resultCameraEaseTime<comment="変更時間(秒)">;
 
     FSeek(p + 4);
 } QuestMowingResultCameraParameter;
@@ -70,14 +70,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 applicableFailedCount;
-    FSeek(p + 4);   uint32 questClearPoint;
-    FSeek(p + 8);   QuestMowingPlayerParameter playerParam;
-    FSeek(p + 12);  uint32 pointParamNum;
-    FSeek(p + 16);  QuestMowingPointParameter pointParam[5]<optimize=false>;
-    FSeek(p + 56);  QuestMowingTimerParameter timerParam;
-    FSeek(p + 80);  QuestMowingEarnedScoreParameter scoreUIParam;
-    FSeek(p + 112); QuestMowingResultCameraParameter resultCameraParam;
+    FSeek(p + 0);   sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 4);   uint32 questClearPoint<comment="クエストクリアポイント">;
+    FSeek(p + 8);   QuestMowingPlayerParameter playerParam<comment="プレイヤー">;
+    FSeek(p + 12);  uint32 pointParamNum<comment="有効にするポイントパラメータの数">;
+    FSeek(p + 16);  QuestMowingPointParameter pointParam[5]<comment="ポイント基準",optimize=false>;
+    FSeek(p + 56);  QuestMowingTimerParameter timerParam<comment="タイマー">;
+    FSeek(p + 80);  QuestMowingEarnedScoreParameter scoreUIParam<comment="獲得スコアUI">;
+    FSeek(p + 112); QuestMowingResultCameraParameter resultCameraParam<comment="結果確認用カメラ">;
 
     FSeek(p + 128);
 } QuestMowingParameterElement;
@@ -86,7 +86,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); QuestMowingParameterElement element[3]<optimize=false>;
+    FSeek(p + 0); QuestMowingParameterElement element[3]<comment="草刈り",optimize=false>;
 
     FSeek(p + 384);
 } QuestMowingParameter;

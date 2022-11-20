@@ -11,9 +11,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool enableShadow;
-    FSeek(p + 4); sint32 shadowCoverage;
-    FSeek(p + 8); float shadowValueMin;
+    FSeek(p + 0); bool enableShadow<comment="雲影有効化">;
+    FSeek(p + 4); sint32 shadowCoverage<comment="影を落とす範囲[m]">;
+    FSeek(p + 8); float shadowValueMin<comment="雲の遮蔽最低値">;
 
     FSeek(p + 12);
 } FxCloudShadowParameter;

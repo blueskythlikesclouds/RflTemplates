@@ -4,11 +4,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float killWaitTime;
-    FSeek(p + 4);  float colliderRadius;
-    FSeek(p + 8);  float colliderHeight;
-    FSeek(p + 12); float damageColliderRadiusOffset;
-    FSeek(p + 16); float eyesightDistance;
+    FSeek(p + 0);  float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 4);  float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 8);  float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 12); float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 16); float eyesightDistance<comment="視野距離">;
 
     FSeek(p + 20);
 } EnemyJumperSubCommonParam;
@@ -19,10 +19,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } EnemyJumperSubCommonLevelParam;
@@ -31,8 +31,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); EnemyJumperSubCommonLevelParam common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); EnemyJumperSubCommonLevelParam common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyJumperSubLevelParam;
@@ -41,7 +41,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } EnemyJumperSubLevelBand;
@@ -50,9 +50,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyJumperSubCommonParam commonParam;
-    FSeek(p + 20);  EnemyJumperSubLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 100); EnemyJumperSubLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 0);   EnemyJumperSubCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 20);  EnemyJumperSubLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 100); EnemyJumperSubLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 120);
 } EnemyJumperSubConfig;

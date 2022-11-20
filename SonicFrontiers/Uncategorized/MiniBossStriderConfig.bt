@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,7 +25,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); MiniBossCommonConfig commonConfig;
+    FSeek(p + 0); MiniBossCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 64);
 } MiniBossStriderCommonParam;
@@ -36,16 +36,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -54,8 +54,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossStriderLevelParam;
@@ -64,7 +64,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } MiniBossStriderLevelBand;
@@ -87,9 +87,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); MeansOfAttack meansOfAttack;
-    FSeek(p + 1); bool enabled;
-    FSeek(p + 4); float attackInterval;
+    FSeek(p + 0); MeansOfAttack meansOfAttack<comment="攻撃方法">;
+    FSeek(p + 1); bool enabled<comment="使用するか">;
+    FSeek(p + 4); float attackInterval<comment="攻撃間隔（秒）">;
 
     FSeek(p + 8);
 } AttackInfo;
@@ -98,8 +98,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  AttackInfo attackInfos[2]<optimize=false>;
-    FSeek(p + 16); float triggeredHPRatio;
+    FSeek(p + 0);  AttackInfo attackInfos[2]<comment="使用する攻撃とその設定",optimize=false>;
+    FSeek(p + 16); float triggeredHPRatio<comment="トリガーとなる残りHP割合">;
 
     FSeek(p + 20);
 } AttackPhase;
@@ -108,29 +108,29 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   AttackPhase attackPhases[3]<optimize=false>;
-    FSeek(p + 60);  float initialAttackWaitBullet;
-    FSeek(p + 64);  float initialAttackWaitLaser;
-    FSeek(p + 68);  float attackableTime;
-    FSeek(p + 72);  float railBulletAttackInterval;
-    FSeek(p + 76);  float tentativePlatformTopYOffset;
-    FSeek(p + 80);  float tentativePlatformBottomYOffset;
-    FSeek(p + 84);  float tentativePlatformRadius;
-    FSeek(p + 88);  float cameraElevation;
-    FSeek(p + 92);  float cameraFovy;
-    FSeek(p + 96);  float cameraDistance;
-    FSeek(p + 100); float cameraDegreeForClockwiseMovement;
-    FSeek(p + 104); float cameraDegreeForCounterClockwiseMovement;
-    FSeek(p + 108); float cameraLookAtPointOffsetY;
-    FSeek(p + 112); float cameraMaxChangeableDegreeByStickInput;
-    FSeek(p + 116); float cameraMaxDegreeChangedByStickInputPerSec;
-    FSeek(p + 120); float attackableCameraElevation;
-    FSeek(p + 124); float attackableCameraDistance;
-    FSeek(p + 128); float attackableCameraInterpolationTime;
-    FSeek(p + 132); float attackableCameraDuration;
-    FSeek(p + 136); bool enableAttackableCamera;
-    FSeek(p + 137); bool enableStun;
-    FSeek(p + 138); bool enableStagger;
+    FSeek(p + 0);   AttackPhase attackPhases[3]<comment="アタックフェーズ",optimize=false>;
+    FSeek(p + 60);  float initialAttackWaitBullet<comment="初期攻撃待機時間（這い弾）">;
+    FSeek(p + 64);  float initialAttackWaitLaser<comment="初期攻撃待機時間（レーザー）">;
+    FSeek(p + 68);  float attackableTime<comment="攻撃可能時間">;
+    FSeek(p + 72);  float railBulletAttackInterval<comment="フープレール弾攻撃間隔（秒）">;
+    FSeek(p + 76);  float tentativePlatformTopYOffset<comment="仮足場上面高度オフセット">;
+    FSeek(p + 80);  float tentativePlatformBottomYOffset<comment="仮足場下面高度オフセット">;
+    FSeek(p + 84);  float tentativePlatformRadius<comment="仮足場半径">;
+    FSeek(p + 88);  float cameraElevation<comment="グラインド時カメラ仰角">;
+    FSeek(p + 92);  float cameraFovy<comment="グラインド時カメラ画角">;
+    FSeek(p + 96);  float cameraDistance<comment="グラインド時カメラ注視点からの距離">;
+    FSeek(p + 100); float cameraDegreeForClockwiseMovement<comment="グラインド時カメラ回転角度（時計回りに移動時）">;
+    FSeek(p + 104); float cameraDegreeForCounterClockwiseMovement<comment="グラインド時カメラ回転角度（反時計回りに移動時）">;
+    FSeek(p + 108); float cameraLookAtPointOffsetY<comment="グラインド時カメラ注視点Yオフセット">;
+    FSeek(p + 112); float cameraMaxChangeableDegreeByStickInput<comment="スティック入力による変更可能カメラ角度">;
+    FSeek(p + 116); float cameraMaxDegreeChangedByStickInputPerSec<comment="スティック入力で変わる最大の毎秒角度">;
+    FSeek(p + 120); float attackableCameraElevation<comment="バリア破壊時カメラ仰角">;
+    FSeek(p + 124); float attackableCameraDistance<comment="バリア破壊時カメラ注視点からの距離">;
+    FSeek(p + 128); float attackableCameraInterpolationTime<comment="バリア破壊時カメラ補間時間">;
+    FSeek(p + 132); float attackableCameraDuration<comment="バリア破壊時カメラ継続時間">;
+    FSeek(p + 136); bool enableAttackableCamera<comment="バリア破壊時カメラ有効化">;
+    FSeek(p + 137); bool enableStun<comment="スタンを有効化">;
+    FSeek(p + 138); bool enableStagger<comment="怯みを有効化">;
 
     FSeek(p + 140);
 } MiniBossStriderParam;
@@ -139,18 +139,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius1;
-    FSeek(p + 4);  float radius2;
-    FSeek(p + 8);  float radius3;
-    FSeek(p + 12); float yOffset1;
-    FSeek(p + 16); float yOffset2;
-    FSeek(p + 20); float yOffset3;
-    FSeek(p + 24); uint8 numRailBulletsFiredAtOnce;
-    FSeek(p + 28); float railBulletPreAttackEffectTime;
-    FSeek(p + 32); float railBulletRadius;
-    FSeek(p + 36); float railBulletSearchDistance;
-    FSeek(p + 40); float maxJumpDistanceFromRailBullet;
-    FSeek(p + 44); float distToDestWithinWhichJumpIsDone;
+    FSeek(p + 0);  float radius1<comment="内側のレール半径">;
+    FSeek(p + 4);  float radius2<comment="真ん中のレール半径">;
+    FSeek(p + 8);  float radius3<comment="外側のレール半径">;
+    FSeek(p + 12); float yOffset1<comment="内側のレールYオフセット">;
+    FSeek(p + 16); float yOffset2<comment="真ん中のレールYオフセット">;
+    FSeek(p + 20); float yOffset3<comment="外側のレールYオフセット">;
+    FSeek(p + 24); uint8 numRailBulletsFiredAtOnce<comment="一度に発射するフープレールの数">;
+    FSeek(p + 28); float railBulletPreAttackEffectTime<comment="フープレール発射何秒前に予兆エフェクトを再生するか">;
+    FSeek(p + 32); float railBulletRadius<comment="フープレール弾半径">;
+    FSeek(p + 36); float railBulletSearchDistance<comment="フープレール弾検索距離（外側レールの点基準）">;
+    FSeek(p + 40); float maxJumpDistanceFromRailBullet<comment="フープレールからの最大ジャンプ距離">;
+    FSeek(p + 44); float distToDestWithinWhichJumpIsDone<comment="フープレールからのジャンプが行われるPositionIndicatorまでの許容距離">;
 
     FSeek(p + 48);
 } ObjStriderGrindRailParam;
@@ -159,8 +159,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float colliderRadius;
-    FSeek(p + 4); float colliderHeight;
+    FSeek(p + 0); float colliderRadius<comment="攻撃時足場半径">;
+    FSeek(p + 4); float colliderHeight<comment="攻撃時足場高さ">;
 
     FSeek(p + 8);
 } ObjStriderPlatformParam;
@@ -169,12 +169,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossStriderCommonParam commonParam;
-    FSeek(p + 64);  MiniBossStriderLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 344); MiniBossStriderLevelBand levelBand[5]<optimize=false>;
-    FSeek(p + 364); MiniBossStriderParam striderParam;
-    FSeek(p + 504); ObjStriderGrindRailParam grindRailParam;
-    FSeek(p + 552); ObjStriderPlatformParam platformParam;
+    FSeek(p + 0);   MiniBossStriderCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 64);  MiniBossStriderLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 344); MiniBossStriderLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 364); MiniBossStriderParam striderParam<comment="ストライダー本体のパラメータ">;
+    FSeek(p + 504); ObjStriderGrindRailParam grindRailParam<comment="レール関連パラメータ（レールオブジェクト外で使用するもの）">;
+    FSeek(p + 552); ObjStriderPlatformParam platformParam<comment="攻撃時足場関連パラメータ">;
 
     FSeek(p + 560);
 } MiniBossStriderConfig;

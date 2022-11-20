@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float bulletRadius;
-    FSeek(p + 4);  float bulletModelScale;
-    FSeek(p + 8);  float bulletRadiusLastBoss;
-    FSeek(p + 12); float bulletModelScaleLastBoss;
-    FSeek(p + 16); float bulletModelOffsetRateLastBoss;
-    FSeek(p + 20); float laserNormalRadius;
-    FSeek(p + 24); float laserThickRadius;
+    FSeek(p + 0);  float bulletRadius<comment="弾コリジョン半径">;
+    FSeek(p + 4);  float bulletModelScale<comment="弾モデルスケール">;
+    FSeek(p + 8);  float bulletRadiusLastBoss<comment="弾コリジョン半径[ラスボス]">;
+    FSeek(p + 12); float bulletModelScaleLastBoss<comment="弾モデルスケール[ラスボス]">;
+    FSeek(p + 16); float bulletModelOffsetRateLastBoss<comment="弾モデルカメラ方向オフセット率[ラスボス]">;
+    FSeek(p + 20); float laserNormalRadius<comment="ビームコリジョン半径">;
+    FSeek(p + 24); float laserThickRadius<comment="極太ビームコリジョン半径">;
 
     FSeek(p + 28);
 } HackingBulletParameter;
@@ -50,8 +50,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float angle;
-    FSeek(p + 4); float time;
+    FSeek(p + 0); float angle<comment="旋回角度">;
+    FSeek(p + 4); float time<comment="旋回時間">;
 
     FSeek(p + 8);
 } AnimationParameter;
@@ -60,18 +60,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  Type type;
-    FSeek(p + 1);  ElementType element;
-    FSeek(p + 4);  float startAngle;
-    FSeek(p + 8);  float endAngle;
-    FSeek(p + 12); uint8 shootNum;
-    FSeek(p + 16); float shootSpeed;
-    FSeek(p + 20); uint8 wayNum;
-    FSeek(p + 24); float wayAngle;
-    FSeek(p + 28); float laserLength;
-    FSeek(p + 32); float lifeTime;
-    FSeek(p + 36); bool animation;
-    FSeek(p + 40); AnimationParameter animParam[8]<optimize=false>;
+    FSeek(p + 0);  Type type<comment="タイプ">;
+    FSeek(p + 1);  ElementType element<comment="属性値">;
+    FSeek(p + 4);  float startAngle<comment="開始角度">;
+    FSeek(p + 8);  float endAngle<comment="終了角度">;
+    FSeek(p + 12); uint8 shootNum<comment="射出数 弾">;
+    FSeek(p + 16); float shootSpeed<comment="射出速度 弾">;
+    FSeek(p + 20); uint8 wayNum<comment="WAY数">;
+    FSeek(p + 24); float wayAngle<comment="WAY 角度幅">;
+    FSeek(p + 28); float laserLength<comment="ビーム長">;
+    FSeek(p + 32); float lifeTime<comment="行動時間">;
+    FSeek(p + 36); bool animation<comment="アニメーションを使用か">;
+    FSeek(p + 40); AnimationParameter animParam[8]<comment="キーフレーム",optimize=false>;
 
     FSeek(p + 104);
 } BulletPatternParameter;
@@ -80,8 +80,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); BulletPatternParameter param;
+    FSeek(p + 0);  cstring name<comment="名前">;
+    FSeek(p + 16); BulletPatternParameter param<comment="弾パターンパラメータ">;
 
     FSeek(p + 120);
 } BulletPatternSetParameter;
@@ -90,8 +90,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  HackingBulletParameter bulletParam;
-    FSeek(p + 32); BulletPatternSetParameter data[256]<optimize=false>;
+    FSeek(p + 0);  HackingBulletParameter bulletParam<comment="弾パラメータ">;
+    FSeek(p + 32); BulletPatternSetParameter data[256]<comment="弾パターンパラメータ郡",optimize=false>;
 
     FSeek(p + 30752);
 } BulletPatternSetParameters;

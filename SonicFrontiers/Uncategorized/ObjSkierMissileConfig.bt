@@ -11,13 +11,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float colliderHeight;
-    FSeek(p + 4);  float colliderRadius;
-    FSeek(p + 16); vector3 colliderOffset;
-    FSeek(p + 32); float explodeRadius;
-    FSeek(p + 36); float distanceStartCurve;
-    FSeek(p + 40); float distanceEndCurve;
-    FSeek(p + 44); float inducedExplosionTimePerDistance;
+    FSeek(p + 0);  float colliderHeight<comment="コリジョンの高さ">;
+    FSeek(p + 4);  float colliderRadius<comment="コリジョンの半径">;
+    FSeek(p + 16); vector3 colliderOffset<comment="コリジョンオフセット">;
+    FSeek(p + 32); float explodeRadius<comment="爆発半径">;
+    FSeek(p + 36); float distanceStartCurve<comment="曲がり始めるまでの距離">;
+    FSeek(p + 40); float distanceEndCurve<comment="曲がり終わるまでの距離">;
+    FSeek(p + 44); float inducedExplosionTimePerDistance<comment="単位距離あたりの誘爆する時間(s/m)">;
 
     FSeek(p + 48);
 } ObjSkierMissileConfig;

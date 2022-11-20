@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -32,19 +32,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 count;
-    FSeek(p + 4);  float intervalTime;
-    FSeek(p + 8);  float pitchMin;
-    FSeek(p + 12); float pitchMax;
-    FSeek(p + 16); float pitchOffsetMin;
-    FSeek(p + 20); float pitchOffsetMax;
-    FSeek(p + 24); float yawOffsetRange;
-    FSeek(p + 28); bool sweepFire;
-    FSeek(p + 29); bool predict;
-    FSeek(p + 32); float radius;
-    FSeek(p + 36); float speed;
-    FSeek(p + 40); float lifeTime;
-    FSeek(p + 44); float waitTime;
+    FSeek(p + 0);  sint32 count<comment="発射数">;
+    FSeek(p + 4);  float intervalTime<comment="発射間隔">;
+    FSeek(p + 8);  float pitchMin<comment="発射ピッチ角の下限">;
+    FSeek(p + 12); float pitchMax<comment="発射ピッチ角の上限">;
+    FSeek(p + 16); float pitchOffsetMin<comment="発射ピッチ角の下ブレ範囲">;
+    FSeek(p + 20); float pitchOffsetMax<comment="発射ピッチ角の上ブレ範囲">;
+    FSeek(p + 24); float yawOffsetRange<comment="発射ヨー角のブレ範囲">;
+    FSeek(p + 28); bool sweepFire<comment="掃射">;
+    FSeek(p + 29); bool predict<comment="偏差射撃">;
+    FSeek(p + 32); float radius<comment="弾の半径">;
+    FSeek(p + 36); float speed<comment="弾の速度">;
+    FSeek(p + 40); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 44); float waitTime<comment="射撃後の待ち時間">;
 
     FSeek(p + 48);
 } MiniBossDarumaShotParam;
@@ -62,19 +62,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 count;
-    FSeek(p + 4);  float intervalTime;
-    FSeek(p + 8);  float shootPitchMin;
-    FSeek(p + 12); float shootPitchMax;
-    FSeek(p + 16); float initialSpeedMin;
-    FSeek(p + 20); float initialSpeedMax;
-    FSeek(p + 24); float maxAngle;
-    FSeek(p + 28); float moveRadius;
-    FSeek(p + 32); float maxMoveSpeed;
-    FSeek(p + 36); float accel;
-    FSeek(p + 40); float waitTime;
-    FSeek(p + 44); float featherLifeTime;
-    FSeek(p + 48); ScatterType m_scatterTypeTable[6]<optimize=false>;
+    FSeek(p + 0);  sint32 count<comment="数">;
+    FSeek(p + 4);  float intervalTime<comment="間隔">;
+    FSeek(p + 8);  float shootPitchMin<comment="射出ピッチ[最小]">;
+    FSeek(p + 12); float shootPitchMax<comment="射出ピッチ[最大]">;
+    FSeek(p + 16); float initialSpeedMin<comment="射出速度[最小]">;
+    FSeek(p + 20); float initialSpeedMax<comment="射出速度[最大]">;
+    FSeek(p + 24); float maxAngle<comment="狙い撃ちの角度範囲">;
+    FSeek(p + 28); float moveRadius<comment="移動半径">;
+    FSeek(p + 32); float maxMoveSpeed<comment="移動速度">;
+    FSeek(p + 36); float accel<comment="加速度">;
+    FSeek(p + 40); float waitTime<comment="撃ち切った後の停止時間">;
+    FSeek(p + 44); float featherLifeTime<comment="羽根の生存時間">;
+    FSeek(p + 48); ScatterType m_scatterTypeTable[6]<comment="ばら撒き方テーブル",optimize=false>;
 
     FSeek(p + 56);
 } MiniBossDarumaSpecialShotParamBase;
@@ -84,9 +84,9 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
-    FSeek(p + 56); float explosionRadius;
-    FSeek(p + 60); float explosionEffectScale;
-    FSeek(p + 64); float explosionTime;
+    FSeek(p + 56); float explosionRadius<comment="爆発半径">;
+    FSeek(p + 60); float explosionEffectScale<comment="爆発エフェクトスケール">;
+    FSeek(p + 64); float explosionTime<comment="爆発時間">;
 
     FSeek(p + 68);
 } MiniBossDarumaBombParam;
@@ -96,7 +96,7 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
-    FSeek(p + 56); float burnLifeTime;
+    FSeek(p + 56); float burnLifeTime<comment="火柱の生存時間">;
 
     FSeek(p + 60);
 } MiniBossDarumaFlamePillarParam;
@@ -106,12 +106,12 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
-    FSeek(p + 56); float burnLifeTime;
-    FSeek(p + 60); float cycleTime;
-    FSeek(p + 64); float cycleDistance;
-    FSeek(p + 68); float homingLimitAngle;
-    FSeek(p + 72); float maxTurnAngle;
-    FSeek(p + 76); uint32 cycleCount;
+    FSeek(p + 56); float burnLifeTime<comment="火柱の生存時間">;
+    FSeek(p + 60); float cycleTime<comment="火柱間の時間">;
+    FSeek(p + 64); float cycleDistance<comment="火柱間の距離">;
+    FSeek(p + 68); float homingLimitAngle<comment="追跡制限角度">;
+    FSeek(p + 72); float maxTurnAngle<comment="最大旋回角度">;
+    FSeek(p + 76); uint32 cycleCount<comment="火柱の数">;
 
     FSeek(p + 80);
 } MiniBossDarumaWaveBombParam;
@@ -120,36 +120,36 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float range;
-    FSeek(p + 4);   float riseDistance;
-    FSeek(p + 8);   float riseTime;
-    FSeek(p + 12);  float chaseSpeed;
-    FSeek(p + 16);  float chaseTime;
-    FSeek(p + 20);  float speed;
-    FSeek(p + 24);  float rotationSpeed;
-    FSeek(p + 28);  float timingGap;
-    FSeek(p + 32);  float spinTime;
-    FSeek(p + 36);  float ringRiseTime;
-    FSeek(p + 40);  float waitTime;
-    FSeek(p + 44);  float staggerTime;
-    FSeek(p + 48);  float staggerDistance;
-    FSeek(p + 52);  float groundImpactRadius;
-    FSeek(p + 56);  float waveRadius;
-    FSeek(p + 60);  float waveAppearRadius;
-    FSeek(p + 64);  float waveKeepRadius;
-    FSeek(p + 68);  float waveDisappearRadius;
-    FSeek(p + 72);  float waveHeightMin;
-    FSeek(p + 76);  float waveHeightMax;
-    FSeek(p + 80);  float waveLifeTime;
-    FSeek(p + 84);  float waveVelocityX;
-    FSeek(p + 88);  float waveVelocityY;
-    FSeek(p + 92);  float laserRadius;
-    FSeek(p + 96);  float laserLength;
-    FSeek(p + 100); float laserTime;
-    FSeek(p + 104); float laserRotationInitialSpeed;
-    FSeek(p + 108); float laserRotationAccel;
-    FSeek(p + 112); float laserRotationMaxSpeed;
-    FSeek(p + 116); float laserAccelDelayTime;
+    FSeek(p + 0);   float range<comment="射程距離">;
+    FSeek(p + 4);   float riseDistance<comment="上昇高度">;
+    FSeek(p + 8);   float riseTime<comment="上昇時間">;
+    FSeek(p + 12);  float chaseSpeed<comment="追跡速度">;
+    FSeek(p + 16);  float chaseTime<comment="追跡時間">;
+    FSeek(p + 20);  float speed<comment="速度">;
+    FSeek(p + 24);  float rotationSpeed<comment="回転速度">;
+    FSeek(p + 28);  float timingGap<comment="胴体の落下時間差">;
+    FSeek(p + 32);  float spinTime<comment="事前の回転時間">;
+    FSeek(p + 36);  float ringRiseTime<comment="リング上昇時間">;
+    FSeek(p + 40);  float waitTime<comment="終了後の待ち時間">;
+    FSeek(p + 44);  float staggerTime<comment="よろめき時間">;
+    FSeek(p + 48);  float staggerDistance<comment="よろめき距離">;
+    FSeek(p + 52);  float groundImpactRadius<comment="地面に衝撃が伝わる半径">;
+    FSeek(p + 56);  float waveRadius<comment="波の最大半径">;
+    FSeek(p + 60);  float waveAppearRadius<comment="波の出現半径">;
+    FSeek(p + 64);  float waveKeepRadius<comment="波の待機半径">;
+    FSeek(p + 68);  float waveDisappearRadius<comment="波の消滅半径">;
+    FSeek(p + 72);  float waveHeightMin<comment="波の最小高さ">;
+    FSeek(p + 76);  float waveHeightMax<comment="波の最大高さ">;
+    FSeek(p + 80);  float waveLifeTime<comment="波の生存時間">;
+    FSeek(p + 84);  float waveVelocityX<comment="波の吹っ飛び力X">;
+    FSeek(p + 88);  float waveVelocityY<comment="波の吹っ飛び力Y">;
+    FSeek(p + 92);  float laserRadius<comment="レーザーの半径">;
+    FSeek(p + 96);  float laserLength<comment="レーザーの長さ">;
+    FSeek(p + 100); float laserTime<comment="レーザーの照射時間">;
+    FSeek(p + 104); float laserRotationInitialSpeed<comment="レーザーの回転初速">;
+    FSeek(p + 108); float laserRotationAccel<comment="レーザーの回転加速度">;
+    FSeek(p + 112); float laserRotationMaxSpeed<comment="レーザーの回転最高速">;
+    FSeek(p + 116); float laserAccelDelayTime<comment="レーザーの加速遅延時間">;
 
     FSeek(p + 120);
 } MiniBossDarumaStompingParam;
@@ -158,17 +158,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 targetOffSet;
-    FSeek(p + 16); float azimuth;
-    FSeek(p + 20); float elevation;
-    FSeek(p + 24); float distance;
-    FSeek(p + 28); float zRoll;
-    FSeek(p + 32); float fovy;
-    FSeek(p + 48); vector3 cameraMoveDir;
-    FSeek(p + 64); float cameraMoveSpeed;
-    FSeek(p + 68); float interpolateTime;
-    FSeek(p + 72); float bodyBreakWaitTime;
-    FSeek(p + 76); float changeStateWaitTime;
+    FSeek(p + 0);  vector3 targetOffSet<comment="カメラ注視点オフセット">;
+    FSeek(p + 16); float azimuth<comment="カメラ方位角">;
+    FSeek(p + 20); float elevation<comment="カメラ仰角">;
+    FSeek(p + 24); float distance<comment="カメラ距離">;
+    FSeek(p + 28); float zRoll<comment="カメラロール">;
+    FSeek(p + 32); float fovy<comment="カメラ画角">;
+    FSeek(p + 48); vector3 cameraMoveDir<comment="カメラの移動方向">;
+    FSeek(p + 64); float cameraMoveSpeed<comment="カメラ移動速度">;
+    FSeek(p + 68); float interpolateTime<comment="通常カメラに戻す補間時間">;
+    FSeek(p + 72); float bodyBreakWaitTime<comment="胴体の破壊間隔">;
+    FSeek(p + 76); float changeStateWaitTime<comment="攻撃ステートまでの待機時間">;
 
     FSeek(p + 80);
 } MiniBossDarumaCyloopReactionParam;
@@ -177,16 +177,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float lifeTime;
-    FSeek(p + 4);  float forceScale;
-    FSeek(p + 8);  float forceMin;
-    FSeek(p + 12); float forceMax;
-    FSeek(p + 16); float forceCyloopExplode;
-    FSeek(p + 20); float gravity;
-    FSeek(p + 24); float weight;
-    FSeek(p + 28); float friction;
-    FSeek(p + 32); sint8 maxPieceNum;
-    FSeek(p + 48); vector3 centerOffset;
+    FSeek(p + 0);  float lifeTime<comment="生存時間">;
+    FSeek(p + 4);  float forceScale<comment="吹き飛ばす力スケール">;
+    FSeek(p + 8);  float forceMin<comment="最小の吹き飛び力">;
+    FSeek(p + 12); float forceMax<comment="最大の吹き飛び力">;
+    FSeek(p + 16); float forceCyloopExplode<comment="サイループ破壊時の吹き飛び力">;
+    FSeek(p + 20); float gravity<comment="重力加速度">;
+    FSeek(p + 24); float weight<comment="重さ">;
+    FSeek(p + 28); float friction<comment="摩擦係数">;
+    FSeek(p + 32); sint8 maxPieceNum<comment="破片の生成数5段階指定(負の値の場合、システム設定値を使う.)">;
+    FSeek(p + 48); vector3 centerOffset<comment="拡散点中心位置オフセット">;
 
     FSeek(p + 64);
 } MiniBossDarumaDebrisBodySmallParam;
@@ -195,11 +195,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float damageVelocityScale;
-    FSeek(p + 4);  float minSpeed;
-    FSeek(p + 8);  float maxSpeed;
-    FSeek(p + 16); MiniBossDarumaDebrisBodySmallParam body;
-    FSeek(p + 80); MiniBossDarumaDebrisBodySmallParam cyloop;
+    FSeek(p + 0);  float damageVelocityScale<comment="ダメージ速度倍率">;
+    FSeek(p + 4);  float minSpeed<comment="最低速度">;
+    FSeek(p + 8);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 16); MiniBossDarumaDebrisBodySmallParam body<comment="体の小破片">;
+    FSeek(p + 80); MiniBossDarumaDebrisBodySmallParam cyloop<comment="体の小破片(サイループリアクション用)">;
 
     FSeek(p + 144);
 } MiniBossDarumaDebrisParam;
@@ -208,11 +208,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float time;
-    FSeek(p + 4);  float magnitude;
-    FSeek(p + 8);  sint32 freq;
-    FSeek(p + 12); float attnRatio;
-    FSeek(p + 16); float shakeRange;
+    FSeek(p + 0);  float time<comment="有効時間">;
+    FSeek(p + 4);  float magnitude<comment="振幅の大きさ">;
+    FSeek(p + 8);  sint32 freq<comment="周波数">;
+    FSeek(p + 12); float attnRatio<comment="振幅の減衰率">;
+    FSeek(p + 16); float shakeRange<comment="振動が伝わる距離">;
 
     FSeek(p + 20);
 } MiniBossDarumaCameraShakeParam;
@@ -221,45 +221,45 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossCommonConfig commonConfig;
-    FSeek(p + 64);   float headHeight;
-    FSeek(p + 68);   sint32 bodyMaxHealthPoint;
-    FSeek(p + 72);   float bodyRadius;
-    FSeek(p + 76);   float bodyHeight;
-    FSeek(p + 80);   float baseHeight;
-    FSeek(p + 84);   float partSpace;
-    FSeek(p + 88);   float ringRadius;
-    FSeek(p + 92);   float ringHeight;
-    FSeek(p + 96);   float ringRotationSpeed;
-    FSeek(p + 100);  float gravity;
-    FSeek(p + 104);  float stunTime;
-    FSeek(p + 108);  float maxSpeed;
-    FSeek(p + 112);  float stompingTransitRange;
-    FSeek(p + 116);  sint32 questKodamaMaxNum[3]<optimize=false>;
-    FSeek(p + 128);  MiniBossDarumaShotParam shot;
-    FSeek(p + 176);  MiniBossDarumaShotParam shot3way;
-    FSeek(p + 224);  MiniBossDarumaShotParam shot5way;
-    FSeek(p + 272);  MiniBossDarumaBombParam bomb;
-    FSeek(p + 340);  MiniBossDarumaFlamePillarParam flamePillar;
-    FSeek(p + 400);  MiniBossDarumaWaveBombParam waveBomb;
-    FSeek(p + 480);  MiniBossDarumaStompingParam stomping;
-    FSeek(p + 600);  MiniBossDarumaStompingParam stompingThorn;
-    FSeek(p + 720);  MiniBossDarumaStompingParam stompingQuest[3]<optimize=false>;
-    FSeek(p + 1080); MiniBossDarumaStompingParam stompingQuestHigh[3]<optimize=false>;
-    FSeek(p + 1440); MiniBossDarumaStompingParam stompingQuest2[3]<optimize=false>;
-    FSeek(p + 1800); MiniBossDarumaStompingParam stompingQuest2High[3]<optimize=false>;
-    FSeek(p + 2160); MiniBossDarumaCyloopReactionParam cyloopReaction;
-    FSeek(p + 2240); MiniBossDarumaShotParam shotBerserk;
-    FSeek(p + 2288); MiniBossDarumaShotParam shotBerserk3way;
-    FSeek(p + 2336); MiniBossDarumaShotParam shotBerserk5way;
-    FSeek(p + 2384); MiniBossDarumaStompingParam hop;
-    FSeek(p + 2504); MiniBossDarumaStompingParam stompingBerserk;
-    FSeek(p + 2624); MiniBossDarumaFlamePillarParam flamePillarBerserk;
-    FSeek(p + 2688); MiniBossDarumaDebrisParam debris;
-    FSeek(p + 2832); MiniBossDarumaCameraShakeParam cameraShakeStomping;
-    FSeek(p + 2852); MiniBossDarumaCameraShakeParam cameraShakeStompingQuest;
-    FSeek(p + 2872); MiniBossDarumaCameraShakeParam cameraShakeStompingQuest2;
-    FSeek(p + 2892); MiniBossDarumaCameraShakeParam cameraShakeDrop;
+    FSeek(p + 0);    MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64);   float headHeight<comment="頭部の高さ">;
+    FSeek(p + 68);   sint32 bodyMaxHealthPoint<comment="胴体の最大体力">;
+    FSeek(p + 72);   float bodyRadius<comment="胴体の半径">;
+    FSeek(p + 76);   float bodyHeight<comment="胴体の高さ">;
+    FSeek(p + 80);   float baseHeight<comment="土台の高さ">;
+    FSeek(p + 84);   float partSpace<comment="部品の間隔">;
+    FSeek(p + 88);   float ringRadius<comment="リングの半径">;
+    FSeek(p + 92);   float ringHeight<comment="リングの高さ">;
+    FSeek(p + 96);   float ringRotationSpeed<comment="リングの回転速度">;
+    FSeek(p + 100);  float gravity<comment="重力の強さ">;
+    FSeek(p + 104);  float stunTime<comment="気絶時間">;
+    FSeek(p + 108);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 112);  float stompingTransitRange<comment="ストンピング移行距離">;
+    FSeek(p + 116);  sint32 questKodamaMaxNum[3]<comment="[クエスト]最大パラメータになるコダマ所持数",optimize=false>;
+    FSeek(p + 128);  MiniBossDarumaShotParam shot<comment="射撃">;
+    FSeek(p + 176);  MiniBossDarumaShotParam shot3way<comment="射撃3way">;
+    FSeek(p + 224);  MiniBossDarumaShotParam shot5way<comment="射撃5way">;
+    FSeek(p + 272);  MiniBossDarumaBombParam bomb<comment="爆発弾">;
+    FSeek(p + 340);  MiniBossDarumaFlamePillarParam flamePillar<comment="火柱">;
+    FSeek(p + 400);  MiniBossDarumaWaveBombParam waveBomb<comment="ウェーブボム">;
+    FSeek(p + 480);  MiniBossDarumaStompingParam stomping<comment="ストンピング">;
+    FSeek(p + 600);  MiniBossDarumaStompingParam stompingThorn<comment="[棘]ストンピング">;
+    FSeek(p + 720);  MiniBossDarumaStompingParam stompingQuest[3]<comment="ストンピング[コダマ護衛 最小]",optimize=false>;
+    FSeek(p + 1080); MiniBossDarumaStompingParam stompingQuestHigh[3]<comment="ストンピング[コダマ護衛 最大]",optimize=false>;
+    FSeek(p + 1440); MiniBossDarumaStompingParam stompingQuest2[3]<comment="ストンピング[コダマ護衛2 最小]",optimize=false>;
+    FSeek(p + 1800); MiniBossDarumaStompingParam stompingQuest2High[3]<comment="ストンピング[コダマ護衛2 最大]",optimize=false>;
+    FSeek(p + 2160); MiniBossDarumaCyloopReactionParam cyloopReaction<comment="サイループリアクション">;
+    FSeek(p + 2240); MiniBossDarumaShotParam shotBerserk<comment="[発狂]射撃">;
+    FSeek(p + 2288); MiniBossDarumaShotParam shotBerserk3way<comment="[発狂]射撃3way">;
+    FSeek(p + 2336); MiniBossDarumaShotParam shotBerserk5way<comment="[発狂]射撃5way">;
+    FSeek(p + 2384); MiniBossDarumaStompingParam hop<comment="[発狂]三連ストンピング前半">;
+    FSeek(p + 2504); MiniBossDarumaStompingParam stompingBerserk<comment="[発狂]三連ストンピング最後">;
+    FSeek(p + 2624); MiniBossDarumaFlamePillarParam flamePillarBerserk<comment="[発狂]火柱">;
+    FSeek(p + 2688); MiniBossDarumaDebrisParam debris<comment="破片">;
+    FSeek(p + 2832); MiniBossDarumaCameraShakeParam cameraShakeStomping<comment="スピンピング時のカメラ振動">;
+    FSeek(p + 2852); MiniBossDarumaCameraShakeParam cameraShakeStompingQuest<comment="スピンピング時のカメラ振動[コダマ護衛]">;
+    FSeek(p + 2872); MiniBossDarumaCameraShakeParam cameraShakeStompingQuest2<comment="スピンピング時のカメラ振動[コダマ護衛2]">;
+    FSeek(p + 2892); MiniBossDarumaCameraShakeParam cameraShakeDrop<comment="胴体落下時のカメラ振動">;
 
     FSeek(p + 2912);
 } MiniBossDarumaCommonParam;
@@ -268,16 +268,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -286,8 +286,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossDarumaLevelParam;
@@ -316,19 +316,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 level;
-    FSeek(p + 4);  StompingType stompingType;
-    FSeek(p + 5);  sint8 laserCount;
-    FSeek(p + 6);  bool isBarrier;
-    FSeek(p + 7);  StompingType stompingTypeThorn;
-    FSeek(p + 8);  sint8 laserCountThorn;
-    FSeek(p + 9);  bool isBarrierThorn;
-    FSeek(p + 10); BulletType bulletType;
-    FSeek(p + 11); SpecialBulletType specialBulletType;
-    FSeek(p + 12); sint8 stompingMaxBreakBodyCount;
-    FSeek(p + 13); bool isThorn;
-    FSeek(p + 16); vector3 headRigidColliderExtents;
-    FSeek(p + 32); vector3 headRigidCollHeightOffset;
+    FSeek(p + 0);  uint32 level<comment="レベル">;
+    FSeek(p + 4);  StompingType stompingType<comment="ストンピング">;
+    FSeek(p + 5);  sint8 laserCount<comment="レーザー発射本数">;
+    FSeek(p + 6);  bool isBarrier<comment="バリア展開">;
+    FSeek(p + 7);  StompingType stompingTypeThorn<comment="[棘]ストンピング">;
+    FSeek(p + 8);  sint8 laserCountThorn<comment="[棘]レーザー発射本数">;
+    FSeek(p + 9);  bool isBarrierThorn<comment="[棘]バリア展開">;
+    FSeek(p + 10); BulletType bulletType<comment="通常弾">;
+    FSeek(p + 11); SpecialBulletType specialBulletType<comment="特殊弾">;
+    FSeek(p + 12); sint8 stompingMaxBreakBodyCount<comment="ストンピング中の胴体破壊可能数">;
+    FSeek(p + 13); bool isThorn<comment="トゲ展開">;
+    FSeek(p + 16); vector3 headRigidColliderExtents<comment="頭部胴体コリジョン半径">;
+    FSeek(p + 32); vector3 headRigidCollHeightOffset<comment="頭部胴体コリジョン高さオフセット">;
 
     FSeek(p + 48);
 } MiniBossDarumaLevelBand;
@@ -337,11 +337,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossDarumaCommonParam commonParam;
-    FSeek(p + 2912); MiniBossDarumaLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 3200); MiniBossDarumaLevelBand levelBands[5]<optimize=false>;
-    FSeek(p + 3440); MiniBossDarumaLevelParam levelParamQuest;
-    FSeek(p + 3504); MiniBossDarumaLevelBand levelBandQuest;
+    FSeek(p + 0);    MiniBossDarumaCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 2912); MiniBossDarumaLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 3200); MiniBossDarumaLevelBand levelBands[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 3440); MiniBossDarumaLevelParam levelParamQuest<comment="レベルパラメータ(クエスト用)">;
+    FSeek(p + 3504); MiniBossDarumaLevelBand levelBandQuest<comment="レベル帯別パラメータ(クエスト用)">;
 
     FSeek(p + 3552);
 } MiniBossDarumaConfig;

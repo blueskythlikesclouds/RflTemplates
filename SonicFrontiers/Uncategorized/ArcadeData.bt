@@ -36,18 +36,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 signature;
-    FSeek(p + 4);  uint8 version;
-    FSeek(p + 5);  Status status;
-    FSeek(p + 6);  uint8 config;
-    FSeek(p + 7);  Sequence sequence;
-    FSeek(p + 8);  uint32 playTime;
-    FSeek(p + 12); SaveDataIcon icon;
-    FSeek(p + 13); uint8 reserved0;
-    FSeek(p + 14); uint16 reserved1;
-    FSeek(p + 16); uint32 saveDate;
-    FSeek(p + 20); uint8 index;
-    FSeek(p + 24); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);  uint32 signature<comment="シグニチャ">;
+    FSeek(p + 4);  uint8 version<comment="バージョン">;
+    FSeek(p + 5);  Status status<comment="ステータス">;
+    FSeek(p + 6);  uint8 config<comment="コンフィグ">;
+    FSeek(p + 7);  Sequence sequence<comment="シーケンス">;
+    FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
+    FSeek(p + 12); SaveDataIcon icon<comment="セーブデータアイコン">;
+    FSeek(p + 13); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 14); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 16); uint32 saveDate<comment="保存日時">;
+    FSeek(p + 20); uint8 index<comment="index">;
+    FSeek(p + 24); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 40);
 } HeaderData;
@@ -61,9 +61,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint16 flags;
-    FSeek(p + 4); uint32 bestTime;
-    FSeek(p + 8); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0); uint16 flags<comment="ビットフラグ">;
+    FSeek(p + 4); uint32 bestTime<comment="ベストタイム">;
+    FSeek(p + 8); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 24);
 } CyberStageData;
@@ -72,7 +72,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); CyberStageData actStages[32]<optimize=false>;
+    FSeek(p + 0); CyberStageData actStages[32]<comment="電脳空間ステージ情報",optimize=false>;
 
     FSeek(p + 768);
 } CyberStageContainerData;
@@ -81,10 +81,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   HeaderData header;
-    FSeek(p + 40);  bool unlocked;
-    FSeek(p + 44);  CyberStageContainerData stages;
-    FSeek(p + 812); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);   HeaderData header<comment="ヘッダ">;
+    FSeek(p + 40);  bool unlocked<comment="アーケードモード解放済み">;
+    FSeek(p + 44);  CyberStageContainerData stages<comment="電脳空間ステージコンテナ">;
+    FSeek(p + 812); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 828);
 } ArcadeData;

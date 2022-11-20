@@ -16,12 +16,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool enable;
-    FSeek(p + 16); vector3 color;
-    FSeek(p + 32); float intensity;
-    FSeek(p + 36); float nearDist;
-    FSeek(p + 40); float farDist;
-    FSeek(p + 44); float influence;
+    FSeek(p + 0);  bool enable<comment="Enable">;
+    FSeek(p + 16); vector3 color<comment="フォグカラー">;
+    FSeek(p + 32); float intensity<comment="フォグカラー強度">;
+    FSeek(p + 36); float nearDist<comment="最近距離">;
+    FSeek(p + 40); float farDist<comment="最遠距離">;
+    FSeek(p + 44); float influence<comment="影響度">;
 
     FSeek(p + 48);
 } FxDistanceFogParameter;
@@ -30,14 +30,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool enable;
-    FSeek(p + 16); vector3 color;
-    FSeek(p + 32); float intensity;
-    FSeek(p + 36); float minHeight;
-    FSeek(p + 40); float maxHeight;
-    FSeek(p + 44); float nearDist;
-    FSeek(p + 48); float farDist;
-    FSeek(p + 52); float influence;
+    FSeek(p + 0);  bool enable<comment="Enable">;
+    FSeek(p + 16); vector3 color<comment="フォグカラー">;
+    FSeek(p + 32); float intensity<comment="フォグカラー強度">;
+    FSeek(p + 36); float minHeight<comment="最小の高さ">;
+    FSeek(p + 40); float maxHeight<comment="最大の高さ">;
+    FSeek(p + 44); float nearDist<comment="最近距離">;
+    FSeek(p + 48); float farDist<comment="最遠距離">;
+    FSeek(p + 52); float influence<comment="影響度">;
 
     FSeek(p + 64);
 } FxHeightFogParameter;
@@ -46,8 +46,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  FxDistanceFogParameter distanceFogParam;
-    FSeek(p + 48); FxHeightFogParameter heightFogParam;
+    FSeek(p + 0);  FxDistanceFogParameter distanceFogParam<comment="距離フォグ">;
+    FSeek(p + 48); FxHeightFogParameter heightFogParam<comment="高さフォグ">;
 
     FSeek(p + 112);
 } FxFogParameter;

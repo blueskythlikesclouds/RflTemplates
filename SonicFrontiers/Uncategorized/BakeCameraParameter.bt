@@ -25,8 +25,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); array_BakeCameraParameter data;
+    FSeek(p + 0);  cstring name<comment="元リソース名">;
+    FSeek(p + 16); array_BakeCameraParameter data<comment="データ">;
 
     FSeek(p + 48);
 } BakeCameraParameter;

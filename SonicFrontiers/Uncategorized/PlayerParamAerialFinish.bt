@@ -26,12 +26,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  Condition condition;
-    FSeek(p + 1);  sint8 count;
-    FSeek(p + 4);  float spanTime;
-    FSeek(p + 8);  Shape shape;
-    FSeek(p + 16); vector3 shapeSize;
-    FSeek(p + 32); vector3 shapeOffset;
+    FSeek(p + 0);  Condition condition<comment="判定条件">;
+    FSeek(p + 1);  sint8 count<comment="判定回数">;
+    FSeek(p + 4);  float spanTime<comment="間隔時間">;
+    FSeek(p + 8);  Shape shape<comment="形状">;
+    FSeek(p + 16); vector3 shapeSize<comment="サイズ">;
+    FSeek(p + 32); vector3 shapeOffset<comment="位置オフセット">;
 
     FSeek(p + 48);
 } PlayerParamAttackCollider;
@@ -40,8 +40,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  PlayerParamAttackCollider hit;
-    FSeek(p + 48); float ignoreSwingingTime;
+    FSeek(p + 0);  PlayerParamAttackCollider hit<comment="ヒット判定">;
+    FSeek(p + 48); float ignoreSwingingTime<comment="空振り無効時間">;
 
     FSeek(p + 64);
 } PlayerParamAerialFinish;

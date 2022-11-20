@@ -27,28 +27,28 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool enable;
-    FSeek(p + 1);  bool useFocusLookAt;
-    FSeek(p + 4);  float foregroundBokehMaxDepth;
-    FSeek(p + 8);  float foregroundBokehStartDepth;
-    FSeek(p + 12); float backgroundBokehStartDepth;
-    FSeek(p + 16); float backgroundBokehMaxDepth;
-    FSeek(p + 20); bool enableCircleDOF;
-    FSeek(p + 24); float cocMaxRadius;
-    FSeek(p + 28); float bokehRadiusScale;
-    FSeek(p + 32); sint32 bokehSampleCount;
-    FSeek(p + 36); float skyFocusDistance;
-    FSeek(p + 40); float bokehBias;
-    FSeek(p + 44); bool drawFocalPlane;
-    FSeek(p + 48); RenderTargetSize rtScale;
-    FSeek(p + 52); bool enableSWA;
-    FSeek(p + 56); float swaFocus;
-    FSeek(p + 60); float swaFocusRange;
-    FSeek(p + 64); float swaNear;
-    FSeek(p + 68); float swaFar;
-    FSeek(p + 72); bool enableEnhancedForeBokeh;
-    FSeek(p + 76); float foreBokehScale;
-    FSeek(p + 80); float foreBokehMaxLuminance;
+    FSeek(p + 0);  bool enable<comment="DOFを有効">;
+    FSeek(p + 1);  bool useFocusLookAt<comment="LookAt位置でピント">;
+    FSeek(p + 4);  float foregroundBokehMaxDepth<comment="前ボケ最大深度(近)">;
+    FSeek(p + 8);  float foregroundBokehStartDepth<comment="前ボケ最小深度">;
+    FSeek(p + 12); float backgroundBokehStartDepth<comment="後ボケ最小深度">;
+    FSeek(p + 16); float backgroundBokehMaxDepth<comment="後ボケ最大深度(遠)">;
+    FSeek(p + 20); bool enableCircleDOF<comment="錯乱円を使うか">;
+    FSeek(p + 24); float cocMaxRadius<comment="錯乱円の最大半径">;
+    FSeek(p + 28); float bokehRadiusScale<comment="ボケの錯乱円のスケール">;
+    FSeek(p + 32); sint32 bokehSampleCount<comment="ボケのサンプル数">;
+    FSeek(p + 36); float skyFocusDistance<comment="天球のピント距離[0.0だとボケる]">;
+    FSeek(p + 40); float bokehBias<comment="MAXボケの比率[0.0だとボケない]">;
+    FSeek(p + 44); bool drawFocalPlane<comment="ピントが合う位置の表示">;
+    FSeek(p + 48); RenderTargetSize rtScale<comment="解像度スケール">;
+    FSeek(p + 52); bool enableSWA<comment="enableSWA">;
+    FSeek(p + 56); float swaFocus<comment="swaFocus">;
+    FSeek(p + 60); float swaFocusRange<comment="swaFocusRange">;
+    FSeek(p + 64); float swaNear<comment="swaNear">;
+    FSeek(p + 68); float swaFar<comment="swaFar">;
+    FSeek(p + 72); bool enableEnhancedForeBokeh<comment="前ボケを強調する">;
+    FSeek(p + 76); float foreBokehScale<comment="前ボケスケール">;
+    FSeek(p + 80); float foreBokehMaxLuminance<comment="前ボケ強調時の最大輝度">;
 
     FSeek(p + 84);
 } FxDOFParameter;
@@ -57,12 +57,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 camerapos;
-    FSeek(p + 16); float lineAlpha;
-    FSeek(p + 20); float noiseScale;
-    FSeek(p + 24); float noiseSpeed;
-    FSeek(p + 28); float moveWidth;
-    FSeek(p + 32); FxDOFParameter dofparam;
+    FSeek(p + 0);  vector3 camerapos<comment="カメラの位置">;
+    FSeek(p + 16); float lineAlpha<comment="ワイヤーフレームの透明度">;
+    FSeek(p + 20); float noiseScale<comment="ゆらぎノイズのスケール">;
+    FSeek(p + 24); float noiseSpeed<comment="ゆらぎノイズの変化速度">;
+    FSeek(p + 28); float moveWidth<comment="頂点の移動スケール">;
+    FSeek(p + 32); FxDOFParameter dofparam<comment="DoFパラメーター">;
 
     FSeek(p + 128);
 } UIWireframeParameter;

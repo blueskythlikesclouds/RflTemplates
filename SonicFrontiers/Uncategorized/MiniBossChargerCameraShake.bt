@@ -6,11 +6,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float time;
-    FSeek(p + 4);  float magnitude;
-    FSeek(p + 8);  sint32 freq;
-    FSeek(p + 12); float attnRatio;
-    FSeek(p + 16); float shakeRange;
+    FSeek(p + 0);  float time<comment="有効時間">;
+    FSeek(p + 4);  float magnitude<comment="振幅の大きさ">;
+    FSeek(p + 8);  sint32 freq<comment="周波数">;
+    FSeek(p + 12); float attnRatio<comment="振幅の減衰率">;
+    FSeek(p + 16); float shakeRange<comment="振動が伝わる距離">;
 
     FSeek(p + 20);
 } MiniBossChargerCameraShake;

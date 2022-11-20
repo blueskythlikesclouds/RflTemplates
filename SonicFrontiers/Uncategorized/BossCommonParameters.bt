@@ -20,11 +20,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring modelName;
-    FSeek(p + 16); cstring animName;
-    FSeek(p + 32); vector3 scale;
-    FSeek(p + 48); cstring stageName;
-    FSeek(p + 64); vector3 stagePos;
+    FSeek(p + 0);  cstring modelName<comment="モデル名">;
+    FSeek(p + 16); cstring animName<comment="asm名">;
+    FSeek(p + 32); vector3 scale<comment="サイズの比率1.0で通常出力">;
+    FSeek(p + 48); cstring stageName<comment="エディタ上でロードするステージ">;
+    FSeek(p + 64); vector3 stagePos<comment="エディタ上でセットする位置">;
 
     FSeek(p + 80);
 } BossResourceInfo;
@@ -35,11 +35,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring nodeName;
-    FSeek(p + 16); vector3 offset;
-    FSeek(p + 32); vector3 rot;
-    FSeek(p + 48); cstring tagName;
-    FSeek(p + 64); sint32 nextPointId;
+    FSeek(p + 0);  cstring nodeName<comment="基準位置のモデルノード名">;
+    FSeek(p + 16); vector3 offset<comment="位置オフセット">;
+    FSeek(p + 32); vector3 rot<comment="回転オフセット">;
+    FSeek(p + 48); cstring tagName<comment="検索用tag">;
+    FSeek(p + 64); sint32 nextPointId<comment="次のポイントのID(-1で無効)">;
 
     FSeek(p + 80);
 } HoldPoint;
@@ -48,7 +48,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); HoldPoint holdPoints[128]<optimize=false>;
+    FSeek(p + 0); HoldPoint holdPoints[128]<comment="holdPoints",optimize=false>;
 
     FSeek(p + 10240);
 } HoldPointParameter;
@@ -72,13 +72,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring nodeName;
-    FSeek(p + 16); Shape shape;
-    FSeek(p + 17); bool isPhysics;
-    FSeek(p + 32); vector3 size;
-    FSeek(p + 48); vector3 offset;
-    FSeek(p + 64); vector3 rot;
-    FSeek(p + 80); cstring tagName;
+    FSeek(p + 0);  cstring nodeName<comment="基準位置のモデルノード名">;
+    FSeek(p + 16); Shape shape<comment="形状">;
+    FSeek(p + 17); bool isPhysics<comment="物理コリジョンかどうか">;
+    FSeek(p + 32); vector3 size<comment="サイズ ※球体時xが半径">;
+    FSeek(p + 48); vector3 offset<comment="位置オフセット">;
+    FSeek(p + 64); vector3 rot<comment="回転オフセット">;
+    FSeek(p + 80); cstring tagName<comment="検索用tag">;
 
     FSeek(p + 96);
 } CollisionPart;
@@ -87,7 +87,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); CollisionPart colParts[32]<optimize=false>;
+    FSeek(p + 0); CollisionPart colParts[32]<comment="colParts",optimize=false>;
 
     FSeek(p + 3072);
 } CollisionPartParameter;
@@ -96,9 +96,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     BossResourceInfo resource;
-    FSeek(p + 80);    HoldPointParameter holdParam;
-    FSeek(p + 10320); CollisionPartParameter colParam;
+    FSeek(p + 0);     BossResourceInfo resource<comment="ボス共通リソース">;
+    FSeek(p + 80);    HoldPointParameter holdParam<comment="HoldPoint">;
+    FSeek(p + 10320); CollisionPartParameter colParam<comment="Collision">;
 
     FSeek(p + 13392);
 } BossCommonParameters;

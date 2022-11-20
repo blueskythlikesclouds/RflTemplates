@@ -13,8 +13,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float playSpanTime;
-    FSeek(p + 8); cstring labelNames[24]<optimize=false>;
+    FSeek(p + 0); float playSpanTime<comment="再生間隔時間">;
+    FSeek(p + 8); cstring labelNames[24]<comment="ラベルテーブル",optimize=false>;
 
     FSeek(p + 392);
 } MonologueIslandParameters;
@@ -23,7 +23,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); cstring labelNames[4]<optimize=false>;
+    FSeek(p + 0); cstring labelNames[4]<comment="ラベルテーブル",optimize=false>;
 
     FSeek(p + 64);
 } MonologueMultiTextParameters;
@@ -44,11 +44,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MonologueIslandParameters islands[5]<optimize=false>;
-    FSeek(p + 1960); MonologueMultiTextParameters multiText;
-    FSeek(p + 2024); sint8 firstTheEndNotifyCount;
-    FSeek(p + 2025); sint8 theEndNotifyCount;
-    FSeek(p + 2026); Value dummy;
+    FSeek(p + 0);    MonologueIslandParameters islands[5]<comment="島ごとのパラメータ",optimize=false>;
+    FSeek(p + 1960); MonologueMultiTextParameters multiText<comment="複数テキスト構成パラメータ">;
+    FSeek(p + 2024); sint8 firstTheEndNotifyCount<comment="TheEndの初回通知のカウント">;
+    FSeek(p + 2025); sint8 theEndNotifyCount<comment="Theendの通知のカウント">;
+    FSeek(p + 2026); Value dummy<comment="dummy">;
 
     FSeek(p + 2032);
 } MonologueParameters;

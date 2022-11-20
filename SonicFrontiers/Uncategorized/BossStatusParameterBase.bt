@@ -6,7 +6,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 maxHp;
+    FSeek(p + 0); sint32 maxHp<comment="耐久値">;
 
     FSeek(p + 4);
 } BossStatusParameterBase;

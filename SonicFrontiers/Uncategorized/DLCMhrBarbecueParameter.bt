@@ -4,10 +4,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 rawToken;
-    FSeek(p + 4);  uint32 rawBurnToken;
-    FSeek(p + 8);  uint32 brownedToken;
-    FSeek(p + 12); uint32 charredToken;
+    FSeek(p + 0);  uint32 rawToken<comment="生肉獲得トークン">;
+    FSeek(p + 4);  uint32 rawBurnToken<comment="生焼け肉獲得トークン">;
+    FSeek(p + 8);  uint32 brownedToken<comment="こんがり肉獲得トークン">;
+    FSeek(p + 12); uint32 charredToken<comment="焦げ肉獲得トークン">;
 
     FSeek(p + 16);
 } DLCMhrBarbecueTokenParam;
@@ -16,16 +16,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rawTime;
-    FSeek(p + 4);  float rawBurnTime;
-    FSeek(p + 8);  float brownedTime;
-    FSeek(p + 12); float charredTime;
-    FSeek(p + 16); float startwaitTime;
-    FSeek(p + 20); float successTime;
-    FSeek(p + 24); float missTime;
-    FSeek(p + 28); float resultUIDelaySuccess;
-    FSeek(p + 32); float resultUIDelayFaild;
-    FSeek(p + 36); DLCMhrBarbecueTokenParam tokenParam[4]<optimize=false>;
+    FSeek(p + 0);  float rawTime<comment="生肉時間">;
+    FSeek(p + 4);  float rawBurnTime<comment="生焼け肉時間">;
+    FSeek(p + 8);  float brownedTime<comment="こんがり肉時間">;
+    FSeek(p + 12); float charredTime<comment="焦げ肉時間">;
+    FSeek(p + 16); float startwaitTime<comment="準備演出待機時間">;
+    FSeek(p + 20); float successTime<comment="成功演出待機時間">;
+    FSeek(p + 24); float missTime<comment="失敗演出待機時間">;
+    FSeek(p + 28); float resultUIDelaySuccess<comment="成功時結果UIの表示を遅らせる時間">;
+    FSeek(p + 32); float resultUIDelayFaild<comment="失敗時結果UIの表示を遅らせる時間">;
+    FSeek(p + 36); DLCMhrBarbecueTokenParam tokenParam[4]<comment="獲得トークン",optimize=false>;
 
     FSeek(p + 100);
 } DLCMhrBarbecueParameter;

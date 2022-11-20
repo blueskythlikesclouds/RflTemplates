@@ -19,16 +19,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool autoSaveEnabled;
-    FSeek(p + 1); bool gismoEnabled;
-    FSeek(p + 2); bool reportEnabled;
-    FSeek(p + 3); bool skillTreeEnabled;
-    FSeek(p + 4); bool tutorialEnabled;
-    FSeek(p + 5); bool arcadeModeEnabled;
-    FSeek(p + 6); bool practice;
-    FSeek(p + 7); bool practiceTimeLimitEnabled;
-    FSeek(p + 8); bool creditsEnabled;
-    FSeek(p + 9); ReplayMode replayMode;
+    FSeek(p + 0); bool autoSaveEnabled<comment="AutoSave">;
+    FSeek(p + 1); bool gismoEnabled<comment="Gismo">;
+    FSeek(p + 2); bool reportEnabled<comment="Report">;
+    FSeek(p + 3); bool skillTreeEnabled<comment="SkillTree">;
+    FSeek(p + 4); bool tutorialEnabled<comment="Tutorial">;
+    FSeek(p + 5); bool arcadeModeEnabled<comment="ArcadeMode">;
+    FSeek(p + 6); bool practice<comment="Practice">;
+    FSeek(p + 7); bool practiceTimeLimitEnabled<comment="Practice Timelimit">;
+    FSeek(p + 8); bool creditsEnabled<comment="Credits">;
+    FSeek(p + 9); ReplayMode replayMode<comment="Replay">;
 
     FSeek(p + 10);
 } DevConfigParameters;

@@ -4,8 +4,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint32 maxExpPointBase;
-    FSeek(p + 4); uint32 maxExpPointAdd;
+    FSeek(p + 0); uint32 maxExpPointBase<comment="レベルアップに必要な経験値">;
+    FSeek(p + 4); uint32 maxExpPointAdd<comment="レベルに応じた必要経験値増加量">;
 
     FSeek(p + 8);
 } GameExpParameter;

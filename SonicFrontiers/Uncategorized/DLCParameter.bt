@@ -6,7 +6,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 dummy;
+    FSeek(p + 0); uint8 dummy<comment="dummy">;
 
     FSeek(p + 1);
 } DLCParameter;

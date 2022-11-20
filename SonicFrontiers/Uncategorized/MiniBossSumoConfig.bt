@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,14 +25,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float mass;
-    FSeek(p + 4);  float slopeAngleMax;
-    FSeek(p + 8);  float timeStun;
-    FSeek(p + 12); float timeExpend;
-    FSeek(p + 16); float timeGuardBreak;
-    FSeek(p + 20); float visualOffset;
-    FSeek(p + 32); vector3 hpGaugeOffset;
-    FSeek(p + 48); float guardEffectCoolTime;
+    FSeek(p + 0);  float mass<comment="質量">;
+    FSeek(p + 4);  float slopeAngleMax<comment="登れるスロープの角度">;
+    FSeek(p + 8);  float timeStun<comment="パックによる硬直時間">;
+    FSeek(p + 12); float timeExpend<comment="膨らんでいる時間">;
+    FSeek(p + 16); float timeGuardBreak<comment="うずくまり時間">;
+    FSeek(p + 20); float visualOffset<comment="visualの高さオフセット">;
+    FSeek(p + 32); vector3 hpGaugeOffset<comment="HPゲージ表示オフセット">;
+    FSeek(p + 48); float guardEffectCoolTime<comment="ガードエフェクトのクールタイム">;
 
     FSeek(p + 64);
 } MiniBossSumoBaseConfig;
@@ -77,16 +77,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool enabled;
-    FSeek(p + 4);  float height;
-    FSeek(p + 8);  float radius;
-    FSeek(p + 16); cstring attachNodeName;
-    FSeek(p + 32); vector3 offset;
-    FSeek(p + 48); vector3 rotation;
-    FSeek(p + 64); cstring tag;
-    FSeek(p + 80); ColliderProperty properties[2]<optimize=false>;
-    FSeek(p + 88); bool debugDraw;
-    FSeek(p + 92); color8 color;
+    FSeek(p + 0);  bool enabled<comment="有効">;
+    FSeek(p + 4);  float height<comment="高さ">;
+    FSeek(p + 8);  float radius<comment="半径">;
+    FSeek(p + 16); cstring attachNodeName<comment="アタッチするノード名">;
+    FSeek(p + 32); vector3 offset<comment="オフセット">;
+    FSeek(p + 48); vector3 rotation<comment="回転">;
+    FSeek(p + 64); cstring tag<comment="タグ(プログラマ利用)">;
+    FSeek(p + 80); ColliderProperty properties[2]<comment="プロパティ",optimize=false>;
+    FSeek(p + 88); bool debugDraw<comment="デバッグ表示">;
+    FSeek(p + 92); color8 color<comment="デバッグ表示時の色">;
 
     FSeek(p + 96);
 } MiniBossSumoColliderParam;
@@ -95,19 +95,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossSumoColliderParam damaged[6]<optimize=false>;
-    FSeek(p + 576);  MiniBossSumoColliderParam damage[2]<optimize=false>;
-    FSeek(p + 768);  MiniBossSumoColliderParam detectPuck;
-    FSeek(p + 864);  MiniBossSumoColliderParam cyloop;
-    FSeek(p + 960);  MiniBossSumoColliderParam pressBlow[3]<optimize=false>;
-    FSeek(p + 1248); MiniBossSumoColliderParam sensorArm[2]<optimize=false>;
-    FSeek(p + 1440); MiniBossSumoColliderParam simpleBody;
-    FSeek(p + 1536); float moveRadius;
-    FSeek(p + 1540); float moveHeight;
-    FSeek(p + 1552); vector3 targetMarkerOffset;
-    FSeek(p + 1568); float comboRadiusMin;
-    FSeek(p + 1572); float comboRadiusMax;
-    FSeek(p + 1576); float comboHeight;
+    FSeek(p + 0);    MiniBossSumoColliderParam damaged[6]<comment="被ダメージ",optimize=false>;
+    FSeek(p + 576);  MiniBossSumoColliderParam damage[2]<comment="与ダメージ",optimize=false>;
+    FSeek(p + 768);  MiniBossSumoColliderParam detectPuck<comment="パック検知">;
+    FSeek(p + 864);  MiniBossSumoColliderParam cyloop<comment="サイループ膨らみ状態用">;
+    FSeek(p + 960);  MiniBossSumoColliderParam pressBlow[3]<comment="押しつぶし回避用の吹き飛ばし",optimize=false>;
+    FSeek(p + 1248); MiniBossSumoColliderParam sensorArm[2]<comment="腕のソニック検知用",optimize=false>;
+    FSeek(p + 1440); MiniBossSumoColliderParam simpleBody<comment="簡易剛体">;
+    FSeek(p + 1536); float moveRadius<comment="移動用半径">;
+    FSeek(p + 1540); float moveHeight<comment="移動用高さ">;
+    FSeek(p + 1552); vector3 targetMarkerOffset<comment="ターゲットマーカー表示オフセット">;
+    FSeek(p + 1568); float comboRadiusMin<comment="コンボ最小半径">;
+    FSeek(p + 1572); float comboRadiusMax<comment="コンボ最大半径">;
+    FSeek(p + 1576); float comboHeight<comment="コンボ高さ">;
 
     FSeek(p + 1584);
 } MiniBossSumoColliderConfig;
@@ -118,18 +118,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float coolDownTimeToChangeElectric;
-    FSeek(p + 4);  float timeToWaitChangeAfterDamage;
-    FSeek(p + 8);  float blowOffSpeedDamagedElectricRope;
-    FSeek(p + 12); float decelerationDamagedElectricRope;
-    FSeek(p + 16); float timeElectricReaction;
-    FSeek(p + 20); sint32 damageByReflectCount[5]<optimize=false>;
-    FSeek(p + 40); float bendLengthOnHit;
-    FSeek(p + 44); sint32 expansionBoundCount;
-    FSeek(p + 48); float blowOffSpeedExpansionBoundRope;
-    FSeek(p + 52); float decelerationExpansionBoundRope;
-    FSeek(p + 56); float lockonPanningSuspensionKExpansionBoundRope;
-    FSeek(p + 60); float reflectAngleMaxExpansionBoundRope;
+    FSeek(p + 0);  float coolDownTimeToChangeElectric<comment="電流の流すロープの変更クールダウン">;
+    FSeek(p + 4);  float timeToWaitChangeAfterDamage<comment="ダメージを受けた後に電流を流さない時間">;
+    FSeek(p + 8);  float blowOffSpeedDamagedElectricRope<comment="電流ダメージに触れた際の吹き飛ばし速度">;
+    FSeek(p + 12); float decelerationDamagedElectricRope<comment="電流ダメージで吹き飛ばされた際の減速度">;
+    FSeek(p + 16); float timeElectricReaction<comment="電流ロープでビリビリする時間">;
+    FSeek(p + 20); sint32 damageByReflectCount[5]<comment="反射回数ごとの受ける電流ダメージ量",optimize=false>;
+    FSeek(p + 40); float bendLengthOnHit<comment="ロープにヒットした際のしなり距離">;
+    FSeek(p + 44); sint32 expansionBoundCount<comment="膨らみ状態でロープに跳ね返る回数">;
+    FSeek(p + 48); float blowOffSpeedExpansionBoundRope<comment="膨らみ状態でロープに触れた際の吹き飛ばし速度">;
+    FSeek(p + 52); float decelerationExpansionBoundRope<comment="膨らみ状態でロープで跳ね返る回数後の減速度">;
+    FSeek(p + 56); float lockonPanningSuspensionKExpansionBoundRope<comment="膨らみ状態でロープで触れた際に注視するパンニング遅延のバネ定数">;
+    FSeek(p + 60); float reflectAngleMaxExpansionBoundRope<comment="膨らみ状態でのロープの反射最大角度">;
 
     FSeek(p + 64);
 } MiniBossSumoRopeConfig;
@@ -138,10 +138,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float backInitialSpeeds[5]<optimize=false>;
-    FSeek(p + 20); float backDeccelation;
-    FSeek(p + 24); float frontAngle;
-    FSeek(p + 28); float timeTurn;
+    FSeek(p + 0);  float backInitialSpeeds[5]<comment="反射回数ごとの後退速度",optimize=false>;
+    FSeek(p + 20); float backDeccelation<comment="後退減速度">;
+    FSeek(p + 24); float frontAngle<comment="前からヒットしたと判定する角度">;
+    FSeek(p + 28); float timeTurn<comment="正面を向ける時間">;
 
     FSeek(p + 32);
 } MiniBossSumoSlingShotConfig;
@@ -150,8 +150,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float moveHorzLimitAngle;
-    FSeek(p + 4); float moveRotateDeceleration;
+    FSeek(p + 0); float moveHorzLimitAngle<comment="水平方向追従制限角">;
+    FSeek(p + 4); float moveRotateDeceleration<comment="回転時の減速度">;
 
     FSeek(p + 8);
 } MiniBossSumoMoveConfig;
@@ -160,13 +160,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distanceThrow;
-    FSeek(p + 4);  float coolTime;
-    FSeek(p + 16); vector3 attachOffset;
-    FSeek(p + 32); vector3 attachRotateL;
-    FSeek(p + 48); vector3 attachRotateR;
-    FSeek(p + 64); float throwAngleLimit;
-    FSeek(p + 80); vector3 throwOffsetMulti;
+    FSeek(p + 0);  float distanceThrow<comment="投げる距離">;
+    FSeek(p + 4);  float coolTime<comment="クールタイム">;
+    FSeek(p + 16); vector3 attachOffset<comment="投げる時のオフセット">;
+    FSeek(p + 32); vector3 attachRotateL<comment="投げる時の回転(左)">;
+    FSeek(p + 48); vector3 attachRotateR<comment="投げる時の回転(右)">;
+    FSeek(p + 64); float throwAngleLimit<comment="投射角度制限">;
+    FSeek(p + 80); vector3 throwOffsetMulti<comment="複数投げる際の目標地点をオフセット">;
 
     FSeek(p + 96);
 } MiniBossSumoThrowPuckParam;
@@ -175,9 +175,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 count;
-    FSeek(p + 4); bool reflectBack;
-    FSeek(p + 8); float reflectRagWidth;
+    FSeek(p + 0); sint32 count<comment="コンボ数">;
+    FSeek(p + 4); bool reflectBack<comment="コンボの際にSumoに向かって反射する">;
+    FSeek(p + 8); float reflectRagWidth<comment="コンボの際にSumoに向かって反射するブレ幅">;
 
     FSeek(p + 12);
 } MiniBossSumoSlingshotComboParam;
@@ -186,25 +186,25 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   vector3 kneeAxisLS;
-    FSeek(p + 16);  vector3 footEndLS;
-    FSeek(p + 32);  float footPlantedAnkleHeightMS;
-    FSeek(p + 36);  float footRaisedAnkleHeightMS;
-    FSeek(p + 40);  float maxAnkleHeightMS;
-    FSeek(p + 44);  float minAnkleHeightMS;
-    FSeek(p + 48);  float maxKneeAngleDegrees;
-    FSeek(p + 52);  float minKneeAngleDegrees;
-    FSeek(p + 56);  float onOffGain;
-    FSeek(p + 60);  float groundAscendingGain;
-    FSeek(p + 64);  float groundDescendingGain;
-    FSeek(p + 68);  float footPlantedGain;
-    FSeek(p + 72);  float footRaisedGain;
-    FSeek(p + 76);  float footLockingGain;
-    FSeek(p + 80);  float ankleRotationGain;
-    FSeek(p + 88);  cstring hipName;
-    FSeek(p + 104); cstring kneeName;
-    FSeek(p + 120); cstring ankleName;
-    FSeek(p + 136); cstring toeName;
+    FSeek(p + 0);   vector3 kneeAxisLS<comment="膝のローカルスペースにおける回転軸">;
+    FSeek(p + 16);  vector3 footEndLS<comment="足首のローカルスペースにおける足の終端部">;
+    FSeek(p + 32);  float footPlantedAnkleHeightMS<comment="着地しているとみなす足首の高さ">;
+    FSeek(p + 36);  float footRaisedAnkleHeightMS<comment="足が完全に上がっているとみなす足首の高さ">;
+    FSeek(p + 40);  float maxAnkleHeightMS<comment="足首が届く最大の高さ">;
+    FSeek(p + 44);  float minAnkleHeightMS<comment="足首が届く最小の高さ">;
+    FSeek(p + 48);  float maxKneeAngleDegrees<comment="膝の角度制限">;
+    FSeek(p + 52);  float minKneeAngleDegrees<comment="膝の角度制限">;
+    FSeek(p + 56);  float onOffGain<comment="接地のON,OFF切り替え時のゲイン">;
+    FSeek(p + 60);  float groundAscendingGain<comment="地面高度が上昇するときのゲイン">;
+    FSeek(p + 64);  float groundDescendingGain<comment="地面高度が下降するときのゲイン">;
+    FSeek(p + 68);  float footPlantedGain<comment="足を地面へ接地させる場合のゲイン">;
+    FSeek(p + 72);  float footRaisedGain<comment="足を地面から離す場合のゲイン">;
+    FSeek(p + 76);  float footLockingGain<comment="足のロック状態とアンロック状態の切り替え時のゲイン">;
+    FSeek(p + 80);  float ankleRotationGain<comment="足首の回転のゲイン">;
+    FSeek(p + 88);  cstring hipName<comment="腰骨の名前">;
+    FSeek(p + 104); cstring kneeName<comment="膝骨の名前">;
+    FSeek(p + 120); cstring ankleName<comment="かかと骨の名前">;
+    FSeek(p + 136); cstring toeName<comment="つまさき骨の名前">;
 
     FSeek(p + 160);
 } MiniBossSumoIKFootParam;
@@ -213,15 +213,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 elbowAxisLS;
-    FSeek(p + 16); vector3 handOffsetLS;
-    FSeek(p + 32); vector3 backHandNormalLS;
-    FSeek(p + 48); float maxElbowAngleDegrees;
-    FSeek(p + 52); float minElbowAngleDegrees;
-    FSeek(p + 56); bool enforceWristRotation;
-    FSeek(p + 64); cstring shoulderName;
-    FSeek(p + 80); cstring elbowName;
-    FSeek(p + 96); cstring wristName;
+    FSeek(p + 0);  vector3 elbowAxisLS<comment="肘のローカルスペースにおける回転軸">;
+    FSeek(p + 16); vector3 handOffsetLS<comment="手首のローカルスペースにおける手の終端部">;
+    FSeek(p + 32); vector3 backHandNormalLS<comment="手の甲のローカルスペースにおける法線">;
+    FSeek(p + 48); float maxElbowAngleDegrees<comment="肘の角度制限">;
+    FSeek(p + 52); float minElbowAngleDegrees<comment="肘の角度制限">;
+    FSeek(p + 56); bool enforceWristRotation<comment="手首の回転をターゲットに追従させるか">;
+    FSeek(p + 64); cstring shoulderName<comment="肩骨の名前">;
+    FSeek(p + 80); cstring elbowName<comment="肘骨の名前">;
+    FSeek(p + 96); cstring wristName<comment="手首骨の名前">;
 
     FSeek(p + 112);
 } MiniBossSumoIKHandParam;
@@ -230,16 +230,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float footRaycastDistanceUp;
-    FSeek(p + 4);   float footRaycastDistanceDown;
-    FSeek(p + 16);  MiniBossSumoIKFootParam feet[2]<optimize=false>;
-    FSeek(p + 336); float handRaycastDistanceUp;
-    FSeek(p + 340); float handRaycastDistanceDown;
-    FSeek(p + 344); float handSweepRadius;
-    FSeek(p + 348); float handGain;
-    FSeek(p + 352); float easeInTimeHandIk;
-    FSeek(p + 356); float easeOutTimeHandIk;
-    FSeek(p + 368); MiniBossSumoIKHandParam hands[2]<optimize=false>;
+    FSeek(p + 0);   float footRaycastDistanceUp<comment="足のアップレイキャスト距離">;
+    FSeek(p + 4);   float footRaycastDistanceDown<comment="足のダウンレイキャスト距離">;
+    FSeek(p + 16);  MiniBossSumoIKFootParam feet[2]<comment="足のIKパラメータ",optimize=false>;
+    FSeek(p + 336); float handRaycastDistanceUp<comment="手のアップレイキャスト距離">;
+    FSeek(p + 340); float handRaycastDistanceDown<comment="手のダウンレイキャスト距離">;
+    FSeek(p + 344); float handSweepRadius<comment="手のSweep半径">;
+    FSeek(p + 348); float handGain<comment="手の設置位置変更のゲイン">;
+    FSeek(p + 352); float easeInTimeHandIk<comment="手IKのIN補間時間">;
+    FSeek(p + 356); float easeOutTimeHandIk<comment="手IKのOUT補間時間">;
+    FSeek(p + 368); MiniBossSumoIKHandParam hands[2]<comment="手のIKパラメータ",optimize=false>;
 
     FSeek(p + 592);
 } MiniBossSumoIKParam;
@@ -248,10 +248,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float puckSpeed;
-    FSeek(p + 4);  float puckTimeStartDecelerate;
-    FSeek(p + 8);  float puckDeceleration;
-    FSeek(p + 12); float puckLifeTime;
+    FSeek(p + 0);  float puckSpeed<comment="パック速度">;
+    FSeek(p + 4);  float puckTimeStartDecelerate<comment="減速を開始する時間">;
+    FSeek(p + 8);  float puckDeceleration<comment="パック減速度">;
+    FSeek(p + 12); float puckLifeTime<comment="パック寿命">;
 
     FSeek(p + 16);
 } MiniBossSumoCyloopConfig;
@@ -260,10 +260,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float minElevation;
-    FSeek(p + 8);  float maxElevation;
-    FSeek(p + 12); float elevationOffset;
+    FSeek(p + 0);  float distance<comment="カメラ距離">;
+    FSeek(p + 4);  float minElevation<comment="仰角最小値">;
+    FSeek(p + 8);  float maxElevation<comment="仰角最大値">;
+    FSeek(p + 12); float elevationOffset<comment="仰角オフセット">;
 
     FSeek(p + 16);
 } MiniBossSumoLockonConfig;
@@ -272,17 +272,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossCommonConfig common;
-    FSeek(p + 64);   MiniBossSumoBaseConfig base;
-    FSeek(p + 128);  MiniBossSumoColliderConfig collider;
-    FSeek(p + 1712); MiniBossSumoRopeConfig rope;
-    FSeek(p + 1776); MiniBossSumoSlingShotConfig slingShot;
-    FSeek(p + 1808); MiniBossSumoMoveConfig move;
-    FSeek(p + 1824); MiniBossSumoThrowPuckParam throwPuck;
-    FSeek(p + 1920); MiniBossSumoSlingshotComboParam combo;
-    FSeek(p + 1936); MiniBossSumoIKParam ik;
-    FSeek(p + 2528); MiniBossSumoCyloopConfig cyloop;
-    FSeek(p + 2544); MiniBossSumoLockonConfig lockon;
+    FSeek(p + 0);    MiniBossCommonConfig common<comment="小ボス共通設定">;
+    FSeek(p + 64);   MiniBossSumoBaseConfig base<comment="基本設定">;
+    FSeek(p + 128);  MiniBossSumoColliderConfig collider<comment="コリジョン設定">;
+    FSeek(p + 1712); MiniBossSumoRopeConfig rope<comment="ロープ設定">;
+    FSeek(p + 1776); MiniBossSumoSlingShotConfig slingShot<comment="スリングショット設定">;
+    FSeek(p + 1808); MiniBossSumoMoveConfig move<comment="移動設定">;
+    FSeek(p + 1824); MiniBossSumoThrowPuckParam throwPuck<comment="パック投げ設定">;
+    FSeek(p + 1920); MiniBossSumoSlingshotComboParam combo<comment="コンボ設定">;
+    FSeek(p + 1936); MiniBossSumoIKParam ik<comment="IK設定">;
+    FSeek(p + 2528); MiniBossSumoCyloopConfig cyloop<comment="サイループ設定">;
+    FSeek(p + 2544); MiniBossSumoLockonConfig lockon<comment="カメラ設定">;
 
     FSeek(p + 2560);
 } MiniBossSumoCommonParam;
@@ -291,16 +291,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -309,8 +309,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossSumoLevelParam;
@@ -319,9 +319,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 puckCount;
-    FSeek(p + 4); float speed;
-    FSeek(p + 8); float lifeTime;
+    FSeek(p + 0); sint32 puckCount<comment="パックを投げる個数">;
+    FSeek(p + 4); float speed<comment="速度">;
+    FSeek(p + 8); float lifeTime<comment="寿命">;
 
     FSeek(p + 12);
 } MiniBossSumoPuckParam;
@@ -330,8 +330,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool enabled;
-    FSeek(p + 1); bool electriced[8]<optimize=false>;
+    FSeek(p + 0); bool enabled<comment="このパターンが有効か">;
+    FSeek(p + 1); bool electriced[8]<comment="各ロープの電流ON/OFF",optimize=false>;
 
     FSeek(p + 9);
 } MiniBossSumoElectricRopePattern;
@@ -340,7 +340,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); MiniBossSumoElectricRopePattern patterns[10]<optimize=false>;
+    FSeek(p + 0); MiniBossSumoElectricRopePattern patterns[10]<comment="パターンテーブル",optimize=false>;
 
     FSeek(p + 90);
 } MiniBossSumoRotationElectricRopeParam;
@@ -349,13 +349,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 rateHp;
-    FSeek(p + 4);   MiniBossSumoPuckParam puck;
-    FSeek(p + 16);  MiniBossSumoRotationElectricRopeParam rotation8;
-    FSeek(p + 106); MiniBossSumoRotationElectricRopeParam rotation7;
-    FSeek(p + 196); MiniBossSumoRotationElectricRopeParam rotation6;
-    FSeek(p + 286); MiniBossSumoRotationElectricRopeParam rotation5;
-    FSeek(p + 376); MiniBossSumoRotationElectricRopeParam rotation4;
+    FSeek(p + 0);   sint32 rateHp<comment="HPが○％以上の時">;
+    FSeek(p + 4);   MiniBossSumoPuckParam puck<comment="パック設定">;
+    FSeek(p + 16);  MiniBossSumoRotationElectricRopeParam rotation8<comment="電流ローテーション(8角)">;
+    FSeek(p + 106); MiniBossSumoRotationElectricRopeParam rotation7<comment="電流ローテーション(7角)">;
+    FSeek(p + 196); MiniBossSumoRotationElectricRopeParam rotation6<comment="電流ローテーション(6角)">;
+    FSeek(p + 286); MiniBossSumoRotationElectricRopeParam rotation5<comment="電流ローテーション(5角)">;
+    FSeek(p + 376); MiniBossSumoRotationElectricRopeParam rotation4<comment="電流ローテーション(4角)">;
 
     FSeek(p + 468);
 } MiniBossSumoBehaviorHPRateParam;
@@ -364,8 +364,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossSumoBehaviorHPRateParam hpRateParams[3]<optimize=false>;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossSumoBehaviorHPRateParam hpRateParams[3]<comment="行動パターン設定",optimize=false>;
 
     FSeek(p + 1408);
 } MiniBossSumoLevelBand;
@@ -374,9 +374,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossSumoCommonParam commonParam;
-    FSeek(p + 2560); MiniBossSumoLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 2840); MiniBossSumoLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 0);    MiniBossSumoCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 2560); MiniBossSumoLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 2840); MiniBossSumoLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 9888);
 } MiniBossSumoConfig;

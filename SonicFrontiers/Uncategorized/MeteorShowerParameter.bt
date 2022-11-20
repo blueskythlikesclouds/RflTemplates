@@ -11,25 +11,25 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float spawnIntervalMax;
-    FSeek(p + 4);  float spawnIntervalMin;
-    FSeek(p + 8);  float spawnHeightMax;
-    FSeek(p + 12); float spawnHeightMin;
-    FSeek(p + 16); float spawnHorizonMax;
-    FSeek(p + 20); float spawnHorizonMin;
-    FSeek(p + 24); float speedMax;
-    FSeek(p + 28); float speedMin;
-    FSeek(p + 32); float lengthMax;
-    FSeek(p + 36); float lengthMin;
-    FSeek(p + 40); float width;
-    FSeek(p + 44); float angleMax;
-    FSeek(p + 48); float angleMin;
-    FSeek(p + 52); float moveTimeMax;
-    FSeek(p + 56); float moveTimeMin;
-    FSeek(p + 60); float fadeTimeMax;
-    FSeek(p + 64); float fadeTimeMin;
-    FSeek(p + 68); float spawnAngle;
-    FSeek(p + 80); vector3 color;
+    FSeek(p + 0);  float spawnIntervalMax<comment="生成最大間隔">;
+    FSeek(p + 4);  float spawnIntervalMin<comment="生成最小間隔">;
+    FSeek(p + 8);  float spawnHeightMax<comment="生成位置の最大高さ">;
+    FSeek(p + 12); float spawnHeightMin<comment="生成位置の最小高さ">;
+    FSeek(p + 16); float spawnHorizonMax<comment="生成位置の最大水平距離">;
+    FSeek(p + 20); float spawnHorizonMin<comment="生成位置の最小水平距離">;
+    FSeek(p + 24); float speedMax<comment="最大速度">;
+    FSeek(p + 28); float speedMin<comment="最小速度">;
+    FSeek(p + 32); float lengthMax<comment="最大長さ">;
+    FSeek(p + 36); float lengthMin<comment="最小長さ">;
+    FSeek(p + 40); float width<comment="幅">;
+    FSeek(p + 44); float angleMax<comment="最大傾き角">;
+    FSeek(p + 48); float angleMin<comment="最小傾き角">;
+    FSeek(p + 52); float moveTimeMax<comment="最大移動時間">;
+    FSeek(p + 56); float moveTimeMin<comment="最小移動時間">;
+    FSeek(p + 60); float fadeTimeMax<comment="最大フェード時間">;
+    FSeek(p + 64); float fadeTimeMin<comment="最小フェード時間">;
+    FSeek(p + 68); float spawnAngle<comment="発生範囲角度[カメラ正面基準]">;
+    FSeek(p + 80); vector3 color<comment="DIFFUSE_COLOR">;
 
     FSeek(p + 96);
 } MeteorShowerEffectParameter;
@@ -50,11 +50,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  Symbol symbols[16]<optimize=false>;
-    FSeek(p + 16); float spinSpeedMin;
-    FSeek(p + 20); float spinSpeedMax;
-    FSeek(p + 24); float autoStopTimeMin;
-    FSeek(p + 28); float autoStopTimeMax;
+    FSeek(p + 0);  Symbol symbols[16]<comment="絵柄",optimize=false>;
+    FSeek(p + 16); float spinSpeedMin<comment="回転速度（最小）">;
+    FSeek(p + 20); float spinSpeedMax<comment="回転速度（最大）">;
+    FSeek(p + 24); float autoStopTimeMin<comment="自動停止までの時間（最小）">;
+    FSeek(p + 28); float autoStopTimeMax<comment="自動停止までの時間（最大）">;
 
     FSeek(p + 32);
 } ReelParam;
@@ -73,8 +73,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); RateInfo_Symbol symbols[3]<optimize=false>;
-    FSeek(p + 4); float rate;
+    FSeek(p + 0); RateInfo_Symbol symbols[3]<comment="絵柄組み合わせ",optimize=false>;
+    FSeek(p + 4); float rate<comment="確率[0.0~100.0]">;
 
     FSeek(p + 8);
 } RateInfo;
@@ -93,8 +93,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); CeilingInfo_Symbol symbols[3]<optimize=false>;
-    FSeek(p + 4); uint32 rollCount;
+    FSeek(p + 0); CeilingInfo_Symbol symbols[3]<comment="絵柄組み合わせ",optimize=false>;
+    FSeek(p + 4); uint32 rollCount<comment="回転数">;
 
     FSeek(p + 8);
 } CeilingInfo;
@@ -113,8 +113,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); PayoutInfo_Symbol symbols[3]<optimize=false>;
-    FSeek(p + 4); uint32 payout;
+    FSeek(p + 0); PayoutInfo_Symbol symbols[3]<comment="絵柄組み合わせ",optimize=false>;
+    FSeek(p + 4); uint32 payout<comment="払出釣りコイン数">;
 
     FSeek(p + 8);
 } PayoutInfo;
@@ -128,16 +128,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   ReelParam reelParams[3]<optimize=false>;
-    FSeek(p + 96);  float spinInterval;
-    FSeek(p + 100); RateInfo rateInfos[4]<optimize=false>;
-    FSeek(p + 132); CeilingInfo ceilingInfos[4]<optimize=false>;
-    FSeek(p + 164); PayoutInfo payoutInfos[4]<optimize=false>;
-    FSeek(p + 196); uint32 payoutOnBlank;
-    FSeek(p + 200); bool WinEvenWithPush;
-    FSeek(p + 204); float retrySpeed;
-    FSeek(p + 208); float backSpeed;
-    FSeek(p + 212); float stepSpeed;
+    FSeek(p + 0);   ReelParam reelParams[3]<comment="リール設定",optimize=false>;
+    FSeek(p + 96);  float spinInterval<comment="スピン間隔（秒）">;
+    FSeek(p + 100); RateInfo rateInfos[4]<comment="確率テーブル",optimize=false>;
+    FSeek(p + 132); CeilingInfo ceilingInfos[4]<comment="回転数による保証設定",optimize=false>;
+    FSeek(p + 164); PayoutInfo payoutInfos[4]<comment="支払いテーブル",optimize=false>;
+    FSeek(p + 196); uint32 payoutOnBlank<comment="外れ時の払出釣りコイン数">;
+    FSeek(p + 200); bool WinEvenWithPush<comment="目押しでも確定役を出す">;
+    FSeek(p + 204); float retrySpeed<comment="再回転演出速度">;
+    FSeek(p + 208); float backSpeed<comment="逆回転演出速度">;
+    FSeek(p + 212); float stepSpeed<comment="１段ずつ演出速度">;
 
     FSeek(p + 216);
 } ObjBonusSlotConfig;
@@ -146,14 +146,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float rangeFromSonicObjectsDontRespawn;
-    FSeek(p + 4);   uint32 intervalDay;
-    FSeek(p + 8);   uint32 startHour;
-    FSeek(p + 12);  uint32 startMinute;
-    FSeek(p + 16);  uint32 durationHour;
-    FSeek(p + 20);  uint32 durationMinute;
-    FSeek(p + 32);  MeteorShowerEffectParameter effect;
-    FSeek(p + 128); ObjBonusSlotConfig bonusSlotConfig;
+    FSeek(p + 0);   float rangeFromSonicObjectsDontRespawn<comment="オブジェクトを即リスポーンさせないソニックからの距離">;
+    FSeek(p + 4);   uint32 intervalDay<comment="間隔日数">;
+    FSeek(p + 8);   uint32 startHour<comment="発生時">;
+    FSeek(p + 12);  uint32 startMinute<comment="発生分">;
+    FSeek(p + 16);  uint32 durationHour<comment="流星雨継続時間">;
+    FSeek(p + 20);  uint32 durationMinute<comment="流星雨継続分">;
+    FSeek(p + 32);  MeteorShowerEffectParameter effect<comment="流星エフェクト設定">;
+    FSeek(p + 128); ObjBonusSlotConfig bonusSlotConfig<comment="ボーナススロット設定">;
 
     FSeek(p + 352);
 } MeteorShowerParameter;

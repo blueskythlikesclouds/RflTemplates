@@ -11,11 +11,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float timeLimitSeconds;
-    FSeek(p + 4);  float cautionTime;
-    FSeek(p + 8);  float warningTime;
-    FSeek(p + 12); bool useCautionAnimation;
-    FSeek(p + 13); bool useWarningAnimation;
+    FSeek(p + 0);  float timeLimitSeconds<comment="制限時間(秒)">;
+    FSeek(p + 4);  float cautionTime<comment="Cautionアニメ開始残り時間(秒)">;
+    FSeek(p + 8);  float warningTime<comment="(Cautionの後に再生する)Warningアニメ開始残り時間(秒)">;
+    FSeek(p + 12); bool useCautionAnimation<comment="Cautionアニメを使うか">;
+    FSeek(p + 13); bool useWarningAnimation<comment="Warningアニメを使うか">;
 
     FSeek(p + 16);
 } QuestDarumaTimerParameter;
@@ -24,10 +24,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 applicableFailedCount;
-    FSeek(p + 4);  float collectionColliderRadius;
-    FSeek(p + 8);  float collectionColliderHeight;
-    FSeek(p + 12); QuestDarumaTimerParameter timerParam;
+    FSeek(p + 0);  sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 4);  float collectionColliderRadius<comment="中断コリジョン半径">;
+    FSeek(p + 8);  float collectionColliderHeight<comment="中断コリジョン高さ">;
+    FSeek(p + 12); QuestDarumaTimerParameter timerParam<comment="タイマー">;
 
     FSeek(p + 28);
 } QuestDarumaBattleParameterElement;
@@ -36,7 +36,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); QuestDarumaBattleParameterElement element[3]<optimize=false>;
+    FSeek(p + 0); QuestDarumaBattleParameterElement element[3]<comment="ダルマ戦",optimize=false>;
 
     FSeek(p + 84);
 } QuestDarumaBattleParameter;

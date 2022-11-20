@@ -6,7 +6,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 challengeID[40]<optimize=false>;
+    FSeek(p + 0); sint32 challengeID[40]<comment="グリッドごとのチェレンジID",optimize=false>;
 
     FSeek(p + 160);
 } ChallengeID1DimParameter;
@@ -15,7 +15,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); ChallengeID1DimParameter challengeIDHorizonGridGroup[40]<optimize=false>;
+    FSeek(p + 0); ChallengeID1DimParameter challengeIDHorizonGridGroup[40]<comment="横１列分のグリッドのチェレンジID",optimize=false>;
 
     FSeek(p + 6400);
 } IslandMapParameter;
@@ -31,8 +31,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 id;
-    FSeek(p + 4); color8 color;
+    FSeek(p + 0); sint32 id<comment="チェレンジID">;
+    FSeek(p + 4); color8 color<comment="色">;
 
     FSeek(p + 8);
 } IDColor;
@@ -41,8 +41,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     IslandMapParameter islandMapParam[5]<optimize=false>;
-    FSeek(p + 32000); IDColor idColors[136]<optimize=false>;
+    FSeek(p + 0);     IslandMapParameter islandMapParam[5]<comment="島マップごとのグリッドのチェレンジID二次元配列",optimize=false>;
+    FSeek(p + 32000); IDColor idColors[136]<comment="エディタのグリッド上のID表示色",optimize=false>;
 
     FSeek(p + 33088);
 } UIMapParameter;

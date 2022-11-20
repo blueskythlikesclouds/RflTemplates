@@ -29,18 +29,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  array_csetobjectid initPositions;
-    FSeek(p + 32); cstring heightTargetNodeName;
-    FSeek(p + 48); float heightMoveSpeed;
-    FSeek(p + 52); float bossToPlayerDistanceMin;
-    FSeek(p + 56); float bossToPlayerDistanceMax;
-    FSeek(p + 60); float offsetHeightMin;
-    FSeek(p + 64); float offsetHeightMax;
-    FSeek(p + 68); float areaDistanceMin;
-    FSeek(p + 72); float areaDistanceMax;
-    FSeek(p + 76); float playerSpawnDistance;
-    FSeek(p + 80); float playerRespawnDistance;
-    FSeek(p + 84); float playerRespawnDistance2;
+    FSeek(p + 0);  array_csetobjectid initPositions<comment="戦闘開始座標・中心座標">;
+    FSeek(p + 32); cstring heightTargetNodeName<comment="高さの基準となるノード名[未設定時はオブジェクトの原点]">;
+    FSeek(p + 48); float heightMoveSpeed<comment="高さを調整する速度">;
+    FSeek(p + 52); float bossToPlayerDistanceMin<comment="プレイヤーとボスの相対距離[最小]">;
+    FSeek(p + 56); float bossToPlayerDistanceMax<comment="プレイヤーとボスの相対距離[最大]">;
+    FSeek(p + 60); float offsetHeightMin<comment="高さ調整[相対距離最小時]">;
+    FSeek(p + 64); float offsetHeightMax<comment="高さ調整[相対距離最大時]">;
+    FSeek(p + 68); float areaDistanceMin<comment="ボス移動範囲[最小]">;
+    FSeek(p + 72); float areaDistanceMax<comment="ボス移動範囲[最大]">;
+    FSeek(p + 76); float playerSpawnDistance<comment="プレイヤー初期出現位置">;
+    FSeek(p + 80); float playerRespawnDistance<comment="プレイヤー再出現位置">;
+    FSeek(p + 84); float playerRespawnDistance2<comment="プレイヤー再出現位置2">;
 
     FSeek(p + 88);
 } PlayerMoveableRangeParam;
@@ -54,9 +54,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool isUse;
-    FSeek(p + 1); bool isUsePillar;
-    FSeek(p + 4); float phaseChangeHpRatio;
+    FSeek(p + 0); bool isUse<comment="使用フラグ">;
+    FSeek(p + 1); bool isUsePillar<comment="柱オブジェクト使用フラグ">;
+    FSeek(p + 4); float phaseChangeHpRatio<comment="フェーズ切替発生残HP[%]">;
 
     FSeek(p + 8);
 } BossPhaseParam;
@@ -81,14 +81,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float easeTime;
-    FSeek(p + 4);  EaseType easeType;
-    FSeek(p + 8);  cstring mainLookAtNodeName;
-    FSeek(p + 32); vector3 mainLookOffsetPos;
-    FSeek(p + 48); cstring subLookAtNodeName;
-    FSeek(p + 64); vector3 subLookOffsetPos;
-    FSeek(p + 80); float distance;
-    FSeek(p + 96); vector3 playerOffsetPos;
+    FSeek(p + 0);  float easeTime<comment="補間時間">;
+    FSeek(p + 4);  EaseType easeType<comment="補間タイプ">;
+    FSeek(p + 8);  cstring mainLookAtNodeName<comment="注視するノード名[未設定時.はオブジェクトの原点]">;
+    FSeek(p + 32); vector3 mainLookOffsetPos<comment="注視位置調整">;
+    FSeek(p + 48); cstring subLookAtNodeName<comment="サブとして注視するノード名[未設定時はオブジェクトの原点]">;
+    FSeek(p + 64); vector3 subLookOffsetPos<comment="サブ注視位置調整">;
+    FSeek(p + 80); float distance<comment="距離">;
+    FSeek(p + 96); vector3 playerOffsetPos<comment="プレイヤー位置調整">;
 
     FSeek(p + 112);
 } BossLockOnCameraParam;
@@ -97,17 +97,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   uint32 healthPoint;
-    FSeek(p + 4);   float stunTime;
-    FSeek(p + 8);   float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 20);  float maxStaggerPoint[5]<optimize=false>;
-    FSeek(p + 40);  uint16 exp;
-    FSeek(p + 48);  PlayerMoveableRangeParam moveRangeParam;
-    FSeek(p + 136); PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
-    FSeek(p + 224); BossPhaseParam phaseParams[8]<optimize=false>;
-    FSeek(p + 288); BossLockOnCameraParam cameraParam;
-    FSeek(p + 400); bool isDebugDraw;
-    FSeek(p + 404); uint32 debugDrawPhaseIndex;
+    FSeek(p + 0);   uint32 healthPoint<comment="体力値">;
+    FSeek(p + 4);   float stunTime<comment="スタン時間">;
+    FSeek(p + 8);   float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 20);  float maxStaggerPoint[5]<comment="怯み値",optimize=false>;
+    FSeek(p + 40);  uint16 exp<comment="経験値">;
+    FSeek(p + 48);  PlayerMoveableRangeParam moveRangeParam<comment="範囲設定">;
+    FSeek(p + 136); PlayerMoveableRangeParam cyloopDamageMoveRangeParam<comment="サイループ時の範囲設定">;
+    FSeek(p + 224); BossPhaseParam phaseParams[8]<comment="バトルフェーズ設定",optimize=false>;
+    FSeek(p + 288); BossLockOnCameraParam cameraParam<comment="カメラ設定">;
+    FSeek(p + 400); bool isDebugDraw<comment="デバック表示">;
+    FSeek(p + 404); uint32 debugDrawPhaseIndex<comment="デバック表示するフェーズ番号">;
 
     FSeek(p + 416);
 } BossStatusConfig;
@@ -156,14 +156,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool isUse;
-    FSeek(p + 4);  float gimmickPhaseTime;
-    FSeek(p + 8);  float attackPhaseTime;
-    FSeek(p + 12); bool isUnique;
-    FSeek(p + 13); BossPillarParam_GimmickType gimmickType;
-    FSeek(p + 16); float gimmickIntervalTime;
-    FSeek(p + 20); BossPillarParam_AttackType attackType;
-    FSeek(p + 24); float attackIntervalTime;
+    FSeek(p + 0);  bool isUse<comment="使用フラグ">;
+    FSeek(p + 4);  float gimmickPhaseTime<comment="ギミック時間位相">;
+    FSeek(p + 8);  float attackPhaseTime<comment="アタック時間位相">;
+    FSeek(p + 12); bool isUnique<comment="個別指定フラグ[一括指定内容より優先]">;
+    FSeek(p + 13); BossPillarParam_GimmickType gimmickType<comment="ギミックタイプ[個別指定時用]">;
+    FSeek(p + 16); float gimmickIntervalTime<comment="ギミック再使用待機時間[個別指定時用]">;
+    FSeek(p + 20); BossPillarParam_AttackType attackType<comment="アタックタイプ[個別指定時用]">;
+    FSeek(p + 24); float attackIntervalTime<comment="アタック再使用待機時間[個別指定時用]">;
 
     FSeek(p + 28);
 } BossPillarParam;
@@ -172,17 +172,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   GimmickType gimmickTypeAll;
-    FSeek(p + 4);   float gimmickIntervalTimeAll;
-    FSeek(p + 8);   AttackType attackTypeAll;
-    FSeek(p + 12);  float attackIntervalTimeAll;
-    FSeek(p + 16);  BossPillarParam pillars[32]<optimize=false>;
-    FSeek(p + 912); cstring spawnPositionName;
-    FSeek(p + 928); uint32 pillarHealthPoint;
-    FSeek(p + 932); uint32 pillarBreakDamage;
-    FSeek(p + 936); float pillarBreakStun;
-    FSeek(p + 940); bool isDebugDraw;
-    FSeek(p + 944); uint32 DebugDrawType;
+    FSeek(p + 0);   GimmickType gimmickTypeAll<comment="ギミックタイプ[一括指定]">;
+    FSeek(p + 4);   float gimmickIntervalTimeAll<comment="ギミック再使用待機時間[一括指定]">;
+    FSeek(p + 8);   AttackType attackTypeAll<comment="アタックタイプ[一括指定]">;
+    FSeek(p + 12);  float attackIntervalTimeAll<comment="アタック再使用待機時間[一括指定]">;
+    FSeek(p + 16);  BossPillarParam pillars[32]<comment="個別設定",optimize=false>;
+    FSeek(p + 912); cstring spawnPositionName<comment="柱を生成するスケルトンのノード名">;
+    FSeek(p + 928); uint32 pillarHealthPoint<comment="柱の体力値">;
+    FSeek(p + 932); uint32 pillarBreakDamage<comment="柱破壊時ボス本体ダメージ値">;
+    FSeek(p + 936); float pillarBreakStun<comment="柱破壊時ボス本体スタン値">;
+    FSeek(p + 940); bool isDebugDraw<comment="デバック表示">;
+    FSeek(p + 944); uint32 DebugDrawType<comment="デバック表示切り替え">;
 
     FSeek(p + 952);
 } BossPillarConfig;
@@ -243,9 +243,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  ColliderActiveType type;
-    FSeek(p + 2);  ColliderProperty propertys[4]<optimize=false>;
-    FSeek(p + 16); cstring text;
+    FSeek(p + 0);  ColliderActiveType type<comment="起動タイプ">;
+    FSeek(p + 2);  ColliderProperty propertys[4]<comment="属性",optimize=false>;
+    FSeek(p + 16); cstring text<comment="テキスト(接触やモーション中の切り替え時に使用)">;
 
     FSeek(p + 32);
 } BossColliderStatus;
@@ -254,15 +254,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   bool isUse;
-    FSeek(p + 2);   sint16 priority;
-    FSeek(p + 4);   CollisionType type;
-    FSeek(p + 8);   cstring attachNodeName;
-    FSeek(p + 24);  cstring name;
-    FSeek(p + 40);  BossColliderStatus status;
-    FSeek(p + 80);  vector3 size;
-    FSeek(p + 96);  vector3 offset;
-    FSeek(p + 112); vector3 rotation;
+    FSeek(p + 0);   bool isUse<comment="使用フラグ">;
+    FSeek(p + 2);   sint16 priority<comment="優先度">;
+    FSeek(p + 4);   CollisionType type<comment="形状">;
+    FSeek(p + 8);   cstring attachNodeName<comment="ノード名">;
+    FSeek(p + 24);  cstring name<comment="コリジョン名">;
+    FSeek(p + 40);  BossColliderStatus status<comment="コリジョン設定">;
+    FSeek(p + 80);  vector3 size<comment="サイズ">;
+    FSeek(p + 96);  vector3 offset<comment="位置オフセット">;
+    FSeek(p + 112); vector3 rotation<comment="回転">;
 
     FSeek(p + 128);
 } BossPerceiveCollisionParam;
@@ -271,8 +271,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    BossPerceiveCollisionParam perceiveCollisions[64]<optimize=false>;
-    FSeek(p + 8192); bool isDebugDraw;
+    FSeek(p + 0);    BossPerceiveCollisionParam perceiveCollisions[64]<comment="コリジョン",optimize=false>;
+    FSeek(p + 8192); bool isDebugDraw<comment="デバック表示">;
 
     FSeek(p + 8208);
 } BossPerceivePartsWithCollisionConfig;
@@ -295,9 +295,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  BossColliderStatus status;
-    FSeek(p + 32); float distance;
-    FSeek(p + 36); float nextSearchDistance;
+    FSeek(p + 0);  BossColliderStatus status<comment="コリジョン設定">;
+    FSeek(p + 32); float distance<comment="有効距離">;
+    FSeek(p + 36); float nextSearchDistance<comment="連続ホーミング可能距離">;
 
     FSeek(p + 40);
 } BossHomingPointParam;
@@ -306,10 +306,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 num;
-    FSeek(p + 4);  float interval;
-    FSeek(p + 8);  float liveTime;
-    FSeek(p + 12); float waitTime;
+    FSeek(p + 0);  uint32 num<comment="生成個数">;
+    FSeek(p + 4);  float interval<comment="生成間隔">;
+    FSeek(p + 8);  float liveTime<comment="生存時間">;
+    FSeek(p + 12); float waitTime<comment="待ち時間">;
 
     FSeek(p + 16);
 } BossMinionParam;
@@ -326,10 +326,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  Shape ShapeType;
-    FSeek(p + 4);  float CollisionWidth;
-    FSeek(p + 8);  float CollisionHeight;
-    FSeek(p + 12); float CollisionDepth;
+    FSeek(p + 0);  Shape ShapeType<comment="形状">;
+    FSeek(p + 4);  float CollisionWidth<comment="width">;
+    FSeek(p + 8);  float CollisionHeight<comment="height">;
+    FSeek(p + 12); float CollisionDepth<comment="depth">;
 
     FSeek(p + 16);
 } BossTrigerParam;
@@ -338,7 +338,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float phaseTime;
+    FSeek(p + 0); float phaseTime<comment="時間位相">;
 
     FSeek(p + 4);
 } BossStickParam;
@@ -347,8 +347,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool isCyloopDownUnuse;
-    FSeek(p + 8); cstring text;
+    FSeek(p + 0); bool isCyloopDownUnuse<comment="サイループによるダウン時は未使用">;
+    FSeek(p + 8); cstring text<comment="コリジョン名(識別に使用)">;
 
     FSeek(p + 24);
 } BossDamagePointParam;
@@ -359,16 +359,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 focusGeometryIndex;
-    FSeek(p + 4);  sint32 focusTriangleIndex;
-    FSeek(p + 8);  float sizeScale;
-    FSeek(p + 12); float impulseSpeed;
-    FSeek(p + 16); float ocTime;
-    FSeek(p + 20); float slowRateBoss;
-    FSeek(p + 24); float slowRatePlayer;
-    FSeek(p + 28); float slowTime;
-    FSeek(p + 32); float slowEaseInTime;
-    FSeek(p + 36); float slowEaseOutTime;
+    FSeek(p + 0);  sint32 focusGeometryIndex<comment="フォーカス部位指定[ジオメトリ番号]">;
+    FSeek(p + 4);  sint32 focusTriangleIndex<comment="フォーカスポリゴン指定[トライアングル番号]">;
+    FSeek(p + 8);  float sizeScale<comment="サイズスケール">;
+    FSeek(p + 12); float impulseSpeed<comment="打ち出し速度">;
+    FSeek(p + 16); float ocTime<comment="操作不能時間">;
+    FSeek(p + 20); float slowRateBoss<comment="ボススロー比率">;
+    FSeek(p + 24); float slowRatePlayer<comment="プレイヤースロー比率">;
+    FSeek(p + 28); float slowTime<comment="スロー時間">;
+    FSeek(p + 32); float slowEaseInTime<comment="スロー補間開始時間">;
+    FSeek(p + 36); float slowEaseOutTime<comment="スロー補間終了時間">;
 
     FSeek(p + 40);
 } BossDashCirclPointParam;
@@ -377,19 +377,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   bool isUse;
-    FSeek(p + 4);   uint32 geometryIndex;
-    FSeek(p + 8);   uint32 triangleIndex;
-    FSeek(p + 12);  PointType type;
-    FSeek(p + 16);  BossHomingPointParam homingPoint;
-    FSeek(p + 56);  BossMinionParam minionParam;
-    FSeek(p + 72);  BossTrigerParam trigger;
-    FSeek(p + 88);  BossStickParam stickParam;
-    FSeek(p + 96);  BossDamagePointParam damagePoint;
-    FSeek(p + 120); BossDashCirclPointParam dashCirclPoint;
-    FSeek(p + 160); sint32 linkNums[5]<optimize=false>;
-    FSeek(p + 192); vector3 offsetPos;
-    FSeek(p + 208); vector3 offsetRot;
+    FSeek(p + 0);   bool isUse<comment="使用フラグ">;
+    FSeek(p + 4);   uint32 geometryIndex<comment="部位指定[ジオメトリ番号]">;
+    FSeek(p + 8);   uint32 triangleIndex<comment="ポリゴン指定[トライアングル番号]">;
+    FSeek(p + 12);  PointType type<comment="種別">;
+    FSeek(p + 16);  BossHomingPointParam homingPoint<comment="ホーミング可能ポイント設定">;
+    FSeek(p + 56);  BossMinionParam minionParam<comment="ミニオン設定">;
+    FSeek(p + 72);  BossTrigerParam trigger<comment="トリガー設定">;
+    FSeek(p + 88);  BossStickParam stickParam<comment="障害物設定">;
+    FSeek(p + 96);  BossDamagePointParam damagePoint<comment="攻撃ポイント設定">;
+    FSeek(p + 120); BossDashCirclPointParam dashCirclPoint<comment="ダッシュサークルポイント設定">;
+    FSeek(p + 160); sint32 linkNums[5]<comment="リンクするメッシュフレーム番号",optimize=false>;
+    FSeek(p + 192); vector3 offsetPos<comment="位置調整">;
+    FSeek(p + 208); vector3 offsetRot<comment="回転調整">;
 
     FSeek(p + 224);
 } BossMeshFrameParam;
@@ -398,13 +398,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     BossMeshFrameParam meshShapeKeyFrames[256]<optimize=false>;
-    FSeek(p + 57344); bool isDebugDraw;
-    FSeek(p + 57345); bool isDebugDrawPoint;
-    FSeek(p + 57346); bool isDebugDrawMesh;
-    FSeek(p + 57347); bool isDebugDrawMeshIndivid;
-    FSeek(p + 57348); float debugDrawMeshTriangleDistance;
-    FSeek(p + 57352); uint32 debugDrawMeshTriangleNum;
+    FSeek(p + 0);     BossMeshFrameParam meshShapeKeyFrames[256]<comment="メッシュフレーム",optimize=false>;
+    FSeek(p + 57344); bool isDebugDraw<comment="デバック表示">;
+    FSeek(p + 57345); bool isDebugDrawPoint<comment="各種ポイントのデバック表示">;
+    FSeek(p + 57346); bool isDebugDrawMesh<comment="メッシュコリジョンのデバック表示">;
+    FSeek(p + 57347); bool isDebugDrawMeshIndivid<comment="メッシュ番号デバック表示">;
+    FSeek(p + 57348); float debugDrawMeshTriangleDistance<comment="メッシュ番号表示距離">;
+    FSeek(p + 57352); uint32 debugDrawMeshTriangleNum<comment="メッシュ番号表示上限">;
 
     FSeek(p + 57360);
 } BossMeshFrameConfig;
@@ -424,14 +424,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool isUse;
-    FSeek(p + 8);  cstring attachNodeName;
-    FSeek(p + 24); float damageVelocityRaito;
-    FSeek(p + 28); BossAttackCollisionParam_AttackType types[4]<optimize=false>;
-    FSeek(p + 32); BossColliderStatus status;
-    FSeek(p + 64); float size;
-    FSeek(p + 80); vector3 offset;
-    FSeek(p + 96); cstring parryCounterTargetCollisionName;
+    FSeek(p + 0);  bool isUse<comment="使用フラグ">;
+    FSeek(p + 8);  cstring attachNodeName<comment="ノード名">;
+    FSeek(p + 24); float damageVelocityRaito<comment="移動量ベクトル係数">;
+    FSeek(p + 28); BossAttackCollisionParam_AttackType types[4]<comment="攻撃設定",optimize=false>;
+    FSeek(p + 32); BossColliderStatus status<comment="コリジョン設定">;
+    FSeek(p + 64); float size<comment="サイズ">;
+    FSeek(p + 80); vector3 offset<comment="位置オフセット">;
+    FSeek(p + 96); cstring parryCounterTargetCollisionName<comment="カウンター対象のコリジョン名[スパソニ用ホーミングコリジョン]">;
 
     FSeek(p + 112);
 } BossAttackCollisionParam;
@@ -440,8 +440,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    BossAttackCollisionParam attackCollisions[64]<optimize=false>;
-    FSeek(p + 7168); bool isDebugDraw;
+    FSeek(p + 0);    BossAttackCollisionParam attackCollisions[64]<comment="コリジョン",optimize=false>;
+    FSeek(p + 7168); bool isDebugDraw<comment="デバック表示">;
 
     FSeek(p + 7184);
 } BossAttackCollisionConfig;
@@ -450,15 +450,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool isUse;
-    FSeek(p + 8);  cstring attachNodeName;
-    FSeek(p + 24); cstring name;
-    FSeek(p + 40); float size;
-    FSeek(p + 48); vector3 offset;
-    FSeek(p + 64); vector3 rotation;
-    FSeek(p + 80); bool isParryActive;
-    FSeek(p + 84); float cyloopRadius;
-    FSeek(p + 88); bool onlyRigidBody;
+    FSeek(p + 0);  bool isUse<comment="使用フラグ">;
+    FSeek(p + 8);  cstring attachNodeName<comment="ノード名">;
+    FSeek(p + 24); cstring name<comment="コリジョン名">;
+    FSeek(p + 40); float size<comment="サイズ">;
+    FSeek(p + 48); vector3 offset<comment="位置オフセット">;
+    FSeek(p + 64); vector3 rotation<comment="回転">;
+    FSeek(p + 80); bool isParryActive<comment="パリィ成功時のみ有効">;
+    FSeek(p + 84); float cyloopRadius<comment="サイループ半径[パリィ成功時]">;
+    FSeek(p + 88); bool onlyRigidBody<comment="剛体のみ">;
 
     FSeek(p + 96);
 } BossBattlePhaseCollisionParam;
@@ -467,8 +467,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    BossBattlePhaseCollisionParam battleCollisions[16]<optimize=false>;
-    FSeek(p + 1536); bool isDebugDraw;
+    FSeek(p + 0);    BossBattlePhaseCollisionParam battleCollisions[16]<comment="コリジョン",optimize=false>;
+    FSeek(p + 1536); bool isDebugDraw<comment="デバック表示">;
 
     FSeek(p + 1552);
 } BossBattlePhaseCollisionConfig;
@@ -477,11 +477,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 ringNumQuickCyloopUp;
-    FSeek(p + 4);  uint32 ringNumQuickCyloopDown;
-    FSeek(p + 8);  uint32 ringNumSonicSpecial;
-    FSeek(p + 12); float ringSpawnDistance;
-    FSeek(p + 16); float ringSuckedVelocity;
+    FSeek(p + 0);  uint32 ringNumQuickCyloopUp<comment="枚数(Qサイループ上り)">;
+    FSeek(p + 4);  uint32 ringNumQuickCyloopDown<comment="枚数(Qサイループ下り)">;
+    FSeek(p + 8);  uint32 ringNumSonicSpecial<comment="枚数(ソニック必殺技)">;
+    FSeek(p + 12); float ringSpawnDistance<comment="発生距離">;
+    FSeek(p + 16); float ringSuckedVelocity<comment="発生時のランダム初速">;
 
     FSeek(p + 20);
 } BossDropRingConfig;
@@ -490,13 +490,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     BossStatusConfig status;
-    FSeek(p + 416);   BossPillarConfig pillar;
-    FSeek(p + 1376);  BossPerceivePartsWithCollisionConfig perceivPartsWithCollision;
-    FSeek(p + 9584);  BossMeshFrameConfig meshShapeKeyFrame;
-    FSeek(p + 66944); BossAttackCollisionConfig attackCollision;
-    FSeek(p + 74128); BossBattlePhaseCollisionConfig battleCollision;
-    FSeek(p + 75680); BossDropRingConfig dropRing;
+    FSeek(p + 0);     BossStatusConfig status<comment="ステータス">;
+    FSeek(p + 416);   BossPillarConfig pillar<comment="柱オブジェクト配置設定">;
+    FSeek(p + 1376);  BossPerceivePartsWithCollisionConfig perceivPartsWithCollision<comment="プレイヤー検知設定">;
+    FSeek(p + 9584);  BossMeshFrameConfig meshShapeKeyFrame<comment="メッシュフレーム設定">;
+    FSeek(p + 66944); BossAttackCollisionConfig attackCollision<comment="攻撃設定">;
+    FSeek(p + 74128); BossBattlePhaseCollisionConfig battleCollision<comment="スパソニ戦用ホーミングポイント設定">;
+    FSeek(p + 75680); BossDropRingConfig dropRing<comment="リング放出">;
 
     FSeek(p + 75712);
 } BossBaseConfig;
@@ -505,11 +505,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); cstring parentFrame;
-    FSeek(p + 32); vector3 size;
-    FSeek(p + 48); vector3 localPosition;
-    FSeek(p + 64); vector3 localRotation;
+    FSeek(p + 0);  cstring name<comment="名前">;
+    FSeek(p + 16); cstring parentFrame<comment="親フレーム名">;
+    FSeek(p + 32); vector3 size<comment="サイズ">;
+    FSeek(p + 48); vector3 localPosition<comment="ローカル位置">;
+    FSeek(p + 64); vector3 localRotation<comment="ローカル回転">;
 
     FSeek(p + 80);
 } BossDragonCollisionParamBase;
@@ -519,7 +519,7 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  BossDragonCollisionParamBase bossDragonCollisionParamBase;
-    FSeek(p + 80); vector3 damageVelocity;
+    FSeek(p + 80); vector3 damageVelocity<comment="ダメージ速度">;
 
     FSeek(p + 96);
 } BossDragonHitBoxParam;
@@ -529,10 +529,10 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);   BossDragonCollisionParamBase bossDragonCollisionParamBase;
-    FSeek(p + 80);  bool isEnableHoming;
-    FSeek(p + 88);  cstring homingNode;
-    FSeek(p + 104); cstring homingNodeMirror;
-    FSeek(p + 128); vector3 homingPosition;
+    FSeek(p + 80);  bool isEnableHoming<comment="ホーミング可能">;
+    FSeek(p + 88);  cstring homingNode<comment="ホーミングノード名">;
+    FSeek(p + 104); cstring homingNodeMirror<comment="ホーミングノード名[反転]">;
+    FSeek(p + 128); vector3 homingPosition<comment="ホーミング位置">;
 
     FSeek(p + 144);
 } BossDragonHurtBoxParam;
@@ -541,8 +541,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float aimTime;
-    FSeek(p + 4); float stunTime;
+    FSeek(p + 0); float aimTime<comment="狙う時間">;
+    FSeek(p + 4); float stunTime<comment="よろけ時間">;
 
     FSeek(p + 8);
 } BossDragonScratchParam;
@@ -551,16 +551,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float maxSpeed;
-    FSeek(p + 12); float accel;
-    FSeek(p + 16); float reflectSpeedScale;
-    FSeek(p + 20); float intervalTime;
-    FSeek(p + 24); float lifeTime;
-    FSeek(p + 28); float pitchOffsetRange;
-    FSeek(p + 32); float yawOffsetRange;
-    FSeek(p + 36); bool isBound;
+    FSeek(p + 0);  float radius<comment="弾の半径">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float maxSpeed<comment="弾の最大速度">;
+    FSeek(p + 12); float accel<comment="弾の加速度">;
+    FSeek(p + 16); float reflectSpeedScale<comment="跳ね返した時の加速率">;
+    FSeek(p + 20); float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 24); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 28); float pitchOffsetRange<comment="発射ピッチ角のブレ範囲">;
+    FSeek(p + 32); float yawOffsetRange<comment="発射ヨー角のブレ範囲">;
+    FSeek(p + 36); bool isBound<comment="ボスに当たって跳ね返る？">;
 
     FSeek(p + 40);
 } BossDragonReflectShotParam;
@@ -569,14 +569,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float intervalTime;
-    FSeek(p + 12); float lifeTime;
-    FSeek(p + 16); float pitchOffsetRange;
-    FSeek(p + 20); float yawOffsetRange;
-    FSeek(p + 24); sint32 count;
-    FSeek(p + 28); float waitTime;
+    FSeek(p + 0);  float radius<comment="弾の半径">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 12); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 16); float pitchOffsetRange<comment="発射ピッチ角のブレ範囲">;
+    FSeek(p + 20); float yawOffsetRange<comment="発射ヨー角のブレ範囲">;
+    FSeek(p + 24); sint32 count<comment="発射数">;
+    FSeek(p + 28); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 32);
 } BossDragonShotParam;
@@ -585,16 +585,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float intervalTime;
-    FSeek(p + 12); float lifeTime;
-    FSeek(p + 16); float pitchSpeed;
-    FSeek(p + 20); float yawSpeed;
-    FSeek(p + 24); float circleIntervalTime;
-    FSeek(p + 28); sint32 count;
-    FSeek(p + 32); sint32 parriableCount;
-    FSeek(p + 36); float waitTime;
+    FSeek(p + 0);  float radius<comment="弾の半径">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 12); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 16); float pitchSpeed<comment="銃口の垂直回転速度">;
+    FSeek(p + 20); float yawSpeed<comment="銃口の水平回転速度">;
+    FSeek(p + 24); float circleIntervalTime<comment="円の発射間隔">;
+    FSeek(p + 28); sint32 count<comment="円の数">;
+    FSeek(p + 32); sint32 parriableCount<comment="パリィ可能な円の数">;
+    FSeek(p + 36); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 40);
 } BossDragonSpiralShotParam;
@@ -603,17 +603,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float gravity;
-    FSeek(p + 12); float intervalTime;
-    FSeek(p + 16); float lifeTime;
-    FSeek(p + 20); float pitch;
-    FSeek(p + 24); float pitchInterval;
-    FSeek(p + 28); float yawInterval;
-    FSeek(p + 32); sint32 count;
-    FSeek(p + 36); sint32 parriableCount;
-    FSeek(p + 40); float waitTime;
+    FSeek(p + 0);  float radius<comment="弾の半径">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float gravity<comment="重力加速">;
+    FSeek(p + 12); float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 16); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 20); float pitch<comment="仰角">;
+    FSeek(p + 24); float pitchInterval<comment="仰角の間隔">;
+    FSeek(p + 28); float yawInterval<comment="方位角の間隔">;
+    FSeek(p + 32); sint32 count<comment="回数">;
+    FSeek(p + 36); sint32 parriableCount<comment="パリィ可能弾の回数">;
+    FSeek(p + 40); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 44);
 } BossDragonSplashShotParam;
@@ -622,17 +622,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float maxAccel;
-    FSeek(p + 12); float intervalTime;
-    FSeek(p + 16); float arrivalTime;
-    FSeek(p + 20); float lifeTime;
-    FSeek(p + 24); float minPitchOffset;
-    FSeek(p + 28); float maxPitchOffset;
-    FSeek(p + 32); float yawOffsetRange;
-    FSeek(p + 36); sint32 count;
-    FSeek(p + 40); float waitTime;
+    FSeek(p + 0);  float radius<comment="弾の半径">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float maxAccel<comment="弾の最大加速度">;
+    FSeek(p + 12); float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 16); float arrivalTime<comment="弾の到達時間">;
+    FSeek(p + 20); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 24); float minPitchOffset<comment="最小ピッチ角">;
+    FSeek(p + 28); float maxPitchOffset<comment="最大ピッチ角">;
+    FSeek(p + 32); float yawOffsetRange<comment="発射ヨー角のブレ範囲">;
+    FSeek(p + 36); sint32 count<comment="発射数">;
+    FSeek(p + 40); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 44);
 } BossDragonHomingLaserParam;
@@ -641,16 +641,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float length;
-    FSeek(p + 8);  float speed;
-    FSeek(p + 12); float intervalTime;
-    FSeek(p + 16); float lifeTime;
-    FSeek(p + 20); float minPitchOffset;
-    FSeek(p + 24); float maxPitchOffset;
-    FSeek(p + 28); float yawOffsetRange;
-    FSeek(p + 32); sint32 count;
-    FSeek(p + 36); float waitTime;
+    FSeek(p + 0);  float radius<comment="半径">;
+    FSeek(p + 4);  float length<comment="長さ">;
+    FSeek(p + 8);  float speed<comment="速度">;
+    FSeek(p + 12); float intervalTime<comment="発射間隔">;
+    FSeek(p + 16); float lifeTime<comment="生存時間">;
+    FSeek(p + 20); float minPitchOffset<comment="最小ピッチ角">;
+    FSeek(p + 24); float maxPitchOffset<comment="最大ピッチ角">;
+    FSeek(p + 28); float yawOffsetRange<comment="発射ヨー角のブレ範囲">;
+    FSeek(p + 32); sint32 count<comment="発射数">;
+    FSeek(p + 36); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 40);
 } BossDragonHomingMissileParam;
@@ -659,18 +659,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float innerRadius;
-    FSeek(p + 4);  float outerRadius;
-    FSeek(p + 8);  float speed;
-    FSeek(p + 12); float intervalTime;
-    FSeek(p + 16); float lifeTime;
-    FSeek(p + 20); float pitchOffsetRange;
-    FSeek(p + 24); float yawOffsetRange;
-    FSeek(p + 28); sint32 count;
-    FSeek(p + 32); sint32 parriableCount;
-    FSeek(p + 36); float intervalTimeInGroup;
-    FSeek(p + 40); sint32 countInGroup;
-    FSeek(p + 44); float waitTime;
+    FSeek(p + 0);  float innerRadius<comment="内側の半径">;
+    FSeek(p + 4);  float outerRadius<comment="外側の半径">;
+    FSeek(p + 8);  float speed<comment="弾の速度">;
+    FSeek(p + 12); float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 16); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 20); float pitchOffsetRange<comment="発射ピッチ角のブレ範囲">;
+    FSeek(p + 24); float yawOffsetRange<comment="発射ヨー角のブレ範囲">;
+    FSeek(p + 28); sint32 count<comment="発射数">;
+    FSeek(p + 32); sint32 parriableCount<comment="パリィ可能弾の発射数">;
+    FSeek(p + 36); float intervalTimeInGroup<comment="1セット内での発射間隔">;
+    FSeek(p + 40); sint32 countInGroup<comment="1セットの発射数">;
+    FSeek(p + 44); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 48);
 } BossDragonRippleLaserParam;
@@ -679,20 +679,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float innerRadius;
-    FSeek(p + 4);  float outerRadius;
-    FSeek(p + 8);  float speed;
-    FSeek(p + 12); float intervalTime;
-    FSeek(p + 16); float lifeTime;
-    FSeek(p + 20); float maxPitch;
-    FSeek(p + 24); float maxYaw;
-    FSeek(p + 28); sint32 verticalCount;
-    FSeek(p + 32); sint32 horizontalCount;
-    FSeek(p + 36); sint32 extraFrontCount;
-    FSeek(p + 40); sint32 parriableCount;
-    FSeek(p + 44); float intervalTimeInGroup;
-    FSeek(p + 48); sint32 countInGroup;
-    FSeek(p + 52); float waitTime;
+    FSeek(p + 0);  float innerRadius<comment="内側の半径">;
+    FSeek(p + 4);  float outerRadius<comment="外側の半径">;
+    FSeek(p + 8);  float speed<comment="弾の速度">;
+    FSeek(p + 12); float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 16); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 20); float maxPitch<comment="最大ピッチ角">;
+    FSeek(p + 24); float maxYaw<comment="最大ヨー角">;
+    FSeek(p + 28); sint32 verticalCount<comment="縦方向の発射数">;
+    FSeek(p + 32); sint32 horizontalCount<comment="横方向の発射数">;
+    FSeek(p + 36); sint32 extraFrontCount<comment="正面の追加発射数">;
+    FSeek(p + 40); sint32 parriableCount<comment="パリィ可能弾の発射数">;
+    FSeek(p + 44); float intervalTimeInGroup<comment="1セット内での発射間隔">;
+    FSeek(p + 48); sint32 countInGroup<comment="1セットの発射数">;
+    FSeek(p + 52); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 56);
 } BossDragonRippleLaserRageParam;
@@ -701,16 +701,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float innerRadius;
-    FSeek(p + 4);  float outerRadius;
-    FSeek(p + 8);  float speed;
-    FSeek(p + 12); float intervalTime;
-    FSeek(p + 16); float lifeTime;
-    FSeek(p + 20); float pitchOffsetRange;
-    FSeek(p + 24); float yawOffsetRange;
-    FSeek(p + 28); sint32 count;
-    FSeek(p + 32); float intervalTimeInGroup;
-    FSeek(p + 36); sint32 countInGroup;
+    FSeek(p + 0);  float innerRadius<comment="内側の半径">;
+    FSeek(p + 4);  float outerRadius<comment="外側の半径">;
+    FSeek(p + 8);  float speed<comment="弾の速度">;
+    FSeek(p + 12); float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 16); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 20); float pitchOffsetRange<comment="発射ピッチ角のブレ範囲">;
+    FSeek(p + 24); float yawOffsetRange<comment="発射ヨー角のブレ範囲">;
+    FSeek(p + 28); sint32 count<comment="発射数">;
+    FSeek(p + 32); float intervalTimeInGroup<comment="1セット内での発射間隔">;
+    FSeek(p + 36); sint32 countInGroup<comment="1セットの発射数">;
 
     FSeek(p + 40);
 } BossDragonRippleLaserDummyParam;
@@ -719,16 +719,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float speed;
-    FSeek(p + 4);  float rotSpeed;
-    FSeek(p + 8);  float accel;
-    FSeek(p + 12); float rotAccel;
-    FSeek(p + 16); float intervalTime;
-    FSeek(p + 20); float lifeTime;
-    FSeek(p + 24); sint32 segmentCount;
-    FSeek(p + 28); float waveRate;
-    FSeek(p + 32); sint32 count;
-    FSeek(p + 36); float waitTime;
+    FSeek(p + 0);  float speed<comment="弾の速度">;
+    FSeek(p + 4);  float rotSpeed<comment="弾の回転速度">;
+    FSeek(p + 8);  float accel<comment="弾の加速度">;
+    FSeek(p + 12); float rotAccel<comment="弾の回転加速度">;
+    FSeek(p + 16); float intervalTime<comment="弾の発射間隔">;
+    FSeek(p + 20); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 24); sint32 segmentCount<comment="セグメント数">;
+    FSeek(p + 28); float waveRate<comment="衝撃波部分の比率">;
+    FSeek(p + 32); sint32 count<comment="発射数">;
+    FSeek(p + 36); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 40);
 } BossDragonWaveParam;
@@ -737,15 +737,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float length;
-    FSeek(p + 8);  float rotSpeed;
-    FSeek(p + 12); float rotAccel;
-    FSeek(p + 16); float roll;
-    FSeek(p + 20); float intervalTime;
-    FSeek(p + 24); float standbyTime;
-    FSeek(p + 28); sint32 count;
-    FSeek(p + 32); float waitTime;
+    FSeek(p + 0);  float radius<comment="半径">;
+    FSeek(p + 4);  float length<comment="長さ">;
+    FSeek(p + 8);  float rotSpeed<comment="回転速度">;
+    FSeek(p + 12); float rotAccel<comment="回転加速度">;
+    FSeek(p + 16); float roll<comment="ロール角">;
+    FSeek(p + 20); float intervalTime<comment="発射間隔">;
+    FSeek(p + 24); float standbyTime<comment="照射準備時間">;
+    FSeek(p + 28); sint32 count<comment="発射数">;
+    FSeek(p + 32); float waitTime<comment="発射終了後の待ち時間">;
 
     FSeek(p + 36);
 } BossDragonLaserParam;
@@ -754,9 +754,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float radius;
-    FSeek(p + 4); float speed;
-    FSeek(p + 8); float lifeTime;
+    FSeek(p + 0); float radius<comment="弾の半径">;
+    FSeek(p + 4); float speed<comment="弾の速度">;
+    FSeek(p + 8); float lifeTime<comment="弾の生存時間">;
 
     FSeek(p + 12);
 } BossDragonCounterLaserParam;
@@ -765,8 +765,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 missileNum;
-    FSeek(p + 4); float missileWaitTime;
+    FSeek(p + 0); sint32 missileNum<comment="ミサイル発射数">;
+    FSeek(p + 4); float missileWaitTime<comment="ミサイル発射間隔">;
 
     FSeek(p + 8);
 } BossDragonRingSupplyMissileParam;
@@ -775,11 +775,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 playerPosition;
-    FSeek(p + 16); float moveTime;
-    FSeek(p + 20); float moveRange;
-    FSeek(p + 24); float rotSpeed;
-    FSeek(p + 28); BossDragonRingSupplyMissileParam missile[3]<optimize=false>;
+    FSeek(p + 0);  vector3 playerPosition<comment="プレイヤー位置">;
+    FSeek(p + 16); float moveTime<comment="移動時間">;
+    FSeek(p + 20); float moveRange<comment="移動範囲">;
+    FSeek(p + 24); float rotSpeed<comment="セット回転速度">;
+    FSeek(p + 28); BossDragonRingSupplyMissileParam missile[3]<comment="missile",optimize=false>;
 
     FSeek(p + 64);
 } BossDragonRingSupplyParam;
@@ -796,16 +796,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 bossPosition;
-    FSeek(p + 16); float bossYaw;
-    FSeek(p + 20); BossDragonLayoutParam_EaseType bossEaseType;
-    FSeek(p + 24); float bossEaseTime;
-    FSeek(p + 32); vector3 playerPosition;
-    FSeek(p + 48); float playerFieldRange;
-    FSeek(p + 52); float playerFieldHeight;
-    FSeek(p + 56); float playerFieldYaw;
-    FSeek(p + 60); BossDragonLayoutParam_EaseType playerEaseType;
-    FSeek(p + 64); float playerEaseTime;
+    FSeek(p + 0);  vector3 bossPosition<comment="ボスの位置">;
+    FSeek(p + 16); float bossYaw<comment="ボスのY回転">;
+    FSeek(p + 20); BossDragonLayoutParam_EaseType bossEaseType<comment="ボスの補間タイプ">;
+    FSeek(p + 24); float bossEaseTime<comment="ボスの補間時間">;
+    FSeek(p + 32); vector3 playerPosition<comment="プレイヤーの位置">;
+    FSeek(p + 48); float playerFieldRange<comment="プレイヤーの移動幅">;
+    FSeek(p + 52); float playerFieldHeight<comment="プレイヤーの移動高さ">;
+    FSeek(p + 56); float playerFieldYaw<comment="プレイヤーの移動範囲の回転">;
+    FSeek(p + 60); BossDragonLayoutParam_EaseType playerEaseType<comment="プレイヤーの補間タイプ">;
+    FSeek(p + 64); float playerEaseTime<comment="プレイヤーの補間時間">;
 
     FSeek(p + 80);
 } BossDragonLayoutParam;
@@ -814,13 +814,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring gazeFrame;
-    FSeek(p + 16); cstring gazeFrameMirror;
-    FSeek(p + 32); vector3 gazeOffset;
-    FSeek(p + 48); float distance;
-    FSeek(p + 64); vector3 playerOffset;
-    FSeek(p + 80); float elevationOffset;
-    FSeek(p + 96); vector3 followRate;
+    FSeek(p + 0);  cstring gazeFrame<comment="注視フレーム">;
+    FSeek(p + 16); cstring gazeFrameMirror<comment="注視フレーム[反転]">;
+    FSeek(p + 32); vector3 gazeOffset<comment="注視オフセット">;
+    FSeek(p + 48); float distance<comment="距離">;
+    FSeek(p + 64); vector3 playerOffset<comment="プレイヤーオフセット">;
+    FSeek(p + 80); float elevationOffset<comment="仰角オフセット">;
+    FSeek(p + 96); vector3 followRate<comment="追従率">;
 
     FSeek(p + 112);
 } BossDragonCameraParam;
@@ -829,11 +829,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   vector3 playerNodes[8]<optimize=false>;
-    FSeek(p + 128); vector3 bossNodes[8]<optimize=false>;
-    FSeek(p + 256); sint32 playerNodeCount;
-    FSeek(p + 260); sint32 bossNodeCount;
-    FSeek(p + 264); float time;
+    FSeek(p + 0);   vector3 playerNodes[8]<comment="プレイヤーノード",optimize=false>;
+    FSeek(p + 128); vector3 bossNodes[8]<comment="ボスノード",optimize=false>;
+    FSeek(p + 256); sint32 playerNodeCount<comment="プレイヤーノード数">;
+    FSeek(p + 260); sint32 bossNodeCount<comment="ボスノード数">;
+    FSeek(p + 264); float time<comment="移動時間">;
 
     FSeek(p + 272);
 } BossDragonMoveParam;
@@ -842,9 +842,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float radius;
-    FSeek(p + 4); float length;
-    FSeek(p + 8); float rotSpeed;
+    FSeek(p + 0); float radius<comment="半径">;
+    FSeek(p + 4); float length<comment="長さ">;
+    FSeek(p + 8); float rotSpeed<comment="回転速度">;
 
     FSeek(p + 12);
 } BossDragonFireBarParam;
@@ -853,11 +853,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 vertRatio[3]<optimize=false>;
-    FSeek(p + 12); float initSpeed;
-    FSeek(p + 16); float maxSpeed;
-    FSeek(p + 20); float acc;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  uint32 vertRatio[3]<comment="出現高さの確率[%](低, 中, 高)",optimize=false>;
+    FSeek(p + 12); float initSpeed<comment="初速度[m/s]">;
+    FSeek(p + 16); float maxSpeed<comment="最高速度[m/s]">;
+    FSeek(p + 20); float acc<comment="加速度[m/s^2]">;
+    FSeek(p + 24); float lifeTime<comment="持続時間[s]">;
 
     FSeek(p + 28);
 } BossDragonEscapeShotParam;
@@ -881,9 +881,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float distance;
-    FSeek(p + 4); Type type;
-    FSeek(p + 5); Location location;
+    FSeek(p + 0); float distance<comment="距離">;
+    FSeek(p + 4); Type type<comment="種類">;
+    FSeek(p + 5); Location location<comment="配置">;
 
     FSeek(p + 8);
 } BossDragonObstacleParam;
@@ -892,8 +892,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float start;
-    FSeek(p + 4); float end;
+    FSeek(p + 0); float start<comment="開始距離">;
+    FSeek(p + 4); float end<comment="終了距離">;
 
     FSeek(p + 8);
 } BossDragonHoleParam;
@@ -902,13 +902,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float interval;
-    FSeek(p + 4);   sint32 recordNum;
-    FSeek(p + 8);   float width;
-    FSeek(p + 12);  BossDragonFireBarParam fireBar;
-    FSeek(p + 24);  BossDragonEscapeShotParam shot;
-    FSeek(p + 52);  BossDragonObstacleParam obstacles[64]<optimize=false>;
-    FSeek(p + 564); BossDragonHoleParam holes[16]<optimize=false>;
+    FSeek(p + 0);   float interval<comment="記録間隔(0で毎F)">;
+    FSeek(p + 4);   sint32 recordNum<comment="保持個数">;
+    FSeek(p + 8);   float width<comment="幅">;
+    FSeek(p + 12);  BossDragonFireBarParam fireBar<comment="ファイアバー">;
+    FSeek(p + 24);  BossDragonEscapeShotParam shot<comment="射撃">;
+    FSeek(p + 52);  BossDragonObstacleParam obstacles[64]<comment="障害物セット",optimize=false>;
+    FSeek(p + 564); BossDragonHoleParam holes[16]<comment="奈落",optimize=false>;
 
     FSeek(p + 692);
 } BossDragonRoadParam;
@@ -917,29 +917,29 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float outStrength;
-    FSeek(p + 4);   float inStrength;
-    FSeek(p + 8);   float outElev;
-    FSeek(p + 12);  float inElev;
-    FSeek(p + 16);  float speed;
-    FSeek(p + 32);  vector3 targetOffset;
-    FSeek(p + 48);  float launchCameraInterpolateTime;
-    FSeek(p + 64);  vector3 launchCameraPos;
-    FSeek(p + 80);  vector3 launchCameraTarget;
-    FSeek(p + 96);  float launchCameraRoll;
-    FSeek(p + 100); float launchCameraTime;
-    FSeek(p + 104); float fallCameraInterpolateTime;
-    FSeek(p + 108); float fallCameraDistance;
-    FSeek(p + 112); float fallCameraElavation;
-    FSeek(p + 116); float landingCameraInterpolateTime;
-    FSeek(p + 120); float landingCameraDistance;
-    FSeek(p + 124); float landingCameraElavation;
-    FSeek(p + 128); float landingCameraAzimuth;
-    FSeek(p + 132); float landingCameraChangeDistance;
-    FSeek(p + 136); float landingCameraNearInterpolateTime;
-    FSeek(p + 140); float landingCameraNearDistance;
-    FSeek(p + 144); float landingCameraNearElavation;
-    FSeek(p + 148); float landingCameraNearAzimuth;
+    FSeek(p + 0);   float outStrength<comment="射出強度">;
+    FSeek(p + 4);   float inStrength<comment="終了強度">;
+    FSeek(p + 8);   float outElev<comment="射出時発射角(°)">;
+    FSeek(p + 12);  float inElev<comment="終了時入射角(°)">;
+    FSeek(p + 16);  float speed<comment="移動速度">;
+    FSeek(p + 32);  vector3 targetOffset<comment="打ち出し先オフセット">;
+    FSeek(p + 48);  float launchCameraInterpolateTime<comment="[打ち出しカメラ]補間時間">;
+    FSeek(p + 64);  vector3 launchCameraPos<comment="[打ち出しカメラ]位置オフセット">;
+    FSeek(p + 80);  vector3 launchCameraTarget<comment="[打ち出しカメラ]注視点オフセット">;
+    FSeek(p + 96);  float launchCameraRoll<comment="[打ち出しカメラ]ロール">;
+    FSeek(p + 100); float launchCameraTime<comment="[打ち出しカメラ]持続時間">;
+    FSeek(p + 104); float fallCameraInterpolateTime<comment="[落下カメラ]補間時間">;
+    FSeek(p + 108); float fallCameraDistance<comment="[落下カメラ]距離">;
+    FSeek(p + 112); float fallCameraElavation<comment="[落下カメラ]仰角">;
+    FSeek(p + 116); float landingCameraInterpolateTime<comment="[着地カメラ]補間時間">;
+    FSeek(p + 120); float landingCameraDistance<comment="[着地カメラ]距離">;
+    FSeek(p + 124); float landingCameraElavation<comment="[着地カメラ]仰角">;
+    FSeek(p + 128); float landingCameraAzimuth<comment="[着地カメラ]方位角">;
+    FSeek(p + 132); float landingCameraChangeDistance<comment="[金庫注視カメラ]開始距離">;
+    FSeek(p + 136); float landingCameraNearInterpolateTime<comment="[金庫注視カメラ]補間時間">;
+    FSeek(p + 140); float landingCameraNearDistance<comment="[金庫注視カメラ]距離">;
+    FSeek(p + 144); float landingCameraNearElavation<comment="[金庫注視カメラ]仰角">;
+    FSeek(p + 148); float landingCameraNearAzimuth<comment="[金庫注視カメラ]方位角">;
 
     FSeek(p + 160);
 } BossDragonLaunchParam;
@@ -948,9 +948,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float speed;
-    FSeek(p + 4); float boostSpeed;
-    FSeek(p + 8); float boostSpeedMax;
+    FSeek(p + 0); float speed<comment="通常時の走る速さ">;
+    FSeek(p + 4); float boostSpeed<comment="ブースト時の走る速さ">;
+    FSeek(p + 8); float boostSpeedMax<comment="パワーブースト時の走る速さ">;
 
     FSeek(p + 12);
 } BossDragonQuickStepParam;
@@ -959,20 +959,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float goalOffset;
-    FSeek(p + 8);  float speed;
-    FSeek(p + 12); float boostSpeed;
-    FSeek(p + 16); float width;
-    FSeek(p + 20); float height;
-    FSeek(p + 24); float closeDistance;
-    FSeek(p + 28); float closeSpeedScale;
-    FSeek(p + 32); float fastMoveDistance;
-    FSeek(p + 36); float stunTime;
-    FSeek(p + 40); float stunSpeedScale;
-    FSeek(p + 44); float superBoostDelayTime;
-    FSeek(p + 48); float superBoostTime;
-    FSeek(p + 52); float superBoostSpeed;
+    FSeek(p + 0);  float distance<comment="初期距離">;
+    FSeek(p + 4);  float goalOffset<comment="ゴールオフセット">;
+    FSeek(p + 8);  float speed<comment="通常時の速度">;
+    FSeek(p + 12); float boostSpeed<comment="ブースト時の速度">;
+    FSeek(p + 16); float width<comment="プレイヤー移動幅">;
+    FSeek(p + 20); float height<comment="プレイヤー移動高さ">;
+    FSeek(p + 24); float closeDistance<comment="至近距離">;
+    FSeek(p + 28); float closeSpeedScale<comment="至近距離の速度スケール">;
+    FSeek(p + 32); float fastMoveDistance<comment="ミサイルHitでボスが進む距離">;
+    FSeek(p + 36); float stunTime<comment="ミサイルHit時のボス減速時間">;
+    FSeek(p + 40); float stunSpeedScale<comment="ミサイルHit時のボス速度スケール">;
+    FSeek(p + 44); float superBoostDelayTime<comment="ミサイルHit時のブースト遅延時間">;
+    FSeek(p + 48); float superBoostTime<comment="ミサイルHit時のブースト時間">;
+    FSeek(p + 52); float superBoostSpeed<comment="ミサイルHit時のブースト速度">;
 
     FSeek(p + 56);
 } BossDragonChaseParam;
@@ -981,12 +981,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool isValid;
-    FSeek(p + 4);  float rotForce;
-    FSeek(p + 8);  float maxRotForce;
-    FSeek(p + 12); float rotForceSpeed;
-    FSeek(p + 16); float rotDamper;
-    FSeek(p + 20); float straightTime;
+    FSeek(p + 0);  bool isValid<comment="有効">;
+    FSeek(p + 4);  float rotForce<comment="回転力">;
+    FSeek(p + 8);  float maxRotForce<comment="最大回転力">;
+    FSeek(p + 12); float rotForceSpeed<comment="回転力の増加速度">;
+    FSeek(p + 16); float rotDamper<comment="回転抵抗力">;
+    FSeek(p + 20); float straightTime<comment="直進時間">;
 
     FSeek(p + 24);
 } BossDragonMissileIndividualParam;
@@ -995,11 +995,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float hpRatioThreshold;
-    FSeek(p + 4);  sint32 count;
-    FSeek(p + 8);  float intervalTime;
-    FSeek(p + 12); float waitTime;
-    FSeek(p + 16); float badRatio;
+    FSeek(p + 0);  float hpRatioThreshold<comment="指定HP割合まで">;
+    FSeek(p + 4);  sint32 count<comment="発射数">;
+    FSeek(p + 8);  float intervalTime<comment="発射間隔">;
+    FSeek(p + 12); float waitTime<comment="発射後の待ち時間">;
+    FSeek(p + 16); float badRatio<comment="粗悪品の割合">;
 
     FSeek(p + 20);
 } BossDragonMissileFirePattern;
@@ -1008,15 +1008,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float radius;
-    FSeek(p + 4);   float length;
-    FSeek(p + 8);   float speed;
-    FSeek(p + 12);  float maxSpeed;
-    FSeek(p + 16);  float accel;
-    FSeek(p + 20);  float lifeTime;
-    FSeek(p + 24);  BossDragonMissileIndividualParam individuals[16]<optimize=false>;
-    FSeek(p + 408); BossDragonMissileIndividualParam badIndividuals[8]<optimize=false>;
-    FSeek(p + 600); BossDragonMissileFirePattern firePatterns[8]<optimize=false>;
+    FSeek(p + 0);   float radius<comment="半径">;
+    FSeek(p + 4);   float length<comment="長さ">;
+    FSeek(p + 8);   float speed<comment="速度">;
+    FSeek(p + 12);  float maxSpeed<comment="最大速度">;
+    FSeek(p + 16);  float accel<comment="加速度">;
+    FSeek(p + 20);  float lifeTime<comment="生存時間">;
+    FSeek(p + 24);  BossDragonMissileIndividualParam individuals[16]<comment="個別パラメータ",optimize=false>;
+    FSeek(p + 408); BossDragonMissileIndividualParam badIndividuals[8]<comment="個別パラメータ[粗悪]",optimize=false>;
+    FSeek(p + 600); BossDragonMissileFirePattern firePatterns[8]<comment="発射パターン",optimize=false>;
 
     FSeek(p + 760);
 } BossDragonMissileParam;
@@ -1057,9 +1057,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float hpRatio;
-    FSeek(p + 4); BossDragonInterrupt interrupt;
-    FSeek(p + 5); bool forceInterrupt;
+    FSeek(p + 0); float hpRatio<comment="HP割合">;
+    FSeek(p + 4); BossDragonInterrupt interrupt<comment="発生シーケンス">;
+    FSeek(p + 5); bool forceInterrupt<comment="強制割り込み">;
 
     FSeek(p + 8);
 } BossDragonInterruptParam;
@@ -1068,7 +1068,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float postCameraTime[4]<optimize=false>;
+    FSeek(p + 0); float postCameraTime[4]<comment="後半カメラに遷移するまでの時間",optimize=false>;
 
     FSeek(p + 16);
 } BossDragonCyloopBindParam;
@@ -1077,10 +1077,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scale;
-    FSeek(p + 4);  float time;
-    FSeek(p + 8);  float easeOutTime;
-    FSeek(p + 12); bool cameraSlow;
+    FSeek(p + 0);  float scale<comment="スロー倍率">;
+    FSeek(p + 4);  float time<comment="スロー時間">;
+    FSeek(p + 8);  float easeOutTime<comment="スロー終了補間時間">;
+    FSeek(p + 12); bool cameraSlow<comment="カメラもスローに含める？">;
 
     FSeek(p + 16);
 } BossDragonParrySlowParam;
@@ -1089,7 +1089,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); BossDragonParrySlowParam slowParams[2]<optimize=false>;
+    FSeek(p + 0); BossDragonParrySlowParam slowParams[2]<comment="スロー設定",optimize=false>;
 
     FSeek(p + 32);
 } BossDragonParryParam;
@@ -1098,7 +1098,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float delayTime[6]<optimize=false>;
+    FSeek(p + 0); float delayTime[6]<comment="予兆表示遅延時間",optimize=false>;
 
     FSeek(p + 24);
 } BossDragonAttackSignParam;
@@ -1107,9 +1107,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool usePracticeNotifier;
-    FSeek(p + 1); sint8 practiceNo;
-    FSeek(p + 2); sint8 tipsNo;
+    FSeek(p + 0); bool usePracticeNotifier<comment="練習通知を使用するか">;
+    FSeek(p + 1); sint8 practiceNo<comment="練習番号">;
+    FSeek(p + 2); sint8 tipsNo<comment="Tips番号">;
 
     FSeek(p + 3);
 } EnemyPracticeNotifierConfig;
@@ -1118,8 +1118,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); EnemyPracticeNotifierConfig notifierConfigClimb;
-    FSeek(p + 3); EnemyPracticeNotifierConfig notifierConfigBattle;
+    FSeek(p + 0); EnemyPracticeNotifierConfig notifierConfigClimb<comment="練習通知設定[登頂時]">;
+    FSeek(p + 3); EnemyPracticeNotifierConfig notifierConfigBattle<comment="練習通知設定[戦闘時]">;
 
     FSeek(p + 6);
 } BossDragonNotifierParam;
@@ -1129,67 +1129,67 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     BossBaseConfig bossBaseConfig;
-    FSeek(p + 75712); float cruisePathSpeed;
-    FSeek(p + 75716); float patrolPathSpeed;
-    FSeek(p + 75720); float approachPathSpeedMin;
-    FSeek(p + 75724); float approachPathSpeedMax;
-    FSeek(p + 75728); float climbPathSpeed;
-    FSeek(p + 75732); float pathSpeed;
-    FSeek(p + 75736); float ringSupplyPathSpeed;
-    FSeek(p + 75740); float sideDistance;
-    FSeek(p + 75744); float shootEndTime;
-    FSeek(p + 75748); sint32 staggerPoint;
-    FSeek(p + 75752); sint32 staggerPointRage;
-    FSeek(p + 75756); float staggerTime;
-    FSeek(p + 75760); float biteParriedTime;
-    FSeek(p + 75764); float scratchParriedTime;
-    FSeek(p + 75768); sint32 knockBackStaggerCount;
-    FSeek(p + 75772); sint32 knockBackPoint;
-    FSeek(p + 75776); float knockBackTime;
-    FSeek(p + 75780); float hardStunTime;
-    FSeek(p + 75784); float cyloopBindTime;
-    FSeek(p + 75788); float cyloopBind2Time;
-    FSeek(p + 75792); float cyloopEscapeHpRatio;
-    FSeek(p + 75796); float cyloopEscapeTime;
-    FSeek(p + 75800); float fallDeadHeight;
-    FSeek(p + 75804); sint32 specialAttackDamage;
-    FSeek(p + 75808); sint32 qte1Damage;
-    FSeek(p + 75816); cstring accessNodeNames[16]<optimize=false>;
-    FSeek(p + 76080); BossDragonHitBoxParam hitBoxes[32]<optimize=false>;
-    FSeek(p + 79152); BossDragonHurtBoxParam hurtBoxes[32]<optimize=false>;
-    FSeek(p + 83760); BossDragonScratchParam scratch;
-    FSeek(p + 83768); BossDragonReflectShotParam reflect;
-    FSeek(p + 83808); BossDragonShotParam shot;
-    FSeek(p + 83840); BossDragonSpiralShotParam spiral;
-    FSeek(p + 83880); BossDragonSpiralShotParam spiralAlternate;
-    FSeek(p + 83920); BossDragonSpiralShotParam spiralVertical;
-    FSeek(p + 83960); BossDragonSplashShotParam splash;
-    FSeek(p + 84004); BossDragonHomingLaserParam homingLaser;
-    FSeek(p + 84048); BossDragonHomingMissileParam homingMissile;
-    FSeek(p + 84088); BossDragonRippleLaserParam rippleLaser;
-    FSeek(p + 84136); BossDragonRippleLaserRageParam rippleLaserRage;
-    FSeek(p + 84192); BossDragonRippleLaserDummyParam rippleLaserDummy;
-    FSeek(p + 84232); BossDragonWaveParam wave;
-    FSeek(p + 84272); BossDragonLaserParam laserWinder;
-    FSeek(p + 84308); BossDragonLaserParam randomLaser;
-    FSeek(p + 84344); BossDragonCounterLaserParam counterLaser;
-    FSeek(p + 84368); BossDragonRingSupplyParam ringSupply;
-    FSeek(p + 84432); float damageRates[4]<optimize=false>;
-    FSeek(p + 84448); BossDragonLayoutParam layouts[46]<optimize=false>;
-    FSeek(p + 88128); BossDragonCameraParam cameras[47]<optimize=false>;
-    FSeek(p + 93392); BossDragonMoveParam swapMove;
-    FSeek(p + 93664); BossDragonRoadParam road;
-    FSeek(p + 94368); BossDragonLaunchParam launch;
-    FSeek(p + 94528); BossDragonQuickStepParam quickStep;
-    FSeek(p + 94540); BossDragonChaseParam chase;
-    FSeek(p + 94596); BossDragonMissileParam missile;
-    FSeek(p + 95356); BossDragonSequence seq[16]<optimize=false>;
-    FSeek(p + 95372); BossDragonSequence seq2[16]<optimize=false>;
-    FSeek(p + 95388); BossDragonInterruptParam interrupts[8]<optimize=false>;
-    FSeek(p + 95452); BossDragonCyloopBindParam cyloopBind;
-    FSeek(p + 95468); BossDragonParryParam parry[4]<optimize=false>;
-    FSeek(p + 95596); BossDragonAttackSignParam attackSign;
-    FSeek(p + 95620); BossDragonNotifierParam notifier;
+    FSeek(p + 75712); float cruisePathSpeed<comment="島上空巡回パス速度">;
+    FSeek(p + 75716); float patrolPathSpeed<comment="ボスの巣巡回パス速度">;
+    FSeek(p + 75720); float approachPathSpeedMin<comment="ボスの巣接近パス速度[最低]">;
+    FSeek(p + 75724); float approachPathSpeedMax<comment="ボスの巣接近パス速度[最高]">;
+    FSeek(p + 75728); float climbPathSpeed<comment="登頂パス速度">;
+    FSeek(p + 75732); float pathSpeed<comment="戦闘パス速度">;
+    FSeek(p + 75736); float ringSupplyPathSpeed<comment="リング回収パス速度">;
+    FSeek(p + 75740); float sideDistance<comment="側面時の距離">;
+    FSeek(p + 75744); float shootEndTime<comment="砲撃終了時の待ち時間">;
+    FSeek(p + 75748); sint32 staggerPoint<comment="よろけ耐久値">;
+    FSeek(p + 75752); sint32 staggerPointRage<comment="[発狂]よろけ耐久値">;
+    FSeek(p + 75756); float staggerTime<comment="よろけ時間">;
+    FSeek(p + 75760); float biteParriedTime<comment="噛みつきパリィ後の時間">;
+    FSeek(p + 75764); float scratchParriedTime<comment="引っかきパリィ後の時間">;
+    FSeek(p + 75768); sint32 knockBackStaggerCount<comment="ノックバックに至る怯み回数">;
+    FSeek(p + 75772); sint32 knockBackPoint<comment="ノックバック耐久値">;
+    FSeek(p + 75776); float knockBackTime<comment="ノックバック時間">;
+    FSeek(p + 75780); float hardStunTime<comment="ピヨり時間">;
+    FSeek(p + 75784); float cyloopBindTime<comment="サイループの拘束時間">;
+    FSeek(p + 75788); float cyloopBind2Time<comment="サイループ第二段階の拘束時間">;
+    FSeek(p + 75792); float cyloopEscapeHpRatio<comment="サイループ脱出HP割合">;
+    FSeek(p + 75796); float cyloopEscapeTime<comment="サイループの脱出時間">;
+    FSeek(p + 75800); float fallDeadHeight<comment="落下死する相対高度">;
+    FSeek(p + 75804); sint32 specialAttackDamage<comment="必殺技で受けるダメージ">;
+    FSeek(p + 75808); sint32 qte1Damage<comment="QTE1で受けるダメージ">;
+    FSeek(p + 75816); cstring accessNodeNames[16]<comment="巡回時のアクセスノード名",optimize=false>;
+    FSeek(p + 76080); BossDragonHitBoxParam hitBoxes[32]<comment="攻撃判定",optimize=false>;
+    FSeek(p + 79152); BossDragonHurtBoxParam hurtBoxes[32]<comment="喰らい判定",optimize=false>;
+    FSeek(p + 83760); BossDragonScratchParam scratch<comment="引っかき">;
+    FSeek(p + 83768); BossDragonReflectShotParam reflect<comment="パリィ可能弾">;
+    FSeek(p + 83808); BossDragonShotParam shot<comment="射撃">;
+    FSeek(p + 83840); BossDragonSpiralShotParam spiral<comment="螺旋射撃">;
+    FSeek(p + 83880); BossDragonSpiralShotParam spiralAlternate<comment="交互螺旋射撃">;
+    FSeek(p + 83920); BossDragonSpiralShotParam spiralVertical<comment="上下螺旋射撃">;
+    FSeek(p + 83960); BossDragonSplashShotParam splash<comment="噴水射撃">;
+    FSeek(p + 84004); BossDragonHomingLaserParam homingLaser<comment="ホーミングレーザー">;
+    FSeek(p + 84048); BossDragonHomingMissileParam homingMissile<comment="ホーミングミサイル">;
+    FSeek(p + 84088); BossDragonRippleLaserParam rippleLaser<comment="リップルレーザー">;
+    FSeek(p + 84136); BossDragonRippleLaserRageParam rippleLaserRage<comment="全方位リップルレーザー">;
+    FSeek(p + 84192); BossDragonRippleLaserDummyParam rippleLaserDummy<comment="発狂後賑やかしリップルレーザー">;
+    FSeek(p + 84232); BossDragonWaveParam wave<comment="衝撃波">;
+    FSeek(p + 84272); BossDragonLaserParam laserWinder<comment="レーザーワインダー">;
+    FSeek(p + 84308); BossDragonLaserParam randomLaser<comment="ランダムレーザー">;
+    FSeek(p + 84344); BossDragonCounterLaserParam counterLaser<comment="カウンターレーザー">;
+    FSeek(p + 84368); BossDragonRingSupplyParam ringSupply<comment="リング回収">;
+    FSeek(p + 84432); float damageRates[4]<comment="ダメージ倍率",optimize=false>;
+    FSeek(p + 84448); BossDragonLayoutParam layouts[46]<comment="位置関係",optimize=false>;
+    FSeek(p + 88128); BossDragonCameraParam cameras[47]<comment="カメラ設定",optimize=false>;
+    FSeek(p + 93392); BossDragonMoveParam swapMove<comment="左右入れ替えの移動データ">;
+    FSeek(p + 93664); BossDragonRoadParam road<comment="オーラロード">;
+    FSeek(p + 94368); BossDragonLaunchParam launch<comment="オーラロードから頭部への射出">;
+    FSeek(p + 94528); BossDragonQuickStepParam quickStep<comment="クイックステップ">;
+    FSeek(p + 94540); BossDragonChaseParam chase<comment="チェイス">;
+    FSeek(p + 94596); BossDragonMissileParam missile<comment="チェイス中のミサイル">;
+    FSeek(p + 95356); BossDragonSequence seq[16]<comment="シーケンス",optimize=false>;
+    FSeek(p + 95372); BossDragonSequence seq2[16]<comment="発狂シーケンス",optimize=false>;
+    FSeek(p + 95388); BossDragonInterruptParam interrupts[8]<comment="割り込み設定",optimize=false>;
+    FSeek(p + 95452); BossDragonCyloopBindParam cyloopBind<comment="Cyloop拘束設定">;
+    FSeek(p + 95468); BossDragonParryParam parry[4]<comment="パリィ演出設定",optimize=false>;
+    FSeek(p + 95596); BossDragonAttackSignParam attackSign<comment="攻撃予兆設定">;
+    FSeek(p + 95620); BossDragonNotifierParam notifier<comment="通知設定">;
 
     FSeek(p + 95632);
 } BossDragonConfig;

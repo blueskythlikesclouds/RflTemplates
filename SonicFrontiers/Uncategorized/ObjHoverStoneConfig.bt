@@ -4,9 +4,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float hoverUpSpeed;
-    FSeek(p + 4); float fallSpeed;
-    FSeek(p + 8); float homingAttackBounce;
+    FSeek(p + 0); float hoverUpSpeed<comment="上昇平均速度(m/s)">;
+    FSeek(p + 4); float fallSpeed<comment="落下速度(m/s)">;
+    FSeek(p + 8); float homingAttackBounce<comment="HAのバウンドの強さ">;
 
     FSeek(p + 12);
 } ObjHoverStoneConfig;

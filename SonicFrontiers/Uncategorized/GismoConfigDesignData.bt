@@ -18,9 +18,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring modelName;
-    FSeek(p + 16); cstring skeltonName;
-    FSeek(p + 32); bool noInstance;
+    FSeek(p + 0);  cstring modelName<comment="モデル名">;
+    FSeek(p + 16); cstring skeltonName<comment="スケルトン名">;
+    FSeek(p + 32); bool noInstance<comment="インスタンス描画適用しない">;
 
     FSeek(p + 40);
 } GismoBasicParam;
@@ -56,14 +56,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  ShapeType shape;
-    FSeek(p + 1);  BasePoint basePoint;
-    FSeek(p + 4);  float width;
-    FSeek(p + 8);  float height;
-    FSeek(p + 12); float depth;
-    FSeek(p + 16); cstring meshName;
-    FSeek(p + 32); vector3 shapeOffset;
-    FSeek(p + 48); float shapeSizeOffset;
+    FSeek(p + 0);  ShapeType shape<comment="コリジョン形状">;
+    FSeek(p + 1);  BasePoint basePoint<comment="基点">;
+    FSeek(p + 4);  float width<comment="幅/直径">;
+    FSeek(p + 8);  float height<comment="高さ">;
+    FSeek(p + 12); float depth<comment="奥行き">;
+    FSeek(p + 16); cstring meshName<comment="MESHコリジョン名">;
+    FSeek(p + 32); vector3 shapeOffset<comment="コリジョン位置オフセット">;
+    FSeek(p + 48); float shapeSizeOffset<comment="イベントコリジョンサイズオフセット">;
 
     FSeek(p + 64);
 } GismoCollision;
@@ -87,13 +87,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float mass;
-    FSeek(p + 4);  float friction;
-    FSeek(p + 8);  float gravityFactor;
-    FSeek(p + 12); float restitution;
-    FSeek(p + 16); float linearDamping;
-    FSeek(p + 20); float angularDamping;
-    FSeek(p + 24); float maxLinearVelocity;
+    FSeek(p + 0);  float mass<comment="質量">;
+    FSeek(p + 4);  float friction<comment="摩擦係数">;
+    FSeek(p + 8);  float gravityFactor<comment="重力スケーリング">;
+    FSeek(p + 12); float restitution<comment="反発係数">;
+    FSeek(p + 16); float linearDamping<comment="速度減衰率">;
+    FSeek(p + 20); float angularDamping<comment="角速度減衰率">;
+    FSeek(p + 24); float maxLinearVelocity<comment="直線速度の上限">;
 
     FSeek(p + 28);
 } PhysicsParam;
@@ -102,9 +102,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); RigidBodyType rigidBodyType;
-    FSeek(p + 1); RigidBodyMaterial rigidBodyMaterial;
-    FSeek(p + 4); PhysicsParam physicsParam;
+    FSeek(p + 0); RigidBodyType rigidBodyType<comment="剛体">;
+    FSeek(p + 1); RigidBodyMaterial rigidBodyMaterial<comment="剛体のマテリアル">;
+    FSeek(p + 4); PhysicsParam physicsParam<comment="物理挙動パラメータ">;
 
     FSeek(p + 32);
 } GismoRegidBody;
@@ -113,9 +113,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring motionName;
-    FSeek(p + 16); bool syncFrame;
-    FSeek(p + 17); bool stopEndFrame;
+    FSeek(p + 0);  cstring motionName<comment="モーション名">;
+    FSeek(p + 16); bool syncFrame<comment="フレーム同期">;
+    FSeek(p + 17); bool stopEndFrame<comment="ループ再生停止時、最終フレームで停止する">;
 
     FSeek(p + 24);
 } MotionData;
@@ -124,9 +124,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring texSrtAnimName[3]<optimize=false>;
-    FSeek(p + 48); cstring texPatAnimName[3]<optimize=false>;
-    FSeek(p + 96); cstring matAnimName[3]<optimize=false>;
+    FSeek(p + 0);  cstring texSrtAnimName[3]<comment="uv-anim",optimize=false>;
+    FSeek(p + 48); cstring texPatAnimName[3]<comment="pt-anim",optimize=false>;
+    FSeek(p + 96); cstring matAnimName[3]<comment="mat-anim",optimize=false>;
 
     FSeek(p + 144);
 } MirageAnimData;
@@ -144,11 +144,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  MotionType motionType;
-    FSeek(p + 16); vector3 axis;
-    FSeek(p + 32); float power;
-    FSeek(p + 36); float speedScale;
-    FSeek(p + 40); float time;
+    FSeek(p + 0);  MotionType motionType<comment="モーションタイプ">;
+    FSeek(p + 16); vector3 axis<comment="軸">;
+    FSeek(p + 32); float power<comment="力">;
+    FSeek(p + 36); float speedScale<comment="速度スケール">;
+    FSeek(p + 40); float time<comment="時間">;
 
     FSeek(p + 48);
 } ProgramMotionData;
@@ -157,8 +157,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring effectName;
-    FSeek(p + 16); bool linkMotionStop;
+    FSeek(p + 0);  cstring effectName<comment="エフェクト名">;
+    FSeek(p + 16); bool linkMotionStop<comment="[上級者向け]モーションの停止に連動する">;
 
     FSeek(p + 24);
 } EffectData;
@@ -167,7 +167,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); cstring cueName;
+    FSeek(p + 0); cstring cueName<comment="サウンド名">;
 
     FSeek(p + 16);
 } SoundData;
@@ -184,12 +184,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float gravity;
-    FSeek(p + 4);  float lifeTime;
-    FSeek(p + 8);  float mass;
-    FSeek(p + 12); float friction;
-    FSeek(p + 16); float explosionScale;
-    FSeek(p + 20); float impulseScale;
+    FSeek(p + 0);  float gravity<comment="重力加速度">;
+    FSeek(p + 4);  float lifeTime<comment="生存時間">;
+    FSeek(p + 8);  float mass<comment="質量">;
+    FSeek(p + 12); float friction<comment="摩擦係数">;
+    FSeek(p + 16); float explosionScale<comment="拡散力の倍率">;
+    FSeek(p + 20); float impulseScale<comment="外部から受けた力の倍率">;
 
     FSeek(p + 24);
 } DebrisData;
@@ -198,10 +198,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  KillType killType;
-    FSeek(p + 4);  float killTime;
-    FSeek(p + 8);  cstring breakMotionName;
-    FSeek(p + 24); DebrisData debrisData;
+    FSeek(p + 0);  KillType killType<comment="挙動タイプ">;
+    FSeek(p + 4);  float killTime<comment="KILL時間">;
+    FSeek(p + 8);  cstring breakMotionName<comment="壊れモーション名">;
+    FSeek(p + 24); DebrisData debrisData<comment="破片パラメータ">;
 
     FSeek(p + 48);
 } KillData;
@@ -210,12 +210,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MotionData motionData;
-    FSeek(p + 24);  MirageAnimData mirageAnimData;
-    FSeek(p + 176); ProgramMotionData programMotionData;
-    FSeek(p + 224); EffectData effectData;
-    FSeek(p + 248); SoundData soundData;
-    FSeek(p + 264); KillData killData;
+    FSeek(p + 0);   MotionData motionData<comment="モーション">;
+    FSeek(p + 24);  MirageAnimData mirageAnimData<comment="Mirageアニメーション">;
+    FSeek(p + 176); ProgramMotionData programMotionData<comment="プログラム制御モーション">;
+    FSeek(p + 224); EffectData effectData<comment="エフェクト">;
+    FSeek(p + 248); SoundData soundData<comment="サウンド">;
+    FSeek(p + 264); KillData killData<comment="寿命管理">;
 
     FSeek(p + 320);
 } ReactionData;
@@ -224,18 +224,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    float rangeIn;
-    FSeek(p + 4);    float rangeDistance;
-    FSeek(p + 8);    GismoBasicParam basicParam;
-    FSeek(p + 48);   GismoCollision collision;
-    FSeek(p + 112);  GismoRegidBody rigidBody;
-    FSeek(p + 144);  ReactionData reactionIdle;
-    FSeek(p + 464);  ReactionData reactionEnter;
-    FSeek(p + 784);  ReactionData reactionLeave;
-    FSeek(p + 1104); ReactionData reactionStay;
-    FSeek(p + 1424); ReactionData reactionStayMove;
-    FSeek(p + 1744); ReactionData reactionDamage;
-    FSeek(p + 2064); bool ignoreMeteorShowerAndRespawnOnReenterRange;
+    FSeek(p + 0);    float rangeIn<comment="range_in">;
+    FSeek(p + 4);    float rangeDistance<comment="range_distance">;
+    FSeek(p + 8);    GismoBasicParam basicParam<comment="基本設定">;
+    FSeek(p + 48);   GismoCollision collision<comment="コリジョン">;
+    FSeek(p + 112);  GismoRegidBody rigidBody<comment="剛体">;
+    FSeek(p + 144);  ReactionData reactionIdle<comment="[何もしていない時,常時再生]">;
+    FSeek(p + 464);  ReactionData reactionEnter<comment="[コリジョン接触時]">;
+    FSeek(p + 784);  ReactionData reactionLeave<comment="[コリジョン離脱時]">;
+    FSeek(p + 1104); ReactionData reactionStay<comment="[コリジョン接触中]">;
+    FSeek(p + 1424); ReactionData reactionStayMove<comment="[コリジョン接触中にプレイヤーが動いた時]">;
+    FSeek(p + 1744); ReactionData reactionDamage<comment="[ダメージが加わった時]">;
+    FSeek(p + 2064); bool ignoreMeteorShowerAndRespawnOnReenterRange<comment="流星雨の影響を無視し、再レンジインでリスポーンする">;
 
     FSeek(p + 2080);
 } GismoConfigDesignData;

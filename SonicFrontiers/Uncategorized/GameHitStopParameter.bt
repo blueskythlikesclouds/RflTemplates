@@ -18,16 +18,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); float scale;
-    FSeek(p + 20); float time;
-    FSeek(p + 24); float easeOutTime;
-    FSeek(p + 28); float delayTime;
-    FSeek(p + 32); bool layerPlayer;
-    FSeek(p + 33); bool layerEnemy;
-    FSeek(p + 34); bool layerDamagedEnemy;
-    FSeek(p + 35); bool layerCamera;
-    FSeek(p + 36); bool layerOthers;
+    FSeek(p + 0);  cstring name<comment="設定名">;
+    FSeek(p + 16); float scale<comment="スケール">;
+    FSeek(p + 20); float time<comment="時間">;
+    FSeek(p + 24); float easeOutTime<comment="終了補間時間">;
+    FSeek(p + 28); float delayTime<comment="発生遅延時間">;
+    FSeek(p + 32); bool layerPlayer<comment="レイヤー/プレイヤー">;
+    FSeek(p + 33); bool layerEnemy<comment="レイヤー/エネミー">;
+    FSeek(p + 34); bool layerDamagedEnemy<comment="レイヤー/被ダメージエネミー">;
+    FSeek(p + 35); bool layerCamera<comment="レイヤー/カメラ">;
+    FSeek(p + 36); bool layerOthers<comment="レイヤー/上記以外すべて">;
 
     FSeek(p + 40);
 } GameHitStopParameterData;
@@ -36,7 +36,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); GameHitStopParameterData data[64]<optimize=false>;
+    FSeek(p + 0); GameHitStopParameterData data[64]<comment="設定",optimize=false>;
 
     FSeek(p + 2560);
 } GameHitStopParameter;

@@ -21,10 +21,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); EventType type;
-    FSeek(p + 20); float inTime;
-    FSeek(p + 24); float outTime;
+    FSeek(p + 0);  cstring name<comment="イベント名">;
+    FSeek(p + 16); EventType type<comment="イベントタイプ">;
+    FSeek(p + 20); float inTime<comment="開始時間">;
+    FSeek(p + 24); float outTime<comment="終了時間[インターバル用]">;
 
     FSeek(p + 32);
 } EventData;
@@ -59,9 +59,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 position;
-    FSeek(p + 16); quaternion rotation;
-    FSeek(p + 32); float time;
+    FSeek(p + 0);  vector3 position<comment="ローカル座標">;
+    FSeek(p + 16); quaternion rotation<comment="ローカル姿勢">;
+    FSeek(p + 32); float time<comment="アニメーション時間">;
 
     FSeek(p + 48);
 } NodeInfoInAnim;
@@ -82,8 +82,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); array_NodeInfoInAnim nodeInfos;
+    FSeek(p + 0);  cstring name<comment="ノード名">;
+    FSeek(p + 16); array_NodeInfoInAnim nodeInfos<comment="アニメーション中のノード情報">;
 
     FSeek(p + 48);
 } NodeData;
@@ -104,9 +104,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 position;
-    FSeek(p + 16); quaternion rotation;
-    FSeek(p + 32); float time;
+    FSeek(p + 0);  vector3 position<comment="ローカル移動値[前回からの差分]">;
+    FSeek(p + 16); quaternion rotation<comment="ローカル回転値[前回からの差分]">;
+    FSeek(p + 32); float time<comment="アニメーション時間">;
 
     FSeek(p + 48);
 } DeltaMotionInfoInAnim;
@@ -127,7 +127,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); array_DeltaMotionInfoInAnim deltaInfos;
+    FSeek(p + 0); array_DeltaMotionInfoInAnim deltaInfos<comment="アニメーション中のデルタモーション情報">;
 
     FSeek(p + 32);
 } DeltaMotionData;
@@ -136,11 +136,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   cstring name;
-    FSeek(p + 16);  array_EventData eventDatas;
-    FSeek(p + 48);  array_NodeData nodeDatas;
-    FSeek(p + 80);  DeltaMotionData deltaMotionData;
-    FSeek(p + 112); float maxTime;
+    FSeek(p + 0);   cstring name<comment="アニメーション名">;
+    FSeek(p + 16);  array_EventData eventDatas<comment="イベント情報">;
+    FSeek(p + 48);  array_NodeData nodeDatas<comment="ノード情報">;
+    FSeek(p + 80);  DeltaMotionData deltaMotionData<comment="デルタモーション情報">;
+    FSeek(p + 112); float maxTime<comment="アニメーション再生時間">;
 
     FSeek(p + 120);
 } AnimData;
@@ -161,7 +161,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); array_AnimData animDatas;
+    FSeek(p + 0); array_AnimData animDatas<comment="アニメーション情報">;
 
     FSeek(p + 32);
 } RecordData;

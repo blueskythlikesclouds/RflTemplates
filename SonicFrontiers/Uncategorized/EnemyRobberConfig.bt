@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -19,15 +19,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  RingParameter ringParam;
-    FSeek(p + 28); float eyesightDistance;
-    FSeek(p + 32); float idlingSpeed;
-    FSeek(p + 36); float chasingSpeed;
-    FSeek(p + 40); float escapeSpeed;
-    FSeek(p + 44); float escapeSpeedPlayerOnPath;
-    FSeek(p + 48); float onBoardSpeed;
-    FSeek(p + 52); float restTime;
-    FSeek(p + 56); float railMaxLength;
+    FSeek(p + 0);  RingParameter ringParam<comment="ドロップリング">;
+    FSeek(p + 28); float eyesightDistance<comment="視野距離">;
+    FSeek(p + 32); float idlingSpeed<comment="うろうろ速度">;
+    FSeek(p + 36); float chasingSpeed<comment="追っかけ速度">;
+    FSeek(p + 40); float escapeSpeed<comment="逃げ回る速度">;
+    FSeek(p + 44); float escapeSpeedPlayerOnPath<comment="逃げ回る速度[プレイヤーグラインド中]">;
+    FSeek(p + 48); float onBoardSpeed<comment="プレイヤー乗っている際の速度">;
+    FSeek(p + 52); float restTime<comment="停止時間">;
+    FSeek(p + 56); float railMaxLength<comment="レール最大長さ">;
 
     FSeek(p + 60);
 } EnemyRobberCommonConfig;
@@ -38,10 +38,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } RobbberCommonLevelConfig;
@@ -50,8 +50,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); RobbberCommonLevelConfig common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); RobbberCommonLevelConfig common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyRobberLevelConfig;
@@ -60,8 +60,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  EnemyRobberCommonConfig commonParams;
-    FSeek(p + 60); EnemyRobberLevelConfig levelParams[5]<optimize=false>;
+    FSeek(p + 0);  EnemyRobberCommonConfig commonParams<comment="共通パラメータ">;
+    FSeek(p + 60); EnemyRobberLevelConfig levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
 
     FSeek(p + 140);
 } EnemyRobberConfig;

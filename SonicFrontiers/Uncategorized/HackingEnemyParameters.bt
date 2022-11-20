@@ -4,12 +4,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint16 hpS;
-    FSeek(p + 2);  uint16 hpM;
-    FSeek(p + 4);  uint16 hpL;
-    FSeek(p + 8);  float colliderRadius;
-    FSeek(p + 12); float colliderHeight;
-    FSeek(p + 16); float modelScale;
+    FSeek(p + 0);  uint16 hpS<comment="HP[小]">;
+    FSeek(p + 2);  uint16 hpM<comment="HP[中]">;
+    FSeek(p + 4);  uint16 hpL<comment="HP[大]">;
+    FSeek(p + 8);  float colliderRadius<comment="コリジョン半径">;
+    FSeek(p + 12); float colliderHeight<comment="コリジョン高さ">;
+    FSeek(p + 16); float modelScale<comment="モデルスケール">;
 
     FSeek(p + 20);
 } HackingEnemyParameterNormal;
@@ -18,9 +18,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float colliderRadius;
-    FSeek(p + 4); float colliderHeight;
-    FSeek(p + 8); float modelScale;
+    FSeek(p + 0); float colliderRadius<comment="コリジョン半径">;
+    FSeek(p + 4); float colliderHeight<comment="コリジョン高さ">;
+    FSeek(p + 8); float modelScale<comment="モデルスケール">;
 
     FSeek(p + 12);
 } HackingEnemyParameterCore;
@@ -29,8 +29,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  HackingEnemyParameterNormal normalEnemyParam;
-    FSeek(p + 20); HackingEnemyParameterCore coreEnemyParam;
+    FSeek(p + 0);  HackingEnemyParameterNormal normalEnemyParam<comment="ザコ敵">;
+    FSeek(p + 20); HackingEnemyParameterCore coreEnemyParam<comment="コア敵">;
 
     FSeek(p + 32);
 } HackingEnemyParameters;

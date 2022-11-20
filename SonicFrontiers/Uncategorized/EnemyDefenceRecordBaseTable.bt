@@ -6,7 +6,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 no;
+    FSeek(p + 0); uint8 no<comment="レコード番号">;
 
     FSeek(p + 1);
 } Record;
@@ -25,12 +25,12 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  Record record;
-    FSeek(p + 8);  cstring name;
-    FSeek(p + 24); float baseRate;
-    FSeek(p + 28); float slashRate;
-    FSeek(p + 32); float quickRate;
-    FSeek(p + 36); float stunRate;
-    FSeek(p + 40); float staggerRate;
+    FSeek(p + 8);  cstring name<comment="キー名">;
+    FSeek(p + 24); float baseRate<comment="通常倍率">;
+    FSeek(p + 28); float slashRate<comment="サイループ倍率">;
+    FSeek(p + 32); float quickRate<comment="クイックサイループ倍率">;
+    FSeek(p + 36); float stunRate<comment="スタン倍率">;
+    FSeek(p + 40); float staggerRate<comment="怯み倍率">;
 
     FSeek(p + 48);
 } EnemyDefenceRecord;
@@ -39,7 +39,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); EnemyDefenceRecord data[64]<optimize=false>;
+    FSeek(p + 0); EnemyDefenceRecord data[64]<comment="data",optimize=false>;
 
     FSeek(p + 3072);
 } EnemyDefenceRecordBaseTable;

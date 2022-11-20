@@ -21,9 +21,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  DisplayType display;
-    FSeek(p + 8);  cstring label;
-    FSeek(p + 24); float waitTime;
+    FSeek(p + 0);  DisplayType display<comment="表示タイプ">;
+    FSeek(p + 8);  cstring label<comment="テキストラベル">;
+    FSeek(p + 24); float waitTime<comment="ボイス終了後の待ち時間">;
 
     FSeek(p + 32);
 } LabelData;
@@ -37,8 +37,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   LabelData labels[20]<optimize=false>;
-    FSeek(p + 640); bool isForcePlay;
+    FSeek(p + 0);   LabelData labels[20]<comment="会話",optimize=false>;
+    FSeek(p + 640); bool isForcePlay<comment="字幕OFFでも表示するか">;
 
     FSeek(p + 648);
 } Discussion;
@@ -47,7 +47,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); Discussion discussions[10]<optimize=false>;
+    FSeek(p + 0); Discussion discussions[10]<comment="会話データ",optimize=false>;
 
     FSeek(p + 6480);
 } CaptionParameter;

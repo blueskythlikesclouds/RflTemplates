@@ -6,8 +6,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 recordNo;
-    FSeek(p + 1); uint8 numRecords;
+    FSeek(p + 0); uint8 recordNo<comment="開始レコード番号">;
+    FSeek(p + 1); uint8 numRecords<comment="レコード数">;
 
     FSeek(p + 2);
 } AddDatabaseInfo;
@@ -25,8 +25,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); AddDatabaseInfo databases[2]<optimize=false>;
-    FSeek(p + 8); cstring stagedata;
+    FSeek(p + 0); AddDatabaseInfo databases[2]<comment="databases",optimize=false>;
+    FSeek(p + 8); cstring stagedata<comment="ステージデータ">;
 
     FSeek(p + 24);
 } ContentParameter;

@@ -4,7 +4,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float radius;
+    FSeek(p + 0); float radius<comment="スフィアスコリジョン半径">;
 
     FSeek(p + 4);
 } ObjMowingGrassParameter;
@@ -20,15 +20,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float modelScale;
-    FSeek(p + 4);  float capsuleRadiusSprouts;
-    FSeek(p + 8);  float capsuleRadiusFlower;
-    FSeek(p + 12); float capsuleHeightSprouts;
-    FSeek(p + 16); float capsuleHeightFlower;
-    FSeek(p + 32); vector3 effectOffsetSprouts;
-    FSeek(p + 48); vector3 effectOffsetFlower;
-    FSeek(p + 64); float beeAttractDist;
-    FSeek(p + 68); float efficacyTimeFlower;
+    FSeek(p + 0);  float modelScale<comment="モデルスケール">;
+    FSeek(p + 4);  float capsuleRadiusSprouts<comment="コリジョン半径（苗）">;
+    FSeek(p + 8);  float capsuleRadiusFlower<comment="コリジョン半径（花）">;
+    FSeek(p + 12); float capsuleHeightSprouts<comment="コリジョン高さ（苗）">;
+    FSeek(p + 16); float capsuleHeightFlower<comment="コリジョン高さ（花）">;
+    FSeek(p + 32); vector3 effectOffsetSprouts<comment="エフェクトオフセット（苗）">;
+    FSeek(p + 48); vector3 effectOffsetFlower<comment="エフェクトオフセット（花）">;
+    FSeek(p + 64); float beeAttractDist<comment="ハチを引き寄せる距離">;
+    FSeek(p + 68); float efficacyTimeFlower<comment="ハチを引き寄せる時間(秒)">;
 
     FSeek(p + 80);
 } ObjBeeFlowerParameter;
@@ -37,17 +37,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 targetOffset;
-    FSeek(p + 16); vector3 targetOffsetFlower;
-    FSeek(p + 32); float collRadius;
-    FSeek(p + 36); float modelScale;
-    FSeek(p + 40); float beeMoveSpeed;
-    FSeek(p + 44); float reflectionAngle;
-    FSeek(p + 48); float coefAverage;
-    FSeek(p + 52); float coefCenter;
-    FSeek(p + 56); float coefRepulse;
-    FSeek(p + 60); float waitTimeAfterAttack;
-    FSeek(p + 64); float waitTimeAfterFlower;
+    FSeek(p + 0);  vector3 targetOffset<comment="目標点のオフセット">;
+    FSeek(p + 16); vector3 targetOffsetFlower<comment="目標点のオフセット(花)">;
+    FSeek(p + 32); float collRadius<comment="攻撃コリジョンの半径">;
+    FSeek(p + 36); float modelScale<comment="ハチ大きさ">;
+    FSeek(p + 40); float beeMoveSpeed<comment="ハチ移動速度">;
+    FSeek(p + 44); float reflectionAngle<comment="壁から反射する角度(度)">;
+    FSeek(p + 48); float coefAverage<comment="群れ移動係数">;
+    FSeek(p + 52); float coefCenter<comment="目的地移動係数">;
+    FSeek(p + 56); float coefRepulse<comment="反発移動係数">;
+    FSeek(p + 60); float waitTimeAfterAttack<comment="攻撃後の待機時間(秒)">;
+    FSeek(p + 64); float waitTimeAfterFlower<comment="花にいる待機時間(秒)">;
 
     FSeek(p + 80);
 } ObjBeeSwarmParameter;
@@ -56,9 +56,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  ObjMowingGrassParameter grassParam;
-    FSeek(p + 16); ObjBeeFlowerParameter beeFlowerParam;
-    FSeek(p + 96); ObjBeeSwarmParameter beeSwarm;
+    FSeek(p + 0);  ObjMowingGrassParameter grassParam<comment="草刈りコリジョン">;
+    FSeek(p + 16); ObjBeeFlowerParameter beeFlowerParam<comment="ハチの集まる花">;
+    FSeek(p + 96); ObjBeeSwarmParameter beeSwarm<comment="ハチ">;
 
     FSeek(p + 176);
 } ObjMowingParameterElement;
@@ -67,7 +67,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); ObjMowingParameterElement element[3]<optimize=false>;
+    FSeek(p + 0); ObjMowingParameterElement element[3]<comment="草刈り",optimize=false>;
 
     FSeek(p + 528);
 } ObjMowingParameter;

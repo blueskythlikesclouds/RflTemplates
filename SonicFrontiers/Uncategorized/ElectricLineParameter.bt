@@ -6,8 +6,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 challengeNo0;
-    FSeek(p + 4); sint32 challengeNo1;
+    FSeek(p + 0); sint32 challengeNo0<comment="接続チャレンジ番号/始端">;
+    FSeek(p + 4); sint32 challengeNo1<comment="接続チャレンジ番号/終端">;
 
     FSeek(p + 8);
 } ElectricLineConnectData;
@@ -16,9 +16,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 challengeNo0;
-    FSeek(p + 4); sint32 challengeNo1;
-    FSeek(p + 8); ElectricLineConnectData data[3]<optimize=false>;
+    FSeek(p + 0); sint32 challengeNo0<comment="接続チャレンジ番号/始端">;
+    FSeek(p + 4); sint32 challengeNo1<comment="接続チャレンジ番号/終端">;
+    FSeek(p + 8); ElectricLineConnectData data[3]<comment="接続チャレンジ番号リスト",optimize=false>;
 
     FSeek(p + 32);
 } ElectricLineConnectParameter;
@@ -27,7 +27,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); ElectricLineConnectParameter connect[200]<optimize=false>;
+    FSeek(p + 0); ElectricLineConnectParameter connect[200]<comment="connect",optimize=false>;
 
     FSeek(p + 6400);
 } ElectricLineParameter;

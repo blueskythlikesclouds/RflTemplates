@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } TornadoRingParameter;

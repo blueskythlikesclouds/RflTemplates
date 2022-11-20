@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,14 +25,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  MiniBossCommonConfig commonConfig;
-    FSeek(p + 64); float nonBattleRange;
-    FSeek(p + 68); float miniDamageRange;
-    FSeek(p + 72); float miniComboRange;
-    FSeek(p + 76); float miniOffsetY;
-    FSeek(p + 80); float bodyDamageRange;
-    FSeek(p + 84); float bodyComboRange;
-    FSeek(p + 88); float bodyOffsetY;
+    FSeek(p + 0);  MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64); float nonBattleRange<comment="非戦闘時の索敵範囲">;
+    FSeek(p + 68); float miniDamageRange<comment="各弱点のコリジョン半径">;
+    FSeek(p + 72); float miniComboRange<comment="各弱点のコンボ半径">;
+    FSeek(p + 76); float miniOffsetY<comment="各弱点のYオフセット">;
+    FSeek(p + 80); float bodyDamageRange<comment="ボディ（サイループ反応）のコリジョン半径">;
+    FSeek(p + 84); float bodyComboRange<comment="ボディ（サイループ反応）のコンボ半径">;
+    FSeek(p + 88); float bodyOffsetY<comment="ボディ（サイループ反応）のYオフセット">;
 
     FSeek(p + 96);
 } MiniBossTyrantCommonParam;
@@ -43,16 +43,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -61,8 +61,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossTyrantLevelParam;
@@ -71,7 +71,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } MiniBossTyrantLevelBand;
@@ -80,10 +80,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float speed;
-    FSeek(p + 4);  float time;
-    FSeek(p + 8);  float waitTime;
-    FSeek(p + 12); float rotSpeed;
+    FSeek(p + 0);  float speed<comment="突進スピード">;
+    FSeek(p + 4);  float time<comment="突進時間">;
+    FSeek(p + 8);  float waitTime<comment="待機時間">;
+    FSeek(p + 12); float rotSpeed<comment="追従回転速度">;
 
     FSeek(p + 16);
 } MiniBossTyrantAttackSpinParam;
@@ -92,8 +92,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float speed;
-    FSeek(p + 4); sint32 attackNum;
+    FSeek(p + 0); float speed<comment="突進スピード">;
+    FSeek(p + 4); sint32 attackNum<comment="連続攻撃回数">;
 
     FSeek(p + 8);
 } MiniBossTyrantAttackAirSpinParam;
@@ -102,7 +102,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float time;
+    FSeek(p + 0); float time<comment="継続時間">;
 
     FSeek(p + 4);
 } MiniBossTyrantAttackRouletteParam;
@@ -111,10 +111,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 muzzlePosOffset;
-    FSeek(p + 16); float time;
-    FSeek(p + 20); float rotSpeed;
-    FSeek(p + 24); float waitTime;
+    FSeek(p + 0);  vector3 muzzlePosOffset<comment="発射口の位置オフセット">;
+    FSeek(p + 16); float time<comment="継続時間">;
+    FSeek(p + 20); float rotSpeed<comment="追従回転速度">;
+    FSeek(p + 24); float waitTime<comment="終了後待ち時間">;
 
     FSeek(p + 32);
 } MiniBossTyrantAttackLaserParam;
@@ -140,20 +140,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  BarrageType type;
-    FSeek(p + 8);  cstring damageTag;
-    FSeek(p + 24); float startSpeed;
-    FSeek(p + 28); float decelePower;
-    FSeek(p + 32); float minSpeed;
-    FSeek(p + 36); float lifeTime;
-    FSeek(p + 40); float waitTime;
-    FSeek(p + 44); float lineTime;
-    FSeek(p + 48); float scale;
-    FSeek(p + 52); float hitVelocity;
-    FSeek(p + 56); float parriedSpeed;
-    FSeek(p + 60); sint32 parriedDamage;
-    FSeek(p + 64); float parriedStaggerValue;
-    FSeek(p + 68); float parriedStunValue;
+    FSeek(p + 0);  BarrageType type<comment="弾丸タイプ">;
+    FSeek(p + 8);  cstring damageTag<comment="ダメージ名">;
+    FSeek(p + 24); float startSpeed<comment="初速">;
+    FSeek(p + 28); float decelePower<comment="減速力[秒間]">;
+    FSeek(p + 32); float minSpeed<comment="最低速度">;
+    FSeek(p + 36); float lifeTime<comment="生存時間">;
+    FSeek(p + 40); float waitTime<comment="待機時間">;
+    FSeek(p + 44); float lineTime<comment="直進時間">;
+    FSeek(p + 48); float scale<comment="スケール">;
+    FSeek(p + 52); float hitVelocity<comment="吹き飛び力">;
+    FSeek(p + 56); float parriedSpeed<comment="パリィ跳ね返し弾の弾速">;
+    FSeek(p + 60); sint32 parriedDamage<comment="パリィ跳ね返し弾のダメージ値">;
+    FSeek(p + 64); float parriedStaggerValue<comment="パリィ跳ね返し弾のよろめき値">;
+    FSeek(p + 68); float parriedStunValue<comment="パリィ跳ね返し弾のスタン値">;
 
     FSeek(p + 72);
 } MiniBossTyrantBarrageParam;
@@ -167,17 +167,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); bool isFollowPlayer;
-    FSeek(p + 16); float shotIntarval;
-    FSeek(p + 20); float maxAngle;
-    FSeek(p + 24); float yAngleOffset;
-    FSeek(p + 28); float shotTime;
-    FSeek(p + 32); float addSpeedMax;
-    FSeek(p + 36); float startWaitTime;
-    FSeek(p + 40); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); bool isFollowPlayer<comment="Player追従">;
+    FSeek(p + 16); float shotIntarval<comment="発射間隔[秒]">;
+    FSeek(p + 20); float maxAngle<comment="最大角度[片側]">;
+    FSeek(p + 24); float yAngleOffset<comment="発射角[縦]">;
+    FSeek(p + 28); float shotTime<comment="発射継続時間[秒]">;
+    FSeek(p + 32); float addSpeedMax<comment="最大加速量">;
+    FSeek(p + 36); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 40); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 44);
 } MiniBossTyrantShotgunBullet;
@@ -186,17 +186,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); bool isFollowPlayer;
-    FSeek(p + 16); float shotIntarval;
-    FSeek(p + 20); float maxAngle;
-    FSeek(p + 24); float rotateSpeed;
-    FSeek(p + 28); float rotateAngle;
-    FSeek(p + 32); float barrageAngleDiff;
-    FSeek(p + 36); float startWaitTime;
-    FSeek(p + 40); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); bool isFollowPlayer<comment="Player追従">;
+    FSeek(p + 16); float shotIntarval<comment="発射間隔[角度]">;
+    FSeek(p + 20); float maxAngle<comment="最大角度[片側]">;
+    FSeek(p + 24); float rotateSpeed<comment="回転速度[角度/秒]">;
+    FSeek(p + 28); float rotateAngle<comment="ステート終了までの回転量">;
+    FSeek(p + 32); float barrageAngleDiff<comment="弾丸間の発射角度差">;
+    FSeek(p + 36); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 40); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 44);
 } MiniBossTyrantWinderBullet;
@@ -205,14 +205,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); sint32 num;
-    FSeek(p + 16); float waitTime;
-    FSeek(p + 20); bool isFollowPlayer;
-    FSeek(p + 24); float startWaitTime;
-    FSeek(p + 28); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); sint32 num<comment="弾の数">;
+    FSeek(p + 16); float waitTime<comment="格弾ごとの待ち時間">;
+    FSeek(p + 20); bool isFollowPlayer<comment="Player追従">;
+    FSeek(p + 24); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 28); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 32);
 } MiniBossTyrantLineBullet;
@@ -221,16 +221,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); bool isFollowPlayer;
-    FSeek(p + 16); float waitTime;
-    FSeek(p + 20); float sideAngle;
-    FSeek(p + 24); sint32 arrayNum;
-    FSeek(p + 28); float arrayTime;
-    FSeek(p + 32); float startWaitTime;
-    FSeek(p + 36); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); bool isFollowPlayer<comment="Player追従">;
+    FSeek(p + 16); float waitTime<comment="格弾ごとの待ち時間">;
+    FSeek(p + 20); float sideAngle<comment="両翼の角度">;
+    FSeek(p + 24); sint32 arrayNum<comment="連続回数">;
+    FSeek(p + 28); float arrayTime<comment="連続回数の間隔">;
+    FSeek(p + 32); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 36); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 40);
 } MiniBossTyrantWaveBullet;
@@ -239,16 +239,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); sint32 num;
-    FSeek(p + 16); float speed;
-    FSeek(p + 20); float rotSpeed;
-    FSeek(p + 24); sint32 arrayNum;
-    FSeek(p + 28); float arrayTime;
-    FSeek(p + 32); float startWaitTime;
-    FSeek(p + 36); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); sint32 num<comment="弾の数">;
+    FSeek(p + 16); float speed<comment="弾速">;
+    FSeek(p + 20); float rotSpeed<comment="追従回転速度">;
+    FSeek(p + 24); sint32 arrayNum<comment="連続回数">;
+    FSeek(p + 28); float arrayTime<comment="連続回数の間隔">;
+    FSeek(p + 32); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 36); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 40);
 } MiniBossTyrantAttackCircleBullet;
@@ -257,13 +257,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float airBattleRate;
-    FSeek(p + 4);  float nextRoundRate;
-    FSeek(p + 8);  float airBattleRateSecond;
-    FSeek(p + 12); float chanceTime;
-    FSeek(p + 16); float chanceTimeSecond;
-    FSeek(p + 20); bool isSpin;
-    FSeek(p + 21); bool isSecondAttack;
+    FSeek(p + 0);  float airBattleRate<comment="前半空中戦終了に必要なダメージ割合">;
+    FSeek(p + 4);  float nextRoundRate<comment="後半戦に移行する体力割合">;
+    FSeek(p + 8);  float airBattleRateSecond<comment="後半空中戦終了に必要なダメージ割合">;
+    FSeek(p + 12); float chanceTime<comment="チャンスタイム時の時間・前半">;
+    FSeek(p + 16); float chanceTimeSecond<comment="チャンスタイム時の時間・後半">;
+    FSeek(p + 20); bool isSpin<comment="前半戦、バーナースピンを行うか">;
+    FSeek(p + 21); bool isSecondAttack<comment="後半戦、攻撃参照を初回のみにするか">;
 
     FSeek(p + 24);
 } MiniBossTyrantSequenceParameter;
@@ -272,10 +272,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float upPower;
-    FSeek(p + 4);  float upTime;
-    FSeek(p + 8);  float attackTime;
-    FSeek(p + 12); float downPower;
+    FSeek(p + 0);  float upPower<comment="打ち上げ力">;
+    FSeek(p + 4);  float upTime<comment="打ち上げ時間">;
+    FSeek(p + 8);  float attackTime<comment="浮遊時間">;
+    FSeek(p + 12); float downPower<comment="落下力">;
 
     FSeek(p + 16);
 } MiniBossTyrantCyloopDamageParameter;
@@ -297,21 +297,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossTyrantAttackSpinParam spin;
-    FSeek(p + 16);   MiniBossTyrantAttackAirSpinParam airSpin;
-    FSeek(p + 24);   MiniBossTyrantAttackRouletteParam roulette;
-    FSeek(p + 32);   MiniBossTyrantAttackLaserParam laser;
-    FSeek(p + 64);   float rotSpeed;
-    FSeek(p + 72);   MiniBossTyrantBarrageParam barrage[16]<optimize=false>;
-    FSeek(p + 1224); MiniBossTyrantShotgunBullet shotgunBullet;
-    FSeek(p + 1268); MiniBossTyrantWinderBullet winderBullet;
-    FSeek(p + 1312); MiniBossTyrantLineBullet lineBullet;
-    FSeek(p + 1344); MiniBossTyrantWaveBullet waveBullet;
-    FSeek(p + 1384); MiniBossTyrantAttackCircleBullet circleBullet;
-    FSeek(p + 1424); MiniBossTyrantSequenceParameter sequenceParam;
-    FSeek(p + 1448); MiniBossTyrantCyloopDamageParameter cyloopParam;
-    FSeek(p + 1464); ActionType actionListGround[10]<optimize=false>;
-    FSeek(p + 1474); ActionType actionListAir[10]<optimize=false>;
+    FSeek(p + 0);    MiniBossTyrantAttackSpinParam spin<comment="地上バーナースピン">;
+    FSeek(p + 16);   MiniBossTyrantAttackAirSpinParam airSpin<comment="空中バーナースピン">;
+    FSeek(p + 24);   MiniBossTyrantAttackRouletteParam roulette<comment="ルーレット">;
+    FSeek(p + 32);   MiniBossTyrantAttackLaserParam laser<comment="レーザー">;
+    FSeek(p + 64);   float rotSpeed<comment="デフォルト追従回転速度">;
+    FSeek(p + 72);   MiniBossTyrantBarrageParam barrage[16]<comment="弾丸パラメータ",optimize=false>;
+    FSeek(p + 1224); MiniBossTyrantShotgunBullet shotgunBullet<comment="ショットガン">;
+    FSeek(p + 1268); MiniBossTyrantWinderBullet winderBullet<comment="ワインダー">;
+    FSeek(p + 1312); MiniBossTyrantLineBullet lineBullet<comment="直線弾">;
+    FSeek(p + 1344); MiniBossTyrantWaveBullet waveBullet<comment="扇弾">;
+    FSeek(p + 1384); MiniBossTyrantAttackCircleBullet circleBullet<comment="放射弾">;
+    FSeek(p + 1424); MiniBossTyrantSequenceParameter sequenceParam<comment="シーケンス">;
+    FSeek(p + 1448); MiniBossTyrantCyloopDamageParameter cyloopParam<comment="サイループ反応時">;
+    FSeek(p + 1464); ActionType actionListGround[10]<comment="後半戦、地上時の行動テーブル",optimize=false>;
+    FSeek(p + 1474); ActionType actionListAir[10]<comment="後半戦、空中時の行動テーブル",optimize=false>;
 
     FSeek(p + 1488);
 } MiniBossTyrantAttackParam;
@@ -320,16 +320,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float speed;
-    FSeek(p + 4);  float accel;
-    FSeek(p + 8);  float rotate_speed_min;
-    FSeek(p + 12); float rotate_speed_max;
-    FSeek(p + 16); float rotate_speed_fast;
-    FSeek(p + 20); float rotate_accel;
-    FSeek(p + 24); float life;
-    FSeek(p + 28); float spawn_offset;
-    FSeek(p + 32); float spawn_interval;
-    FSeek(p + 36); sint32 spawn_num;
+    FSeek(p + 0);  float speed<comment="上昇速度">;
+    FSeek(p + 4);  float accel<comment="上昇加速度">;
+    FSeek(p + 8);  float rotate_speed_min<comment="通常時回転速度　最小値">;
+    FSeek(p + 12); float rotate_speed_max<comment="通常時回転速度　最大値">;
+    FSeek(p + 16); float rotate_speed_fast<comment="竜巻時回転速度">;
+    FSeek(p + 20); float rotate_accel<comment="竜巻時回転加速度">;
+    FSeek(p + 24); float life<comment="生存時間">;
+    FSeek(p + 28); float spawn_offset<comment="発生高さオフセット">;
+    FSeek(p + 32); float spawn_interval<comment="発生頻度">;
+    FSeek(p + 36); sint32 spawn_num<comment="発生数">;
 
     FSeek(p + 40);
 } MiniBossTyrantDebrisParam;
@@ -338,7 +338,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); MiniBossTyrantDebrisParam debris;
+    FSeek(p + 0); MiniBossTyrantDebrisParam debris<comment="デブリ">;
 
     FSeek(p + 40);
 } MiniBossTyrantStormEffectParam;
@@ -347,11 +347,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossTyrantCommonParam commonParam;
-    FSeek(p + 96);   MiniBossTyrantLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 376);  MiniBossTyrantLevelBand levelBand[5]<optimize=false>;
-    FSeek(p + 400);  MiniBossTyrantAttackParam attackParam;
-    FSeek(p + 1888); MiniBossTyrantStormEffectParam stormEffectParam;
+    FSeek(p + 0);    MiniBossTyrantCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 96);   MiniBossTyrantLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 376);  MiniBossTyrantLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 400);  MiniBossTyrantAttackParam attackParam<comment="攻撃ごとのパラメータ">;
+    FSeek(p + 1888); MiniBossTyrantStormEffectParam stormEffectParam<comment="嵐演出パラメータ">;
 
     FSeek(p + 1936);
 } MiniBossTyrantConfig;

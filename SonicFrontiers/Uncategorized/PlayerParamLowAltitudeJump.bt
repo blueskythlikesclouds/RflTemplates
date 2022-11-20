@@ -4,12 +4,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float upSpeed;
-    FSeek(p + 4);  float frontSpeed;
-    FSeek(p + 8);  float damperV;
-    FSeek(p + 12); float damperH;
-    FSeek(p + 16); float gravity;
-    FSeek(p + 20); float time;
+    FSeek(p + 0);  float upSpeed<comment="上方向初速">;
+    FSeek(p + 4);  float frontSpeed<comment="前方初速">;
+    FSeek(p + 8);  float damperV<comment="垂直方向ダンパー">;
+    FSeek(p + 12); float damperH<comment="水平方向ダンパー">;
+    FSeek(p + 16); float gravity<comment="重力加速度">;
+    FSeek(p + 20); float time<comment="時間">;
 
     FSeek(p + 24);
 } PlayerParamLowAltitudeJump;

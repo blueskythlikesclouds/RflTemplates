@@ -4,7 +4,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint32 intervalMinuntes;
+    FSeek(p + 0); uint32 intervalMinuntes<comment="[sy1030]発生時間間隔[分]">;
 
     FSeek(p + 4);
 } ScriptParameter;

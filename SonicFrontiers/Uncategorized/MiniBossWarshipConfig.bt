@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,13 +25,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float highSpeed;
-    FSeek(p + 4);  float lowSpeed;
-    FSeek(p + 8);  float changeLowSpeedDistance;
-    FSeek(p + 12); float disableDistanceMaxSpeed;
-    FSeek(p + 16); float relativeSpeedDisableDistance;
-    FSeek(p + 20); float speedOnJump;
-    FSeek(p + 24); float speedDownOnJumpDistance;
+    FSeek(p + 0);  float highSpeed<comment="高速状態時の速度">;
+    FSeek(p + 4);  float lowSpeed<comment="低速状態時の速度">;
+    FSeek(p + 8);  float changeLowSpeedDistance<comment="低速に変わる距離">;
+    FSeek(p + 12); float disableDistanceMaxSpeed<comment="接近禁止中の最高速度">;
+    FSeek(p + 16); float relativeSpeedDisableDistance<comment="相対速度に入る接近禁止距離">;
+    FSeek(p + 20); float speedOnJump<comment="一定距離内且つソニックがジャンプ中時の速度">;
+    FSeek(p + 24); float speedDownOnJumpDistance<comment="ジャンプして速度が落ちる距離">;
 
     FSeek(p + 28);
 } MiniBossWarshipSpeedParam;
@@ -40,8 +40,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float min;
-    FSeek(p + 4); float max;
+    FSeek(p + 0); float min<comment="最低速度">;
+    FSeek(p + 4); float max<comment="最高速度">;
 
     FSeek(p + 8);
 } MiniBossWarshipAccelSpeed;
@@ -50,10 +50,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossWarshipWarpCameraParam;
@@ -67,18 +67,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float fovy;
-    FSeek(p + 4);  float zRot;
-    FSeek(p + 8);  float distance;
-    FSeek(p + 12); float pathOffset;
-    FSeek(p + 16); bool usePathVerticalComponent;
-    FSeek(p + 17); bool usePathNormal;
-    FSeek(p + 20); float angleSensitivity;
-    FSeek(p + 24); float angleSensitivityBoost;
-    FSeek(p + 28); float azimuthOffsetDeg;
-    FSeek(p + 32); float elevationOffsetDeg;
-    FSeek(p + 36); float gravityOffset;
-    FSeek(p + 48); vector3 playerOffset;
+    FSeek(p + 0);  float fovy<comment="画角">;
+    FSeek(p + 4);  float zRot<comment="Roll">;
+    FSeek(p + 8);  float distance<comment="距離">;
+    FSeek(p + 12); float pathOffset<comment="パス上のOffset">;
+    FSeek(p + 16); bool usePathVerticalComponent<comment="パス方向の垂直成分を使用する">;
+    FSeek(p + 17); bool usePathNormal<comment="カメラY-Upの傾き">;
+    FSeek(p + 20); float angleSensitivity<comment="視点方向の感度">;
+    FSeek(p + 24); float angleSensitivityBoost<comment="視点方向の感度(ブースト中)">;
+    FSeek(p + 28); float azimuthOffsetDeg<comment="方位角Offset">;
+    FSeek(p + 32); float elevationOffsetDeg<comment="仰角Offset">;
+    FSeek(p + 36); float gravityOffset<comment="重力方向のOffset">;
+    FSeek(p + 48); vector3 playerOffset<comment="プレイヤー座標Offset">;
 
     FSeek(p + 64);
 } MiniBossWarshipEscapeCameraParam;
@@ -87,12 +87,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float dashRingAppearDistance;
-    FSeek(p + 4);  float dashRingDisappearDistance;
-    FSeek(p + 8);  float birdAppearDistance;
-    FSeek(p + 12); float birdDisappearDistance;
-    FSeek(p + 16); float bulletAppearDistance;
-    FSeek(p + 20); float bulletDisappearDistance;
+    FSeek(p + 0);  float dashRingAppearDistance<comment="[ダッシュリング]出現開始距離">;
+    FSeek(p + 4);  float dashRingDisappearDistance<comment="[ダッシュリング]消滅開始距離">;
+    FSeek(p + 8);  float birdAppearDistance<comment="[鳥型エネミー]出現開始距離">;
+    FSeek(p + 12); float birdDisappearDistance<comment="[鳥型エネミー]消滅開始距離">;
+    FSeek(p + 16); float bulletAppearDistance<comment="[弾]出現開始距離">;
+    FSeek(p + 20); float bulletDisappearDistance<comment="[弾]消滅開始距離">;
 
     FSeek(p + 24);
 } MiniBossWarshipObjectParam;
@@ -101,14 +101,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float outStrength;
-    FSeek(p + 4);  float inStrength;
-    FSeek(p + 8);  float outElev;
-    FSeek(p + 12); float inElev;
-    FSeek(p + 16); float speedMin;
-    FSeek(p + 20); float speedMax;
-    FSeek(p + 24); float speedMinLength;
-    FSeek(p + 28); float speedMaxLength;
+    FSeek(p + 0);  float outStrength<comment="射出強度">;
+    FSeek(p + 4);  float inStrength<comment="終了強度">;
+    FSeek(p + 8);  float outElev<comment="射出時発射角(°)">;
+    FSeek(p + 12); float inElev<comment="終了時入射角(°)">;
+    FSeek(p + 16); float speedMin<comment="移動速度最小">;
+    FSeek(p + 20); float speedMax<comment="移動速度最大">;
+    FSeek(p + 24); float speedMinLength<comment="移動速度最小パス長">;
+    FSeek(p + 28); float speedMaxLength<comment="移動速度最大パス長">;
 
     FSeek(p + 32);
 } WarshipNearLaunchParam;
@@ -117,14 +117,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
-    FSeek(p + 64);  MiniBossWarshipSpeedParam speedParam;
-    FSeek(p + 92);  MiniBossWarshipAccelSpeed normalSpeedParam;
-    FSeek(p + 100); MiniBossWarshipAccelSpeed boostSpeedParam;
-    FSeek(p + 112); MiniBossWarshipWarpCameraParam warpCameraParam;
-    FSeek(p + 176); MiniBossWarshipEscapeCameraParam escapeCameraParam;
-    FSeek(p + 240); MiniBossWarshipObjectParam objectParam;
-    FSeek(p + 264); WarshipNearLaunchParam launchParam;
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64);  MiniBossWarshipSpeedParam speedParam<comment="速度変更関連のパラメータ">;
+    FSeek(p + 92);  MiniBossWarshipAccelSpeed normalSpeedParam<comment="アクセル状態のソニックの通常移動速度">;
+    FSeek(p + 100); MiniBossWarshipAccelSpeed boostSpeedParam<comment="アクセル状態のソニックのブースト移動速度">;
+    FSeek(p + 112); MiniBossWarshipWarpCameraParam warpCameraParam<comment="ワープ用のカメラのパラメータ">;
+    FSeek(p + 176); MiniBossWarshipEscapeCameraParam escapeCameraParam<comment="逃亡用のグラインド中のカメラパラメータ">;
+    FSeek(p + 240); MiniBossWarshipObjectParam objectParam<comment="道中に出現させるオブジェクト群のパラメータ">;
+    FSeek(p + 264); WarshipNearLaunchParam launchParam<comment="launchParam">;
 
     FSeek(p + 304);
 } MiniBossWarshipCommonParam;
@@ -135,16 +135,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -153,8 +153,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossWarshipLevelParam;
@@ -163,7 +163,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } MiniBossWarshipLevelBand;
@@ -172,8 +172,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float normal;
-    FSeek(p + 4); float boost;
+    FSeek(p + 0); float normal<comment="通常時の回復量">;
+    FSeek(p + 4); float boost<comment="ブースト時の回復量">;
 
     FSeek(p + 8);
 } MiniBossWarshipRecoverBoostGaugeParam;
@@ -182,14 +182,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveSpeed;
-    FSeek(p + 4);  float bombDropSpeed;
-    FSeek(p + 8);  float bombInterval;
-    FSeek(p + 12); float explosionRadius;
-    FSeek(p + 16); float bombPreDistEffectRange;
-    FSeek(p + 20); float lifeTime;
-    FSeek(p + 24); float preBombTime;
-    FSeek(p + 28); float preBombStateSpeed;
+    FSeek(p + 0);  float moveSpeed<comment="移動速度">;
+    FSeek(p + 4);  float bombDropSpeed<comment="爆撃の落下速度">;
+    FSeek(p + 8);  float bombInterval<comment="爆撃のインターバル">;
+    FSeek(p + 12); float explosionRadius<comment="爆風攻撃範囲">;
+    FSeek(p + 16); float bombPreDistEffectRange<comment="bombPreDistEffectRange">;
+    FSeek(p + 20); float lifeTime<comment="爆弾の生存時間">;
+    FSeek(p + 24); float preBombTime<comment="爆撃を始めるまでの時間">;
+    FSeek(p + 28); float preBombStateSpeed<comment="爆撃を始めるまでの移動速度（0の場合は通常移動速度と同じ">;
 
     FSeek(p + 32);
 } MiniBossWarshipAttackStateParam;
@@ -198,9 +198,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float firstFinishTimer;
-    FSeek(p + 4); float finishTimer;
-    FSeek(p + 8); float disableHomingTime;
+    FSeek(p + 0); float firstFinishTimer<comment="(逃亡ステートの初回限定)逃亡中に戦闘が解除されるグラインドに乗っていない時間">;
+    FSeek(p + 4); float finishTimer<comment="逃亡中に戦闘が解除されるグラインドに乗っていない時間">;
+    FSeek(p + 8); float disableHomingTime<comment="逃亡開始時にHAを無効にする時間">;
 
     FSeek(p + 12);
 } MiniBossWarshipBattleFlagParam;
@@ -209,12 +209,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float minElevation;
-    FSeek(p + 8);  float maxElevation;
-    FSeek(p + 12); float targetUpOffset;
-    FSeek(p + 16); float targetMinUpOffsetLimit;
-    FSeek(p + 20); float targetMaxUpOffsetLimit;
+    FSeek(p + 0);  float distance<comment="カメラ距離">;
+    FSeek(p + 4);  float minElevation<comment="最低仰角">;
+    FSeek(p + 8);  float maxElevation<comment="最大仰角">;
+    FSeek(p + 12); float targetUpOffset<comment="注視点の上方オフセット">;
+    FSeek(p + 16); float targetMinUpOffsetLimit<comment="注視点の最小上方オフセットリミット">;
+    FSeek(p + 20); float targetMaxUpOffsetLimit<comment="注視点の最大上方オフセットリミット">;
 
     FSeek(p + 24);
 } MiniBossWarshipNearBattleCameraParam;
@@ -232,9 +232,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool enable;
-    FSeek(p + 4); float start;
-    FSeek(p + 8); float end;
+    FSeek(p + 0); bool enable<comment="使用する">;
+    FSeek(p + 4); float start<comment="開始位置">;
+    FSeek(p + 8); float end<comment="終了位置">;
 
     FSeek(p + 12);
 } WarshipPathSectionInfo;
@@ -243,9 +243,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   cstring followPaths;
-    FSeek(p + 16);  WarshipPathSectionInfo usePathInfo[50]<optimize=false>;
-    FSeek(p + 616); WarshipPathSectionInfo accelInfo[50]<optimize=false>;
+    FSeek(p + 0);   cstring followPaths<comment="パス名">;
+    FSeek(p + 16);  WarshipPathSectionInfo usePathInfo[50]<comment="出現させるパスのレーン情報",optimize=false>;
+    FSeek(p + 616); WarshipPathSectionInfo accelInfo[50]<comment="加速レーン情報",optimize=false>;
 
     FSeek(p + 1216);
 } WarshipEscapePathInfo;
@@ -254,7 +254,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); WarshipEscapePathInfo escapePathInfo[5]<optimize=false>;
+    FSeek(p + 0); WarshipEscapePathInfo escapePathInfo[5]<comment="逃亡用のパス",optimize=false>;
 
     FSeek(p + 6080);
 } MiniBossWarshipEscapePathParam;
@@ -263,13 +263,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float lockonDistance;
-    FSeek(p + 4);  float unlockDistance;
-    FSeek(p + 8);  float duration;
-    FSeek(p + 12); float distance;
-    FSeek(p + 16); float minElevation;
-    FSeek(p + 20); float maxElevation;
-    FSeek(p + 24); float lockonFrameYOffset;
+    FSeek(p + 0);  float lockonDistance<comment="ロックオン成立距離">;
+    FSeek(p + 4);  float unlockDistance<comment="ロックオン解除距離">;
+    FSeek(p + 8);  float duration<comment="持続時間(0の場合は永続)">;
+    FSeek(p + 12); float distance<comment="距離(0の場合はデフォルト)">;
+    FSeek(p + 16); float minElevation<comment="仰角最小値">;
+    FSeek(p + 20); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 24); float lockonFrameYOffset<comment="ロックオン方向のYオフセット">;
 
     FSeek(p + 28);
 } MiniBossWarshipBombAttackCameraParam;
@@ -278,9 +278,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float midCameraPosOffset;
-    FSeek(p + 4);  MiniBossWarshipBombAttackCameraParam firstCamera;
-    FSeek(p + 32); MiniBossWarshipBombAttackCameraParam secondCamera;
+    FSeek(p + 0);  float midCameraPosOffset<comment="中間地点でのカメラ位置のYオフセット（爆撃開始時）">;
+    FSeek(p + 4);  MiniBossWarshipBombAttackCameraParam firstCamera<comment="第1段階のカメラ設定（移動開始時）">;
+    FSeek(p + 32); MiniBossWarshipBombAttackCameraParam secondCamera<comment="第2段階のカメラ設定（攻撃終了時）">;
 
     FSeek(p + 60);
 } MiniBossWarshipAttackStateCameraParam;
@@ -289,25 +289,25 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     MiniBossWarshipCommonParam commonParam;
-    FSeek(p + 304);   MiniBossWarshipLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 584);   MiniBossWarshipLevelBand levelBand[5]<optimize=false>;
-    FSeek(p + 604);   float wanderMoveSpeed;
-    FSeek(p + 608);   float railMaxLength;
-    FSeek(p + 612);   MiniBossWarshipSpeedParam shiftStateMoveSpeedParam;
-    FSeek(p + 640);   float locatorDistance;
-    FSeek(p + 644);   float distanceEscapePathToStart;
-    FSeek(p + 648);   MiniBossWarshipRecoverBoostGaugeParam boostGaugeParam;
-    FSeek(p + 656);   MiniBossWarshipAttackStateParam attackStateParam;
-    FSeek(p + 688);   MiniBossWarshipBattleFlagParam battleFlagParam;
-    FSeek(p + 700);   MiniBossWarshipNearBattleCameraParam nearBattleCameraParam;
-    FSeek(p + 724);   float disableGimmickDistance;
-    FSeek(p + 728);   float warpTime;
-    FSeek(p + 732);   float cameraChangeTime;
-    FSeek(p + 736);   float cameraAppearTime;
-    FSeek(p + 740);   float spreadHomingDistance;
-    FSeek(p + 744);   MiniBossWarshipEscapePathParam escapePathID[5]<optimize=false>;
-    FSeek(p + 31144); MiniBossWarshipAttackStateCameraParam bombAttackCameraParam[5]<optimize=false>;
+    FSeek(p + 0);     MiniBossWarshipCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 304);   MiniBossWarshipLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 584);   MiniBossWarshipLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 604);   float wanderMoveSpeed<comment="徘徊時の移動速度">;
+    FSeek(p + 608);   float railMaxLength<comment="レールの最大の長さ">;
+    FSeek(p + 612);   MiniBossWarshipSpeedParam shiftStateMoveSpeedParam<comment="移行レールアクセス時の速度制御パラメータ">;
+    FSeek(p + 640);   float locatorDistance<comment="接近フェーズに入るロケーターとプレイヤーの距離">;
+    FSeek(p + 644);   float distanceEscapePathToStart<comment="最初に入る周回パスの距離">;
+    FSeek(p + 648);   MiniBossWarshipRecoverBoostGaugeParam boostGaugeParam<comment="加速時のブーストゲージ回復パラメータ">;
+    FSeek(p + 656);   MiniBossWarshipAttackStateParam attackStateParam<comment="攻撃ステート用のパラメータ">;
+    FSeek(p + 688);   MiniBossWarshipBattleFlagParam battleFlagParam<comment="戦闘フェーズフラグ管理用のパラメータ">;
+    FSeek(p + 700);   MiniBossWarshipNearBattleCameraParam nearBattleCameraParam<comment="近接戦闘時のカメラパラメータ">;
+    FSeek(p + 724);   float disableGimmickDistance<comment="ギミック出現を禁止する距離">;
+    FSeek(p + 728);   float warpTime<comment="注目してからワープするまでの時間">;
+    FSeek(p + 732);   float cameraChangeTime<comment="ワープ後にカメラがロケーターに戻るまでの時間">;
+    FSeek(p + 736);   float cameraAppearTime<comment="ワープ後に本体が出現するまで時間">;
+    FSeek(p + 740);   float spreadHomingDistance<comment="ホーミング可能距離を広げるプレイヤーと本体の距離">;
+    FSeek(p + 744);   MiniBossWarshipEscapePathParam escapePathID[5]<comment="逃亡用のパスの使用ID",optimize=false>;
+    FSeek(p + 31144); MiniBossWarshipAttackStateCameraParam bombAttackCameraParam[5]<comment="爆撃時のカメラパラメータ",optimize=false>;
 
     FSeek(p + 31456);
 } MiniBossWarshipConfig;

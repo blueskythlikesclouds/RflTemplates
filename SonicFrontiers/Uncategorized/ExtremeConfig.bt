@@ -27,19 +27,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  LineType lineType;
-    FSeek(p + 4);  float lineWidth;
-    FSeek(p + 8);  float roadLength;
-    FSeek(p + 12); float speed;
-    FSeek(p + 16); float barricadeInterval;
-    FSeek(p + 20); float emergencyDistance;
-    FSeek(p + 32); vector3 barricadeSize;
-    FSeek(p + 48); color8 roadColor;
-    FSeek(p + 52); color8 barricadeColor;
-    FSeek(p + 56); float cameraFovy;
-    FSeek(p + 60); float cameraDistance;
-    FSeek(p + 64); float cameraUpOffset;
-    FSeek(p + 68); float cameraShakeOffset;
+    FSeek(p + 0);  LineType lineType<comment="ライン">;
+    FSeek(p + 4);  float lineWidth<comment="走行ラインの幅">;
+    FSeek(p + 8);  float roadLength<comment="道の長さ">;
+    FSeek(p + 12); float speed<comment="速度">;
+    FSeek(p + 16); float barricadeInterval<comment="障害物の配置間隔">;
+    FSeek(p + 20); float emergencyDistance<comment="障害物の接近を知らせる距離">;
+    FSeek(p + 32); vector3 barricadeSize<comment="障害物サイズ">;
+    FSeek(p + 48); color8 roadColor<comment="道の色">;
+    FSeek(p + 52); color8 barricadeColor<comment="障害物の色">;
+    FSeek(p + 56); float cameraFovy<comment="カメラ視野角">;
+    FSeek(p + 60); float cameraDistance<comment="カメラ距離">;
+    FSeek(p + 64); float cameraUpOffset<comment="カメラ上方オフセット">;
+    FSeek(p + 68); float cameraShakeOffset<comment="カメラの揺れ幅">;
 
     FSeek(p + 80);
 } ExtremeConfig;

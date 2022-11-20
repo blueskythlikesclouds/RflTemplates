@@ -6,7 +6,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 no;
+    FSeek(p + 0); uint8 no<comment="レコード番号">;
 
     FSeek(p + 1);
 } Record;
@@ -25,7 +25,7 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0); Record record;
-    FSeek(p + 8); cstring emitterSetName[2]<optimize=false>;
+    FSeek(p + 8); cstring emitterSetName[2]<comment="シーン名",optimize=false>;
 
     FSeek(p + 40);
 } EffectRecord;
@@ -34,7 +34,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); EffectRecord data[255]<optimize=false>;
+    FSeek(p + 0); EffectRecord data[255]<comment="data",optimize=false>;
 
     FSeek(p + 10200);
 } EffectRecordTable;

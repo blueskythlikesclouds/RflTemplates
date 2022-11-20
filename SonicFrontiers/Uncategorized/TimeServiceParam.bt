@@ -6,9 +6,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float speed;
-    FSeek(p + 4); float timeMagnification;
-    FSeek(p + 8); sint32 addMinuteReturnFromCyber;
+    FSeek(p + 0); float speed<comment="時間経過を早くするプレイヤー速度">;
+    FSeek(p + 4); float timeMagnification<comment="一定速度を超えた時の時間経過倍率">;
+    FSeek(p + 8); sint32 addMinuteReturnFromCyber<comment="電脳空間から戻ったときに加算する時間(分)">;
 
     FSeek(p + 12);
 } TimeServiceParam;

@@ -11,14 +11,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   vector3 backColliderExtents;
-    FSeek(p + 16);  vector3 backColliderOffset;
-    FSeek(p + 32);  vector3 backDamageColliderExtents;
-    FSeek(p + 48);  vector3 backDamageColliderOffset;
-    FSeek(p + 64);  vector3 chargeColliderExtents;
-    FSeek(p + 80);  vector3 chargeColliderOffset;
-    FSeek(p + 96);  float eyesightAngle;
-    FSeek(p + 100); float eyesightDistance;
+    FSeek(p + 0);   vector3 backColliderExtents<comment="背中ボックスコリジョン半径">;
+    FSeek(p + 16);  vector3 backColliderOffset<comment="背中ボックスコリジョンオフセット">;
+    FSeek(p + 32);  vector3 backDamageColliderExtents<comment="背中ダメージコリジョン半径">;
+    FSeek(p + 48);  vector3 backDamageColliderOffset<comment="背中ダメージコリジョンオフセット">;
+    FSeek(p + 64);  vector3 chargeColliderExtents<comment="突進ボックスコリジョン半径">;
+    FSeek(p + 80);  vector3 chargeColliderOffset<comment="突進ボックスコリジョンオフセット">;
+    FSeek(p + 96);  float eyesightAngle<comment="視野角">;
+    FSeek(p + 100); float eyesightDistance<comment="視野距離">;
 
     FSeek(p + 112);
 } EnemyBirdCommonParam;
@@ -29,10 +29,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } EnemyBirdCommonLevelParam;
@@ -41,8 +41,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); EnemyBirdCommonLevelParam common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); EnemyBirdCommonLevelParam common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyBirdLevelParam;
@@ -51,7 +51,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } EnemyBirdLevelBand;
@@ -60,9 +60,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float speedOnPath;
-    FSeek(p + 4); float speedToPath;
-    FSeek(p + 8); float eyesightDelayAfterBarAction;
+    FSeek(p + 0); float speedOnPath<comment="パス上の移動速度">;
+    FSeek(p + 4); float speedToPath<comment="パスへの移動速度">;
+    FSeek(p + 8); float eyesightDelayAfterBarAction<comment="鉄棒アクション後の視界検知ディレイ">;
 
     FSeek(p + 12);
 } BirdWanderParam;
@@ -71,12 +71,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float speed;
-    FSeek(p + 4);  float maxSpeed;
-    FSeek(p + 8);  float acceleration;
-    FSeek(p + 12); float rotateDegreeToSonic;
-    FSeek(p + 16); float stopDistanceFromSonic;
-    FSeek(p + 32); vector3 offsetFromSonic;
+    FSeek(p + 0);  float speed<comment="初速度">;
+    FSeek(p + 4);  float maxSpeed<comment="最大速度">;
+    FSeek(p + 8);  float acceleration<comment="加速度">;
+    FSeek(p + 12); float rotateDegreeToSonic<comment="ソニックへの回転速度">;
+    FSeek(p + 16); float stopDistanceFromSonic<comment="停止位置からソニックまでの距離">;
+    FSeek(p + 32); vector3 offsetFromSonic<comment="ソニックからのオフセット">;
 
     FSeek(p + 48);
 } BirdApproachParam;
@@ -85,8 +85,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float laserInterval;
-    FSeek(p + 4); float rotateDegreeToSonic;
+    FSeek(p + 0); float laserInterval<comment="laserInterval">;
+    FSeek(p + 4); float rotateDegreeToSonic<comment="ソニックへの回転速度">;
 
     FSeek(p + 8);
 } BirdLaserStateParam;
@@ -95,17 +95,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float waitTime;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float maxSpeed;
-    FSeek(p + 12); float acceleration;
-    FSeek(p + 16); vector3 offsetFromSonic;
-    FSeek(p + 32); float duration;
-    FSeek(p + 36); float distance;
-    FSeek(p + 40); float minElevation;
-    FSeek(p + 44); float maxElevation;
-    FSeek(p + 48); float panningSuspensionK;
-    FSeek(p + 52); float interiorPanningSuspensionK;
+    FSeek(p + 0);  float waitTime<comment="突進開始までの待ち時間">;
+    FSeek(p + 4);  float speed<comment="初速度">;
+    FSeek(p + 8);  float maxSpeed<comment="最大速度">;
+    FSeek(p + 12); float acceleration<comment="加速度">;
+    FSeek(p + 16); vector3 offsetFromSonic<comment="ソニックからのオフセット">;
+    FSeek(p + 32); float duration<comment="ロックオン有効時間">;
+    FSeek(p + 36); float distance<comment="ロックオン距離">;
+    FSeek(p + 40); float minElevation<comment="仰角最小値">;
+    FSeek(p + 44); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 48); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 52); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
 
     FSeek(p + 64);
 } BirdChargeParam;
@@ -114,10 +114,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float speed;
-    FSeek(p + 4);  float maxSpeed;
-    FSeek(p + 8);  float acceleration;
-    FSeek(p + 12); float backupTime;
+    FSeek(p + 0);  float speed<comment="初速度">;
+    FSeek(p + 4);  float maxSpeed<comment="最大速度">;
+    FSeek(p + 8);  float acceleration<comment="加速度">;
+    FSeek(p + 12); float backupTime<comment="後退移動時間">;
 
     FSeek(p + 16);
 } BirdBackupParam;
@@ -126,13 +126,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float haWaitTime;
-    FSeek(p + 4);  float degreeOnPath;
-    FSeek(p + 8);  float speedOnPath;
-    FSeek(p + 12); float speedToPath;
-    FSeek(p + 16); float splineTension;
-    FSeek(p + 20); float splineSpeed;
-    FSeek(p + 32); vector3 velocityOnFail;
+    FSeek(p + 0);  float haWaitTime<comment="HA待機時間">;
+    FSeek(p + 4);  float degreeOnPath<comment="パス上の回転速度">;
+    FSeek(p + 8);  float speedOnPath<comment="パス上の移動速度">;
+    FSeek(p + 12); float speedToPath<comment="パスへの移動速度">;
+    FSeek(p + 16); float splineTension<comment="スプラインのテンション">;
+    FSeek(p + 20); float splineSpeed<comment="スプラインの速度">;
+    FSeek(p + 32); vector3 velocityOnFail<comment="鉄棒アクション失敗時の射出速度">;
 
     FSeek(p + 48);
 } BirdBarParam;
@@ -141,15 +141,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveSpeed;
-    FSeek(p + 4);  float gidingVelocityY;
-    FSeek(p + 8);  float limitTime;
-    FSeek(p + 12); float rotateSpeed;
-    FSeek(p + 16); float rotateSpeedMin;
-    FSeek(p + 20); float rotateSpeedMax;
-    FSeek(p + 24); float rotateSpeedMaxSpeedMin;
-    FSeek(p + 28); float rotateSpeedMinSpeedMax;
-    FSeek(p + 32); float heightOfChangeShake;
+    FSeek(p + 0);  float moveSpeed<comment="滑空速度">;
+    FSeek(p + 4);  float gidingVelocityY<comment="滑空時にY方向に加える力">;
+    FSeek(p + 8);  float limitTime<comment="振り落とされるまでの時間">;
+    FSeek(p + 12); float rotateSpeed<comment="旋回モーション速度">;
+    FSeek(p + 16); float rotateSpeedMin<comment="最少旋回速度">;
+    FSeek(p + 20); float rotateSpeedMax<comment="最大旋回速度">;
+    FSeek(p + 24); float rotateSpeedMaxSpeedMin<comment="旋回速度が最大になる最少速度">;
+    FSeek(p + 28); float rotateSpeedMinSpeedMax<comment="旋回速度が最少になる最大速度">;
+    FSeek(p + 32); float heightOfChangeShake<comment="振り落としに遷移する高さ">;
 
     FSeek(p + 36);
 } BirdGlidingParam;
@@ -158,12 +158,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float minWaitTime;
-    FSeek(p + 4);  float maxWaitTime;
-    FSeek(p + 8);  float raycastDistance;
-    FSeek(p + 12); float fallSpeedOnStomp;
-    FSeek(p + 16); float maxFallSpeedOnStomp;
-    FSeek(p + 20); float fallAccelerationOnStomp;
+    FSeek(p + 0);  float minWaitTime<comment="死亡までに掛ける最低時間">;
+    FSeek(p + 4);  float maxWaitTime<comment="死亡までに掛ける最大時間">;
+    FSeek(p + 8);  float raycastDistance<comment="下方レイキャスト距離">;
+    FSeek(p + 12); float fallSpeedOnStomp<comment="ストンピング時落下初速度">;
+    FSeek(p + 16); float maxFallSpeedOnStomp<comment="ストンピング時最大速度">;
+    FSeek(p + 20); float fallAccelerationOnStomp<comment="ストンピング時加速度">;
 
     FSeek(p + 24);
 } BirdDeadParam;
@@ -172,9 +172,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float distanceFront;
-    FSeek(p + 4); float distanceBack;
-    FSeek(p + 8); float distanceDown;
+    FSeek(p + 0); float distanceFront<comment="前方レイキャスト距離">;
+    FSeek(p + 4); float distanceBack<comment="後方レイキャスト距離">;
+    FSeek(p + 8); float distanceDown<comment="下方レイキャスト距離">;
 
     FSeek(p + 12);
 } BirdRaycastParam;
@@ -188,8 +188,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float distToConsiderSonicAsOnBird;
-    FSeek(p + 4); float distance;
+    FSeek(p + 0); float distToConsiderSonicAsOnBird<comment="ソニックを鳥に乗っていると判定する鳥からの距離">;
+    FSeek(p + 4); float distance<comment="距離">;
 
     FSeek(p + 8);
 } BirdOnBackCameraParam;
@@ -198,12 +198,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float azimuth;
-    FSeek(p + 4);  float elevation;
-    FSeek(p + 8);  float distance;
-    FSeek(p + 12); float zRoll;
-    FSeek(p + 16); float fovy;
-    FSeek(p + 32); vector3 frameOffset;
+    FSeek(p + 0);  float azimuth<comment="方位角">;
+    FSeek(p + 4);  float elevation<comment="仰角">;
+    FSeek(p + 8);  float distance<comment="距離">;
+    FSeek(p + 12); float zRoll<comment="ロール">;
+    FSeek(p + 16); float fovy<comment="画角">;
+    FSeek(p + 32); vector3 frameOffset<comment="注視点オフセット">;
 
     FSeek(p + 48);
 } BirdCameraParam;
@@ -212,23 +212,23 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   vector3 haColliderExtents;
-    FSeek(p + 16);  vector3 haColliderOffset;
-    FSeek(p + 32);  vector3 haTargetOffset;
-    FSeek(p + 48);  float haTargetRadius;
-    FSeek(p + 52);  float haTargetHeight;
-    FSeek(p + 56);  BirdWanderParam wanderParam;
-    FSeek(p + 80);  BirdApproachParam approachParam;
-    FSeek(p + 128); BirdLaserStateParam laserStateParam;
-    FSeek(p + 144); BirdChargeParam chargeParam;
-    FSeek(p + 208); BirdBackupParam backupParam;
-    FSeek(p + 224); BirdBarParam barParam;
-    FSeek(p + 272); BirdGlidingParam glidingParam;
-    FSeek(p + 308); BirdDeadParam deadParam;
-    FSeek(p + 332); BirdRaycastParam raycastParam;
-    FSeek(p + 344); bool useCamera;
-    FSeek(p + 348); BirdOnBackCameraParam onBackCameraParam;
-    FSeek(p + 368); BirdCameraParam cameraParam;
+    FSeek(p + 0);   vector3 haColliderExtents<comment="HA用ボックスコリジョン半径">;
+    FSeek(p + 16);  vector3 haColliderOffset<comment="HA用ボックスコリジョンオフセット">;
+    FSeek(p + 32);  vector3 haTargetOffset<comment="HAターゲット位置オフセット">;
+    FSeek(p + 48);  float haTargetRadius<comment="HAターゲット半径">;
+    FSeek(p + 52);  float haTargetHeight<comment="HAターゲット高さ">;
+    FSeek(p + 56);  BirdWanderParam wanderParam<comment="徘徊設定">;
+    FSeek(p + 80);  BirdApproachParam approachParam<comment="接近設定">;
+    FSeek(p + 128); BirdLaserStateParam laserStateParam<comment="レーザーステート設定">;
+    FSeek(p + 144); BirdChargeParam chargeParam<comment="突進設定">;
+    FSeek(p + 208); BirdBackupParam backupParam<comment="後退設定">;
+    FSeek(p + 224); BirdBarParam barParam<comment="鉄棒設定">;
+    FSeek(p + 272); BirdGlidingParam glidingParam<comment="ソニック搭乗時の滑空設定">;
+    FSeek(p + 308); BirdDeadParam deadParam<comment="死亡設定">;
+    FSeek(p + 332); BirdRaycastParam raycastParam<comment="レイキャスト設定">;
+    FSeek(p + 344); bool useCamera<comment="カメラを使用する">;
+    FSeek(p + 348); BirdOnBackCameraParam onBackCameraParam<comment="着地後カメラ設定">;
+    FSeek(p + 368); BirdCameraParam cameraParam<comment="カメラ設定">;
 
     FSeek(p + 416);
 } EnemyBirdParam;
@@ -237,10 +237,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyBirdCommonParam commonParam;
-    FSeek(p + 112); EnemyBirdLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 192); EnemyBirdLevelBand levelBand[5]<optimize=false>;
-    FSeek(p + 224); EnemyBirdParam birdParam;
+    FSeek(p + 0);   EnemyBirdCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 112); EnemyBirdLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 192); EnemyBirdLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 224); EnemyBirdParam birdParam<comment="鳥型エネミー本体のパラメータ">;
 
     FSeek(p + 640);
 } EnemyBirdConfig;

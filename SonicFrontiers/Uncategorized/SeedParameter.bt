@@ -12,8 +12,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float suckedTime;
-    FSeek(p + 4); SeedType seedType;
+    FSeek(p + 0); float suckedTime<comment="タネ回収までの時間">;
+    FSeek(p + 4); SeedType seedType<comment="seedType">;
 
     FSeek(p + 8);
 } SeedParameter;

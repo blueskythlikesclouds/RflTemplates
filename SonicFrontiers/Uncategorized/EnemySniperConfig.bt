@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -21,22 +21,22 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  RingParameter ringParam;
-    FSeek(p + 28); sint32 codeDropNumMin;
-    FSeek(p + 32); sint32 codeDropNumMax;
-    FSeek(p + 36); sint32 codeXDropNumMin;
-    FSeek(p + 40); sint32 codeXDropNumMax;
-    FSeek(p + 44); float eyesightDistancePatrol;
-    FSeek(p + 48); float eyesightDistanceBattle;
-    FSeek(p + 52); float hideCoreDistance;
-    FSeek(p + 56); float showCoreDistance;
-    FSeek(p + 60); float guardShotWaitTime;
-    FSeek(p + 64); float guardShotAngle;
-    FSeek(p + 68); float aimBendSpeed;
-    FSeek(p + 72); float muzzleShrinkStartDist;
-    FSeek(p + 76); float muzzleShrinkEndDist;
-    FSeek(p + 80); float snipeMaxAngle;
-    FSeek(p + 84); float guardMaxAngle;
+    FSeek(p + 0);  RingParameter ringParam<comment="ドロップリング">;
+    FSeek(p + 28); sint32 codeDropNumMin<comment="[コード]最小ドロップ数">;
+    FSeek(p + 32); sint32 codeDropNumMax<comment="[コード]最大ドロップ数">;
+    FSeek(p + 36); sint32 codeXDropNumMin<comment="[コードX]最大ドロップ数">;
+    FSeek(p + 40); sint32 codeXDropNumMax<comment="[コードX]最大ドロップ数">;
+    FSeek(p + 44); float eyesightDistancePatrol<comment="視野距離(索敵時)">;
+    FSeek(p + 48); float eyesightDistanceBattle<comment="視野距離(戦闘時)">;
+    FSeek(p + 52); float hideCoreDistance<comment="弱点を隠す距離">;
+    FSeek(p + 56); float showCoreDistance<comment="弱点を出す距離">;
+    FSeek(p + 60); float guardShotWaitTime<comment="防御時の停止時間">;
+    FSeek(p + 64); float guardShotAngle<comment="防御弾幕の発射角度">;
+    FSeek(p + 68); float aimBendSpeed<comment="エイム時銃口の曲がる速さ">;
+    FSeek(p + 72); float muzzleShrinkStartDist<comment="銃口が縮み始める距離">;
+    FSeek(p + 76); float muzzleShrinkEndDist<comment="銃口が縮み終わる距離">;
+    FSeek(p + 80); float snipeMaxAngle<comment="スナイプ時の銃口最大角度">;
+    FSeek(p + 84); float guardMaxAngle<comment="防御時の銃口最大角度">;
 
     FSeek(p + 88);
 } EnemySniperCommonConfig;
@@ -45,24 +45,24 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  sint32 maxGuardPoint;
-    FSeek(p + 8);  float stunTime;
-    FSeek(p + 12); float attackRate;
-    FSeek(p + 16); uint16 expItemNum;
-    FSeek(p + 18); uint16 exp;
-    FSeek(p + 20); float snipeRotateSpeed;
-    FSeek(p + 24); float chargeRotateSpeed;
-    FSeek(p + 28); float predictRotateSpeed;
-    FSeek(p + 32); float snipeWaitTime;
-    FSeek(p + 36); float snipeShotSpeed;
-    FSeek(p + 40); float snipeIntervalTime;
-    FSeek(p + 44); float predictTime;
-    FSeek(p + 48); float predictAngleRange;
-    FSeek(p + 52); float guardShotSpeed;
-    FSeek(p + 56); float guardShotRotateSpeed;
-    FSeek(p + 60); float guardShotMotionSpeed;
-    FSeek(p + 64); float guardShotLifeTime;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  sint32 maxGuardPoint<comment="防御体力">;
+    FSeek(p + 8);  float stunTime<comment="スタン時間">;
+    FSeek(p + 12); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 16); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 18); uint16 exp<comment="合計経験値">;
+    FSeek(p + 20); float snipeRotateSpeed<comment="スナイプ中の旋回速度">;
+    FSeek(p + 24); float chargeRotateSpeed<comment="チャージ中の旋回速度">;
+    FSeek(p + 28); float predictRotateSpeed<comment="偏差射撃中の旋回速度">;
+    FSeek(p + 32); float snipeWaitTime<comment="スナイプ弾発射の前隙">;
+    FSeek(p + 36); float snipeShotSpeed<comment="スナイプ弾の弾速">;
+    FSeek(p + 40); float snipeIntervalTime<comment="スナイプ弾発射の後隙">;
+    FSeek(p + 44); float predictTime<comment="偏差射撃の標準合わせ時間">;
+    FSeek(p + 48); float predictAngleRange<comment="偏差射撃の最大ブレ角度">;
+    FSeek(p + 52); float guardShotSpeed<comment="防御弾幕の弾速">;
+    FSeek(p + 56); float guardShotRotateSpeed<comment="防御弾幕の回転速度">;
+    FSeek(p + 60); float guardShotMotionSpeed<comment="防御弾幕のモーション速度">;
+    FSeek(p + 64); float guardShotLifeTime<comment="防御弾幕の寿命">;
 
     FSeek(p + 68);
 } SniperCommonLevelConfig;
@@ -71,8 +71,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); SniperCommonLevelConfig common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); SniperCommonLevelConfig common<comment="共通設定">;
 
     FSeek(p + 72);
 } EnemySniperLevelConfig;
@@ -81,7 +81,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 dummy;
+    FSeek(p + 0); sint32 dummy<comment="dummy">;
 
     FSeek(p + 4);
 } SniperCommonActionConfig;
@@ -90,8 +90,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); SniperCommonActionConfig common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); SniperCommonActionConfig common<comment="共通設定">;
 
     FSeek(p + 8);
 } EnemySniperLevelBandConfig;
@@ -100,9 +100,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemySniperCommonConfig commonParams;
-    FSeek(p + 88);  EnemySniperLevelConfig levelParams[5]<optimize=false>;
-    FSeek(p + 448); EnemySniperLevelBandConfig levelBands[5]<optimize=false>;
+    FSeek(p + 0);   EnemySniperCommonConfig commonParams<comment="共通パラメータ">;
+    FSeek(p + 88);  EnemySniperLevelConfig levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 448); EnemySniperLevelBandConfig levelBands[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 488);
 } EnemySniperConfig;

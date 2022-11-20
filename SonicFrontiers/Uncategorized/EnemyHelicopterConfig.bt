@@ -11,8 +11,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 16); vector3 pos;
+    FSeek(p + 0);  float radius<comment="半径">;
+    FSeek(p + 16); vector3 pos<comment="ローカル位置">;
 
     FSeek(p + 32);
 } HeliDamageCol;
@@ -21,8 +21,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float followRotateSpeed;
-    FSeek(p + 16); HeliDamageCol damageCol;
+    FSeek(p + 0);  float followRotateSpeed<comment="プレイヤー追従回転速度[°/s]">;
+    FSeek(p + 16); HeliDamageCol damageCol<comment="ダメージコリジョン">;
 
     FSeek(p + 48);
 } HeliCommon;
@@ -31,8 +31,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float life;
-    FSeek(p + 4); float attackInterval;
+    FSeek(p + 0); float life<comment="生存時間(s)">;
+    FSeek(p + 4); float attackInterval<comment="攻撃間隔(s)">;
 
     FSeek(p + 8);
 } HeliAttackBase;
@@ -44,10 +44,10 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  HeliAttackBase heliAttackBase;
-    FSeek(p + 8);  float bulletSpeed;
-    FSeek(p + 12); float gunRotateSpeed;
-    FSeek(p + 16); uint8 attackChainNum;
-    FSeek(p + 20); float attackChainInterval;
+    FSeek(p + 8);  float bulletSpeed<comment="弾の速度[m/s]">;
+    FSeek(p + 12); float gunRotateSpeed<comment="バルカン回転速度[°/s]">;
+    FSeek(p + 16); uint8 attackChainNum<comment="連射回数">;
+    FSeek(p + 20); float attackChainInterval<comment="連射間隔">;
 
     FSeek(p + 24);
 } HeliBullet;
@@ -57,7 +57,7 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0); HeliAttackBase heliAttackBase;
-    FSeek(p + 8); float bombSpeed;
+    FSeek(p + 8); float bombSpeed<comment="爆弾落下速度[m/s]">;
 
     FSeek(p + 12);
 } HeliBomb;
@@ -66,9 +66,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  HeliCommon common;
-    FSeek(p + 48); HeliBullet attackBullet;
-    FSeek(p + 72); HeliBomb attackBomb;
+    FSeek(p + 0);  HeliCommon common<comment="基本設定">;
+    FSeek(p + 48); HeliBullet attackBullet<comment="バルカン">;
+    FSeek(p + 72); HeliBomb attackBomb<comment="爆弾">;
 
     FSeek(p + 96);
 } EnemyHelicopterConfig;

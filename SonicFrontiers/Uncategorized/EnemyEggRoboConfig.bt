@@ -11,18 +11,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scaleSv;
-    FSeek(p + 4);  float scaleFv;
-    FSeek(p + 8);  float appearEffTimer;
-    FSeek(p + 12); float colliderRadius;
-    FSeek(p + 16); float colliderHeight;
-    FSeek(p + 32); vector3 colliderOffset;
-    FSeek(p + 48); float laserColliderRadius;
-    FSeek(p + 52); float laserColliderHeight;
-    FSeek(p + 64); vector3 laserColliderSizeSV;
-    FSeek(p + 80); float missileColliderRadius;
-    FSeek(p + 84); float missileColliderHeight;
-    FSeek(p + 96); vector3 missileColliderOffset;
+    FSeek(p + 0);  float scaleSv<comment="SVスケール">;
+    FSeek(p + 4);  float scaleFv<comment="FVスケール">;
+    FSeek(p + 8);  float appearEffTimer<comment="出現エフェクトタイマー">;
+    FSeek(p + 12); float colliderRadius<comment="本体コリジョン半径">;
+    FSeek(p + 16); float colliderHeight<comment="本体コリジョン高さ">;
+    FSeek(p + 32); vector3 colliderOffset<comment="本体コリジョンオフセット">;
+    FSeek(p + 48); float laserColliderRadius<comment="ビームコリジョン半径">;
+    FSeek(p + 52); float laserColliderHeight<comment="ビームコリジョン高さ">;
+    FSeek(p + 64); vector3 laserColliderSizeSV<comment="SV用ビームコリジョン各辺の長さ">;
+    FSeek(p + 80); float missileColliderRadius<comment="ミサイルコリジョン半径">;
+    FSeek(p + 84); float missileColliderHeight<comment="ミサイルコリジョン高さ">;
+    FSeek(p + 96); vector3 missileColliderOffset<comment="ミサイルコリジョンオフセット">;
 
     FSeek(p + 112);
 } EnemyEggRoboConfig;

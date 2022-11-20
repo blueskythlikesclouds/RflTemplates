@@ -19,10 +19,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); ContactDamageType contactDamageType;
-    FSeek(p + 1); bool noneDamageSpin;
-    FSeek(p + 2); bool rideOnDamage;
-    FSeek(p + 3); bool aerialBounce;
+    FSeek(p + 0); ContactDamageType contactDamageType<comment="接触ダメージ">;
+    FSeek(p + 1); bool noneDamageSpin<comment="スピンアタックではダメージを受けない">;
+    FSeek(p + 2); bool rideOnDamage<comment="乗られた時、ダメージを受ける">;
+    FSeek(p + 3); bool aerialBounce<comment="空中攻撃で破壊した際のバウンド">;
 
     FSeek(p + 4);
 } GismoConfigPlanData;

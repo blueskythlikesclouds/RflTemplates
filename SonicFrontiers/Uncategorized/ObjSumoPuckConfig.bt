@@ -6,20 +6,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float mass;
-    FSeek(p + 4);  float slopeAngleMax;
-    FSeek(p + 8);  float stairHeightMax;
-    FSeek(p + 12); float colliderRigidHeight;
-    FSeek(p + 16); float colliderRigidRadius;
-    FSeek(p + 20); float colliderEventHeight;
-    FSeek(p + 24); float colliderEventRadius;
-    FSeek(p + 28); float colliderOffsetHeightSlingshot;
-    FSeek(p + 32); float explodeRadius;
-    FSeek(p + 36); float bumperBlowSpeed;
-    FSeek(p + 40); float bumperOCTime;
-    FSeek(p + 44); sint32 damageToEnemy;
-    FSeek(p + 48); float lifeTimeParried;
-    FSeek(p + 52); float decelerationParried;
+    FSeek(p + 0);  float mass<comment="質量">;
+    FSeek(p + 4);  float slopeAngleMax<comment="登れるスロープの角度">;
+    FSeek(p + 8);  float stairHeightMax<comment="登れる段さの高さ">;
+    FSeek(p + 12); float colliderRigidHeight<comment="剛体コリジョンの高さ">;
+    FSeek(p + 16); float colliderRigidRadius<comment="剛体コリジョンの半径">;
+    FSeek(p + 20); float colliderEventHeight<comment="イベントコリジョンの高さ">;
+    FSeek(p + 24); float colliderEventRadius<comment="イベントコリジョンの半径">;
+    FSeek(p + 28); float colliderOffsetHeightSlingshot<comment="スリングショット中のコリジョンの高さオフセット">;
+    FSeek(p + 32); float explodeRadius<comment="爆発半径">;
+    FSeek(p + 36); float bumperBlowSpeed<comment="バンパー吹き飛ばし速度">;
+    FSeek(p + 40); float bumperOCTime<comment="バンパー操作不能時間">;
+    FSeek(p + 44); sint32 damageToEnemy<comment="エネミーへのダメージ量">;
+    FSeek(p + 48); float lifeTimeParried<comment="パリーした後の生存時間">;
+    FSeek(p + 52); float decelerationParried<comment="パリー後の減速度">;
 
     FSeek(p + 56);
 } ObjSumoPuckConfig;

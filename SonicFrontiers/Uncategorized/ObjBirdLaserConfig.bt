@@ -4,9 +4,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float speed;
-    FSeek(p + 4); float maxSpeed;
-    FSeek(p + 8); float acceleration;
+    FSeek(p + 0); float speed<comment="初速度">;
+    FSeek(p + 4); float maxSpeed<comment="最大速度">;
+    FSeek(p + 8); float acceleration<comment="加速度">;
 
     FSeek(p + 12);
 } SpeedInfo;
@@ -22,12 +22,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  SpeedInfo speedInfoToSonic;
-    FSeek(p + 12); SpeedInfo speedInfoToBird;
-    FSeek(p + 24); float colliderLength;
-    FSeek(p + 28); float colliderRadius;
-    FSeek(p + 32); float lifeTime;
-    FSeek(p + 48); vector3 laserScale;
+    FSeek(p + 0);  SpeedInfo speedInfoToSonic<comment="速度情報（行き）">;
+    FSeek(p + 12); SpeedInfo speedInfoToBird<comment="速度情報（戻り）">;
+    FSeek(p + 24); float colliderLength<comment="コライダーの長さ">;
+    FSeek(p + 28); float colliderRadius<comment="コライダーの半径">;
+    FSeek(p + 32); float lifeTime<comment="寿命">;
+    FSeek(p + 48); vector3 laserScale<comment="スケール">;
 
     FSeek(p + 64);
 } ObjBirdLaserConfig;

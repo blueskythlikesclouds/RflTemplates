@@ -4,12 +4,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float LicenseInterval;
-    FSeek(p + 4);  float NameInterval;
-    FSeek(p + 8);  float PostInterval;
-    FSeek(p + 12); float CompanyInterval;
-    FSeek(p + 16); float LogoInterval;
-    FSeek(p + 20); float WaitTime;
+    FSeek(p + 0);  float LicenseInterval<comment="ライセンス表記の行間">;
+    FSeek(p + 4);  float NameInterval<comment="名前表記の行間">;
+    FSeek(p + 8);  float PostInterval<comment="役職表示の行間">;
+    FSeek(p + 12); float CompanyInterval<comment="会社表示の行間">;
+    FSeek(p + 16); float LogoInterval<comment="ロゴ表示の行間">;
+    FSeek(p + 20); float WaitTime<comment="最後のディクター表示停止時間">;
 
     FSeek(p + 24);
 } UICreditParameter;

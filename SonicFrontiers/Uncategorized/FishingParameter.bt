@@ -4,26 +4,26 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float baseWaveThickness;
-    FSeek(p + 4);  float baseWaveSuccessRatioNormal;
-    FSeek(p + 8);  float baseWaveSuccessRatioHold;
-    FSeek(p + 12); float singleWaveThickness;
-    FSeek(p + 16); float baseWaveEdgeThickness;
-    FSeek(p + 20); float timingEdgeThickness;
-    FSeek(p + 24); uint32 fishShadowNum;
-    FSeek(p + 28); float fishApproachIntervalMin;
-    FSeek(p + 32); float fishApproachIntervalMax;
-    FSeek(p + 36); float fishEscapeDistance;
-    FSeek(p + 40); uint32 buoyTwitchNumMin;
-    FSeek(p + 44); uint32 buoyTwitchNumMax;
-    FSeek(p + 48); float buoyTwitchIntervalMin;
-    FSeek(p + 52); float buoyTwitchIntervalMax;
-    FSeek(p + 56); float inputValidTime;
-    FSeek(p + 60); float fishingCameraTransitDelay;
-    FSeek(p + 64); float cutinDelay;
-    FSeek(p + 68); float cutinDuration;
-    FSeek(p + 72); float successPullUpDelay;
-    FSeek(p + 76); uint32 goldenChestLimitNum;
+    FSeek(p + 0);  float baseWaveThickness<comment="基準波の太さ">;
+    FSeek(p + 4);  float baseWaveSuccessRatioNormal<comment="基準波の成功判定割合(通常)">;
+    FSeek(p + 8);  float baseWaveSuccessRatioHold<comment="基準波の成功判定割合(長押)">;
+    FSeek(p + 12); float singleWaveThickness<comment="単発波の太さ">;
+    FSeek(p + 16); float baseWaveEdgeThickness<comment="基準波の縁の太さ">;
+    FSeek(p + 20); float timingEdgeThickness<comment="タイミング表示の縁の太さ">;
+    FSeek(p + 24); uint32 fishShadowNum<comment="魚影の数">;
+    FSeek(p + 28); float fishApproachIntervalMin<comment="魚がウキに接近を始める時間(最少)">;
+    FSeek(p + 32); float fishApproachIntervalMax<comment="魚がウキに接近を始める時間(最少)">;
+    FSeek(p + 36); float fishEscapeDistance<comment="魚が逃げるウキとの距離">;
+    FSeek(p + 40); uint32 buoyTwitchNumMin<comment="ヒット前のウキのピクつき回数(最少)">;
+    FSeek(p + 44); uint32 buoyTwitchNumMax<comment="ヒット前のウキのピクつき回数(最大)">;
+    FSeek(p + 48); float buoyTwitchIntervalMin<comment="ヒット前のウキのピクつき間隔(最少)">;
+    FSeek(p + 52); float buoyTwitchIntervalMax<comment="ヒット前のウキのピクつき間隔(最大)">;
+    FSeek(p + 56); float inputValidTime<comment="入力受付開始時間">;
+    FSeek(p + 60); float fishingCameraTransitDelay<comment="釣りカメラへの移行ディレイ">;
+    FSeek(p + 64); float cutinDelay<comment="釣り成功時カットイン表示までの遅延時間">;
+    FSeek(p + 68); float cutinDuration<comment="カットインの表示時間">;
+    FSeek(p + 72); float successPullUpDelay<comment="カットイン後釣り上げまでの遅延時間">;
+    FSeek(p + 76); uint32 goldenChestLimitNum<comment="ゴールデンチェストの入手上限数">;
 
     FSeek(p + 80);
 } FishingCommonParam;
@@ -32,8 +32,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint32 successNum;
-    FSeek(p + 4); uint32 failureNum;
+    FSeek(p + 0); uint32 successNum<comment="成功回数">;
+    FSeek(p + 4); uint32 failureNum<comment="失敗回数">;
 
     FSeek(p + 8);
 } FishingSuccessPatternParam;
@@ -51,9 +51,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); Type type;
-    FSeek(p + 4); float radius;
-    FSeek(p + 8); float thickness;
+    FSeek(p + 0); Type type<comment="波の種類">;
+    FSeek(p + 4); float radius<comment="波の半径">;
+    FSeek(p + 8); float thickness<comment="波の太さ(長押波のみ)">;
 
     FSeek(p + 12);
 } FishingWaveParam;
@@ -62,7 +62,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); FishingWaveParam waves[5]<optimize=false>;
+    FSeek(p + 0); FishingWaveParam waves[5]<comment="waves",optimize=false>;
 
     FSeek(p + 60);
 } FishingWaveGroupParam;
@@ -71,15 +71,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float speed;
-    FSeek(p + 4);  float intervalMinFirst;
-    FSeek(p + 8);  float intervalMaxFirst;
-    FSeek(p + 12); float intervalMin;
-    FSeek(p + 16); float intervalMax;
-    FSeek(p + 20); float addRadiusMin;
-    FSeek(p + 24); float addRadiusMax;
-    FSeek(p + 28); uint32 waveGroupNum;
-    FSeek(p + 32); FishingWaveGroupParam waveGroups[10]<optimize=false>;
+    FSeek(p + 0);  float speed<comment="基準波の速さ">;
+    FSeek(p + 4);  float intervalMinFirst<comment="波発生の最小間隔(1回目)">;
+    FSeek(p + 8);  float intervalMaxFirst<comment="波発生の最大間隔(1回目)">;
+    FSeek(p + 12); float intervalMin<comment="波発生の最小間隔(2回目以降)">;
+    FSeek(p + 16); float intervalMax<comment="波発生の最大間隔(2回目以降)">;
+    FSeek(p + 20); float addRadiusMin<comment="波半径の最少ずれ幅">;
+    FSeek(p + 24); float addRadiusMax<comment="波半径の最大ずれ幅">;
+    FSeek(p + 28); uint32 waveGroupNum<comment="波のパターン数 (「波」項目の設定数)">;
+    FSeek(p + 32); FishingWaveGroupParam waveGroups[10]<comment="波 (上から詰めて設定)",optimize=false>;
 
     FSeek(p + 632);
 } FishingWavePatternParam;
@@ -88,7 +88,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float rate;
+    FSeek(p + 0); float rate<comment="出現率">;
 
     FSeek(p + 4);
 } FishingFishGroupParam;
@@ -141,17 +141,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 fishGroupId;
-    FSeek(p + 4);  FishShadowType shadowType;
-    FSeek(p + 8);  uint32 successPatternId;
-    FSeek(p + 12); uint32 wavePatternId;
-    FSeek(p + 16); uint32 expPoint;
-    FSeek(p + 20); uint32 tokenNum;
-    FSeek(p + 24); bool isRare;
-    FSeek(p + 25); CatchUpMotionType catchUpMotionType;
-    FSeek(p + 26); ToastType toastType;
-    FSeek(p + 32); vector3 catchUpOffsetPos;
-    FSeek(p + 48); vector3 catchUpOffsetRot;
+    FSeek(p + 0);  sint32 fishGroupId<comment="魚グループID">;
+    FSeek(p + 4);  FishShadowType shadowType<comment="魚影の種類">;
+    FSeek(p + 8);  uint32 successPatternId<comment="成功パターンID">;
+    FSeek(p + 12); uint32 wavePatternId<comment="波パターンID">;
+    FSeek(p + 16); uint32 expPoint<comment="獲得スキルピース数">;
+    FSeek(p + 20); uint32 tokenNum<comment="獲得トークン数">;
+    FSeek(p + 24); bool isRare<comment="レア魚か">;
+    FSeek(p + 25); CatchUpMotionType catchUpMotionType<comment="釣り上げモーション">;
+    FSeek(p + 26); ToastType toastType<comment="Toast表示タイプ">;
+    FSeek(p + 32); vector3 catchUpOffsetPos<comment="釣り上げ位置オフセット">;
+    FSeek(p + 48); vector3 catchUpOffsetRot<comment="釣り上げ回転オフセット">;
 
     FSeek(p + 64);
 } FishingFishParam;
@@ -160,7 +160,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 spawnFishId[20]<optimize=false>;
+    FSeek(p + 0); sint32 spawnFishId[20]<comment="spawnFishId",optimize=false>;
 
     FSeek(p + 80);
 } FishingSpotSpawnFishParam;
@@ -169,8 +169,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 count;
-    FSeek(p + 4); sint32 fishId;
+    FSeek(p + 0); sint32 count<comment="釣り上げ回数">;
+    FSeek(p + 4); sint32 fishId<comment="魚ID">;
 
     FSeek(p + 8);
 } FishingFixedResultParam;
@@ -179,9 +179,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint32 tableSize;
-    FSeek(p + 4); uint32 achievementUnlockCount;
-    FSeek(p + 8); FishingFixedResultParam fixedResultList[50]<optimize=false>;
+    FSeek(p + 0); uint32 tableSize<comment="固定釣果テーブルサイズ">;
+    FSeek(p + 4); uint32 achievementUnlockCount<comment="釣果コンプリート実績解除テーブル位置">;
+    FSeek(p + 8); FishingFixedResultParam fixedResultList[50]<comment="固定釣果一覧",optimize=false>;
 
     FSeek(p + 408);
 } FishingSpotFixedResultParam;
@@ -190,10 +190,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    FishingSpotSpawnFishParam spawnFish[4]<optimize=false>;
-    FSeek(p + 320);  FishingSpotFixedResultParam fixedResults[4]<optimize=false>;
-    FSeek(p + 1952); uint32 useFishCoinNum[4]<optimize=false>;
-    FSeek(p + 1968); uint32 tokenRate[4]<optimize=false>;
+    FSeek(p + 0);    FishingSpotSpawnFishParam spawnFish[4]<comment="出現する魚ID",optimize=false>;
+    FSeek(p + 320);  FishingSpotFixedResultParam fixedResults[4]<comment="固定釣果",optimize=false>;
+    FSeek(p + 1952); uint32 useFishCoinNum[4]<comment="消費するフィッシュコイン数",optimize=false>;
+    FSeek(p + 1968); uint32 tokenRate[4]<comment="獲得トークン倍率",optimize=false>;
 
     FSeek(p + 1984);
 } FishingSpotParam;
@@ -202,10 +202,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   uint32 singleWaveSuccessCount;
-    FSeek(p + 4);   uint32 holdWaveSuccessCount;
-    FSeek(p + 8);   FishingWavePatternParam singleWave;
-    FSeek(p + 640); FishingWavePatternParam holdWave;
+    FSeek(p + 0);   uint32 singleWaveSuccessCount<comment="単発波の必要成功回数">;
+    FSeek(p + 4);   uint32 holdWaveSuccessCount<comment="長押波の必要成功回数">;
+    FSeek(p + 8);   FishingWavePatternParam singleWave<comment="単発波">;
+    FSeek(p + 640); FishingWavePatternParam holdWave<comment="長押波">;
 
     FSeek(p + 1272);
 } FishingTutorialParam;
@@ -216,7 +216,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 sales[9]<optimize=false>;
+    FSeek(p + 0); uint8 sales[9]<comment="販売数",optimize=false>;
 
     FSeek(p + 9);
 } FishingTradeTableParma;
@@ -225,9 +225,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  FishingTradeTableParma spot[4]<optimize=false>;
-    FSeek(p + 36); uint8 prices[9]<optimize=false>;
-    FSeek(p + 45); uint8 counts[9]<optimize=false>;
+    FSeek(p + 0);  FishingTradeTableParma spot[4]<comment="スポット別",optimize=false>;
+    FSeek(p + 36); uint8 prices[9]<comment="販売価格",optimize=false>;
+    FSeek(p + 45); uint8 counts[9]<comment="1購入ごとの獲得数",optimize=false>;
 
     FSeek(p + 54);
 } FishingTradeParam;
@@ -236,14 +236,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     FishingCommonParam common;
-    FSeek(p + 80);    FishingSuccessPatternParam successPattern[10]<optimize=false>;
-    FSeek(p + 160);   FishingWavePatternParam wavePattern[10]<optimize=false>;
-    FSeek(p + 6480);  FishingFishGroupParam fishGroup[10]<optimize=false>;
-    FSeek(p + 6528);  FishingFishParam fish[130]<optimize=false>;
-    FSeek(p + 14848); FishingSpotParam spot;
-    FSeek(p + 16832); FishingTutorialParam tutorial;
-    FSeek(p + 18104); FishingTradeParam trade;
+    FSeek(p + 0);     FishingCommonParam common<comment="基本設定">;
+    FSeek(p + 80);    FishingSuccessPatternParam successPattern[10]<comment="成功パターン設定",optimize=false>;
+    FSeek(p + 160);   FishingWavePatternParam wavePattern[10]<comment="波パターン設定",optimize=false>;
+    FSeek(p + 6480);  FishingFishGroupParam fishGroup[10]<comment="魚グループ設定",optimize=false>;
+    FSeek(p + 6528);  FishingFishParam fish[130]<comment="魚設定",optimize=false>;
+    FSeek(p + 14848); FishingSpotParam spot<comment="釣りスポット設定">;
+    FSeek(p + 16832); FishingTutorialParam tutorial<comment="チュートリアル設定">;
+    FSeek(p + 18104); FishingTradeParam trade<comment="交換設定">;
 
     FSeek(p + 18160);
 } FishingParameter;

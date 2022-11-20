@@ -4,8 +4,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float interoplateTimeActivate;
-    FSeek(p + 4); float interoplateTimeDeactivate;
+    FSeek(p + 0); float interoplateTimeActivate<comment="カメラ起動時補間時間">;
+    FSeek(p + 4); float interoplateTimeDeactivate<comment="カメラ終了時補間時間">;
 
     FSeek(p + 8);
 } ReflexesPanelCameraParam;
@@ -21,8 +21,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 collisionHalfExtents;
-    FSeek(p + 16); vector3 collisionOffset;
+    FSeek(p + 0);  vector3 collisionHalfExtents<comment="コリジョン 各辺の長さの半分">;
+    FSeek(p + 16); vector3 collisionOffset<comment="コリジョン オフセット">;
 
     FSeek(p + 32);
 } ReflexesPanelPanelParam;
@@ -31,8 +31,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  ReflexesPanelCameraParam cameraParam;
-    FSeek(p + 16); ReflexesPanelPanelParam panelParam;
+    FSeek(p + 0);  ReflexesPanelCameraParam cameraParam<comment="カメラ">;
+    FSeek(p + 16); ReflexesPanelPanelParam panelParam<comment="パネル">;
 
     FSeek(p + 48);
 } ReflexesPanelParam;

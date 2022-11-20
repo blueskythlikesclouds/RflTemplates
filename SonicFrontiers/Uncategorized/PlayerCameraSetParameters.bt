@@ -39,16 +39,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  CameraType type;
-    FSeek(p + 4);  float time;
-    FSeek(p + 8);  float easeinTime;
-    FSeek(p + 12); CameraCoordType lookAtCoord;
-    FSeek(p + 16); vector3 localLookAtOffset;
-    FSeek(p + 32); vector3 worldLookAtOffset;
-    FSeek(p + 48); CameraCoordType eyeCoord;
-    FSeek(p + 64); vector3 localEyeOffset;
-    FSeek(p + 80); vector3 worldEyeOffset;
-    FSeek(p + 96); float roll;
+    FSeek(p + 0);  CameraType type<comment="動作">;
+    FSeek(p + 4);  float time<comment="有効時間">;
+    FSeek(p + 8);  float easeinTime<comment="補間時間">;
+    FSeek(p + 12); CameraCoordType lookAtCoord<comment="注視点の座標系">;
+    FSeek(p + 16); vector3 localLookAtOffset<comment="注視点のローカルオフセット">;
+    FSeek(p + 32); vector3 worldLookAtOffset<comment="注視点のワールドオフセット">;
+    FSeek(p + 48); CameraCoordType eyeCoord<comment="カメラ位置の座標系">;
+    FSeek(p + 64); vector3 localEyeOffset<comment="カメラ位置のローカルオフセット">;
+    FSeek(p + 80); vector3 worldEyeOffset<comment="カメラ位置のワールドオフセット">;
+    FSeek(p + 96); float roll<comment="Roll">;
 
     FSeek(p + 112);
 } PlayerCameraParameter;
@@ -57,9 +57,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); float easeoutTime;
-    FSeek(p + 32); PlayerCameraParameter param[8]<optimize=false>;
+    FSeek(p + 0);  cstring name<comment="名前">;
+    FSeek(p + 16); float easeoutTime<comment="終了補間時間">;
+    FSeek(p + 32); PlayerCameraParameter param[8]<comment="パラメータ",optimize=false>;
 
     FSeek(p + 928);
 } PlayerCameraSetParameter;
@@ -68,7 +68,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); PlayerCameraSetParameter data[45]<optimize=false>;
+    FSeek(p + 0); PlayerCameraSetParameter data[45]<comment="カメラパラメータ郡",optimize=false>;
 
     FSeek(p + 41760);
 } PlayerCameraSetParameters;

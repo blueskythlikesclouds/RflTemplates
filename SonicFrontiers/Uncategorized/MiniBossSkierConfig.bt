@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,17 +25,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float blockRadius;
-    FSeek(p + 4);  float blockHeight;
-    FSeek(p + 8);  float damageRadius;
-    FSeek(p + 12); float damagedBlockRadius;
-    FSeek(p + 16); float damagedBlockHeight;
-    FSeek(p + 20); float returnRadius;
-    FSeek(p + 24); float returnBlockRadius;
-    FSeek(p + 28); float returnHeight;
-    FSeek(p + 32); float weakPointRadius;
-    FSeek(p + 36); float grabRadius;
-    FSeek(p + 40); float attackRadius;
+    FSeek(p + 0);  float blockRadius<comment="潜り中剛体コリジョン半径">;
+    FSeek(p + 4);  float blockHeight<comment="潜り中剛体コリジョン高さ">;
+    FSeek(p + 8);  float damageRadius<comment="もがく中ダメージコリジョン半径">;
+    FSeek(p + 12); float damagedBlockRadius<comment="もがく中ブロックコリジョン半径">;
+    FSeek(p + 16); float damagedBlockHeight<comment="もがくジ中ブロックコリジョン長さ">;
+    FSeek(p + 20); float returnRadius<comment="地面に戻るときダメージコリジョン半径">;
+    FSeek(p + 24); float returnBlockRadius<comment="地面に戻るときブロックコリジョン半径">;
+    FSeek(p + 28); float returnHeight<comment="地面に戻るときコリジョン高さ">;
+    FSeek(p + 32); float weakPointRadius<comment="弱点コリジョン半径">;
+    FSeek(p + 36); float grabRadius<comment="掴みコリジョン半径">;
+    FSeek(p + 40); float attackRadius<comment="飛び出し攻撃コリジョン半径">;
 
     FSeek(p + 44);
 } MiniBossSkierColliderParam;
@@ -44,9 +44,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float tailRotateMinSpeed;
-    FSeek(p + 4); float tailRotateMaxSpeed;
-    FSeek(p + 8); float tailRotateAddSpeed;
+    FSeek(p + 0); float tailRotateMinSpeed<comment="尻尾ノード最小回転速度[deg/s]">;
+    FSeek(p + 4); float tailRotateMaxSpeed<comment="尻尾ノード最大回転速度[deg/s]">;
+    FSeek(p + 8); float tailRotateAddSpeed<comment="尻尾ノード回転速度加速度[deg/s]">;
 
     FSeek(p + 12);
 } MiniBossSkeirTailMoveParam;
@@ -55,15 +55,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float tailExtendTime;
-    FSeek(p + 4);  float tailNodeLenthMin;
-    FSeek(p + 8);  float tailNodeLenthMax;
-    FSeek(p + 12); float checkGroundStartDistanceOnSkiing;
-    FSeek(p + 16); float checkGroundEndDistanceOnSkiing;
-    FSeek(p + 20); float checkGroundEndDistanceOnSkiingJump;
-    FSeek(p + 24); float checkGroundEndDistanceOnSkiingCamera;
-    FSeek(p + 28); MiniBossSkeirTailMoveParam rotateParamNormal;
-    FSeek(p + 40); MiniBossSkeirTailMoveParam rotateParamAttack;
+    FSeek(p + 0);  float tailExtendTime<comment="尻尾全長展開時間">;
+    FSeek(p + 4);  float tailNodeLenthMin<comment="尻尾ノード間最小長さ">;
+    FSeek(p + 8);  float tailNodeLenthMax<comment="尻尾ノード間最大長さ">;
+    FSeek(p + 12); float checkGroundStartDistanceOnSkiing<comment="スキー中の接地判定開始距離">;
+    FSeek(p + 16); float checkGroundEndDistanceOnSkiing<comment="スキー中の接地判定終了距離">;
+    FSeek(p + 20); float checkGroundEndDistanceOnSkiingJump<comment="スキー中の接地判定終了距離[ジャンプ]">;
+    FSeek(p + 24); float checkGroundEndDistanceOnSkiingCamera<comment="スキー中の接地判定終了距離[カメラ]">;
+    FSeek(p + 28); MiniBossSkeirTailMoveParam rotateParamNormal<comment="尻尾回転設定[通常]">;
+    FSeek(p + 40); MiniBossSkeirTailMoveParam rotateParamAttack<comment="尻尾回転設定[パイロン/爆弾]">;
 
     FSeek(p + 52);
 } MiniBossSkierTailParam;
@@ -72,13 +72,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float LRFBNormalRatioSpeed;
-    FSeek(p + 4);  float LRDangerAngle;
-    FSeek(p + 8);  float LRDangerTime;
-    FSeek(p + 12); float LRInputInterfere;
-    FSeek(p + 16); float LRRecoverSpeed;
-    FSeek(p + 20); float LRDragSpeed;
-    FSeek(p + 24); float LRRecoverEndRatio;
+    FSeek(p + 0);  float LRFBNormalRatioSpeed<comment="通常姿勢調整速度">;
+    FSeek(p + 4);  float LRDangerAngle<comment="危険姿勢判定角度">;
+    FSeek(p + 8);  float LRDangerTime<comment="危険姿勢継続可能時間">;
+    FSeek(p + 12); float LRInputInterfere<comment="プレイヤー入力影響比率">;
+    FSeek(p + 16); float LRRecoverSpeed<comment="入力による安定姿勢に復帰する速度">;
+    FSeek(p + 20); float LRDragSpeed<comment="危険姿勢に戻る速度">;
+    FSeek(p + 24); float LRRecoverEndRatio<comment="安定姿勢に自動復帰する比率">;
 
     FSeek(p + 28);
 } MiniBossSkeirPlayerControlLR;
@@ -87,9 +87,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float UDSafeRatio;
-    FSeek(p + 4); float UDRecoverSpeed;
-    FSeek(p + 8); float UDDragSpeed;
+    FSeek(p + 0); float UDSafeRatio<comment="安定姿勢に戻る閾値">;
+    FSeek(p + 4); float UDRecoverSpeed<comment="入力による安定姿勢に復帰する速度">;
+    FSeek(p + 8); float UDDragSpeed<comment="危険姿勢に戻る速度">;
 
     FSeek(p + 12);
 } MiniBossSkeirPlayerControlUD;
@@ -98,10 +98,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float tailRatioChangeSpeed;
-    FSeek(p + 4);  float tailRatioRecoverSpeed;
-    FSeek(p + 8);  float tailAddSpeedMax;
-    FSeek(p + 12); float tailAddSpeedAttenuation;
+    FSeek(p + 0);  float tailRatioChangeSpeed<comment="入力による姿勢調整速度">;
+    FSeek(p + 4);  float tailRatioRecoverSpeed<comment="入力なし時安定姿勢復帰速度">;
+    FSeek(p + 8);  float tailAddSpeedMax<comment="入力による尻尾回転加速度">;
+    FSeek(p + 12); float tailAddSpeedAttenuation<comment="入力影響減衰因子">;
 
     FSeek(p + 16);
 } MiniBossSkeirPlayerControlTail;
@@ -110,8 +110,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float timeExplodePassed;
-    FSeek(p + 4); float timeExplodeAuto;
+    FSeek(p + 0); float timeExplodePassed<comment="通り過ぎた爆弾の爆破時間">;
+    FSeek(p + 4); float timeExplodeAuto<comment="接地後に自動で爆破する時間">;
 
     FSeek(p + 8);
 } MiniBossSkierMissileParam;
@@ -120,10 +120,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float interoplateTimeActivate;
-    FSeek(p + 4);  float interoplateTimeDeactivate;
-    FSeek(p + 16); vector3 targetOffset;
-    FSeek(p + 32); vector3 cameraPosOffset;
+    FSeek(p + 0);  float interoplateTimeActivate<comment="カメラ起動時補間時間">;
+    FSeek(p + 4);  float interoplateTimeDeactivate<comment="カメラ終了時補間時間">;
+    FSeek(p + 16); vector3 targetOffset<comment="注視点オフセット">;
+    FSeek(p + 32); vector3 cameraPosOffset<comment="カメラオフセット">;
 
     FSeek(p + 48);
 } MiniBossSkierCustomCameraParam;
@@ -132,15 +132,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
-    FSeek(p + 64);  MiniBossSkierColliderParam colliderParam;
-    FSeek(p + 108); MiniBossSkierTailParam tailParam;
-    FSeek(p + 160); MiniBossSkeirPlayerControlLR LRControlParam;
-    FSeek(p + 188); MiniBossSkeirPlayerControlUD UDControlParam;
-    FSeek(p + 200); MiniBossSkeirPlayerControlTail tailControlParam;
-    FSeek(p + 216); MiniBossSkierMissileParam missileParam;
-    FSeek(p + 224); MiniBossSkierCustomCameraParam customCameraParam;
-    FSeek(p + 272); MiniBossSkierCustomCameraParam skiCameraParam;
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64);  MiniBossSkierColliderParam colliderParam<comment="コリジョン設定">;
+    FSeek(p + 108); MiniBossSkierTailParam tailParam<comment="尻尾関連設定">;
+    FSeek(p + 160); MiniBossSkeirPlayerControlLR LRControlParam<comment="尻尾左右制御設定">;
+    FSeek(p + 188); MiniBossSkeirPlayerControlUD UDControlParam<comment="尻尾上下制御設定">;
+    FSeek(p + 200); MiniBossSkeirPlayerControlTail tailControlParam<comment="尻尾移動制御設定">;
+    FSeek(p + 216); MiniBossSkierMissileParam missileParam<comment="投下爆弾設定">;
+    FSeek(p + 224); MiniBossSkierCustomCameraParam customCameraParam<comment="めり込み回避用カメラ設定">;
+    FSeek(p + 272); MiniBossSkierCustomCameraParam skiCameraParam<comment="スキーカメラ設定">;
 
     FSeek(p + 320);
 } MiniBossSkierCommonParam;
@@ -151,16 +151,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -169,8 +169,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossSkierLevelParam;
@@ -179,12 +179,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float NoActionRate;
-    FSeek(p + 4);  float SnakeMoveRate;
-    FSeek(p + 8);  float JumpHighRate;
-    FSeek(p + 12); float JumpLowRate;
-    FSeek(p + 16); float PylonRate;
-    FSeek(p + 20); float MissileRate;
+    FSeek(p + 0);  float NoActionRate<comment="行動しない確率">;
+    FSeek(p + 4);  float SnakeMoveRate<comment="蛇行移動確率">;
+    FSeek(p + 8);  float JumpHighRate<comment="ジャンプ[高]確率">;
+    FSeek(p + 12); float JumpLowRate<comment="ジャンプ[低]確率">;
+    FSeek(p + 16); float PylonRate<comment="パイロン確率">;
+    FSeek(p + 20); float MissileRate<comment="爆弾確率">;
 
     FSeek(p + 24);
 } MiniBossSkierSkiAcitionRate;
@@ -193,9 +193,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float HPRate;
-    FSeek(p + 4);  MiniBossSkierSkiAcitionRate actionRate;
-    FSeek(p + 28); float showWeaknessTimeReTry;
+    FSeek(p + 0);  float HPRate<comment="設定適用HP率">;
+    FSeek(p + 4);  MiniBossSkierSkiAcitionRate actionRate<comment="スキーアクション確率">;
+    FSeek(p + 28); float showWeaknessTimeReTry<comment="弱点露出時間減少閾値">;
 
     FSeek(p + 32);
 } MiniBossSkierBattlePhaseParam;
@@ -204,10 +204,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float attackInterval;
-    FSeek(p + 4);  float attackSensorRange;
-    FSeek(p + 8);  float returnToWanderTime;
-    FSeek(p + 12); float pathPosAngleLimit;
+    FSeek(p + 0);  float attackInterval<comment="攻撃間隔">;
+    FSeek(p + 4);  float attackSensorRange<comment="センサー範囲">;
+    FSeek(p + 8);  float returnToWanderTime<comment="センサー範囲外待ち時間">;
+    FSeek(p + 12); float pathPosAngleLimit<comment="パス上着地時回転角度制限[deg]">;
 
     FSeek(p + 16);
 } MiniBossSkierJumpOutParam;
@@ -216,15 +216,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float showWeaknessTime;
-    FSeek(p + 4);  float skiMoveSpeed;
-    FSeek(p + 8);  float skiWeakMoveSpeed;
-    FSeek(p + 12); float skiReturnSpeed;
-    FSeek(p + 16); float homingSpeed;
-    FSeek(p + 20); float jumpHighSpeed;
-    FSeek(p + 24); float jumpLowSpeed;
-    FSeek(p + 28); float struggleTime;
-    FSeek(p + 32); float returnUndergroundTime;
+    FSeek(p + 0);  float showWeaknessTime<comment="弱点露出時間最大値">;
+    FSeek(p + 4);  float skiMoveSpeed<comment="通常移動速度">;
+    FSeek(p + 8);  float skiWeakMoveSpeed<comment="弱点露出中移動速度">;
+    FSeek(p + 12); float skiReturnSpeed<comment="掴み終了時移動速度">;
+    FSeek(p + 16); float homingSpeed<comment="ホーミングHA中移動速度">;
+    FSeek(p + 20); float jumpHighSpeed<comment="ジャンプ[高]移動速度">;
+    FSeek(p + 24); float jumpLowSpeed<comment="ジャンプ[低]移動速度">;
+    FSeek(p + 28); float struggleTime<comment="地上もがく時間">;
+    FSeek(p + 32); float returnUndergroundTime<comment="地下に戻る時間">;
 
     FSeek(p + 36);
 } MiniBossSkierSkiParam;
@@ -233,11 +233,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float snakeMoveAmplitude;
-    FSeek(p + 4);  float snakeMovePeriod;
-    FSeek(p + 8);  float snakeMovePrepareTime;
-    FSeek(p + 12); float snakeMoveReturnTime;
-    FSeek(p + 16); float snakeMoveDangerAngleOffset;
+    FSeek(p + 0);  float snakeMoveAmplitude<comment="蛇行移動最大幅">;
+    FSeek(p + 4);  float snakeMovePeriod<comment="蛇行移動周期">;
+    FSeek(p + 8);  float snakeMovePrepareTime<comment="蛇行軌道へ補間する開始時間">;
+    FSeek(p + 12); float snakeMoveReturnTime<comment="蛇行軌道へ補間する終了時間">;
+    FSeek(p + 16); float snakeMoveDangerAngleOffset<comment="蛇行中危険姿勢とみなす角度オフセット[deg]">;
 
     FSeek(p + 20);
 } MiniBossSkierSnakeMoveParam;
@@ -246,16 +246,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float signSpeed;
-    FSeek(p + 4);  float attackMinSpeed;
-    FSeek(p + 8);  float attackMaxSpeed;
-    FSeek(p + 12); float maxWaitTime;
-    FSeek(p + 16); float driftLenth;
-    FSeek(p + 20); float driftLenthUIOffset;
-    FSeek(p + 24); float rotStartAngularSpeed;
-    FSeek(p + 28); float rotEndAngularSpeed;
-    FSeek(p + 32); float avoidObjCalMargePylon;
-    FSeek(p + 36); float avoidObjCalMargeMissile;
+    FSeek(p + 0);  float signSpeed<comment="予兆移動速度[ミサイル]">;
+    FSeek(p + 4);  float attackMinSpeed<comment="攻撃移動最小速度">;
+    FSeek(p + 8);  float attackMaxSpeed<comment="攻撃移動最大速度">;
+    FSeek(p + 12); float maxWaitTime<comment="姿勢復帰最大待ち時間">;
+    FSeek(p + 16); float driftLenth<comment="攻撃回転開始距離">;
+    FSeek(p + 20); float driftLenthUIOffset<comment="攻撃回転開始距離UIオフセット">;
+    FSeek(p + 24); float rotStartAngularSpeed<comment="回転開始角速度[deg/s]">;
+    FSeek(p + 28); float rotEndAngularSpeed<comment="回転終了角速度[deg/s]">;
+    FSeek(p + 32); float avoidObjCalMargePylon<comment="入力終了計算マージ[パイロン]">;
+    FSeek(p + 36); float avoidObjCalMargeMissile<comment="入力終了計算マージ[ミサイル]">;
 
     FSeek(p + 40);
 } MiniBossSkierTailAttackParam;
@@ -264,10 +264,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float signSpeed;
-    FSeek(p + 4);  float signTime;
-    FSeek(p + 8);  float pylonAppearTime;
-    FSeek(p + 12); float pylonDisappearTime;
+    FSeek(p + 0);  float signSpeed<comment="予兆移動速度">;
+    FSeek(p + 4);  float signTime<comment="予兆継続時間">;
+    FSeek(p + 8);  float pylonAppearTime<comment="パイロン出現時間">;
+    FSeek(p + 12); float pylonDisappearTime<comment="パイロン退場時間">;
 
     FSeek(p + 16);
 } MiniBossSkierTailAttackPylonParam;
@@ -276,13 +276,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 level;
-    FSeek(p + 4);   MiniBossSkierBattlePhaseParam phaseParam[3]<optimize=false>;
-    FSeek(p + 100); MiniBossSkierJumpOutParam jumpOutParam;
-    FSeek(p + 116); MiniBossSkierSkiParam skiParam;
-    FSeek(p + 152); MiniBossSkierSnakeMoveParam snakeMoveParam;
-    FSeek(p + 172); MiniBossSkierTailAttackParam tailAttackParam;
-    FSeek(p + 212); MiniBossSkierTailAttackPylonParam pylonParam;
+    FSeek(p + 0);   sint32 level<comment="レベル">;
+    FSeek(p + 4);   MiniBossSkierBattlePhaseParam phaseParam[3]<comment="バトルフェースパラメータ",optimize=false>;
+    FSeek(p + 100); MiniBossSkierJumpOutParam jumpOutParam<comment="飛び出し攻撃">;
+    FSeek(p + 116); MiniBossSkierSkiParam skiParam<comment="スキー">;
+    FSeek(p + 152); MiniBossSkierSnakeMoveParam snakeMoveParam<comment="蛇行移動">;
+    FSeek(p + 172); MiniBossSkierTailAttackParam tailAttackParam<comment="パイロン/爆弾共通">;
+    FSeek(p + 212); MiniBossSkierTailAttackPylonParam pylonParam<comment="パイロン">;
 
     FSeek(p + 228);
 } MiniBossSkierLevelBand;
@@ -291,9 +291,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossSkierCommonParam commonParam;
-    FSeek(p + 320); MiniBossSkierLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 600); MiniBossSkierLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 0);   MiniBossSkierCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 320); MiniBossSkierLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 600); MiniBossSkierLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 1744);
 } MiniBossSkierConfig;

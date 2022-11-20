@@ -13,13 +13,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 clearKodamaNum;
-    FSeek(p + 4);  float modelScale;
-    FSeek(p + 8);  float capsuleRadius;
-    FSeek(p + 12); float capsuleHeight;
-    FSeek(p + 16); vector3 capsuleOffset;
-    FSeek(p + 32); float searchRadius;
-    FSeek(p + 36); float collectTime;
+    FSeek(p + 0);  sint32 clearKodamaNum<comment="クリアに必要なコダマ数">;
+    FSeek(p + 4);  float modelScale<comment="コダマモデルスケール">;
+    FSeek(p + 8);  float capsuleRadius<comment="カプセルコリジョン半径">;
+    FSeek(p + 12); float capsuleHeight<comment="カプセルコリジョン高さ">;
+    FSeek(p + 16); vector3 capsuleOffset<comment="カプセルコリジョンのオフセット">;
+    FSeek(p + 32); float searchRadius<comment="索敵半径">;
+    FSeek(p + 36); float collectTime<comment="ジャンプ開始から回収までの時間">;
 
     FSeek(p + 48);
 } QuestKodamaCollectionBaseParameter;
@@ -28,15 +28,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotationAnglePerSec;
-    FSeek(p + 4);  float moveSpeed;
-    FSeek(p + 8);  float moveStopSpeed;
-    FSeek(p + 12); float moveStopeTime;
-    FSeek(p + 16); float groupRadius;
-    FSeek(p + 20); float groupMoveAdjustRangeOffset;
-    FSeek(p + 24); float groupLeaderFixTime;
-    FSeek(p + 28); float returnToCenterDistance;
-    FSeek(p + 32); float returnToCenterRotationAngle;
+    FSeek(p + 0);  float rotationAnglePerSec<comment="コダマ回転角度/秒">;
+    FSeek(p + 4);  float moveSpeed<comment="コダマ転がり速度">;
+    FSeek(p + 8);  float moveStopSpeed<comment="コダマ停止初速度">;
+    FSeek(p + 12); float moveStopeTime<comment="コダマ停止時間">;
+    FSeek(p + 16); float groupRadius<comment="群れとして括る半径">;
+    FSeek(p + 20); float groupMoveAdjustRangeOffset<comment="群れ集まる移動時検知半径オフセット">;
+    FSeek(p + 24); float groupLeaderFixTime<comment="群れリーダー最短時間">;
+    FSeek(p + 28); float returnToCenterDistance<comment="中央線に戻る距離">;
+    FSeek(p + 32); float returnToCenterRotationAngle<comment="中央線に戻る角度">;
 
     FSeek(p + 36);
 } QuestKodamaCollectionMoveParameter;
@@ -47,14 +47,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float bombSpawnTrialTime;
-    FSeek(p + 4);  uint16 numKodamasNeededForBombSpawnRate2;
-    FSeek(p + 6);  uint16 numKodamasNeededForBombSpawnRate3;
-    FSeek(p + 8);  float bombSpawnRate1;
-    FSeek(p + 12); float bombSpawnRate2;
-    FSeek(p + 16); float bombSpawnRate3;
-    FSeek(p + 20); uint8 maxAliveBombNum;
-    FSeek(p + 24); float bombSpawnRange;
+    FSeek(p + 0);  float bombSpawnTrialTime<comment="何秒おきに爆弾の生成を試みるか">;
+    FSeek(p + 4);  uint16 numKodamasNeededForBombSpawnRate2<comment="何匹回収で爆弾確率が1段階上がるか">;
+    FSeek(p + 6);  uint16 numKodamasNeededForBombSpawnRate3<comment="何匹回収で爆弾確率が2段階上がるか">;
+    FSeek(p + 8);  float bombSpawnRate1<comment="爆弾発生確率%（１段階目）">;
+    FSeek(p + 12); float bombSpawnRate2<comment="爆弾発生確率%（２段階目）">;
+    FSeek(p + 16); float bombSpawnRate3<comment="爆弾発生確率%（３段階目）">;
+    FSeek(p + 20); uint8 maxAliveBombNum<comment="同時出現爆弾数上限">;
+    FSeek(p + 24); float bombSpawnRange<comment="爆弾同士発生距離制限">;
 
     FSeek(p + 28);
 } QuestKodamaCollectionBombParameter;
@@ -68,12 +68,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool isTimeUp;
-    FSeek(p + 4);  float timeLimitSeconds;
-    FSeek(p + 8);  float cautionTime;
-    FSeek(p + 12); float warningTime;
-    FSeek(p + 16); bool useCautionAnimation;
-    FSeek(p + 17); bool useWarningAnimation;
+    FSeek(p + 0);  bool isTimeUp<comment="時間制限を使用する">;
+    FSeek(p + 4);  float timeLimitSeconds<comment="制限時間(秒)">;
+    FSeek(p + 8);  float cautionTime<comment="Cautionアニメ開始残り時間(秒)">;
+    FSeek(p + 12); float warningTime<comment="(Cautionの後に再生する)Warningアニメ開始残り時間(秒)">;
+    FSeek(p + 16); bool useCautionAnimation<comment="Cautionアニメを使うか">;
+    FSeek(p + 17); bool useWarningAnimation<comment="Warningアニメを使うか">;
 
     FSeek(p + 20);
 } QuestKodamaCollectionTimerParameter;
@@ -82,11 +82,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 applicableFailedCount;
-    FSeek(p + 16);  QuestKodamaCollectionBaseParameter baseParam;
-    FSeek(p + 64);  QuestKodamaCollectionMoveParameter moveParam;
-    FSeek(p + 100); QuestKodamaCollectionBombParameter bombParam;
-    FSeek(p + 128); QuestKodamaCollectionTimerParameter timerParam;
+    FSeek(p + 0);   sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 16);  QuestKodamaCollectionBaseParameter baseParam<comment="基本設定">;
+    FSeek(p + 64);  QuestKodamaCollectionMoveParameter moveParam<comment="移動設定">;
+    FSeek(p + 100); QuestKodamaCollectionBombParameter bombParam<comment="爆弾設定">;
+    FSeek(p + 128); QuestKodamaCollectionTimerParameter timerParam<comment="タイマー">;
 
     FSeek(p + 160);
 } ObjKodamaQuestGrassIslandParameter;
@@ -96,10 +96,10 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  QuestKodamaCollectionBombParameter questKodamaCollectionBombParameter;
-    FSeek(p + 28); float sandStormTime;
-    FSeek(p + 32); float noBombsTime;
-    FSeek(p + 36); float sandStormInLerpTime;
-    FSeek(p + 40); float sandStormOutLerpTime;
+    FSeek(p + 28); float sandStormTime<comment="砂嵐時間">;
+    FSeek(p + 32); float noBombsTime<comment="砂嵐解除後爆弾を生成しない時間">;
+    FSeek(p + 36); float sandStormInLerpTime<comment="砂嵐遷移時の補間時間">;
+    FSeek(p + 40); float sandStormOutLerpTime<comment="砂嵐終了時の補間時間">;
 
     FSeek(p + 44);
 } QuestKodamaCollectionSandBombParameter;
@@ -108,11 +108,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 applicableFailedCount;
-    FSeek(p + 16);  QuestKodamaCollectionBaseParameter baseParam;
-    FSeek(p + 64);  QuestKodamaCollectionMoveParameter moveParam;
-    FSeek(p + 100); QuestKodamaCollectionSandBombParameter bombParam;
-    FSeek(p + 144); QuestKodamaCollectionTimerParameter timerParam;
+    FSeek(p + 0);   sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 16);  QuestKodamaCollectionBaseParameter baseParam<comment="基本設定">;
+    FSeek(p + 64);  QuestKodamaCollectionMoveParameter moveParam<comment="移動設定">;
+    FSeek(p + 100); QuestKodamaCollectionSandBombParameter bombParam<comment="爆弾設定">;
+    FSeek(p + 144); QuestKodamaCollectionTimerParameter timerParam<comment="タイマー">;
 
     FSeek(p + 176);
 } ObjKodamaQuestDesertIslandParameter;
@@ -121,8 +121,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   ObjKodamaQuestGrassIslandParameter grassIslandParam[3]<optimize=false>;
-    FSeek(p + 480); ObjKodamaQuestDesertIslandParameter desertIslandParam[3]<optimize=false>;
+    FSeek(p + 0);   ObjKodamaQuestGrassIslandParameter grassIslandParam[3]<comment="草原島コダマ集め",optimize=false>;
+    FSeek(p + 480); ObjKodamaQuestDesertIslandParameter desertIslandParam[3]<comment="砂漠島コダマ集め",optimize=false>;
 
     FSeek(p + 1008);
 } ObjKodamaQuestParameter;

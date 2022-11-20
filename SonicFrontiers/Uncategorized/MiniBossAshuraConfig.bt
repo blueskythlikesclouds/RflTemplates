@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,7 +25,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); MiniBossCommonConfig commonConfig;
+    FSeek(p + 0); MiniBossCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 64);
 } MiniBossAshuraCommonParam;
@@ -36,16 +36,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -54,8 +54,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossAshuraLevelParam;
@@ -64,7 +64,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } MiniBossAshuraLevelBand;
@@ -73,15 +73,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotationSpeed;
-    FSeek(p + 4);  float moveRadiusMin;
-    FSeek(p + 8);  float moveRadiusMax;
-    FSeek(p + 12); float initKeepTime;
-    FSeek(p + 16); float scaleUpTime;
-    FSeek(p + 20); float scaleUpKeepTime;
-    FSeek(p + 24); float scaleDownTime;
-    FSeek(p + 28); float scaleDownKeepTime;
-    FSeek(p + 32); sint32 num;
+    FSeek(p + 0);  float rotationSpeed<comment="回転速度">;
+    FSeek(p + 4);  float moveRadiusMin<comment="回転半径[最小]">;
+    FSeek(p + 8);  float moveRadiusMax<comment="回転半径[最大]">;
+    FSeek(p + 12); float initKeepTime<comment="初期状態維持時間">;
+    FSeek(p + 16); float scaleUpTime<comment="拡大時間">;
+    FSeek(p + 20); float scaleUpKeepTime<comment="拡大状態維持時間">;
+    FSeek(p + 24); float scaleDownTime<comment="縮小時間">;
+    FSeek(p + 28); float scaleDownKeepTime<comment="縮小状態維持時間">;
+    FSeek(p + 32); sint32 num<comment="個数">;
 
     FSeek(p + 36);
 } MiniBossAshuraObjectCircleLaser;
@@ -90,16 +90,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 createNum;
-    FSeek(p + 4);  sint32 createParkourNum;
-    FSeek(p + 8);  float createCycleTime;
-    FSeek(p + 12); float moveSpeed;
-    FSeek(p + 16); float lifeTime;
-    FSeek(p + 20); float homingMaxAngle;
-    FSeek(p + 24); float homingStartTime;
-    FSeek(p + 28); float homingPowerMaxTime;
-    FSeek(p + 32); float meanderingPower;
-    FSeek(p + 36); float meanderingCycleTime;
+    FSeek(p + 0);  sint32 createNum<comment="生成数">;
+    FSeek(p + 4);  sint32 createParkourNum<comment="生成数[パルクール中]">;
+    FSeek(p + 8);  float createCycleTime<comment="生成間隔">;
+    FSeek(p + 12); float moveSpeed<comment="移動速度">;
+    FSeek(p + 16); float lifeTime<comment="生存時間">;
+    FSeek(p + 20); float homingMaxAngle<comment="追従性能[秒間角速度]">;
+    FSeek(p + 24); float homingStartTime<comment="追従開始遅延時間">;
+    FSeek(p + 28); float homingPowerMaxTime<comment="追従性能最大化時間">;
+    FSeek(p + 32); float meanderingPower<comment="蛇行移動量[0.0で蛇行無し]">;
+    FSeek(p + 36); float meanderingCycleTime<comment="蛇行周期">;
 
     FSeek(p + 40);
 } MiniBossAshuraObjectCrawlSpark;
@@ -108,10 +108,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float ocTime;
-    FSeek(p + 4);  float dashSpeed;
-    FSeek(p + 8);  float ocTimeOnGround;
-    FSeek(p + 12); float dashSpeedOnGround;
+    FSeek(p + 0);  float ocTime<comment="操作不能時間[腕]">;
+    FSeek(p + 4);  float dashSpeed<comment="ダッシュ速度[腕]">;
+    FSeek(p + 8);  float ocTimeOnGround<comment="操作不能時間[地上]">;
+    FSeek(p + 12); float dashSpeedOnGround<comment="ダッシュ速度[地上]">;
 
     FSeek(p + 16);
 } MiniBossAshuraObjectDashCircleBulletParamByType;
@@ -120,10 +120,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveSpeed;
-    FSeek(p + 4);  float lifeTime;
-    FSeek(p + 8);  MiniBossAshuraObjectDashCircleBulletParamByType frontType;
-    FSeek(p + 24); MiniBossAshuraObjectDashCircleBulletParamByType backType;
+    FSeek(p + 0);  float moveSpeed<comment="移動速度">;
+    FSeek(p + 4);  float lifeTime<comment="生存時間[移動タイプにのみ適用]">;
+    FSeek(p + 8);  MiniBossAshuraObjectDashCircleBulletParamByType frontType<comment="ダッシュタイプ設定">;
+    FSeek(p + 24); MiniBossAshuraObjectDashCircleBulletParamByType backType<comment="バックタイプ設定">;
 
     FSeek(p + 40);
 } MiniBossAshuraObjectDashCircleBullet;
@@ -132,9 +132,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float blowOffRadius;
-    FSeek(p + 4); float blowOffHeight;
-    FSeek(p + 8); float killRadius;
+    FSeek(p + 0); float blowOffRadius<comment="吹き飛ばし範囲[半径]">;
+    FSeek(p + 4); float blowOffHeight<comment="吹き飛ばし範囲[高さ]">;
+    FSeek(p + 8); float killRadius<comment="即死範囲[半径]">;
 
     FSeek(p + 12);
 } MiniBossAshuraObjectSlamWave;
@@ -143,10 +143,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossAshuraObjectCircleLaser circleLaser;
-    FSeek(p + 36);  MiniBossAshuraObjectCrawlSpark crawlSpark;
-    FSeek(p + 76);  MiniBossAshuraObjectDashCircleBullet dashCircleBullet;
-    FSeek(p + 116); MiniBossAshuraObjectSlamWave slamWave;
+    FSeek(p + 0);   MiniBossAshuraObjectCircleLaser circleLaser<comment="C型レーザーパラメータ">;
+    FSeek(p + 36);  MiniBossAshuraObjectCrawlSpark crawlSpark<comment="電撃パラメータ">;
+    FSeek(p + 76);  MiniBossAshuraObjectDashCircleBullet dashCircleBullet<comment="ダッシュサークルパラメータ">;
+    FSeek(p + 116); MiniBossAshuraObjectSlamWave slamWave<comment="衝撃波パラメータ">;
 
     FSeek(p + 128);
 } MiniBossAshuraObjectParam;
@@ -170,12 +170,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  OnArmCircleBulletType left;
-    FSeek(p + 1);  OnArmCircleBulletType center;
-    FSeek(p + 2);  OnArmCircleBulletType right;
-    FSeek(p + 4);  float leftOffsetAngle;
-    FSeek(p + 8);  float centerOffsetAngle;
-    FSeek(p + 12); float rightOffsetAngle;
+    FSeek(p + 0);  OnArmCircleBulletType left<comment="左">;
+    FSeek(p + 1);  OnArmCircleBulletType center<comment="中央">;
+    FSeek(p + 2);  OnArmCircleBulletType right<comment="右">;
+    FSeek(p + 4);  float leftOffsetAngle<comment="左 角度調整">;
+    FSeek(p + 8);  float centerOffsetAngle<comment="中央 角度調整">;
+    FSeek(p + 12); float rightOffsetAngle<comment="右 角度調整">;
 
     FSeek(p + 16);
 } MiniBossAshuraPhaseOnArmCircleBulletPos;
@@ -184,18 +184,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   bool isCircleLaser;
-    FSeek(p + 1);   bool isCrawlSpark;
-    FSeek(p + 2);   bool isAttackArmWave;
-    FSeek(p + 3);   bool isAttackArmCircleBulletOnArm;
-    FSeek(p + 4);   MiniBossAshuraPhaseOnArmCircleBulletPos onArmCircleBullets[8]<optimize=false>;
-    FSeek(p + 132); bool isAttackArmCircleBullet;
-    FSeek(p + 136); sint32 circleBulletBackTypeFreq;
-    FSeek(p + 140); sint32 circleBulletCreateNum;
-    FSeek(p + 144); float circleBulletCreateAngle;
-    FSeek(p + 148); float circleJumpTargetDistace;
-    FSeek(p + 152); float circleBulletCreateIntervalTime;
-    FSeek(p + 156); sint32 armAttackConsecutiveNum;
+    FSeek(p + 0);   bool isCircleLaser<comment="C型レーザー">;
+    FSeek(p + 1);   bool isCrawlSpark<comment="電撃">;
+    FSeek(p + 2);   bool isAttackArmWave<comment="腕攻撃時の腕のウェーブ">;
+    FSeek(p + 3);   bool isAttackArmCircleBulletOnArm<comment="腕攻撃時のサークル弾[腕上]">;
+    FSeek(p + 4);   MiniBossAshuraPhaseOnArmCircleBulletPos onArmCircleBullets[8]<comment="腕上のサークル弾配置",optimize=false>;
+    FSeek(p + 132); bool isAttackArmCircleBullet<comment="腕攻撃時のサークル弾">;
+    FSeek(p + 136); sint32 circleBulletBackTypeFreq<comment="サークル弾のバックタイプ発生頻度">;
+    FSeek(p + 140); sint32 circleBulletCreateNum<comment="サークル弾の生成数">;
+    FSeek(p + 144); float circleBulletCreateAngle<comment="サークル弾の生成範囲[角度]">;
+    FSeek(p + 148); float circleJumpTargetDistace<comment="サークル弾最終ジャンプ距離">;
+    FSeek(p + 152); float circleBulletCreateIntervalTime<comment="生成間隔">;
+    FSeek(p + 156); sint32 armAttackConsecutiveNum<comment="腕攻撃時の連続攻撃回数">;
 
     FSeek(p + 160);
 } MiniBossAshuraPhaseParam;
@@ -204,11 +204,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossAshuraCommonParam commonParam;
-    FSeek(p + 64);  MiniBossAshuraLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 344); MiniBossAshuraLevelBand levelBand[5]<optimize=false>;
-    FSeek(p + 364); MiniBossAshuraObjectParam objectParam;
-    FSeek(p + 492); MiniBossAshuraPhaseParam phaseParam[3]<optimize=false>;
+    FSeek(p + 0);   MiniBossAshuraCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 64);  MiniBossAshuraLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 344); MiniBossAshuraLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 364); MiniBossAshuraObjectParam objectParam<comment="関連オブジェクトパラメータ">;
+    FSeek(p + 492); MiniBossAshuraPhaseParam phaseParam[3]<comment="各フェーズ別パラメータ[腕破壊状況別]",optimize=false>;
 
     FSeek(p + 976);
 } MiniBossAshuraConfig;

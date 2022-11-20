@@ -36,18 +36,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 signature;
-    FSeek(p + 4);  uint8 version;
-    FSeek(p + 5);  Status status;
-    FSeek(p + 6);  uint8 config;
-    FSeek(p + 7);  Sequence sequence;
-    FSeek(p + 8);  uint32 playTime;
-    FSeek(p + 12); SaveDataIcon icon;
-    FSeek(p + 13); uint8 reserved0;
-    FSeek(p + 14); uint16 reserved1;
-    FSeek(p + 16); uint32 saveDate;
-    FSeek(p + 20); uint8 index;
-    FSeek(p + 24); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);  uint32 signature<comment="シグニチャ">;
+    FSeek(p + 4);  uint8 version<comment="バージョン">;
+    FSeek(p + 5);  Status status<comment="ステータス">;
+    FSeek(p + 6);  uint8 config<comment="コンフィグ">;
+    FSeek(p + 7);  Sequence sequence<comment="シーケンス">;
+    FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
+    FSeek(p + 12); SaveDataIcon icon<comment="セーブデータアイコン">;
+    FSeek(p + 13); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 14); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 16); uint32 saveDate<comment="保存日時">;
+    FSeek(p + 20); uint8 index<comment="index">;
+    FSeek(p + 24); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 40);
 } HeaderData;
@@ -100,28 +100,28 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint8 initialSpeedRate;
-    FSeek(p + 1);  uint8 boostInitialSpeedRate;
-    FSeek(p + 2);  uint8 acceleRate;
-    FSeek(p + 3);  uint8 maxSpeedRate;
-    FSeek(p + 4);  uint8 minTurnSpeedRate;
-    FSeek(p + 5);  uint8 boostMinTurnSpeedRate;
-    FSeek(p + 6);  uint8 rotateForceRate;
-    FSeek(p + 7);  uint8 bumpJumpGravityRate;
-    FSeek(p + 8);  VoiceLanguageType speech;
-    FSeek(p + 9);  LanguageType text;
-    FSeek(p + 10); VibrationLevel vibrationLevel;
-    FSeek(p + 11); Value diffculty;
-    FSeek(p + 12); uint8 config;
-    FSeek(p + 13); uint8 padSensibilityRate;
-    FSeek(p + 14); uint8 mouseSensibilityRate;
-    FSeek(p + 15); uint8 padding0;
-    FSeek(p + 16); uint8 dlcSonicCostume;
-    FSeek(p + 17); uint8 dlcKodamaModel;
-    FSeek(p + 18); uint8 dlcRingSE;
-    FSeek(p + 19); uint8 dlcConfig;
-    FSeek(p + 20); uint8 reserved1[4]<optimize=false>;
-    FSeek(p + 24); uint32 reserved2[2]<optimize=false>;
+    FSeek(p + 0);  uint8 initialSpeedRate<comment="初速レート">;
+    FSeek(p + 1);  uint8 boostInitialSpeedRate<comment="初速レート/ブースト">;
+    FSeek(p + 2);  uint8 acceleRate<comment="加速度レート">;
+    FSeek(p + 3);  uint8 maxSpeedRate<comment="最高速度レート">;
+    FSeek(p + 4);  uint8 minTurnSpeedRate<comment="旋回速度レート">;
+    FSeek(p + 5);  uint8 boostMinTurnSpeedRate<comment="旋回速度レート/ブースト">;
+    FSeek(p + 6);  uint8 rotateForceRate<comment="旋回力レート">;
+    FSeek(p + 7);  uint8 bumpJumpGravityRate<comment="バンプジャンプ重力レート">;
+    FSeek(p + 8);  VoiceLanguageType speech<comment="音声言語">;
+    FSeek(p + 9);  LanguageType text<comment="文字言語">;
+    FSeek(p + 10); VibrationLevel vibrationLevel<comment="振動強度">;
+    FSeek(p + 11); Value diffculty<comment="難易度">;
+    FSeek(p + 12); uint8 config<comment="コンフィグ">;
+    FSeek(p + 13); uint8 padSensibilityRate<comment="パッド感度">;
+    FSeek(p + 14); uint8 mouseSensibilityRate<comment="マウス感度">;
+    FSeek(p + 15); uint8 padding0<comment="padding0">;
+    FSeek(p + 16); uint8 dlcSonicCostume<comment="[DLC]ソニック衣装">;
+    FSeek(p + 17); uint8 dlcKodamaModel<comment="[DLC]ココの見た目">;
+    FSeek(p + 18); uint8 dlcRingSE<comment="[DLC]リング取得音">;
+    FSeek(p + 19); uint8 dlcConfig<comment="[DLC]コンフィグ">;
+    FSeek(p + 20); uint8 reserved1[4]<comment="reserved1",optimize=false>;
+    FSeek(p + 24); uint32 reserved2[2]<comment="reserved2",optimize=false>;
 
     FSeek(p + 32);
 } OptionGamePlayData;
@@ -288,9 +288,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   InputKey padMappings[62]<optimize=false>;
-    FSeek(p + 248); InputKey mainMappings[62]<optimize=false>;
-    FSeek(p + 496); InputKey subMappings[62]<optimize=false>;
+    FSeek(p + 0);   InputKey padMappings[62]<comment="ゲームパッド/マッピング",optimize=false>;
+    FSeek(p + 248); InputKey mainMappings[62]<comment="キーボード/マッピング/メイン",optimize=false>;
+    FSeek(p + 496); InputKey subMappings[62]<comment="キーボード/マッピング/サブ",optimize=false>;
 
     FSeek(p + 744);
 } OptionControlsData;
@@ -305,18 +305,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotateSpeedPad;
-    FSeek(p + 4);  float rotateSpeedVertMouse;
-    FSeek(p + 8);  float rotateSpeedHorzMouse;
-    FSeek(p + 12); float reticleSpeedPad;
-    FSeek(p + 16); float reticleSpeedVertMouse;
-    FSeek(p + 20); float reticleSpeedHorzMouse;
-    FSeek(p + 24); uint8 rotateSpeedRate;
-    FSeek(p + 25); uint8 distanceRate;
-    FSeek(p + 26); uint8 fovyRate;
-    FSeek(p + 27); MovementStyle movementStyle;
-    FSeek(p + 28); uint8 config;
-    FSeek(p + 32); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);  float rotateSpeedPad<comment="パッド操作時の回転速度">;
+    FSeek(p + 4);  float rotateSpeedVertMouse<comment="マウス操作時の垂直回転速度">;
+    FSeek(p + 8);  float rotateSpeedHorzMouse<comment="マウス操作時の水平回転速度">;
+    FSeek(p + 12); float reticleSpeedPad<comment="パッド操作時の照準速度">;
+    FSeek(p + 16); float reticleSpeedVertMouse<comment="マウス操作時の垂直照準速度">;
+    FSeek(p + 20); float reticleSpeedHorzMouse<comment="マウス操作時の水平照準速度">;
+    FSeek(p + 24); uint8 rotateSpeedRate<comment="回転速度レート">;
+    FSeek(p + 25); uint8 distanceRate<comment="距離レート">;
+    FSeek(p + 26); uint8 fovyRate<comment="画角レート">;
+    FSeek(p + 27); MovementStyle movementStyle<comment="移動制御">;
+    FSeek(p + 28); uint8 config<comment="コンフィグ">;
+    FSeek(p + 32); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 48);
 } OptionCameraData;
@@ -325,11 +325,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 masterVolume;
-    FSeek(p + 1); uint8 sfxVolume;
-    FSeek(p + 2); uint8 musicVolume;
-    FSeek(p + 3); uint8 voiceVolume;
-    FSeek(p + 4); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0); uint8 masterVolume<comment="マスタボリューム">;
+    FSeek(p + 1); uint8 sfxVolume<comment="SEボリューム">;
+    FSeek(p + 2); uint8 musicVolume<comment="音楽ボリューム">;
+    FSeek(p + 3); uint8 voiceVolume<comment="ボイスボリューム">;
+    FSeek(p + 4); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 20);
 } OptionAudioData;
@@ -408,24 +408,24 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  Resolution resolution;
-    FSeek(p + 1);  GraphicQuality graphicQuality;
-    FSeek(p + 2);  FrameRate frameRate;
-    FSeek(p + 3);  uint8 brightness;
-    FSeek(p + 4);  AntiAliasing antiAliasing;
-    FSeek(p + 5);  AnisotropicFiltering anisotropicFiltering;
-    FSeek(p + 6);  DOF depthOfField;
-    FSeek(p + 7);  Bloom bloom;
-    FSeek(p + 8);  uint8 config;
-    FSeek(p + 9);  uint8 hudVisible;
-    FSeek(p + 10); Shadow shadow;
-    FSeek(p + 11); VolumetricLight volumetricLight;
-    FSeek(p + 12); RederingScale renderingScale;
-    FSeek(p + 13); uint8 reserved1;
-    FSeek(p + 14); uint16 width;
-    FSeek(p + 16); uint16 height;
-    FSeek(p + 18); uint16 padding0;
-    FSeek(p + 20); uint32 reserved[2]<optimize=false>;
+    FSeek(p + 0);  Resolution resolution<comment="解像度">;
+    FSeek(p + 1);  GraphicQuality graphicQuality<comment="グラフィック品質">;
+    FSeek(p + 2);  FrameRate frameRate<comment="FPS">;
+    FSeek(p + 3);  uint8 brightness<comment="Brightness">;
+    FSeek(p + 4);  AntiAliasing antiAliasing<comment="AA">;
+    FSeek(p + 5);  AnisotropicFiltering anisotropicFiltering<comment="AF">;
+    FSeek(p + 6);  DOF depthOfField<comment="DOF">;
+    FSeek(p + 7);  Bloom bloom<comment="Bloom">;
+    FSeek(p + 8);  uint8 config<comment="コンフィグ">;
+    FSeek(p + 9);  uint8 hudVisible<comment="HUDの表示">;
+    FSeek(p + 10); Shadow shadow<comment="影の品質">;
+    FSeek(p + 11); VolumetricLight volumetricLight<comment="ボリューメトリックライト">;
+    FSeek(p + 12); RederingScale renderingScale<comment="レンダリングスケール">;
+    FSeek(p + 13); uint8 reserved1<comment="reserved1">;
+    FSeek(p + 14); uint16 width<comment="幅">;
+    FSeek(p + 16); uint16 height<comment="高さ">;
+    FSeek(p + 18); uint16 padding0<comment="padding0">;
+    FSeek(p + 20); uint32 reserved[2]<comment="reserved",optimize=false>;
 
     FSeek(p + 28);
 } OptionGraphicsData;
@@ -434,12 +434,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   HeaderData header;
-    FSeek(p + 40);  OptionGamePlayData gameplay;
-    FSeek(p + 72);  OptionControlsData controls;
-    FSeek(p + 816); OptionCameraData camera;
-    FSeek(p + 864); OptionAudioData audio;
-    FSeek(p + 884); OptionGraphicsData graphics;
+    FSeek(p + 0);   HeaderData header<comment="ヘッダ">;
+    FSeek(p + 40);  OptionGamePlayData gameplay<comment="ゲームプレイ">;
+    FSeek(p + 72);  OptionControlsData controls<comment="コントロール">;
+    FSeek(p + 816); OptionCameraData camera<comment="カメラ">;
+    FSeek(p + 864); OptionAudioData audio<comment="音声">;
+    FSeek(p + 884); OptionGraphicsData graphics<comment="グラフィックス">;
 
     FSeek(p + 912);
 } OptionData;

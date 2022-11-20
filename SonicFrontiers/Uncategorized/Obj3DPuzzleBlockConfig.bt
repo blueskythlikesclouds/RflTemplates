@@ -13,7 +13,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 columns[5]<optimize=false>;
+    FSeek(p + 0); uint8 columns[5]<comment="列",optimize=false>;
 
     FSeek(p + 5);
 } FSRow;
@@ -22,7 +22,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); FSRow rows[5]<optimize=false>;
+    FSeek(p + 0); FSRow rows[5]<comment="行",optimize=false>;
 
     FSeek(p + 25);
 } FSLayer;
@@ -31,11 +31,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint8 numLayers;
-    FSeek(p + 1);  uint8 numRows;
-    FSeek(p + 2);  uint8 numColumns;
-    FSeek(p + 16); vector3 offsetToTopLeft;
-    FSeek(p + 32); FSLayer layers[5]<optimize=false>;
+    FSeek(p + 0);  uint8 numLayers<comment="層数">;
+    FSeek(p + 1);  uint8 numRows<comment="行数">;
+    FSeek(p + 2);  uint8 numColumns<comment="列数">;
+    FSeek(p + 16); vector3 offsetToTopLeft<comment="左上最奥ブロック中央までのオフセット">;
+    FSeek(p + 32); FSLayer layers[5]<comment="層",optimize=false>;
 
     FSeek(p + 160);
 } FreeShape;
@@ -44,7 +44,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); FreeShape freeShapes[19]<optimize=false>;
+    FSeek(p + 0); FreeShape freeShapes[19]<comment="形状配列",optimize=false>;
 
     FSeek(p + 3040);
 } Obj3DPuzzleBlockConfig;

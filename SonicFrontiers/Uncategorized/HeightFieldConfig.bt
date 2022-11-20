@@ -82,11 +82,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); LayerType layer;
-    FSeek(p + 1); MaterialType material;
-    FSeek(p + 2); bool notStand;
-    FSeek(p + 3); bool wall;
-    FSeek(p + 4); bool parkour;
+    FSeek(p + 0); LayerType layer<comment="レイヤー">;
+    FSeek(p + 1); MaterialType material<comment="マテリアル">;
+    FSeek(p + 2); bool notStand<comment="斜面化">;
+    FSeek(p + 3); bool wall<comment="壁面化">;
+    FSeek(p + 4); bool parkour<comment="パルクール可能">;
 
     FSeek(p + 5);
 } HeightFieldConfigData;
@@ -95,7 +95,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); HeightFieldConfigData data[255]<optimize=false>;
+    FSeek(p + 0); HeightFieldConfigData data[255]<comment="データ",optimize=false>;
 
     FSeek(p + 1275);
 } HeightFieldConfig;

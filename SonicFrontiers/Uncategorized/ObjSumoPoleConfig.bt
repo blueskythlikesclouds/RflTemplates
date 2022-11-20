@@ -6,15 +6,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float baseHeight;
-    FSeek(p + 4);  float baseRadius;
-    FSeek(p + 8);  float baseOffset;
-    FSeek(p + 12); float poleHeight;
-    FSeek(p + 16); float poleRadius;
-    FSeek(p + 20); float rigidAdditionalHeight;
-    FSeek(p + 24); float ropeThicknessRigid;
-    FSeek(p + 28); float ropeThicknessDamage;
-    FSeek(p + 32); float ropeThicknessArea;
+    FSeek(p + 0);  float baseHeight<comment="ベース部分の高さ">;
+    FSeek(p + 4);  float baseRadius<comment="ベース部分の半径">;
+    FSeek(p + 8);  float baseOffset<comment="ベース部分のコリジョンオフセット">;
+    FSeek(p + 12); float poleHeight<comment="柱部分の高さ">;
+    FSeek(p + 16); float poleRadius<comment="柱部分の半径">;
+    FSeek(p + 20); float rigidAdditionalHeight<comment="剛体コリジョンの追加の高さ">;
+    FSeek(p + 24); float ropeThicknessRigid<comment="ロープコリジョンの厚さ(剛体))">;
+    FSeek(p + 28); float ropeThicknessDamage<comment="ロープコリジョンの厚さ(ダメージ)">;
+    FSeek(p + 32); float ropeThicknessArea<comment="ロープエリア判定の厚み">;
 
     FSeek(p + 36);
 } ObjSumoPoleColliderConfig;
@@ -23,9 +23,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float interpolationTime;
-    FSeek(p + 4); float height;
-    FSeek(p + 8); float fovy;
+    FSeek(p + 0); float interpolationTime<comment="カメラ補間時間">;
+    FSeek(p + 4); float height<comment="カメラの高さ">;
+    FSeek(p + 8); float fovy<comment="画角">;
 
     FSeek(p + 12);
 } ObjSumoPoleSlingShotLookDownCameraConfig;
@@ -34,23 +34,23 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float shotGuideMoveDistance;
-    FSeek(p + 4);  float shotRaycastLength;
-    FSeek(p + 8);  float sweepCapsuleHeight;
-    FSeek(p + 12); float shotMoveLengthMax;
-    FSeek(p + 16); sint32 shotReflectCountMax;
-    FSeek(p + 20); sint32 shotReflectOwnerCountMax;
-    FSeek(p + 24); float shotOffset;
-    FSeek(p + 28); float shotDirAngleLimit;
-    FSeek(p + 32); float shotDirAngleChangeSpeed;
-    FSeek(p + 36); float shotSpeedMin;
-    FSeek(p + 40); float shotSpeedMax;
-    FSeek(p + 44); float shotSpeedAdd;
-    FSeek(p + 48); float cancelSpeed;
-    FSeek(p + 52); float bendPullLength;
-    FSeek(p + 56); float aimTimeScale;
-    FSeek(p + 60); float aimLimitTime;
-    FSeek(p + 64); ObjSumoPoleSlingShotLookDownCameraConfig cameraLookDown;
+    FSeek(p + 0);  float shotGuideMoveDistance<comment="ガイド表示距離">;
+    FSeek(p + 4);  float shotRaycastLength<comment="レイキャスト距離">;
+    FSeek(p + 8);  float sweepCapsuleHeight<comment="衝突判定のカプセルの高さ">;
+    FSeek(p + 12); float shotMoveLengthMax<comment="最大移動距離">;
+    FSeek(p + 16); sint32 shotReflectCountMax<comment="最大反射回数">;
+    FSeek(p + 20); sint32 shotReflectOwnerCountMax<comment="膨らみ状態のSumoへの最大反射回数">;
+    FSeek(p + 24); float shotOffset<comment="ため中の位置オフセット">;
+    FSeek(p + 28); float shotDirAngleLimit<comment="発射角度制限">;
+    FSeek(p + 32); float shotDirAngleChangeSpeed<comment="発射角度変動速度">;
+    FSeek(p + 36); float shotSpeedMin<comment="発射初速度">;
+    FSeek(p + 40); float shotSpeedMax<comment="最高速度">;
+    FSeek(p + 44); float shotSpeedAdd<comment="反射ごとの加算速度">;
+    FSeek(p + 48); float cancelSpeed<comment="キャンセル時の射出速度">;
+    FSeek(p + 52); float bendPullLength<comment="弦の引き尺">;
+    FSeek(p + 56); float aimTimeScale<comment="エイム中のタイムスケール">;
+    FSeek(p + 60); float aimLimitTime<comment="エイム中の時間制限">;
+    FSeek(p + 64); ObjSumoPoleSlingShotLookDownCameraConfig cameraLookDown<comment="見下ろしカメラ設定">;
 
     FSeek(p + 76);
 } ObjSumoPoleSlingShotConfig;
@@ -71,16 +71,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float width;
-    FSeek(p + 4);  float maxDistance;
-    FSeek(p + 8);  float tilingDistance;
-    FSeek(p + 12); float uvScrollSpeedMin;
-    FSeek(p + 16); float uvScrollSpeedMax;
-    FSeek(p + 20); sint32 reflectCountSpeedMax;
-    FSeek(p + 24); color8 colors[5]<optimize=false>;
-    FSeek(p + 44); float colorIntensity;
-    FSeek(p + 48); bool colorGradation;
-    FSeek(p + 49); bool colorChangeAll;
+    FSeek(p + 0);  float width<comment="予測線の幅">;
+    FSeek(p + 4);  float maxDistance<comment="予測線の最大距離">;
+    FSeek(p + 8);  float tilingDistance<comment="予測線のタイリング距離">;
+    FSeek(p + 12); float uvScrollSpeedMin<comment="UVスクロール最低速度">;
+    FSeek(p + 16); float uvScrollSpeedMax<comment="UVスクロール最高速度">;
+    FSeek(p + 20); sint32 reflectCountSpeedMax<comment="UVスクロールが最高速度になる反射回数">;
+    FSeek(p + 24); color8 colors[5]<comment="反射ごとの頂点カラー",optimize=false>;
+    FSeek(p + 44); float colorIntensity<comment="カラー強度">;
+    FSeek(p + 48); bool colorGradation<comment="線の色をグラデーションさせるか">;
+    FSeek(p + 49); bool colorChangeAll<comment="反射回数に応じて線全体を変える">;
 
     FSeek(p + 52);
 } ObjSumoPoleSlingshotLineConfig;
@@ -96,21 +96,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float width;
-    FSeek(p + 4);  float tilingDistance;
-    FSeek(p + 8);  float fluctuationPeriod;
-    FSeek(p + 12); float fluctuationAmplitude;
-    FSeek(p + 16); float uvScrollSpeed;
-    FSeek(p + 20); colorF colorPrimary;
-    FSeek(p + 36); color8 colorVertexEdge;
-    FSeek(p + 40); color8 colorVertexCenter;
-    FSeek(p + 44); float colorIntensityAnimTime;
-    FSeek(p + 48); float colorIntensityMin;
-    FSeek(p + 52); float colorIntensityMax;
-    FSeek(p + 56); float patternChangeIntervalTime;
-    FSeek(p + 60); float edgeWidthScale;
-    FSeek(p + 64); float edgeWidthScaleLength;
-    FSeek(p + 68); float roll;
+    FSeek(p + 0);  float width<comment="ポリゴンの幅">;
+    FSeek(p + 4);  float tilingDistance<comment="テクスチャのタイリング距離">;
+    FSeek(p + 8);  float fluctuationPeriod<comment="ゆらぎ周期">;
+    FSeek(p + 12); float fluctuationAmplitude<comment="ゆらぎ振幅">;
+    FSeek(p + 16); float uvScrollSpeed<comment="UVスクロールスピード">;
+    FSeek(p + 20); colorF colorPrimary<comment="プライマリーカラー">;
+    FSeek(p + 36); color8 colorVertexEdge<comment="端の頂点カラー">;
+    FSeek(p + 40); color8 colorVertexCenter<comment="中央の頂点カラー">;
+    FSeek(p + 44); float colorIntensityAnimTime<comment="カラー強度アニメーション時間">;
+    FSeek(p + 48); float colorIntensityMin<comment="カラー強度最低値">;
+    FSeek(p + 52); float colorIntensityMax<comment="カラー強度最高値">;
+    FSeek(p + 56); float patternChangeIntervalTime<comment="パタチェン間隔">;
+    FSeek(p + 60); float edgeWidthScale<comment="端の幅スケール">;
+    FSeek(p + 64); float edgeWidthScaleLength<comment="端の幅スケールの補間距離">;
+    FSeek(p + 68); float roll<comment="ポリゴンのロール回転角度">;
 
     FSeek(p + 72);
 } ObjSumoPoleRopeElectricConfig;
@@ -119,16 +119,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float timeAppear;
-    FSeek(p + 4);  float timeDisappear;
-    FSeek(p + 8);  sint32 count;
-    FSeek(p + 12); float swingWidthMin;
-    FSeek(p + 16); float swingWidthMax;
-    FSeek(p + 20); float swingWidthReductionRate;
-    FSeek(p + 24); float swingTime;
-    FSeek(p + 28); float swingPeriod;
-    FSeek(p + 32); float swingReturnSlowTime;
-    FSeek(p + 36); ObjSumoPoleRopeElectricConfig electric;
+    FSeek(p + 0);  float timeAppear<comment="入場時間">;
+    FSeek(p + 4);  float timeDisappear<comment="退場時間">;
+    FSeek(p + 8);  sint32 count<comment="ロープの数">;
+    FSeek(p + 12); float swingWidthMin<comment="反射時の最小揺れ幅">;
+    FSeek(p + 16); float swingWidthMax<comment="反射時の最大揺れ幅">;
+    FSeek(p + 20); float swingWidthReductionRate<comment="揺れ幅減衰">;
+    FSeek(p + 24); float swingTime<comment="揺れ時間">;
+    FSeek(p + 28); float swingPeriod<comment="揺れ周期">;
+    FSeek(p + 32); float swingReturnSlowTime<comment="しなりがゆっくり戻るときの時間">;
+    FSeek(p + 36); ObjSumoPoleRopeElectricConfig electric<comment="電流設定">;
 
     FSeek(p + 108);
 } ObjSumoPoleRopeConfig;
@@ -137,11 +137,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 electricDamageToEnemy;
-    FSeek(p + 4);   ObjSumoPoleColliderConfig collider;
-    FSeek(p + 40);  ObjSumoPoleSlingShotConfig slingShot;
-    FSeek(p + 116); ObjSumoPoleSlingshotLineConfig line;
-    FSeek(p + 168); ObjSumoPoleRopeConfig rope;
+    FSeek(p + 0);   sint32 electricDamageToEnemy<comment="エネミーへの電流ダメージ">;
+    FSeek(p + 4);   ObjSumoPoleColliderConfig collider<comment="コリジョン設定">;
+    FSeek(p + 40);  ObjSumoPoleSlingShotConfig slingShot<comment="スリングショット設定">;
+    FSeek(p + 116); ObjSumoPoleSlingshotLineConfig line<comment="予測線設定">;
+    FSeek(p + 168); ObjSumoPoleRopeConfig rope<comment="ロープ設定">;
 
     FSeek(p + 276);
 } ObjSumoPoleConfig;

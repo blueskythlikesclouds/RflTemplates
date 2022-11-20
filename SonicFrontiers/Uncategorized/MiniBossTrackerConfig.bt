@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,7 +25,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); MiniBossCommonConfig commonConfig;
+    FSeek(p + 0); MiniBossCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 64);
 } MiniBossTrackerCommonParam;
@@ -36,16 +36,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -54,8 +54,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossTrackerLevelParam;
@@ -64,7 +64,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } MiniBossTrackerLevelBand;
@@ -73,12 +73,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float time;
-    FSeek(p + 4);  float distance;
-    FSeek(p + 8);  float minElevation;
-    FSeek(p + 12); float maxElevation;
-    FSeek(p + 16); float panningSuspensionK;
-    FSeek(p + 20); float interiorPanningSuspensionK;
+    FSeek(p + 0);  float time<comment="有効時間">;
+    FSeek(p + 4);  float distance<comment="距離">;
+    FSeek(p + 8);  float minElevation<comment="仰角最小値">;
+    FSeek(p + 12); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 16); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 20); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
 
     FSeek(p + 24);
 } MiniBossTrackerCameraLockOn;
@@ -87,30 +87,30 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float facingSpeed;
-    FSeek(p + 4);  float facingSpeed2;
-    FSeek(p + 8);  float steeringSpeed;
-    FSeek(p + 12); float chaseSpeed;
-    FSeek(p + 16); float roundSpeed;
-    FSeek(p + 20); float changeBaseSpeed;
-    FSeek(p + 24); float returnSpeed;
-    FSeek(p + 28); float minSpeed;
-    FSeek(p + 32); float turnSpeed;
-    FSeek(p + 36); float accel;
-    FSeek(p + 40); float brake;
-    FSeek(p + 44); float brakeDistance;
-    FSeek(p + 48); float damper;
-    FSeek(p + 52); float springFactor;
-    FSeek(p + 56); float verticalWidth;
-    FSeek(p + 60); float verticalDamper;
-    FSeek(p + 64); float verticalSpringFactor;
-    FSeek(p + 68); float verticalRotateSpeed;
-    FSeek(p + 72); float checkChaseRadius;
-    FSeek(p + 76); float checkRoundRadius;
-    FSeek(p + 80); float checkReturnRadius;
-    FSeek(p + 84); float chaseRadius;
-    FSeek(p + 88); float chaseHeight;
-    FSeek(p + 92); float chaseWaitTime;
+    FSeek(p + 0);  float facingSpeed<comment="プレーヤーの方向へ向く速度">;
+    FSeek(p + 4);  float facingSpeed2<comment="カメラの方向へ向く速度">;
+    FSeek(p + 8);  float steeringSpeed<comment="移動方向を変更する速度">;
+    FSeek(p + 12); float chaseSpeed<comment="追跡時の移動速度">;
+    FSeek(p + 16); float roundSpeed<comment="接近時の移動速度">;
+    FSeek(p + 20); float changeBaseSpeed<comment="次の土台への移動速度">;
+    FSeek(p + 24); float returnSpeed<comment="帰宅時の移動速度">;
+    FSeek(p + 28); float minSpeed<comment="最低速度">;
+    FSeek(p + 32); float turnSpeed<comment="ターン時の移動速度">;
+    FSeek(p + 36); float accel<comment="加速度">;
+    FSeek(p + 40); float brake<comment="減速度">;
+    FSeek(p + 44); float brakeDistance<comment="減速判定距離">;
+    FSeek(p + 48); float damper<comment="減速ダンパー">;
+    FSeek(p + 52); float springFactor<comment="減速バネ係数">;
+    FSeek(p + 56); float verticalWidth<comment="垂直方向移動幅">;
+    FSeek(p + 60); float verticalDamper<comment="垂直方向移動ダンパー">;
+    FSeek(p + 64); float verticalSpringFactor<comment="垂直方向移動バネ係数">;
+    FSeek(p + 68); float verticalRotateSpeed<comment="垂直方向移動回転速度">;
+    FSeek(p + 72); float checkChaseRadius<comment="追跡判定距離">;
+    FSeek(p + 76); float checkRoundRadius<comment="接近判定距離">;
+    FSeek(p + 80); float checkReturnRadius<comment="帰宅判定距離">;
+    FSeek(p + 84); float chaseRadius<comment="追跡目標半径">;
+    FSeek(p + 88); float chaseHeight<comment="追跡目標高度">;
+    FSeek(p + 92); float chaseWaitTime<comment="追跡移行時間">;
 
     FSeek(p + 96);
 } MiniBossTrackerMoveParam;
@@ -119,12 +119,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float time;
-    FSeek(p + 4);  float interval;
-    FSeek(p + 8);  float speed;
-    FSeek(p + 12); float steeringSpeed;
-    FSeek(p + 16); float startSteeringTime;
-    FSeek(p + 20); float life;
+    FSeek(p + 0);  float time<comment="発射時間">;
+    FSeek(p + 4);  float interval<comment="発射間隔">;
+    FSeek(p + 8);  float speed<comment="速度">;
+    FSeek(p + 12); float steeringSpeed<comment="向き変更速度">;
+    FSeek(p + 16); float startSteeringTime<comment="向き変更開始時間">;
+    FSeek(p + 20); float life<comment="生存時間">;
 
     FSeek(p + 24);
 } MiniBossTrackerBulletParam;
@@ -133,19 +133,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 num;
-    FSeek(p + 4);  sint32 num2;
-    FSeek(p + 8);  float height;
-    FSeek(p + 12); float deviationTime;
-    FSeek(p + 16); float searchRadius;
-    FSeek(p + 20); float playerRadius;
-    FSeek(p + 24); float playerHeight;
-    FSeek(p + 28); float setInterval;
-    FSeek(p + 32); float life;
-    FSeek(p + 36); float lifeEx;
-    FSeek(p + 40); float timer;
-    FSeek(p + 44); float explosionLife;
-    FSeek(p + 48); float targetEffectiveDistance;
+    FSeek(p + 0);  sint32 num<comment="設置数(土台設置)">;
+    FSeek(p + 4);  sint32 num2<comment="設置数(プレーヤー周辺設置)">;
+    FSeek(p + 8);  float height<comment="設置高度(土台設置)">;
+    FSeek(p + 12); float deviationTime<comment="設置予測時間(プレーヤー周辺設置)">;
+    FSeek(p + 16); float searchRadius<comment="設置検索半径">;
+    FSeek(p + 20); float playerRadius<comment="設置範囲(プレーヤー周辺設置)">;
+    FSeek(p + 24); float playerHeight<comment="設置高度(プレーヤー周辺設置)">;
+    FSeek(p + 28); float setInterval<comment="設置間隔(プレーヤー周辺設置)">;
+    FSeek(p + 32); float life<comment="タイマー起動時間">;
+    FSeek(p + 36); float lifeEx<comment="タイマー起動時間の揺らぎ幅">;
+    FSeek(p + 40); float timer<comment="タイマー">;
+    FSeek(p + 44); float explosionLife<comment="爆発時間">;
+    FSeek(p + 48); float targetEffectiveDistance<comment="ターゲット選択時の最大距離">;
 
     FSeek(p + 52);
 } MiniBossTrackerMineParam;
@@ -154,25 +154,25 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float minRadius;
-    FSeek(p + 4);  float maxRadius;
-    FSeek(p + 8);  float maxDistance;
-    FSeek(p + 12); float minHeight;
-    FSeek(p + 16); float maxHeight;
-    FSeek(p + 20); float deviationTime;
-    FSeek(p + 24); float maxSpeed;
-    FSeek(p + 28); float minSpeed;
-    FSeek(p + 32); float accel;
-    FSeek(p + 36); float stopTime;
-    FSeek(p + 40); float damperDistance;
-    FSeek(p + 44); float damper;
-    FSeek(p + 48); float chaseRadius;
-    FSeek(p + 52); float chaseSpeed;
-    FSeek(p + 56); float disappearTime;
-    FSeek(p + 60); float life;
-    FSeek(p + 64); float interval;
-    FSeek(p + 68); float radius;
-    FSeek(p + 72); float targetEffectiveDistance;
+    FSeek(p + 0);  float minRadius<comment="設置半径の最小値">;
+    FSeek(p + 4);  float maxRadius<comment="設置半径の最大値">;
+    FSeek(p + 8);  float maxDistance<comment="設置位置のプレーヤーからの距離の最大値">;
+    FSeek(p + 12); float minHeight<comment="最小設置高度">;
+    FSeek(p + 16); float maxHeight<comment="最大設置高度">;
+    FSeek(p + 20); float deviationTime<comment="移動予測時間">;
+    FSeek(p + 24); float maxSpeed<comment="最高速度">;
+    FSeek(p + 28); float minSpeed<comment="最低速度">;
+    FSeek(p + 32); float accel<comment="加速度">;
+    FSeek(p + 36); float stopTime<comment="発射時停止時間">;
+    FSeek(p + 40); float damperDistance<comment="減速する距離">;
+    FSeek(p + 44); float damper<comment="減速ダンパー">;
+    FSeek(p + 48); float chaseRadius<comment="プレイヤー追跡半径">;
+    FSeek(p + 52); float chaseSpeed<comment="プレイヤー追跡速度">;
+    FSeek(p + 56); float disappearTime<comment="消失時間">;
+    FSeek(p + 60); float life<comment="リング吸い込み時間">;
+    FSeek(p + 64); float interval<comment="リング吸い込み間隔">;
+    FSeek(p + 68); float radius<comment="リング吸い込み半径">;
+    FSeek(p + 72); float targetEffectiveDistance<comment="ターゲット選択時の最大距離">;
 
     FSeek(p + 76);
 } MiniBossTrackerRingHoleParam;
@@ -193,9 +193,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float intervalTable[20]<optimize=false>;
-    FSeek(p + 80);  ActionType actionTable[20]<optimize=false>;
-    FSeek(p + 100); sint32 nextPoint;
+    FSeek(p + 0);   float intervalTable[20]<comment="インターバルテーブル",optimize=false>;
+    FSeek(p + 80);  ActionType actionTable[20]<comment="アクションテーブル",optimize=false>;
+    FSeek(p + 100); sint32 nextPoint<comment="次の段階にいくための土台撃破数">;
 
     FSeek(p + 104);
 } MiniBossTrackerActionParam;
@@ -204,17 +204,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 hp;
-    FSeek(p + 4);  float lossRingTime;
-    FSeek(p + 8);  float pursuitTime;
-    FSeek(p + 12); sint32 baseDebuffCount;
-    FSeek(p + 16); sint32 addDebuffCount;
-    FSeek(p + 20); float cameraDistance;
-    FSeek(p + 24); float cameraDistance2;
-    FSeek(p + 28); float cameraMinElevation;
-    FSeek(p + 32); float cameraMaxElevation;
-    FSeek(p + 36); float cameraTargetUpOffset;
-    FSeek(p + 40); float cameraTargetUpOffset2;
+    FSeek(p + 0);  sint32 hp<comment="hp">;
+    FSeek(p + 4);  float lossRingTime<comment="リング減少時間">;
+    FSeek(p + 8);  float pursuitTime<comment="追撃時間">;
+    FSeek(p + 12); sint32 baseDebuffCount<comment="基本デバフ値">;
+    FSeek(p + 16); sint32 addDebuffCount<comment="追加デバフ値">;
+    FSeek(p + 20); float cameraDistance<comment="カメラの距離">;
+    FSeek(p + 24); float cameraDistance2<comment="攻撃時のカメラの距離">;
+    FSeek(p + 28); float cameraMinElevation<comment="カメラの最小仰角">;
+    FSeek(p + 32); float cameraMaxElevation<comment="カメラの最大仰角">;
+    FSeek(p + 36); float cameraTargetUpOffset<comment="カメラの注視点上方オフセット">;
+    FSeek(p + 40); float cameraTargetUpOffset2<comment="攻撃時のカメラの注視点上方オフセット">;
 
     FSeek(p + 44);
 } MiniBossTrackerGameParam;
@@ -223,20 +223,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossTrackerCommonParam commonParam;
-    FSeek(p + 64);   MiniBossTrackerLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 344);  MiniBossTrackerLevelBand levelBand[5]<optimize=false>;
-    FSeek(p + 364);  MiniBossTrackerCameraLockOn cameraLockDamage;
-    FSeek(p + 388);  MiniBossTrackerMoveParam move;
-    FSeek(p + 484);  MiniBossTrackerBulletParam bullet;
-    FSeek(p + 508);  MiniBossTrackerMineParam mine;
-    FSeek(p + 560);  MiniBossTrackerRingHoleParam ringHole;
-    FSeek(p + 636);  MiniBossTrackerActionParam action1;
-    FSeek(p + 740);  MiniBossTrackerActionParam action2;
-    FSeek(p + 844);  MiniBossTrackerActionParam action3;
-    FSeek(p + 948);  MiniBossTrackerActionParam action4;
-    FSeek(p + 1052); MiniBossTrackerActionParam action5;
-    FSeek(p + 1156); MiniBossTrackerGameParam game;
+    FSeek(p + 0);    MiniBossTrackerCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 64);   MiniBossTrackerLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 344);  MiniBossTrackerLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 364);  MiniBossTrackerCameraLockOn cameraLockDamage<comment="[カメラ注視]ダメージ">;
+    FSeek(p + 388);  MiniBossTrackerMoveParam move<comment="移動パラメータ">;
+    FSeek(p + 484);  MiniBossTrackerBulletParam bullet<comment="弾パラメータ">;
+    FSeek(p + 508);  MiniBossTrackerMineParam mine<comment="機雷パラメータ">;
+    FSeek(p + 560);  MiniBossTrackerRingHoleParam ringHole<comment="リングホールパラメータ">;
+    FSeek(p + 636);  MiniBossTrackerActionParam action1<comment="アクションパラメータ 初期">;
+    FSeek(p + 740);  MiniBossTrackerActionParam action2<comment="アクションパラメータ ２段階目">;
+    FSeek(p + 844);  MiniBossTrackerActionParam action3<comment="アクションパラメータ ３段階目">;
+    FSeek(p + 948);  MiniBossTrackerActionParam action4<comment="アクションパラメータ ４段階目">;
+    FSeek(p + 1052); MiniBossTrackerActionParam action5<comment="アクションパラメータ ５段階目">;
+    FSeek(p + 1156); MiniBossTrackerGameParam game<comment="その他パラメータ">;
 
     FSeek(p + 1200);
 } MiniBossTrackerConfig;

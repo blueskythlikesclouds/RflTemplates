@@ -6,32 +6,32 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float distance;
-    FSeek(p + 4);   float distanceSuspensionK;
-    FSeek(p + 8);   float minElevation;
-    FSeek(p + 12);  float maxElevation;
-    FSeek(p + 16);  float azimuthSensitivity;
-    FSeek(p + 20);  float elevationUpSensitivity;
-    FSeek(p + 24);  float elevationDownSensitivity;
-    FSeek(p + 28);  float elevationOffset;
-    FSeek(p + 32);  float targetUpOffset;
-    FSeek(p + 36);  float targetMinUpOffsetLimit;
-    FSeek(p + 40);  float targetMaxUpOffsetLimit;
-    FSeek(p + 44);  float targetMinUpOffsetLimitDistance;
-    FSeek(p + 48);  float targetMaxUpOffsetLimitDistance;
-    FSeek(p + 52);  float targetOffsetSuspensionK;
-    FSeek(p + 56);  float delayAllowDistance;
-    FSeek(p + 60);  float delayLimitDistance;
-    FSeek(p + 64);  float delaySuspensionK;
-    FSeek(p + 68);  float autocontrolDisabledTime;
-    FSeek(p + 72);  float chaseSegmentSuspensionK;
-    FSeek(p + 76);  float chaseSegmentShortenSpeed;
-    FSeek(p + 80);  sint32 chaseSegmentMaxCount;
-    FSeek(p + 84);  float inertiaMinDecel;
-    FSeek(p + 88);  float inertiaOvershootAngle;
-    FSeek(p + 92);  float resetSuspensionK;
-    FSeek(p + 96);  float downDirectionDotThreshold;
-    FSeek(p + 100); float baseUpLeanRate;
+    FSeek(p + 0);   float distance<comment="距離">;
+    FSeek(p + 4);   float distanceSuspensionK<comment="距離変動のバネ定数">;
+    FSeek(p + 8);   float minElevation<comment="仰角最小値">;
+    FSeek(p + 12);  float maxElevation<comment="仰角最大値">;
+    FSeek(p + 16);  float azimuthSensitivity<comment="方位角の追従感度">;
+    FSeek(p + 20);  float elevationUpSensitivity<comment="仰角の上昇追従感度">;
+    FSeek(p + 24);  float elevationDownSensitivity<comment="仰角の下降追従感度">;
+    FSeek(p + 28);  float elevationOffset<comment="仰角オフセット">;
+    FSeek(p + 32);  float targetUpOffset<comment="注視点の上方オフセット">;
+    FSeek(p + 36);  float targetMinUpOffsetLimit<comment="注視点の最小上方オフセットリミット">;
+    FSeek(p + 40);  float targetMaxUpOffsetLimit<comment="注視点の最大上方オフセットリミット">;
+    FSeek(p + 44);  float targetMinUpOffsetLimitDistance<comment="注視点の上方オフセットリミットが最小値になる距離">;
+    FSeek(p + 48);  float targetMaxUpOffsetLimitDistance<comment="注視点の上方オフセットリミットが最大値になる距離">;
+    FSeek(p + 52);  float targetOffsetSuspensionK<comment="注視点オフセットのバネ定数">;
+    FSeek(p + 56);  float delayAllowDistance<comment="注視点遅延の許容距離">;
+    FSeek(p + 60);  float delayLimitDistance<comment="注視点遅延の限界距離">;
+    FSeek(p + 64);  float delaySuspensionK<comment="注視点遅延のバネ定数">;
+    FSeek(p + 68);  float autocontrolDisabledTime<comment="手動操作後に自動操作を無効化する時間">;
+    FSeek(p + 72);  float chaseSegmentSuspensionK<comment="追跡チェーン回転時のバネ定数">;
+    FSeek(p + 76);  float chaseSegmentShortenSpeed<comment="追跡チェーンを縮める速度">;
+    FSeek(p + 80);  sint32 chaseSegmentMaxCount<comment="追跡チェーンの許容セグメント数">;
+    FSeek(p + 84);  float inertiaMinDecel<comment="慣性の最小減速度">;
+    FSeek(p + 88);  float inertiaOvershootAngle<comment="慣性によってオーバーシュートする最大角度">;
+    FSeek(p + 92);  float resetSuspensionK<comment="カメラリセット時のバネ定数">;
+    FSeek(p + 96);  float downDirectionDotThreshold<comment="下向きとみなす内積の境界値">;
+    FSeek(p + 100); float baseUpLeanRate<comment="通常時のターゲット上方向反映割合">;
 
     FSeek(p + 104);
 } StandardCameraCommonParameter;
@@ -40,18 +40,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float minDistance;
-    FSeek(p + 4);  float maxDistance;
-    FSeek(p + 8);  float minDistanceAccel;
-    FSeek(p + 12); float maxDistanceAccel;
-    FSeek(p + 16); float distanceSuspensionK;
-    FSeek(p + 20); float elevationOffset;
-    FSeek(p + 24); float azimuthSensitivity;
-    FSeek(p + 28); float targetOffsetSuspensionK;
-    FSeek(p + 32); float targetUpOffset;
-    FSeek(p + 36); float delayAllowDistance;
-    FSeek(p + 40); float delayLimitDistance;
-    FSeek(p + 44); float delaySuspensionK;
+    FSeek(p + 0);  float minDistance<comment="最小距離">;
+    FSeek(p + 4);  float maxDistance<comment="最大距離">;
+    FSeek(p + 8);  float minDistanceAccel<comment="最小距離に対応する加速度">;
+    FSeek(p + 12); float maxDistanceAccel<comment="最大距離に対応する加速度">;
+    FSeek(p + 16); float distanceSuspensionK<comment="距離変動のバネ定数">;
+    FSeek(p + 20); float elevationOffset<comment="仰角オフセット">;
+    FSeek(p + 24); float azimuthSensitivity<comment="方位角の追従感度">;
+    FSeek(p + 28); float targetOffsetSuspensionK<comment="注視点オフセットのバネ定数">;
+    FSeek(p + 32); float targetUpOffset<comment="注視点の上方オフセット">;
+    FSeek(p + 36); float delayAllowDistance<comment="注視点遅延の許容距離">;
+    FSeek(p + 40); float delayLimitDistance<comment="注視点遅延の限界距離">;
+    FSeek(p + 44); float delaySuspensionK<comment="注視点遅延のバネ定数">;
 
     FSeek(p + 48);
 } StandardCameraDashParameter;
@@ -60,15 +60,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float minDistance;
-    FSeek(p + 4);  float maxDistance;
-    FSeek(p + 8);  float elevationOffset;
-    FSeek(p + 12); float azimuthSensitivity;
-    FSeek(p + 16); float elevationUpSensitivity;
-    FSeek(p + 20); float elevationDownSensitivity;
-    FSeek(p + 24); float targetUpOffset;
-    FSeek(p + 28); float minDelayLimitDistance;
-    FSeek(p + 32); float maxDelayLimitDistance;
+    FSeek(p + 0);  float minDistance<comment="最小距離">;
+    FSeek(p + 4);  float maxDistance<comment="最大距離">;
+    FSeek(p + 8);  float elevationOffset<comment="仰角オフセット">;
+    FSeek(p + 12); float azimuthSensitivity<comment="方位角の追従感度">;
+    FSeek(p + 16); float elevationUpSensitivity<comment="仰角の上昇追従感度">;
+    FSeek(p + 20); float elevationDownSensitivity<comment="仰角の下降追従感度">;
+    FSeek(p + 24); float targetUpOffset<comment="注視点の上方オフセット">;
+    FSeek(p + 28); float minDelayLimitDistance<comment="注視点遅延の最小限界距離">;
+    FSeek(p + 32); float maxDelayLimitDistance<comment="注視点遅延の最大限界距離">;
 
     FSeek(p + 36);
 } StandardCameraCyloopParameter;
@@ -77,20 +77,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float minElevation;
-    FSeek(p + 8);  float maxElevation;
-    FSeek(p + 12); float elevationOffset;
-    FSeek(p + 16); float minElevationCyloop;
-    FSeek(p + 20); float maxElevationCyloop;
-    FSeek(p + 24); float elevationOffsetCyloop;
-    FSeek(p + 28); float targetUpOffset;
-    FSeek(p + 32); float delayAllowDistance;
-    FSeek(p + 36); float delayLimitDistance;
-    FSeek(p + 40); float delaySuspensionK;
-    FSeek(p + 44); float panningSuspensionK;
-    FSeek(p + 48); float interiorPanningDistance;
-    FSeek(p + 52); float interiorPanningSuspensionK;
+    FSeek(p + 0);  float distance<comment="距離">;
+    FSeek(p + 4);  float minElevation<comment="仰角最小値">;
+    FSeek(p + 8);  float maxElevation<comment="仰角最大値">;
+    FSeek(p + 12); float elevationOffset<comment="仰角オフセット">;
+    FSeek(p + 16); float minElevationCyloop<comment="[サイループ中]仰角最小値">;
+    FSeek(p + 20); float maxElevationCyloop<comment="[サイループ中]仰角最大値">;
+    FSeek(p + 24); float elevationOffsetCyloop<comment="[サイループ中]仰角オフセット">;
+    FSeek(p + 28); float targetUpOffset<comment="注視点の上方オフセット">;
+    FSeek(p + 32); float delayAllowDistance<comment="注視点遅延の許容距離">;
+    FSeek(p + 36); float delayLimitDistance<comment="注視点遅延の限界距離">;
+    FSeek(p + 40); float delaySuspensionK<comment="注視点遅延のバネ定数">;
+    FSeek(p + 44); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 48); float interiorPanningDistance<comment="近距離パンニング距離">;
+    FSeek(p + 52); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
 
     FSeek(p + 56);
 } StandardCameraLockonParameter;
@@ -99,8 +99,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float distance;
-    FSeek(p + 4); float targetUpOffset;
+    FSeek(p + 0); float distance<comment="距離">;
+    FSeek(p + 4); float targetUpOffset<comment="注視点の上方オフセット">;
 
     FSeek(p + 8);
 } StandardCameraWallParameter;
@@ -109,11 +109,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float azimuthSensitivity;
-    FSeek(p + 4);  float elevationUpSensitivity;
-    FSeek(p + 8);  float elevationDownSensitivity;
-    FSeek(p + 12); float targetUpOffset;
-    FSeek(p + 16); float baseUpLeanRate;
+    FSeek(p + 0);  float azimuthSensitivity<comment="方位角の追従感度">;
+    FSeek(p + 4);  float elevationUpSensitivity<comment="仰角の上昇追従感度">;
+    FSeek(p + 8);  float elevationDownSensitivity<comment="仰角の下降追従感度">;
+    FSeek(p + 12); float targetUpOffset<comment="注視点の上方オフセット">;
+    FSeek(p + 16); float baseUpLeanRate<comment="通常時のターゲット上方向反映割合">;
 
     FSeek(p + 20);
 } StandardCameraLoopParameter;
@@ -122,22 +122,22 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float distanceSuspensionK;
-    FSeek(p + 8);  float elevationOffset;
-    FSeek(p + 12); float azimuthMinOffset;
-    FSeek(p + 16); float azimuthMaxOffset;
-    FSeek(p + 20); float azimuthMinOffsetDistance;
-    FSeek(p + 24); float azimuthMaxOffsetDistance;
-    FSeek(p + 28); float azimuthSensitivity;
-    FSeek(p + 32); float targetOffsetSuspensionK;
-    FSeek(p + 36); float targetMinUpOffset;
-    FSeek(p + 40); float targetMaxUpOffset;
-    FSeek(p + 44); float targetFrontOffset;
-    FSeek(p + 48); float delayAllowDistance;
-    FSeek(p + 52); float delayLimitDistance;
-    FSeek(p + 56); float delaySuspensionK;
-    FSeek(p + 60); float manualControlTime;
+    FSeek(p + 0);  float distance<comment="距離">;
+    FSeek(p + 4);  float distanceSuspensionK<comment="距離変動のバネ定数">;
+    FSeek(p + 8);  float elevationOffset<comment="仰角オフセット">;
+    FSeek(p + 12); float azimuthMinOffset<comment="最小方位角オフセット">;
+    FSeek(p + 16); float azimuthMaxOffset<comment="最大方位角オフセット">;
+    FSeek(p + 20); float azimuthMinOffsetDistance<comment="最小方位角オフセットになる距離">;
+    FSeek(p + 24); float azimuthMaxOffsetDistance<comment="最大方位角オフセットになる距離">;
+    FSeek(p + 28); float azimuthSensitivity<comment="方位角の追従感度">;
+    FSeek(p + 32); float targetOffsetSuspensionK<comment="注視点オフセットのバネ定数">;
+    FSeek(p + 36); float targetMinUpOffset<comment="注視点の最小上方オフセット">;
+    FSeek(p + 40); float targetMaxUpOffset<comment="注視点の最大上方オフセット">;
+    FSeek(p + 44); float targetFrontOffset<comment="注視点の前方オフセット">;
+    FSeek(p + 48); float delayAllowDistance<comment="注視点遅延の許容距離">;
+    FSeek(p + 52); float delayLimitDistance<comment="注視点遅延の限界距離">;
+    FSeek(p + 56); float delaySuspensionK<comment="注視点遅延のバネ定数">;
+    FSeek(p + 60); float manualControlTime<comment="手動操作を維持する時間">;
 
     FSeek(p + 64);
 } StandardCameraBattleParameter;
@@ -146,15 +146,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float minManualRotationSpeed;
-    FSeek(p + 4);  float maxManualRotationSpeed;
-    FSeek(p + 8);  float minDistanceScale;
-    FSeek(p + 12); float maxDistanceScale;
-    FSeek(p + 16); float maxElevationAddOffset;
-    FSeek(p + 20); float minTargetUpOffsetScale;
-    FSeek(p + 24); float maxTargetUpOffsetScale;
-    FSeek(p + 28); float minFovyRate;
-    FSeek(p + 32); float minLimitFovy;
+    FSeek(p + 0);  float minManualRotationSpeed<comment="マニュアル操作時の最低回転速度">;
+    FSeek(p + 4);  float maxManualRotationSpeed<comment="マニュアル操作時の最高回転速度">;
+    FSeek(p + 8);  float minDistanceScale<comment="距離スケール[最小]">;
+    FSeek(p + 12); float maxDistanceScale<comment="距離スケール[最大]">;
+    FSeek(p + 16); float maxElevationAddOffset<comment="追加の仰角オフセット[最大]">;
+    FSeek(p + 20); float minTargetUpOffsetScale<comment="注視点の上方オフセットスケール[最小]">;
+    FSeek(p + 24); float maxTargetUpOffsetScale<comment="注視点の上方オフセットスケール[最大]">;
+    FSeek(p + 28); float minFovyRate<comment="最低レート時の画角スケール">;
+    FSeek(p + 32); float minLimitFovy<comment="画角の最小限界値">;
 
     FSeek(p + 36);
 } StandardCameraOptionParameter;
@@ -163,20 +163,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   StandardCameraCommonParameter common;
-    FSeek(p + 104); StandardCameraDashParameter dash;
-    FSeek(p + 152); StandardCameraCyloopParameter cyloop;
-    FSeek(p + 188); StandardCameraCyloopParameter cyloopSnipe;
-    FSeek(p + 224); StandardCameraLockonParameter lockon;
-    FSeek(p + 280); StandardCameraLockonParameter lockonCharger;
-    FSeek(p + 336); StandardCameraLockonParameter lockonSpider;
-    FSeek(p + 392); StandardCameraLockonParameter lockonDaruma;
-    FSeek(p + 448); StandardCameraLockonParameter lockonNinja;
-    FSeek(p + 504); StandardCameraLockonParameter lockonSumo;
-    FSeek(p + 560); StandardCameraWallParameter wall;
-    FSeek(p + 568); StandardCameraLoopParameter loop;
-    FSeek(p + 588); StandardCameraBattleParameter battle;
-    FSeek(p + 652); StandardCameraOptionParameter option;
+    FSeek(p + 0);   StandardCameraCommonParameter common<comment="共通">;
+    FSeek(p + 104); StandardCameraDashParameter dash<comment="ダッシュ">;
+    FSeek(p + 152); StandardCameraCyloopParameter cyloop<comment="サイループ">;
+    FSeek(p + 188); StandardCameraCyloopParameter cyloopSnipe<comment="サイループ[スナイプ]">;
+    FSeek(p + 224); StandardCameraLockonParameter lockon<comment="ロックオン[標準]">;
+    FSeek(p + 280); StandardCameraLockonParameter lockonCharger<comment="ロックオン[Charger]">;
+    FSeek(p + 336); StandardCameraLockonParameter lockonSpider<comment="ロックオン[Spider]">;
+    FSeek(p + 392); StandardCameraLockonParameter lockonDaruma<comment="ロックオン[Daruma]">;
+    FSeek(p + 448); StandardCameraLockonParameter lockonNinja<comment="ロックオン[Ninja]">;
+    FSeek(p + 504); StandardCameraLockonParameter lockonSumo<comment="ロックオン[Sumo]">;
+    FSeek(p + 560); StandardCameraWallParameter wall<comment="壁走り">;
+    FSeek(p + 568); StandardCameraLoopParameter loop<comment="ループ地形">;
+    FSeek(p + 588); StandardCameraBattleParameter battle<comment="バトル">;
+    FSeek(p + 652); StandardCameraOptionParameter option<comment="オプション">;
 
     FSeek(p + 688);
 } StandardCameraConfig;

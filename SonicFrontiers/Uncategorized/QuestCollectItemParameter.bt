@@ -11,11 +11,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float timeLimitSeconds;
-    FSeek(p + 4);  float cautionTime;
-    FSeek(p + 8);  float warningTime;
-    FSeek(p + 12); bool useCautionAnimation;
-    FSeek(p + 13); bool useWarningAnimation;
+    FSeek(p + 0);  float timeLimitSeconds<comment="制限時間(秒)">;
+    FSeek(p + 4);  float cautionTime<comment="Cautionアニメ開始残り時間(秒)">;
+    FSeek(p + 8);  float warningTime<comment="(Cautionの後に再生する)Warningアニメ開始残り時間(秒)">;
+    FSeek(p + 12); bool useCautionAnimation<comment="Cautionアニメを使うか">;
+    FSeek(p + 13); bool useWarningAnimation<comment="Warningアニメを使うか">;
 
     FSeek(p + 16);
 } QuestCollectitemTimerParameter;
@@ -24,11 +24,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float azimuthSensitivity;
-    FSeek(p + 8);  float elevationUpSensitivity;
-    FSeek(p + 12); float elevationDownSensitivity;
-    FSeek(p + 16); float elevationOffset;
+    FSeek(p + 0);  float distance<comment="距離">;
+    FSeek(p + 4);  float azimuthSensitivity<comment="方位角の追従感度">;
+    FSeek(p + 8);  float elevationUpSensitivity<comment="仰角の上昇追従感度">;
+    FSeek(p + 12); float elevationDownSensitivity<comment="仰角の下降追従感度">;
+    FSeek(p + 16); float elevationOffset<comment="仰角オフセット">;
 
     FSeek(p + 20);
 } QuestCameraParameter;
@@ -37,10 +37,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 applicableFailedCount;
-    FSeek(p + 4);  sint32 RequestItemNum;
-    FSeek(p + 8);  QuestCollectitemTimerParameter timerParam;
-    FSeek(p + 24); QuestCameraParameter cameraParam;
+    FSeek(p + 0);  sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 4);  sint32 RequestItemNum<comment="必要なアイテム数">;
+    FSeek(p + 8);  QuestCollectitemTimerParameter timerParam<comment="タイマー">;
+    FSeek(p + 24); QuestCameraParameter cameraParam<comment="カメラ">;
 
     FSeek(p + 44);
 } QuestCollectItemParameterElement;
@@ -49,7 +49,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); QuestCollectItemParameterElement element[3]<optimize=false>;
+    FSeek(p + 0); QuestCollectItemParameterElement element[3]<comment="部品集め",optimize=false>;
 
     FSeek(p + 132);
 } QuestCollectItemParameter;

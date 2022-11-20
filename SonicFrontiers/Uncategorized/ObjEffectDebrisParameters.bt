@@ -16,11 +16,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 centerPosOffsetMin;
-    FSeek(p + 16); vector3 centerPosOffsetMax;
-    FSeek(p + 32); float range;
-    FSeek(p + 36); float powerMin;
-    FSeek(p + 40); float powerMax;
+    FSeek(p + 0);  vector3 centerPosOffsetMin<comment="爆発位置オフセット最小値">;
+    FSeek(p + 16); vector3 centerPosOffsetMax<comment="爆発位置オフセット最大値">;
+    FSeek(p + 32); float range<comment="爆発が届く範囲">;
+    FSeek(p + 36); float powerMin<comment="力の大きさ最小値">;
+    FSeek(p + 40); float powerMax<comment="力の大きさ最大値">;
 
     FSeek(p + 48);
 } ExplosionParameter;
@@ -29,9 +29,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 impulseDir;
-    FSeek(p + 16); float powerMin;
-    FSeek(p + 20); float powerMax;
+    FSeek(p + 0);  vector3 impulseDir<comment="力の方向(後で正規化されます)">;
+    FSeek(p + 16); float powerMin<comment="力の大きさ最小値">;
+    FSeek(p + 20); float powerMax<comment="力の大きさ最大値">;
 
     FSeek(p + 32);
 } ImpulseParameter;
@@ -40,13 +40,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float marginTime;
-    FSeek(p + 4);  float nextTime;
-    FSeek(p + 8);  float gravity;
-    FSeek(p + 12); float moveStopTime;
-    FSeek(p + 16); bool damping;
-    FSeek(p + 32); ExplosionParameter explosionParam;
-    FSeek(p + 80); ImpulseParameter impulseParam;
+    FSeek(p + 0);  float marginTime<comment="速度遷移マージン">;
+    FSeek(p + 4);  float nextTime<comment="次の段階に移る時間">;
+    FSeek(p + 8);  float gravity<comment="重力加速度">;
+    FSeek(p + 12); float moveStopTime<comment="移動停止秒">;
+    FSeek(p + 16); bool damping<comment="速度減衰するか">;
+    FSeek(p + 32); ExplosionParameter explosionParam<comment="爆発パラメータ">;
+    FSeek(p + 80); ImpulseParameter impulseParam<comment="インパルスパラメータ">;
 
     FSeek(p + 112);
 } DebrisPhaseParameter;
@@ -55,7 +55,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); DebrisPhaseParameter debrisPhaseParameters[3]<optimize=false>;
+    FSeek(p + 0); DebrisPhaseParameter debrisPhaseParameters[3]<comment="debrisPhaseParameters",optimize=false>;
 
     FSeek(p + 336);
 } EffectDebrisParameter;
@@ -64,7 +64,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); EffectDebrisParameter effectDebrisParameters[10]<optimize=false>;
+    FSeek(p + 0); EffectDebrisParameter effectDebrisParameters[10]<comment="effectDebrisParameters",optimize=false>;
 
     FSeek(p + 3360);
 } ObjEffectDebrisParameters;

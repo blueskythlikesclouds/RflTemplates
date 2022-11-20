@@ -11,8 +11,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 target;
-    FSeek(p + 16); vector3 eye;
+    FSeek(p + 0);  vector3 target<comment="注視点">;
+    FSeek(p + 16); vector3 eye<comment="視点">;
 
     FSeek(p + 32);
 } BakeCameraParameterData;

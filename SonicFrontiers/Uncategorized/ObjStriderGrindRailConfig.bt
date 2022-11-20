@@ -4,26 +4,26 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float bulletSpeed;
-    FSeek(p + 4);  float bulletRotDegPerSec;
-    FSeek(p + 8);  float jumpToCenterTime;
-    FSeek(p + 12); float jumpTime;
-    FSeek(p + 16); float jumpToCenterTangentY;
-    FSeek(p + 20); float jumpTangentMultiplier;
-    FSeek(p + 24); float jumpDestinationOffsetY;
-    FSeek(p + 28); float jumpDestinationOffsetXZ;
-    FSeek(p + 32); float jumpToFloorHeight;
-    FSeek(p + 36); float jumpToFloorOffset;
-    FSeek(p + 40); float jumpToFloorTime;
-    FSeek(p + 44); float bulletWaitTime;
-    FSeek(p + 48); float timeTilDisappear;
-    FSeek(p + 52); float segmentLength;
-    FSeek(p + 56); float collisionHeight;
-    FSeek(p + 60); float collisionRadiusAddend;
-    FSeek(p + 64); float initialEffectScaleY;
-    FSeek(p + 68); float initialEffectScaleXZ;
-    FSeek(p + 72); float maxEffectScaleXZ;
-    FSeek(p + 76); float timeToMaxEffectScale;
+    FSeek(p + 0);  float bulletSpeed<comment="フープレール弾速">;
+    FSeek(p + 4);  float bulletRotDegPerSec<comment="フープレール弾回転角度/秒">;
+    FSeek(p + 8);  float jumpToCenterTime<comment="中心へのジャンプにかかる時間">;
+    FSeek(p + 12); float jumpTime<comment="次点へのジャンプにかかる時間">;
+    FSeek(p + 16); float jumpToCenterTangentY<comment="中心へのジャンプスプラインタンジェントY値">;
+    FSeek(p + 20); float jumpTangentMultiplier<comment="次点へのジャンプスプライン終点タンジェント倍率（this*（X,0,Z））">;
+    FSeek(p + 24); float jumpDestinationOffsetY<comment="ジャンプ地点Yオフセット">;
+    FSeek(p + 28); float jumpDestinationOffsetXZ<comment="ジャンプ地点XZオフセット（奥方向）">;
+    FSeek(p + 32); float jumpToFloorHeight<comment="中心足場へのジャンプ目標位置高さ">;
+    FSeek(p + 36); float jumpToFloorOffset<comment="中心足場へのジャンプ目標位置の水平オフセット">;
+    FSeek(p + 40); float jumpToFloorTime<comment="中心足場へのジャンプ時間">;
+    FSeek(p + 44); float bulletWaitTime<comment="フープレール到着後の待機時間">;
+    FSeek(p + 48); float timeTilDisappear<comment="消滅までの時間">;
+    FSeek(p + 52); float segmentLength<comment="レール分割距離">;
+    FSeek(p + 56); float collisionHeight<comment="コリジョン高さ">;
+    FSeek(p + 60); float collisionRadiusAddend<comment="コリジョン半径加数">;
+    FSeek(p + 64); float initialEffectScaleY<comment="発射時エフェクトスケール（高さ）">;
+    FSeek(p + 68); float initialEffectScaleXZ<comment="発射時エフェクトスケール（横）">;
+    FSeek(p + 72); float maxEffectScaleXZ<comment="最大エフェクトスケール（横）">;
+    FSeek(p + 76); float timeToMaxEffectScale<comment="エフェクトスケールが最大になるまでの時間">;
 
     FSeek(p + 80);
 } ObjStriderGrindRailConfig;

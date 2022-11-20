@@ -13,11 +13,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float noiseTextureScrollSpeed;
-    FSeek(p + 8);  float blurScale;
-    FSeek(p + 12); float colorGain;
-    FSeek(p + 16); float noiseGain;
+    FSeek(p + 0);  float distance<comment="距離">;
+    FSeek(p + 4);  float noiseTextureScrollSpeed<comment="ノイズスクロール速度">;
+    FSeek(p + 8);  float blurScale<comment="ブラースケール">;
+    FSeek(p + 12); float colorGain<comment="カラーゲイン">;
+    FSeek(p + 16); float noiseGain<comment="ノイズゲイン">;
 
     FSeek(p + 20);
 } AuraEffectLerpNode;
@@ -26,8 +26,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); AuraEffectLerpNode node[2]<optimize=false>;
+    FSeek(p + 0);  cstring name<comment="名前">;
+    FSeek(p + 16); AuraEffectLerpNode node[2]<comment="補間パラメータ",optimize=false>;
 
     FSeek(p + 56);
 } AuraEffectLerpParameter;
@@ -36,7 +36,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); AuraEffectLerpParameter params[4]<optimize=false>;
+    FSeek(p + 0); AuraEffectLerpParameter params[4]<comment="パラメータ",optimize=false>;
 
     FSeek(p + 224);
 } AuraEffectParameters;
@@ -52,9 +52,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float localLightIntensityScale;
-    FSeek(p + 4); bool dropPriorityEnabled;
-    FSeek(p + 5); sint8 dropPriority;
+    FSeek(p + 0); float localLightIntensityScale<comment="ローカルライト輝度スケール">;
+    FSeek(p + 4); bool dropPriorityEnabled<comment="処理落ちプライオリティを上書きする">;
+    FSeek(p + 5); sint8 dropPriority<comment="処理落ちプライオリティ">;
 
     FSeek(p + 8);
 } EffectParameters;
@@ -65,7 +65,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 blockWeights[5]<optimize=false>;
+    FSeek(p + 0); uint8 blockWeights[5]<comment="ブロック数ウェイト値",optimize=false>;
 
     FSeek(p + 5);
 } WeatherBlockParameter;
@@ -74,8 +74,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 transitWeights[5]<optimize=false>;
-    FSeek(p + 5); WeatherBlockParameter blockParams[5]<optimize=false>;
+    FSeek(p + 0); uint8 transitWeights[5]<comment="遷移先ウェイト値",optimize=false>;
+    FSeek(p + 5); WeatherBlockParameter blockParams[5]<comment="天候別ブロック長",optimize=false>;
 
     FSeek(p + 30);
 } WeatherTypeParameter;
@@ -84,8 +84,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 hour;
-    FSeek(p + 1); uint8 minute;
+    FSeek(p + 0); uint8 hour<comment="時">;
+    FSeek(p + 1); uint8 minute<comment="分">;
 
     FSeek(p + 2);
 } WeatherTimeParameter;
@@ -94,11 +94,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); WeatherTimeParameter sunriseBeginTime;
-    FSeek(p + 2); WeatherTimeParameter dayBeginTime;
-    FSeek(p + 4); WeatherTimeParameter sunsetBeginTime;
-    FSeek(p + 6); WeatherTimeParameter nightBeginTime;
-    FSeek(p + 8); WeatherTimeParameter blockTime;
+    FSeek(p + 0); WeatherTimeParameter sunriseBeginTime<comment="日出/晴れ固定開始時間">;
+    FSeek(p + 2); WeatherTimeParameter dayBeginTime<comment="日出/晴れ固定終了時間">;
+    FSeek(p + 4); WeatherTimeParameter sunsetBeginTime<comment="日没/晴れ固定開始時間">;
+    FSeek(p + 6); WeatherTimeParameter nightBeginTime<comment="日没/晴れ固定終了時間">;
+    FSeek(p + 8); WeatherTimeParameter blockTime<comment="天候1ブロック時間">;
 
     FSeek(p + 10);
 } WeatherTimeControlParameter;
@@ -107,8 +107,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   WeatherTypeParameter type[5]<optimize=false>;
-    FSeek(p + 150); WeatherTimeControlParameter timeControl;
+    FSeek(p + 0);   WeatherTypeParameter type[5]<comment="天候一覧",optimize=false>;
+    FSeek(p + 150); WeatherTimeControlParameter timeControl<comment="時間制御">;
 
     FSeek(p + 160);
 } WeatherParameters;
@@ -117,9 +117,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   AuraEffectParameters aura;
-    FSeek(p + 224); EffectParameters effect;
-    FSeek(p + 232); WeatherParameters weather;
+    FSeek(p + 0);   AuraEffectParameters aura<comment="オーラ">;
+    FSeek(p + 224); EffectParameters effect<comment="エフェクト">;
+    FSeek(p + 232); WeatherParameters weather<comment="天候">;
 
     FSeek(p + 392);
 } GraphicsParameters;

@@ -11,16 +11,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float dropBoxProbabilly;
-    FSeek(p + 4);  float boxHpSmall;
-    FSeek(p + 8);  float boxHpMiddle;
-    FSeek(p + 12); float boxHpLarge;
-    FSeek(p + 16); float friction;
-    FSeek(p + 20); float mass;
-    FSeek(p + 24); float gravity;
-    FSeek(p + 28); float linearDamping;
-    FSeek(p + 32); float angularDamping;
-    FSeek(p + 48); vector3 maxSpeed;
+    FSeek(p + 0);  float dropBoxProbabilly<comment="散らばる箱の割合">;
+    FSeek(p + 4);  float boxHpSmall<comment="箱の耐久値(小)">;
+    FSeek(p + 8);  float boxHpMiddle<comment="箱の耐久値(中)">;
+    FSeek(p + 12); float boxHpLarge<comment="箱の耐久値(大)">;
+    FSeek(p + 16); float friction<comment="箱の摩擦係数">;
+    FSeek(p + 20); float mass<comment="箱のおもさ">;
+    FSeek(p + 24); float gravity<comment="箱の重力加速度">;
+    FSeek(p + 28); float linearDamping<comment="箱の速度減衰率">;
+    FSeek(p + 32); float angularDamping<comment="箱の角速度減衰率">;
+    FSeek(p + 48); vector3 maxSpeed<comment="箱の最大速度">;
 
     FSeek(p + 64);
 } ObjQuestBoxParameter;

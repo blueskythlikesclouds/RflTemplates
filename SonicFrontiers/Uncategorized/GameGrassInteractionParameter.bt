@@ -18,11 +18,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); float radius;
-    FSeek(p + 20); float height;
-    FSeek(p + 24); float power;
-    FSeek(p + 28); bool moveHitEnabled;
+    FSeek(p + 0);  cstring name<comment="設定名">;
+    FSeek(p + 16); float radius<comment="半径">;
+    FSeek(p + 20); float height<comment="高さ">;
+    FSeek(p + 24); float power<comment="強度">;
+    FSeek(p + 28); bool moveHitEnabled<comment="移動区間も衝突対象とするか">;
 
     FSeek(p + 32);
 } GameGrassInteractionParameterData;
@@ -31,7 +31,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); GameGrassInteractionParameterData data[32]<optimize=false>;
+    FSeek(p + 0); GameGrassInteractionParameterData data[32]<comment="設定",optimize=false>;
 
     FSeek(p + 1024);
 } GameGrassInteractionParameter;

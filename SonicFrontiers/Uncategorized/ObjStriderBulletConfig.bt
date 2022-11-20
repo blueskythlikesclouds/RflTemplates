@@ -13,11 +13,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  ShootingDirection shootingDirection;
-    FSeek(p + 4);  float lifeTime;
-    FSeek(p + 8);  float speedToRail;
-    FSeek(p + 12); float speed;
-    FSeek(p + 16); float yOffset;
+    FSeek(p + 0);  ShootingDirection shootingDirection<comment="発射方向">;
+    FSeek(p + 4);  float lifeTime<comment="寿命（秒）">;
+    FSeek(p + 8);  float speedToRail<comment="レールまでの弾速">;
+    FSeek(p + 12); float speed<comment="レール上での弾速">;
+    FSeek(p + 16); float yOffset<comment="高さオフセット">;
 
     FSeek(p + 20);
 } CommonBulletParam;
@@ -32,10 +32,10 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  CommonBulletParam commonBulletParam;
-    FSeek(p + 20); float railChangeDelay;
-    FSeek(p + 24); float turnaroundTime;
-    FSeek(p + 28); float splinePositionDistance;
-    FSeek(p + 32); bool changesRails;
+    FSeek(p + 20); float railChangeDelay<comment="レール変更ディレイ">;
+    FSeek(p + 24); float turnaroundTime<comment="スプラインによる転向時間">;
+    FSeek(p + 28); float splinePositionDistance<comment="スプライン始点終点間距離">;
+    FSeek(p + 32); bool changesRails<comment="レールを変更するか">;
 
     FSeek(p + 36);
 } HomingBulletParam;
@@ -45,10 +45,10 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  CommonBulletParam commonBulletParam;
-    FSeek(p + 20); float railChangeDelay;
-    FSeek(p + 24); float turnaroundTime;
-    FSeek(p + 28); float splinePositionDistance;
-    FSeek(p + 32); bool changesRails;
+    FSeek(p + 20); float railChangeDelay<comment="レール変更ディレイ">;
+    FSeek(p + 24); float turnaroundTime<comment="スプラインによる転向時間">;
+    FSeek(p + 28); float splinePositionDistance<comment="スプライン始点終点間距離">;
+    FSeek(p + 32); bool changesRails<comment="レールを変更するか">;
 
     FSeek(p + 36);
 } ReverseHomingBulletParam;
@@ -66,9 +66,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  HomingBulletParam homingBulletParam;
-    FSeek(p + 36); ReverseHomingBulletParam reverseHomingBulletParam;
-    FSeek(p + 72); SameBodyRailBulletParam sameBodyRailBulletParam;
+    FSeek(p + 0);  HomingBulletParam homingBulletParam<comment="追尾這い弾のパラメータ">;
+    FSeek(p + 36); ReverseHomingBulletParam reverseHomingBulletParam<comment="逆追尾這い弾のパラメータ">;
+    FSeek(p + 72); SameBodyRailBulletParam sameBodyRailBulletParam<comment="レーン固定這い弾のパラメータ">;
 
     FSeek(p + 92);
 } ObjStriderBulletConfig;

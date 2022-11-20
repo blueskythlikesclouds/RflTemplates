@@ -13,25 +13,25 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 baseHp;
-    FSeek(p + 4);   sint32 lifeCount;
-    FSeek(p + 8);   sint32 lifeUpFailedCount[6]<optimize=false>;
-    FSeek(p + 32);  sint32 lifeMax;
-    FSeek(p + 36);  float gageUpVolume;
-    FSeek(p + 40);  float gageMax;
-    FSeek(p + 44);  sint32 laserNum;
-    FSeek(p + 48);  float laserInterval;
-    FSeek(p + 52);  float bulletInterval;
-    FSeek(p + 56);  float moveSpeed;
-    FSeek(p + 60);  float nodamageTime;
-    FSeek(p + 64);  float specialmoveTime;
-    FSeek(p + 68);  float bodyCol;
-    FSeek(p + 72);  float barrierCol;
-    FSeek(p + 76);  float attackRangeTime;
-    FSeek(p + 80);  float expandAttackCol;
-    FSeek(p + 96);  vector3 hitPos;
-    FSeek(p + 112); vector3 barrierPos;
-    FSeek(p + 128); vector3 expandAttackPos;
+    FSeek(p + 0);   sint32 baseHp<comment="基礎体力">;
+    FSeek(p + 4);   sint32 lifeCount<comment="初期残機数">;
+    FSeek(p + 8);   sint32 lifeUpFailedCount[6]<comment="残機を増やすのに必要な失敗数",optimize=false>;
+    FSeek(p + 32);  sint32 lifeMax<comment="最大残機数">;
+    FSeek(p + 36);  float gageUpVolume<comment="必殺ゲージ上昇量">;
+    FSeek(p + 40);  float gageMax<comment="必殺ゲージ最大値">;
+    FSeek(p + 44);  sint32 laserNum<comment="レーザー生成本数">;
+    FSeek(p + 48);  float laserInterval<comment="レーザー生成インターバル">;
+    FSeek(p + 52);  float bulletInterval<comment="属性弾生成インターバル">;
+    FSeek(p + 56);  float moveSpeed<comment="自機移動速度">;
+    FSeek(p + 60);  float nodamageTime<comment="リスポーン時無敵時間">;
+    FSeek(p + 64);  float specialmoveTime<comment="必殺技時間">;
+    FSeek(p + 68);  float bodyCol<comment="本体当たり判定サイズ">;
+    FSeek(p + 72);  float barrierCol<comment="バリア当たり判定サイズ">;
+    FSeek(p + 76);  float attackRangeTime<comment="攻撃範囲展開時間">;
+    FSeek(p + 80);  float expandAttackCol<comment="攻撃範囲展開サイズ">;
+    FSeek(p + 96);  vector3 hitPos<comment="ダメージ判定位置">;
+    FSeek(p + 112); vector3 barrierPos<comment="バリア位置">;
+    FSeek(p + 128); vector3 expandAttackPos<comment="攻撃範囲展開位置">;
 
     FSeek(p + 144);
 } PlayerMachineConfig;
@@ -40,9 +40,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float length;
-    FSeek(p + 4); float minLength;
-    FSeek(p + 8); float texWidth;
+    FSeek(p + 0); float length<comment="軌跡の長さ">;
+    FSeek(p + 4); float minLength<comment="軌跡の長さの最小値">;
+    FSeek(p + 8); float texWidth<comment="軌跡見た目の幅">;
 
     FSeek(p + 12);
 } HomingLaserTrailConfig;
@@ -51,16 +51,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float maxAccel;
-    FSeek(p + 12); float arrivalTime;
-    FSeek(p + 16); float lifeTime;
-    FSeek(p + 20); float minYaw;
-    FSeek(p + 24); float maxYaw;
-    FSeek(p + 28); float depthVelocity;
-    FSeek(p + 32); uint32 power;
-    FSeek(p + 36); HomingLaserTrailConfig trail;
+    FSeek(p + 0);  float radius<comment="弾の幅">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float maxAccel<comment="弾の最大加速度">;
+    FSeek(p + 12); float arrivalTime<comment="弾の到達時間">;
+    FSeek(p + 16); float lifeTime<comment="弾の生存時間">;
+    FSeek(p + 20); float minYaw<comment="弾のYawの最小値">;
+    FSeek(p + 24); float maxYaw<comment="弾のYawの最大値">;
+    FSeek(p + 28); float depthVelocity<comment="弾の奥行方向への初速">;
+    FSeek(p + 32); uint32 power<comment="弾の威力">;
+    FSeek(p + 36); HomingLaserTrailConfig trail<comment="軌跡のパラメータ">;
 
     FSeek(p + 48);
 } HomingLaserConfig;
@@ -69,10 +69,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float scale;
-    FSeek(p + 12); uint32 power;
+    FSeek(p + 0);  float radius<comment="弾の幅">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float scale<comment="弾のモデルのスケール">;
+    FSeek(p + 12); uint32 power<comment="弾の威力">;
 
     FSeek(p + 16);
 } ElementBulletConfig;
@@ -81,9 +81,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float distance;
-    FSeek(p + 4); float gageUpVolumeFromMiss;
-    FSeek(p + 8); float hitViewScale;
+    FSeek(p + 0); float distance<comment="レーザー発射時のボスとの距離の閾値">;
+    FSeek(p + 4); float gageUpVolumeFromMiss<comment="ミス時の必殺ゲージ上昇量">;
+    FSeek(p + 8); float hitViewScale<comment="当たり判定描画サイズ">;
 
     FSeek(p + 12);
 } TheEndConfig;
@@ -92,10 +92,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   PlayerMachineConfig machine;
-    FSeek(p + 144); HomingLaserConfig laser;
-    FSeek(p + 192); ElementBulletConfig bullet;
-    FSeek(p + 208); TheEndConfig TheEnd;
+    FSeek(p + 0);   PlayerMachineConfig machine<comment="自機パラメータ">;
+    FSeek(p + 144); HomingLaserConfig laser<comment="ホーミングレーザーパラメータ">;
+    FSeek(p + 192); ElementBulletConfig bullet<comment="属性弾パラメータ">;
+    FSeek(p + 208); TheEndConfig TheEnd<comment="ジエンド戦のパラメータ">;
 
     FSeek(p + 224);
 } ObjTheEndPlayerMachineConfig;

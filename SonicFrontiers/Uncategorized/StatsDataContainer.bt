@@ -15,8 +15,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); StatsType type;
-    FSeek(p + 8); uint64 value;
+    FSeek(p + 0); StatsType type<comment="型タイプ">;
+    FSeek(p + 8); uint64 value<comment="値">;
 
     FSeek(p + 16);
 } StatsDataValue;
@@ -37,7 +37,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); array_StatsDataValue data;
+    FSeek(p + 0); array_StatsDataValue data<comment="統計値リスト">;
 
     FSeek(p + 32);
 } StatsDataContainer;

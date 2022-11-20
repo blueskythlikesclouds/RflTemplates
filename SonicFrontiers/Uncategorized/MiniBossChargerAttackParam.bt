@@ -30,10 +30,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  AttackType type;
-    FSeek(p + 4);  sint32 index;
-    FSeek(p + 8);  float rate;
-    FSeek(p + 12); float restTime;
+    FSeek(p + 0);  AttackType type<comment="攻撃タイプ">;
+    FSeek(p + 4);  sint32 index<comment="攻撃パラメータ用Index">;
+    FSeek(p + 8);  float rate<comment="発生確率">;
+    FSeek(p + 12); float restTime<comment="発生後冷却時間">;
 
     FSeek(p + 16);
 } MiniBossChargerAttackParam;

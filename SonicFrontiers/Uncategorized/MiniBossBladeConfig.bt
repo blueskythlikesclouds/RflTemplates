@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -25,18 +25,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float backRange;
-    FSeek(p + 4);  float standRange;
-    FSeek(p + 8);  float shortRange;
-    FSeek(p + 12); float middleRange;
-    FSeek(p + 16); float runEndDistance;
-    FSeek(p + 20); float dashEndDistance;
-    FSeek(p + 24); float parryRange;
-    FSeek(p + 28); float specialBeginDisappearTime;
-    FSeek(p + 32); float specialEndDisappearTime;
-    FSeek(p + 36); float endWarpWaitTime;
-    FSeek(p + 40); float shiftTimeMin;
-    FSeek(p + 44); float shiftTimeMax;
+    FSeek(p + 0);  float backRange<comment="後退する距離(内)">;
+    FSeek(p + 4);  float standRange<comment="立ち止まる距離(内)">;
+    FSeek(p + 8);  float shortRange<comment="近距離とみなす距離(内)">;
+    FSeek(p + 12); float middleRange<comment="中距離とみなす距離(外)">;
+    FSeek(p + 16); float runEndDistance<comment="走り終了距離(内)">;
+    FSeek(p + 20); float dashEndDistance<comment="突進終了距離(内)">;
+    FSeek(p + 24); float parryRange<comment="パリィを使用する距離(内)">;
+    FSeek(p + 28); float specialBeginDisappearTime<comment="必殺技開始の消失時間">;
+    FSeek(p + 32); float specialEndDisappearTime<comment="必殺技終了の消失時間">;
+    FSeek(p + 36); float endWarpWaitTime<comment="必殺技ワープ終了後の待ち時間">;
+    FSeek(p + 40); float shiftTimeMin<comment="間合い管理移動時間(最少)">;
+    FSeek(p + 44); float shiftTimeMax<comment="間合い管理移動時間(最大)">;
 
     FSeek(p + 48);
 } MiniBossBladeCommonAIParam;
@@ -45,8 +45,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  MiniBossCommonConfig commonConfig;
-    FSeek(p + 64); MiniBossBladeCommonAIParam ai;
+    FSeek(p + 0);  MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64); MiniBossBladeCommonAIParam ai<comment="AI">;
 
     FSeek(p + 112);
 } MiniBossBladeCommonParam;
@@ -57,16 +57,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -75,15 +75,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float angryHpRatio;
-    FSeek(p + 4);  float stunTime;
-    FSeek(p + 8);  float downTime;
-    FSeek(p + 12); float strikeComboTimer;
-    FSeek(p + 16); float cyloopComboTimer;
-    FSeek(p + 20); float blowupComboTimer;
-    FSeek(p + 24); float attackMotionSpeed;
-    FSeek(p + 28); float preliminaryMotionSpeed;
-    FSeek(p + 32); float ghostPreliminaryMotionSpeed;
+    FSeek(p + 0);  float angryHpRatio<comment="怒り状態になるHP割合">;
+    FSeek(p + 4);  float stunTime<comment="気絶時間">;
+    FSeek(p + 8);  float downTime<comment="ダウン時間">;
+    FSeek(p + 12); float strikeComboTimer<comment="打撃始動コンボ時間">;
+    FSeek(p + 16); float cyloopComboTimer<comment="囲み始動コンボ時間">;
+    FSeek(p + 20); float blowupComboTimer<comment="打ち上げ始動コンボ時間">;
+    FSeek(p + 24); float attackMotionSpeed<comment="攻撃モーション速度">;
+    FSeek(p + 28); float preliminaryMotionSpeed<comment="攻撃予備動作モーション速度">;
+    FSeek(p + 32); float ghostPreliminaryMotionSpeed<comment="分身の攻撃予備動作モーション速度">;
 
     FSeek(p + 36);
 } MiniBossBladeLevelCommonParam;
@@ -92,21 +92,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float firstContactWait;
-    FSeek(p + 4);  float specialAttackInterval;
-    FSeek(p + 8);  float shortRangeIntervalMin;
-    FSeek(p + 12); float shortRangeIntervalMax;
-    FSeek(p + 16); float middleRangeIntervalMin;
-    FSeek(p + 20); float middleRangeIntervalMax;
-    FSeek(p + 24); float counterIntervalMin;
-    FSeek(p + 28); float counterIntervalMax;
-    FSeek(p + 32); float afterDashIntervalMin;
-    FSeek(p + 36); float afterDashIntervalMax;
-    FSeek(p + 40); float parryIntervalMin;
-    FSeek(p + 44); float parryIntervalMax;
-    FSeek(p + 48); float parryDuration;
-    FSeek(p + 52); float slashComboCoolTime;
-    FSeek(p + 56); float ghostDashSlashCoolTime;
+    FSeek(p + 0);  float firstContactWait<comment="戦闘開始時の攻撃してこない時間">;
+    FSeek(p + 4);  float specialAttackInterval<comment="連続ワープ攻撃の使用間隔">;
+    FSeek(p + 8);  float shortRangeIntervalMin<comment="近距離行動インターバル(最少)">;
+    FSeek(p + 12); float shortRangeIntervalMax<comment="近距離行動インターバル(最大)">;
+    FSeek(p + 16); float middleRangeIntervalMin<comment="中距離行動インターバル(最少)">;
+    FSeek(p + 20); float middleRangeIntervalMax<comment="中距離行動インターバル(最大)">;
+    FSeek(p + 24); float counterIntervalMin<comment="ガード反撃インターバル(最少)">;
+    FSeek(p + 28); float counterIntervalMax<comment="ガード反撃インターバル(最大)">;
+    FSeek(p + 32); float afterDashIntervalMin<comment="ダッシュ後インターバル(最少)">;
+    FSeek(p + 36); float afterDashIntervalMax<comment="ダッシュ後インターバル(最大)">;
+    FSeek(p + 40); float parryIntervalMin<comment="パリィ使用インターバル(最少)">;
+    FSeek(p + 44); float parryIntervalMax<comment="パリィ使用インターバル(最大)">;
+    FSeek(p + 48); float parryDuration<comment="パリィの持続時間">;
+    FSeek(p + 52); float slashComboCoolTime<comment="斬りつけコンボのクールタイム">;
+    FSeek(p + 56); float ghostDashSlashCoolTime<comment="分身特攻のクールタイム">;
 
     FSeek(p + 60);
 } MiniBossBladeLevelAIParam;
@@ -117,7 +117,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 spawnNum;
+    FSeek(p + 0); uint8 spawnNum<comment="分身出現数">;
 
     FSeek(p + 1);
 } MiniBossBladeSpecialAttackParam;
@@ -126,11 +126,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 level;
-    FSeek(p + 4);   MiniBossLevelCommonConfig common;
-    FSeek(p + 56);  MiniBossBladeLevelCommonParam general;
-    FSeek(p + 92);  MiniBossBladeLevelAIParam ai;
-    FSeek(p + 152); MiniBossBladeSpecialAttackParam special;
+    FSeek(p + 0);   sint32 level<comment="レベル">;
+    FSeek(p + 4);   MiniBossLevelCommonConfig common<comment="基本設定">;
+    FSeek(p + 56);  MiniBossBladeLevelCommonParam general<comment="汎用設定">;
+    FSeek(p + 92);  MiniBossBladeLevelAIParam ai<comment="AI">;
+    FSeek(p + 152); MiniBossBladeSpecialAttackParam special<comment="連続ワープ攻撃">;
 
     FSeek(p + 156);
 } MiniBossBladeLevelParam;
@@ -144,21 +144,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float verticalSlashRate;
-    FSeek(p + 4);  float horizontalSlashRate;
-    FSeek(p + 8);  float slashComboRate;
-    FSeek(p + 12); float backSlashRate;
-    FSeek(p + 16); float dashRate;
-    FSeek(p + 20); float dashSlashRate;
-    FSeek(p + 24); float ghostDashSlashRate;
-    FSeek(p + 28); float specialAttackRate;
-    FSeek(p + 32); bool useTimeStopAttack;
-    FSeek(p + 36); float guardBeginTime;
-    FSeek(p + 40); float guardJumpLaserRate;
-    FSeek(p + 44); float parryJumpLaserRate;
-    FSeek(p + 48); float cyloopJumpLaserRate;
-    FSeek(p + 52); float doubleJumpLaserRate;
-    FSeek(p + 56); bool useParry;
+    FSeek(p + 0);  float verticalSlashRate<comment="縦斬り発動率">;
+    FSeek(p + 4);  float horizontalSlashRate<comment="横斬り発動率">;
+    FSeek(p + 8);  float slashComboRate<comment="斬りつけコンボ発動率">;
+    FSeek(p + 12); float backSlashRate<comment="背面斬り発動率">;
+    FSeek(p + 16); float dashRate<comment="ダッシュ発動率">;
+    FSeek(p + 20); float dashSlashRate<comment="突進斬り発動率">;
+    FSeek(p + 24); float ghostDashSlashRate<comment="分身突進斬り発動率">;
+    FSeek(p + 28); float specialAttackRate<comment="必殺技発動率">;
+    FSeek(p + 32); bool useTimeStopAttack<comment="必殺技を時止め攻撃にするか">;
+    FSeek(p + 36); float guardBeginTime<comment="初撃からガードまでの時間">;
+    FSeek(p + 40); float guardJumpLaserRate<comment="ガード時レーザー発動率">;
+    FSeek(p + 44); float parryJumpLaserRate<comment="パリィ時レーザー発動率">;
+    FSeek(p + 48); float cyloopJumpLaserRate<comment="Cyloop時レーザー発動率">;
+    FSeek(p + 52); float doubleJumpLaserRate<comment="連続レーザー発動率">;
+    FSeek(p + 56); bool useParry<comment="パリィを使用するか">;
 
     FSeek(p + 60);
 } MiniBossBladeLevelPhaseAction;
@@ -167,8 +167,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint32 level;
-    FSeek(p + 4); MiniBossBladeLevelPhaseAction phases[2]<optimize=false>;
+    FSeek(p + 0); uint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossBladeLevelPhaseAction phases[2]<comment="phases",optimize=false>;
 
     FSeek(p + 124);
 } MiniBossBladeLevelBand;
@@ -177,13 +177,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -192,10 +192,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossBladeCommonParam commonParam;
-    FSeek(p + 112);  MiniBossBladeLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 892);  MiniBossBladeLevelBand levelBands[5]<optimize=false>;
-    FSeek(p + 1512); RingParameter ringParam;
+    FSeek(p + 0);    MiniBossBladeCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 112);  MiniBossBladeLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 892);  MiniBossBladeLevelBand levelBands[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 1512); RingParameter ringParam<comment="ドロップリング">;
 
     FSeek(p + 1552);
 } MiniBossBladeConfig;

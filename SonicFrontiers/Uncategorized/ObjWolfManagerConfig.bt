@@ -4,12 +4,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float duration;
-    FSeek(p + 4);  float distance;
-    FSeek(p + 8);  float minElevation;
-    FSeek(p + 12); float maxElevation;
-    FSeek(p + 16); float panningSuspensionK;
-    FSeek(p + 20); float interiorPanningSuspensionK;
+    FSeek(p + 0);  float duration<comment="持続時間">;
+    FSeek(p + 4);  float distance<comment="引き距離">;
+    FSeek(p + 8);  float minElevation<comment="仰角最小値">;
+    FSeek(p + 12); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 16); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 20); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
 
     FSeek(p + 24);
 } FocusCameraConfig;
@@ -18,19 +18,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  FocusCameraConfig focusCamera;
-    FSeek(p + 24); float shotInterval;
-    FSeek(p + 28); float shotInterval_Parried;
-    FSeek(p + 32); float shotInterval_Reborn;
-    FSeek(p + 36); float shotInterval_First;
-    FSeek(p + 40); float shotInterval_NoReborn;
-    FSeek(p + 44); float stunTime;
-    FSeek(p + 48); float approachWait;
-    FSeek(p + 52); float dispWait;
-    FSeek(p + 56); float rollWait;
-    FSeek(p + 60); float reactionTime;
-    FSeek(p + 64); float controlDelay;
-    FSeek(p + 68); float shotAngle;
+    FSeek(p + 0);  FocusCameraConfig focusCamera<comment="注視カメラパラメータ">;
+    FSeek(p + 24); float shotInterval<comment="攻撃間隔（通常）">;
+    FSeek(p + 28); float shotInterval_Parried<comment="攻撃間隔（パリィ成功時）">;
+    FSeek(p + 32); float shotInterval_Reborn<comment="攻撃間隔（復活時）">;
+    FSeek(p + 36); float shotInterval_First<comment="攻撃間隔（初回）">;
+    FSeek(p + 40); float shotInterval_NoReborn<comment="攻撃間隔（復活ゼロ）">;
+    FSeek(p + 44); float stunTime<comment="転倒時間">;
+    FSeek(p + 48); float approachWait<comment="振り向き後消えるまでの間隔">;
+    FSeek(p + 52); float dispWait<comment="モデル消滅後表示するまでの間隔">;
+    FSeek(p + 56); float rollWait<comment="指定位置出現後回転行動に遷移するまでの間隔">;
+    FSeek(p + 60); float reactionTime<comment="リアクション時間">;
+    FSeek(p + 64); float controlDelay<comment="強制停止解除猶予時間">;
+    FSeek(p + 68); float shotAngle<comment="撃ちだし角度間隔">;
 
     FSeek(p + 72);
 } ObjWolfManagerConfig;

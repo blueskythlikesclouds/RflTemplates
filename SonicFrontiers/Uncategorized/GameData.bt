@@ -36,18 +36,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 signature;
-    FSeek(p + 4);  uint8 version;
-    FSeek(p + 5);  Status status;
-    FSeek(p + 6);  uint8 config;
-    FSeek(p + 7);  Sequence sequence;
-    FSeek(p + 8);  uint32 playTime;
-    FSeek(p + 12); SaveDataIcon icon;
-    FSeek(p + 13); uint8 reserved0;
-    FSeek(p + 14); uint16 reserved1;
-    FSeek(p + 16); uint32 saveDate;
-    FSeek(p + 20); uint8 index;
-    FSeek(p + 24); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);  uint32 signature<comment="シグニチャ">;
+    FSeek(p + 4);  uint8 version<comment="バージョン">;
+    FSeek(p + 5);  Status status<comment="ステータス">;
+    FSeek(p + 6);  uint8 config<comment="コンフィグ">;
+    FSeek(p + 7);  Sequence sequence<comment="シーケンス">;
+    FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
+    FSeek(p + 12); SaveDataIcon icon<comment="セーブデータアイコン">;
+    FSeek(p + 13); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 14); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 16); uint32 saveDate<comment="保存日時">;
+    FSeek(p + 20); uint8 index<comment="index">;
+    FSeek(p + 24); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 40);
 } HeaderData;
@@ -87,17 +87,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  GamePlayData_Status status;
-    FSeek(p + 1);  sint8 lastPlayedStageNo;
-    FSeek(p + 2);  uint8 flags;
-    FSeek(p + 3);  SequenceDeprecated sequence;
-    FSeek(p + 16); vector3 position;
-    FSeek(p + 32); quaternion rotation;
-    FSeek(p + 48); uint32 day;
-    FSeek(p + 52); uint32 hour;
-    FSeek(p + 56); uint32 minute;
-    FSeek(p + 60); float second;
-    FSeek(p + 64); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);  GamePlayData_Status status<comment="ステータス">;
+    FSeek(p + 1);  sint8 lastPlayedStageNo<comment="最後にプレイしていたステージ">;
+    FSeek(p + 2);  uint8 flags<comment="ビットフラグ">;
+    FSeek(p + 3);  SequenceDeprecated sequence<comment="sequence">;
+    FSeek(p + 16); vector3 position<comment="座標">;
+    FSeek(p + 32); quaternion rotation<comment="姿勢">;
+    FSeek(p + 48); uint32 day<comment="日">;
+    FSeek(p + 52); uint32 hour<comment="時">;
+    FSeek(p + 56); uint32 minute<comment="分">;
+    FSeek(p + 60); float second<comment="秒">;
+    FSeek(p + 64); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 80);
 } GamePlayData;
@@ -108,32 +108,32 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint16 numRings;
-    FSeek(p + 2);  uint8 ringLevel;
-    FSeek(p + 3);  uint8 speedLevel;
-    FSeek(p + 4);  uint8 obtainChaosEmeralds;
-    FSeek(p + 5);  uint8 hasChaosEmeralds;
-    FSeek(p + 6);  uint8 skillLevel[30]<optimize=false>;
-    FSeek(p + 36); uint8 skillPointOld;
-    FSeek(p + 37); uint8 levelOld;
-    FSeek(p + 40); uint32 expPoint;
-    FSeek(p + 44); uint8 powerLevel;
-    FSeek(p + 45); uint8 guardLevel;
-    FSeek(p + 48); uint32 numPowerSeeds;
-    FSeek(p + 52); uint32 numGuardSeeds;
-    FSeek(p + 56); uint16 numFishCoins;
-    FSeek(p + 58); uint16 numFishTokens;
-    FSeek(p + 60); uint16 numGoldCards;
-    FSeek(p + 62); uint16 numSlotStars;
-    FSeek(p + 64); float quickCyloopGauge;
-    FSeek(p + 68); uint32 practiceMaxCleared;
-    FSeek(p + 72); uint32 practiceMaxCombos;
-    FSeek(p + 76); uint32 flags;
-    FSeek(p + 80); sint16 skillPoint;
-    FSeek(p + 82); sint16 level;
-    FSeek(p + 84); uint32 dlcrsvExpPoint;
-    FSeek(p + 88); uint32 dlcrsvNumPowerSeeds;
-    FSeek(p + 92); uint32 dlcrsvNumGuardSeeds;
+    FSeek(p + 0);  uint16 numRings<comment="リング数">;
+    FSeek(p + 2);  uint8 ringLevel<comment="リングレベル">;
+    FSeek(p + 3);  uint8 speedLevel<comment="スピードレベル">;
+    FSeek(p + 4);  uint8 obtainChaosEmeralds<comment="取得カオスエメラルド">;
+    FSeek(p + 5);  uint8 hasChaosEmeralds<comment="所有カオスエメラルド">;
+    FSeek(p + 6);  uint8 skillLevel[30]<comment="スキルレベル",optimize=false>;
+    FSeek(p + 36); uint8 skillPointOld<comment="[廃止]所持スキルポイント">;
+    FSeek(p + 37); uint8 levelOld<comment="[廃止]レベル">;
+    FSeek(p + 40); uint32 expPoint<comment="経験値">;
+    FSeek(p + 44); uint8 powerLevel<comment="チカラレベル">;
+    FSeek(p + 45); uint8 guardLevel<comment="マモリレベル">;
+    FSeek(p + 48); uint32 numPowerSeeds<comment="チカラのタネ数">;
+    FSeek(p + 52); uint32 numGuardSeeds<comment="マモリのタネ数">;
+    FSeek(p + 56); uint16 numFishCoins<comment="釣りコイン数">;
+    FSeek(p + 58); uint16 numFishTokens<comment="釣りトークン数">;
+    FSeek(p + 60); uint16 numGoldCards<comment="釣りゴールドカード数">;
+    FSeek(p + 62); uint16 numSlotStars<comment="流星雨スロットスター数">;
+    FSeek(p + 64); float quickCyloopGauge<comment="クイックサイループゲージ">;
+    FSeek(p + 68); uint32 practiceMaxCleared<comment="練習最大クリア数">;
+    FSeek(p + 72); uint32 practiceMaxCombos<comment="練習最大コンボ数">;
+    FSeek(p + 76); uint32 flags<comment="フラグ">;
+    FSeek(p + 80); sint16 skillPoint<comment="所持スキルポイント">;
+    FSeek(p + 82); sint16 level<comment="レベル">;
+    FSeek(p + 84); uint32 dlcrsvExpPoint<comment="経験値のうちDLCRSV(宝箱1)によるもの">;
+    FSeek(p + 88); uint32 dlcrsvNumPowerSeeds<comment="チカラのタネ数のうちDLCRSV(宝箱1)によるもの">;
+    FSeek(p + 92); uint32 dlcrsvNumGuardSeeds<comment="マモリのタネ数のうちDLCRSV(宝箱1)によるもの">;
 
     FSeek(p + 96);
 } CharacterData;
@@ -142,8 +142,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 x;
-    FSeek(p + 1); uint8 y;
+    FSeek(p + 0); uint8 x<comment="x">;
+    FSeek(p + 1); uint8 y<comment="y">;
 
     FSeek(p + 2);
 } IslandMapGridData;
@@ -152,8 +152,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   IslandMapGridData grid[136]<optimize=false>;
-    FSeek(p + 272); uint16 numReleaseGrids;
+    FSeek(p + 0);   IslandMapGridData grid[136]<comment="解放済座標",optimize=false>;
+    FSeek(p + 272); uint16 numReleaseGrids<comment="開放済みグリッド数">;
 
     FSeek(p + 274);
 } IslandMapData;
@@ -162,10 +162,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   vector3 destination;
-    FSeek(p + 16);  uint32 flags;
-    FSeek(p + 20);  IslandMapData map;
-    FSeek(p + 296); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);   vector3 destination<comment="マップ目的地">;
+    FSeek(p + 16);  uint32 flags<comment="ビットフラグ">;
+    FSeek(p + 20);  IslandMapData map<comment="マップデータ">;
+    FSeek(p + 296); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 320);
 } IslandStageData;
@@ -174,7 +174,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); IslandStageData islands[5]<optimize=false>;
+    FSeek(p + 0); IslandStageData islands[5]<comment="島データ",optimize=false>;
 
     FSeek(p + 1600);
 } IslandStageContainerData;
@@ -183,9 +183,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint16 flags;
-    FSeek(p + 4); uint32 bestTime;
-    FSeek(p + 8); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0); uint16 flags<comment="ビットフラグ">;
+    FSeek(p + 4); uint32 bestTime<comment="ベストタイム">;
+    FSeek(p + 8); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 24);
 } CyberStageData;
@@ -194,7 +194,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); CyberStageData actStages[32]<optimize=false>;
+    FSeek(p + 0); CyberStageData actStages[32]<comment="電脳空間ステージ情報",optimize=false>;
 
     FSeek(p + 768);
 } CyberStageContainerData;
@@ -203,9 +203,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   uint32 bitFlags[24]<optimize=false>;
-    FSeek(p + 96);  sint8 byteFlags[128]<optimize=false>;
-    FSeek(p + 224); uint32 intDatas[16]<optimize=false>;
+    FSeek(p + 0);   uint32 bitFlags[24]<comment="ビットフラグ",optimize=false>;
+    FSeek(p + 96);  sint8 byteFlags[128]<comment="バイトフラグ",optimize=false>;
+    FSeek(p + 224); uint32 intDatas[16]<comment="uint32データ",optimize=false>;
 
     FSeek(p + 288);
 } FlagContainerData;
@@ -214,9 +214,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    uint32 bitFlags[1024]<optimize=false>;
-    FSeek(p + 4096); sint8 byteFlags[1024]<optimize=false>;
-    FSeek(p + 5120); uint32 intDatas[512]<optimize=false>;
+    FSeek(p + 0);    uint32 bitFlags[1024]<comment="ビットフラグ",optimize=false>;
+    FSeek(p + 4096); sint8 byteFlags[1024]<comment="バイトフラグ",optimize=false>;
+    FSeek(p + 5120); uint32 intDatas[512]<comment="uint32データ",optimize=false>;
 
     FSeek(p + 7168);
 } WorldFlagData;
@@ -225,8 +225,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     WorldFlagData worldDatas[5]<optimize=false>;
-    FSeek(p + 35840); WorldFlagData debugWorldData;
+    FSeek(p + 0);     WorldFlagData worldDatas[5]<comment="島フラグデータ",optimize=false>;
+    FSeek(p + 35840); WorldFlagData debugWorldData<comment="開発用島フラグデータ">;
 
     FSeek(p + 43008);
 } WorldFlagContainerData;
@@ -235,9 +235,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint16 time;
-    FSeek(p + 2); uint16 x;
-    FSeek(p + 4); uint16 z;
+    FSeek(p + 0); uint16 time<comment="時刻">;
+    FSeek(p + 2); uint16 x<comment="X座標">;
+    FSeek(p + 4); uint16 z<comment="Z座標">;
 
     FSeek(p + 6);
 } PlayLogCoordData;
@@ -265,9 +265,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); PlayLogCoordData coord;
-    FSeek(p + 6); EventType eventType;
-    FSeek(p + 7); sint8 option;
+    FSeek(p + 0); PlayLogCoordData coord<comment="座標">;
+    FSeek(p + 6); EventType eventType<comment="イベント">;
+    FSeek(p + 7); sint8 option<comment="イベント補足用">;
 
     FSeek(p + 8);
 } PlayLogEventData;
@@ -276,12 +276,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);      uint32 numFootMarks;
-    FSeek(p + 4);      uint32 footMarksIndex;
-    FSeek(p + 8);      PlayLogCoordData footmarks[36000]<optimize=false>;
-    FSeek(p + 216008); uint32 numEvents;
-    FSeek(p + 216012); uint32 eventsIndex;
-    FSeek(p + 216016); PlayLogEventData events[50000]<optimize=false>;
+    FSeek(p + 0);      uint32 numFootMarks<comment="numFootMarks">;
+    FSeek(p + 4);      uint32 footMarksIndex<comment="footMarksIndex">;
+    FSeek(p + 8);      PlayLogCoordData footmarks[36000]<comment="footmarks",optimize=false>;
+    FSeek(p + 216008); uint32 numEvents<comment="numEvents">;
+    FSeek(p + 216012); uint32 eventsIndex<comment="eventsIndex">;
+    FSeek(p + 216016); PlayLogEventData events[50000]<comment="events",optimize=false>;
 
     FSeek(p + 616016);
 } PlayLogData;
@@ -297,8 +297,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 value;
-    FSeek(p + 4); bool assigned;
+    FSeek(p + 0); sint32 value<comment="値">;
+    FSeek(p + 4); bool assigned<comment="アサイン済みか">;
 
     FSeek(p + 8);
 } StatValue;
@@ -307,7 +307,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); StatValue stats[3393]<optimize=false>;
+    FSeek(p + 0); StatValue stats[3393]<comment="統計",optimize=false>;
 
     FSeek(p + 27144);
 } StatsContainerData;
@@ -326,8 +326,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float duration;
-    FSeek(p + 4); float time;
+    FSeek(p + 0); float duration<comment="時間">;
+    FSeek(p + 4); float time<comment="進行">;
 
     FSeek(p + 8);
 } WeatherTimerData;
@@ -354,11 +354,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  WeatherBlockData_Type weather;
-    FSeek(p + 4);  uint32 hour;
-    FSeek(p + 8);  uint32 minute;
-    FSeek(p + 12); float second;
-    FSeek(p + 16); WeatherBlockData_Status status;
+    FSeek(p + 0);  WeatherBlockData_Type weather<comment="天候">;
+    FSeek(p + 4);  uint32 hour<comment="ブロック終了時間">;
+    FSeek(p + 8);  uint32 minute<comment="ブロック終了分">;
+    FSeek(p + 12); float second<comment="ブロック終了秒">;
+    FSeek(p + 16); WeatherBlockData_Status status<comment="ステータス">;
 
     FSeek(p + 20);
 } WeatherBlockData;
@@ -367,12 +367,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  Type currentWeather;
-    FSeek(p + 1);  Type prevWeather;
-    FSeek(p + 4);  WeatherTimerData timer;
-    FSeek(p + 12); WeatherBlockData block;
-    FSeek(p + 32); sint32 stageNo;
-    FSeek(p + 36); uint32 reserved[4]<optimize=false>;
+    FSeek(p + 0);  Type currentWeather<comment="今の天気">;
+    FSeek(p + 1);  Type prevWeather<comment="過去の天気">;
+    FSeek(p + 4);  WeatherTimerData timer<comment="天気遷移タイマー">;
+    FSeek(p + 12); WeatherBlockData block<comment="天気ブロック">;
+    FSeek(p + 32); sint32 stageNo<comment="天候記録ステージ番号">;
+    FSeek(p + 36); uint32 reserved[4]<comment="reserved",optimize=false>;
 
     FSeek(p + 52);
 } WeatherData;
@@ -381,16 +381,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);      HeaderData header;
-    FSeek(p + 48);     GamePlayData gameplay;
-    FSeek(p + 128);    CharacterData character;
-    FSeek(p + 224);    IslandStageContainerData islands;
-    FSeek(p + 1824);   CyberStageContainerData stages;
-    FSeek(p + 2592);   FlagContainerData flags;
-    FSeek(p + 2880);   WorldFlagContainerData worldFlags;
-    FSeek(p + 45888);  PlayLogData playlog;
-    FSeek(p + 661904); StatsContainerData stats;
-    FSeek(p + 689048); WeatherData weather;
+    FSeek(p + 0);      HeaderData header<comment="ヘッダ">;
+    FSeek(p + 48);     GamePlayData gameplay<comment="ゲームプレイ">;
+    FSeek(p + 128);    CharacterData character<comment="キャラクタ">;
+    FSeek(p + 224);    IslandStageContainerData islands<comment="島ステージコンテナ">;
+    FSeek(p + 1824);   CyberStageContainerData stages<comment="電脳空間ステージコンテナ">;
+    FSeek(p + 2592);   FlagContainerData flags<comment="フラグコンテナ">;
+    FSeek(p + 2880);   WorldFlagContainerData worldFlags<comment="ワールド別フラグコンテナ">;
+    FSeek(p + 45888);  PlayLogData playlog<comment="プレイログ">;
+    FSeek(p + 661904); StatsContainerData stats<comment="統計コンテナ">;
+    FSeek(p + 689048); WeatherData weather<comment="天候">;
 
     FSeek(p + 689104);
 } GameData;

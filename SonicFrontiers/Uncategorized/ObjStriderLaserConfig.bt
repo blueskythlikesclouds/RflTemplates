@@ -20,20 +20,20 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float arrivalTime;
-    FSeek(p + 4);  uint8 numPatterns;
-    FSeek(p + 8);  float radius;
-    FSeek(p + 12); float tilingDistance;
-    FSeek(p + 16); float fluctuationPeriod;
-    FSeek(p + 20); float fluctuationAmplitude;
-    FSeek(p + 24); float uvScrollSpeed;
-    FSeek(p + 28); colorF colorPrimary;
-    FSeek(p + 44); color8 colorVertexEdge;
-    FSeek(p + 48); color8 colorVertexCenter;
-    FSeek(p + 52); float colorIntensity;
-    FSeek(p + 56); float patternChangeIntervalTime;
-    FSeek(p + 60); float edgeWidthScale;
-    FSeek(p + 64); float edgeWidthScaleLength;
+    FSeek(p + 0);  float arrivalTime<comment="弧状レーザーがレールに到着する時間">;
+    FSeek(p + 4);  uint8 numPatterns<comment="パターン数">;
+    FSeek(p + 8);  float radius<comment="ポリゴンの半径">;
+    FSeek(p + 12); float tilingDistance<comment="テクスチャのタイリング距離">;
+    FSeek(p + 16); float fluctuationPeriod<comment="ゆらぎ周期">;
+    FSeek(p + 20); float fluctuationAmplitude<comment="ゆらぎ振幅">;
+    FSeek(p + 24); float uvScrollSpeed<comment="UVスクロールスピード">;
+    FSeek(p + 28); colorF colorPrimary<comment="プライマリーカラー">;
+    FSeek(p + 44); color8 colorVertexEdge<comment="端の頂点カラー">;
+    FSeek(p + 48); color8 colorVertexCenter<comment="中央の頂点カラー">;
+    FSeek(p + 52); float colorIntensity<comment="カラー強度">;
+    FSeek(p + 56); float patternChangeIntervalTime<comment="パタチェン間隔（秒）">;
+    FSeek(p + 60); float edgeWidthScale<comment="端の幅スケール">;
+    FSeek(p + 64); float edgeWidthScaleLength<comment="端の幅スケールの補間距離">;
 
     FSeek(p + 68);
 } ArcLaserConfig;
@@ -42,15 +42,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float lifeTime;
-    FSeek(p + 4);  float degreeVelocityPrePostLaser;
-    FSeek(p + 8);  float degreeVelocity;
-    FSeek(p + 12); float degreeToRotate;
-    FSeek(p + 16); float radius;
-    FSeek(p + 20); float collisionRadius;
-    FSeek(p + 24); float minStartingPointOffset;
-    FSeek(p + 28); float maxStartingPointOffset;
-    FSeek(p + 32); ArcLaserConfig arcLaserConfig;
+    FSeek(p + 0);  float lifeTime<comment="寿命（秒）">;
+    FSeek(p + 4);  float degreeVelocityPrePostLaser<comment="レーザー攻撃前後の角速度（度／秒）">;
+    FSeek(p + 8);  float degreeVelocity<comment="レーザー角速度（度／秒）">;
+    FSeek(p + 12); float degreeToRotate<comment="回転角度">;
+    FSeek(p + 16); float radius<comment="旧レーザー半径">;
+    FSeek(p + 20); float collisionRadius<comment="コリジョン半径">;
+    FSeek(p + 24); float minStartingPointOffset<comment="初期発射位置最小オフセット距離">;
+    FSeek(p + 28); float maxStartingPointOffset<comment="初期発射位置最大オフセット距離">;
+    FSeek(p + 32); ArcLaserConfig arcLaserConfig<comment="弧状レーザー設定">;
 
     FSeek(p + 100);
 } ObjStriderLaserConfig;

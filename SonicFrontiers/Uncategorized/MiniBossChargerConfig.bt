@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -47,21 +47,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  BarrageType type;
-    FSeek(p + 8);  cstring damageTag;
-    FSeek(p + 24); float startSpeed;
-    FSeek(p + 28); float decelePower;
-    FSeek(p + 32); float minSpeed;
-    FSeek(p + 36); float lifeTime;
-    FSeek(p + 40); float waitTime;
-    FSeek(p + 44); float lineTime;
-    FSeek(p + 48); float scale;
-    FSeek(p + 52); float hitVelocity;
-    FSeek(p + 56); float parriedSpeed;
-    FSeek(p + 60); sint32 parriedDamage;
-    FSeek(p + 64); float parriedStaggerValue;
-    FSeek(p + 68); float parriedStunValue;
-    FSeek(p + 72); cstring hitEffName;
+    FSeek(p + 0);  BarrageType type<comment="弾丸タイプ">;
+    FSeek(p + 8);  cstring damageTag<comment="ダメージ名">;
+    FSeek(p + 24); float startSpeed<comment="初速">;
+    FSeek(p + 28); float decelePower<comment="減速力[秒間]">;
+    FSeek(p + 32); float minSpeed<comment="最低速度">;
+    FSeek(p + 36); float lifeTime<comment="生存時間">;
+    FSeek(p + 40); float waitTime<comment="待機時間">;
+    FSeek(p + 44); float lineTime<comment="直進時間">;
+    FSeek(p + 48); float scale<comment="スケール">;
+    FSeek(p + 52); float hitVelocity<comment="吹き飛び力">;
+    FSeek(p + 56); float parriedSpeed<comment="パリィ跳ね返し弾の弾速">;
+    FSeek(p + 60); sint32 parriedDamage<comment="パリィ跳ね返し弾のダメージ値">;
+    FSeek(p + 64); float parriedStaggerValue<comment="パリィ跳ね返し弾のよろめき値">;
+    FSeek(p + 68); float parriedStunValue<comment="パリィ跳ね返し弾のスタン値">;
+    FSeek(p + 72); cstring hitEffName<comment="ヒットエフェクト名">;
 
     FSeek(p + 88);
 } MiniBossChagerBarrageParam;
@@ -70,17 +70,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float startWaitTime;
-    FSeek(p + 8);  sint32 muzzleNum;
-    FSeek(p + 12); float yOffset;
-    FSeek(p + 16); float zOffset;
-    FSeek(p + 20); float heightLength;
-    FSeek(p + 24); float rotSpeed;
-    FSeek(p + 28); float shakeSpeed;
-    FSeek(p + 32); float intervalTime;
-    FSeek(p + 36); float activeTime;
-    FSeek(p + 40); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 8);  sint32 muzzleNum<comment="発射口の数">;
+    FSeek(p + 12); float yOffset<comment="Yオフセット">;
+    FSeek(p + 16); float zOffset<comment="Zオフセット">;
+    FSeek(p + 20); float heightLength<comment="高さの揺れ幅">;
+    FSeek(p + 24); float rotSpeed<comment="回転スピード">;
+    FSeek(p + 28); float shakeSpeed<comment="振幅スピード">;
+    FSeek(p + 32); float intervalTime<comment="発射間隔">;
+    FSeek(p + 36); float activeTime<comment="活動時間">;
+    FSeek(p + 40); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 44);
 } MiniBossChagerSimpleRotateBullet;
@@ -89,15 +89,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float startWaitTime;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); float moveSpeed;
-    FSeek(p + 16); float followDeg;
-    FSeek(p + 20); sint32 shotNum;
-    FSeek(p + 24); float intervalTime;
-    FSeek(p + 28); float lifeTime;
-    FSeek(p + 32); float endWaitTime;
+    FSeek(p + 0);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); float moveSpeed<comment="移動速度">;
+    FSeek(p + 16); float followDeg<comment="追跡角度">;
+    FSeek(p + 20); sint32 shotNum<comment="発射回数">;
+    FSeek(p + 24); float intervalTime<comment="発射間隔">;
+    FSeek(p + 28); float lifeTime<comment="生存時間">;
+    FSeek(p + 32); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 36);
 } MiniBossChagerFollowLaser;
@@ -106,14 +106,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float startWaitTime;
-    FSeek(p + 4);  sint32 muzzleNum;
-    FSeek(p + 8);  float yOffset;
-    FSeek(p + 12); float zOffset;
-    FSeek(p + 16); float rotSpeed;
-    FSeek(p + 20); float moveSpeed;
-    FSeek(p + 24); float activeTime;
-    FSeek(p + 28); float endWaitTime;
+    FSeek(p + 0);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 4);  sint32 muzzleNum<comment="発射口の数">;
+    FSeek(p + 8);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 12); float zOffset<comment="Zオフセット">;
+    FSeek(p + 16); float rotSpeed<comment="回転スピード">;
+    FSeek(p + 20); float moveSpeed<comment="離れるスピード">;
+    FSeek(p + 24); float activeTime<comment="活動時間">;
+    FSeek(p + 28); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 32);
 } MiniBossChagerVortexLaser;
@@ -122,11 +122,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float startWaitTime;
-    FSeek(p + 4);  float moveSpeed;
-    FSeek(p + 8);  float setDeg;
-    FSeek(p + 12); float lifeTime;
-    FSeek(p + 16); float endWaitTime;
+    FSeek(p + 0);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 4);  float moveSpeed<comment="移動速度">;
+    FSeek(p + 8);  float setDeg<comment="3方向の角度">;
+    FSeek(p + 12); float lifeTime<comment="生存時間">;
+    FSeek(p + 16); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 20);
 } MiniBossChagerCrossLaser;
@@ -140,16 +140,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); bool isFollowPlayer;
-    FSeek(p + 16); float startWaitTime;
-    FSeek(p + 20); float shotIntarval;
-    FSeek(p + 24); float maxAngle;
-    FSeek(p + 28); float rotateSpeed;
-    FSeek(p + 32); float rotateAngle;
-    FSeek(p + 36); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); bool isFollowPlayer<comment="Player追従">;
+    FSeek(p + 16); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 20); float shotIntarval<comment="発射間隔[角度]">;
+    FSeek(p + 24); float maxAngle<comment="最大角度[片側]">;
+    FSeek(p + 28); float rotateSpeed<comment="回転速度[角度/秒]">;
+    FSeek(p + 32); float rotateAngle<comment="ステート終了までの回転量">;
+    FSeek(p + 36); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 40);
 } MiniBossChagerCrossBullet;
@@ -158,11 +158,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float startWaitTime;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float scale;
-    FSeek(p + 12); float lifeTime;
-    FSeek(p + 16); float endWaitTime;
+    FSeek(p + 0);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float scale<comment="スケール">;
+    FSeek(p + 12); float lifeTime<comment="生存時間">;
+    FSeek(p + 16); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 20);
 } MiniBossChagerMassLaser;
@@ -171,14 +171,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float startWaitTime;
-    FSeek(p + 8);  sint32 muzzleNum;
-    FSeek(p + 12); sint32 verticalNum;
-    FSeek(p + 16); float radius;
-    FSeek(p + 20); float spaceRate;
-    FSeek(p + 24); float verticalWaitTime;
-    FSeek(p + 28); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 8);  sint32 muzzleNum<comment="発射口の数">;
+    FSeek(p + 12); sint32 verticalNum<comment="縦の数">;
+    FSeek(p + 16); float radius<comment="半径">;
+    FSeek(p + 20); float spaceRate<comment="縦の間隔">;
+    FSeek(p + 24); float verticalWaitTime<comment="縦置き状態の待ち時間">;
+    FSeek(p + 28); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 32);
 } MiniBossChagerVerticalRoundBullet;
@@ -187,18 +187,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float startWaitTime;
-    FSeek(p + 8);  sint32 muzzleNum;
-    FSeek(p + 12); float radius;
-    FSeek(p + 16); float height;
-    FSeek(p + 20); float scale;
-    FSeek(p + 24); sint32 sideNum;
-    FSeek(p + 28); sint32 attackNum;
-    FSeek(p + 32); float intervalTime;
-    FSeek(p + 36); float nextDeg;
-    FSeek(p + 40); float shotWaitTime;
-    FSeek(p + 44); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 8);  sint32 muzzleNum<comment="発射口の数">;
+    FSeek(p + 12); float radius<comment="半径">;
+    FSeek(p + 16); float height<comment="高さ">;
+    FSeek(p + 20); float scale<comment="スケール">;
+    FSeek(p + 24); sint32 sideNum<comment="一辺当たりの弾数">;
+    FSeek(p + 28); sint32 attackNum<comment="正四面体を出す数">;
+    FSeek(p + 32); float intervalTime<comment="発射間隔">;
+    FSeek(p + 36); float nextDeg<comment="連続発射時の角度差">;
+    FSeek(p + 40); float shotWaitTime<comment="弾が出てからの待機時間">;
+    FSeek(p + 44); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 48);
 } MiniBossPyramidRoundBullet;
@@ -207,18 +207,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float startWaitTime;
-    FSeek(p + 8);  float yOffset;
-    FSeek(p + 12); float scale;
-    FSeek(p + 16); float step;
-    FSeek(p + 20); sint32 allNum;
-    FSeek(p + 24); float upRate;
-    FSeek(p + 28); float downRate;
-    FSeek(p + 32); float frontRate;
-    FSeek(p + 36); float shotWaitTimeMin;
-    FSeek(p + 40); float shotWaitTimeMax;
-    FSeek(p + 44); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 8);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 12); float scale<comment="射出エフェクトのスケール">;
+    FSeek(p + 16); float step<comment="弾ごとの間隔">;
+    FSeek(p + 20); sint32 allNum<comment="一辺の弾数">;
+    FSeek(p + 24); float upRate<comment="上にいく確率">;
+    FSeek(p + 28); float downRate<comment="下にいく確率">;
+    FSeek(p + 32); float frontRate<comment="前にいく確率">;
+    FSeek(p + 36); float shotWaitTimeMin<comment="待機時間Min">;
+    FSeek(p + 40); float shotWaitTimeMax<comment="待機時間Max">;
+    FSeek(p + 44); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 48);
 } MiniBossPlaneUpDownBullet;
@@ -227,13 +227,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float startWaitTime;
-    FSeek(p + 8);  float yOffset;
-    FSeek(p + 12); float edgeLength;
-    FSeek(p + 16); float activeTime;
-    FSeek(p + 20); float intervalTime;
-    FSeek(p + 24); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 8);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 12); float edgeLength<comment="一辺の長さ">;
+    FSeek(p + 16); float activeTime<comment="活動時間">;
+    FSeek(p + 20); float intervalTime<comment="発射間隔">;
+    FSeek(p + 24); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 28);
 } MiniBossTriangleBatteryBullet;
@@ -242,16 +242,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float startWaitTime;
-    FSeek(p + 8);  float yOffset;
-    FSeek(p + 12); float scale;
-    FSeek(p + 16); float lengthMin;
-    FSeek(p + 20); float lengthMax;
-    FSeek(p + 24); float intervalTime;
-    FSeek(p + 28); float shotWaitTime;
-    FSeek(p + 32); float activeTime;
-    FSeek(p + 36); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 8);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 12); float scale<comment="射出エフェクトのスケール">;
+    FSeek(p + 16); float lengthMin<comment="ばらまきの最低距離">;
+    FSeek(p + 20); float lengthMax<comment="ばらまきの最高距離">;
+    FSeek(p + 24); float intervalTime<comment="発射間隔">;
+    FSeek(p + 28); float shotWaitTime<comment="待機時間">;
+    FSeek(p + 32); float activeTime<comment="活動時間">;
+    FSeek(p + 36); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 40);
 } MiniBossPlayerFallBullet;
@@ -260,16 +260,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float startWaitTime;
-    FSeek(p + 8);  float yOffset;
-    FSeek(p + 12); float zOffset;
-    FSeek(p + 16); float scale;
-    FSeek(p + 20); sint32 muzzleNum;
-    FSeek(p + 24); float bulletRad;
-    FSeek(p + 28); float intervalTime;
-    FSeek(p + 32); float activeTime;
-    FSeek(p + 36); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 8);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 12); float zOffset<comment="Zオフセット">;
+    FSeek(p + 16); float scale<comment="射出エフェクトのスケール">;
+    FSeek(p + 20); sint32 muzzleNum<comment="発射口の数">;
+    FSeek(p + 24); float bulletRad<comment="発射口の半径">;
+    FSeek(p + 28); float intervalTime<comment="発射間隔">;
+    FSeek(p + 32); float activeTime<comment="活動時間">;
+    FSeek(p + 36); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 40);
 } MiniBossGatlingRevolverBullet;
@@ -278,17 +278,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); bool isFollowPlayer;
-    FSeek(p + 16); float shotIntarval;
-    FSeek(p + 20); float maxAngle;
-    FSeek(p + 24); float rotateSpeed;
-    FSeek(p + 28); float rotateAngle;
-    FSeek(p + 32); float barrageAngleDiff;
-    FSeek(p + 36); float startWaitTime;
-    FSeek(p + 40); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); bool isFollowPlayer<comment="Player追従">;
+    FSeek(p + 16); float shotIntarval<comment="発射間隔[角度]">;
+    FSeek(p + 20); float maxAngle<comment="最大角度[片側]">;
+    FSeek(p + 24); float rotateSpeed<comment="回転速度[角度/秒]">;
+    FSeek(p + 28); float rotateAngle<comment="ステート終了までの回転量">;
+    FSeek(p + 32); float barrageAngleDiff<comment="弾丸間の発射角度差">;
+    FSeek(p + 36); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 40); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 44);
 } MiniBossWinderBullet;
@@ -297,17 +297,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); bool isFollowPlayer;
-    FSeek(p + 16); float shotIntarval;
-    FSeek(p + 20); float maxAngle;
-    FSeek(p + 24); float yAngleOffset;
-    FSeek(p + 28); float shotTime;
-    FSeek(p + 32); float addSpeedMax;
-    FSeek(p + 36); float startWaitTime;
-    FSeek(p + 40); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); bool isFollowPlayer<comment="Player追従">;
+    FSeek(p + 16); float shotIntarval<comment="発射間隔[秒]">;
+    FSeek(p + 20); float maxAngle<comment="最大角度[片側]">;
+    FSeek(p + 24); float yAngleOffset<comment="発射角[縦]">;
+    FSeek(p + 28); float shotTime<comment="発射継続時間[秒]">;
+    FSeek(p + 32); float addSpeedMax<comment="最大加速量">;
+    FSeek(p + 36); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 40); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 44);
 } MiniBossShotgunBullet;
@@ -316,18 +316,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 barrageIndex;
-    FSeek(p + 4);  float yOffset;
-    FSeek(p + 8);  float zOffset;
-    FSeek(p + 12); float upRotOffset;
-    FSeek(p + 16); float yAngleOffset;
-    FSeek(p + 20); float maxAngle;
-    FSeek(p + 24); float shotTime;
-    FSeek(p + 28); float addSpeedMax;
-    FSeek(p + 32); float lineTime;
-    FSeek(p + 36); float fallPower;
-    FSeek(p + 40); float startWaitTime;
-    FSeek(p + 44); float endWaitTime;
+    FSeek(p + 0);  sint32 barrageIndex<comment="弾丸パラメータのID">;
+    FSeek(p + 4);  float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);  float zOffset<comment="Zオフセット">;
+    FSeek(p + 12); float upRotOffset<comment="上空向きオフセット">;
+    FSeek(p + 16); float yAngleOffset<comment="発射角[縦]">;
+    FSeek(p + 20); float maxAngle<comment="最大角度[片側]">;
+    FSeek(p + 24); float shotTime<comment="発射継続時間[秒]">;
+    FSeek(p + 28); float addSpeedMax<comment="最大加速量">;
+    FSeek(p + 32); float lineTime<comment="直線で進む時間">;
+    FSeek(p + 36); float fallPower<comment="落下時の速度">;
+    FSeek(p + 40); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 44); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 48);
 } MiniBossChagerAirDrop;
@@ -336,21 +336,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 bulletDamage;
-    FSeek(p + 4);  float bulletStaggerPoint;
-    FSeek(p + 8);  float bulletSpeed;
-    FSeek(p + 12); float bulletFallSpeed;
-    FSeek(p + 16); float bulletCyloopSpeed;
-    FSeek(p + 20); float bulletGroundTime;
-    FSeek(p + 24); float bulletFallTime;
-    FSeek(p + 28); float yOffset;
-    FSeek(p + 32); float zOffset;
-    FSeek(p + 36); float upRotOffset;
-    FSeek(p + 40); float yAngleOffset;
-    FSeek(p + 44); float maxAngle;
-    FSeek(p + 48); float shotTime;
-    FSeek(p + 52); float startWaitTime;
-    FSeek(p + 56); float endWaitTime;
+    FSeek(p + 0);  sint32 bulletDamage<comment="弾：ダメージ値">;
+    FSeek(p + 4);  float bulletStaggerPoint<comment="弾：怯み値">;
+    FSeek(p + 8);  float bulletSpeed<comment="弾：移動速度">;
+    FSeek(p + 12); float bulletFallSpeed<comment="弾：重力">;
+    FSeek(p + 16); float bulletCyloopSpeed<comment="弾：サイループで囲んだ時の速度">;
+    FSeek(p + 20); float bulletGroundTime<comment="弾：埋没後爆発までの時間">;
+    FSeek(p + 24); float bulletFallTime<comment="弾：投擲中の生存時間">;
+    FSeek(p + 28); float yOffset<comment="Yオフセット">;
+    FSeek(p + 32); float zOffset<comment="Zオフセット">;
+    FSeek(p + 36); float upRotOffset<comment="上空向きオフセット">;
+    FSeek(p + 40); float yAngleOffset<comment="発射角[縦]">;
+    FSeek(p + 44); float maxAngle<comment="最大角度[片側]">;
+    FSeek(p + 48); float shotTime<comment="発射継続時間[秒]">;
+    FSeek(p + 52); float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 56); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 60);
 } MiniBossChagerGroundObj;
@@ -359,21 +359,21 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float startWaitTime;
-    FSeek(p + 4);   float yOffset;
-    FSeek(p + 8);   float scale;
-    FSeek(p + 12);  sint32 muzzleNum;
-    FSeek(p + 16);  vector3 muzzlePosOffset[10]<optimize=false>;
-    FSeek(p + 176); float muzzleRotOffset[10]<optimize=false>;
-    FSeek(p + 216); float muzzleTimeOffset[10]<optimize=false>;
-    FSeek(p + 256); float muzzleLaserStartOffset[10]<optimize=false>;
-    FSeek(p + 296); sint32 laserNum;
-    FSeek(p + 300); sint32 attackNum;
-    FSeek(p + 304); float laserRandomRange;
-    FSeek(p + 308); float laserTime;
-    FSeek(p + 312); float laserEndTime;
-    FSeek(p + 316); float laserNextTime;
-    FSeek(p + 320); float endWaitTime;
+    FSeek(p + 0);   float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 4);   float yOffset<comment="Yオフセット">;
+    FSeek(p + 8);   float scale<comment="スケール">;
+    FSeek(p + 12);  sint32 muzzleNum<comment="発射口の数（片側）">;
+    FSeek(p + 16);  vector3 muzzlePosOffset[10]<comment="発射口の位置オフセット",optimize=false>;
+    FSeek(p + 176); float muzzleRotOffset[10]<comment="発射口の回転オフセット",optimize=false>;
+    FSeek(p + 216); float muzzleTimeOffset[10]<comment="発射口の出現時間オフセット",optimize=false>;
+    FSeek(p + 256); float muzzleLaserStartOffset[10]<comment="レーザー発射までのオフセット",optimize=false>;
+    FSeek(p + 296); sint32 laserNum<comment="発射口1つあたりのレーザーの数">;
+    FSeek(p + 300); sint32 attackNum<comment="一度の攻撃における発射回数">;
+    FSeek(p + 304); float laserRandomRange<comment="レーザーの射出方向のランダム範囲">;
+    FSeek(p + 308); float laserTime<comment="レーザー照射時間">;
+    FSeek(p + 312); float laserEndTime<comment="レーザー終了から発射口消失までの時間">;
+    FSeek(p + 316); float laserNextTime<comment="次のレーザー発射までの間隔">;
+    FSeek(p + 320); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 336);
 } MiniBossChagerDiffuseLaser;
@@ -382,23 +382,23 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float startWaitTime;
-    FSeek(p + 4);   sint32 muzzleNum;
-    FSeek(p + 16);  vector3 muzzlePosOffset[10]<optimize=false>;
-    FSeek(p + 176); float muzzleRotOffsetX[10]<optimize=false>;
-    FSeek(p + 216); float muzzleRotOffsetY[10]<optimize=false>;
-    FSeek(p + 256); float muzzleTimeOffset[10]<optimize=false>;
-    FSeek(p + 296); float muzzleLaserStartOffset[10]<optimize=false>;
-    FSeek(p + 336); float laserShotTimeMin;
-    FSeek(p + 340); float laserShotTimeMax;
-    FSeek(p + 344); sint32 laserNum;
-    FSeek(p + 348); float laserRange;
-    FSeek(p + 352); float laserEndTime;
-    FSeek(p + 356); float laserSpeed;
-    FSeek(p + 360); float laserRandomRangeMin;
-    FSeek(p + 364); float laserRandomRangeMax;
-    FSeek(p + 368); float laserHomingTime;
-    FSeek(p + 372); float endWaitTime;
+    FSeek(p + 0);   float startWaitTime<comment="開始前待機時間">;
+    FSeek(p + 4);   sint32 muzzleNum<comment="発射口の数">;
+    FSeek(p + 16);  vector3 muzzlePosOffset[10]<comment="発射口の位置オフセット",optimize=false>;
+    FSeek(p + 176); float muzzleRotOffsetX[10]<comment="発射口の回転オフセット:X軸",optimize=false>;
+    FSeek(p + 216); float muzzleRotOffsetY[10]<comment="発射口の回転オフセット:Y軸",optimize=false>;
+    FSeek(p + 256); float muzzleTimeOffset[10]<comment="発射口の出現時間オフセット",optimize=false>;
+    FSeek(p + 296); float muzzleLaserStartOffset[10]<comment="レーザー発射までのオフセット",optimize=false>;
+    FSeek(p + 336); float laserShotTimeMin<comment="各レーザー発射の最小時間">;
+    FSeek(p + 340); float laserShotTimeMax<comment="各レーザー発射の最大時間">;
+    FSeek(p + 344); sint32 laserNum<comment="発射口1つあたりのレーザーの数">;
+    FSeek(p + 348); float laserRange<comment="レーザーの間隔">;
+    FSeek(p + 352); float laserEndTime<comment="レーザー終了から発射口消失までの時間">;
+    FSeek(p + 356); float laserSpeed<comment="レーザーのスピード">;
+    FSeek(p + 360); float laserRandomRangeMin<comment="レーザーのターゲットランダム範囲・最小">;
+    FSeek(p + 364); float laserRandomRangeMax<comment="レーザーのターゲットランダム範囲・最大">;
+    FSeek(p + 368); float laserHomingTime<comment="レーザーの追跡時間">;
+    FSeek(p + 372); float endWaitTime<comment="終了後待機時間">;
 
     FSeek(p + 384);
 } MiniBossChagerChaseShot;
@@ -407,13 +407,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float hitDistance;
-    FSeek(p + 4);  float durationBind;
-    FSeek(p + 8);  float distanceStartBlackOut;
-    FSeek(p + 12); float timeEaseBlackOut;
-    FSeek(p + 16); float timeDelayEndtBlackOut;
-    FSeek(p + 32); vector3 tangentFrom;
-    FSeek(p + 48); vector3 tangentTo;
+    FSeek(p + 0);  float hitDistance<comment="ヒット距離">;
+    FSeek(p + 4);  float durationBind<comment="拘束演出時間">;
+    FSeek(p + 8);  float distanceStartBlackOut<comment="暗転開始距離">;
+    FSeek(p + 12); float timeEaseBlackOut<comment="暗転フェード時間">;
+    FSeek(p + 16); float timeDelayEndtBlackOut<comment="暗転開け遅延時間">;
+    FSeek(p + 32); vector3 tangentFrom<comment="放物線の接線(開始点)">;
+    FSeek(p + 48); vector3 tangentTo<comment="放物線の接線(終了点)">;
 
     FSeek(p + 64);
 } MiniBossChargerCatchParam;
@@ -422,27 +422,27 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossCommonConfig commonConfig;
-    FSeek(p + 64);   MiniBossChagerBarrageParam barrage[16]<optimize=false>;
-    FSeek(p + 1472); MiniBossChagerSimpleRotateBullet simpleRotateBullet[3]<optimize=false>;
-    FSeek(p + 1604); MiniBossChagerFollowLaser followLaser[3]<optimize=false>;
-    FSeek(p + 1712); MiniBossChagerVortexLaser vortexLaser[3]<optimize=false>;
-    FSeek(p + 1808); MiniBossChagerCrossLaser crossLaser[3]<optimize=false>;
-    FSeek(p + 1868); MiniBossChagerCrossBullet crossBullet[3]<optimize=false>;
-    FSeek(p + 1988); MiniBossChagerMassLaser massLaser[3]<optimize=false>;
-    FSeek(p + 2048); MiniBossChagerVerticalRoundBullet verticalRoundBullet[3]<optimize=false>;
-    FSeek(p + 2144); MiniBossPyramidRoundBullet pyramidRoundBullet[3]<optimize=false>;
-    FSeek(p + 2288); MiniBossPlaneUpDownBullet planeUpDownBullet[3]<optimize=false>;
-    FSeek(p + 2432); MiniBossTriangleBatteryBullet triangleBatteryBullet[3]<optimize=false>;
-    FSeek(p + 2516); MiniBossPlayerFallBullet playerFallBullet[3]<optimize=false>;
-    FSeek(p + 2636); MiniBossGatlingRevolverBullet gatlingRevolverBullet[3]<optimize=false>;
-    FSeek(p + 2756); MiniBossWinderBullet winderBullet[3]<optimize=false>;
-    FSeek(p + 2888); MiniBossShotgunBullet shotgunBullet[3]<optimize=false>;
-    FSeek(p + 3020); MiniBossChagerAirDrop airDrop[3]<optimize=false>;
-    FSeek(p + 3164); MiniBossChagerGroundObj groundObj[3]<optimize=false>;
-    FSeek(p + 3344); MiniBossChagerDiffuseLaser diffuseLaser[3]<optimize=false>;
-    FSeek(p + 4352); MiniBossChagerChaseShot chaseShot[3]<optimize=false>;
-    FSeek(p + 5504); MiniBossChargerCatchParam atkCatch;
+    FSeek(p + 0);    MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64);   MiniBossChagerBarrageParam barrage[16]<comment="弾丸パラメータ",optimize=false>;
+    FSeek(p + 1472); MiniBossChagerSimpleRotateBullet simpleRotateBullet[3]<comment="単純回転",optimize=false>;
+    FSeek(p + 1604); MiniBossChagerFollowLaser followLaser[3]<comment="追跡縦レーザー",optimize=false>;
+    FSeek(p + 1712); MiniBossChagerVortexLaser vortexLaser[3]<comment="渦回転レーザー",optimize=false>;
+    FSeek(p + 1808); MiniBossChagerCrossLaser crossLaser[3]<comment="クロスレーザー",optimize=false>;
+    FSeek(p + 1868); MiniBossChagerCrossBullet crossBullet[3]<comment="クロス弾",optimize=false>;
+    FSeek(p + 1988); MiniBossChagerMassLaser massLaser[3]<comment="巨大レーザー",optimize=false>;
+    FSeek(p + 2048); MiniBossChagerVerticalRoundBullet verticalRoundBullet[3]<comment="円周縦置き弾",optimize=false>;
+    FSeek(p + 2144); MiniBossPyramidRoundBullet pyramidRoundBullet[3]<comment="円周正四面体弾",optimize=false>;
+    FSeek(p + 2288); MiniBossPlaneUpDownBullet planeUpDownBullet[3]<comment="水平上下弾",optimize=false>;
+    FSeek(p + 2432); MiniBossTriangleBatteryBullet triangleBatteryBullet[3]<comment="空中3砲台弾",optimize=false>;
+    FSeek(p + 2516); MiniBossPlayerFallBullet playerFallBullet[3]<comment="プレイヤー頭上弾",optimize=false>;
+    FSeek(p + 2636); MiniBossGatlingRevolverBullet gatlingRevolverBullet[3]<comment="リボルバー形状ガトリング弾",optimize=false>;
+    FSeek(p + 2756); MiniBossWinderBullet winderBullet[3]<comment="ワインダー弾",optimize=false>;
+    FSeek(p + 2888); MiniBossShotgunBullet shotgunBullet[3]<comment="追い越し弾",optimize=false>;
+    FSeek(p + 3020); MiniBossChagerAirDrop airDrop[3]<comment="空中浮遊弾",optimize=false>;
+    FSeek(p + 3164); MiniBossChagerGroundObj groundObj[3]<comment="地雷ばらまき弾",optimize=false>;
+    FSeek(p + 3344); MiniBossChagerDiffuseLaser diffuseLaser[3]<comment="拡散レーザー",optimize=false>;
+    FSeek(p + 4352); MiniBossChagerChaseShot chaseShot[3]<comment="追跡レーザーショット",optimize=false>;
+    FSeek(p + 5504); MiniBossChargerCatchParam atkCatch<comment="必中攻撃">;
 
     FSeek(p + 5568);
 } MiniBossChargerCommonParam;
@@ -451,16 +451,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -469,9 +469,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 level;
-    FSeek(p + 4);  MiniBossLevelCommonConfig commonConfig;
-    FSeek(p + 56); float stunTime;
+    FSeek(p + 0);  sint32 level<comment="レベル">;
+    FSeek(p + 4);  MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 56); float stunTime<comment="スタン時間">;
 
     FSeek(p + 60);
 } MiniBossChargerLevelParam;
@@ -504,8 +504,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 rateHp;
-    FSeek(p + 8); cstring grindSetName;
+    FSeek(p + 0); sint32 rateHp<comment="HPが○％以上の時">;
+    FSeek(p + 8); cstring grindSetName<comment="グラインドセット名">;
 
     FSeek(p + 24);
 } MiniBossChargerHPRateParam;
@@ -514,17 +514,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 level;
-    FSeek(p + 4);   float rate;
-    FSeek(p + 8);   float chanceTime;
-    FSeek(p + 12);  float chanceTimeMoveSpeed;
-    FSeek(p + 16);  float chanceTimeDecSpeed;
-    FSeek(p + 20);  float chanceTimeSpeedMin;
-    FSeek(p + 24);  float damageTime;
-    FSeek(p + 28);  float chanceTimeAddSpeed;
-    FSeek(p + 32);  AttackType attackTable[10]<optimize=false>;
-    FSeek(p + 72);  sint32 attackIndexTable[10]<optimize=false>;
-    FSeek(p + 112); MiniBossChargerHPRateParam hpRateParams[3]<optimize=false>;
+    FSeek(p + 0);   sint32 level<comment="レベル">;
+    FSeek(p + 4);   float rate<comment="状態変化する体力割合">;
+    FSeek(p + 8);   float chanceTime<comment="逃げてる時間">;
+    FSeek(p + 12);  float chanceTimeMoveSpeed<comment="逃亡中移動速度">;
+    FSeek(p + 16);  float chanceTimeDecSpeed<comment="ダメージ時減速力">;
+    FSeek(p + 20);  float chanceTimeSpeedMin<comment="ダメージ時最低速度">;
+    FSeek(p + 24);  float damageTime<comment="ダメージ時減速時間">;
+    FSeek(p + 28);  float chanceTimeAddSpeed<comment="ダメージ復帰時加速力">;
+    FSeek(p + 32);  AttackType attackTable[10]<comment="攻撃タイプ",optimize=false>;
+    FSeek(p + 72);  sint32 attackIndexTable[10]<comment="攻撃パラメータ用Index",optimize=false>;
+    FSeek(p + 112); MiniBossChargerHPRateParam hpRateParams[3]<comment="残存HPによるパターン",optimize=false>;
 
     FSeek(p + 184);
 } MiniBossChargerLevelBand;
@@ -557,9 +557,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float range;
-    FSeek(p + 4);  MiniBossChargerLevel1_AttackType attackTable[2]<optimize=false>;
-    FSeek(p + 12); sint32 attackIndexTable[2]<optimize=false>;
+    FSeek(p + 0);  float range<comment="近/遠判別用距離">;
+    FSeek(p + 4);  MiniBossChargerLevel1_AttackType attackTable[2]<comment="攻撃タイプ[近/遠]",optimize=false>;
+    FSeek(p + 12); sint32 attackIndexTable[2]<comment="攻撃パラメータ用Index[近/遠]",optimize=false>;
 
     FSeek(p + 20);
 } MiniBossChargerLevel1;
@@ -568,10 +568,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    MiniBossChargerCommonParam commonParam;
-    FSeek(p + 5568); MiniBossChargerLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 5872); MiniBossChargerLevelBand levelBands[5]<optimize=false>;
-    FSeek(p + 6792); MiniBossChargerLevel1 level1Params[2]<optimize=false>;
+    FSeek(p + 0);    MiniBossChargerCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 5568); MiniBossChargerLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 5872); MiniBossChargerLevelBand levelBands[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 6792); MiniBossChargerLevel1 level1Params[2]<comment="レベル1から19専用パラメータ",optimize=false>;
 
     FSeek(p + 6832);
 } MiniBossChargerConfig;

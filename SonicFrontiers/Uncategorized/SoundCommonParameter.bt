@@ -4,9 +4,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float value;
-    FSeek(p + 4); float delayTime;
-    FSeek(p + 8); float fadeTime;
+    FSeek(p + 0); float value<comment="音量">;
+    FSeek(p + 4); float delayTime<comment="開始遅延時間">;
+    FSeek(p + 8); float fadeTime<comment="フェード時間">;
 
     FSeek(p + 12);
 } BGMVolumeChangeInfo;
@@ -15,13 +15,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  BGMVolumeChangeInfo playerStop;
-    FSeek(p + 12); BGMVolumeChangeInfo playerWalk;
-    FSeek(p + 24); BGMVolumeChangeInfo playerRun;
-    FSeek(p + 36); BGMVolumeChangeInfo fishingHitIn;
-    FSeek(p + 48); BGMVolumeChangeInfo fishingHitOut;
-    FSeek(p + 60); BGMVolumeChangeInfo musicBoxIn;
-    FSeek(p + 72); BGMVolumeChangeInfo musicBoxOut;
+    FSeek(p + 0);  BGMVolumeChangeInfo playerStop<comment="ソニック停止">;
+    FSeek(p + 12); BGMVolumeChangeInfo playerWalk<comment="ソニック低速">;
+    FSeek(p + 24); BGMVolumeChangeInfo playerRun<comment="ソニック高速">;
+    FSeek(p + 36); BGMVolumeChangeInfo fishingHitIn<comment="釣り浮き沈み開始">;
+    FSeek(p + 48); BGMVolumeChangeInfo fishingHitOut<comment="釣り浮き沈み終了">;
+    FSeek(p + 60); BGMVolumeChangeInfo musicBoxIn<comment="メロディー遺跡開始">;
+    FSeek(p + 72); BGMVolumeChangeInfo musicBoxOut<comment="メロディー遺跡終了">;
 
     FSeek(p + 84);
 } BGMVolumeChangeInfoList;
@@ -30,8 +30,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float value;
-    FSeek(p + 4); float fadeTime;
+    FSeek(p + 0); float value<comment="Aisac値">;
+    FSeek(p + 4); float fadeTime<comment="フェード時間">;
 
     FSeek(p + 8);
 } AisacChangeInfo;
@@ -40,11 +40,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  AisacChangeInfo sunny;
-    FSeek(p + 8);  AisacChangeInfo cloudy;
-    FSeek(p + 16); AisacChangeInfo rainy;
-    FSeek(p + 24); AisacChangeInfo beginUnderWater;
-    FSeek(p + 32); AisacChangeInfo finishUnderWater;
+    FSeek(p + 0);  AisacChangeInfo sunny<comment="晴れ">;
+    FSeek(p + 8);  AisacChangeInfo cloudy<comment="曇り">;
+    FSeek(p + 16); AisacChangeInfo rainy<comment="雨">;
+    FSeek(p + 24); AisacChangeInfo beginUnderWater<comment="水中開始">;
+    FSeek(p + 32); AisacChangeInfo finishUnderWater<comment="水中終了[Aisac値は0固定]">;
 
     FSeek(p + 40);
 } AisacChangeInfoList;
@@ -89,18 +89,18 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring cueName;
-    FSeek(p + 16); sint32 blockId;
-    FSeek(p + 20); float fadeInTime;
-    FSeek(p + 24); float fadeOutTime;
-    FSeek(p + 28); float delayTime;
-    FSeek(p + 32); cstring aisacName;
-    FSeek(p + 48); float aisacValue;
-    FSeek(p + 52); float aisacFadeTime;
-    FSeek(p + 56); bool isVolumeControl;
-    FSeek(p + 57); bool isOverlapPlay;
-    FSeek(p + 58); Priority priority;
-    FSeek(p + 59); InterruptType interruptType;
+    FSeek(p + 0);  cstring cueName<comment="Cue名">;
+    FSeek(p + 16); sint32 blockId<comment="BlockID">;
+    FSeek(p + 20); float fadeInTime<comment="フェードイン時間">;
+    FSeek(p + 24); float fadeOutTime<comment="フェードアウト時間">;
+    FSeek(p + 28); float delayTime<comment="再生遅延時間">;
+    FSeek(p + 32); cstring aisacName<comment="AISAC名">;
+    FSeek(p + 48); float aisacValue<comment="AISAC値">;
+    FSeek(p + 52); float aisacFadeTime<comment="AISAC値フェード時間">;
+    FSeek(p + 56); bool isVolumeControl<comment="入力に応じた音量調整を行う">;
+    FSeek(p + 57); bool isOverlapPlay<comment="重複再生する">;
+    FSeek(p + 58); Priority priority<comment="プライオリティ">;
+    FSeek(p + 59); InterruptType interruptType<comment="他BGMに割り込まれた時の動作">;
 
     FSeek(p + 64);
 } BGMInfo;
@@ -117,14 +117,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring tagName;
-    FSeek(p + 16); sint32 beforeId;
-    FSeek(p + 20); sint32 beforeIdMax;
-    FSeek(p + 24); sint32 afterId;
-    FSeek(p + 28); BGMTransitInfo_InterruptType type;
-    FSeek(p + 32); float fadeOutTime;
-    FSeek(p + 36); float fadeInTime;
-    FSeek(p + 40); float delayTime;
+    FSeek(p + 0);  cstring tagName<comment="タグ名">;
+    FSeek(p + 16); sint32 beforeId<comment="遷移前のBGM番号[最小]">;
+    FSeek(p + 20); sint32 beforeIdMax<comment="遷移前のBGM番号[最大、-1で無効]">;
+    FSeek(p + 24); sint32 afterId<comment="遷移後のBGM番号">;
+    FSeek(p + 28); BGMTransitInfo_InterruptType type<comment="[前]停止タイプ">;
+    FSeek(p + 32); float fadeOutTime<comment="[前]フェードアウト時間">;
+    FSeek(p + 36); float fadeInTime<comment="[後]フェードイン時間">;
+    FSeek(p + 40); float delayTime<comment="[後]再生遅延時間">;
 
     FSeek(p + 48);
 } BGMTransitInfo;
@@ -133,14 +133,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    float pauseFadeOutTime;
-    FSeek(p + 4);    float pauseFadeInTime;
-    FSeek(p + 8);    float enterCyberFadeOutTime;
-    FSeek(p + 12);   float leaveCyberResultFadeOutTime;
-    FSeek(p + 16);   BGMVolumeChangeInfoList bgmVolumeInfo;
-    FSeek(p + 100);  AisacChangeInfoList aisacInfo;
-    FSeek(p + 144);  BGMInfo changeBgmInfo[128]<optimize=false>;
-    FSeek(p + 8336); BGMTransitInfo transitBgmInfo[128]<optimize=false>;
+    FSeek(p + 0);    float pauseFadeOutTime<comment="ポーズ開始時のフェードアウト時間">;
+    FSeek(p + 4);    float pauseFadeInTime<comment="ポーズ終了時のフェードイン時間">;
+    FSeek(p + 8);    float enterCyberFadeOutTime<comment="電脳空間へ移動開始時のフェードアウト時間">;
+    FSeek(p + 12);   float leaveCyberResultFadeOutTime<comment="電脳空間リザルト終了時のフェードアウト時間">;
+    FSeek(p + 16);   BGMVolumeChangeInfoList bgmVolumeInfo<comment="BGM音量変化">;
+    FSeek(p + 100);  AisacChangeInfoList aisacInfo<comment="Aisac変化">;
+    FSeek(p + 144);  BGMInfo changeBgmInfo[128]<comment="BGM情報",optimize=false>;
+    FSeek(p + 8336); BGMTransitInfo transitBgmInfo[128]<comment="BGM切り替え時の特殊設定",optimize=false>;
 
     FSeek(p + 14480);
 } SoundCommonParameter;

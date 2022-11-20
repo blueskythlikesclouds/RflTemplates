@@ -14,7 +14,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); QualityType qualityType;
+    FSeek(p + 0); QualityType qualityType<comment="品質">;
 
     FSeek(p + 1);
 } FxFXAAParameter;

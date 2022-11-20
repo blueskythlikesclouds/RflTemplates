@@ -4,8 +4,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distances[4]<optimize=false>;
-    FSeek(p + 16); float cullingDistances[4]<optimize=false>;
+    FSeek(p + 0);  float distances[4]<comment="LOD距離",optimize=false>;
+    FSeek(p + 16); float cullingDistances[4]<comment="レベルごとの間引き距離",optimize=false>;
 
     FSeek(p + 32);
 } GameGrindLodParameter;

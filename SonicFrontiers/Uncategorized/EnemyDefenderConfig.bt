@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -19,8 +19,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float changeTimeIdlePatrolMin;
-    FSeek(p + 4); float changeTimeIdlePatrolMax;
+    FSeek(p + 0); float changeTimeIdlePatrolMin<comment="待機/パトロール切り替え最低時間">;
+    FSeek(p + 4); float changeTimeIdlePatrolMax<comment="待機/パトロール切り替え最大時間">;
 
     FSeek(p + 8);
 } EnemyDefenderPatrolConfig;
@@ -31,31 +31,31 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   RingParameter ringParam;
-    FSeek(p + 28);  float mass;
-    FSeek(p + 32);  float slopeAngleMax;
-    FSeek(p + 36);  float checkBarrierDistance;
-    FSeek(p + 40);  float colliderRadius;
-    FSeek(p + 44);  float colliderHeight;
-    FSeek(p + 48);  float damageColliderRadiusOffset;
-    FSeek(p + 52);  float boomerangColliderRadius;
-    FSeek(p + 56);  float boomerangColliderHeight;
-    FSeek(p + 60);  float boomerangColliderOffset;
-    FSeek(p + 64);  float boomerangCameraKeepTimeMin;
-    FSeek(p + 68);  float eyesightDistance;
-    FSeek(p + 72);  float eyesightLostDelayTime;
-    FSeek(p + 76);  EnemyDefenderPatrolConfig patrolConfig;
-    FSeek(p + 84);  float shieldBlowUpTime;
-    FSeek(p + 88);  float shieldBlowUpHeight;
-    FSeek(p + 92);  float shieldBoomerangSpeed;
-    FSeek(p + 96);  float shieldBoomerangMinDistance;
-    FSeek(p + 100); float shieldBoomerangMaxDistance;
-    FSeek(p + 104); float killWaitTime;
-    FSeek(p + 108); float cameraDistance;
-    FSeek(p + 112); float cameraElevation;
-    FSeek(p + 116); sint32 parryBoomerangRound;
-    FSeek(p + 120); float parryBoomerangOffset;
-    FSeek(p + 124); float parryBoomerangSpeed;
+    FSeek(p + 0);   RingParameter ringParam<comment="ドロップリング">;
+    FSeek(p + 28);  float mass<comment="質量">;
+    FSeek(p + 32);  float slopeAngleMax<comment="登れるスロープの角度">;
+    FSeek(p + 36);  float checkBarrierDistance<comment="崖や障害物を検知する距離">;
+    FSeek(p + 40);  float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 44);  float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 48);  float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 52);  float boomerangColliderRadius<comment="ブーメランコリジョン半径">;
+    FSeek(p + 56);  float boomerangColliderHeight<comment="ブーメランコリジョン高さ">;
+    FSeek(p + 60);  float boomerangColliderOffset<comment="ブーメランコリジョン位置オフセット">;
+    FSeek(p + 64);  float boomerangCameraKeepTimeMin<comment="ブーメラン用カメラ最小維持時間">;
+    FSeek(p + 68);  float eyesightDistance<comment="視野距離">;
+    FSeek(p + 72);  float eyesightLostDelayTime<comment="目標を見失った際の猶予時間">;
+    FSeek(p + 76);  EnemyDefenderPatrolConfig patrolConfig<comment="パトロール設定">;
+    FSeek(p + 84);  float shieldBlowUpTime<comment="シールドの打ちあげ時間">;
+    FSeek(p + 88);  float shieldBlowUpHeight<comment="シールドの打ちあげ高さ">;
+    FSeek(p + 92);  float shieldBoomerangSpeed<comment="ブーメラン速度">;
+    FSeek(p + 96);  float shieldBoomerangMinDistance<comment="ガード開始距離">;
+    FSeek(p + 100); float shieldBoomerangMaxDistance<comment="ブーメラン開始距離">;
+    FSeek(p + 104); float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 108); float cameraDistance<comment="俯瞰カメラ距離">;
+    FSeek(p + 112); float cameraElevation<comment="俯瞰カメラ仰角">;
+    FSeek(p + 116); sint32 parryBoomerangRound<comment="パリィしたブーメランの回転数">;
+    FSeek(p + 120); float parryBoomerangOffset<comment="パリィしたブーメランのズレオフセット">;
+    FSeek(p + 124); float parryBoomerangSpeed<comment="パリィしたブーメランの速度">;
 
     FSeek(p + 128);
 } EnemyDefenderCommonConfig;
@@ -64,10 +64,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } DefenderCommonLevelConfig;
@@ -76,8 +76,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); DefenderCommonLevelConfig common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); DefenderCommonLevelConfig common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyDefenderLevelConfig;
@@ -86,8 +86,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyDefenderCommonConfig commonParams;
-    FSeek(p + 128); EnemyDefenderLevelConfig levelParams[5]<optimize=false>;
+    FSeek(p + 0);   EnemyDefenderCommonConfig commonParams<comment="共通パラメータ">;
+    FSeek(p + 128); EnemyDefenderLevelConfig levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
 
     FSeek(p + 208);
 } EnemyDefenderConfig;

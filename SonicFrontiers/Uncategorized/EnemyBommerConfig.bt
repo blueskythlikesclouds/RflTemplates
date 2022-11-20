@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -19,10 +19,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotationDeceleration;
-    FSeek(p + 4);  float rotationAngleMax;
-    FSeek(p + 8);  float changeTimeIdlePatrolMin;
-    FSeek(p + 12); float changeTimeIdlePatrolMax;
+    FSeek(p + 0);  float rotationDeceleration<comment="方向転換時の減速度">;
+    FSeek(p + 4);  float rotationAngleMax<comment="方向転換角度制限">;
+    FSeek(p + 8);  float changeTimeIdlePatrolMin<comment="待機/パトロール切り替え最低時間">;
+    FSeek(p + 12); float changeTimeIdlePatrolMax<comment="待機/パトロール切り替え最大時間">;
 
     FSeek(p + 16);
 } EnemyBommerPatrolConfig;
@@ -31,10 +31,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveDecerleration;
-    FSeek(p + 4);  float rotationAngleMax;
-    FSeek(p + 8);  float chargeTime;
-    FSeek(p + 12); float rotateSpeed;
+    FSeek(p + 0);  float moveDecerleration<comment="移動減速度">;
+    FSeek(p + 4);  float rotationAngleMax<comment="方向転換角度制限">;
+    FSeek(p + 8);  float chargeTime<comment="チャージ時間">;
+    FSeek(p + 12); float rotateSpeed<comment="[ソニックセット]回転速度">;
 
     FSeek(p + 16);
 } EnemyBommerAimingConfig;
@@ -43,11 +43,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveVelocity;
-    FSeek(p + 4);  float moveDecerleration;
-    FSeek(p + 8);  float moveDecelerationDamaged;
-    FSeek(p + 12); float cooldownTime;
-    FSeek(p + 16); float colliderOffsetRate;
+    FSeek(p + 0);  float moveVelocity<comment="移動速度">;
+    FSeek(p + 4);  float moveDecerleration<comment="ブレーキ時の移動減速度">;
+    FSeek(p + 8);  float moveDecelerationDamaged<comment="被ダメージ時の減速度">;
+    FSeek(p + 12); float cooldownTime<comment="突進攻撃後の硬直時間">;
+    FSeek(p + 16); float colliderOffsetRate<comment="速度によるコリジョンオフセット率">;
 
     FSeek(p + 20);
 } EnemyBommerAttackConfig;
@@ -56,19 +56,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float moveVelocity;
-    FSeek(p + 4);  float moveAccerleration;
-    FSeek(p + 8);  float amplitude;
-    FSeek(p + 12); float period;
-    FSeek(p + 16); float rotateSpeedInFront;
-    FSeek(p + 20); float rotateSpeedOnBack;
-    FSeek(p + 24); float chaseTime;
-    FSeek(p + 28); float parriedMoveDistance;
-    FSeek(p + 32); float parriedShortenTime;
-    FSeek(p + 36); float parriedCoolDownTime;
-    FSeek(p + 40); float colliderOffsetRate;
-    FSeek(p + 44); float cameraDistance;
-    FSeek(p + 48); float cameraElevation;
+    FSeek(p + 0);  float moveVelocity<comment="移動速度">;
+    FSeek(p + 4);  float moveAccerleration<comment="移動加速度">;
+    FSeek(p + 8);  float amplitude<comment="蛇行振幅">;
+    FSeek(p + 12); float period<comment="蛇行周期">;
+    FSeek(p + 16); float rotateSpeedInFront<comment="蛇行正面回転速度">;
+    FSeek(p + 20); float rotateSpeedOnBack<comment="蛇行背後回転速度">;
+    FSeek(p + 24); float chaseTime<comment="爆発までの時間">;
+    FSeek(p + 28); float parriedMoveDistance<comment="パリー後退距離">;
+    FSeek(p + 32); float parriedShortenTime<comment="パリーによる爆発時間短縮">;
+    FSeek(p + 36); float parriedCoolDownTime<comment="[ソニックセット用]パリー後クールダウン時間">;
+    FSeek(p + 40); float colliderOffsetRate<comment="速度によるコリジョンオフセット率">;
+    FSeek(p + 44); float cameraDistance<comment="俯瞰カメラ距離">;
+    FSeek(p + 48); float cameraElevation<comment="俯瞰カメラ仰角">;
 
     FSeek(p + 52);
 } EnemyBommerChaseConfig;
@@ -84,10 +84,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 m_maxNumPieces;
-    FSeek(p + 4);  float gravity;
-    FSeek(p + 8);  float lifeTime;
-    FSeek(p + 12); float force;
+    FSeek(p + 0);  sint32 m_maxNumPieces<comment="破片最大生成数. 負の値で最大">;
+    FSeek(p + 4);  float gravity<comment="重力加速度">;
+    FSeek(p + 8);  float lifeTime<comment="生存時間">;
+    FSeek(p + 12); float force<comment="拡散力">;
 
     FSeek(p + 16);
 } DebrisParameter;
@@ -96,24 +96,24 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   RingParameter ringParam;
-    FSeek(p + 28);  float mass;
-    FSeek(p + 32);  float slopeAngleMax;
-    FSeek(p + 36);  float checkBarrierDistance;
-    FSeek(p + 40);  float colliderRadius;
-    FSeek(p + 44);  float colliderHeight;
-    FSeek(p + 48);  float damageColliderRadiusOffset;
-    FSeek(p + 52);  float eyesightDistance;
-    FSeek(p + 56);  float eyesightDistanceMargin;
-    FSeek(p + 60);  EnemyBommerPatrolConfig patrolConfig;
-    FSeek(p + 76);  EnemyBommerAimingConfig aimingConfig;
-    FSeek(p + 92);  EnemyBommerAttackConfig attackConfig;
-    FSeek(p + 112); EnemyBommerChaseConfig chaseConfig;
-    FSeek(p + 164); float explodeSignalTime;
-    FSeek(p + 168); float explodeColliderRadius;
-    FSeek(p + 172); bool useUniqueDebrisSetting;
-    FSeek(p + 176); DebrisParameter debrisExplode;
-    FSeek(p + 192); DebrisParameter debrisCyloop;
+    FSeek(p + 0);   RingParameter ringParam<comment="ドロップリング">;
+    FSeek(p + 28);  float mass<comment="質量">;
+    FSeek(p + 32);  float slopeAngleMax<comment="登れるスロープの角度">;
+    FSeek(p + 36);  float checkBarrierDistance<comment="崖や障害物を検知する距離">;
+    FSeek(p + 40);  float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 44);  float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 48);  float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 52);  float eyesightDistance<comment="視野距離">;
+    FSeek(p + 56);  float eyesightDistanceMargin<comment="視野距離マージン">;
+    FSeek(p + 60);  EnemyBommerPatrolConfig patrolConfig<comment="パトロール設定">;
+    FSeek(p + 76);  EnemyBommerAimingConfig aimingConfig<comment="狙い中の設定">;
+    FSeek(p + 92);  EnemyBommerAttackConfig attackConfig<comment="突進攻撃の設定">;
+    FSeek(p + 112); EnemyBommerChaseConfig chaseConfig<comment="ねずみ花火追いかけの設定">;
+    FSeek(p + 164); float explodeSignalTime<comment="自爆予兆時間">;
+    FSeek(p + 168); float explodeColliderRadius<comment="爆発コリジョン半径">;
+    FSeek(p + 172); bool useUniqueDebrisSetting<comment="固有の破片設定を使用するか">;
+    FSeek(p + 176); DebrisParameter debrisExplode<comment="専用破片設定(爆発)">;
+    FSeek(p + 192); DebrisParameter debrisCyloop<comment="専用破片設定(サイループ死亡)">;
 
     FSeek(p + 208);
 } EnemyBommerCommonConfig;
@@ -122,10 +122,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } BommerCommonLevelConfig;
@@ -134,8 +134,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); BommerCommonLevelConfig common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); BommerCommonLevelConfig common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyBommerLevelConfig;
@@ -144,8 +144,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyBommerCommonConfig commonParams;
-    FSeek(p + 208); EnemyBommerLevelConfig levelParams[5]<optimize=false>;
+    FSeek(p + 0);   EnemyBommerCommonConfig commonParams<comment="共通パラメータ">;
+    FSeek(p + 208); EnemyBommerLevelConfig levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
 
     FSeek(p + 288);
 } EnemyBommerConfig;

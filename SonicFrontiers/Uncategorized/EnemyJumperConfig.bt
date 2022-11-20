@@ -4,19 +4,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotateSpeedMin;
-    FSeek(p + 4);  float rotateSpeedMax;
-    FSeek(p + 8);  float speedMin;
-    FSeek(p + 12); float speedMax;
-    FSeek(p + 16); float changeTimeIdlePatrolMin;
-    FSeek(p + 20); float changeTimeIdlePatrolMax;
-    FSeek(p + 24); float lockonDistance;
-    FSeek(p + 28); float unlockDistance;
-    FSeek(p + 32); float distance;
-    FSeek(p + 36); float minElevation;
-    FSeek(p + 40); float maxElevation;
-    FSeek(p + 44); float panningSuspensionK;
-    FSeek(p + 48); float interiorPanningSuspensionK;
+    FSeek(p + 0);  float rotateSpeedMin<comment="最少旋回速度">;
+    FSeek(p + 4);  float rotateSpeedMax<comment="最大旋回速度">;
+    FSeek(p + 8);  float speedMin<comment="旋回速度が最大になる最少速度">;
+    FSeek(p + 12); float speedMax<comment="旋回速度が最少になる最大速度.">;
+    FSeek(p + 16); float changeTimeIdlePatrolMin<comment="待機/パトロール切り替え最低時間">;
+    FSeek(p + 20); float changeTimeIdlePatrolMax<comment="待機/パトロール切り替え最大時間">;
+    FSeek(p + 24); float lockonDistance<comment="ロックオン成立距離">;
+    FSeek(p + 28); float unlockDistance<comment="ロックオン解除距離">;
+    FSeek(p + 32); float distance<comment="カメラ距離">;
+    FSeek(p + 36); float minElevation<comment="仰角最小値">;
+    FSeek(p + 40); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 44); float panningSuspensionK<comment="パンニング遅延のバネ定数(負値でデフォルト値)">;
+    FSeek(p + 48); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数(負値でデフォルト値)">;
 
     FSeek(p + 52);
 } EnemyJumperPatrolConfig;
@@ -32,9 +32,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float lockOnMinDistance;
-    FSeek(p + 16); vector3 playerOffset;
+    FSeek(p + 0);  float distance<comment="カメラ距離">;
+    FSeek(p + 4);  float lockOnMinDistance<comment="ロックオン最小有効距離">;
+    FSeek(p + 16); vector3 playerOffset<comment="プレイヤーオフセット">;
 
     FSeek(p + 32);
 } EnemyJumperAutoLockonParam;
@@ -43,17 +43,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float killWaitTime;
-    FSeek(p + 4);  float colliderRadius;
-    FSeek(p + 8);  float colliderHeight;
-    FSeek(p + 12); float headRadius;
-    FSeek(p + 16); float headHeight;
-    FSeek(p + 20); float damageColliderRadiusOffset;
-    FSeek(p + 24); float eyesightDistance;
-    FSeek(p + 28); float maxSpeed;
-    FSeek(p + 32); float checkBarrierDistance;
-    FSeek(p + 36); EnemyJumperPatrolConfig patrolConfig;
-    FSeek(p + 96); EnemyJumperAutoLockonParam lockonCamera;
+    FSeek(p + 0);  float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 4);  float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 8);  float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 12); float headRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 16); float headHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 20); float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 24); float eyesightDistance<comment="視野距離">;
+    FSeek(p + 28); float maxSpeed<comment="最大速度">;
+    FSeek(p + 32); float checkBarrierDistance<comment="崖や障害物を検知する距離">;
+    FSeek(p + 36); EnemyJumperPatrolConfig patrolConfig<comment="パトロール設定">;
+    FSeek(p + 96); EnemyJumperAutoLockonParam lockonCamera<comment="ストンプ後のカメラ">;
 
     FSeek(p + 128);
 } EnemyJumperCommonParam;
@@ -64,10 +64,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } EnemyJumperCommonLevelParam;
@@ -76,8 +76,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); EnemyJumperCommonLevelParam common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); EnemyJumperCommonLevelParam common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyJumperLevelParam;
@@ -86,7 +86,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } EnemyJumperLevelBand;
@@ -95,10 +95,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float height;
-    FSeek(p + 4);  float radius;
-    FSeek(p + 16); vector3 offset;
-    FSeek(p + 32); vector3 scale;
+    FSeek(p + 0);  float height<comment="高さ">;
+    FSeek(p + 4);  float radius<comment="半径">;
+    FSeek(p + 16); vector3 offset<comment="オフセット">;
+    FSeek(p + 32); vector3 scale<comment="スケール">;
 
     FSeek(p + 48);
 } CharacterControllerCollision;
@@ -107,10 +107,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotateSpeedMin;
-    FSeek(p + 4);  float rotateSpeedMax;
-    FSeek(p + 8);  float speedMin;
-    FSeek(p + 12); float speedMax;
+    FSeek(p + 0);  float rotateSpeedMin<comment="最少旋回速度">;
+    FSeek(p + 4);  float rotateSpeedMax<comment="最大旋回速度">;
+    FSeek(p + 8);  float speedMin<comment="旋回速度が最大になる最少速度">;
+    FSeek(p + 12); float speedMax<comment="旋回速度が最少になる最大速度.">;
 
     FSeek(p + 16);
 } MovementParam;
@@ -119,8 +119,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float velocity;
-    FSeek(p + 4); float targetCursorMaxDistance;
+    FSeek(p + 0); float velocity<comment="初期速度">;
+    FSeek(p + 4); float targetCursorMaxDistance<comment="ターゲットカーソルの最大表示距離">;
 
     FSeek(p + 8);
 } SpringPlayer;
@@ -129,17 +129,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float stompingRange;
-    FSeek(p + 4);  float stompingTotalNum;
-    FSeek(p + 8);  float interpalTimeFinal;
-    FSeek(p + 12); float range;
-    FSeek(p + 16); float riseDistance;
-    FSeek(p + 20); float riseTime;
-    FSeek(p + 24); float upLoopTime;
-    FSeek(p + 28); float chaseSpeed;
-    FSeek(p + 32); float speed;
-    FSeek(p + 36); float groundImpactRadius;
-    FSeek(p + 40); SpringPlayer springPlayer;
+    FSeek(p + 0);  float stompingRange<comment="ストンピング有効距離">;
+    FSeek(p + 4);  float stompingTotalNum<comment="ストンピング最大回数">;
+    FSeek(p + 8);  float interpalTimeFinal<comment="最終攻撃後のインターパル時間">;
+    FSeek(p + 12); float range<comment="射程距離">;
+    FSeek(p + 16); float riseDistance<comment="ストンピング上昇高度">;
+    FSeek(p + 20); float riseTime<comment="ストンピング上昇時間">;
+    FSeek(p + 24); float upLoopTime<comment="上昇アニメーション再生時間">;
+    FSeek(p + 28); float chaseSpeed<comment="追跡速度">;
+    FSeek(p + 32); float speed<comment="踏みつけ速度">;
+    FSeek(p + 36); float groundImpactRadius<comment="衝撃波半径">;
+    FSeek(p + 40); SpringPlayer springPlayer<comment="プレイヤー跳ね飛ばし">;
 
     FSeek(p + 48);
 } BattleParam;
@@ -148,12 +148,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyJumperCommonParam commonParam;
-    FSeek(p + 128); EnemyJumperLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 208); EnemyJumperLevelBand levelBand[5]<optimize=false>;
-    FSeek(p + 240); CharacterControllerCollision characterControllerCollision;
-    FSeek(p + 288); MovementParam movement;
-    FSeek(p + 304); BattleParam battleParam;
+    FSeek(p + 0);   EnemyJumperCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 128); EnemyJumperLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 208); EnemyJumperLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
+    FSeek(p + 240); CharacterControllerCollision characterControllerCollision<comment="CharacterControllerコリジョン">;
+    FSeek(p + 288); MovementParam movement<comment="移動関連">;
+    FSeek(p + 304); BattleParam battleParam<comment="バトル関連">;
 
     FSeek(p + 352);
 } EnemyJumperConfig;

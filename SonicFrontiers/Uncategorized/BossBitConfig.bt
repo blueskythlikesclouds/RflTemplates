@@ -4,8 +4,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float rangeMin;
-    FSeek(p + 4); float rangeMax;
+    FSeek(p + 0); float rangeMin<comment="攻撃範囲[最小]">;
+    FSeek(p + 4); float rangeMax<comment="攻撃範囲[最大]">;
 
     FSeek(p + 8);
 } LargeBitLaserParameter;
@@ -16,17 +16,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float bulletRadius;
-    FSeek(p + 4);  float bulletMoveLimitDistance;
-    FSeek(p + 8);  float bitHp;
-    FSeek(p + 12); float rotDamageAngleSpeed;
-    FSeek(p + 16); float rotDamageSize;
-    FSeek(p + 20); float hitDamageNotAttackTime;
-    FSeek(p + 24); float blowoffSpeed;
-    FSeek(p + 28); float outOfControlTime;
-    FSeek(p + 32); float keepVelocity;
-    FSeek(p + 36); float muzzleEffectMinTime;
-    FSeek(p + 40); uint8 dropRingNum;
+    FSeek(p + 0);  float bulletRadius<comment="弾コリジョン半径">;
+    FSeek(p + 4);  float bulletMoveLimitDistance<comment="移動距離限界">;
+    FSeek(p + 8);  float bitHp<comment="耐久値">;
+    FSeek(p + 12); float rotDamageAngleSpeed<comment="ダメージが発生する回転速度の閾値[これ以下はダメージ無し]">;
+    FSeek(p + 16); float rotDamageSize<comment="ダメージ発生範囲調整">;
+    FSeek(p + 20); float hitDamageNotAttackTime<comment="攻撃された際に攻撃を中断する時間">;
+    FSeek(p + 24); float blowoffSpeed<comment="接触時の吹き飛ばし力">;
+    FSeek(p + 28); float outOfControlTime<comment="接触時の操作無効時間">;
+    FSeek(p + 32); float keepVelocity<comment="接触時の速度維持時間">;
+    FSeek(p + 36); float muzzleEffectMinTime<comment="発射エフェクト最短再生間隔">;
+    FSeek(p + 40); uint8 dropRingNum<comment="獲得リング数">;
 
     FSeek(p + 44);
 } SmallBitLaserBulletParameter;
@@ -80,33 +80,33 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool isParry;
-    FSeek(p + 4);  float time;
-    FSeek(p + 8);  float angleSpeed;
-    FSeek(p + 12); BulletType bulletType;
-    FSeek(p + 13); RotType rotType;
-    FSeek(p + 16); float rotAngle;
-    FSeek(p + 20); float phaseRotTime;
-    FSeek(p + 24); uint32 shootNum;
-    FSeek(p + 28); float shootSpeed;
-    FSeek(p + 32); float addShootSpeed;
-    FSeek(p + 36); float shootAccel;
-    FSeek(p + 40); float shootAccelMax;
-    FSeek(p + 44); float shootAccelDelay;
-    FSeek(p + 48); uint8 wayNum;
-    FSeek(p + 52); float wayAngle;
-    FSeek(p + 56); float shootTime;
-    FSeek(p + 60); float phaseShootTime;
-    FSeek(p + 64); uint32 periodShootCool;
-    FSeek(p + 68); float periodShootCoolTime;
-    FSeek(p + 72); float homingAccuracy;
-    FSeek(p + 76); float homingDelay;
-    FSeek(p + 80); float homingLimitAngle;
-    FSeek(p + 84); bool isHomingLowFly;
-    FSeek(p + 85); CameraId overlookingId;
-    FSeek(p + 88); float waveRotationSpeed;
-    FSeek(p + 92); float flyMoveSpeed;
-    FSeek(p + 96); FormationId formationId;
+    FSeek(p + 0);  bool isParry<comment="パリィの有無">;
+    FSeek(p + 4);  float time<comment="攻撃時間[1巡単位]">;
+    FSeek(p + 8);  float angleSpeed<comment="回転速度">;
+    FSeek(p + 12); BulletType bulletType<comment="弾のタイプ">;
+    FSeek(p + 13); RotType rotType<comment="動きのタイプ">;
+    FSeek(p + 16); float rotAngle<comment="往復角度">;
+    FSeek(p + 20); float phaseRotTime<comment="回転時間位相">;
+    FSeek(p + 24); uint32 shootNum<comment="射出数 弾">;
+    FSeek(p + 28); float shootSpeed<comment="射出速度 弾">;
+    FSeek(p + 32); float addShootSpeed<comment="加算射出速度 弾[2発目以降]">;
+    FSeek(p + 36); float shootAccel<comment="加速値[0で速度変化無し、負の値で減速]">;
+    FSeek(p + 40); float shootAccelMax<comment="加減速最大値">;
+    FSeek(p + 44); float shootAccelDelay<comment="加減速遅延時間">;
+    FSeek(p + 48); uint8 wayNum<comment="WAY数">;
+    FSeek(p + 52); float wayAngle<comment="WAY 角度幅">;
+    FSeek(p + 56); float shootTime<comment="発射間隔">;
+    FSeek(p + 60); float phaseShootTime<comment="発射間隔時間位相">;
+    FSeek(p + 64); uint32 periodShootCool<comment="周期発射間隔設定[0で無効]">;
+    FSeek(p + 68); float periodShootCoolTime<comment="周期発射間隔">;
+    FSeek(p + 72); float homingAccuracy<comment="ホーミング精度[0は無誘導]">;
+    FSeek(p + 76); float homingDelay<comment="ホーミング開始遅延">;
+    FSeek(p + 80); float homingLimitAngle<comment="ホーミング可能角度限界[0.0 ～ 180.0f]">;
+    FSeek(p + 84); bool isHomingLowFly<comment="低空飛行型ホーミング[追尾レーザー設定時のみ]">;
+    FSeek(p + 85); CameraId overlookingId<comment="俯瞰カメラの種類">;
+    FSeek(p + 88); float waveRotationSpeed<comment="Wave全体の回転速度[負の値で逆回転]">;
+    FSeek(p + 92); float flyMoveSpeed<comment="浮遊時のボス本体移動速度[負の値で逆]">;
+    FSeek(p + 96); FormationId formationId<comment="配置形状">;
 
     FSeek(p + 100);
 } SmallBitAttackPatternParameter;
@@ -115,8 +115,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring text;
-    FSeek(p + 16); SmallBitAttackPatternParameter param;
+    FSeek(p + 0);  cstring text<comment="テキスト[メモ用]">;
+    FSeek(p + 16); SmallBitAttackPatternParameter param<comment="弾パターンパラメータ">;
 
     FSeek(p + 120);
 } SmallBitSetPatternParameter;
@@ -125,10 +125,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float distance;
-    FSeek(p + 4);  float height;
-    FSeek(p + 8);  float radius;
-    FSeek(p + 12); float angleMax;
+    FSeek(p + 0);  float distance<comment="距離[正面方向]">;
+    FSeek(p + 4);  float height<comment="高さ">;
+    FSeek(p + 8);  float radius<comment="半径">;
+    FSeek(p + 12); float angleMax<comment="展開角度">;
 
     FSeek(p + 16);
 } SmallBitFormationFanShaped;
@@ -137,10 +137,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float changeTime;
-    FSeek(p + 4);  float changeDelay;
-    FSeek(p + 8);  float changeOffsetHeight;
-    FSeek(p + 12); SmallBitFormationFanShaped fanShaped;
+    FSeek(p + 0);  float changeTime<comment="補間時間[配置変更時]">;
+    FSeek(p + 4);  float changeDelay<comment="個々の補間開始遅延時間">;
+    FSeek(p + 8);  float changeOffsetHeight<comment="切り替え時の高さ調整">;
+    FSeek(p + 12); SmallBitFormationFanShaped fanShaped<comment="扇状配置設定">;
 
     FSeek(p + 28);
 } SmallBitFormationParameter;
@@ -149,10 +149,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    LargeBitLaserParameter largeBitLaserParam;
-    FSeek(p + 8);    SmallBitLaserBulletParameter smallBitLaserParam;
-    FSeek(p + 56);   SmallBitSetPatternParameter smallBitPatternDatas[64]<optimize=false>;
-    FSeek(p + 7736); SmallBitFormationParameter smallBitFormation;
+    FSeek(p + 0);    LargeBitLaserParameter largeBitLaserParam<comment="大型子機パラメータ">;
+    FSeek(p + 8);    SmallBitLaserBulletParameter smallBitLaserParam<comment="小型子機パラメータ">;
+    FSeek(p + 56);   SmallBitSetPatternParameter smallBitPatternDatas[64]<comment="小型子機発射弾パターンパラメータ郡",optimize=false>;
+    FSeek(p + 7736); SmallBitFormationParameter smallBitFormation<comment="小型子機配置形状パラメータ">;
 
     FSeek(p + 7768);
 } BossBitConfig;

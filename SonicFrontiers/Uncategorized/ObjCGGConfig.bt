@@ -18,16 +18,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float yOffset;
-    FSeek(p + 4);  float cameraElevation;
-    FSeek(p + 8);  float cameraDistance;
-    FSeek(p + 12); float cameraFovy;
-    FSeek(p + 16); float radius;
-    FSeek(p + 20); float cameraLookAtPointOffsetY;
-    FSeek(p + 24); float cameraDegreeForClockwiseMovement;
-    FSeek(p + 28); float cameraDegreeForCounterClockwiseMovement;
-    FSeek(p + 32); float cameraMaxChangeableDegreeByStickInput;
-    FSeek(p + 36); float cameraMaxDegreeChangedByStickInputPerSec;
+    FSeek(p + 0);  float yOffset<comment="レールYオフセット">;
+    FSeek(p + 4);  float cameraElevation<comment="カメラ仰角">;
+    FSeek(p + 8);  float cameraDistance<comment="カメラ注視点からの距離">;
+    FSeek(p + 12); float cameraFovy<comment="グラインド時カメラ画角">;
+    FSeek(p + 16); float radius<comment="真ん中のレール半径">;
+    FSeek(p + 20); float cameraLookAtPointOffsetY<comment="グラインド時カメラ注視点Yオフセット">;
+    FSeek(p + 24); float cameraDegreeForClockwiseMovement<comment="グラインド時カメラ回転角度（時計回りに移動時）">;
+    FSeek(p + 28); float cameraDegreeForCounterClockwiseMovement<comment="グラインド時カメラ回転角度（反時計回りに移動時）">;
+    FSeek(p + 32); float cameraMaxChangeableDegreeByStickInput<comment="スティック入力による変更可能カメラ角度">;
+    FSeek(p + 36); float cameraMaxDegreeChangedByStickInputPerSec<comment="スティック入力で変わる最大の毎秒角度">;
 
     FSeek(p + 40);
 } RailCameraParam;
@@ -36,13 +36,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 16); vector3 offset;
-    FSeek(p + 32); color8 colorActive;
-    FSeek(p + 36); color8 colorDeactive;
-    FSeek(p + 40); float timerHeightOffset;
-    FSeek(p + 44); RailCameraParam twoRailCamera;
-    FSeek(p + 84); RailCameraParam threeRailCamera;
+    FSeek(p + 0);  float radius<comment="半径">;
+    FSeek(p + 16); vector3 offset<comment="オフセット">;
+    FSeek(p + 32); color8 colorActive<comment="有効時の色">;
+    FSeek(p + 36); color8 colorDeactive<comment="無効時の色">;
+    FSeek(p + 40); float timerHeightOffset<comment="タイマーの高さ">;
+    FSeek(p + 44); RailCameraParam twoRailCamera<comment="レール攻撃時カメラ(レール2本)">;
+    FSeek(p + 84); RailCameraParam threeRailCamera<comment="レール攻撃時カメラ(レール3本)">;
 
     FSeek(p + 128);
 } ObjCGGRootConfig;
@@ -51,17 +51,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float radius;
-    FSeek(p + 4);  color8 color;
-    FSeek(p + 8);  float speed;
-    FSeek(p + 12); float waitFollowTime;
-    FSeek(p + 16); float followTime;
-    FSeek(p + 20); float waitKillTime;
-    FSeek(p + 24); float radiusBulletCircle;
-    FSeek(p + 28); float followLimitAngleHorizontal;
-    FSeek(p + 32); float followLimitAngleVertical;
-    FSeek(p + 36); float rotateDeceleration;
-    FSeek(p + 40); float muzzuleEffectLoopTime;
+    FSeek(p + 0);  float radius<comment="半径">;
+    FSeek(p + 4);  color8 color<comment="色">;
+    FSeek(p + 8);  float speed<comment="速度">;
+    FSeek(p + 12); float waitFollowTime<comment="追跡開始までの待ち時間">;
+    FSeek(p + 16); float followTime<comment="追跡時間">;
+    FSeek(p + 20); float waitKillTime<comment="追跡終了から消失までの時間">;
+    FSeek(p + 24); float radiusBulletCircle<comment="円配置時の半径">;
+    FSeek(p + 28); float followLimitAngleHorizontal<comment="追従角度制限(横)">;
+    FSeek(p + 32); float followLimitAngleVertical<comment="追従角度制限(縦)">;
+    FSeek(p + 36); float rotateDeceleration<comment="回転減速度">;
+    FSeek(p + 40); float muzzuleEffectLoopTime<comment="Muzzuleエフェクトをループにする再生成時間">;
 
     FSeek(p + 44);
 } ObjCGGBulletNormalConfig;
@@ -70,9 +70,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float radius;
-    FSeek(p + 4); color8 color;
-    FSeek(p + 8); float timeToReachTimer;
+    FSeek(p + 0); float radius<comment="半径">;
+    FSeek(p + 4); color8 color<comment="色">;
+    FSeek(p + 8); float timeToReachTimer<comment="タイマーまで飛んでいく時間">;
 
     FSeek(p + 12);
 } ObjCGGResetBindConfig;
@@ -81,9 +81,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float radius;
-    FSeek(p + 4); float heightInterval;
-    FSeek(p + 8); color8 color;
+    FSeek(p + 0); float radius<comment="半径">;
+    FSeek(p + 4); float heightInterval<comment="レーザー同士の間隔">;
+    FSeek(p + 8); color8 color<comment="色">;
 
     FSeek(p + 12);
 } ObjCGGLaserConfig;
@@ -92,8 +92,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float radius;
-    FSeek(p + 4); color8 color;
+    FSeek(p + 0); float radius<comment="半径">;
+    FSeek(p + 4); color8 color<comment="色">;
 
     FSeek(p + 8);
 } ObjCGGAttachmentConfig;
@@ -102,11 +102,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   ObjCGGRootConfig root;
-    FSeek(p + 128); ObjCGGBulletNormalConfig bulletNormal;
-    FSeek(p + 172); ObjCGGResetBindConfig resetBind;
-    FSeek(p + 184); ObjCGGLaserConfig laser;
-    FSeek(p + 196); ObjCGGAttachmentConfig attachment;
+    FSeek(p + 0);   ObjCGGRootConfig root<comment="Root設定">;
+    FSeek(p + 128); ObjCGGBulletNormalConfig bulletNormal<comment="通常弾設定">;
+    FSeek(p + 172); ObjCGGResetBindConfig resetBind<comment="拘束解除ギミック設定">;
+    FSeek(p + 184); ObjCGGLaserConfig laser<comment="レーザー設定">;
+    FSeek(p + 196); ObjCGGAttachmentConfig attachment<comment="吸着攻撃設定">;
 
     FSeek(p + 208);
 } ObjCGGConfig;

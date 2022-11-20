@@ -20,9 +20,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); vector3 center;
-    FSeek(p + 32); vector3 halfExtents;
+    FSeek(p + 0);  cstring name<comment="元リソース名">;
+    FSeek(p + 16); vector3 center<comment="中心">;
+    FSeek(p + 32); vector3 halfExtents<comment="各辺の半分">;
 
     FSeek(p + 48);
 } BakeBoxParameter;

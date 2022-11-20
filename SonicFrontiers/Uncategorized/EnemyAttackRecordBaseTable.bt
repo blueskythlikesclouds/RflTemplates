@@ -6,7 +6,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 no;
+    FSeek(p + 0); uint8 no<comment="レコード番号">;
 
     FSeek(p + 1);
 } Record;
@@ -116,13 +116,13 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  Record record;
-    FSeek(p + 8);  cstring name;
-    FSeek(p + 24); sint32 damage;
-    FSeek(p + 28); float velocityX;
-    FSeek(p + 32); float velocityY;
-    FSeek(p + 40); cstring hitStopName;
-    FSeek(p + 56); cstring cameraShakeName;
-    FSeek(p + 72); Kind practice;
+    FSeek(p + 8);  cstring name<comment="ダメージ名">;
+    FSeek(p + 24); sint32 damage<comment="ダメージ値">;
+    FSeek(p + 28); float velocityX<comment="水平吹き飛び力">;
+    FSeek(p + 32); float velocityY<comment="垂直吹き飛び力">;
+    FSeek(p + 40); cstring hitStopName<comment="ヒットストップキー名">;
+    FSeek(p + 56); cstring cameraShakeName<comment="カメラシェイクキー名">;
+    FSeek(p + 72); Kind practice<comment="練習空間タイプ">;
 
     FSeek(p + 80);
 } EnemyAttackRecord;
@@ -131,7 +131,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); EnemyAttackRecord data[192]<optimize=false>;
+    FSeek(p + 0); EnemyAttackRecord data[192]<comment="data",optimize=false>;
 
     FSeek(p + 15360);
 } EnemyAttackRecordBaseTable;

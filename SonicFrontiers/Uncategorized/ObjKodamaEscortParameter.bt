@@ -13,36 +13,36 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   sint32 applicableFailedCount;
-    FSeek(p + 4);   float stackingHeight;
-    FSeek(p + 8);   float blowAwayLengthMin;
-    FSeek(p + 12);  float blowAwayLengthMax;
-    FSeek(p + 16);  float blowAwayHeightMin;
-    FSeek(p + 20);  float blowAwayHeightMax;
-    FSeek(p + 24);  float modelScale;
-    FSeek(p + 28);  float modelScaleSticking;
-    FSeek(p + 32);  float capsuleRadius;
-    FSeek(p + 36);  float capsuleHeight;
-    FSeek(p + 48);  vector3 capsuleOffset;
-    FSeek(p + 64);  float searchRadius;
-    FSeek(p + 68);  float rotationAnglePerSec;
-    FSeek(p + 72);  float verticalJumpSpeedMin;
-    FSeek(p + 76);  float verticalJumpSpeedMax;
-    FSeek(p + 80);  float horizontalJumpSpeedMin;
-    FSeek(p + 84);  float horizontalJumpSpeedMax;
-    FSeek(p + 88);  float jumpInterval;
-    FSeek(p + 92);  float contactRadius;
-    FSeek(p + 96);  float collectTime;
-    FSeek(p + 100); float splineVelocityY;
-    FSeek(p + 104); float splineVelocityMultiplier;
-    FSeek(p + 108); float splineJumpTime;
-    FSeek(p + 112); float flockRange;
-    FSeek(p + 116); float spaceHA;
-    FSeek(p + 120); float maxTiltOfEachKodamaBending;
-    FSeek(p + 124); float bendingTimeDuringStop;
-    FSeek(p + 128); float maxTiltOfEachKodamaBendingStop;
-    FSeek(p + 132); float bendingCycleTimeDuringStay;
-    FSeek(p + 136); float maxTiltOfEachKodamaBendingStay;
+    FSeek(p + 0);   sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 4);   float stackingHeight<comment="ソニックくっつきコダマの複数重ね高さ差">;
+    FSeek(p + 8);   float blowAwayLengthMin<comment="最小コダマ吹き飛び距離">;
+    FSeek(p + 12);  float blowAwayLengthMax<comment="最大コダマ吹き飛び距離">;
+    FSeek(p + 16);  float blowAwayHeightMin<comment="最小コダマ吹き飛び高さ">;
+    FSeek(p + 20);  float blowAwayHeightMax<comment="最大コダマ吹き飛び高さ">;
+    FSeek(p + 24);  float modelScale<comment="コダマモデルスケール">;
+    FSeek(p + 28);  float modelScaleSticking<comment="コダマモデルスケール(くっつき時)">;
+    FSeek(p + 32);  float capsuleRadius<comment="カプセルコリジョン半径">;
+    FSeek(p + 36);  float capsuleHeight<comment="カプセルコリジョン高さ">;
+    FSeek(p + 48);  vector3 capsuleOffset<comment="カプセルコリジョンのオフセット">;
+    FSeek(p + 64);  float searchRadius<comment="索敵半径">;
+    FSeek(p + 68);  float rotationAnglePerSec<comment="コダマ回転角度/秒">;
+    FSeek(p + 72);  float verticalJumpSpeedMin<comment="最小コダマジャンプ速度(垂直方向)">;
+    FSeek(p + 76);  float verticalJumpSpeedMax<comment="最大コダマジャンプ速度(垂直方向">;
+    FSeek(p + 80);  float horizontalJumpSpeedMin<comment="最小コダマジャンプ速度(水平方向)">;
+    FSeek(p + 84);  float horizontalJumpSpeedMax<comment="最大コダマジャンプ速度(水平方向)">;
+    FSeek(p + 88);  float jumpInterval<comment="コダマジャンプ間隔">;
+    FSeek(p + 92);  float contactRadius<comment="ソニックと接触する範囲の半径">;
+    FSeek(p + 96);  float collectTime<comment="ジャンプ開始から回収までの時間">;
+    FSeek(p + 100); float splineVelocityY<comment="回収後コダマジャンプ速度Y">;
+    FSeek(p + 104); float splineVelocityMultiplier<comment="回収後コダマジャンプ速度倍率">;
+    FSeek(p + 108); float splineJumpTime<comment="回収後コダマジャンプ滞空時間">;
+    FSeek(p + 112); float flockRange<comment="群れ判定距離">;
+    FSeek(p + 116); float spaceHA<comment="HA時のコダマ間距離">;
+    FSeek(p + 120); float maxTiltOfEachKodamaBending<comment="移動しなり時の各コダマの最大傾斜(度)">;
+    FSeek(p + 124); float bendingTimeDuringStop<comment="停止直後しなりの時間">;
+    FSeek(p + 128); float maxTiltOfEachKodamaBendingStop<comment="停止直後しなり時の各コダマの最大傾斜(度)">;
+    FSeek(p + 132); float bendingCycleTimeDuringStay<comment="停止左右しなりの周期時間">;
+    FSeek(p + 136); float maxTiltOfEachKodamaBendingStay<comment="停止左右しなり時の各コダマの最大傾斜(度)">;
 
     FSeek(p + 144);
 } ObjKodamaEscortParameterElement;
@@ -51,7 +51,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); ObjKodamaEscortParameterElement element[3]<optimize=false>;
+    FSeek(p + 0); ObjKodamaEscortParameterElement element[3]<comment="コダマ護衛",optimize=false>;
 
     FSeek(p + 432);
 } ObjKodamaEscortParameter;

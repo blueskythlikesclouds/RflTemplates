@@ -11,8 +11,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  vector3 targetOffset;
-    FSeek(p + 16); vector3 eyeOffset;
+    FSeek(p + 0);  vector3 targetOffset<comment="注視点オフセット">;
+    FSeek(p + 16); vector3 eyeOffset<comment="視点オフセット">;
 
     FSeek(p + 32);
 } ViewSpaceOffsetRflParam;

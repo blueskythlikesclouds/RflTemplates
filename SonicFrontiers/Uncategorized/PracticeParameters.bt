@@ -78,10 +78,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  Type action;
-    FSeek(p + 1);  Judge dummy;
-    FSeek(p + 8);  uint64 skipableActions;
-    FSeek(p + 16); cstring label;
+    FSeek(p + 0);  Type action<comment="アクション">;
+    FSeek(p + 1);  Judge dummy<comment="dummy">;
+    FSeek(p + 8);  uint64 skipableActions<comment="スキップ許容アクション">;
+    FSeek(p + 16); cstring label<comment="操作ガイドテキストラベル">;
 
     FSeek(p + 32);
 } PracticeAction;
@@ -92,9 +92,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  uint32 skill;
-    FSeek(p + 8);  uint64 clearedSubject;
-    FSeek(p + 16); uint64 clearedSubject2;
+    FSeek(p + 0);  uint32 skill<comment="必要スキル">;
+    FSeek(p + 8);  uint64 clearedSubject<comment="必須クリア題目番号">;
+    FSeek(p + 16); uint64 clearedSubject2<comment="必須クリア題目番号64番以降">;
 
     FSeek(p + 24);
 } PracticePrerequisite;
@@ -103,11 +103,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   Checker checker;
-    FSeek(p + 8);   PracticeAction actions[6]<optimize=false>;
-    FSeek(p + 200); sint32 count;
-    FSeek(p + 208); PracticePrerequisite prerequisite;
-    FSeek(p + 232); uint8 options;
+    FSeek(p + 0);   Checker checker<comment="チェッカー">;
+    FSeek(p + 8);   PracticeAction actions[6]<comment="アクションリスト",optimize=false>;
+    FSeek(p + 200); sint32 count<comment="カウント値">;
+    FSeek(p + 208); PracticePrerequisite prerequisite<comment="前提条件">;
+    FSeek(p + 232); uint8 options<comment="オプション">;
 
     FSeek(p + 240);
 } PracticeSubject;
@@ -116,7 +116,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); cstring labels[10]<optimize=false>;
+    FSeek(p + 0); cstring labels[10]<comment="テキストラベル",optimize=false>;
 
     FSeek(p + 160);
 } PracticeText;
@@ -125,13 +125,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float readyTime;
-    FSeek(p + 4);  float countTime;
-    FSeek(p + 8);  float subjectViewTime;
-    FSeek(p + 12); float clearedPostTime;
-    FSeek(p + 16); float fadeoutWaitTime;
-    FSeek(p + 20); float rebuildWaitTime1;
-    FSeek(p + 24); float rebuildWaitTime2;
+    FSeek(p + 0);  float readyTime<comment="Ready時間">;
+    FSeek(p + 4);  float countTime<comment="Play時間">;
+    FSeek(p + 8);  float subjectViewTime<comment="題目説明表示の遅延時間">;
+    FSeek(p + 12); float clearedPostTime<comment="題目クリア判定後の待機時間">;
+    FSeek(p + 16); float fadeoutWaitTime<comment="クリアSEからフェードまでの待機時間">;
+    FSeek(p + 20); float rebuildWaitTime1<comment="題目再構築時の待機時間1">;
+    FSeek(p + 24); float rebuildWaitTime2<comment="題目再構築時の待機時間2">;
 
     FSeek(p + 28);
 } PracticeTime;
@@ -145,8 +145,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint32 skill;
-    FSeek(p + 4); bool tutorialCleared;
+    FSeek(p + 0); uint32 skill<comment="必要スキル">;
+    FSeek(p + 4); bool tutorialCleared<comment="チュートリアルクリア後から表示">;
 
     FSeek(p + 8);
 } PracticeTipsPrerequisite;
@@ -155,7 +155,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); PracticeTipsPrerequisite prerequisite;
+    FSeek(p + 0); PracticeTipsPrerequisite prerequisite<comment="前提条件">;
 
     FSeek(p + 8);
 } PracticeTips;
@@ -164,8 +164,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint8 subjects[20]<optimize=false>;
-    FSeek(p + 20); sint8 tips[100]<optimize=false>;
+    FSeek(p + 0);  sint8 subjects[20]<comment="練習一覧",optimize=false>;
+    FSeek(p + 20); sint8 tips[100]<comment="Tips一覧",optimize=false>;
 
     FSeek(p + 120);
 } PracticeSet;
@@ -174,13 +174,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     PracticeSubject subjects[100]<optimize=false>;
-    FSeek(p + 24000); PracticeText text;
-    FSeek(p + 24160); PracticeTime time;
-    FSeek(p + 24188); float notifyTime;
-    FSeek(p + 24192); PracticeTips tips[128]<optimize=false>;
-    FSeek(p + 25216); float tipsMinViewTime;
-    FSeek(p + 25220); PracticeSet sets[81]<optimize=false>;
+    FSeek(p + 0);     PracticeSubject subjects[100]<comment="練習題目",optimize=false>;
+    FSeek(p + 24000); PracticeText text<comment="練習特殊テキスト">;
+    FSeek(p + 24160); PracticeTime time<comment="練習時間制御">;
+    FSeek(p + 24188); float notifyTime<comment="練習通知表示時間">;
+    FSeek(p + 24192); PracticeTips tips[128]<comment="Tips",optimize=false>;
+    FSeek(p + 25216); float tipsMinViewTime<comment="Tips最小表示時間">;
+    FSeek(p + 25220); PracticeSet sets[81]<comment="練習構成",optimize=false>;
 
     FSeek(p + 34944);
 } PracticeParameters;

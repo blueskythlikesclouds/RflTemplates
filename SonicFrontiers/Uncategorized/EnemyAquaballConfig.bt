@@ -4,13 +4,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float suckedTime;
-    FSeek(p + 4);  float launchAngle;
-    FSeek(p + 8);  float launchMaxSpeed;
-    FSeek(p + 12); float launchMinSpeed;
-    FSeek(p + 16); float randomRangeMin;
-    FSeek(p + 20); float randomRangeMax;
-    FSeek(p + 24); float lifeTime;
+    FSeek(p + 0);  float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 4);  float launchAngle<comment="噴出角度">;
+    FSeek(p + 8);  float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 12); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 16); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 20); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 24); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
 
     FSeek(p + 28);
 } RingParameter;
@@ -19,15 +19,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotateSpeedMin;
-    FSeek(p + 4);  float rotateSpeedMax;
-    FSeek(p + 8);  float speedMin;
-    FSeek(p + 12); float speedMax;
-    FSeek(p + 16); float moveSpeed;
-    FSeek(p + 20); float bounceHeight;
-    FSeek(p + 24); float bounceInterval;
-    FSeek(p + 28); float movePointUpdateInterval;
-    FSeek(p + 32); float addForceOfHA;
+    FSeek(p + 0);  float rotateSpeedMin<comment="最少旋回速度">;
+    FSeek(p + 4);  float rotateSpeedMax<comment="最大旋回速度">;
+    FSeek(p + 8);  float speedMin<comment="旋回速度が最大になる最少速度">;
+    FSeek(p + 12); float speedMax<comment="旋回速度が最少になる最大速度.">;
+    FSeek(p + 16); float moveSpeed<comment="移動速度">;
+    FSeek(p + 20); float bounceHeight<comment="弾む高さ">;
+    FSeek(p + 24); float bounceInterval<comment="弾む間隔">;
+    FSeek(p + 28); float movePointUpdateInterval<comment="移動地点を更新する時間間隔">;
+    FSeek(p + 32); float addForceOfHA<comment="HAによって押させる力の強さ">;
 
     FSeek(p + 36);
 } EnemyAquaballPatrolConfig;
@@ -43,12 +43,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxSuccessCount;
-    FSeek(p + 4);  vector2 bounceSuccessTiming[3]<optimize=false>;
-    FSeek(p + 28); float captureLimitTime;
-    FSeek(p + 32); float captureLimitHeight;
-    FSeek(p + 36); float failLimitTime;
-    FSeek(p + 40); float failNoticeTime;
+    FSeek(p + 0);  sint32 maxSuccessCount<comment="脱出するまでの連続成功回数">;
+    FSeek(p + 4);  vector2 bounceSuccessTiming[3]<comment="成功のタイミング x:始まり y:終わり",optimize=false>;
+    FSeek(p + 28); float captureLimitTime<comment="酸素ゲージが尽きるまでの時間">;
+    FSeek(p + 32); float captureLimitHeight<comment="閉じ込め時の最大の高さ">;
+    FSeek(p + 36); float failLimitTime<comment="失敗に移行するまでの時間">;
+    FSeek(p + 40); float failNoticeTime<comment="失敗予兆モーション時間">;
 
     FSeek(p + 44);
 } EnemyAquaballActionConfig;
@@ -57,16 +57,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float killWaitTime;
-    FSeek(p + 4);  float colliderRadius;
-    FSeek(p + 8);  float colliderHeight;
-    FSeek(p + 12); float damageColliderRadiusOffset;
-    FSeek(p + 16); float hitPlayerColliderRadiusOffset;
-    FSeek(p + 20); float checkBarrierDistance;
-    FSeek(p + 24); float battleDistance;
-    FSeek(p + 28); RingParameter ringParam;
-    FSeek(p + 56); EnemyAquaballPatrolConfig patrolConfig;
-    FSeek(p + 92); EnemyAquaballActionConfig actionConfig;
+    FSeek(p + 0);  float killWaitTime<comment="Deadモーション終了からKillされるまでの待ち時間">;
+    FSeek(p + 4);  float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 8);  float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 12); float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 16); float hitPlayerColliderRadiusOffset<comment="ソニックを取り込むの半径オフセット">;
+    FSeek(p + 20); float checkBarrierDistance<comment="崖や障害物を検知する距離">;
+    FSeek(p + 24); float battleDistance<comment="戦闘開始距離">;
+    FSeek(p + 28); RingParameter ringParam<comment="ドロップリング">;
+    FSeek(p + 56); EnemyAquaballPatrolConfig patrolConfig<comment="パトロール設定">;
+    FSeek(p + 92); EnemyAquaballActionConfig actionConfig<comment="脱出アクション設定">;
 
     FSeek(p + 136);
 } EnemyAquaballCommonParam;
@@ -75,10 +75,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float attackRate;
-    FSeek(p + 8);  uint16 expItemNum;
-    FSeek(p + 10); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float attackRate<comment="攻撃倍率">;
+    FSeek(p + 8);  uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 10); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 12);
 } EnemyAquaballCommonLevelParam;
@@ -87,8 +87,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); EnemyAquaballCommonLevelParam common;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); EnemyAquaballCommonLevelParam common<comment="共通設定">;
 
     FSeek(p + 16);
 } EnemyAquaballLevelParam;
@@ -97,7 +97,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
+    FSeek(p + 0); sint32 level<comment="レベル">;
 
     FSeek(p + 4);
 } EnemyAquaballLevelBand;
@@ -106,9 +106,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   EnemyAquaballCommonParam commonParam;
-    FSeek(p + 136); EnemyAquaballLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 216); EnemyAquaballLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 0);   EnemyAquaballCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 136); EnemyAquaballLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 216); EnemyAquaballLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 236);
 } EnemyAquaballConfig;

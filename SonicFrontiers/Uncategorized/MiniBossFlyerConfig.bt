@@ -11,12 +11,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scoutDistance;
-    FSeek(p + 4);  float scoutDistanceOutside;
-    FSeek(p + 8);  float zoomDistance;
-    FSeek(p + 16); vector3 zoomOffset;
-    FSeek(p + 32); vector3 zoomAngle;
-    FSeek(p + 48); float zoomFov;
+    FSeek(p + 0);  float scoutDistance<comment="索敵距離[通常時]">;
+    FSeek(p + 4);  float scoutDistanceOutside<comment="索敵距離[カメラ外時]">;
+    FSeek(p + 8);  float zoomDistance<comment="見え切りカメラ距離">;
+    FSeek(p + 16); vector3 zoomOffset<comment="見え切りカメラオフセット">;
+    FSeek(p + 32); vector3 zoomAngle<comment="見え切りカメラアングル">;
+    FSeek(p + 48); float zoomFov<comment="画角">;
 
     FSeek(p + 64);
 } MiniBossCommonConfig;
@@ -27,12 +27,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float interval;
-    FSeek(p + 4);  sint32 recordNumWander;
-    FSeek(p + 8);  sint32 recordNumWatch;
-    FSeek(p + 12); sint32 recordNumBattle;
-    FSeek(p + 16); float width;
-    FSeek(p + 20); float wallHeight;
+    FSeek(p + 0);  float interval<comment="記録間隔(0で毎F)">;
+    FSeek(p + 4);  sint32 recordNumWander<comment="保持個数(徘徊)">;
+    FSeek(p + 8);  sint32 recordNumWatch<comment="保持個数(対峙)">;
+    FSeek(p + 12); sint32 recordNumBattle<comment="保持個数(戦闘)">;
+    FSeek(p + 16); float width<comment="幅">;
+    FSeek(p + 20); float wallHeight<comment="壁の高さ">;
 
     FSeek(p + 24);
 } FlyerTrailParam;
@@ -41,7 +41,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float speed;
+    FSeek(p + 0); float speed<comment="移動速度[m/s]">;
 
     FSeek(p + 4);
 } FlyerWanderParam;
@@ -50,12 +50,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float interval;
-    FSeek(p + 4);  float readyDuration;
-    FSeek(p + 8);  float shotAnimSpeed;
-    FSeek(p + 12); uint32 shotAnimNum;
-    FSeek(p + 16); float speed;
-    FSeek(p + 20); float lifeTime;
+    FSeek(p + 0);  float interval<comment="攻撃間隔[s]">;
+    FSeek(p + 4);  float readyDuration<comment="溜め時間[s]">;
+    FSeek(p + 8);  float shotAnimSpeed<comment="射撃モーション速度">;
+    FSeek(p + 12); uint32 shotAnimNum<comment="射撃モーションループ回数">;
+    FSeek(p + 16); float speed<comment="速度[m/s]">;
+    FSeek(p + 20); float lifeTime<comment="持続時間[s]">;
 
     FSeek(p + 24);
 } FlyerWatchShotParam;
@@ -64,9 +64,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float speed;
-    FSeek(p + 4); float changeWanderTime;
-    FSeek(p + 8); FlyerWatchShotParam shot;
+    FSeek(p + 0); float speed<comment="移動速度[m/s]">;
+    FSeek(p + 4); float changeWanderTime<comment="徘徊に戻る非戦闘時間">;
+    FSeek(p + 8); FlyerWatchShotParam shot<comment="射撃">;
 
     FSeek(p + 32);
 } FlyerWatchParam;
@@ -84,7 +84,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); HorizontalType horz[6]<optimize=false>;
+    FSeek(p + 0); HorizontalType horz[6]<comment="出現位置",optimize=false>;
 
     FSeek(p + 6);
 } FlyerEscapeShotTableData;
@@ -93,17 +93,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   FlyerEscapeShotTableData posTable[16]<optimize=false>;
-    FSeek(p + 96);  float interval;
-    FSeek(p + 100); float waitAfterLoop;
-    FSeek(p + 104); float readyDuration;
-    FSeek(p + 108); float shotAnimSpeed;
-    FSeek(p + 112); uint32 shotAnimNum;
-    FSeek(p + 116); float initSpeed;
-    FSeek(p + 120); float maxSpeed;
-    FSeek(p + 124); float acc;
-    FSeek(p + 128); float lifeTime;
-    FSeek(p + 132); float nearest;
+    FSeek(p + 0);   FlyerEscapeShotTableData posTable[16]<comment="出現位置テーブル",optimize=false>;
+    FSeek(p + 96);  float interval<comment="攻撃間隔[s]">;
+    FSeek(p + 100); float waitAfterLoop<comment="ループ後の待ち時間[s]">;
+    FSeek(p + 104); float readyDuration<comment="溜め時間[s]">;
+    FSeek(p + 108); float shotAnimSpeed<comment="射撃モーション速度">;
+    FSeek(p + 112); uint32 shotAnimNum<comment="射撃モーションループ回数">;
+    FSeek(p + 116); float initSpeed<comment="初速度[m/s]">;
+    FSeek(p + 120); float maxSpeed<comment="最高速度[m/s]">;
+    FSeek(p + 124); float acc<comment="加速度[m/s^2]">;
+    FSeek(p + 128); float lifeTime<comment="持続時間[s]">;
+    FSeek(p + 132); float nearest<comment="距離下限[s]">;
 
     FSeek(p + 136);
 } FlyerEscapeShotParam;
@@ -123,19 +123,19 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float fovy;
-    FSeek(p + 4);  float zRot;
-    FSeek(p + 8);  float distance;
-    FSeek(p + 12); float pathOffset;
-    FSeek(p + 16); bool usePathVerticalComponent;
-    FSeek(p + 17); bool usePathNormal;
-    FSeek(p + 20); float angleSensitivity;
-    FSeek(p + 24); float angleSensitivityBoost;
-    FSeek(p + 28); float azimuthOffsetDeg;
-    FSeek(p + 32); float elevationOffsetDeg;
-    FSeek(p + 36); float gravityOffset;
-    FSeek(p + 48); vector3 playerOffset;
-    FSeek(p + 64); PlayerOffsetType playerOffsetType;
+    FSeek(p + 0);  float fovy<comment="画角">;
+    FSeek(p + 4);  float zRot<comment="Roll">;
+    FSeek(p + 8);  float distance<comment="距離">;
+    FSeek(p + 12); float pathOffset<comment="パス上のOffset">;
+    FSeek(p + 16); bool usePathVerticalComponent<comment="パス方向の垂直成分を使用する">;
+    FSeek(p + 17); bool usePathNormal<comment="カメラY-Upの傾き">;
+    FSeek(p + 20); float angleSensitivity<comment="視点方向の感度">;
+    FSeek(p + 24); float angleSensitivityBoost<comment="視点方向の感度(ブースト中)">;
+    FSeek(p + 28); float azimuthOffsetDeg<comment="方位角Offset">;
+    FSeek(p + 32); float elevationOffsetDeg<comment="仰角Offset">;
+    FSeek(p + 36); float gravityOffset<comment="重力方向のOffset">;
+    FSeek(p + 48); vector3 playerOffset<comment="プレイヤー座標Offset">;
+    FSeek(p + 64); PlayerOffsetType playerOffsetType<comment="プレイヤー座標Offsetのタイプ">;
 
     FSeek(p + 80);
 } FlyerEscapeCameraParam;
@@ -144,10 +144,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool enable;
-    FSeek(p + 4);  float speed;
-    FSeek(p + 8);  float boostSpeed;
-    FSeek(p + 12); float boostSpeedMax;
+    FSeek(p + 0);  bool enable<comment="有効">;
+    FSeek(p + 4);  float speed<comment="通常時の走る速さ">;
+    FSeek(p + 8);  float boostSpeed<comment="ブースト時の走る速さ">;
+    FSeek(p + 12); float boostSpeedMax<comment="パワーブースト時の走る速さ">;
 
     FSeek(p + 16);
 } FlyerEscapeQuickStepParam;
@@ -156,15 +156,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float startSpeed;
-    FSeek(p + 4);   float decrease;
-    FSeek(p + 8);   float minSpeed;
-    FSeek(p + 12);  float targetDisableTime;
-    FSeek(p + 16);  float resetByFallTime;
-    FSeek(p + 20);  float resetByDistance;
-    FSeek(p + 24);  FlyerEscapeShotParam shot;
-    FSeek(p + 160); FlyerEscapeCameraParam camera;
-    FSeek(p + 240); FlyerEscapeQuickStepParam quickStep;
+    FSeek(p + 0);   float startSpeed<comment="初速度[m/s]">;
+    FSeek(p + 4);   float decrease<comment="減速度[m/s^2]">;
+    FSeek(p + 8);   float minSpeed<comment="最低速度[m/s]">;
+    FSeek(p + 12);  float targetDisableTime<comment="ターゲット不可時間">;
+    FSeek(p + 16);  float resetByFallTime<comment="戦闘終了になる落下時間">;
+    FSeek(p + 20);  float resetByDistance<comment="戦闘終了になる距離">;
+    FSeek(p + 24);  FlyerEscapeShotParam shot<comment="射撃">;
+    FSeek(p + 160); FlyerEscapeCameraParam camera<comment="カメラ">;
+    FSeek(p + 240); FlyerEscapeQuickStepParam quickStep<comment="オートラン">;
 
     FSeek(p + 256);
 } FlyerEscapeParam;
@@ -173,11 +173,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float duration;
-    FSeek(p + 16); vector3 posOffset;
-    FSeek(p + 32); float fovy;
-    FSeek(p + 36); float interpolateTimePush;
-    FSeek(p + 40); float interpolateTimePop;
+    FSeek(p + 0);  float duration<comment="持続時間[s]">;
+    FSeek(p + 16); vector3 posOffset<comment="位置(注視点からの相対)">;
+    FSeek(p + 32); float fovy<comment="画角[°]">;
+    FSeek(p + 36); float interpolateTimePush<comment="開始補間時間[s]">;
+    FSeek(p + 40); float interpolateTimePop<comment="終了補間時間[s]">;
 
     FSeek(p + 48);
 } FlyerNearStartCamParam;
@@ -186,9 +186,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float durationMin;
-    FSeek(p + 4); float durationMax;
-    FSeek(p + 8); uint32 selectRatio[2]<optimize=false>;
+    FSeek(p + 0); float durationMin<comment="待機時間最小">;
+    FSeek(p + 4); float durationMax<comment="待機時間最大">;
+    FSeek(p + 8); uint32 selectRatio[2]<comment="行動選択確率[%](攻撃,ガード)",optimize=false>;
 
     FSeek(p + 16);
 } FlyerIdlingNearParam;
@@ -197,7 +197,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float duration;
+    FSeek(p + 0); float duration<comment="duration">;
 
     FSeek(p + 4);
 } FlyerGuardParam;
@@ -206,13 +206,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float lockonDistance;
-    FSeek(p + 4);  float unlockDistance;
-    FSeek(p + 8);  float distance;
-    FSeek(p + 12); float minElevation;
-    FSeek(p + 16); float maxElevation;
-    FSeek(p + 20); float panningSuspensionK;
-    FSeek(p + 24); float interiorPanningSuspensionK;
+    FSeek(p + 0);  float lockonDistance<comment="ロックオン成立距離">;
+    FSeek(p + 4);  float unlockDistance<comment="ロックオン解除距離">;
+    FSeek(p + 8);  float distance<comment="カメラ距離">;
+    FSeek(p + 12); float minElevation<comment="仰角最小値">;
+    FSeek(p + 16); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 20); float panningSuspensionK<comment="パンニング遅延のバネ定数(負値でデフォルト値)">;
+    FSeek(p + 24); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数(負値でデフォルト値)">;
 
     FSeek(p + 28);
 } FlyerAutoLockonParam;
@@ -221,14 +221,14 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float outStrength;
-    FSeek(p + 4);  float inStrength;
-    FSeek(p + 8);  float outElev;
-    FSeek(p + 12); float inElev;
-    FSeek(p + 16); float speedMin;
-    FSeek(p + 20); float speedMax;
-    FSeek(p + 24); float speedMinLength;
-    FSeek(p + 28); float speedMaxLength;
+    FSeek(p + 0);  float outStrength<comment="射出強度">;
+    FSeek(p + 4);  float inStrength<comment="終了強度">;
+    FSeek(p + 8);  float outElev<comment="射出時発射角(°)">;
+    FSeek(p + 12); float inElev<comment="終了時入射角(°)">;
+    FSeek(p + 16); float speedMin<comment="移動速度最小">;
+    FSeek(p + 20); float speedMax<comment="移動速度最大">;
+    FSeek(p + 24); float speedMinLength<comment="移動速度最小パス長">;
+    FSeek(p + 28); float speedMaxLength<comment="移動速度最大パス長">;
 
     FSeek(p + 32);
 } FlyerNearEndLaunchParam;
@@ -237,16 +237,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float duration;
-    FSeek(p + 4);   float startHABounceUp;
-    FSeek(p + 8);   float startHABounceBack;
-    FSeek(p + 12);  float preliminaryMotionSpeed;
-    FSeek(p + 16);  float resetByDistance;
-    FSeek(p + 32);  FlyerNearStartCamParam startCam;
-    FSeek(p + 80);  FlyerIdlingNearParam idling;
-    FSeek(p + 96);  FlyerGuardParam guard;
-    FSeek(p + 100); FlyerAutoLockonParam lockon;
-    FSeek(p + 128); FlyerNearEndLaunchParam launch;
+    FSeek(p + 0);   float duration<comment="近接状態維持時間">;
+    FSeek(p + 4);   float startHABounceUp<comment="近接開始時のHA反動(上方向)">;
+    FSeek(p + 8);   float startHABounceBack<comment="近接開始時のHA反動(後方向)">;
+    FSeek(p + 12);  float preliminaryMotionSpeed<comment="近接攻撃予備動作モーション速度">;
+    FSeek(p + 16);  float resetByDistance<comment="戦闘終了になる距離">;
+    FSeek(p + 32);  FlyerNearStartCamParam startCam<comment="近接開始時のカメラ演出">;
+    FSeek(p + 80);  FlyerIdlingNearParam idling<comment="待機">;
+    FSeek(p + 96);  FlyerGuardParam guard<comment="ガード">;
+    FSeek(p + 100); FlyerAutoLockonParam lockon<comment="自動ロックオンカメラ">;
+    FSeek(p + 128); FlyerNearEndLaunchParam launch<comment="自動飛び移り">;
 
     FSeek(p + 160);
 } FlyerNearParam;
@@ -255,13 +255,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossCommonConfig commonConfig;
-    FSeek(p + 64);  FlyerTrailParam trail;
-    FSeek(p + 88);  FlyerWanderParam wander;
-    FSeek(p + 92);  FlyerWatchParam watch;
-    FSeek(p + 128); FlyerEscapeParam escape;
-    FSeek(p + 384); FlyerNearParam nearRange;
-    FSeek(p + 544); float stunTime;
+    FSeek(p + 0);   MiniBossCommonConfig commonConfig<comment="基本設定">;
+    FSeek(p + 64);  FlyerTrailParam trail<comment="軌跡">;
+    FSeek(p + 88);  FlyerWanderParam wander<comment="徘徊状態">;
+    FSeek(p + 92);  FlyerWatchParam watch<comment="対峙状態">;
+    FSeek(p + 128); FlyerEscapeParam escape<comment="逃亡状態">;
+    FSeek(p + 384); FlyerNearParam nearRange<comment="近接状態">;
+    FSeek(p + 544); float stunTime<comment="スタン時間">;
 
     FSeek(p + 560);
 } MiniBossFlyerCommonParam;
@@ -270,16 +270,16 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 maxHealthPoint;
-    FSeek(p + 4);  float maxStunPoint[3]<optimize=false>;
-    FSeek(p + 16); float stunDecreaseStartTime;
-    FSeek(p + 20); float stunDecreaseSpeed;
-    FSeek(p + 24); float maxStaggerPoint[3]<optimize=false>;
-    FSeek(p + 36); float staggerDecreaseStartTime;
-    FSeek(p + 40); float staggerDecreaseSpeed;
-    FSeek(p + 44); float attackRate;
-    FSeek(p + 48); uint16 expItemNum;
-    FSeek(p + 50); uint16 exp;
+    FSeek(p + 0);  sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 4);  float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 16); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 20); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 24); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 36); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 40); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 44); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 48); uint16 expItemNum<comment="経験値アイテムドロップ数">;
+    FSeek(p + 50); uint16 exp<comment="合計経験値">;
 
     FSeek(p + 52);
 } MiniBossLevelCommonConfig;
@@ -288,8 +288,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); MiniBossLevelCommonConfig commonConfig<comment="基本設定">;
 
     FSeek(p + 56);
 } MiniBossFlyerLevelParam;
@@ -298,8 +298,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 id;
-    FSeek(p + 4); float interval;
+    FSeek(p + 0); sint32 id<comment="出現位置テーブル番号">;
+    FSeek(p + 4); float interval<comment="終了後待機時間">;
 
     FSeek(p + 8);
 } FlayerEscapeShotSequenceTable;
@@ -308,8 +308,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool isUse;
-    FSeek(p + 4); FlayerEscapeShotSequenceTable table[8]<optimize=false>;
+    FSeek(p + 0); bool isUse<comment="使用する">;
+    FSeek(p + 4); FlayerEscapeShotSequenceTable table[8]<comment="table",optimize=false>;
 
     FSeek(p + 68);
 } FlayerEscapeShotSequenceTableData;
@@ -318,8 +318,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); sint32 level;
-    FSeek(p + 4); FlayerEscapeShotSequenceTableData sequence[16]<optimize=false>;
+    FSeek(p + 0); sint32 level<comment="レベル">;
+    FSeek(p + 4); FlayerEscapeShotSequenceTableData sequence[16]<comment="攻撃シーケンス",optimize=false>;
 
     FSeek(p + 1092);
 } MiniBossFlyerLevelBand;
@@ -328,9 +328,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   MiniBossFlyerCommonParam commonParam;
-    FSeek(p + 560); MiniBossFlyerLevelParam levelParams[5]<optimize=false>;
-    FSeek(p + 840); MiniBossFlyerLevelBand levelBand[5]<optimize=false>;
+    FSeek(p + 0);   MiniBossFlyerCommonParam commonParam<comment="共通パラメータ">;
+    FSeek(p + 560); MiniBossFlyerLevelParam levelParams[5]<comment="レベル線形補間パラメータ",optimize=false>;
+    FSeek(p + 840); MiniBossFlyerLevelBand levelBand[5]<comment="レベル帯別パラメータ",optimize=false>;
 
     FSeek(p + 6304);
 } MiniBossFlyerConfig;

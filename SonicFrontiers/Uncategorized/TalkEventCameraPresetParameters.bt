@@ -19,17 +19,17 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  bool enable;
-    FSeek(p + 1);  GazePositionType primaryTarget;
-    FSeek(p + 2);  GazePositionType secondaryTarget;
-    FSeek(p + 4);  float targetRatio;
-    FSeek(p + 8);  float rotateDegreePitch;
-    FSeek(p + 12); float rotateDegreeYaw;
-    FSeek(p + 16); float cameraOffsetRatio;
-    FSeek(p + 20); float fovy;
-    FSeek(p + 24); float targetOffsetX;
-    FSeek(p + 28); float targetOffsetY;
-    FSeek(p + 32); float targetOffsetZ;
+    FSeek(p + 0);  bool enable<comment="このプリセットを有効にする">;
+    FSeek(p + 1);  GazePositionType primaryTarget<comment="第1目標の注視基準位置">;
+    FSeek(p + 2);  GazePositionType secondaryTarget<comment="第2目標の注視基準位置">;
+    FSeek(p + 4);  float targetRatio<comment="注視点の位置比率">;
+    FSeek(p + 8);  float rotateDegreePitch<comment="ピッチ方向の初期回転角度">;
+    FSeek(p + 12); float rotateDegreeYaw<comment="ヨー方向の初期回転角度">;
+    FSeek(p + 16); float cameraOffsetRatio<comment="注視目標からカメラまでの距離">;
+    FSeek(p + 20); float fovy<comment="画角">;
+    FSeek(p + 24); float targetOffsetX<comment="注視点のオフセットX">;
+    FSeek(p + 28); float targetOffsetY<comment="注視点のオフセットY">;
+    FSeek(p + 32); float targetOffsetZ<comment="注視点のオフセットZ">;
 
     FSeek(p + 36);
 } TalkEventCameraPresetParameter;
@@ -38,7 +38,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); TalkEventCameraPresetParameter param[16]<optimize=false>;
+    FSeek(p + 0); TalkEventCameraPresetParameter param[16]<comment="カメラプリセットテーブル",optimize=false>;
 
     FSeek(p + 576);
 } TalkEventCameraPresetParameters;

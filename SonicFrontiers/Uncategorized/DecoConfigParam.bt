@@ -13,10 +13,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  color8 clientColor;
-    FSeek(p + 4);  uint8 windowAlpha;
-    FSeek(p + 8);  color8 startGradationGuideColor;
-    FSeek(p + 12); color8 endGradationGuideColor;
+    FSeek(p + 0);  color8 clientColor<comment="クライアント背景色">;
+    FSeek(p + 4);  uint8 windowAlpha<comment="ウィンドウ透過率">;
+    FSeek(p + 8);  color8 startGradationGuideColor<comment="グラデーションガイド始点色">;
+    FSeek(p + 12); color8 endGradationGuideColor<comment="グラデーションガイド終点色">;
 
     FSeek(p + 16);
 } DecoConfigParam;

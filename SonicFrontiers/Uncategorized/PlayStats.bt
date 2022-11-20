@@ -15,9 +15,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring stagecode;
-    FSeek(p + 16); sint32 highTime;
-    FSeek(p + 20); sint32 highScore;
+    FSeek(p + 0);  cstring stagecode<comment="ステージコード">;
+    FSeek(p + 16); sint32 highTime<comment="最高タイム">;
+    FSeek(p + 20); sint32 highScore<comment="ハイスコア">;
 
     FSeek(p + 24);
 } PlayStatsSummary;
@@ -45,11 +45,11 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring stagecode;
-    FSeek(p + 16); cstring play;
-    FSeek(p + 32); cstring option;
-    FSeek(p + 48); vector3 position;
-    FSeek(p + 64); float time;
+    FSeek(p + 0);  cstring stagecode<comment="ステージコード">;
+    FSeek(p + 16); cstring play<comment="プレイ">;
+    FSeek(p + 32); cstring option<comment="オプション">;
+    FSeek(p + 48); vector3 position<comment="座標">;
+    FSeek(p + 64); float time<comment="時間">;
 
     FSeek(p + 80);
 } PlayLog;
@@ -70,12 +70,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  sint32 enemies;
-    FSeek(p + 4);  sint32 damages;
-    FSeek(p + 8);  sint32 misses;
-    FSeek(p + 12); sint32 retry;
-    FSeek(p + 16); sint32 restart;
-    FSeek(p + 24); array_PlayLog logs;
+    FSeek(p + 0);  sint32 enemies<comment="エネミー撃破数">;
+    FSeek(p + 4);  sint32 damages<comment="ダメージ回数">;
+    FSeek(p + 8);  sint32 misses<comment="ミス回数">;
+    FSeek(p + 12); sint32 retry<comment="リトライ回数">;
+    FSeek(p + 16); sint32 restart<comment="リスタート回数">;
+    FSeek(p + 24); array_PlayLog logs<comment="プレイログ">;
 
     FSeek(p + 56);
 } PlayStatsData;
@@ -84,10 +84,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring username;
-    FSeek(p + 16); cstring time;
-    FSeek(p + 32); array_PlayStatsSummary summaries;
-    FSeek(p + 64); PlayStatsData playLog;
+    FSeek(p + 0);  cstring username<comment="プレイユーザー">;
+    FSeek(p + 16); cstring time<comment="プレイ開始時刻">;
+    FSeek(p + 32); array_PlayStatsSummary summaries<comment="サマリ">;
+    FSeek(p + 64); PlayStatsData playLog<comment="ログ">;
 
     FSeek(p + 120);
 } PlayStats;

@@ -4,9 +4,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float radius;
-    FSeek(p + 4); float friction;
-    FSeek(p + 8); float restitution;
+    FSeek(p + 0); float radius<comment="半径">;
+    FSeek(p + 4); float friction<comment="摩擦係数">;
+    FSeek(p + 8); float restitution<comment="反発係数">;
 
     FSeek(p + 12);
 } CollisionConfig;
@@ -15,10 +15,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float CorrectionsMaxDistance;
-    FSeek(p + 4);  float CorrectionsMinDistance;
-    FSeek(p + 8);  float CorrectionsAngle;
-    FSeek(p + 12); float CorrectionsRatio;
+    FSeek(p + 0);  float CorrectionsMaxDistance<comment="補正有効最大距離">;
+    FSeek(p + 4);  float CorrectionsMinDistance<comment="補正有効最短距離">;
+    FSeek(p + 8);  float CorrectionsAngle<comment="補正有効角度">;
+    FSeek(p + 12); float CorrectionsRatio<comment="補正率(0-1)">;
 
     FSeek(p + 16);
 } CorrectionsConfig;
@@ -27,15 +27,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float mass;
-    FSeek(p + 4);  float linearDamping;
-    FSeek(p + 8);  float angularDamping;
-    FSeek(p + 12); float maxLinearVelocity;
-    FSeek(p + 16); float maxLinearAcceleration;
-    FSeek(p + 20); float linearVelocityTimes;
-    FSeek(p + 24); float gravity;
-    FSeek(p + 28); CollisionConfig collisionConfig;
-    FSeek(p + 40); CorrectionsConfig correctionsConfig;
+    FSeek(p + 0);  float mass<comment="重量">;
+    FSeek(p + 4);  float linearDamping<comment="速度減衰率">;
+    FSeek(p + 8);  float angularDamping<comment="角速度減衰率">;
+    FSeek(p + 12); float maxLinearVelocity<comment="最大速度">;
+    FSeek(p + 16); float maxLinearAcceleration<comment="最大加速度">;
+    FSeek(p + 20); float linearVelocityTimes<comment="速度倍率">;
+    FSeek(p + 24); float gravity<comment="重力">;
+    FSeek(p + 28); CollisionConfig collisionConfig<comment="コリジョン">;
+    FSeek(p + 40); CorrectionsConfig correctionsConfig<comment="補正">;
 
     FSeek(p + 56);
 } ObjTimeBallConfig;

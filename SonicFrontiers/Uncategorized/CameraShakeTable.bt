@@ -27,15 +27,15 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring name;
-    FSeek(p + 16); ShakeType type;
-    FSeek(p + 20); float zRot;
-    FSeek(p + 24); float duration;
-    FSeek(p + 28); float frequency;
-    FSeek(p + 32); float amplitude;
-    FSeek(p + 36); float timeAttenuationRate;
-    FSeek(p + 40); bool enableDistanceAttenuation;
-    FSeek(p + 44); float attenuationDistance;
+    FSeek(p + 0);  cstring name<comment="名前">;
+    FSeek(p + 16); ShakeType type<comment="振動タイプ">;
+    FSeek(p + 20); float zRot<comment="[zRot方向]zRot">;
+    FSeek(p + 24); float duration<comment="振動時間">;
+    FSeek(p + 28); float frequency<comment="周波数">;
+    FSeek(p + 32); float amplitude<comment="振幅">;
+    FSeek(p + 36); float timeAttenuationRate<comment="時間減衰率">;
+    FSeek(p + 40); bool enableDistanceAttenuation<comment="距離減衰するか？">;
+    FSeek(p + 44); float attenuationDistance<comment="減衰距離">;
 
     FSeek(p + 48);
 } CameraShakeRecord;
@@ -44,7 +44,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); CameraShakeRecord records[64]<optimize=false>;
+    FSeek(p + 0); CameraShakeRecord records[64]<comment="records",optimize=false>;
 
     FSeek(p + 3072);
 } CameraShakeTable;

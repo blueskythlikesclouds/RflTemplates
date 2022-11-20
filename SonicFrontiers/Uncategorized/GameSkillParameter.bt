@@ -11,9 +11,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 unlockPoint;
-    FSeek(p + 1); uint8 addUnlockPoint;
-    FSeek(p + 2); bool present;
+    FSeek(p + 0); uint8 unlockPoint<comment="スキル解放に必要なポイント">;
+    FSeek(p + 1); uint8 addUnlockPoint<comment="スキルレベルに応じた必要ポイント上昇量">;
+    FSeek(p + 2); bool present<comment="プレゼントスキルか">;
 
     FSeek(p + 3);
 } SkillParam;
@@ -51,9 +51,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool down;
-    FSeek(p + 1); bool left;
-    FSeek(p + 2); bool right;
+    FSeek(p + 0); bool down<comment="↓">;
+    FSeek(p + 1); bool left<comment="←">;
+    FSeek(p + 2); bool right<comment="→">;
 
     FSeek(p + 3);
 } SkillLinkSetting;
@@ -62,9 +62,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool enable;
-    FSeek(p + 1); Value skill;
-    FSeek(p + 2); SkillLinkSetting link;
+    FSeek(p + 0); bool enable<comment="有効">;
+    FSeek(p + 1); Value skill<comment="スキル">;
+    FSeek(p + 2); SkillLinkSetting link<comment="リンク">;
 
     FSeek(p + 5);
 } SkillNodeParam;
@@ -73,8 +73,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   SkillNodeParam nodeParams[30]<optimize=false>;
-    FSeek(p + 150); sint8 startIndex;
+    FSeek(p + 0);   SkillNodeParam nodeParams[30]<comment="ノード",optimize=false>;
+    FSeek(p + 150); sint8 startIndex<comment="開始インデックス">;
 
     FSeek(p + 151);
 } SkillTreeParam;
@@ -83,8 +83,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  SkillParam skillParams[20]<optimize=false>;
-    FSeek(p + 60); SkillTreeParam treeParams;
+    FSeek(p + 0);  SkillParam skillParams[20]<comment="スキルパラメータ",optimize=false>;
+    FSeek(p + 60); SkillTreeParam treeParams<comment="スキルツリー">;
 
     FSeek(p + 211);
 } GameSkillParameter;

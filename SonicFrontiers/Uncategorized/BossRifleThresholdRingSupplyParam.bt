@@ -13,8 +13,8 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float hpRatio;
-    FSeek(p + 4); LaserType type;
+    FSeek(p + 0); float hpRatio<comment="補給モードHP閾値[%]">;
+    FSeek(p + 4); LaserType type<comment="補給中のレーザー攻撃タイプ">;
 
     FSeek(p + 8);
 } BossRifleThresholdRingSupplyParam;

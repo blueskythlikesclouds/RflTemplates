@@ -4,10 +4,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float rotLaserVanishTime;
-    FSeek(p + 4);  float rotLaserOmenTime;
-    FSeek(p + 8);  float bigLaserVanishTime;
-    FSeek(p + 12); float bigLaserOmenTime;
+    FSeek(p + 0);  float rotLaserVanishTime<comment="回転レーザーの消える時間">;
+    FSeek(p + 4);  float rotLaserOmenTime<comment="回転レーザーの予兆時間">;
+    FSeek(p + 8);  float bigLaserVanishTime<comment="極太レーザーの消える時間">;
+    FSeek(p + 12); float bigLaserOmenTime<comment="極太レーザーの予兆時間">;
 
     FSeek(p + 16);
 } EnemyLaserConfig;
