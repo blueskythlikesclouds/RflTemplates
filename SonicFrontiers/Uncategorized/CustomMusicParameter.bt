@@ -1,0 +1,56 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float fadeOutTime<comment="[前]フェードアウト時間">;
+    FSeek(p + 4); float delayTime<comment="[後]再生遅延時間">;
+
+    FSeek(p + 8);
+} CustomMusicTransitInfo;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> MusicType
+{
+    THEME_SONG = 0,
+    OTHER = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float fadeOutTiming<comment="フェードアウトのタイミング[秒]">;
+    FSeek(p + 4); bool lock<comment="アンロック対象">;
+    FSeek(p + 5); MusicType musicType<comment="曲の種類">;
+
+    FSeek(p + 8);
+} CustomMusicInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    CustomMusicTransitInfo transitInfo<comment="楽曲の遷移設定">;
+    FSeek(p + 8);    CustomMusicInfo musicInfos[128]<comment="カスタム楽曲情報",optimize=false>;
+    FSeek(p + 1032); float idlingViewTime<comment="無操作表示を開始するまでの時間">;
+
+    FSeek(p + 1036);
+} CustomMusicParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+CustomMusicParameter customMusicParameter;

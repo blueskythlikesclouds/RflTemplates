@@ -1163,9 +1163,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); PlayerParamDamageRateLevel diffculties[3]<comment="難易度",optimize=false>;
+    FSeek(p + 0); PlayerParamDamageRateLevel diffculties[4]<comment="難易度",optimize=false>;
 
-    FSeek(p + 60);
+    FSeek(p + 80);
 } PlayerParamDamageRate;
 
 typedef struct
@@ -1214,7 +1214,7 @@ typedef struct
     FSeek(p + 29268); PlayerParamBarrierWall barrierWall<comment="結界壁">;
     FSeek(p + 29272); PlayerParamDamageRate damageRate<comment="ダメージ倍率">;
 
-    FSeek(p + 29344);
+    FSeek(p + 29360);
 } CommonPackage;
 
 enum<sint8> SupportedPlane
@@ -2496,7 +2496,7 @@ typedef struct
     FSeek(p + 2728); PlayerParamFly fly<comment="スパソニ飛行">;
     FSeek(p + 2792); PlayerParamLimitedFly limitedfly<comment="スパソニ飛行 範囲制限時">;
 
-    FSeek(p + 2848);
+    FSeek(p + 2944);
 } ModePackage;
 
 typedef struct
@@ -2518,12 +2518,12 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     CommonPackage common<comment="共通">;
-    FSeek(p + 29344); ModePackage forwardView<comment="通常">;
-    FSeek(p + 32192); WaterModePackage water<comment="水中">;
-    FSeek(p + 32576); ModePackage cyberspace<comment="電脳空間/FV">;
-    FSeek(p + 35424); ModePackage cyberspaceSV<comment="電脳空間/SV">;
+    FSeek(p + 29360); ModePackage forwardView<comment="通常">;
+    FSeek(p + 32304); WaterModePackage water<comment="水中">;
+    FSeek(p + 32688); ModePackage cyberspace<comment="電脳空間/FV">;
+    FSeek(p + 35632); ModePackage cyberspaceSV<comment="電脳空間/SV">;
 
-    FSeek(p + 38272);
+    FSeek(p + 38576);
 } PlayerParameters;
 
 LittleEndian();

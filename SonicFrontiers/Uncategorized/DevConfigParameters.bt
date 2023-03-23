@@ -5,32 +5,23 @@ enum<byte> bool {
     True = 1,
 };
 
-typedef byte sint8;
-
-enum<sint8> ReplayMode
-{
-    REPLAY_MODE_OFF = 0,
-    REPLAY_MODE_RECORD = 1,
-    REPLAY_MODE_PLAY = 2,
-    REPLAY_MODE_GHOST = 3,
-};
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); bool autoSaveEnabled<comment="AutoSave">;
-    FSeek(p + 1); bool gismoEnabled<comment="Gismo">;
-    FSeek(p + 2); bool reportEnabled<comment="Report">;
-    FSeek(p + 3); bool skillTreeEnabled<comment="SkillTree">;
-    FSeek(p + 4); bool tutorialEnabled<comment="Tutorial">;
-    FSeek(p + 5); bool arcadeModeEnabled<comment="ArcadeMode">;
-    FSeek(p + 6); bool practice<comment="Practice">;
-    FSeek(p + 7); bool practiceTimeLimitEnabled<comment="Practice Timelimit">;
-    FSeek(p + 8); bool creditsEnabled<comment="Credits">;
-    FSeek(p + 9); ReplayMode replayMode<comment="Replay">;
+    FSeek(p + 0);  bool autoSaveEnabled<comment="AutoSave">;
+    FSeek(p + 1);  bool gismoEnabled<comment="Gismo">;
+    FSeek(p + 2);  bool reportEnabled<comment="Report">;
+    FSeek(p + 3);  bool skillTreeEnabled<comment="SkillTree">;
+    FSeek(p + 4);  bool tutorialEnabled<comment="Tutorial">;
+    FSeek(p + 5);  bool arcadeModeEnabled<comment="ArcadeMode">;
+    FSeek(p + 6);  bool battleModeEnabled<comment="BattleChallenge">;
+    FSeek(p + 7);  bool cyberChallengeEnabled<comment="CyberChallenge">;
+    FSeek(p + 8);  bool practice<comment="Practice">;
+    FSeek(p + 9);  bool practiceTimeLimitEnabled<comment="Practice Timelimit">;
+    FSeek(p + 10); bool creditsEnabled<comment="Credits">;
 
-    FSeek(p + 10);
+    FSeek(p + 12);
 } DevConfigParameters;
 
 LittleEndian();

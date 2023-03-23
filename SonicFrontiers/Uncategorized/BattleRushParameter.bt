@@ -1,0 +1,70 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 rankTime[4]<comment="ランクタイム",optimize=false>;
+    FSeek(p + 16); uint32 rankTimeAll[4]<comment="全島ランクタイム",optimize=false>;
+
+    FSeek(p + 32);
+} BattleRushPhaseRankParameter;
+
+typedef byte sint8;
+
+enum<sint8> BgmType
+{
+    INVALID = -1,
+    ENEMY_BATTLE = 0,
+    FORCE_BATTLE_FIELD = 1,
+    MINIBOSS_CHARGER_BATTLE = 2,
+    MINIBOSS_DARUMA_BATTLE = 3,
+    MINIBOSS_SPIDER_BATTLE = 4,
+    MINIBOSS_BLADE_BATTLE = 5,
+    MINIBOSS_FLYER_BATTLE = 6,
+    MINIBOSS_TRACKER_BATTLE = 7,
+    MINIBOSS_ASHURA_BATTLE = 8,
+    MINIBOSS_SKIER_BATTLE = 9,
+    MINIBOSS_SUMO_BATTLE = 10,
+    MINIBOSS_TYRANT_BATTLE = 11,
+    MINIBOSS_STRIDER_BATTLE = 12,
+    MINIBOSS_WARSHIP_BATTLE = 13,
+    ENEMY_AQUABALL = 14,
+    TUTORIAL_BLADE_BATTLE = 15,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   uint32 numPhases<comment="フェイズ数">;
+    FSeek(p + 4);   float phaseLimitTime[11]<comment="各フェイズのリミット時間[sec]",optimize=false>;
+    FSeek(p + 48);  float phaseClearedTime[11]<comment="各フェイズのクリア遷移待機時間[sec]",optimize=false>;
+    FSeek(p + 92);  float phaseResultTime[11]<comment="各フェイズのリザルト待機時間[sec]",optimize=false>;
+    FSeek(p + 136); BattleRushPhaseRankParameter phaseRank[11]<comment="各フェイズのランクタイム[sec]",optimize=false>;
+    FSeek(p + 488); BgmType phaseBgmType[11]<comment="各フェイズのベースBGM",optimize=false>;
+    FSeek(p + 500); uint32 hour<comment="時間:時">;
+    FSeek(p + 504); uint32 minute<comment="時間:分">;
+
+    FSeek(p + 508);
+} BattleRushStageParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BattleRushStageParameter stages[4]<comment="バトルラッシュステージ",optimize=false>;
+    FSeek(p + 2032); float viewPaseResultTime<comment="フェイズリザルト表示時間">;
+
+    FSeek(p + 2036);
+} BattleRushParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BattleRushParameter battleRushParameter;

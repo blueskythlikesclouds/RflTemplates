@@ -32,6 +32,14 @@ enum<sint8> SaveDataIcon
     IconLastBoss = 6,
 };
 
+enum<uint8> AppVersion
+{
+    AppVersion_1_10 = 0,
+    AppVersion_1_20 = 1,
+    AppVersion_1_30 = 2,
+    AppVersion_1_40 = 3,
+};
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -43,7 +51,7 @@ typedef struct
     FSeek(p + 7);  Sequence sequence<comment="シーケンス">;
     FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
     FSeek(p + 12); SaveDataIcon icon<comment="セーブデータアイコン">;
-    FSeek(p + 13); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 13); AppVersion appVersion<comment="アプリバージョン">;
     FSeek(p + 14); uint16 reserved1<comment="reserved1">;
     FSeek(p + 16); uint32 saveDate<comment="保存日時">;
     FSeek(p + 20); uint8 index<comment="index">;
@@ -94,6 +102,8 @@ enum<sint8> Value
     Normal = 1,
     Hard = 2,
     Num = 3,
+    VeryHard = 3,
+    NumInVeryHard = 4,
 };
 
 typedef struct
@@ -120,7 +130,8 @@ typedef struct
     FSeek(p + 17); uint8 dlcKodamaModel<comment="[DLC]ココの見た目">;
     FSeek(p + 18); uint8 dlcRingSE<comment="[DLC]リング取得音">;
     FSeek(p + 19); uint8 dlcConfig<comment="[DLC]コンフィグ">;
-    FSeek(p + 20); uint8 reserved1[4]<comment="reserved1",optimize=false>;
+    FSeek(p + 20); uint8 config2<comment="コンフィグ2">;
+    FSeek(p + 21); uint8 reserved1[3]<comment="reserved1",optimize=false>;
     FSeek(p + 24); uint32 reserved2[2]<comment="reserved2",optimize=false>;
 
     FSeek(p + 32);
@@ -321,6 +332,19 @@ typedef struct
     FSeek(p + 48);
 } OptionCameraData;
 
+enum<sint8> MusicSelect
+{
+    MUSIC_SELECT_ON = 0,
+    MUSIC_SELECT_OFF = 1,
+};
+
+enum<sint8> MusicSelectType
+{
+    MUSIC_SELECT_NORMAL = 0,
+    MUSIC_SELECT_SHUFFLE = 1,
+    MUSIC_SELECT_LOOP = 2,
+};
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -329,7 +353,10 @@ typedef struct
     FSeek(p + 1); uint8 sfxVolume<comment="SEボリューム">;
     FSeek(p + 2); uint8 musicVolume<comment="音楽ボリューム">;
     FSeek(p + 3); uint8 voiceVolume<comment="ボイスボリューム">;
-    FSeek(p + 4); uint32 reserved[4]<comment="reserved",optimize=false>;
+    FSeek(p + 4); MusicSelect musicSelectEnable<comment="ミュージックセレクト機能のON・OFF">;
+    FSeek(p + 5); MusicSelectType musicSelectType<comment="ミュージックセレクト機能の再生タイプ">;
+    FSeek(p + 6); uint8 padding[2]<comment="padding",optimize=false>;
+    FSeek(p + 8); uint32 reserved[3]<comment="reserved",optimize=false>;
 
     FSeek(p + 20);
 } OptionAudioData;

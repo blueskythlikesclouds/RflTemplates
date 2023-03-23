@@ -227,9 +227,10 @@ typedef struct
 
     FSeek(p + 0);  FishingTradeTableParma spot[4]<comment="スポット別",optimize=false>;
     FSeek(p + 36); uint8 prices[9]<comment="販売価格",optimize=false>;
-    FSeek(p + 45); uint8 counts[9]<comment="1購入ごとの獲得数",optimize=false>;
+    FSeek(p + 45); uint8 pricesVeryHard[9]<comment="販売価格/VeryHard",optimize=false>;
+    FSeek(p + 54); uint8 counts[9]<comment="1購入ごとの獲得数",optimize=false>;
 
-    FSeek(p + 54);
+    FSeek(p + 63);
 } FishingTradeParam;
 
 typedef struct
@@ -245,7 +246,7 @@ typedef struct
     FSeek(p + 16832); FishingTutorialParam tutorial<comment="チュートリアル設定">;
     FSeek(p + 18104); FishingTradeParam trade<comment="交換設定">;
 
-    FSeek(p + 18160);
+    FSeek(p + 18176);
 } FishingParameter;
 
 LittleEndian();

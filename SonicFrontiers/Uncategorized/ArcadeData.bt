@@ -32,6 +32,14 @@ enum<sint8> SaveDataIcon
     IconLastBoss = 6,
 };
 
+enum<uint8> AppVersion
+{
+    AppVersion_1_10 = 0,
+    AppVersion_1_20 = 1,
+    AppVersion_1_30 = 2,
+    AppVersion_1_40 = 3,
+};
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -43,7 +51,7 @@ typedef struct
     FSeek(p + 7);  Sequence sequence<comment="シーケンス">;
     FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
     FSeek(p + 12); SaveDataIcon icon<comment="セーブデータアイコン">;
-    FSeek(p + 13); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 13); AppVersion appVersion<comment="アプリバージョン">;
     FSeek(p + 14); uint16 reserved1<comment="reserved1">;
     FSeek(p + 16); uint32 saveDate<comment="保存日時">;
     FSeek(p + 20); uint8 index<comment="index">;

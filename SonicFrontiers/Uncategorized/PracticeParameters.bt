@@ -147,6 +147,9 @@ typedef struct
 
     FSeek(p + 0); uint32 skill<comment="必要スキル">;
     FSeek(p + 4); bool tutorialCleared<comment="チュートリアルクリア後から表示">;
+    FSeek(p + 5); bool unlockArcadeMode<comment="アーケードモード解禁後から表示">;
+    FSeek(p + 6); bool unlockCyberPowerBoost<comment="電脳パワーブースト解禁後から表示">;
+    FSeek(p + 7); bool unlockVeryHardMode<comment="VeryHard解禁後から表示">;
 
     FSeek(p + 8);
 } PracticeTipsPrerequisite;
@@ -160,14 +163,16 @@ typedef struct
     FSeek(p + 8);
 } PracticeTips;
 
+typedef int16 sint16;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  sint8 subjects[20]<comment="練習一覧",optimize=false>;
-    FSeek(p + 20); sint8 tips[100]<comment="Tips一覧",optimize=false>;
+    FSeek(p + 20); sint16 tips[100]<comment="Tips一覧",optimize=false>;
 
-    FSeek(p + 120);
+    FSeek(p + 220);
 } PracticeSet;
 
 typedef struct
@@ -178,11 +183,11 @@ typedef struct
     FSeek(p + 24000); PracticeText text<comment="練習特殊テキスト">;
     FSeek(p + 24160); PracticeTime time<comment="練習時間制御">;
     FSeek(p + 24188); float notifyTime<comment="練習通知表示時間">;
-    FSeek(p + 24192); PracticeTips tips[128]<comment="Tips",optimize=false>;
-    FSeek(p + 25216); float tipsMinViewTime<comment="Tips最小表示時間">;
-    FSeek(p + 25220); PracticeSet sets[81]<comment="練習構成",optimize=false>;
+    FSeek(p + 24192); PracticeTips tips[256]<comment="Tips",optimize=false>;
+    FSeek(p + 26240); float tipsMinViewTime<comment="Tips最小表示時間">;
+    FSeek(p + 26244); PracticeSet sets[81]<comment="練習構成",optimize=false>;
 
-    FSeek(p + 34944);
+    FSeek(p + 44064);
 } PracticeParameters;
 
 LittleEndian();

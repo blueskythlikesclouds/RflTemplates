@@ -1,0 +1,66 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float translationLimit<comment="平行移動制限">;
+    FSeek(p + 4);  float translationSpeedXZ<comment="平行移動速さ(XZ)">;
+    FSeek(p + 8);  float translationSpeedY<comment="平行移動速さ(Y)">;
+    FSeek(p + 12); float elevLimit<comment="仰角制限">;
+    FSeek(p + 16); float rotationSpeed<comment="回転速さ">;
+    FSeek(p + 20); float rollRange<comment="ロール範囲(初期値±x°)">;
+    FSeek(p + 24); float rollSpeed<comment="ロール速さ">;
+    FSeek(p + 28); float fovyRange<comment="画角調整範囲(初期値±x°)">;
+    FSeek(p + 32); float fovySpeed<comment="画角調整速さ">;
+    FSeek(p + 36); float speedRatioFast<comment="スピード倍率「速い」">;
+    FSeek(p + 40); float speedRatioSlow<comment="スピード倍率「遅い」">;
+    FSeek(p + 44); float distance<comment="カメラ距離">;
+
+    FSeek(p + 48);
+} PhotoModeCameraParameters;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float sepiaSaturationOffset<comment="セピア-彩度オフセット[%]">;
+    FSeek(p + 4);  float sepiaColorizeRate<comment="セピア-適用度[%]">;
+    FSeek(p + 8);  float sepiaColorizeHue<comment="セピア-色相[°]">;
+    FSeek(p + 12); float increaseSaturationOffset<comment="彩度UP-オフセット">;
+    FSeek(p + 16); sint32 warmColorROffset<comment="暖色系-Rオフセット">;
+    FSeek(p + 20); sint32 warmColorGOffset<comment="暖色系-Gオフセット">;
+    FSeek(p + 24); sint32 warmColorBOffset<comment="暖色系-Bオフセット">;
+    FSeek(p + 28); sint32 coldColorROffset<comment="寒色系-Rオフセット">;
+    FSeek(p + 32); sint32 coldColorGOffset<comment="寒色系-Gオフセット">;
+    FSeek(p + 36); sint32 coldColorBOffset<comment="寒色系-Bオフセット">;
+    FSeek(p + 40); float retroContrastOffset<comment="レトロ調-コントラストオフセット">;
+    FSeek(p + 44); sint32 retroROffset<comment="レトロ調-Rオフセット">;
+    FSeek(p + 48); sint32 retroGOffset<comment="レトロ調-Gオフセット">;
+    FSeek(p + 52); sint32 retroBOffset<comment="レトロ調-Bオフセット">;
+    FSeek(p + 56); float retroSaturationOffset<comment="レトロ調-彩度オフセット">;
+
+    FSeek(p + 60);
+} PhotoModeFilterParameters;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PhotoModeCameraParameters camera<comment="カメラ挙動">;
+    FSeek(p + 48); PhotoModeFilterParameters filter<comment="フィルタ">;
+
+    FSeek(p + 108);
+} PhotoModeParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PhotoModeParameters photoModeParameters;
