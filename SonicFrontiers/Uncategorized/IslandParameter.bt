@@ -95,11 +95,25 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  KodamaNormalParam normal<comment="通常コダマ">;
-    FSeek(p + 40); KodamaElderParam elder<comment="長老コダマ">;
-    FSeek(p + 52); KodamaHermitParam hermit<comment="仙人コダマ">;
+    FSeek(p + 0);  float takableRange<comment="コダマの入手半径(m)">;
+    FSeek(p + 4);  float colliderRange<comment="コダマ本体のコリジョン半径(m)">;
+    FSeek(p + 8);  float fadeTime<comment="コダマの表示フェード時間">;
+    FSeek(p + 12); float spaceVertical<comment="追従コダマの垂直方向オフセット">;
+    FSeek(p + 16); float spaceHorizontal<comment="追従コダマの水平方向オフセット">;
 
-    FSeek(p + 1240);
+    FSeek(p + 20);
+} KodamaNewFormParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    KodamaNormalParam normal<comment="通常コダマ">;
+    FSeek(p + 40);   KodamaElderParam elder<comment="長老コダマ">;
+    FSeek(p + 52);   KodamaHermitParam hermit<comment="仙人コダマ">;
+    FSeek(p + 1240); KodamaNewFormParam newform[8]<comment="新種コダマ",optimize=false>;
+
+    FSeek(p + 1400);
 } KodamaParam;
 
 typedef struct
@@ -118,10 +132,10 @@ typedef struct
 
     FSeek(p + 0);    IslandParam islands[5]<comment="島",optimize=false>;
     FSeek(p + 72);   KodamaParam kodama<comment="コダマ">;
-    FSeek(p + 1312); NpcParam npc<comment="NPC">;
-    FSeek(p + 1320); sint32 portalExtraKeyNum<comment="ポータルの追加鍵数">;
+    FSeek(p + 1472); NpcParam npc<comment="NPC">;
+    FSeek(p + 1480); sint32 portalExtraKeyNum<comment="ポータルの追加鍵数">;
 
-    FSeek(p + 1324);
+    FSeek(p + 1484);
 } IslandParameter;
 
 LittleEndian();

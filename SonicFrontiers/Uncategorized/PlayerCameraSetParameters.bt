@@ -11,6 +11,12 @@ string ReadCString(cstring& str) {
 
 typedef ubyte uint8;
 
+enum<uint8> Priority
+{
+    Default = 0,
+    High = 1,
+};
+
 enum<uint8> CameraType
 {
     None = 0,
@@ -59,6 +65,7 @@ typedef struct
 
     FSeek(p + 0);  cstring name<comment="名前">;
     FSeek(p + 16); float easeoutTime<comment="終了補間時間">;
+    FSeek(p + 20); Priority priority<comment="プライオリティ">;
     FSeek(p + 32); PlayerCameraParameter param[8]<comment="パラメータ",optimize=false>;
 
     FSeek(p + 928);

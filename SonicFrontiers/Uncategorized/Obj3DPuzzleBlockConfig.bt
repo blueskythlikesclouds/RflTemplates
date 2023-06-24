@@ -44,9 +44,9 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); FreeShape freeShapes[19]<comment="形状配列",optimize=false>;
+    FSeek(p + 0); FreeShape freeShapes[29]<comment="形状配列",optimize=false>;
 
-    FSeek(p + 3040);
+    FSeek(p + 4640);
 } Obj3DPuzzleBlockConfig;
 
 LittleEndian();

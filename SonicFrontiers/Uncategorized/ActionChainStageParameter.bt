@@ -1,0 +1,45 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 scoreS<comment="Sランクスコア">;
+    FSeek(p + 4);  uint32 scoreA<comment="Aランクスコア">;
+    FSeek(p + 8);  uint32 scoreB<comment="Bランクスコア">;
+    FSeek(p + 12); uint32 scoreC<comment="Cランクスコア">;
+
+    FSeek(p + 16);
+} ActionChainScoreThresholdParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time<comment="制限時間(秒)">;
+    FSeek(p + 4);  ActionChainScoreThresholdParameter scoreEasy<comment="イージー">;
+    FSeek(p + 20); ActionChainScoreThresholdParameter scoreNormal<comment="ノーマル">;
+    FSeek(p + 36); ActionChainScoreThresholdParameter scoreHard<comment="ハード">;
+    FSeek(p + 52); ActionChainScoreThresholdParameter scoreVeryHard<comment="ベリーハード">;
+
+    FSeek(p + 68);
+} ActionChainPlaceParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); ActionChainPlaceParameter placeParam[16]<comment="看板IDに紐づいたアクションチェイン情報",optimize=false>;
+
+    FSeek(p + 1088);
+} ActionChainStageParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ActionChainStageParameter actionChainStageParameter;

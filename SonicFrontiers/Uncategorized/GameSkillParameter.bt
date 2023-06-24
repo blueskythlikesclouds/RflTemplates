@@ -84,7 +84,7 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  SkillParam skillParams[20]<comment="スキルパラメータ",optimize=false>;
-    FSeek(p + 60); SkillTreeParam treeParams<comment="スキルツリー">;
+    FSeek(p + 60); SkillTreeParam treeParams<comment="スキルツリー/ソニック">;
 
     FSeek(p + 211);
 } GameSkillParameter;

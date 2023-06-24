@@ -5,6 +5,19 @@ enum<byte> bool {
     True = 1,
 };
 
+typedef byte sint8;
+
+enum<sint8> Value
+{
+    Invalid = -1,
+    Sonic = 0,
+    Amy = 1,
+    Knuckles = 2,
+    Tails = 3,
+    Num = 4,
+    Default = 0,
+};
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -20,6 +33,7 @@ typedef struct
     FSeek(p + 8);  bool practice<comment="Practice">;
     FSeek(p + 9);  bool practiceTimeLimitEnabled<comment="Practice Timelimit">;
     FSeek(p + 10); bool creditsEnabled<comment="Credits">;
+    FSeek(p + 11); Value character<comment="操作キャラクタ">;
 
     FSeek(p + 12);
 } DevConfigParameters;

@@ -52,7 +52,8 @@ typedef struct
     FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
     FSeek(p + 12); SaveDataIcon icon<comment="セーブデータアイコン">;
     FSeek(p + 13); AppVersion appVersion<comment="アプリバージョン">;
-    FSeek(p + 14); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 14); uint8 config2<comment="コンフィグ2">;
+    FSeek(p + 15); uint8 reserved1<comment="reserved1">;
     FSeek(p + 16); uint32 saveDate<comment="保存日時">;
     FSeek(p + 20); uint8 index<comment="index">;
     FSeek(p + 24); uint32 reserved[4]<comment="reserved",optimize=false>;
@@ -125,14 +126,17 @@ typedef struct
     FSeek(p + 12); uint8 config<comment="コンフィグ">;
     FSeek(p + 13); uint8 padSensibilityRate<comment="パッド感度">;
     FSeek(p + 14); uint8 mouseSensibilityRate<comment="マウス感度">;
-    FSeek(p + 15); uint8 padding0<comment="padding0">;
+    FSeek(p + 15); uint8 neutralDecelerationRate<comment="ニュートラル停止減衰率">;
     FSeek(p + 16); uint8 dlcSonicCostume<comment="[DLC]ソニック衣装">;
     FSeek(p + 17); uint8 dlcKodamaModel<comment="[DLC]ココの見た目">;
     FSeek(p + 18); uint8 dlcRingSE<comment="[DLC]リング取得音">;
     FSeek(p + 19); uint8 dlcConfig<comment="[DLC]コンフィグ">;
     FSeek(p + 20); uint8 config2<comment="コンフィグ2">;
-    FSeek(p + 21); uint8 reserved1[3]<comment="reserved1",optimize=false>;
-    FSeek(p + 24); uint32 reserved2[2]<comment="reserved2",optimize=false>;
+    FSeek(p + 21); uint8 islandVisual<comment="島の見た目">;
+    FSeek(p + 22); uint8 npcVisual<comment="NPCの見た目">;
+    FSeek(p + 23); uint8 baseAirDragScaleRate<comment="基本空気抵抗スケールレート">;
+    FSeek(p + 24); uint32 status<comment="ステータス">;
+    FSeek(p + 28); uint32 reserved2<comment="reserved2">;
 
     FSeek(p + 32);
 } OptionGamePlayData;
@@ -355,7 +359,8 @@ typedef struct
     FSeek(p + 3); uint8 voiceVolume<comment="ボイスボリューム">;
     FSeek(p + 4); MusicSelect musicSelectEnable<comment="ミュージックセレクト機能のON・OFF">;
     FSeek(p + 5); MusicSelectType musicSelectType<comment="ミュージックセレクト機能の再生タイプ">;
-    FSeek(p + 6); uint8 padding[2]<comment="padding",optimize=false>;
+    FSeek(p + 6); uint8 flags<comment="フラグ">;
+    FSeek(p + 7); uint8 padding<comment="padding">;
     FSeek(p + 8); uint32 reserved[3]<comment="reserved",optimize=false>;
 
     FSeek(p + 20);

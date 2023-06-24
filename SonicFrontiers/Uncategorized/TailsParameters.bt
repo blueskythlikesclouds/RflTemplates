@@ -1,0 +1,1557 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint16 pointMin<comment="最小攻撃力">;
+    FSeek(p + 2);  uint16 pointMax<comment="最大攻撃力">;
+    FSeek(p + 4);  float damageRandomRate<comment="ダメージランダム変動幅">;
+    FSeek(p + 8);  float damageRandomRateSS<comment="ダメージランダム変動幅/スパソニ">;
+    FSeek(p + 12); float shapeDamageRate<comment="残像ダメージ値レート">;
+    FSeek(p + 16); float shapeStunRate<comment="残像スタン値レート">;
+    FSeek(p + 20); float shapeStaggerRate<comment="残像怯み値レート">;
+
+    FSeek(p + 24);
+} PlayerParamOffensive;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 rateMin<comment="最低防御率">;
+    FSeek(p + 1); uint8 rateMax<comment="最高防御率">;
+    FSeek(p + 2); uint16 infimumDropRings<comment="最低保障リングドロップ数">;
+
+    FSeek(p + 4);
+} PlayerParamDefensive;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamOffensive offensive<comment="攻撃力">;
+    FSeek(p + 24); PlayerParamDefensive defensive<comment="防御力">;
+    FSeek(p + 28); float criticalDamageRate<comment="クリティカル時のダメージレート">;
+    FSeek(p + 32); float criticalRate<comment="クリティカルの発生確率">;
+    FSeek(p + 36); float criticalRateSS<comment="クリティカルの発生確率/スパソニ">;
+    FSeek(p + 40); float downedDamageRate<comment="ダウン中のダメージレート">;
+
+    FSeek(p + 44);
+} PlayerParamAttackCommon;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef byte sint8;
+
+enum<sint8> HitSE
+{
+    SE_None = -1,
+    Weak = 0,
+    Strong = 1,
+    VeryStrong = 2,
+};
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float damageRate<comment="ダメージレート/ソニック">;
+    FSeek(p + 4);   float damageRateSS<comment="ダメージレート/スーパーソニック">;
+    FSeek(p + 8);   float damageRateAcceleMode<comment="アクセルモード時のダメージ倍率">;
+    FSeek(p + 12);  float damageRateManual<comment="マニュアルモード時のダメージ倍率">;
+    FSeek(p + 16);  float stunPoint<comment="スタン値">;
+    FSeek(p + 20);  float staggerPoint<comment="よろめき値">;
+    FSeek(p + 32);  vector3 velocity<comment="ダメージ速度">;
+    FSeek(p + 48);  float velocityKeepTime<comment="ダメージ速度維持時間">;
+    FSeek(p + 52);  float addComboValue<comment="コンボメーター増加量">;
+    FSeek(p + 56);  float addComboValueAccele<comment="コンボメーター増加量/アクセル時">;
+    FSeek(p + 60);  float addComboValueSS<comment="コンボメーター増加量/スパソニ">;
+    FSeek(p + 64);  float addComboValueAcceleSS<comment="コンボメーター増加量/スパソニアクセル時">;
+    FSeek(p + 68);  float addQuickCyloopEnergy<comment="クイックサイループゲージ増加量">;
+    FSeek(p + 72);  float addQuickCyloopEnergyAccele<comment="クイックサイループゲージ増加量/アクセル時">;
+    FSeek(p + 76);  float addQuickCyloopEnergySS<comment="クイックサイループゲージ増加量/スパソニ">;
+    FSeek(p + 80);  float addQuickCyloopEnergyAcceleSS<comment="クイックサイループゲージ増加量/スパソニアクセル時">;
+    FSeek(p + 84);  float addQuickCyloopEnergyGuard<comment="クイックサイループゲージ増加量/ガード時">;
+    FSeek(p + 88);  float addQuickCyloopEnergyAcceleGuard<comment="クイックサイループゲージ増加量/ガード&アクセル時">;
+    FSeek(p + 96);  vector3 gimmickVelocity<comment="ギミックに与えるダメージ速度">;
+    FSeek(p + 112); float ignoreTime<comment="ヒット後ターゲットから除外する時間">;
+    FSeek(p + 116); uint16 attributes<comment="属性">;
+    FSeek(p + 118); HitSE se<comment="ヒットSE">;
+    FSeek(p + 120); cstring hitEffectName<comment="ヒットエフェクト/ソニック">;
+    FSeek(p + 136); cstring hitEffectNameSS<comment="ヒットエフェクト/スーパーソニック">;
+    FSeek(p + 152); cstring hitStopName<comment="ヒットストップ/ソニック">;
+    FSeek(p + 168); cstring hitStopNameDead<comment="ヒットストップ/撃破/ソニック">;
+    FSeek(p + 184); cstring hitStopNameDeadBoss<comment="ヒットストップ/ボス撃破/ソニック">;
+    FSeek(p + 200); cstring hitStopNameSS<comment="ヒットストップ/スーパーソニック">;
+    FSeek(p + 216); cstring hitStopNameDeadSS<comment="ヒットストップ/撃破/スーパーソニック">;
+    FSeek(p + 232); cstring hitCameraShakeName<comment="ヒットカメラ振動/ソニック">;
+    FSeek(p + 248); cstring hitCameraShakeNameDead<comment="ヒットカメラ振動/撃破/ソニック">;
+    FSeek(p + 264); cstring hitCameraShakeNameDeadBoss<comment="ヒットカメラ振動/ボス撃破/ソニック">;
+    FSeek(p + 280); cstring hitCameraShakeNameSS<comment="ヒットカメラ振動/スーパーソニック">;
+    FSeek(p + 296); cstring hitCameraShakeNameDeadSS<comment="ヒットカメラ振動/撃破/スーパーソニック">;
+    FSeek(p + 312); cstring hitVibrationName<comment="ヒットコントローラ振動/ソニック">;
+    FSeek(p + 328); cstring hitVibrationNameSS<comment="ヒットコントローラ振動/スーパーソニック">;
+
+    FSeek(p + 352);
+} PlayerParamAttackData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     PlayerParamAttackCommon common<comment="共通">;
+    FSeek(p + 48);    PlayerParamAttackData spinAttack<comment="Spin Jump">;
+    FSeek(p + 400);   PlayerParamAttackData spinDash<comment="Spin Dash">;
+    FSeek(p + 752);   PlayerParamAttackData homingAttack<comment="Homing Attack">;
+    FSeek(p + 1104);  PlayerParamAttackData homingAttackAir<comment="Aerial Homing Attack">;
+    FSeek(p + 1456);  PlayerParamAttackData pursuitKick<comment="Pursuit Kick">;
+    FSeek(p + 1808);  PlayerParamAttackData stomping<comment="Stomping">;
+    FSeek(p + 2160);  PlayerParamAttackData stompingAttack<comment="Stomping Attack">;
+    FSeek(p + 2512);  PlayerParamAttackData boundStompingLast<comment="Bound Stomping Last">;
+    FSeek(p + 2864);  PlayerParamAttackData sliding<comment="Sliding">;
+    FSeek(p + 3216);  PlayerParamAttackData loopKick<comment="Loop Kick">;
+    FSeek(p + 3568);  PlayerParamAttackData crasher<comment="Crasher">;
+    FSeek(p + 3920);  PlayerParamAttackData spinSlashHoming<comment="Spin Slash Homing">;
+    FSeek(p + 4272);  PlayerParamAttackData spinSlash<comment="Spin Slash">;
+    FSeek(p + 4624);  PlayerParamAttackData spinSlashLast<comment="Spin Slash Last">;
+    FSeek(p + 4976);  PlayerParamAttackData sonicBoom<comment="Sonic Boom">;
+    FSeek(p + 5328);  PlayerParamAttackData crossSlash<comment="Cross Slash">;
+    FSeek(p + 5680);  PlayerParamAttackData homingShot<comment="Homing Shot">;
+    FSeek(p + 6032);  PlayerParamAttackData chargeAttack<comment="Charge Attack">;
+    FSeek(p + 6384);  PlayerParamAttackData chargeAttackLast<comment="Charge Attack Last">;
+    FSeek(p + 6736);  PlayerParamAttackData cyloop<comment="Cyloop">;
+    FSeek(p + 7088);  PlayerParamAttackData cyloopQuick<comment="Quick Cyloop">;
+    FSeek(p + 7440);  PlayerParamAttackData cyloopAerial<comment="Quick Cyloop Aerial">;
+    FSeek(p + 7792);  PlayerParamAttackData accele1<comment="Accele Combo 1">;
+    FSeek(p + 8144);  PlayerParamAttackData accele2<comment="Accele Combo 2">;
+    FSeek(p + 8496);  PlayerParamAttackData aerialAccele1<comment="Accele Combo 1 Aerial">;
+    FSeek(p + 8848);  PlayerParamAttackData aerialAccele2<comment="Accele Combo 2 Aerial">;
+    FSeek(p + 9200);  PlayerParamAttackData comboFinish<comment="Combo Finish">;
+    FSeek(p + 9552);  PlayerParamAttackData comboFinishF<comment="Combo Finish Front">;
+    FSeek(p + 9904);  PlayerParamAttackData comboFinishB<comment="Combo Finish Back">;
+    FSeek(p + 10256); PlayerParamAttackData comboFinishL<comment="Combo Finish Left">;
+    FSeek(p + 10608); PlayerParamAttackData comboFinishR<comment="Combo Finish Right">;
+    FSeek(p + 10960); PlayerParamAttackData acceleComboFinish<comment="Accele Combo Finish">;
+    FSeek(p + 11312); PlayerParamAttackData acceleComboFinishF<comment="Accele Combo Finish Front">;
+    FSeek(p + 11664); PlayerParamAttackData acceleComboFinishB<comment="Accele Combo Finish Back">;
+    FSeek(p + 12016); PlayerParamAttackData acceleComboFinishL<comment="Accele Combo Finish Left">;
+    FSeek(p + 12368); PlayerParamAttackData acceleComboFinishR<comment="Accele Combo Finish Right">;
+    FSeek(p + 12720); PlayerParamAttackData smash<comment="Smash">;
+    FSeek(p + 13072); PlayerParamAttackData smashLast<comment="Smash Last">;
+    FSeek(p + 13424); PlayerParamAttackData slingShot<comment="Slingshot">;
+    FSeek(p + 13776); PlayerParamAttackData knucklesPunch1<comment="Knuckles Punch1">;
+    FSeek(p + 14128); PlayerParamAttackData knucklesPunch2<comment="Knuckles Punch2">;
+    FSeek(p + 14480); PlayerParamAttackData knucklesUppercut<comment="Knuckles Uppercut">;
+    FSeek(p + 14832); PlayerParamAttackData amyTarotAttack<comment="Amy Tarot Attack">;
+    FSeek(p + 15184); PlayerParamAttackData amyTarotRolling<comment="Amy Tarot Rolling">;
+
+    FSeek(p + 15536);
+} PlayerParamAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float resistRate<comment="水中時の水抵抗係数">;
+    FSeek(p + 4);  float breatheBrake<comment="息継ぎ時の減速">;
+    FSeek(p + 8);  float breatheTime<comment="息継ぎの拘束時間">;
+    FSeek(p + 12); float breatheGravity<comment="重力方向にかかる加速度">;
+
+    FSeek(p + 16);
+} PlayerParamWaterAct;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float baseSpeed<comment="法線方向の初速基本値">;
+    FSeek(p + 4);  float upSpeed<comment="上方向の初速">;
+    FSeek(p + 8);  float upSpeedAir<comment="上方向の初速　空中">;
+    FSeek(p + 12); float edgeSpeed<comment="エッジからの飛び出しの場合の最低速度">;
+    FSeek(p + 16); float airActionTime<comment="他の空中アクションへ移行できる時間">;
+    FSeek(p + 20); float wallMoveTime<comment="壁移動へ移行できる時間">;
+
+    FSeek(p + 24);
+} PlayerParamBaseJump;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 4);  float slidePower<comment="[通常]斜面滑り力">;
+    FSeek(p + 8);  float brakeForce<comment="[通常]ブレーキ力">;
+    FSeek(p + 12); float slidePowerSlalom<comment="[S字内]斜面滑り力">;
+    FSeek(p + 16); float brakeForceSlalom<comment="[S字内]ブレーキ力">;
+    FSeek(p + 20); float releaseSpeed<comment="終了速度">;
+    FSeek(p + 24); bool useInput<comment="入力方向に対する重力加速度を使用するか">;
+
+    FSeek(p + 28);
+} PlayerParamBallMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float width<comment="幅">;
+    FSeek(p + 4);  float distance<comment="距離">;
+    FSeek(p + 8);  float u0<comment="UV:U開始">;
+    FSeek(p + 12); float u1<comment="UV:U終了">;
+
+    FSeek(p + 16);
+} PlayerParamLocusData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerParamLocusData data[4]<comment="data",optimize=false>;
+
+    FSeek(p + 64);
+} PlayerParamLocus;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float effectSpanTime<comment="エフェクトの再生間隔">;
+    FSeek(p + 4);  float effectLifeTime<comment="エフェクトの再生時間">;
+    FSeek(p + 8);  float effectOffsetDistance<comment="エフェクト発生位置オフセット">;
+    FSeek(p + 12); float effectOverlapDistance<comment="エフェクトオーバーラップオフセット">;
+
+    FSeek(p + 16);
+} PlayerParamAuraTrain;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 ringsLevel<comment="リングレベル段数">;
+    FSeek(p + 1); uint8 speedLevel<comment="スピードレベル段数">;
+    FSeek(p + 2); uint8 offensiveLevel<comment="攻撃レベル段数">;
+    FSeek(p + 3); uint8 defensiveLevel<comment="防御レベル段数">;
+
+    FSeek(p + 4);
+} PlayerParamLevel;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float coolTime<comment="クールタイム">;
+
+    FSeek(p + 4);
+} PlayerParamBarrierWall;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float rates[5]<comment="島別レート",optimize=false>;
+
+    FSeek(p + 20);
+} PlayerParamDamageRateLevel;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerParamDamageRateLevel diffculties[4]<comment="難易度",optimize=false>;
+
+    FSeek(p + 80);
+} PlayerParamDamageRate;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     PlayerParamAttack attack<comment="ダメージ設定">;
+    FSeek(p + 15536); PlayerParamWaterAct wateract<comment="水中専用挙動">;
+    FSeek(p + 15552); PlayerParamBaseJump basejump<comment="BASEジャンプ">;
+    FSeek(p + 15576); PlayerParamBallMove ballmove<comment="ボール移動">;
+    FSeek(p + 15604); PlayerParamLocus locus<comment="移動軌跡">;
+    FSeek(p + 15668); PlayerParamAuraTrain auratrain<comment="オーラトレイン">;
+    FSeek(p + 15684); PlayerParamLevel level<comment="レベル段階数">;
+    FSeek(p + 15688); PlayerParamBarrierWall barrierWall<comment="結界壁">;
+    FSeek(p + 15692); PlayerParamDamageRate damageRate<comment="ダメージ倍率">;
+
+    FSeek(p + 15776);
+} CommonPackage;
+
+enum<sint8> SupportedPlane
+{
+    Flat = 0,
+    Slope = 1,
+    Wall = 2,
+};
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float movableMaxSlope<comment="移動可能な傾斜変化量[deg]">;
+    FSeek(p + 4);  float activeLandingSlope<comment="地面探索傾斜[deg]">;
+    FSeek(p + 8);  float activeLandingSlopeInBoost<comment="地面探索傾斜/ブースト中[deg]">;
+    FSeek(p + 12); float landingMaxSlope<comment="平面の最大傾斜[deg]">;
+    FSeek(p + 16); float slidingMaxSlope<comment="斜面の最大傾斜[deg]">;
+    FSeek(p + 20); float wallAngleMaxSlope<comment="壁面の最大傾斜[deg]">;
+    FSeek(p + 24); SupportedPlane onStand<comment="直立可能なサポート面">;
+    FSeek(p + 25); SupportedPlane onRunInAir<comment="空中から走行可能なサポート面">;
+    FSeek(p + 26); SupportedPlane onRun<comment="走行可能なサポート面">;
+    FSeek(p + 27); bool moveHolding<comment="地面に張り付いて移動するか">;
+    FSeek(p + 28); bool wallSlideSlowInBoost<comment="ブースト中の壁衝突で減速するか">;
+    FSeek(p + 29); bool attrWallOnGround<comment="壁面属性に接地可能か">;
+    FSeek(p + 32); float priorityInputTime<comment="先行入力時間">;
+    FSeek(p + 36); sint32 capacityRings<comment="リング所持数">;
+    FSeek(p + 40); sint32 capacityRingsLvMax<comment="リング所持数/LvMax">;
+    FSeek(p + 44); float collectRingRange<comment="リング回収範囲">;
+
+    FSeek(p + 48);
+} PlayerParamCommon;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initial<comment="初速">;
+    FSeek(p + 4);  float min<comment="最低速度">;
+    FSeek(p + 8);  float max<comment="最高速度">;
+    FSeek(p + 12); float minTurn<comment="旋回中速度">;
+
+    FSeek(p + 16);
+} PlayerParamSpeedData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float force<comment="最大力">;
+    FSeek(p + 4);  float force2<comment="最大力[最大]">;
+    FSeek(p + 8);  float damperRange<comment="速度ダンパー範囲">;
+    FSeek(p + 12); float jerkMin<comment="最低躍度">;
+    FSeek(p + 16); float jerkMax<comment="最高躍度">;
+
+    FSeek(p + 20);
+} PlayerParamSpeedAcceleData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float force<comment="最大力">;
+    FSeek(p + 4);  float damperRange<comment="速度ダンパー範囲">;
+    FSeek(p + 8);  float jerkMin<comment="最低躍度">;
+    FSeek(p + 12); float jerkMax<comment="最高躍度">;
+
+    FSeek(p + 16);
+} PlayerParamSpeedAcceleData2;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamSpeedData normal<comment="通常">;
+    FSeek(p + 16);  PlayerParamSpeedData normal2<comment="通常[最大]">;
+    FSeek(p + 32);  PlayerParamSpeedData boost<comment="ブースト">;
+    FSeek(p + 48);  PlayerParamSpeedData boost2<comment="ブースト[最大]">;
+    FSeek(p + 64);  PlayerParamSpeedData boostLvMax<comment="ブーストLvMax">;
+    FSeek(p + 80);  PlayerParamSpeedData boostLvMax2<comment="ブーストLvMax[最大]">;
+    FSeek(p + 96);  float maxSpeedOver<comment="オーバースピード最高速度">;
+    FSeek(p + 100); float opitonMaxSpeedLimitMin<comment="最大速度リミット[最小]">;
+    FSeek(p + 104); float opitonMaxSpeedLimitMax<comment="最大速度リミット[最大]">;
+    FSeek(p + 108); float thresholdStopSpeed<comment="停止判定速度">;
+    FSeek(p + 112); float maxFallSpeed<comment="最高落下速度">;
+    FSeek(p + 116); PlayerParamSpeedAcceleData accele<comment="加速度">;
+    FSeek(p + 136); PlayerParamSpeedAcceleData decele<comment="減速度">;
+    FSeek(p + 156); PlayerParamSpeedAcceleData2 deceleNeutralMin<comment="ニュートラル時最小減速度">;
+    FSeek(p + 172); PlayerParamSpeedAcceleData2 deceleNeutralMax<comment="ニュートラル時最大減速度">;
+    FSeek(p + 188); float acceleAuto<comment="加速度/オートラン">;
+    FSeek(p + 192); float deceleAuto<comment="減速度/オートラン">;
+    FSeek(p + 196); float turnDeceleAngleMin<comment="旋回減速/開始角度">;
+    FSeek(p + 200); float turnDeceleAngleMax<comment="旋回減速/最大角度">;
+    FSeek(p + 204); float maxGravityAccele<comment="斜面加速度">;
+    FSeek(p + 208); float maxGravityDecele<comment="斜面減速度">;
+    FSeek(p + 212); float deceleSquat<comment="しゃがみ時の減速度">;
+    FSeek(p + 216); float acceleSensitive<comment="加速感度">;
+    FSeek(p + 220); float boostAnimSpeedInWater<comment="水中ブースト時のモーションに影響する速度">;
+
+    FSeek(p + 224);
+} PlayerParamSpeed;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float baseRotateForce<comment="基本旋回力">;
+    FSeek(p + 4);  float baseRotateForce2<comment="基本旋回力[最大]">;
+    FSeek(p + 8);  float baseRotateForceSpeed<comment="基本旋回力の基準速度">;
+    FSeek(p + 12); float minRotateForce<comment="最小旋回力">;
+    FSeek(p + 16); float maxRotateForce<comment="最大旋回力">;
+    FSeek(p + 20); bool angleRotateForceDecayEnabled<comment="角度比旋回力減衰を常に適用するか">;
+    FSeek(p + 24); float frontRotateRatio<comment="角度比旋回力減衰の正面方向への影響率">;
+    FSeek(p + 28); float rotationForceDecaySpeed<comment="速度比旋回力減衰の減衰開始速度">;
+    FSeek(p + 32); float rotationForceDecayRate<comment="速度比旋回力減衰の減衰レート">;
+    FSeek(p + 36); float rotationForceDecayMax<comment="速度比旋回力減衰の最大減衰力">;
+    FSeek(p + 40); float autorunRotateForce<comment="オートラン時の旋回力">;
+
+    FSeek(p + 44);
+} PlayerParamRotation;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float walkSpeed<comment="歩き速度">;
+    FSeek(p + 4);  float sneakingSpeed<comment="忍び歩き速度">;
+    FSeek(p + 8);  float animSpeedSneak<comment="忍び歩きのアニメーション再生速度">;
+    FSeek(p + 12); float animSpeedWalk<comment="歩きのアニメーション再生速度">;
+    FSeek(p + 16); float animSpeedRun<comment="走りのアニメーション再生速度">;
+    FSeek(p + 20); float animSpeedBoost<comment="ブーストのアニメーション再生速度">;
+    FSeek(p + 24); float animLRBlendSampleTime<comment="左右傾きの傾きのサンプル時間">;
+    FSeek(p + 28); float animLRBlendAngleMin<comment="左右傾きの最小ブレンド角度">;
+    FSeek(p + 32); float animLRBlendAngleMax<comment="左右傾きの最大ブレンド角度">;
+    FSeek(p + 36); float animLRBlendSpeed<comment="左右傾きのブレンド速度">;
+    FSeek(p + 40); float animLRBlendSpeedToCenter<comment="左右傾きが中央に戻る際のブレンド速度">;
+    FSeek(p + 44); float minChangeWalkTime<comment="最低歩き移行動作時間">;
+    FSeek(p + 48); float fallAnimationAngle<comment="落下時に落下アニメーションになる角度">;
+
+    FSeek(p + 52);
+} PlayerParamRunning;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float rotateSpeedMinFB<comment="前後方向の最小回転速度">;
+    FSeek(p + 4);  float rotateSpeedMaxFB<comment="前後方向の最大回転速度">;
+    FSeek(p + 8);  float rotateSpeedMinLR<comment="左右方向の最小回転速度">;
+    FSeek(p + 12); float rotateSpeedMaxLR<comment="左右方向の最大回転速度">;
+
+    FSeek(p + 16);
+} PlayerParamBalanceData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  PlayerParamBalanceData standard<comment="standard">;
+    FSeek(p + 16); PlayerParamBalanceData loop<comment="loop">;
+
+    FSeek(p + 32);
+} PlayerParamBalance;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSpeedRatio<comment="ブレーキ開始時の速度減衰割合">;
+    FSeek(p + 4);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 8);  float forceLand<comment="地上でのブレーキ力">;
+    FSeek(p + 12); float forceAir<comment="空中でのブレーキ力">;
+    FSeek(p + 16); float endSpeed<comment="ブレーキを終了する速度">;
+    FSeek(p + 20); float stopTime<comment="停止状態で強制停止するまでの時間">;
+
+    FSeek(p + 24);
+} PlayerParamBrake;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float thresholdSpeed<comment="クイックターンが可能な速度">;
+    FSeek(p + 4);  float thresholdAngle<comment="ターン入力と見なす角度">;
+    FSeek(p + 8);  float turnAfterSpeed<comment="ターン後の走り出し速度">;
+    FSeek(p + 12); bool stopEdge<comment="ターン中縁から落ちないようにするか">;
+
+    FSeek(p + 16);
+} PlayerParamTurn;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float preActionTime<comment="ボールになるまでの時間">;
+    FSeek(p + 4);  float longPressTime<comment="最大ジャンプ固定時間[sec]">;
+    FSeek(p + 8);  float addForceTime<comment="加速時間[sec]">;
+    FSeek(p + 12); float force<comment="ジャンプ力">;
+    FSeek(p + 16); float addForce<comment="上昇加速力">;
+    FSeek(p + 20); float forceMin<comment="最小ジャンプ力">;
+    FSeek(p + 24); float gravitySize<comment="重力サイズ">;
+
+    FSeek(p + 28);
+} PlayerParamJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float acceleForce<comment="水平加速力">;
+    FSeek(p + 4);  float deceleForce<comment="水平減速力/通常">;
+    FSeek(p + 8);  float deceleNeutralForce<comment="水平減速力/無入力">;
+    FSeek(p + 12); float deceleBackForce<comment="水平減速力/逆入力">;
+    FSeek(p + 16); float limitMin<comment="水平方向の最高速度の最低値">;
+    FSeek(p + 20); float limitUpSpeed<comment="重力逆方向の初速制限">;
+    FSeek(p + 24); float rotationForce<comment="旋回力[deg/sec]">;
+    FSeek(p + 28); float rotationForceDecaySpeed<comment="速度比旋回力減衰の減衰開始速度">;
+    FSeek(p + 32); float rotationForceDecayRate<comment="速度比旋回力減衰の減衰レート">;
+    FSeek(p + 36); float rotationForceDecayMax<comment="速度比旋回力減衰の最大減衰力">;
+    FSeek(p + 40); float baseAirDragScaleMin<comment="空気抵抗スケール[最小]">;
+    FSeek(p + 44); float baseAirDragScaleMax<comment="空気抵抗スケール[最大]">;
+
+    FSeek(p + 48);
+} PlayerParamJumpSpeed;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float initialSpeed<comment="垂直方向の初速">;
+    FSeek(p + 4); float bounceSpeed<comment="垂直方向の初速(バウンド時)">;
+    FSeek(p + 8); float limitSpeedMin<comment="水平方向の最高速度の最低値">;
+
+    FSeek(p + 12);
+} PlayerParamDoubleJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float thresholdVertSpeed<comment="落下とみなす垂直速度">;
+    FSeek(p + 4);  float tolerateJumpTime<comment="ジャンプへの遷移を許容する時間">;
+    FSeek(p + 8);  float fallEndDelayTime<comment="落下失敗用、カウントダウンが開始される時間">;
+    FSeek(p + 12); float fallEndFadeTime<comment="落下失敗用、カウントダウン開始からの猶予時間">;
+    FSeek(p + 16); float acceleForce<comment="加速度[m/sec]">;
+    FSeek(p + 20); float deceleForce<comment="減速度[m/sec]">;
+    FSeek(p + 24); float overSpeedDeceleForce<comment="オーバースピード減速度[m/sec]">;
+    FSeek(p + 28); float rotationForce<comment="旋回力[deg/sec]">;
+    FSeek(p + 32); float rotationForceDecaySpeed<comment="速度比旋回力減衰の減衰開始速度">;
+    FSeek(p + 36); float rotationForceDecayRate<comment="速度比旋回力減衰の減衰レート">;
+    FSeek(p + 40); float rotationForceDecayMax<comment="速度比旋回力減衰の最大減衰力">;
+
+    FSeek(p + 44);
+} PlayerParamFall;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float invincibleTime<comment="予備無敵時間">;
+
+    FSeek(p + 4);
+} PlayerParamDamageCommon;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialHorzSpeed<comment="デフォルト水平初速">;
+    FSeek(p + 4);  float initialVertSpeed<comment="デフォルト垂直初速">;
+    FSeek(p + 8);  float deceleForce<comment="減速度/空中">;
+    FSeek(p + 12); float transitFallTime<comment="落下遷移時間">;
+    FSeek(p + 16); float gravityScale<comment="重力スケール">;
+
+    FSeek(p + 20);
+} PlayerParamDamageNormal;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float fixedTime<comment="アクション固定時間">;
+
+    FSeek(p + 4);
+} PlayerParamDamageTurnBack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialHorzSpeed<comment="デフォルト水平初速">;
+    FSeek(p + 4);  float initialVertSpeed<comment="デフォルト垂直初速">;
+    FSeek(p + 8);  float deceleForceInAir<comment="減速度/空中">;
+    FSeek(p + 12); float deceleForceOnGround<comment="減速度/地上">;
+    FSeek(p + 16); float gravityScale<comment="重力スケール">;
+    FSeek(p + 20); float downTime<comment="ダウン時間">;
+    FSeek(p + 24); float transitTime<comment="次の行動へ割込遷移可能になる時間">;
+
+    FSeek(p + 28);
+} PlayerParamDamageBlowOff;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float vertSpeed<comment="垂直速度">;
+    FSeek(p + 4);  float horzSpeed<comment="水平速度">;
+    FSeek(p + 8);  float deceleForce<comment="減速度">;
+    FSeek(p + 12); float transitTime<comment="次の行動へ割込遷移可能になる時間">;
+
+    FSeek(p + 16);
+} PlayerParamDamageGuarded;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float actionTime<comment="アクション時間">;
+    FSeek(p + 4);  float minSpeed<comment="最小速度">;
+    FSeek(p + 8);  float lossSpeed<comment="減速速度">;
+    FSeek(p + 12); float lossTime<comment="減速時間">;
+
+    FSeek(p + 16);
+} PlayerParamDamageRunning;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float actionTime<comment="デフォルトアクション時間">;
+
+    FSeek(p + 4);
+} PlayerParamDamageQuake;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 jumpVelocity<comment="ジャンプ速度">;
+    FSeek(p + 16); float gravitySize<comment="重力サイズ">;
+    FSeek(p + 20); float invincibleTime<comment="予備無敵時間">;
+    FSeek(p + 24); float noActionTime<comment="アクション禁止時間">;
+
+    FSeek(p + 32);
+} PlayerParamDamageLava;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamDamageCommon common<comment="共通">;
+    FSeek(p + 4);   PlayerParamDamageNormal normal<comment="通常">;
+    FSeek(p + 24);  PlayerParamDamageTurnBack turnBack<comment="仰け反る">;
+    FSeek(p + 28);  PlayerParamDamageBlowOff blowOff<comment="吹き飛ぶ">;
+    FSeek(p + 56);  PlayerParamDamageGuarded guarded<comment="ガードされた">;
+    FSeek(p + 72);  PlayerParamDamageGuarded guardedSS<comment="ガードされた[スパソニ]">;
+    FSeek(p + 88);  PlayerParamDamageRunning running<comment="走りながら">;
+    FSeek(p + 104); PlayerParamDamageQuake quake<comment="よろける">;
+    FSeek(p + 112); PlayerParamDamageLava lava<comment="溶岩">;
+
+    FSeek(p + 144);
+} PlayerParamDamage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float invincibleTime<comment="無敵時間">;
+    FSeek(p + 4); float initialHorzSpeed<comment="デフォルト水平初速">;
+    FSeek(p + 8); float initialVertSpeed<comment="デフォルト垂直初速">;
+
+    FSeek(p + 12);
+} PlayerParamDeadNormal;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayerParamDeadNormal normal<comment="通常">;
+
+    FSeek(p + 12);
+} PlayerParamDead;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minSpeed<comment="最低速度">;
+    FSeek(p + 4);  float endSpeed<comment="終了速度">;
+    FSeek(p + 8);  float deceleJerk<comment="減速躍度">;
+    FSeek(p + 12); float deceleJerkContinue<comment="ボタン入力中の減速躍度">;
+    FSeek(p + 16); float deceleForceMax<comment="最大減速度">;
+    FSeek(p + 20); float baseRotateForce<comment="基本旋回力">;
+    FSeek(p + 24); float baseRotateForceSpeed<comment="基本旋回力の基準速度">;
+    FSeek(p + 28); float maxRotateForce<comment="最大旋回力">;
+    FSeek(p + 32); float frontRotateRatio<comment="正面方向旋回率">;
+    FSeek(p + 36); float rotationForceAutoRun<comment="旋回力[オートラン]">;
+    FSeek(p + 40); float movableMaxSlope<comment="斜面とみなす傾斜[deg]">;
+    FSeek(p + 44); float gravitySize<comment="重力サイズ">;
+    FSeek(p + 48); float minContinueTime<comment="最小継続時間">;
+    FSeek(p + 52); float maxAutoRunTime<comment="オートランでスライディングを継続する最大時間">;
+    FSeek(p + 56); float endSpeedAutoRun<comment="オートラン中のスライディング終了速度">;
+    FSeek(p + 60); float loopKickTransitTime<comment="ループキックに遷移する時間">;
+
+    FSeek(p + 64);
+} PlayerParamSliding;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSpeed<comment="落下/初速">;
+    FSeek(p + 4);  float initialAccele<comment="落下/初加速度">;
+    FSeek(p + 8);  float maxAccele<comment="落下/最高加速度">;
+    FSeek(p + 12); float jerk<comment="落下/躍度">;
+    FSeek(p + 16); float maxFallSpeed<comment="落下/最高落下速度">;
+    FSeek(p + 20); float angle<comment="落下/角度">;
+    FSeek(p + 24); float landingCancelTime<comment="着地/割込不能時間">;
+    FSeek(p + 28); float boundStompingCollisionScale<comment="バウンドストンプ3回目のコリジョンサイズスケール">;
+
+    FSeek(p + 32);
+} PlayerParamStomping;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 4);  float maxBoostSpeed<comment="ブースト最高速度">;
+    FSeek(p + 8);  float acceleForce<comment="加速度">;
+    FSeek(p + 12); float deceleForce<comment="減速度">;
+    FSeek(p + 16); float limitSpeedMin<comment="最低保証速度">;
+
+    FSeek(p + 20);
+} PlayerParamGrind;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSpeed<comment="初速">;
+    FSeek(p + 4);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 8);  float brakeAngle<comment="ブレーキを始める角度">;
+    FSeek(p + 12); float highBrakeAngle<comment="強いブレーキを始める角度">;
+    FSeek(p + 16); float brakeForce<comment="坂滑り後の斜面ブレーキ速度">;
+    FSeek(p + 20); float brakeForceHigh<comment="坂滑り後の水平面ブレーキ速度">;
+    FSeek(p + 24); float gravitySize<comment="重力サイズ">;
+    FSeek(p + 28); float gravitySizeAir<comment="空中重力サイズ">;
+    FSeek(p + 32); float endSpeedFront<comment="前方向滑り終了速度閾値">;
+    FSeek(p + 36); float endSpeedBack<comment="後方向滑り終了速度閾値">;
+    FSeek(p + 40); float reverseFallTime<comment="逆さま姿勢による落下への遷移時間">;
+    FSeek(p + 44); float fallToSlipTime<comment="落下から滑りに遷移する閾時間">;
+    FSeek(p + 48); float slipIdlingTime<comment="坂滑り開始時のスリップ時間">;
+    FSeek(p + 52); float minSlipTime<comment="最小スリップ時間">;
+
+    FSeek(p + 56);
+} PlayerParamFallSlope;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float thresholdSpeed<comment="閾値速度">;
+    FSeek(p + 4); float maxSpeed<comment="最高速度">;
+    FSeek(p + 8); float flipAngle<comment="バックフリップ角度">;
+
+    FSeek(p + 12);
+} PlayerParamFallFlip;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enabled<comment="転倒アクションをするか">;
+    FSeek(p + 4);   float sideSpinAngle<comment="転倒空中が横回転になる傾き">;
+    FSeek(p + 8);   float initialVertSpeed<comment="転倒空中の初速">;
+    FSeek(p + 12);  float gravitySize<comment="転倒空中の重力サイズ">;
+    FSeek(p + 16);  float gravitySize2<comment="転倒空中の重力サイズ[最大]">;
+    FSeek(p + 20);  float deceleForceInAir<comment="転倒空中の減速度">;
+    FSeek(p + 24);  float minSpeedInAir<comment="転倒空中の最低速度">;
+    FSeek(p + 28);  float rotateEaseTimeLeftRight<comment="左右転倒の旋回開始補間時間">;
+    FSeek(p + 32);  float rotateEaseTimeFrontBack<comment="前後転倒の旋回開始補間時間">;
+    FSeek(p + 36);  float rotateSpeedMinLeftRight<comment="左右転倒の最小旋回速度">;
+    FSeek(p + 40);  float rotateSpeedMaxLeftRight<comment="左右転倒の最大旋回速度">;
+    FSeek(p + 44);  float rotateSpeedMinFrontBack<comment="前後転倒の最小旋回速度">;
+    FSeek(p + 48);  float rotateSpeedMaxFrontBack<comment="前後転倒の最大旋回速度">;
+    FSeek(p + 52);  float angleLeftRightStagger<comment="転倒判定の左右角度/よろけ">;
+    FSeek(p + 56);  float angleLeftRightRoll<comment="転倒判定の左右角度/転倒">;
+    FSeek(p + 60);  float angleFrontBackRoll<comment="転倒判定の前後角度/転倒">;
+    FSeek(p + 64);  float angleBigRoll<comment="転倒判定が大転倒になる地面の角度">;
+    FSeek(p + 68);  float inRunTime<comment="転倒判定の開始時間1">;
+    FSeek(p + 72);  float inAirTime<comment="転倒判定の開始時間2">;
+    FSeek(p + 76);  float rollSpeedFront<comment="転倒時の前方向速度">;
+    FSeek(p + 80);  float bigRollVelocityRatio<comment="大転倒時の速度減衰率">;
+    FSeek(p + 84);  float dropDashHoldTime<comment="ドロップダッシュ移行ホールド時間">;
+    FSeek(p + 88);  float airBrakeVertSpeed<comment="垂直エアブレーキがかかる垂直方向速度">;
+    FSeek(p + 92);  float airBrakeForce<comment="垂直エアブレーキ力">;
+    FSeek(p + 96);  float airTrickHeight<comment="エアトリック可能な高度">;
+    FSeek(p + 100); float airTrickTime<comment="エアトリック可能になるまでの時間">;
+
+    FSeek(p + 104);
+} PlayerParamTumble;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float jumpForce<comment="ジャンプ力">;
+    FSeek(p + 4);  float jumpAddForce<comment="ジャンプ上昇加速力">;
+    FSeek(p + 8);  float addTime<comment="最長加速時間">;
+    FSeek(p + 12); float acceleForce<comment="水平加速力">;
+    FSeek(p + 16); float deceleForce<comment="水平減速力">;
+    FSeek(p + 20); float brakeForce<comment="ブレーキ減速力">;
+    FSeek(p + 24); float limitSpeedMin<comment="水平移動最低速度">;
+    FSeek(p + 28); float limitSpeedMax<comment="水平移動最高速度">;
+
+    FSeek(p + 32);
+} PlayerParamSpinAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speed<comment="速度">;
+
+    FSeek(p + 4);
+} PlayerParamHomingAttackData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bounceVertSpeed<comment="ノックバック垂直速度">;
+    FSeek(p + 4);  float bounceHorzSpeed<comment="ノックバック水平速度">;
+    FSeek(p + 8);  float bounceAcceleForce<comment="ノックバック加速度">;
+    FSeek(p + 12); float bounceDeceleForce<comment="ノックバック減速度">;
+    FSeek(p + 16); float bounceAngleWidth<comment="ノックバック角度幅">;
+    FSeek(p + 20); float bounceTime<comment="ノックバック挙動時間">;
+    FSeek(p + 24); float attackDownTime<comment="攻撃不能時間">;
+    FSeek(p + 28); float attackDownTimeForStomp<comment="ストンピング不能時間">;
+
+    FSeek(p + 32);
+} PlayerParamHomingBounceData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamHomingAttackData sonic<comment="攻撃/ソニック">;
+    FSeek(p + 4);   PlayerParamHomingAttackData supersonic<comment="攻撃/スーパーソニック">;
+    FSeek(p + 8);   PlayerParamHomingBounceData sonicBounce<comment="バウンス/ソニック[強]">;
+    FSeek(p + 40);  PlayerParamHomingBounceData sonicBounceWeak<comment="バウンス/ソニック[弱]">;
+    FSeek(p + 72);  PlayerParamHomingBounceData sonicBounceStorm<comment="バウンス/ソニック[嵐中]">;
+    FSeek(p + 104); PlayerParamHomingBounceData sonicBounceStormSwirl<comment="バウンス/ソニック[嵐吸い込み中]">;
+    FSeek(p + 136); PlayerParamHomingBounceData supersonicBounce<comment="バウンス/スーパーソニック">;
+    FSeek(p + 168); float cameraEaseInTime<comment="ホーミングカメラ開始補間時間">;
+    FSeek(p + 172); float cameraEaseOutTime<comment="ホーミングカメラ終了補間時間">;
+
+    FSeek(p + 176);
+} PlayerParamHomingAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float bounceVertSpeed<comment="ノックバック垂直速度">;
+    FSeek(p + 4);  float bounceHorzSpeed<comment="ノックバック水平速度">;
+    FSeek(p + 8);  float attackDownTime<comment="攻撃後再攻撃不能時間">;
+    FSeek(p + 12); float enableHomingTime<comment="攻撃後攻撃可能時間">;
+
+    FSeek(p + 16);
+} PlayerParamHitEnemy;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float maxVertSpeed<comment="最高落下速度">;
+    FSeek(p + 4);  float acceleVertForce<comment="落下加速度">;
+    FSeek(p + 8);  float maxHorzSpeed<comment="最高水平速度">;
+    FSeek(p + 12); float acceleHorzForce<comment="水平移動加速度">;
+
+    FSeek(p + 16);
+} SpeedParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  SpeedParam normal<comment="通常">;
+    FSeek(p + 16); SpeedParam fast<comment="ブースト">;
+    FSeek(p + 32); SpeedParam damaged<comment="ダメージ中">;
+    FSeek(p + 48); SpeedParam ringdash<comment="リングダッシュ中">;
+    FSeek(p + 64); float startHeight<comment="開始に必要な高度">;
+    FSeek(p + 68); float startSpeed<comment="開始に必要な落下速度">;
+    FSeek(p + 72); float deceleVertForce<comment="落下減速度">;
+    FSeek(p + 76); float deceleHorzForce<comment="水平減速度">;
+    FSeek(p + 80); float deceleNeutralForce<comment="無入力減速度">;
+    FSeek(p + 84); float damageTime<comment="ダメージ時間">;
+    FSeek(p + 88); float ringdashTime<comment="リングダッシュ時間">;
+
+    FSeek(p + 92);
+} PlayerParamDiving;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float damperV<comment="垂直方向の速度減衰率">;
+    FSeek(p + 4);  float damperH<comment="水平方向の速度減衰率">;
+    FSeek(p + 8);  float accelRate<comment="ファンからの距離に応じた加速率">;
+    FSeek(p + 12); float moveForceFV<comment="スティックによる移動加速度FV">;
+    FSeek(p + 16); float moveForceSV<comment="スティックによる移動加速度SV">;
+    FSeek(p + 20); float jumpCheckSpeed<comment="ジャンプから移行できる速度">;
+
+    FSeek(p + 24);
+} PlayerParamFan;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float jumpSpeed<comment="上方向初速">;
+    FSeek(p + 4);  float backSpeed<comment="後方向初速">;
+    FSeek(p + 8);  float downAccel<comment="重力加速度">;
+    FSeek(p + 12); float damperV<comment="垂直方向ダンパー">;
+    FSeek(p + 16); float damperH<comment="水平方向ダンパー">;
+    FSeek(p + 20); float time<comment="時間">;
+
+    FSeek(p + 24);
+} PlayerParamBackflip;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startSpeed<comment="初速">;
+    FSeek(p + 4);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 8);  float accel<comment="加速度">;
+    FSeek(p + 12); float brake<comment="減速度">;
+    FSeek(p + 16); float damageSpeed<comment="ダメージ時初速">;
+    FSeek(p + 20); float damageBrake<comment="ダメージ時減速度">;
+    FSeek(p + 24); float steeringSpeed<comment="回転速度">;
+    FSeek(p + 28); float endSteeringSpeed<comment="回転速度になる速度">;
+
+    FSeek(p + 32);
+} PlayerParamSlowMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startSlopeAngle<comment="発動斜度">;
+    FSeek(p + 4);  float endSlopeAngle<comment="終了斜度">;
+    FSeek(p + 8);  float startSpeed<comment="発動速度">;
+    FSeek(p + 12); float endSpeed<comment="終了速度">;
+    FSeek(p + 16); float stickAngle<comment="ブレーキ判定スティック角度">;
+    FSeek(p + 20); float brake<comment="減速度">;
+    FSeek(p + 24); float forceBrake<comment="スティック入力時の減速度">;
+    FSeek(p + 28); float maxSpeed<comment="最高速度">;
+
+    FSeek(p + 32);
+} PlayerParamSpin;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float maxSpeed<comment="最高速度">;
+    FSeek(p + 4);   float walkSpeed<comment="移動速度 基本値">;
+    FSeek(p + 8);   float walkSpeedMax<comment="移動速度 最大値">;
+    FSeek(p + 12);  float runSpeed<comment="ダッシュ移動速度 基本値">;
+    FSeek(p + 16);  float runSpeedMax<comment="ダッシュ移動速度 最大値">;
+    FSeek(p + 20);  float walkSpeedOnMesh<comment="移動速度 変形メッシュ上 基本値">;
+    FSeek(p + 24);  float walkSpeedOnMeshMax<comment="移動速度 変形メッシュ上 最大値">;
+    FSeek(p + 28);  float runSpeedOnMesh<comment="ダッシュ移動速度 変形メッシュ上 基本値">;
+    FSeek(p + 32);  float runSpeedOnMeshMax<comment="ダッシュ移動速度 変形メッシュ上 最大値">;
+    FSeek(p + 36);  float minAccessSpeed<comment="壁移動移行最低速度">;
+    FSeek(p + 40);  float stickSpeed<comment="スティックで貼り付ける速度">;
+    FSeek(p + 44);  float gravity<comment="専用重力加速度">;
+    FSeek(p + 48);  float accel<comment="加速度">;
+    FSeek(p + 52);  float brake<comment="減速ブレーキ">;
+    FSeek(p + 56);  float stopBrake<comment="停止ブレーキ">;
+    FSeek(p + 60);  float fallSpeed<comment="落下移行速度">;
+    FSeek(p + 64);  float steeringSpeed1<comment="回転速度1">;
+    FSeek(p + 68);  float steeringSpeed2<comment="回転速度2">;
+    FSeek(p + 72);  float startSteeringSpeed<comment="回転速度1になる速度">;
+    FSeek(p + 76);  float endSteeringSpeed<comment="回転速度2になる速度">;
+    FSeek(p + 80);  float startTime<comment="開始に必要な走行時間">;
+    FSeek(p + 84);  float useEnergySpeedBase<comment="壁移動エネルギー消費速度 ベース">;
+    FSeek(p + 88);  float useEnergySpeedBaseOnMesh<comment="壁移動エネルギー消費速度 ベース 変形メッシュ上">;
+    FSeek(p + 92);  float useEnergySpeedVal<comment="壁移動エネルギー消費速度 可変">;
+    FSeek(p + 96);  float useEnergySpeedValOnMesh<comment="壁移動エネルギー消費速度 可変 変形メッシュ上">;
+    FSeek(p + 100); float useEnergyAngle<comment="壁移動エネルギー可変角度">;
+    FSeek(p + 104); float useEnergyAngleOnMesh<comment="壁移動エネルギー可変角度 変形メッシュ上">;
+    FSeek(p + 108); float brakeStartEnergy<comment="減速開始エネルギー">;
+    FSeek(p + 112); float brakeStartEnergyOnMesh<comment="減速開始エネルギー 変形メッシュ上">;
+    FSeek(p + 116); float homingSearchDistanceNear<comment="ホーミング索敵範囲　近">;
+    FSeek(p + 120); float homingSearchDistanceFar<comment="ホーミング索敵範囲　遠">;
+    FSeek(p + 124); float wallBumpHeightUpper<comment="壁の凹凸の高さ 上り">;
+    FSeek(p + 128); float wallBumpHeightUnder<comment="壁の凹凸の高さ 下り">;
+    FSeek(p + 132); float recoveryCheckTime<comment="吹っ飛び移行時のリカバリーターゲット検索時間">;
+
+    FSeek(p + 136);
+} PlayerParamWallMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float gravitySize<comment="張り付き/重力サイズ">;
+    FSeek(p + 4);  float minTime<comment="張り付き/最小時間">;
+    FSeek(p + 8);  float maxTime<comment="張り付き/最大時間">;
+    FSeek(p + 12); float stopTime<comment="張り付き/滑らない時間">;
+    FSeek(p + 16); float maxDownSpeed<comment="張り付き/最高滑落速度">;
+    FSeek(p + 20); float fallGroundDistance<comment="張り付き/落下になる地面までの高さ">;
+    FSeek(p + 24); float frontForce<comment="ジャンプ/正面方向速度">;
+    FSeek(p + 28); float upForce<comment="ジャンプ/上方向速度">;
+    FSeek(p + 32); float impulseTime<comment="ジャンプ/射出時間">;
+
+    FSeek(p + 36);
+} PlayerParamWallJump;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float stepSpeedFront<comment="前方移動速度">;
+    FSeek(p + 4);  float stepSpeedFrontDash<comment="前方移動速度(ダッシュ時)">;
+    FSeek(p + 8);  float stepSpeedSide<comment="側方移動速度">;
+    FSeek(p + 12); float stepSpeedSideDash<comment="側方移動速度(ダッシュ時)">;
+    FSeek(p + 16); float stepSpeedBack<comment="後方移動速度">;
+    FSeek(p + 20); float stepDashRate<comment="ダッシュ時の倍率">;
+    FSeek(p + 24); float maxAnimSpeed<comment="移動モーション再生レート 最大値">;
+    FSeek(p + 28); float exhaustAngle<comment="クライミング疲労一定角度">;
+    FSeek(p + 32); float exhaustAngleOnMesh<comment="クライミング疲労一定角度 変形メッシュ上">;
+    FSeek(p + 36); float exhaustBase<comment="クライミング疲労基本量　開始角度時の1mあたりの消費量">;
+    FSeek(p + 40); float exhaustBaseOnMesh<comment="クライミング疲労基本量　 変形メッシュ上">;
+    FSeek(p + 44); float exhaustRate<comment="クライミング疲労増加率　角度に比例">;
+    FSeek(p + 48); float exhaustRateOnMesh<comment="クライミング疲労増加率　 変形メッシュ上">;
+    FSeek(p + 52); float useGrabGaugeSpeed<comment="握力ゲージ消費速度">;
+    FSeek(p + 56); float useGrabGaugeSpeedOnMesh<comment="握力ゲージ消費速度  変形メッシュ上">;
+    FSeek(p + 60); float useGrabGaugeTurbo<comment="ターボ時握力ゲージ消費量">;
+    FSeek(p + 64); float useGrabGaugeTurboOnMesh<comment="ターボ時握力ゲージ消費量  変形メッシュ上">;
+    FSeek(p + 68); float homingSearchDistanceNear<comment="ホーミング索敵範囲　近">;
+    FSeek(p + 72); float homingSearchDistanceFar<comment="ホーミング索敵範囲　遠">;
+    FSeek(p + 76); float resetAngle<comment="姿勢の重力上方向リセットが起こる角度">;
+    FSeek(p + 80); float recoveryCheckTime<comment="吹っ飛び移行時のリカバリーターゲット検索時間">;
+
+    FSeek(p + 84);
+} PlayerParamClimbing;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float time<comment="滑落時間">;
+    FSeek(p + 4);  float speed<comment="滑落速度">;
+    FSeek(p + 8);  float speedOnMesh<comment="滑落速度 メッシュ上">;
+    FSeek(p + 12); float accel<comment="加速度">;
+    FSeek(p + 16); float brake<comment="減速度">;
+    FSeek(p + 20); float brakeOnMesh<comment="減速度 メッシュ上">;
+
+    FSeek(p + 24);
+} PlayerParamSlideDown;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float consumptionRate<comment="消費速度/ソニック">;
+    FSeek(p + 4);  float consumptionRateSS<comment="消費速度/スーパーソニック">;
+    FSeek(p + 8);  float recoveryRate<comment="回復速度/ソニック">;
+    FSeek(p + 12); float recoveryRateSS<comment="回復速度/スーパーソニック">;
+    FSeek(p + 16); float reigniteRatio<comment="再点火許容レート">;
+    FSeek(p + 20); float recoveryByRing<comment="リングによる回復量">;
+    FSeek(p + 24); float recoveryByAttack<comment="攻撃による回復量">;
+    FSeek(p + 28); float blurPowers[3]<comment="ブースト中のブラー強度",optimize=false>;
+    FSeek(p + 40); float blurEaseInTime<comment="ブースト開始時のブラー補間時間">;
+    FSeek(p + 44); float blurEaseOutTime<comment="ブースト終了時のブラー補間時間">;
+    FSeek(p + 48); float endSpeed<comment="ブースト解除の下限速度">;
+    FSeek(p + 52); float powerBoostCoolTime<comment="パワーブースト演出のクールタイム">;
+    FSeek(p + 56); float infinityBoostTime<comment="無限ブースト時間">;
+
+    FSeek(p + 60);
+} PlayerParamBoost;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float startHSpeed<comment="水平方向初速  基本値">;
+    FSeek(p + 4);  float startHSpeedMax<comment="水平方向初速  最高値">;
+    FSeek(p + 8);  float startVSpeed<comment="垂直方向初速">;
+    FSeek(p + 12); float minHSpeed<comment="水平方向最低速度 基本値">;
+    FSeek(p + 16); float minHSpeedMax<comment="水平方向最低速度 最高値">;
+    FSeek(p + 20); float brakeTime<comment="初速から最低速度になるまでの時間">;
+    FSeek(p + 24); float minKeepTime<comment="最低初速持続時間">;
+    FSeek(p + 28); float maxKeepTime<comment="最高初速持続時間">;
+    FSeek(p + 32); float maxTime<comment="最高持続時間">;
+    FSeek(p + 36); float gravityRate<comment="重力加速度倍率">;
+    FSeek(p + 40); float steeringSpeed<comment="回転速度">;
+    FSeek(p + 44); float additionalTransitTime<comment="落下状態になってもAirBoostからの遷移とみなす追加時間">;
+    FSeek(p + 48); float supersonicTime<comment="スパソニのオートラン中入力時の判定時間">;
+
+    FSeek(p + 52);
+} PlayerParamAirBoost;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSideSpeed<comment="横方向の初速">;
+    FSeek(p + 4);  float acceleSideForce<comment="横方向の加速度">;
+    FSeek(p + 8);  float deceleSideForce<comment="横方向の減速度">;
+    FSeek(p + 12); float maxSideSpeed<comment="横方向の最高速度">;
+
+    FSeek(p + 16);
+} PlayerParamAutorun;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed<comment="側転速度">;
+    FSeek(p + 4);  float brakeForce<comment="側転ブレーキ力">;
+    FSeek(p + 8);  float motionSpeedRatio<comment="モーション速度比率">;
+    FSeek(p + 12); float stepSpeed<comment="ステップ速度">;
+    FSeek(p + 16); float maxStepDistance<comment="最大ステップ距離">;
+    FSeek(p + 20); float minStepDistance<comment="最小ステップ距離">;
+    FSeek(p + 24); float maxStepSpeed<comment="ステップ距離が最大になる速度">;
+    FSeek(p + 28); float minStepSpeed<comment="ステップ距離が最小になる速度">;
+
+    FSeek(p + 32);
+} PlayerParamSideStep;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed<comment="側転速度">;
+    FSeek(p + 4);  float brakeForce<comment="側転ブレーキ力">;
+    FSeek(p + 8);  float motionSpeedRatio<comment="モーション速度比率">;
+    FSeek(p + 12); float stepSpeed<comment="ステップ速度">;
+    FSeek(p + 16); float maxStepDistance<comment="最大ステップ距離">;
+    FSeek(p + 20); float minStepDistance<comment="最小ステップ距離">;
+    FSeek(p + 24); float maxStepSpeed<comment="ステップ距離が最大になる速度">;
+    FSeek(p + 28); float minStepSpeed<comment="ステップ距離が最小になる速度">;
+
+    FSeek(p + 32);
+} PlayerParamSideStep2;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float needSpeed<comment="発動に必要な最低速度">;
+    FSeek(p + 4);  float acceleForce<comment="前方への加速度">;
+    FSeek(p + 8);  float acceleSideForce<comment="移動ラインへの引き込み加速度">;
+    FSeek(p + 12); float stepInitialSpeed<comment="サイドステップの初速">;
+    FSeek(p + 16); float avoidForce<comment="壁衝突回避時の加速度">;
+    FSeek(p + 20); float justBoostForce<comment="ジャスト回避時の追加加速度">;
+    FSeek(p + 24); float justBoostMax<comment="ジャスト回避時の最大速度">;
+    FSeek(p + 28); float justBoostTime<comment="ジャスト回避時のブースト時間">;
+    FSeek(p + 32); float justBoostBrake<comment="ジャスト回避ブーストの終了時減速度">;
+
+    FSeek(p + 36);
+} PlayerParamQuickStep;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float minRecieveTime<comment="最小受付時間">;
+    FSeek(p + 4);  float maxRecieveTime<comment="最大受付時間">;
+    FSeek(p + 8);  float frozenTime<comment="失敗時硬直時間">;
+    FSeek(p + 12); float justEffectEasein<comment="短エフェクト開始補間時間">;
+    FSeek(p + 16); float justEffectEaseout<comment="短エフェクト終了補間時間">;
+    FSeek(p + 20); float justEffectTime<comment="短エフェクト時間">;
+    FSeek(p + 24); float justEffectEasein2<comment="長エフェクト開始補間時間">;
+    FSeek(p + 28); float justEffectEaseout2<comment="長エフェクト終了補間時間">;
+    FSeek(p + 32); float justEffectTime2<comment="長エフェクト時間">;
+
+    FSeek(p + 36);
+} PlayerParamParry;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed<comment="速度">;
+    FSeek(p + 4);  float damper<comment="減衰">;
+    FSeek(p + 8);  float parryTime<comment="パリー可能時間">;
+    FSeek(p + 12); float invincibleTime<comment="無敵時間">;
+
+    FSeek(p + 16);
+} PlayerParamAvoidData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float time<comment="アクション時間">;
+    FSeek(p + 4);   float fixedTime<comment="アクション固定時間">;
+    FSeek(p + 8);   float reentryInputPriorityTime<comment="連続回避の先行入力開始時間">;
+    FSeek(p + 12);  float reentryTime<comment="連続回避の禁止時間">;
+    FSeek(p + 16);  float frontAngle<comment="前方回避角度">;
+    FSeek(p + 20);  float backAngle<comment="後方回避角度">;
+    FSeek(p + 24);  float addFallSpeed<comment="空中回避の加算落下速度">;
+    FSeek(p + 28);  PlayerParamAvoidData data[7]<comment="移動",optimize=false>;
+    FSeek(p + 140); float baseDistance<comment="回り込み基準距離">;
+    FSeek(p + 144); float limitAngle<comment="回り込み制限角度">;
+
+    FSeek(p + 148);
+} PlayerParamAvoid;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    PlayerParamCommon common<comment="汎用">;
+    FSeek(p + 48);   PlayerParamSpeed speed<comment="速度">;
+    FSeek(p + 272);  PlayerParamRotation rotation<comment="角速度">;
+    FSeek(p + 316);  PlayerParamRunning running<comment="走りモーション">;
+    FSeek(p + 368);  PlayerParamBalance balance<comment="姿勢回転">;
+    FSeek(p + 400);  PlayerParamBrake brake<comment="ブレーキ">;
+    FSeek(p + 424);  PlayerParamTurn turn<comment="ターン">;
+    FSeek(p + 440);  PlayerParamJump jump<comment="ジャンプ">;
+    FSeek(p + 468);  PlayerParamJumpSpeed jumpSpeed<comment="ジャンプ中速度">;
+    FSeek(p + 516);  PlayerParamDoubleJump doubleJump<comment="2段ジャンプ">;
+    FSeek(p + 528);  PlayerParamFall fall<comment="落下">;
+    FSeek(p + 576);  PlayerParamDamage damage<comment="ダメージ">;
+    FSeek(p + 720);  PlayerParamDead dead<comment="死亡">;
+    FSeek(p + 732);  PlayerParamSliding sliding<comment="スライディング">;
+    FSeek(p + 796);  PlayerParamStomping stomping<comment="ストンピング">;
+    FSeek(p + 828);  PlayerParamGrind grind<comment="グラインド">;
+    FSeek(p + 848);  PlayerParamFallSlope fallSlope<comment="坂滑り">;
+    FSeek(p + 904);  PlayerParamFallFlip fallFlip<comment="坂バックフリップ">;
+    FSeek(p + 916);  PlayerParamTumble tumble<comment="バンプジャンプ">;
+    FSeek(p + 1020); PlayerParamSpinAttack spinAttack<comment="スピンアタック">;
+    FSeek(p + 1052); PlayerParamHomingAttack homingAttack<comment="ホーミングアタック">;
+    FSeek(p + 1228); PlayerParamHitEnemy hitEnemy<comment="敵接触">;
+    FSeek(p + 1244); PlayerParamDiving diving<comment="ダイビング">;
+    FSeek(p + 1336); PlayerParamFan fan<comment="ファン">;
+    FSeek(p + 1360); PlayerParamBackflip backflip<comment="後方宙返り">;
+    FSeek(p + 1384); PlayerParamSlowMove slowmove<comment="低速移動">;
+    FSeek(p + 1416); PlayerParamSpin spin<comment="スピン">;
+    FSeek(p + 1448); PlayerParamWallMove wallmove<comment="壁移動">;
+    FSeek(p + 1584); PlayerParamWallJump walljump<comment="壁ジャンプ">;
+    FSeek(p + 1620); PlayerParamClimbing climbing<comment="クライミング">;
+    FSeek(p + 1704); PlayerParamSlideDown slidedown<comment="滑落">;
+    FSeek(p + 1728); PlayerParamBoost boost<comment="ブースト">;
+    FSeek(p + 1788); PlayerParamAirBoost airboost<comment="エアブースト">;
+    FSeek(p + 1840); PlayerParamAutorun autorun<comment="オートラン">;
+    FSeek(p + 1856); PlayerParamSideStep sidestep<comment="サイドステップ">;
+    FSeek(p + 1888); PlayerParamSideStep2 sidestep2<comment="サイドステップ(特殊状況)">;
+    FSeek(p + 1920); PlayerParamQuickStep quickstep<comment="クイックステップ">;
+    FSeek(p + 1956); PlayerParamParry parry<comment="パリー">;
+    FSeek(p + 1992); PlayerParamAvoid avoid<comment="回避">;
+
+    FSeek(p + 2144);
+} ModePackage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speedYStart<comment="上昇初速">;
+    FSeek(p + 4);  float speedYMax<comment="上昇最高速">;
+    FSeek(p + 8);  float accY<comment="上昇加速度">;
+    FSeek(p + 12); float height<comment="上昇高度">;
+    FSeek(p + 16); sint32 riseNum<comment="上昇可能回数">;
+    FSeek(p + 20); float heightRatio[4]<comment="上昇高度倍率",optimize=false>;
+
+    FSeek(p + 36);
+} TailsParamFlyRise;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float decY<comment="Y減速度">;
+    FSeek(p + 4); float duration<comment="高度維持時間">;
+
+    FSeek(p + 8);
+} TailsParamFlyCruise;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float speedYMax<comment="降下最高速">;
+    FSeek(p + 4); float accY<comment="降下加速度">;
+    FSeek(p + 8); float moveMaxSpeed<comment="移動最高速度">;
+
+    FSeek(p + 12);
+} TailsParamFlyDescend;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float azimuthSensitivity<comment="方位角の追従感度">;
+    FSeek(p + 4); float elevationOffset<comment="仰角オフセット">;
+
+    FSeek(p + 8);
+} TailsParamFlyCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  TailsParamFlyRise rise<comment="上昇">;
+    FSeek(p + 36); TailsParamFlyCruise cruise<comment="巡航">;
+    FSeek(p + 44); TailsParamFlyDescend descend<comment="降下">;
+    FSeek(p + 56); float maxSpeed<comment="最高速度(上昇・巡航)">;
+    FSeek(p + 60); float acc<comment="加速度">;
+    FSeek(p + 64); float dec<comment="無入力時減速度">;
+    FSeek(p + 68); float maxSteerSpeed<comment="最大回転になる速度">;
+    FSeek(p + 72); float rollSpeed<comment="ロール速度">;
+    FSeek(p + 76); float neutralRollSpeed<comment="戻りロール速度">;
+    FSeek(p + 80); float yawSpeed<comment="ヨー速度">;
+    FSeek(p + 84); float maxRollAngle<comment="最大ロール角">;
+    FSeek(p + 88); float height<comment="挙動維持高度">;
+    FSeek(p + 92); float heightLimit<comment="高度上限">;
+    FSeek(p + 96); TailsParamFlyCamera camera<comment="カメラ">;
+
+    FSeek(p + 104);
+} TailsParamFly;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float archSpeed<comment="[山なり]速さ">;
+    FSeek(p + 4);  float archRange<comment="[山なり]射程">;
+    FSeek(p + 8);  float archHeight<comment="[山なり]高さ">;
+    FSeek(p + 12); float archModelScale<comment="[山なり]モデルスケール">;
+    FSeek(p + 16); float archColliderRadius<comment="[山なり]コリジョン半径">;
+    FSeek(p + 20); float floatSpeed<comment="[滞空]初速">;
+    FSeek(p + 24); float floatRange<comment="[滞空]射程">;
+    FSeek(p + 28); float floatAirYOffset<comment="[滞空]空中時のYオフセット">;
+    FSeek(p + 32); float floatDuration<comment="[滞空]最大滞空時間">;
+    FSeek(p + 36); float floatModelScale<comment="[滞空]モデルスケール">;
+    FSeek(p + 40); float floatColliderRadius<comment="[滞空]コリジョン半径">;
+    FSeek(p + 44); float addMoveSpeedRatio<comment="移動速度加算倍率">;
+    FSeek(p + 48); float modelExtendDuration<comment="モデル拡大時間">;
+
+    FSeek(p + 52);
+} TailsParamSpannerShot;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); TailsParamSpannerShot shot<comment="スパナの弾パラメータ">;
+
+    FSeek(p + 52);
+} TailsParamSpanner;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float speed<comment="弾速">;
+    FSeek(p + 4);  float range<comment="射程">;
+    FSeek(p + 8);  float colliderRadius<comment="コリジョン半径">;
+    FSeek(p + 12); float readyDuration<comment="タメ時間">;
+    FSeek(p + 16); float readyRotateSpeed<comment="タメ回転速度(°/s)">;
+    FSeek(p + 20); float readyFallSpeed<comment="タメ落下速度">;
+    FSeek(p + 24); float addMoveSpeedRatio<comment="移動速度加算倍率">;
+
+    FSeek(p + 28);
+} TailsParamCyBlasterShot;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initial<comment="初速">;
+    FSeek(p + 4);  float min<comment="最低速度">;
+    FSeek(p + 8);  float max<comment="最高速度">;
+    FSeek(p + 12); float minTurn<comment="旋回中速度">;
+    FSeek(p + 16); float acceleForce<comment="加速度[m/sec]">;
+    FSeek(p + 20); float rotateForce<comment="旋回力[deg/sec]">;
+
+    FSeek(p + 24);
+} TailsParamCyBlasterLiftRun;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float jumpForce<comment="ジャンプ力">;
+    FSeek(p + 4); float gravitySize<comment="重力サイズ">;
+
+    FSeek(p + 8);
+} TailsParamCyBlasterLiftAir;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  TailsParamCyBlasterLiftRun run<comment="歩行">;
+    FSeek(p + 24); TailsParamCyBlasterLiftAir air<comment="空中">;
+    FSeek(p + 32); float liftUpTime<comment="持ち上げにかかる時間">;
+    FSeek(p + 48); vector3 liftOffset<comment="持ち上げ位置(足元からの相対)">;
+
+    FSeek(p + 64);
+} TailsParamCyBlasterLift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 noneWeight<comment="ドロップなしのウェイト値">;
+    FSeek(p + 4);  uint32 ring10Weight<comment="10リングのウェイト値">;
+    FSeek(p + 8);  uint32 powerSeedWeight<comment="力の種のウェイト値">;
+    FSeek(p + 12); uint32 guardSeedWeight<comment="守りの種のウェイト値">;
+    FSeek(p + 16); uint32 sequenceItemWeight<comment="シーケンスアイテムのウェイト値">;
+    FSeek(p + 20); uint32 portalBitWeight<comment="ポータルの欠片のウェイト値">;
+    FSeek(p + 24); uint32 skillPieceWeight<comment="スキルピースのウェイト値">;
+
+    FSeek(p + 28);
+} CyloopDropItemWeightParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  CyloopDropItemWeightParameter weight<comment="通常時のウェイト">;
+    FSeek(p + 28); CyloopDropItemWeightParameter weight2<comment="バトル中のウェイト">;
+    FSeek(p + 56); uint32 numRings<comment="リングドロップ枚数/単体">;
+    FSeek(p + 60); uint32 numRings2<comment="リングドロップ枚数/複合">;
+    FSeek(p + 64); uint32 num10Rings<comment="10リングドロップ枚数">;
+    FSeek(p + 68); uint32 numSkillPieces<comment="スキルピースドロップ数">;
+    FSeek(p + 72); uint32 skillPieceExp<comment="スキルピース1つあたりの経験値量">;
+    FSeek(p + 76); float rareDropCoolTime<comment="レアドロップクールタイム[sec]">;
+
+    FSeek(p + 80);
+} CyloopDropItemParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  TailsParamCyBlasterShot shot<comment="射撃">;
+    FSeek(p + 32); TailsParamCyBlasterLift lift<comment="持ち上げ状態">;
+    FSeek(p + 96); CyloopDropItemParameter dropItem<comment="アイテムドロップ">;
+
+    FSeek(p + 176);
+} TailsParamCyBlaster;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float initialSpeed<comment="初速">;
+    FSeek(p + 4);  float maxSpeed<comment="最高速度">;
+    FSeek(p + 8);  PlayerParamSpeedAcceleData accele<comment="加速度">;
+    FSeek(p + 28); PlayerParamSpeedAcceleData decele<comment="減速度">;
+    FSeek(p + 48); float baseRotateForce<comment="基本旋回力">;
+    FSeek(p + 52); float minTurnSpeed<comment="旋回中速度">;
+    FSeek(p + 56); float turnDeceleAngleMin<comment="旋回減速/開始角度">;
+    FSeek(p + 60); float turnDeceleAngleMax<comment="旋回減速/最大角度">;
+
+    FSeek(p + 64);
+} PlayerParamSpinBoostSpeed;
+
+enum<sint8> AirAccelMode
+{
+    Alawys = 0,
+    None = 1,
+    Speed = 2,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float forceRunTime<comment="強制走り時間">;
+    FSeek(p + 4);   float initialRunTime<comment="初速を維持する時間">;
+    FSeek(p + 8);   PlayerParamSpinBoostSpeed speedBall<comment="通常速度">;
+    FSeek(p + 72);  PlayerParamSpinBoostSpeed speedBoost<comment="ブースト速度">;
+    FSeek(p + 136); PlayerParamSpeedAcceleData2 deceleNeutralMin<comment="ニュートラル時最小減速度">;
+    FSeek(p + 152); PlayerParamSpeedAcceleData2 deceleNeutralMax<comment="ニュートラル時最大減速度">;
+    FSeek(p + 168); float gravitySize<comment="重力サイズ">;
+    FSeek(p + 172); float gravityBeginTime<comment="空中/重力開始時間">;
+    FSeek(p + 176); float gravityMaxTime<comment="空中/重力最大化時間">;
+    FSeek(p + 180); float gravitySizeMinInAir<comment="空中/最小重力サイズ">;
+    FSeek(p + 184); float gravitySizeMaxInAir<comment="空中/最大重力サイズ">;
+    FSeek(p + 188); float maxGravityAccele<comment="斜面加速度">;
+    FSeek(p + 192); float maxGravityDecele<comment="斜面減速度">;
+    FSeek(p + 196); float inAirTime<comment="スピン状態のまま空中を移動できる時間">;
+    FSeek(p + 200); float spinBoostEndSpeed<comment="スピンブーストが終了してころころ移動になる速度">;
+    FSeek(p + 204); float jumpOutAngle<comment="飛び出し挙動になる角度">;
+    FSeek(p + 208); float jumpOutSpeed<comment="飛び出し挙動になる速度">;
+    FSeek(p + 212); bool humpJumpOut<comment="丘で飛び出すか">;
+    FSeek(p + 213); AirAccelMode airAccelMode<comment="空中加速動作">;
+    FSeek(p + 216); float airAccelVertSpeedThreshold<comment="空中加速が可能になる速度の閾値">;
+    FSeek(p + 220); float chargeRotateForce<comment="チャージ中回頭速度">;
+    FSeek(p + 224); float chargeRotateForceMinAngle<comment="チャージ中回頭速度が0になる角度">;
+    FSeek(p + 228); float chargeRotateForceMaxAngle<comment="チャージ中回頭速度が最大になる角度">;
+    FSeek(p + 232); cstring cameraShakeName<comment="チャージ時のカメラシェイク名">;
+
+    FSeek(p + 248);
+} PlayerParamSpinBoost;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    ModePackage modePackage;
+    FSeek(p + 2144); TailsParamFly tailsFly<comment="飛行">;
+    FSeek(p + 2248); TailsParamSpanner spanner<comment="スパナ攻撃">;
+    FSeek(p + 2304); TailsParamCyBlaster cyBlaster<comment="サイブラスター">;
+    FSeek(p + 2480); PlayerParamSpinBoost spinBoost<comment="スピンブースト">;
+
+    FSeek(p + 2736);
+} ModePackageTails;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   PlayerParamSpeed speed<comment="速度">;
+    FSeek(p + 224); PlayerParamJump jump<comment="ジャンプ">;
+    FSeek(p + 252); PlayerParamJumpSpeed jumpSpeed<comment="ジャンプ中速度">;
+    FSeek(p + 300); PlayerParamDoubleJump doubleJump<comment="2段ジャンプ">;
+    FSeek(p + 312); PlayerParamBoost boost<comment="ブースト">;
+    FSeek(p + 372); PlayerParamAirBoost airboost<comment="エアブースト">;
+
+    FSeek(p + 424);
+} WaterModePackage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     CommonPackage common<comment="共通">;
+    FSeek(p + 15776); ModePackageTails forwardView<comment="通常">;
+    FSeek(p + 18512); WaterModePackage water<comment="水中">;
+
+    FSeek(p + 18944);
+} TailsParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+TailsParameters tailsParameters;

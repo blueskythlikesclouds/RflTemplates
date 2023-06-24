@@ -1,0 +1,222 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 score<comment="スコア増加量">;
+    FSeek(p + 4);  uint32 level1Meter<comment="倍率1倍時のメーター増加量">;
+    FSeek(p + 8);  uint32 level2Meter<comment="倍率2倍時のメーター増加量">;
+    FSeek(p + 12); uint32 level3Meter<comment="倍率4倍時のメーター増加量">;
+    FSeek(p + 16); uint32 level4Meter<comment="倍率8倍時のメーター増加量">;
+    FSeek(p + 20); uint32 level5Meter<comment="倍率16倍時のメーター増加量">;
+    FSeek(p + 24); uint32 level6Meter<comment="倍率32倍時のメーター増加量">;
+    FSeek(p + 28); uint32 level7Meter<comment="倍率64倍時のメーター増加量">;
+    FSeek(p + 32); uint32 level8Meter<comment="倍率128倍時のメーター増加量">;
+    FSeek(p + 36); uint32 level9Meter<comment="倍率256倍時のメーター増加量">;
+    FSeek(p + 40); float delay<comment="スコア加算ディレイ(秒)">;
+
+    FSeek(p + 44);
+} ActionChainScoreParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 level1Param<comment="最小">;
+    FSeek(p + 4); uint32 level99Param<comment="最大">;
+
+    FSeek(p + 8);
+} ActionChainAttackLevelParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  ActionChainAttackLevelParameter score<comment="スコア増加量">;
+    FSeek(p + 8);  ActionChainAttackLevelParameter level1Meter<comment="倍率1倍時のメーター増加量">;
+    FSeek(p + 16); ActionChainAttackLevelParameter level2Meter<comment="倍率2倍時のメーター増加量">;
+    FSeek(p + 24); ActionChainAttackLevelParameter level3Meter<comment="倍率4倍時のメーター増加量">;
+    FSeek(p + 32); ActionChainAttackLevelParameter level4Meter<comment="倍率8倍時のメーター増加量">;
+    FSeek(p + 40); ActionChainAttackLevelParameter level5Meter<comment="倍率16倍時のメーター増加量">;
+    FSeek(p + 48); ActionChainAttackLevelParameter level6Meter<comment="倍率32倍時のメーター増加量">;
+    FSeek(p + 56); ActionChainAttackLevelParameter level7Meter<comment="倍率64倍時のメーター増加量">;
+    FSeek(p + 64); ActionChainAttackLevelParameter level8Meter<comment="倍率128倍時のメーター増加量">;
+    FSeek(p + 72); ActionChainAttackLevelParameter level9Meter<comment="倍率256倍時のメーター増加量">;
+
+    FSeek(p + 80);
+} ActionChainAttackScoreParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float intervalTime<comment="スコア取得間隔(秒)">;
+    FSeek(p + 4);  uint32 score<comment="スコア増加量">;
+    FSeek(p + 8);  uint32 level1Meter<comment="倍率1倍時のメーター増加量">;
+    FSeek(p + 12); uint32 level2Meter<comment="倍率2倍時のメーター増加量">;
+    FSeek(p + 16); uint32 level3Meter<comment="倍率4倍時のメーター増加量">;
+    FSeek(p + 20); uint32 level4Meter<comment="倍率8倍時のメーター増加量">;
+    FSeek(p + 24); uint32 level5Meter<comment="倍率16倍時のメーター増加量">;
+    FSeek(p + 28); uint32 level6Meter<comment="倍率32倍時のメーター増加量">;
+    FSeek(p + 32); uint32 level7Meter<comment="倍率64倍時のメーター増加量">;
+    FSeek(p + 36); uint32 level8Meter<comment="倍率128倍時のメーター増加量">;
+    FSeek(p + 40); uint32 level9Meter<comment="倍率256倍時のメーター増加量">;
+
+    FSeek(p + 44);
+} ActionChainIntervalScoreParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float intervalTime<comment="スコア取得間隔(秒)">;
+    FSeek(p + 4);  float minSpeed<comment="スコア取得を反映させる最小速度">;
+    FSeek(p + 8);  float maxSpeed<comment="スコア取得を反映させる最高速度">;
+    FSeek(p + 12); ActionChainAttackLevelParameter score<comment="スコア増加量">;
+    FSeek(p + 20); ActionChainAttackLevelParameter level1Meter<comment="倍率1倍時のメーター増加量">;
+    FSeek(p + 28); ActionChainAttackLevelParameter level2Meter<comment="倍率2倍時のメーター増加量">;
+    FSeek(p + 36); ActionChainAttackLevelParameter level3Meter<comment="倍率4倍時のメーター増加量">;
+    FSeek(p + 44); ActionChainAttackLevelParameter level4Meter<comment="倍率8倍時のメーター増加量">;
+    FSeek(p + 52); ActionChainAttackLevelParameter level5Meter<comment="倍率16倍時のメーター増加量">;
+    FSeek(p + 60); ActionChainAttackLevelParameter level6Meter<comment="倍率32倍時のメーター増加量">;
+    FSeek(p + 68); ActionChainAttackLevelParameter level7Meter<comment="倍率64倍時のメーター増加量">;
+    FSeek(p + 76); ActionChainAttackLevelParameter level8Meter<comment="倍率128倍時のメーター増加量">;
+    FSeek(p + 84); ActionChainAttackLevelParameter level9Meter<comment="倍率256倍時のメーター増加量">;
+
+    FSeek(p + 92);
+} ActionChainBoostScoreParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float intervalTime<comment="スコア取得間隔(秒)">;
+    FSeek(p + 4);   float minSpeed<comment="スコア取得を反映させる最小速度">;
+    FSeek(p + 8);   float maxSpeed<comment="スコア取得を反映させる最高速度">;
+    FSeek(p + 12);  ActionChainAttackLevelParameter score<comment="スコア増加量">;
+    FSeek(p + 20);  ActionChainAttackLevelParameter level1Meter<comment="倍率1倍時のメーター増加量">;
+    FSeek(p + 28);  ActionChainAttackLevelParameter level2Meter<comment="倍率2倍時のメーター増加量">;
+    FSeek(p + 36);  ActionChainAttackLevelParameter level3Meter<comment="倍率4倍時のメーター増加量">;
+    FSeek(p + 44);  ActionChainAttackLevelParameter level4Meter<comment="倍率8倍時のメーター増加量">;
+    FSeek(p + 52);  ActionChainAttackLevelParameter level5Meter<comment="倍率16倍時のメーター増加量">;
+    FSeek(p + 60);  ActionChainAttackLevelParameter level6Meter<comment="倍率32倍時のメーター増加量">;
+    FSeek(p + 68);  ActionChainAttackLevelParameter level7Meter<comment="倍率64倍時のメーター増加量">;
+    FSeek(p + 76);  ActionChainAttackLevelParameter level8Meter<comment="倍率128倍時のメーター増加量">;
+    FSeek(p + 84);  ActionChainAttackLevelParameter level9Meter<comment="倍率256倍時のメーター増加量">;
+    FSeek(p + 92);  float minHeight<comment="倍率加算を反映させる最低高度">;
+    FSeek(p + 96);  float maxHeight<comment="倍率加算を反映させる最高高度">;
+    FSeek(p + 100); float maxHeightMagnification<comment="最高高度時の補正倍率">;
+
+    FSeek(p + 104);
+} ActionChainSpinBoostScoreParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    ActionChainScoreParameter dashRollerScore<comment="ダッシュローラー">;
+    FSeek(p + 44);   ActionChainScoreParameter dashPanelScore<comment="ダッシュパネル">;
+    FSeek(p + 88);   ActionChainScoreParameter jumpBoardScore<comment="ジャンプボード">;
+    FSeek(p + 132);  ActionChainScoreParameter jumpSelecterScore<comment="ジャンプセレクター">;
+    FSeek(p + 176);  ActionChainScoreParameter poleScore<comment="鉄棒">;
+    FSeek(p + 220);  ActionChainScoreParameter selectCannonScore<comment="セレクトキャノン">;
+    FSeek(p + 264);  ActionChainScoreParameter springScore<comment="スプリング">;
+    FSeek(p + 308);  ActionChainScoreParameter wideSpringScore<comment="ワイドスプリング">;
+    FSeek(p + 352);  ActionChainScoreParameter springClassicScore<comment="スプリングクラシック">;
+    FSeek(p + 396);  ActionChainScoreParameter balloonScore<comment="風船">;
+    FSeek(p + 440);  ActionChainScoreParameter upReelScore<comment="アップリール">;
+    FSeek(p + 484);  ActionChainScoreParameter wallJumpScore<comment="壁ジャンプ">;
+    FSeek(p + 528);  ActionChainScoreParameter propellerSpringScore<comment="プロペラスプリング">;
+    FSeek(p + 572);  ActionChainScoreParameter springPoleScore<comment="スプリングポール">;
+    FSeek(p + 616);  ActionChainScoreParameter dashRingScore<comment="ダッシュリング">;
+    FSeek(p + 660);  ActionChainAttackScoreParameter acceleCombo1Score<comment="コンボ1">;
+    FSeek(p + 740);  ActionChainAttackScoreParameter acceleCombo2Score<comment="コンボ2">;
+    FSeek(p + 820);  ActionChainAttackScoreParameter comboFinishScore<comment="コンボフィニッシュ">;
+    FSeek(p + 900);  ActionChainAttackScoreParameter acceleRushCombo1Score<comment="アクセルラッシュコンボ1">;
+    FSeek(p + 980);  ActionChainAttackScoreParameter acceleRushCombo2Score<comment="アクセルラッシュコンボ2">;
+    FSeek(p + 1060); ActionChainAttackScoreParameter acceleRushComboFinishScore<comment="アクセルラッシュコンボフィニッシュ">;
+    FSeek(p + 1140); ActionChainAttackScoreParameter chargeAttackScore<comment="チャージアタック">;
+    FSeek(p + 1220); ActionChainAttackScoreParameter smashScore<comment="必殺技">;
+    FSeek(p + 1300); ActionChainAttackScoreParameter recoverySmashScore<comment="受け身必殺技">;
+    FSeek(p + 1380); ActionChainAttackScoreParameter sonicBoomScore<comment="ソニックブーム">;
+    FSeek(p + 1460); ActionChainAttackScoreParameter crasherScore<comment="クラッシャー">;
+    FSeek(p + 1540); ActionChainAttackScoreParameter loopKickScore<comment="ループキック">;
+    FSeek(p + 1620); ActionChainAttackScoreParameter spinSlashScore<comment="スピンスラッシュ">;
+    FSeek(p + 1700); ActionChainAttackScoreParameter stompingAttackScore<comment="ストンピング">;
+    FSeek(p + 1780); ActionChainAttackScoreParameter homingShotScore<comment="ホーミングショット">;
+    FSeek(p + 1860); ActionChainAttackScoreParameter crossSlashScore<comment="クロススラッシュ">;
+    FSeek(p + 1940); ActionChainScoreParameter ringScore<comment="リング">;
+    FSeek(p + 1984); ActionChainScoreParameter gismoScore<comment="Gismo">;
+    FSeek(p + 2028); ActionChainScoreParameter homingScore<comment="オブジェクトへのホーミングアタック">;
+    FSeek(p + 2072); ActionChainAttackScoreParameter enemyHomingScore<comment="敵へのホーミングアタック">;
+    FSeek(p + 2152); ActionChainScoreParameter airTrickScore<comment="エアトリック">;
+    FSeek(p + 2196); ActionChainScoreParameter chainBoosterScore<comment="チェインブースター">;
+    FSeek(p + 2240); ActionChainScoreParameter parryScore<comment="パリィ">;
+    FSeek(p + 2284); ActionChainAttackScoreParameter quickCyloopScore<comment="クイックサイループ">;
+    FSeek(p + 2364); ActionChainScoreParameter defeatEnemyScore<comment="雑魚撃破">;
+    FSeek(p + 2408); ActionChainScoreParameter defeatMiniBossScore<comment="小ボス撃破">;
+    FSeek(p + 2452); ActionChainAttackScoreParameter slingShotScore<comment="スリングショット">;
+    FSeek(p + 2532); ActionChainScoreParameter rippleLaserScore<comment="リップルレーザー">;
+    FSeek(p + 2576); ActionChainIntervalScoreParameter grindRailScore<comment="グラインドレール">;
+    FSeek(p + 2620); ActionChainIntervalScoreParameter pulleyScore<comment="滑車">;
+    FSeek(p + 2664); ActionChainIntervalScoreParameter fanScore<comment="ファン">;
+    FSeek(p + 2708); ActionChainIntervalScoreParameter wallRunScore<comment="壁走り">;
+    FSeek(p + 2752); ActionChainBoostScoreParameter boostScore<comment="ブースト">;
+    FSeek(p + 2844); ActionChainIntervalScoreParameter powerBoostScore<comment="パワーブースト">;
+    FSeek(p + 2888); ActionChainIntervalScoreParameter sandSkiScore<comment="サンドスキー">;
+    FSeek(p + 2932); ActionChainIntervalScoreParameter acceleRailScore<comment="加速レール">;
+    FSeek(p + 2976); ActionChainSpinBoostScoreParameter spinBoostScore<comment="スピンブースト">;
+
+    FSeek(p + 3080);
+} ActionChainActionParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 meterMax<comment="メーターのマックス値">;
+    FSeek(p + 4);  float meterDecreaseTime<comment="メーター減少間隔(秒)">;
+    FSeek(p + 8);  uint32 meterDecrease<comment="メーター減少量">;
+    FSeek(p + 12); float decreaseWaitTime<comment="レベル到達直後メーター減少開始するまでの時間(秒)">;
+    FSeek(p + 16); float decreasePercent<comment="メーター加算直後メーター減少を開始するメーター%">;
+    FSeek(p + 20); float decreaseWaitTimeAddMeter<comment="メーター加算直後メーター減少開始するまでの時間(秒)">;
+    FSeek(p + 24); float meterResetDelayTime<comment="メーターが0になってから倍率リセットするまでの時間(秒)">;
+
+    FSeek(p + 28);
+} ActionChainMeterParameter;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    ActionChainActionParameter actionParam<comment="アクションごとのスコア獲得情報">;
+    FSeek(p + 3080); ActionChainMeterParameter level1MeterParam<comment="倍率1倍時のメーター情報">;
+    FSeek(p + 3108); ActionChainMeterParameter level2MeterParam<comment="倍率2倍時のメーター情報">;
+    FSeek(p + 3136); ActionChainMeterParameter level3MeterParam<comment="倍率4倍時のメーター情報">;
+    FSeek(p + 3164); ActionChainMeterParameter level4MeterParam<comment="倍率8倍時のメーター情報">;
+    FSeek(p + 3192); ActionChainMeterParameter level5MeterParam<comment="倍率16倍時のメーター情報">;
+    FSeek(p + 3220); ActionChainMeterParameter level6MeterParam<comment="倍率32倍時のメーター情報">;
+    FSeek(p + 3248); ActionChainMeterParameter level7MeterParam<comment="倍率64倍時のメーター情報">;
+    FSeek(p + 3276); ActionChainMeterParameter level8MeterParam<comment="倍率128倍時のメーター情報">;
+    FSeek(p + 3304); ActionChainMeterParameter level9MeterParam<comment="倍率256倍時のメーター情報">;
+    FSeek(p + 3332); float gimmickReuseTime<comment="ギミック再使用待機時間(秒)">;
+    FSeek(p + 3336); bool isChainBoosterLevelUp<comment="ブースター取得時の倍率上昇を有効化">;
+
+    FSeek(p + 3340);
+} ActionChainParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ActionChainParameter actionChainParameter;

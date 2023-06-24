@@ -10,6 +10,15 @@ typedef struct
     FSeek(p + 8);
 } CustomMusicTransitInfo;
 
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
 enum<byte> bool {
     False = 0,
     True = 1,
@@ -27,11 +36,12 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float fadeOutTiming<comment="フェードアウトのタイミング[秒]">;
-    FSeek(p + 4); bool lock<comment="アンロック対象">;
-    FSeek(p + 5); MusicType musicType<comment="曲の種類">;
+    FSeek(p + 0);  cstring cueName<comment="キュー名">;
+    FSeek(p + 16); float fadeOutTiming<comment="フェードアウトのタイミング[秒]">;
+    FSeek(p + 20); bool lock<comment="アンロック対象">;
+    FSeek(p + 21); MusicType musicType<comment="曲の種類">;
 
-    FSeek(p + 8);
+    FSeek(p + 24);
 } CustomMusicInfo;
 
 typedef struct
@@ -40,9 +50,9 @@ typedef struct
 
     FSeek(p + 0);    CustomMusicTransitInfo transitInfo<comment="楽曲の遷移設定">;
     FSeek(p + 8);    CustomMusicInfo musicInfos[128]<comment="カスタム楽曲情報",optimize=false>;
-    FSeek(p + 1032); float idlingViewTime<comment="無操作表示を開始するまでの時間">;
+    FSeek(p + 3080); float idlingViewTime<comment="無操作表示を開始するまでの時間">;
 
-    FSeek(p + 1036);
+    FSeek(p + 3088);
 } CustomMusicParameter;
 
 LittleEndian();

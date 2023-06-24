@@ -38,6 +38,8 @@ enum<sint8> Value
     TowerIsland = 3,
     SteppeIsland2 = 4,
     Num = 5,
+    ExtraIsland = 5,
+    NumInExtra = 6,
 };
 
 typedef struct

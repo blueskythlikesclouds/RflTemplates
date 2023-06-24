@@ -246,52 +246,56 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    uint32 bitFlags[512]<comment="ビットフラグ",optimize=false>;
-    FSeek(p + 2048); sint8 byteFlags[512]<comment="バイトフラグ",optimize=false>;
-    FSeek(p + 2560); uint32 intDatas[256]<comment="uint32データ",optimize=false>;
+    FSeek(p + 0); uint16 time<comment="時刻">;
+    FSeek(p + 2); uint16 x<comment="X座標">;
+    FSeek(p + 4); uint16 z<comment="Z座標">;
 
-    FSeek(p + 3584);
-} ExtraFlagData;
+    FSeek(p + 6);
+} PlayLogCoordData;
+
+enum<sint8> EventType
+{
+    InvalidEvent = -1,
+    Dead = 0,
+    BeginStage = 1,
+    EndStage = 2,
+    ReleaseLightPillar = 3,
+    ObtainChaosEmerald = 4,
+    ContactMiniboss = 5,
+    DefeatMiniboss = 6,
+    BeginCyberStage = 7,
+    EndCyberStage = 8,
+    CompleteCyberStage = 9,
+    RestartCyberStage = 10,
+    GiveupCyberStage = 11,
+    OpenTreasureChest = 12,
+    AccessRingSensor = 13,
+};
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    WorldFlagData worldData<comment="フラグデータWorld共通">;
-    FSeek(p + 7168); ExtraFlagData extraData<comment="フラグデータExtra固有">;
+    FSeek(p + 0); PlayLogCoordData coord<comment="座標">;
+    FSeek(p + 6); EventType eventType<comment="イベント">;
+    FSeek(p + 7); sint8 option<comment="イベント補足用">;
 
-    FSeek(p + 10752);
-} ExtraFlagContainerData;
-
-typedef struct
-{
-    local uint64 p<hidden=true> = FTell();
-
-    FSeek(p + 0); uint32 hightScore<comment="hightScore">;
-    FSeek(p + 4); uint16 rank<comment="rank">;
-    FSeek(p + 6); uint16 padding0<comment="padding0">;
-    FSeek(p + 8); uint32 reserved0<comment="reserved0">;
-
-    FSeek(p + 12);
-} ScoreAndRnakData;
+    FSeek(p + 8);
+} PlayLogEventData;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); ScoreAndRnakData hightState[200]<comment="hightState",optimize=false>;
+    FSeek(p + 0);      uint32 numFootMarks<comment="numFootMarks">;
+    FSeek(p + 4);      uint32 footMarksIndex<comment="footMarksIndex">;
+    FSeek(p + 8);      PlayLogCoordData footmarks[36000]<comment="footmarks",optimize=false>;
+    FSeek(p + 216008); uint32 numEvents<comment="numEvents">;
+    FSeek(p + 216012); uint32 eventsIndex<comment="eventsIndex">;
+    FSeek(p + 216016); PlayLogEventData events[50000]<comment="events",optimize=false>;
 
-    FSeek(p + 2400);
-} ActionChainStruct;
-
-typedef struct
-{
-    local uint64 p<hidden=true> = FTell();
-
-    FSeek(p + 0); uint8 reserved[602864]<comment="reserved",optimize=false>;
-
-    FSeek(p + 602864);
-} ReservedData;
+    FSeek(p + 616016);
+} PlayLogData;
 
 typedef int32 sint32;
 
@@ -395,14 +399,12 @@ typedef struct
     FSeek(p + 1824);   CyberStageContainerData stages<comment="電脳空間ステージコンテナ">;
     FSeek(p + 2592);   FlagContainerData flags<comment="フラグコンテナ">;
     FSeek(p + 2880);   WorldFlagContainerData worldFlags<comment="ワールド別フラグコンテナ">;
-    FSeek(p + 45888);  ExtraFlagContainerData extraFlags<comment="Extraフラグコンテナ">;
-    FSeek(p + 56640);  ActionChainStruct actionChain<comment="アクションチェイン">;
-    FSeek(p + 59040);  ReservedData reserved<comment="reserved">;
+    FSeek(p + 45888);  PlayLogData playlog<comment="プレイログ">;
     FSeek(p + 661904); StatsContainerData stats<comment="統計コンテナ">;
     FSeek(p + 689048); WeatherData weather<comment="天候">;
 
     FSeek(p + 689104);
-} GameData;
+} GameDataInPlayLog;
 
 LittleEndian();
 
@@ -412,4 +414,4 @@ if (signature == 0x414E4942)
     BASE_OFFSET_VALUE = 0x40;
 
 FSeek(BASE_OFFSET_VALUE);
-GameData gameData;
+GameDataInPlayLog gameDataInPlayLog;

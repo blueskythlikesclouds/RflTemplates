@@ -1,0 +1,54 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint8 prerequisite<comment="前提条件">;
+    FSeek(p + 4);  float limitTime<comment="制限時間">;
+    FSeek(p + 8);  float speedUpScale<comment="敵の加速割合(通常1.0)">;
+    FSeek(p + 12); float recoveryHpTime<comment="敵の回復までの間隔">;
+    FSeek(p + 16); uint32 recoveryHpPoint<comment="敵の回復量">;
+    FSeek(p + 20); uint32 limitMistake<comment="ダメージ可能回数">;
+
+    FSeek(p + 24);
+} MasterTrialStageParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 4); MasterTrialStageParameter stages[4]<comment="試練ステージ",optimize=false>;
+
+    FSeek(p + 100);
+} MasterTrialParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float subjectViewTime<comment="題目説明表示の遅延時間">;
+    FSeek(p + 4);  float readyTime<comment="Ready表示時間">;
+    FSeek(p + 8);  float clearTime<comment="Clear表示時間">;
+    FSeek(p + 12); float failedTime<comment="Faild表示時間">;
+    FSeek(p + 16); float clearWaitTime<comment="クリアSEからフェードまでの待機時間">;
+    FSeek(p + 20); float failedWaitTime<comment="失敗SEから選択UI表示までの待機時間">;
+    FSeek(p + 24); MasterTrialParameterElement element[3]<comment="達人ココ試練",optimize=false>;
+
+    FSeek(p + 324);
+} MasterTrialParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MasterTrialParameters masterTrialParameters;

@@ -52,7 +52,8 @@ typedef struct
     FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
     FSeek(p + 12); SaveDataIcon icon<comment="セーブデータアイコン">;
     FSeek(p + 13); AppVersion appVersion<comment="アプリバージョン">;
-    FSeek(p + 14); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 14); uint8 config2<comment="コンフィグ2">;
+    FSeek(p + 15); uint8 reserved1<comment="reserved1">;
     FSeek(p + 16); uint32 saveDate<comment="保存日時">;
     FSeek(p + 20); uint8 index<comment="index">;
     FSeek(p + 24); uint32 reserved[4]<comment="reserved",optimize=false>;
