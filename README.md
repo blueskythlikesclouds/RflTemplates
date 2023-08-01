@@ -1,6 +1,6 @@
 # RflTemplates
 
-010 Editor binary templates for Hedgehog Engine 2 RFL files.
+Binary templates for Hedgehog Engine 2 RFL files.
 
 All of these were dumped from the game executable.
 
