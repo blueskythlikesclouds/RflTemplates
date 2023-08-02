@@ -38,14 +38,14 @@ public struct HoldPointParameter
 {
     [FieldOffset(0)] public fixed byte /* HoldPoint[128] */ _holdPoints[10240];
 
-	public HoldPoint* holdPoints
-	{
-		get
-		{
-			fixed (byte* p_holdPoints = _holdPoints)
-				return (HoldPoint*)p_holdPoints;
-		}
-	}
+    public HoldPoint* holdPoints
+    {
+        get
+        {
+            fixed (byte* p_holdPoints = _holdPoints)
+                return (HoldPoint*)p_holdPoints;
+        }
+    }
 }
 
 public enum Shape : sbyte
@@ -73,14 +73,14 @@ public struct CollisionPartParameter
 {
     [FieldOffset(0)] public fixed byte /* CollisionPart[32] */ _colParts[3072];
 
-	public CollisionPart* colParts
-	{
-		get
-		{
-			fixed (byte* p_colParts = _colParts)
-				return (CollisionPart*)p_colParts;
-		}
-	}
+    public CollisionPart* colParts
+    {
+        get
+        {
+            fixed (byte* p_colParts = _colParts)
+                return (CollisionPart*)p_colParts;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 13392)]

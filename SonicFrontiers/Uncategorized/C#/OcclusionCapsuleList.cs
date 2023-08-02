@@ -45,13 +45,13 @@ public struct OcclusionCapsuleList
 {
     [FieldOffset(0)] public fixed byte /* CapsuleParam[64] */ _capsules[7168];
 
-	public CapsuleParam* capsules
-	{
-		get
-		{
-			fixed (byte* p_capsules = _capsules)
-				return (CapsuleParam*)p_capsules;
-		}
-	}
+    public CapsuleParam* capsules
+    {
+        get
+        {
+            fixed (byte* p_capsules = _capsules)
+                return (CapsuleParam*)p_capsules;
+        }
+    }
 }
 

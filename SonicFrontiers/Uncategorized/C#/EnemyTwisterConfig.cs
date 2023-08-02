@@ -57,13 +57,13 @@ public struct EnemyTwisterConfig
     [FieldOffset(0)]  public EnemyTwisterCommonConfig commonParams;
     [FieldOffset(68)] public fixed byte /* EnemyTwisterLevelConfig[5] */ _levelParams[80];
 
-	public EnemyTwisterLevelConfig* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyTwisterLevelConfig*)p_levelParams;
-		}
-	}
+    public EnemyTwisterLevelConfig* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyTwisterLevelConfig*)p_levelParams;
+        }
+    }
 }
 

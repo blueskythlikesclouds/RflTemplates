@@ -24,13 +24,13 @@ public struct DLCMhrBarbecueParameter
     [FieldOffset(32)] public float resultUIDelayFaild;
     [FieldOffset(36)] public fixed byte /* DLCMhrBarbecueTokenParam[4] */ _tokenParam[64];
 
-	public DLCMhrBarbecueTokenParam* tokenParam
-	{
-		get
-		{
-			fixed (byte* p_tokenParam = _tokenParam)
-				return (DLCMhrBarbecueTokenParam*)p_tokenParam;
-		}
-	}
+    public DLCMhrBarbecueTokenParam* tokenParam
+    {
+        get
+        {
+            fixed (byte* p_tokenParam = _tokenParam)
+                return (DLCMhrBarbecueTokenParam*)p_tokenParam;
+        }
+    }
 }
 

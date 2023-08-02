@@ -60,14 +60,14 @@ public struct FlyerEscapeShotTableData
 {
     [FieldOffset(0)] public fixed byte /* HorizontalType[6] */ _horz[6];
 
-	public HorizontalType* horz
-	{
-		get
-		{
-			fixed (byte* p_horz = _horz)
-				return (HorizontalType*)p_horz;
-		}
-	}
+    public HorizontalType* horz
+    {
+        get
+        {
+            fixed (byte* p_horz = _horz)
+                return (HorizontalType*)p_horz;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 136)]
@@ -75,14 +75,14 @@ public struct FlyerEscapeShotParam
 {
     [FieldOffset(0)]   public fixed byte /* FlyerEscapeShotTableData[16] */ _posTable[96];
 
-	public FlyerEscapeShotTableData* posTable
-	{
-		get
-		{
-			fixed (byte* p_posTable = _posTable)
-				return (FlyerEscapeShotTableData*)p_posTable;
-		}
-	}
+    public FlyerEscapeShotTableData* posTable
+    {
+        get
+        {
+            fixed (byte* p_posTable = _posTable)
+                return (FlyerEscapeShotTableData*)p_posTable;
+        }
+    }
 
     [FieldOffset(96)]  public float interval;
     [FieldOffset(100)] public float waitAfterLoop;
@@ -254,14 +254,14 @@ public struct FlayerEscapeShotSequenceTableData
     [FieldOffset(0)] public bool isUse;
     [FieldOffset(4)] public fixed byte /* FlayerEscapeShotSequenceTable[8] */ _table[64];
 
-	public FlayerEscapeShotSequenceTable* table
-	{
-		get
-		{
-			fixed (byte* p_table = _table)
-				return (FlayerEscapeShotSequenceTable*)p_table;
-		}
-	}
+    public FlayerEscapeShotSequenceTable* table
+    {
+        get
+        {
+            fixed (byte* p_table = _table)
+                return (FlayerEscapeShotSequenceTable*)p_table;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1092)]
@@ -270,14 +270,14 @@ public struct MiniBossFlyerLevelBand
     [FieldOffset(0)] public int level;
     [FieldOffset(4)] public fixed byte /* FlayerEscapeShotSequenceTableData[16] */ _sequence[1088];
 
-	public FlayerEscapeShotSequenceTableData* sequence
-	{
-		get
-		{
-			fixed (byte* p_sequence = _sequence)
-				return (FlayerEscapeShotSequenceTableData*)p_sequence;
-		}
-	}
+    public FlayerEscapeShotSequenceTableData* sequence
+    {
+        get
+        {
+            fixed (byte* p_sequence = _sequence)
+                return (FlayerEscapeShotSequenceTableData*)p_sequence;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 6304)]
@@ -286,24 +286,24 @@ public struct MiniBossFlyerConfig
     [FieldOffset(0)]   public MiniBossFlyerCommonParam commonParam;
     [FieldOffset(560)] public fixed byte /* MiniBossFlyerLevelParam[5] */ _levelParams[280];
 
-	public MiniBossFlyerLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossFlyerLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossFlyerLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossFlyerLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(840)] public fixed byte /* MiniBossFlyerLevelBand[5] */ _levelBand[5460];
 
-	public MiniBossFlyerLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossFlyerLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossFlyerLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossFlyerLevelBand*)p_levelBand;
+        }
+    }
 }
 

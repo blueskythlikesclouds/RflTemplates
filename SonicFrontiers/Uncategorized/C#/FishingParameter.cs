@@ -53,14 +53,14 @@ public struct FishingWaveGroupParam
 {
     [FieldOffset(0)] public fixed byte /* FishingWaveParam[5] */ _waves[60];
 
-	public FishingWaveParam* waves
-	{
-		get
-		{
-			fixed (byte* p_waves = _waves)
-				return (FishingWaveParam*)p_waves;
-		}
-	}
+    public FishingWaveParam* waves
+    {
+        get
+        {
+            fixed (byte* p_waves = _waves)
+                return (FishingWaveParam*)p_waves;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 632)]
@@ -76,14 +76,14 @@ public struct FishingWavePatternParam
     [FieldOffset(28)] public uint waveGroupNum;
     [FieldOffset(32)] public fixed byte /* FishingWaveGroupParam[10] */ _waveGroups[600];
 
-	public FishingWaveGroupParam* waveGroups
-	{
-		get
-		{
-			fixed (byte* p_waveGroups = _waveGroups)
-				return (FishingWaveGroupParam*)p_waveGroups;
-		}
-	}
+    public FishingWaveGroupParam* waveGroups
+    {
+        get
+        {
+            fixed (byte* p_waveGroups = _waveGroups)
+                return (FishingWaveGroupParam*)p_waveGroups;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 4)]
@@ -158,14 +158,14 @@ public struct FishingSpotFixedResultParam
     [FieldOffset(4)] public uint achievementUnlockCount;
     [FieldOffset(8)] public fixed byte /* FishingFixedResultParam[50] */ _fixedResultList[400];
 
-	public FishingFixedResultParam* fixedResultList
-	{
-		get
-		{
-			fixed (byte* p_fixedResultList = _fixedResultList)
-				return (FishingFixedResultParam*)p_fixedResultList;
-		}
-	}
+    public FishingFixedResultParam* fixedResultList
+    {
+        get
+        {
+            fixed (byte* p_fixedResultList = _fixedResultList)
+                return (FishingFixedResultParam*)p_fixedResultList;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1984)]
@@ -173,25 +173,25 @@ public struct FishingSpotParam
 {
     [FieldOffset(0)]    public fixed byte /* FishingSpotSpawnFishParam[4] */ _spawnFish[320];
 
-	public FishingSpotSpawnFishParam* spawnFish
-	{
-		get
-		{
-			fixed (byte* p_spawnFish = _spawnFish)
-				return (FishingSpotSpawnFishParam*)p_spawnFish;
-		}
-	}
+    public FishingSpotSpawnFishParam* spawnFish
+    {
+        get
+        {
+            fixed (byte* p_spawnFish = _spawnFish)
+                return (FishingSpotSpawnFishParam*)p_spawnFish;
+        }
+    }
 
     [FieldOffset(320)]  public fixed byte /* FishingSpotFixedResultParam[4] */ _fixedResults[1632];
 
-	public FishingSpotFixedResultParam* fixedResults
-	{
-		get
-		{
-			fixed (byte* p_fixedResults = _fixedResults)
-				return (FishingSpotFixedResultParam*)p_fixedResults;
-		}
-	}
+    public FishingSpotFixedResultParam* fixedResults
+    {
+        get
+        {
+            fixed (byte* p_fixedResults = _fixedResults)
+                return (FishingSpotFixedResultParam*)p_fixedResults;
+        }
+    }
 
     [FieldOffset(1952)] public fixed uint useFishCoinNum[4];
     [FieldOffset(1968)] public fixed uint tokenRate[4];
@@ -217,14 +217,14 @@ public struct FishingTradeParam
 {
     [FieldOffset(0)]  public fixed byte /* FishingTradeTableParma[4] */ _spot[36];
 
-	public FishingTradeTableParma* spot
-	{
-		get
-		{
-			fixed (byte* p_spot = _spot)
-				return (FishingTradeTableParma*)p_spot;
-		}
-	}
+    public FishingTradeTableParma* spot
+    {
+        get
+        {
+            fixed (byte* p_spot = _spot)
+                return (FishingTradeTableParma*)p_spot;
+        }
+    }
 
     [FieldOffset(36)] public fixed byte prices[9];
     [FieldOffset(45)] public fixed byte pricesVeryHard[9];
@@ -237,47 +237,47 @@ public struct FishingParameter
     [FieldOffset(0)]     public FishingCommonParam common;
     [FieldOffset(80)]    public fixed byte /* FishingSuccessPatternParam[10] */ _successPattern[80];
 
-	public FishingSuccessPatternParam* successPattern
-	{
-		get
-		{
-			fixed (byte* p_successPattern = _successPattern)
-				return (FishingSuccessPatternParam*)p_successPattern;
-		}
-	}
+    public FishingSuccessPatternParam* successPattern
+    {
+        get
+        {
+            fixed (byte* p_successPattern = _successPattern)
+                return (FishingSuccessPatternParam*)p_successPattern;
+        }
+    }
 
     [FieldOffset(160)]   public fixed byte /* FishingWavePatternParam[10] */ _wavePattern[6320];
 
-	public FishingWavePatternParam* wavePattern
-	{
-		get
-		{
-			fixed (byte* p_wavePattern = _wavePattern)
-				return (FishingWavePatternParam*)p_wavePattern;
-		}
-	}
+    public FishingWavePatternParam* wavePattern
+    {
+        get
+        {
+            fixed (byte* p_wavePattern = _wavePattern)
+                return (FishingWavePatternParam*)p_wavePattern;
+        }
+    }
 
     [FieldOffset(6480)]  public fixed byte /* FishingFishGroupParam[10] */ _fishGroup[40];
 
-	public FishingFishGroupParam* fishGroup
-	{
-		get
-		{
-			fixed (byte* p_fishGroup = _fishGroup)
-				return (FishingFishGroupParam*)p_fishGroup;
-		}
-	}
+    public FishingFishGroupParam* fishGroup
+    {
+        get
+        {
+            fixed (byte* p_fishGroup = _fishGroup)
+                return (FishingFishGroupParam*)p_fishGroup;
+        }
+    }
 
     [FieldOffset(6528)]  public fixed byte /* FishingFishParam[130] */ _fish[8320];
 
-	public FishingFishParam* fish
-	{
-		get
-		{
-			fixed (byte* p_fish = _fish)
-				return (FishingFishParam*)p_fish;
-		}
-	}
+    public FishingFishParam* fish
+    {
+        get
+        {
+            fixed (byte* p_fish = _fish)
+                return (FishingFishParam*)p_fish;
+        }
+    }
 
     [FieldOffset(14848)] public FishingSpotParam spot;
     [FieldOffset(16832)] public FishingTutorialParam tutorial;

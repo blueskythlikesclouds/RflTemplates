@@ -25,13 +25,13 @@ public struct ActionChainStageParameter
 {
     [FieldOffset(0)] public fixed byte /* ActionChainPlaceParameter[16] */ _placeParam[1088];
 
-	public ActionChainPlaceParameter* placeParam
-	{
-		get
-		{
-			fixed (byte* p_placeParam = _placeParam)
-				return (ActionChainPlaceParameter*)p_placeParam;
-		}
-	}
+    public ActionChainPlaceParameter* placeParam
+    {
+        get
+        {
+            fixed (byte* p_placeParam = _placeParam)
+                return (ActionChainPlaceParameter*)p_placeParam;
+        }
+    }
 }
 

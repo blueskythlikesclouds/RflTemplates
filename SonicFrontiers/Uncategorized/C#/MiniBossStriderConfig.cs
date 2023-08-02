@@ -66,14 +66,14 @@ public struct AttackPhase
 {
     [FieldOffset(0)]  public fixed byte /* AttackInfo[2] */ _attackInfos[16];
 
-	public AttackInfo* attackInfos
-	{
-		get
-		{
-			fixed (byte* p_attackInfos = _attackInfos)
-				return (AttackInfo*)p_attackInfos;
-		}
-	}
+    public AttackInfo* attackInfos
+    {
+        get
+        {
+            fixed (byte* p_attackInfos = _attackInfos)
+                return (AttackInfo*)p_attackInfos;
+        }
+    }
 
     [FieldOffset(16)] public float triggeredHPRatio;
 }
@@ -83,14 +83,14 @@ public struct MiniBossStriderParam
 {
     [FieldOffset(0)]   public fixed byte /* AttackPhase[3] */ _attackPhases[60];
 
-	public AttackPhase* attackPhases
-	{
-		get
-		{
-			fixed (byte* p_attackPhases = _attackPhases)
-				return (AttackPhase*)p_attackPhases;
-		}
-	}
+    public AttackPhase* attackPhases
+    {
+        get
+        {
+            fixed (byte* p_attackPhases = _attackPhases)
+                return (AttackPhase*)p_attackPhases;
+        }
+    }
 
     [FieldOffset(60)]  public float initialAttackWaitBullet;
     [FieldOffset(64)]  public float initialAttackWaitLaser;
@@ -146,25 +146,25 @@ public struct MiniBossStriderConfig
     [FieldOffset(0)]   public MiniBossStriderCommonParam commonParam;
     [FieldOffset(64)]  public fixed byte /* MiniBossStriderLevelParam[5] */ _levelParams[280];
 
-	public MiniBossStriderLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossStriderLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossStriderLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossStriderLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(344)] public fixed byte /* MiniBossStriderLevelBand[5] */ _levelBand[20];
 
-	public MiniBossStriderLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossStriderLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossStriderLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossStriderLevelBand*)p_levelBand;
+        }
+    }
 
     [FieldOffset(364)] public MiniBossStriderParam striderParam;
     [FieldOffset(504)] public ObjStriderGrindRailParam grindRailParam;

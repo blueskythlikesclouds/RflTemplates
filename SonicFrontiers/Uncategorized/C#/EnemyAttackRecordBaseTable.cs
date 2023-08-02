@@ -109,7 +109,7 @@ public enum Kind : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct EnemyAttackRecord
 {
-    [FieldOffset(0)]  Record record;
+    [FieldOffset(0)]  public Record record;
     [FieldOffset(8)]  public CString name;
     [FieldOffset(24)] public int damage;
     [FieldOffset(28)] public float velocityX;
@@ -124,13 +124,13 @@ public struct EnemyAttackRecordBaseTable
 {
     [FieldOffset(0)] public fixed byte /* EnemyAttackRecord[192] */ _data[15360];
 
-	public EnemyAttackRecord* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (EnemyAttackRecord*)p_data;
-		}
-	}
+    public EnemyAttackRecord* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (EnemyAttackRecord*)p_data;
+        }
+    }
 }
 

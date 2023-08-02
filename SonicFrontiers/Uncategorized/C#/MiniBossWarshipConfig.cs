@@ -187,25 +187,25 @@ public struct WarshipEscapePathInfo
     [FieldOffset(0)]   public CString followPaths;
     [FieldOffset(16)]  public fixed byte /* WarshipPathSectionInfo[50] */ _usePathInfo[600];
 
-	public WarshipPathSectionInfo* usePathInfo
-	{
-		get
-		{
-			fixed (byte* p_usePathInfo = _usePathInfo)
-				return (WarshipPathSectionInfo*)p_usePathInfo;
-		}
-	}
+    public WarshipPathSectionInfo* usePathInfo
+    {
+        get
+        {
+            fixed (byte* p_usePathInfo = _usePathInfo)
+                return (WarshipPathSectionInfo*)p_usePathInfo;
+        }
+    }
 
     [FieldOffset(616)] public fixed byte /* WarshipPathSectionInfo[50] */ _accelInfo[600];
 
-	public WarshipPathSectionInfo* accelInfo
-	{
-		get
-		{
-			fixed (byte* p_accelInfo = _accelInfo)
-				return (WarshipPathSectionInfo*)p_accelInfo;
-		}
-	}
+    public WarshipPathSectionInfo* accelInfo
+    {
+        get
+        {
+            fixed (byte* p_accelInfo = _accelInfo)
+                return (WarshipPathSectionInfo*)p_accelInfo;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 6080)]
@@ -213,14 +213,14 @@ public struct MiniBossWarshipEscapePathParam
 {
     [FieldOffset(0)] public fixed byte /* WarshipEscapePathInfo[5] */ _escapePathInfo[6080];
 
-	public WarshipEscapePathInfo* escapePathInfo
-	{
-		get
-		{
-			fixed (byte* p_escapePathInfo = _escapePathInfo)
-				return (WarshipEscapePathInfo*)p_escapePathInfo;
-		}
-	}
+    public WarshipEscapePathInfo* escapePathInfo
+    {
+        get
+        {
+            fixed (byte* p_escapePathInfo = _escapePathInfo)
+                return (WarshipEscapePathInfo*)p_escapePathInfo;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 28)]
@@ -249,25 +249,25 @@ public struct MiniBossWarshipConfig
     [FieldOffset(0)]     public MiniBossWarshipCommonParam commonParam;
     [FieldOffset(304)]   public fixed byte /* MiniBossWarshipLevelParam[5] */ _levelParams[280];
 
-	public MiniBossWarshipLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossWarshipLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossWarshipLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossWarshipLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(584)]   public fixed byte /* MiniBossWarshipLevelBand[5] */ _levelBand[20];
 
-	public MiniBossWarshipLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossWarshipLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossWarshipLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossWarshipLevelBand*)p_levelBand;
+        }
+    }
 
     [FieldOffset(604)]   public float wanderMoveSpeed;
     [FieldOffset(608)]   public float railMaxLength;
@@ -285,24 +285,24 @@ public struct MiniBossWarshipConfig
     [FieldOffset(740)]   public float spreadHomingDistance;
     [FieldOffset(744)]   public fixed byte /* MiniBossWarshipEscapePathParam[5] */ _escapePathID[30400];
 
-	public MiniBossWarshipEscapePathParam* escapePathID
-	{
-		get
-		{
-			fixed (byte* p_escapePathID = _escapePathID)
-				return (MiniBossWarshipEscapePathParam*)p_escapePathID;
-		}
-	}
+    public MiniBossWarshipEscapePathParam* escapePathID
+    {
+        get
+        {
+            fixed (byte* p_escapePathID = _escapePathID)
+                return (MiniBossWarshipEscapePathParam*)p_escapePathID;
+        }
+    }
 
     [FieldOffset(31144)] public fixed byte /* MiniBossWarshipAttackStateCameraParam[5] */ _bombAttackCameraParam[300];
 
-	public MiniBossWarshipAttackStateCameraParam* bombAttackCameraParam
-	{
-		get
-		{
-			fixed (byte* p_bombAttackCameraParam = _bombAttackCameraParam)
-				return (MiniBossWarshipAttackStateCameraParam*)p_bombAttackCameraParam;
-		}
-	}
+    public MiniBossWarshipAttackStateCameraParam* bombAttackCameraParam
+    {
+        get
+        {
+            fixed (byte* p_bombAttackCameraParam = _bombAttackCameraParam)
+                return (MiniBossWarshipAttackStateCameraParam*)p_bombAttackCameraParam;
+        }
+    }
 }
 

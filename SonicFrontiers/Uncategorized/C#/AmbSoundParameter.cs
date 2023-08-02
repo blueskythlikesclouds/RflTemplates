@@ -66,14 +66,14 @@ public struct AmbSoundParameter
 {
     [FieldOffset(0)]   public fixed byte /* AmbInfo[8] */ _ambSoundInfo[192];
 
-	public AmbInfo* ambSoundInfo
-	{
-		get
-		{
-			fixed (byte* p_ambSoundInfo = _ambSoundInfo)
-				return (AmbInfo*)p_ambSoundInfo;
-		}
-	}
+    public AmbInfo* ambSoundInfo
+    {
+        get
+        {
+            fixed (byte* p_ambSoundInfo = _ambSoundInfo)
+                return (AmbInfo*)p_ambSoundInfo;
+        }
+    }
 
     [FieldOffset(192)] public AmbBaseNoiseParameter baseNoise;
     [FieldOffset(208)] public AmbRelativeWindParameter relativeWind;

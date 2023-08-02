@@ -117,24 +117,24 @@ public struct SoundCommonParameter
     [FieldOffset(100)]  public AisacChangeInfoList aisacInfo;
     [FieldOffset(144)]  public fixed byte /* BGMInfo[128] */ _changeBgmInfo[8192];
 
-	public BGMInfo* changeBgmInfo
-	{
-		get
-		{
-			fixed (byte* p_changeBgmInfo = _changeBgmInfo)
-				return (BGMInfo*)p_changeBgmInfo;
-		}
-	}
+    public BGMInfo* changeBgmInfo
+    {
+        get
+        {
+            fixed (byte* p_changeBgmInfo = _changeBgmInfo)
+                return (BGMInfo*)p_changeBgmInfo;
+        }
+    }
 
     [FieldOffset(8336)] public fixed byte /* BGMTransitInfo[128] */ _transitBgmInfo[6144];
 
-	public BGMTransitInfo* transitBgmInfo
-	{
-		get
-		{
-			fixed (byte* p_transitBgmInfo = _transitBgmInfo)
-				return (BGMTransitInfo*)p_transitBgmInfo;
-		}
-	}
+    public BGMTransitInfo* transitBgmInfo
+    {
+        get
+        {
+            fixed (byte* p_transitBgmInfo = _transitBgmInfo)
+                return (BGMTransitInfo*)p_transitBgmInfo;
+        }
+    }
 }
 

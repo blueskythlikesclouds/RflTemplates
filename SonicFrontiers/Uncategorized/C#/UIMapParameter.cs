@@ -12,14 +12,14 @@ public struct IslandMapParameter
 {
     [FieldOffset(0)] public fixed byte /* ChallengeID1DimParameter[40] */ _challengeIDHorizonGridGroup[6400];
 
-	public ChallengeID1DimParameter* challengeIDHorizonGridGroup
-	{
-		get
-		{
-			fixed (byte* p_challengeIDHorizonGridGroup = _challengeIDHorizonGridGroup)
-				return (ChallengeID1DimParameter*)p_challengeIDHorizonGridGroup;
-		}
-	}
+    public ChallengeID1DimParameter* challengeIDHorizonGridGroup
+    {
+        get
+        {
+            fixed (byte* p_challengeIDHorizonGridGroup = _challengeIDHorizonGridGroup)
+                return (ChallengeID1DimParameter*)p_challengeIDHorizonGridGroup;
+        }
+    }
 }
 
 public struct Color8
@@ -42,24 +42,24 @@ public struct UIMapParameter
 {
     [FieldOffset(0)]     public fixed byte /* IslandMapParameter[5] */ _islandMapParam[32000];
 
-	public IslandMapParameter* islandMapParam
-	{
-		get
-		{
-			fixed (byte* p_islandMapParam = _islandMapParam)
-				return (IslandMapParameter*)p_islandMapParam;
-		}
-	}
+    public IslandMapParameter* islandMapParam
+    {
+        get
+        {
+            fixed (byte* p_islandMapParam = _islandMapParam)
+                return (IslandMapParameter*)p_islandMapParam;
+        }
+    }
 
     [FieldOffset(32000)] public fixed byte /* IDColor[136] */ _idColors[1088];
 
-	public IDColor* idColors
-	{
-		get
-		{
-			fixed (byte* p_idColors = _idColors)
-				return (IDColor*)p_idColors;
-		}
-	}
+    public IDColor* idColors
+    {
+        get
+        {
+            fixed (byte* p_idColors = _idColors)
+                return (IDColor*)p_idColors;
+        }
+    }
 }
 

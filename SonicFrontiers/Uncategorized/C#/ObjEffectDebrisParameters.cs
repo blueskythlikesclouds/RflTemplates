@@ -36,14 +36,14 @@ public struct EffectDebrisParameter
 {
     [FieldOffset(0)] public fixed byte /* DebrisPhaseParameter[3] */ _debrisPhaseParameters[336];
 
-	public DebrisPhaseParameter* debrisPhaseParameters
-	{
-		get
-		{
-			fixed (byte* p_debrisPhaseParameters = _debrisPhaseParameters)
-				return (DebrisPhaseParameter*)p_debrisPhaseParameters;
-		}
-	}
+    public DebrisPhaseParameter* debrisPhaseParameters
+    {
+        get
+        {
+            fixed (byte* p_debrisPhaseParameters = _debrisPhaseParameters)
+                return (DebrisPhaseParameter*)p_debrisPhaseParameters;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 3360)]
@@ -51,13 +51,13 @@ public struct ObjEffectDebrisParameters
 {
     [FieldOffset(0)] public fixed byte /* EffectDebrisParameter[10] */ _effectDebrisParameters[3360];
 
-	public EffectDebrisParameter* effectDebrisParameters
-	{
-		get
-		{
-			fixed (byte* p_effectDebrisParameters = _effectDebrisParameters)
-				return (EffectDebrisParameter*)p_effectDebrisParameters;
-		}
-	}
+    public EffectDebrisParameter* effectDebrisParameters
+    {
+        get
+        {
+            fixed (byte* p_effectDebrisParameters = _effectDebrisParameters)
+                return (EffectDebrisParameter*)p_effectDebrisParameters;
+        }
+    }
 }
 

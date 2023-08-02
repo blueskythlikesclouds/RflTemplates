@@ -75,14 +75,14 @@ public struct BossStatusConfig
     [FieldOffset(136)] public PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
     [FieldOffset(224)] public fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
 
-	public BossPhaseParam* phaseParams
-	{
-		get
-		{
-			fixed (byte* p_phaseParams = _phaseParams)
-				return (BossPhaseParam*)p_phaseParams;
-		}
-	}
+    public BossPhaseParam* phaseParams
+    {
+        get
+        {
+            fixed (byte* p_phaseParams = _phaseParams)
+                return (BossPhaseParam*)p_phaseParams;
+        }
+    }
 
     [FieldOffset(288)] public BossLockOnCameraParam cameraParam;
     [FieldOffset(400)] public bool isDebugDraw;
@@ -151,14 +151,14 @@ public struct BossPillarConfig
     [FieldOffset(12)]  public float attackIntervalTimeAll;
     [FieldOffset(16)]  public fixed byte /* BossPillarParam[32] */ _pillars[896];
 
-	public BossPillarParam* pillars
-	{
-		get
-		{
-			fixed (byte* p_pillars = _pillars)
-				return (BossPillarParam*)p_pillars;
-		}
-	}
+    public BossPillarParam* pillars
+    {
+        get
+        {
+            fixed (byte* p_pillars = _pillars)
+                return (BossPillarParam*)p_pillars;
+        }
+    }
 
     [FieldOffset(912)] public CString spawnPositionName;
     [FieldOffset(928)] public uint pillarHealthPoint;
@@ -224,14 +224,14 @@ public struct BossColliderStatus
     [FieldOffset(0)]  public ColliderActiveType type;
     [FieldOffset(2)]  public fixed byte /* ColliderProperty[4] */ _propertys[8];
 
-	public ColliderProperty* propertys
-	{
-		get
-		{
-			fixed (byte* p_propertys = _propertys)
-				return (ColliderProperty*)p_propertys;
-		}
-	}
+    public ColliderProperty* propertys
+    {
+        get
+        {
+            fixed (byte* p_propertys = _propertys)
+                return (ColliderProperty*)p_propertys;
+        }
+    }
 
     [FieldOffset(16)] public CString text;
 }
@@ -255,14 +255,14 @@ public struct BossPerceivePartsWithCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
 
-	public BossPerceiveCollisionParam* perceiveCollisions
-	{
-		get
-		{
-			fixed (byte* p_perceiveCollisions = _perceiveCollisions)
-				return (BossPerceiveCollisionParam*)p_perceiveCollisions;
-		}
-	}
+    public BossPerceiveCollisionParam* perceiveCollisions
+    {
+        get
+        {
+            fixed (byte* p_perceiveCollisions = _perceiveCollisions)
+                return (BossPerceiveCollisionParam*)p_perceiveCollisions;
+        }
+    }
 
     [FieldOffset(8192)] public bool isDebugDraw;
 }
@@ -366,14 +366,14 @@ public struct BossMeshFrameConfig
 {
     [FieldOffset(0)]     public fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
 
-	public BossMeshFrameParam* meshShapeKeyFrames
-	{
-		get
-		{
-			fixed (byte* p_meshShapeKeyFrames = _meshShapeKeyFrames)
-				return (BossMeshFrameParam*)p_meshShapeKeyFrames;
-		}
-	}
+    public BossMeshFrameParam* meshShapeKeyFrames
+    {
+        get
+        {
+            fixed (byte* p_meshShapeKeyFrames = _meshShapeKeyFrames)
+                return (BossMeshFrameParam*)p_meshShapeKeyFrames;
+        }
+    }
 
     [FieldOffset(57344)] public bool isDebugDraw;
     [FieldOffset(57345)] public bool isDebugDrawPoint;
@@ -402,14 +402,14 @@ public struct BossAttackCollisionParam
     [FieldOffset(24)] public float damageVelocityRaito;
     [FieldOffset(28)] public fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
 
-	public BossAttackCollisionParam_AttackType* types
-	{
-		get
-		{
-			fixed (byte* p_types = _types)
-				return (BossAttackCollisionParam_AttackType*)p_types;
-		}
-	}
+    public BossAttackCollisionParam_AttackType* types
+    {
+        get
+        {
+            fixed (byte* p_types = _types)
+                return (BossAttackCollisionParam_AttackType*)p_types;
+        }
+    }
 
     [FieldOffset(32)] public BossColliderStatus status;
     [FieldOffset(64)] public float size;
@@ -422,14 +422,14 @@ public struct BossAttackCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
 
-	public BossAttackCollisionParam* attackCollisions
-	{
-		get
-		{
-			fixed (byte* p_attackCollisions = _attackCollisions)
-				return (BossAttackCollisionParam*)p_attackCollisions;
-		}
-	}
+    public BossAttackCollisionParam* attackCollisions
+    {
+        get
+        {
+            fixed (byte* p_attackCollisions = _attackCollisions)
+                return (BossAttackCollisionParam*)p_attackCollisions;
+        }
+    }
 
     [FieldOffset(7168)] public bool isDebugDraw;
 }
@@ -453,14 +453,14 @@ public struct BossBattlePhaseCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
 
-	public BossBattlePhaseCollisionParam* battleCollisions
-	{
-		get
-		{
-			fixed (byte* p_battleCollisions = _battleCollisions)
-				return (BossBattlePhaseCollisionParam*)p_battleCollisions;
-		}
-	}
+    public BossBattlePhaseCollisionParam* battleCollisions
+    {
+        get
+        {
+            fixed (byte* p_battleCollisions = _battleCollisions)
+                return (BossBattlePhaseCollisionParam*)p_battleCollisions;
+        }
+    }
 
     [FieldOffset(1536)] public bool isDebugDraw;
 }
@@ -529,18 +529,18 @@ public struct UIConfig
 [StructLayout(LayoutKind.Explicit, Size = 76576)]
 public struct BossTheEndConfig
 {
-    [FieldOffset(0)]     BossBaseConfig bossBaseConfig;
+    [FieldOffset(0)]     public BossBaseConfig bossBaseConfig;
     [FieldOffset(75712)] public LaserTargetConfig target;
     [FieldOffset(75720)] public fixed byte /* SerifConfig[26] */ _serifConfigs[832];
 
-	public SerifConfig* serifConfigs
-	{
-		get
-		{
-			fixed (byte* p_serifConfigs = _serifConfigs)
-				return (SerifConfig*)p_serifConfigs;
-		}
-	}
+    public SerifConfig* serifConfigs
+    {
+        get
+        {
+            fixed (byte* p_serifConfigs = _serifConfigs)
+                return (SerifConfig*)p_serifConfigs;
+        }
+    }
 
     [FieldOffset(76552)] public NotifierConfig notifierConfigStart;
     [FieldOffset(76556)] public NotifierConfig notifierConfigLaser;

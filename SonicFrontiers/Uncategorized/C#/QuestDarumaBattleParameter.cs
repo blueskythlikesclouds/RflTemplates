@@ -25,13 +25,13 @@ public struct QuestDarumaBattleParameter
 {
     [FieldOffset(0)] public fixed byte /* QuestDarumaBattleParameterElement[3] */ _element[84];
 
-	public QuestDarumaBattleParameterElement* element
-	{
-		get
-		{
-			fixed (byte* p_element = _element)
-				return (QuestDarumaBattleParameterElement*)p_element;
-		}
-	}
+    public QuestDarumaBattleParameterElement* element
+    {
+        get
+        {
+            fixed (byte* p_element = _element)
+                return (QuestDarumaBattleParameterElement*)p_element;
+        }
+    }
 }
 

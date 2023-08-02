@@ -81,24 +81,24 @@ public struct EnemyAquaballConfig
     [FieldOffset(0)]   public EnemyAquaballCommonParam commonParam;
     [FieldOffset(136)] public fixed byte /* EnemyAquaballLevelParam[5] */ _levelParams[80];
 
-	public EnemyAquaballLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyAquaballLevelParam*)p_levelParams;
-		}
-	}
+    public EnemyAquaballLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyAquaballLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(216)] public fixed byte /* EnemyAquaballLevelBand[5] */ _levelBand[20];
 
-	public EnemyAquaballLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (EnemyAquaballLevelBand*)p_levelBand;
-		}
-	}
+    public EnemyAquaballLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (EnemyAquaballLevelBand*)p_levelBand;
+        }
+    }
 }
 

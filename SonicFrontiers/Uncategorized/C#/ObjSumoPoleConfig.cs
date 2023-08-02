@@ -64,14 +64,14 @@ public struct ObjSumoPoleSlingshotLineConfig
     [FieldOffset(20)] public int reflectCountSpeedMax;
     [FieldOffset(24)] public fixed byte /* Color8[5] */ _colors[1275];
 
-	public Color8* colors
-	{
-		get
-		{
-			fixed (byte* p_colors = _colors)
-				return (Color8*)p_colors;
-		}
-	}
+    public Color8* colors
+    {
+        get
+        {
+            fixed (byte* p_colors = _colors)
+                return (Color8*)p_colors;
+        }
+    }
 
     [FieldOffset(44)] public float colorIntensity;
     [FieldOffset(48)] public bool colorGradation;

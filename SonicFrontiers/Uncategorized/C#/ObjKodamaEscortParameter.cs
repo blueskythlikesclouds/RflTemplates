@@ -41,13 +41,13 @@ public struct ObjKodamaEscortParameter
 {
     [FieldOffset(0)] public fixed byte /* ObjKodamaEscortParameterElement[3] */ _element[432];
 
-	public ObjKodamaEscortParameterElement* element
-	{
-		get
-		{
-			fixed (byte* p_element = _element)
-				return (ObjKodamaEscortParameterElement*)p_element;
-		}
-	}
+    public ObjKodamaEscortParameterElement* element
+    {
+        get
+        {
+            fixed (byte* p_element = _element)
+                return (ObjKodamaEscortParameterElement*)p_element;
+        }
+    }
 }
 

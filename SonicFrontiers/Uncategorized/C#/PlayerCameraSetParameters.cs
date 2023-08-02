@@ -59,14 +59,14 @@ public struct PlayerCameraSetParameter
     [FieldOffset(20)] public Priority priority;
     [FieldOffset(32)] public fixed byte /* PlayerCameraParameter[8] */ _param[896];
 
-	public PlayerCameraParameter* param
-	{
-		get
-		{
-			fixed (byte* p_param = _param)
-				return (PlayerCameraParameter*)p_param;
-		}
-	}
+    public PlayerCameraParameter* param
+    {
+        get
+        {
+            fixed (byte* p_param = _param)
+                return (PlayerCameraParameter*)p_param;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 41760)]
@@ -74,13 +74,13 @@ public struct PlayerCameraSetParameters
 {
     [FieldOffset(0)] public fixed byte /* PlayerCameraSetParameter[45] */ _data[41760];
 
-	public PlayerCameraSetParameter* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (PlayerCameraSetParameter*)p_data;
-		}
-	}
+    public PlayerCameraSetParameter* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (PlayerCameraSetParameter*)p_data;
+        }
+    }
 }
 

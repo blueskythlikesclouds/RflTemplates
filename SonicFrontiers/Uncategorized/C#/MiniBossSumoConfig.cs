@@ -72,14 +72,14 @@ public struct MiniBossSumoColliderParam
     [FieldOffset(64)] public CString tag;
     [FieldOffset(80)] public fixed byte /* ColliderProperty[2] */ _properties[8];
 
-	public ColliderProperty* properties
-	{
-		get
-		{
-			fixed (byte* p_properties = _properties)
-				return (ColliderProperty*)p_properties;
-		}
-	}
+    public ColliderProperty* properties
+    {
+        get
+        {
+            fixed (byte* p_properties = _properties)
+                return (ColliderProperty*)p_properties;
+        }
+    }
 
     [FieldOffset(88)] public bool debugDraw;
     [FieldOffset(92)] public Color8 color;
@@ -90,49 +90,49 @@ public struct MiniBossSumoColliderConfig
 {
     [FieldOffset(0)]    public fixed byte /* MiniBossSumoColliderParam[6] */ _damaged[576];
 
-	public MiniBossSumoColliderParam* damaged
-	{
-		get
-		{
-			fixed (byte* p_damaged = _damaged)
-				return (MiniBossSumoColliderParam*)p_damaged;
-		}
-	}
+    public MiniBossSumoColliderParam* damaged
+    {
+        get
+        {
+            fixed (byte* p_damaged = _damaged)
+                return (MiniBossSumoColliderParam*)p_damaged;
+        }
+    }
 
     [FieldOffset(576)]  public fixed byte /* MiniBossSumoColliderParam[2] */ _damage[192];
 
-	public MiniBossSumoColliderParam* damage
-	{
-		get
-		{
-			fixed (byte* p_damage = _damage)
-				return (MiniBossSumoColliderParam*)p_damage;
-		}
-	}
+    public MiniBossSumoColliderParam* damage
+    {
+        get
+        {
+            fixed (byte* p_damage = _damage)
+                return (MiniBossSumoColliderParam*)p_damage;
+        }
+    }
 
     [FieldOffset(768)]  public MiniBossSumoColliderParam detectPuck;
     [FieldOffset(864)]  public MiniBossSumoColliderParam cyloop;
     [FieldOffset(960)]  public fixed byte /* MiniBossSumoColliderParam[3] */ _pressBlow[288];
 
-	public MiniBossSumoColliderParam* pressBlow
-	{
-		get
-		{
-			fixed (byte* p_pressBlow = _pressBlow)
-				return (MiniBossSumoColliderParam*)p_pressBlow;
-		}
-	}
+    public MiniBossSumoColliderParam* pressBlow
+    {
+        get
+        {
+            fixed (byte* p_pressBlow = _pressBlow)
+                return (MiniBossSumoColliderParam*)p_pressBlow;
+        }
+    }
 
     [FieldOffset(1248)] public fixed byte /* MiniBossSumoColliderParam[2] */ _sensorArm[192];
 
-	public MiniBossSumoColliderParam* sensorArm
-	{
-		get
-		{
-			fixed (byte* p_sensorArm = _sensorArm)
-				return (MiniBossSumoColliderParam*)p_sensorArm;
-		}
-	}
+    public MiniBossSumoColliderParam* sensorArm
+    {
+        get
+        {
+            fixed (byte* p_sensorArm = _sensorArm)
+                return (MiniBossSumoColliderParam*)p_sensorArm;
+        }
+    }
 
     [FieldOffset(1440)] public MiniBossSumoColliderParam simpleBody;
     [FieldOffset(1536)] public float moveRadius;
@@ -241,14 +241,14 @@ public struct MiniBossSumoIKParam
     [FieldOffset(4)]   public float footRaycastDistanceDown;
     [FieldOffset(16)]  public fixed byte /* MiniBossSumoIKFootParam[2] */ _feet[320];
 
-	public MiniBossSumoIKFootParam* feet
-	{
-		get
-		{
-			fixed (byte* p_feet = _feet)
-				return (MiniBossSumoIKFootParam*)p_feet;
-		}
-	}
+    public MiniBossSumoIKFootParam* feet
+    {
+        get
+        {
+            fixed (byte* p_feet = _feet)
+                return (MiniBossSumoIKFootParam*)p_feet;
+        }
+    }
 
     [FieldOffset(336)] public float handRaycastDistanceUp;
     [FieldOffset(340)] public float handRaycastDistanceDown;
@@ -258,14 +258,14 @@ public struct MiniBossSumoIKParam
     [FieldOffset(356)] public float easeOutTimeHandIk;
     [FieldOffset(368)] public fixed byte /* MiniBossSumoIKHandParam[2] */ _hands[224];
 
-	public MiniBossSumoIKHandParam* hands
-	{
-		get
-		{
-			fixed (byte* p_hands = _hands)
-				return (MiniBossSumoIKHandParam*)p_hands;
-		}
-	}
+    public MiniBossSumoIKHandParam* hands
+    {
+        get
+        {
+            fixed (byte* p_hands = _hands)
+                return (MiniBossSumoIKHandParam*)p_hands;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 16)]
@@ -344,14 +344,14 @@ public struct MiniBossSumoRotationElectricRopeParam
 {
     [FieldOffset(0)] public fixed byte /* MiniBossSumoElectricRopePattern[10] */ _patterns[90];
 
-	public MiniBossSumoElectricRopePattern* patterns
-	{
-		get
-		{
-			fixed (byte* p_patterns = _patterns)
-				return (MiniBossSumoElectricRopePattern*)p_patterns;
-		}
-	}
+    public MiniBossSumoElectricRopePattern* patterns
+    {
+        get
+        {
+            fixed (byte* p_patterns = _patterns)
+                return (MiniBossSumoElectricRopePattern*)p_patterns;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 468)]
@@ -372,14 +372,14 @@ public struct MiniBossSumoLevelBand
     [FieldOffset(0)] public int level;
     [FieldOffset(4)] public fixed byte /* MiniBossSumoBehaviorHPRateParam[3] */ _hpRateParams[1404];
 
-	public MiniBossSumoBehaviorHPRateParam* hpRateParams
-	{
-		get
-		{
-			fixed (byte* p_hpRateParams = _hpRateParams)
-				return (MiniBossSumoBehaviorHPRateParam*)p_hpRateParams;
-		}
-	}
+    public MiniBossSumoBehaviorHPRateParam* hpRateParams
+    {
+        get
+        {
+            fixed (byte* p_hpRateParams = _hpRateParams)
+                return (MiniBossSumoBehaviorHPRateParam*)p_hpRateParams;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 9888)]
@@ -388,24 +388,24 @@ public struct MiniBossSumoConfig
     [FieldOffset(0)]    public MiniBossSumoCommonParam commonParam;
     [FieldOffset(2560)] public fixed byte /* MiniBossSumoLevelParam[5] */ _levelParams[280];
 
-	public MiniBossSumoLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossSumoLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossSumoLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossSumoLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(2840)] public fixed byte /* MiniBossSumoLevelBand[5] */ _levelBand[7040];
 
-	public MiniBossSumoLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossSumoLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossSumoLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossSumoLevelBand*)p_levelBand;
+        }
+    }
 }
 

@@ -100,36 +100,36 @@ public struct MirageAnimData
 {
     [FieldOffset(0)]  public fixed byte /* CString[3] */ _texSrtAnimName[765];
 
-	public CString* texSrtAnimName
-	{
-		get
-		{
-			fixed (byte* p_texSrtAnimName = _texSrtAnimName)
-				return (CString*)p_texSrtAnimName;
-		}
-	}
+    public CString* texSrtAnimName
+    {
+        get
+        {
+            fixed (byte* p_texSrtAnimName = _texSrtAnimName)
+                return (CString*)p_texSrtAnimName;
+        }
+    }
 
     [FieldOffset(48)] public fixed byte /* CString[3] */ _texPatAnimName[765];
 
-	public CString* texPatAnimName
-	{
-		get
-		{
-			fixed (byte* p_texPatAnimName = _texPatAnimName)
-				return (CString*)p_texPatAnimName;
-		}
-	}
+    public CString* texPatAnimName
+    {
+        get
+        {
+            fixed (byte* p_texPatAnimName = _texPatAnimName)
+                return (CString*)p_texPatAnimName;
+        }
+    }
 
     [FieldOffset(96)] public fixed byte /* CString[3] */ _matAnimName[765];
 
-	public CString* matAnimName
-	{
-		get
-		{
-			fixed (byte* p_matAnimName = _matAnimName)
-				return (CString*)p_matAnimName;
-		}
-	}
+    public CString* matAnimName
+    {
+        get
+        {
+            fixed (byte* p_matAnimName = _matAnimName)
+                return (CString*)p_matAnimName;
+        }
+    }
 }
 
 public enum MotionType : byte

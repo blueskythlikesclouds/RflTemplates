@@ -25,7 +25,7 @@ public struct HeliAttackBase
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct HeliBullet
 {
-    [FieldOffset(0)]  HeliAttackBase heliAttackBase;
+    [FieldOffset(0)]  public HeliAttackBase heliAttackBase;
     [FieldOffset(8)]  public float bulletSpeed;
     [FieldOffset(12)] public float gunRotateSpeed;
     [FieldOffset(16)] public byte attackChainNum;
@@ -35,7 +35,7 @@ public struct HeliBullet
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct HeliBomb
 {
-    [FieldOffset(0)] HeliAttackBase heliAttackBase;
+    [FieldOffset(0)] public HeliAttackBase heliAttackBase;
     [FieldOffset(8)] public float bombSpeed;
 }
 

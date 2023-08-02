@@ -57,14 +57,14 @@ public struct SkillTreeParam
 {
     [FieldOffset(0)]   public fixed byte /* SkillNodeParam[30] */ _nodeParams[150];
 
-	public SkillNodeParam* nodeParams
-	{
-		get
-		{
-			fixed (byte* p_nodeParams = _nodeParams)
-				return (SkillNodeParam*)p_nodeParams;
-		}
-	}
+    public SkillNodeParam* nodeParams
+    {
+        get
+        {
+            fixed (byte* p_nodeParams = _nodeParams)
+                return (SkillNodeParam*)p_nodeParams;
+        }
+    }
 
     [FieldOffset(150)] public sbyte startIndex;
 }
@@ -74,14 +74,14 @@ public struct GameSkillParameter
 {
     [FieldOffset(0)]  public fixed byte /* SkillParam[20] */ _skillParams[60];
 
-	public SkillParam* skillParams
-	{
-		get
-		{
-			fixed (byte* p_skillParams = _skillParams)
-				return (SkillParam*)p_skillParams;
-		}
-	}
+    public SkillParam* skillParams
+    {
+        get
+        {
+            fixed (byte* p_skillParams = _skillParams)
+                return (SkillParam*)p_skillParams;
+        }
+    }
 
     [FieldOffset(60)] public SkillTreeParam treeParams;
 }

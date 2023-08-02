@@ -14,13 +14,13 @@ public struct ObjNormalFloorConfig
 {
     [FieldOffset(0)] public fixed byte /* NormalFloorSize[10] */ _sizeInfo[120];
 
-	public NormalFloorSize* sizeInfo
-	{
-		get
-		{
-			fixed (byte* p_sizeInfo = _sizeInfo)
-				return (NormalFloorSize*)p_sizeInfo;
-		}
-	}
+    public NormalFloorSize* sizeInfo
+    {
+        get
+        {
+            fixed (byte* p_sizeInfo = _sizeInfo)
+                return (NormalFloorSize*)p_sizeInfo;
+        }
+    }
 }
 

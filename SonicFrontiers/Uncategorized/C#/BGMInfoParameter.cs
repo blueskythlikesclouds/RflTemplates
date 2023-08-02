@@ -82,35 +82,35 @@ public struct BGMInfoParameter
 {
     [FieldOffset(0)]    public fixed byte /* BGMInfo[32] */ _changeBgmInfo[2048];
 
-	public BGMInfo* changeBgmInfo
-	{
-		get
-		{
-			fixed (byte* p_changeBgmInfo = _changeBgmInfo)
-				return (BGMInfo*)p_changeBgmInfo;
-		}
-	}
+    public BGMInfo* changeBgmInfo
+    {
+        get
+        {
+            fixed (byte* p_changeBgmInfo = _changeBgmInfo)
+                return (BGMInfo*)p_changeBgmInfo;
+        }
+    }
 
     [FieldOffset(2048)] public fixed byte /* BGMTransitInfo[32] */ _transitBgmInfo[1536];
 
-	public BGMTransitInfo* transitBgmInfo
-	{
-		get
-		{
-			fixed (byte* p_transitBgmInfo = _transitBgmInfo)
-				return (BGMTransitInfo*)p_transitBgmInfo;
-		}
-	}
+    public BGMTransitInfo* transitBgmInfo
+    {
+        get
+        {
+            fixed (byte* p_transitBgmInfo = _transitBgmInfo)
+                return (BGMTransitInfo*)p_transitBgmInfo;
+        }
+    }
 
     [FieldOffset(3584)] public fixed byte /* BGMSceneInfo[4] */ _sceneBgmInfo[96];
 
-	public BGMSceneInfo* sceneBgmInfo
-	{
-		get
-		{
-			fixed (byte* p_sceneBgmInfo = _sceneBgmInfo)
-				return (BGMSceneInfo*)p_sceneBgmInfo;
-		}
-	}
+    public BGMSceneInfo* sceneBgmInfo
+    {
+        get
+        {
+            fixed (byte* p_sceneBgmInfo = _sceneBgmInfo)
+                return (BGMSceneInfo*)p_sceneBgmInfo;
+        }
+    }
 }
 

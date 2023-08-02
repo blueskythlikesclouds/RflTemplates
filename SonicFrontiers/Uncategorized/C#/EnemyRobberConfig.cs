@@ -49,13 +49,13 @@ public struct EnemyRobberConfig
     [FieldOffset(0)]  public EnemyRobberCommonConfig commonParams;
     [FieldOffset(60)] public fixed byte /* EnemyRobberLevelConfig[5] */ _levelParams[80];
 
-	public EnemyRobberLevelConfig* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyRobberLevelConfig*)p_levelParams;
-		}
-	}
+    public EnemyRobberLevelConfig* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyRobberLevelConfig*)p_levelParams;
+        }
+    }
 }
 

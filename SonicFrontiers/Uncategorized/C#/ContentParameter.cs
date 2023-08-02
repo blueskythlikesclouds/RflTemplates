@@ -25,14 +25,14 @@ public struct ContentParameter
 {
     [FieldOffset(0)] public fixed byte /* AddDatabaseInfo[2] */ _databases[4];
 
-	public AddDatabaseInfo* databases
-	{
-		get
-		{
-			fixed (byte* p_databases = _databases)
-				return (AddDatabaseInfo*)p_databases;
-		}
-	}
+    public AddDatabaseInfo* databases
+    {
+        get
+        {
+            fixed (byte* p_databases = _databases)
+                return (AddDatabaseInfo*)p_databases;
+        }
+    }
 
     [FieldOffset(8)] public CString stagedata;
 }

@@ -189,14 +189,14 @@ public struct PlayerParamLocus
 {
     [FieldOffset(0)] public fixed byte /* PlayerParamLocusData[4] */ _data[64];
 
-	public PlayerParamLocusData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (PlayerParamLocusData*)p_data;
-		}
-	}
+    public PlayerParamLocusData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (PlayerParamLocusData*)p_data;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 16)]
@@ -234,14 +234,14 @@ public struct PlayerParamDamageRate
 {
     [FieldOffset(0)] public fixed byte /* PlayerParamDamageRateLevel[4] */ _diffculties[80];
 
-	public PlayerParamDamageRateLevel* diffculties
-	{
-		get
-		{
-			fixed (byte* p_diffculties = _diffculties)
-				return (PlayerParamDamageRateLevel*)p_diffculties;
-		}
-	}
+    public PlayerParamDamageRateLevel* diffculties
+    {
+        get
+        {
+            fixed (byte* p_diffculties = _diffculties)
+                return (PlayerParamDamageRateLevel*)p_diffculties;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 15776)]
@@ -1001,14 +1001,14 @@ public struct PlayerParamAvoid
     [FieldOffset(24)]  public float addFallSpeed;
     [FieldOffset(28)]  public fixed byte /* PlayerParamAvoidData[7] */ _data[112];
 
-	public PlayerParamAvoidData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (PlayerParamAvoidData*)p_data;
-		}
-	}
+    public PlayerParamAvoidData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (PlayerParamAvoidData*)p_data;
+        }
+    }
 
     [FieldOffset(140)] public float baseDistance;
     [FieldOffset(144)] public float limitAngle;
@@ -1258,7 +1258,7 @@ public struct PlayerParamSpinBoost
 [StructLayout(LayoutKind.Explicit, Size = 2736)]
 public struct ModePackageTails
 {
-    [FieldOffset(0)]    ModePackage modePackage;
+    [FieldOffset(0)]    public ModePackage modePackage;
     [FieldOffset(2144)] public TailsParamFly tailsFly;
     [FieldOffset(2248)] public TailsParamSpanner spanner;
     [FieldOffset(2304)] public TailsParamCyBlaster cyBlaster;

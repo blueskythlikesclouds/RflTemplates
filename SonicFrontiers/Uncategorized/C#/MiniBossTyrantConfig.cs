@@ -240,14 +240,14 @@ public struct MiniBossTyrantAttackParam
     [FieldOffset(64)]   public float rotSpeed;
     [FieldOffset(72)]   public fixed byte /* MiniBossTyrantBarrageParam[16] */ _barrage[1152];
 
-	public MiniBossTyrantBarrageParam* barrage
-	{
-		get
-		{
-			fixed (byte* p_barrage = _barrage)
-				return (MiniBossTyrantBarrageParam*)p_barrage;
-		}
-	}
+    public MiniBossTyrantBarrageParam* barrage
+    {
+        get
+        {
+            fixed (byte* p_barrage = _barrage)
+                return (MiniBossTyrantBarrageParam*)p_barrage;
+        }
+    }
 
     [FieldOffset(1224)] public MiniBossTyrantShotgunBullet shotgunBullet;
     [FieldOffset(1268)] public MiniBossTyrantWinderBullet winderBullet;
@@ -258,25 +258,25 @@ public struct MiniBossTyrantAttackParam
     [FieldOffset(1448)] public MiniBossTyrantCyloopDamageParameter cyloopParam;
     [FieldOffset(1464)] public fixed byte /* ActionType[10] */ _actionListGround[10];
 
-	public ActionType* actionListGround
-	{
-		get
-		{
-			fixed (byte* p_actionListGround = _actionListGround)
-				return (ActionType*)p_actionListGround;
-		}
-	}
+    public ActionType* actionListGround
+    {
+        get
+        {
+            fixed (byte* p_actionListGround = _actionListGround)
+                return (ActionType*)p_actionListGround;
+        }
+    }
 
     [FieldOffset(1474)] public fixed byte /* ActionType[10] */ _actionListAir[10];
 
-	public ActionType* actionListAir
-	{
-		get
-		{
-			fixed (byte* p_actionListAir = _actionListAir)
-				return (ActionType*)p_actionListAir;
-		}
-	}
+    public ActionType* actionListAir
+    {
+        get
+        {
+            fixed (byte* p_actionListAir = _actionListAir)
+                return (ActionType*)p_actionListAir;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 40)]
@@ -306,25 +306,25 @@ public struct MiniBossTyrantConfig
     [FieldOffset(0)]    public MiniBossTyrantCommonParam commonParam;
     [FieldOffset(96)]   public fixed byte /* MiniBossTyrantLevelParam[5] */ _levelParams[280];
 
-	public MiniBossTyrantLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossTyrantLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossTyrantLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossTyrantLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(376)]  public fixed byte /* MiniBossTyrantLevelBand[5] */ _levelBand[20];
 
-	public MiniBossTyrantLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossTyrantLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossTyrantLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossTyrantLevelBand*)p_levelBand;
+        }
+    }
 
     [FieldOffset(400)]  public MiniBossTyrantAttackParam attackParam;
     [FieldOffset(1888)] public MiniBossTyrantStormEffectParam stormEffectParam;

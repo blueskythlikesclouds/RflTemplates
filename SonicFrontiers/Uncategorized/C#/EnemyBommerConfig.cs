@@ -113,13 +113,13 @@ public struct EnemyBommerConfig
     [FieldOffset(0)]   public EnemyBommerCommonConfig commonParams;
     [FieldOffset(208)] public fixed byte /* EnemyBommerLevelConfig[5] */ _levelParams[80];
 
-	public EnemyBommerLevelConfig* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyBommerLevelConfig*)p_levelParams;
-		}
-	}
+    public EnemyBommerLevelConfig* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyBommerLevelConfig*)p_levelParams;
+        }
+    }
 }
 

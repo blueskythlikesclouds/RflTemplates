@@ -52,14 +52,14 @@ public struct SwayParamNodeCollision
 {
     [FieldOffset(0)] public fixed byte /* SwayParamCollision[8] */ _collisionParam[768];
 
-	public SwayParamCollision* collisionParam
-	{
-		get
-		{
-			fixed (byte* p_collisionParam = _collisionParam)
-				return (SwayParamCollision*)p_collisionParam;
-		}
-	}
+    public SwayParamCollision* collisionParam
+    {
+        get
+        {
+            fixed (byte* p_collisionParam = _collisionParam)
+                return (SwayParamCollision*)p_collisionParam;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 13328)]
@@ -68,24 +68,24 @@ public struct SwayParamIndivisual
     [FieldOffset(0)]    public CString idName;
     [FieldOffset(16)]   public fixed byte /* SwayParamNode[16] */ _nodeParam[1024];
 
-	public SwayParamNode* nodeParam
-	{
-		get
-		{
-			fixed (byte* p_nodeParam = _nodeParam)
-				return (SwayParamNode*)p_nodeParam;
-		}
-	}
+    public SwayParamNode* nodeParam
+    {
+        get
+        {
+            fixed (byte* p_nodeParam = _nodeParam)
+                return (SwayParamNode*)p_nodeParam;
+        }
+    }
 
     [FieldOffset(1040)] public fixed byte /* SwayParamNodeCollision[16] */ _collisionParam[12288];
 
-	public SwayParamNodeCollision* collisionParam
-	{
-		get
-		{
-			fixed (byte* p_collisionParam = _collisionParam)
-				return (SwayParamNodeCollision*)p_collisionParam;
-		}
-	}
+    public SwayParamNodeCollision* collisionParam
+    {
+        get
+        {
+            fixed (byte* p_collisionParam = _collisionParam)
+                return (SwayParamNodeCollision*)p_collisionParam;
+        }
+    }
 }
 

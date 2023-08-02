@@ -213,14 +213,14 @@ public struct MiniBossSkierLevelBand
     [FieldOffset(0)]   public int level;
     [FieldOffset(4)]   public fixed byte /* MiniBossSkierBattlePhaseParam[3] */ _phaseParam[96];
 
-	public MiniBossSkierBattlePhaseParam* phaseParam
-	{
-		get
-		{
-			fixed (byte* p_phaseParam = _phaseParam)
-				return (MiniBossSkierBattlePhaseParam*)p_phaseParam;
-		}
-	}
+    public MiniBossSkierBattlePhaseParam* phaseParam
+    {
+        get
+        {
+            fixed (byte* p_phaseParam = _phaseParam)
+                return (MiniBossSkierBattlePhaseParam*)p_phaseParam;
+        }
+    }
 
     [FieldOffset(100)] public MiniBossSkierJumpOutParam jumpOutParam;
     [FieldOffset(116)] public MiniBossSkierSkiParam skiParam;
@@ -235,24 +235,24 @@ public struct MiniBossSkierConfig
     [FieldOffset(0)]   public MiniBossSkierCommonParam commonParam;
     [FieldOffset(320)] public fixed byte /* MiniBossSkierLevelParam[5] */ _levelParams[280];
 
-	public MiniBossSkierLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossSkierLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossSkierLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossSkierLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(600)] public fixed byte /* MiniBossSkierLevelBand[5] */ _levelBand[1140];
 
-	public MiniBossSkierLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossSkierLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossSkierLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossSkierLevelBand*)p_levelBand;
+        }
+    }
 }
 

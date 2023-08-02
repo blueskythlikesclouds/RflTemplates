@@ -32,14 +32,14 @@ public struct Discussion
 {
     [FieldOffset(0)]   public fixed byte /* LabelData[20] */ _labels[640];
 
-	public LabelData* labels
-	{
-		get
-		{
-			fixed (byte* p_labels = _labels)
-				return (LabelData*)p_labels;
-		}
-	}
+    public LabelData* labels
+    {
+        get
+        {
+            fixed (byte* p_labels = _labels)
+                return (LabelData*)p_labels;
+        }
+    }
 
     [FieldOffset(640)] public bool isForcePlay;
 }
@@ -49,13 +49,13 @@ public struct CaptionParameter
 {
     [FieldOffset(0)] public fixed byte /* Discussion[10] */ _discussions[6480];
 
-	public Discussion* discussions
-	{
-		get
-		{
-			fixed (byte* p_discussions = _discussions)
-				return (Discussion*)p_discussions;
-		}
-	}
+    public Discussion* discussions
+    {
+        get
+        {
+            fixed (byte* p_discussions = _discussions)
+                return (Discussion*)p_discussions;
+        }
+    }
 }
 

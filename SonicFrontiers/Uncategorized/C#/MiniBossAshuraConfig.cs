@@ -138,14 +138,14 @@ public struct MiniBossAshuraPhaseParam
     [FieldOffset(3)]   public bool isAttackArmCircleBulletOnArm;
     [FieldOffset(4)]   public fixed byte /* MiniBossAshuraPhaseOnArmCircleBulletPos[8] */ _onArmCircleBullets[128];
 
-	public MiniBossAshuraPhaseOnArmCircleBulletPos* onArmCircleBullets
-	{
-		get
-		{
-			fixed (byte* p_onArmCircleBullets = _onArmCircleBullets)
-				return (MiniBossAshuraPhaseOnArmCircleBulletPos*)p_onArmCircleBullets;
-		}
-	}
+    public MiniBossAshuraPhaseOnArmCircleBulletPos* onArmCircleBullets
+    {
+        get
+        {
+            fixed (byte* p_onArmCircleBullets = _onArmCircleBullets)
+                return (MiniBossAshuraPhaseOnArmCircleBulletPos*)p_onArmCircleBullets;
+        }
+    }
 
     [FieldOffset(132)] public bool isAttackArmCircleBullet;
     [FieldOffset(136)] public int circleBulletBackTypeFreq;
@@ -162,36 +162,36 @@ public struct MiniBossAshuraConfig
     [FieldOffset(0)]   public MiniBossAshuraCommonParam commonParam;
     [FieldOffset(64)]  public fixed byte /* MiniBossAshuraLevelParam[5] */ _levelParams[280];
 
-	public MiniBossAshuraLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossAshuraLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossAshuraLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossAshuraLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(344)] public fixed byte /* MiniBossAshuraLevelBand[5] */ _levelBand[20];
 
-	public MiniBossAshuraLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossAshuraLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossAshuraLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossAshuraLevelBand*)p_levelBand;
+        }
+    }
 
     [FieldOffset(364)] public MiniBossAshuraObjectParam objectParam;
     [FieldOffset(492)] public fixed byte /* MiniBossAshuraPhaseParam[3] */ _phaseParam[480];
 
-	public MiniBossAshuraPhaseParam* phaseParam
-	{
-		get
-		{
-			fixed (byte* p_phaseParam = _phaseParam)
-				return (MiniBossAshuraPhaseParam*)p_phaseParam;
-		}
-	}
+    public MiniBossAshuraPhaseParam* phaseParam
+    {
+        get
+        {
+            fixed (byte* p_phaseParam = _phaseParam)
+                return (MiniBossAshuraPhaseParam*)p_phaseParam;
+        }
+    }
 }
 

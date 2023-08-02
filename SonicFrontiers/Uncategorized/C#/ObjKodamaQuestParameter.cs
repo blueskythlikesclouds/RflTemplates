@@ -64,7 +64,7 @@ public struct ObjKodamaQuestGrassIslandParameter
 [StructLayout(LayoutKind.Explicit, Size = 44)]
 public struct QuestKodamaCollectionSandBombParameter
 {
-    [FieldOffset(0)]  QuestKodamaCollectionBombParameter questKodamaCollectionBombParameter;
+    [FieldOffset(0)]  public QuestKodamaCollectionBombParameter questKodamaCollectionBombParameter;
     [FieldOffset(28)] public float sandStormTime;
     [FieldOffset(32)] public float noBombsTime;
     [FieldOffset(36)] public float sandStormInLerpTime;
@@ -86,24 +86,24 @@ public struct ObjKodamaQuestParameter
 {
     [FieldOffset(0)]   public fixed byte /* ObjKodamaQuestGrassIslandParameter[3] */ _grassIslandParam[480];
 
-	public ObjKodamaQuestGrassIslandParameter* grassIslandParam
-	{
-		get
-		{
-			fixed (byte* p_grassIslandParam = _grassIslandParam)
-				return (ObjKodamaQuestGrassIslandParameter*)p_grassIslandParam;
-		}
-	}
+    public ObjKodamaQuestGrassIslandParameter* grassIslandParam
+    {
+        get
+        {
+            fixed (byte* p_grassIslandParam = _grassIslandParam)
+                return (ObjKodamaQuestGrassIslandParameter*)p_grassIslandParam;
+        }
+    }
 
     [FieldOffset(480)] public fixed byte /* ObjKodamaQuestDesertIslandParameter[3] */ _desertIslandParam[528];
 
-	public ObjKodamaQuestDesertIslandParameter* desertIslandParam
-	{
-		get
-		{
-			fixed (byte* p_desertIslandParam = _desertIslandParam)
-				return (ObjKodamaQuestDesertIslandParameter*)p_desertIslandParam;
-		}
-	}
+    public ObjKodamaQuestDesertIslandParameter* desertIslandParam
+    {
+        get
+        {
+            fixed (byte* p_desertIslandParam = _desertIslandParam)
+                return (ObjKodamaQuestDesertIslandParameter*)p_desertIslandParam;
+        }
+    }
 }
 

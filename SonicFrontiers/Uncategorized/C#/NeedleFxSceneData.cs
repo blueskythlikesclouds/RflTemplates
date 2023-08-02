@@ -102,7 +102,7 @@ public struct TimeIntervalData
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct ProgressTimePairData
 {
-    [FieldOffset(0)] TimeIntervalData timeIntervalData;
+    [FieldOffset(0)] public TimeIntervalData timeIntervalData;
     [FieldOffset(4)] public float hourlyTime;
 }
 
@@ -120,14 +120,14 @@ public struct StageCommonTimeProgressParameter
     [FieldOffset(32)]  public float hourlyTime;
     [FieldOffset(36)]  public fixed byte /* ProgressTimePairData[8] */ _overrideSpeeds[64];
 
-	public ProgressTimePairData* overrideSpeeds
-	{
-		get
-		{
-			fixed (byte* p_overrideSpeeds = _overrideSpeeds)
-				return (ProgressTimePairData*)p_overrideSpeeds;
-		}
-	}
+    public ProgressTimePairData* overrideSpeeds
+    {
+        get
+        {
+            fixed (byte* p_overrideSpeeds = _overrideSpeeds)
+                return (ProgressTimePairData*)p_overrideSpeeds;
+        }
+    }
 
     [FieldOffset(100)] public TimeIntervalData night;
 }
@@ -389,14 +389,14 @@ public struct FxRenderOption
     [FieldOffset(54)]  public bool debugEnableAOGI;
     [FieldOffset(56)]  public fixed byte /* DebugScreenOption[16] */ _debugScreen[384];
 
-	public DebugScreenOption* debugScreen
-	{
-		get
-		{
-			fixed (byte* p_debugScreen = _debugScreen)
-				return (DebugScreenOption*)p_debugScreen;
-		}
-	}
+    public DebugScreenOption* debugScreen
+    {
+        get
+        {
+            fixed (byte* p_debugScreen = _debugScreen)
+                return (DebugScreenOption*)p_debugScreen;
+        }
+    }
 
     [FieldOffset(440)] public DebugScreenView debugScreenView;
     [FieldOffset(441)] public bool enableMSAA;
@@ -407,14 +407,14 @@ public struct FxRenderOption
     [FieldOffset(452)] public int debugOccluderVertThreshold;
     [FieldOffset(464)] public fixed byte /* GlobalUserParamOption[4] */ _globalUserParam[128];
 
-	public GlobalUserParamOption* globalUserParam
-	{
-		get
-		{
-			fixed (byte* p_globalUserParam = _globalUserParam)
-				return (GlobalUserParamOption*)p_globalUserParam;
-		}
-	}
+    public GlobalUserParamOption* globalUserParam
+    {
+        get
+        {
+            fixed (byte* p_globalUserParam = _globalUserParam)
+                return (GlobalUserParamOption*)p_globalUserParam;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
@@ -949,14 +949,14 @@ public struct FxOcclusionCapsuleParameter
     [FieldOffset(52)]  public int manualLightCount;
     [FieldOffset(64)]  public fixed byte /* Vector3[4] */ _manualLightPos[64];
 
-	public Vector3* manualLightPos
-	{
-		get
-		{
-			fixed (byte* p_manualLightPos = _manualLightPos)
-				return (Vector3*)p_manualLightPos;
-		}
-	}
+    public Vector3* manualLightPos
+    {
+        get
+        {
+            fixed (byte* p_manualLightPos = _manualLightPos)
+                return (Vector3*)p_manualLightPos;
+        }
+    }
 
     [FieldOffset(128)] public bool debugDraw;
 }
@@ -1770,14 +1770,14 @@ public struct FxSeparableSSSParameter
     [FieldOffset(12)] public float blurOffsetMax;
     [FieldOffset(16)] public fixed byte /* Vector4[16] */ _strength[256];
 
-	public Vector4* strength
-	{
-		get
-		{
-			fixed (byte* p_strength = _strength)
-				return (Vector4*)p_strength;
-		}
-	}
+    public Vector4* strength
+    {
+        get
+        {
+            fixed (byte* p_strength = _strength)
+                return (Vector4*)p_strength;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 4720)]
@@ -1936,36 +1936,36 @@ public struct NeedleFxSceneData
     [FieldOffset(0)]      public NeedleFxSceneConfig config;
     [FieldOffset(320)]    public fixed byte /* NeedleFxParameter[16] */ _items[75520];
 
-	public NeedleFxParameter* items
-	{
-		get
-		{
-			fixed (byte* p_items = _items)
-				return (NeedleFxParameter*)p_items;
-		}
-	}
+    public NeedleFxParameter* items
+    {
+        get
+        {
+            fixed (byte* p_items = _items)
+                return (NeedleFxParameter*)p_items;
+        }
+    }
 
     [FieldOffset(75840)]  public fixed byte /* TimeProgressNeedleFxParam[24] */ _timeItems[38784];
 
-	public TimeProgressNeedleFxParam* timeItems
-	{
-		get
-		{
-			fixed (byte* p_timeItems = _timeItems)
-				return (TimeProgressNeedleFxParam*)p_timeItems;
-		}
-	}
+    public TimeProgressNeedleFxParam* timeItems
+    {
+        get
+        {
+            fixed (byte* p_timeItems = _timeItems)
+                return (TimeProgressNeedleFxParam*)p_timeItems;
+        }
+    }
 
     [FieldOffset(114624)] public fixed byte /* WeatherFxParameter[7] */ _weatherItems[12432];
 
-	public WeatherFxParameter* weatherItems
-	{
-		get
-		{
-			fixed (byte* p_weatherItems = _weatherItems)
-				return (WeatherFxParameter*)p_weatherItems;
-		}
-	}
+    public WeatherFxParameter* weatherItems
+    {
+        get
+        {
+            fixed (byte* p_weatherItems = _weatherItems)
+                return (WeatherFxParameter*)p_weatherItems;
+        }
+    }
 
     [FieldOffset(127056)] public StageConfig stageConfig;
 }

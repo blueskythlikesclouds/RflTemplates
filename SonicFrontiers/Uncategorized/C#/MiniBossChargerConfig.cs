@@ -298,14 +298,14 @@ public struct MiniBossChagerDiffuseLaser
     [FieldOffset(12)]  public int muzzleNum;
     [FieldOffset(16)]  public fixed byte /* Vector3[10] */ _muzzlePosOffset[160];
 
-	public Vector3* muzzlePosOffset
-	{
-		get
-		{
-			fixed (byte* p_muzzlePosOffset = _muzzlePosOffset)
-				return (Vector3*)p_muzzlePosOffset;
-		}
-	}
+    public Vector3* muzzlePosOffset
+    {
+        get
+        {
+            fixed (byte* p_muzzlePosOffset = _muzzlePosOffset)
+                return (Vector3*)p_muzzlePosOffset;
+        }
+    }
 
     [FieldOffset(176)] public fixed float muzzleRotOffset[10];
     [FieldOffset(216)] public fixed float muzzleTimeOffset[10];
@@ -326,14 +326,14 @@ public struct MiniBossChagerChaseShot
     [FieldOffset(4)]   public int muzzleNum;
     [FieldOffset(16)]  public fixed byte /* Vector3[10] */ _muzzlePosOffset[160];
 
-	public Vector3* muzzlePosOffset
-	{
-		get
-		{
-			fixed (byte* p_muzzlePosOffset = _muzzlePosOffset)
-				return (Vector3*)p_muzzlePosOffset;
-		}
-	}
+    public Vector3* muzzlePosOffset
+    {
+        get
+        {
+            fixed (byte* p_muzzlePosOffset = _muzzlePosOffset)
+                return (Vector3*)p_muzzlePosOffset;
+        }
+    }
 
     [FieldOffset(176)] public fixed float muzzleRotOffsetX[10];
     [FieldOffset(216)] public fixed float muzzleRotOffsetY[10];
@@ -369,212 +369,212 @@ public struct MiniBossChargerCommonParam
     [FieldOffset(0)]    public MiniBossCommonConfig commonConfig;
     [FieldOffset(64)]   public fixed byte /* MiniBossChagerBarrageParam[16] */ _barrage[1408];
 
-	public MiniBossChagerBarrageParam* barrage
-	{
-		get
-		{
-			fixed (byte* p_barrage = _barrage)
-				return (MiniBossChagerBarrageParam*)p_barrage;
-		}
-	}
+    public MiniBossChagerBarrageParam* barrage
+    {
+        get
+        {
+            fixed (byte* p_barrage = _barrage)
+                return (MiniBossChagerBarrageParam*)p_barrage;
+        }
+    }
 
     [FieldOffset(1472)] public fixed byte /* MiniBossChagerSimpleRotateBullet[3] */ _simpleRotateBullet[132];
 
-	public MiniBossChagerSimpleRotateBullet* simpleRotateBullet
-	{
-		get
-		{
-			fixed (byte* p_simpleRotateBullet = _simpleRotateBullet)
-				return (MiniBossChagerSimpleRotateBullet*)p_simpleRotateBullet;
-		}
-	}
+    public MiniBossChagerSimpleRotateBullet* simpleRotateBullet
+    {
+        get
+        {
+            fixed (byte* p_simpleRotateBullet = _simpleRotateBullet)
+                return (MiniBossChagerSimpleRotateBullet*)p_simpleRotateBullet;
+        }
+    }
 
     [FieldOffset(1604)] public fixed byte /* MiniBossChagerFollowLaser[3] */ _followLaser[108];
 
-	public MiniBossChagerFollowLaser* followLaser
-	{
-		get
-		{
-			fixed (byte* p_followLaser = _followLaser)
-				return (MiniBossChagerFollowLaser*)p_followLaser;
-		}
-	}
+    public MiniBossChagerFollowLaser* followLaser
+    {
+        get
+        {
+            fixed (byte* p_followLaser = _followLaser)
+                return (MiniBossChagerFollowLaser*)p_followLaser;
+        }
+    }
 
     [FieldOffset(1712)] public fixed byte /* MiniBossChagerVortexLaser[3] */ _vortexLaser[96];
 
-	public MiniBossChagerVortexLaser* vortexLaser
-	{
-		get
-		{
-			fixed (byte* p_vortexLaser = _vortexLaser)
-				return (MiniBossChagerVortexLaser*)p_vortexLaser;
-		}
-	}
+    public MiniBossChagerVortexLaser* vortexLaser
+    {
+        get
+        {
+            fixed (byte* p_vortexLaser = _vortexLaser)
+                return (MiniBossChagerVortexLaser*)p_vortexLaser;
+        }
+    }
 
     [FieldOffset(1808)] public fixed byte /* MiniBossChagerCrossLaser[3] */ _crossLaser[60];
 
-	public MiniBossChagerCrossLaser* crossLaser
-	{
-		get
-		{
-			fixed (byte* p_crossLaser = _crossLaser)
-				return (MiniBossChagerCrossLaser*)p_crossLaser;
-		}
-	}
+    public MiniBossChagerCrossLaser* crossLaser
+    {
+        get
+        {
+            fixed (byte* p_crossLaser = _crossLaser)
+                return (MiniBossChagerCrossLaser*)p_crossLaser;
+        }
+    }
 
     [FieldOffset(1868)] public fixed byte /* MiniBossChagerCrossBullet[3] */ _crossBullet[120];
 
-	public MiniBossChagerCrossBullet* crossBullet
-	{
-		get
-		{
-			fixed (byte* p_crossBullet = _crossBullet)
-				return (MiniBossChagerCrossBullet*)p_crossBullet;
-		}
-	}
+    public MiniBossChagerCrossBullet* crossBullet
+    {
+        get
+        {
+            fixed (byte* p_crossBullet = _crossBullet)
+                return (MiniBossChagerCrossBullet*)p_crossBullet;
+        }
+    }
 
     [FieldOffset(1988)] public fixed byte /* MiniBossChagerMassLaser[3] */ _massLaser[60];
 
-	public MiniBossChagerMassLaser* massLaser
-	{
-		get
-		{
-			fixed (byte* p_massLaser = _massLaser)
-				return (MiniBossChagerMassLaser*)p_massLaser;
-		}
-	}
+    public MiniBossChagerMassLaser* massLaser
+    {
+        get
+        {
+            fixed (byte* p_massLaser = _massLaser)
+                return (MiniBossChagerMassLaser*)p_massLaser;
+        }
+    }
 
     [FieldOffset(2048)] public fixed byte /* MiniBossChagerVerticalRoundBullet[3] */ _verticalRoundBullet[96];
 
-	public MiniBossChagerVerticalRoundBullet* verticalRoundBullet
-	{
-		get
-		{
-			fixed (byte* p_verticalRoundBullet = _verticalRoundBullet)
-				return (MiniBossChagerVerticalRoundBullet*)p_verticalRoundBullet;
-		}
-	}
+    public MiniBossChagerVerticalRoundBullet* verticalRoundBullet
+    {
+        get
+        {
+            fixed (byte* p_verticalRoundBullet = _verticalRoundBullet)
+                return (MiniBossChagerVerticalRoundBullet*)p_verticalRoundBullet;
+        }
+    }
 
     [FieldOffset(2144)] public fixed byte /* MiniBossPyramidRoundBullet[3] */ _pyramidRoundBullet[144];
 
-	public MiniBossPyramidRoundBullet* pyramidRoundBullet
-	{
-		get
-		{
-			fixed (byte* p_pyramidRoundBullet = _pyramidRoundBullet)
-				return (MiniBossPyramidRoundBullet*)p_pyramidRoundBullet;
-		}
-	}
+    public MiniBossPyramidRoundBullet* pyramidRoundBullet
+    {
+        get
+        {
+            fixed (byte* p_pyramidRoundBullet = _pyramidRoundBullet)
+                return (MiniBossPyramidRoundBullet*)p_pyramidRoundBullet;
+        }
+    }
 
     [FieldOffset(2288)] public fixed byte /* MiniBossPlaneUpDownBullet[3] */ _planeUpDownBullet[144];
 
-	public MiniBossPlaneUpDownBullet* planeUpDownBullet
-	{
-		get
-		{
-			fixed (byte* p_planeUpDownBullet = _planeUpDownBullet)
-				return (MiniBossPlaneUpDownBullet*)p_planeUpDownBullet;
-		}
-	}
+    public MiniBossPlaneUpDownBullet* planeUpDownBullet
+    {
+        get
+        {
+            fixed (byte* p_planeUpDownBullet = _planeUpDownBullet)
+                return (MiniBossPlaneUpDownBullet*)p_planeUpDownBullet;
+        }
+    }
 
     [FieldOffset(2432)] public fixed byte /* MiniBossTriangleBatteryBullet[3] */ _triangleBatteryBullet[84];
 
-	public MiniBossTriangleBatteryBullet* triangleBatteryBullet
-	{
-		get
-		{
-			fixed (byte* p_triangleBatteryBullet = _triangleBatteryBullet)
-				return (MiniBossTriangleBatteryBullet*)p_triangleBatteryBullet;
-		}
-	}
+    public MiniBossTriangleBatteryBullet* triangleBatteryBullet
+    {
+        get
+        {
+            fixed (byte* p_triangleBatteryBullet = _triangleBatteryBullet)
+                return (MiniBossTriangleBatteryBullet*)p_triangleBatteryBullet;
+        }
+    }
 
     [FieldOffset(2516)] public fixed byte /* MiniBossPlayerFallBullet[3] */ _playerFallBullet[120];
 
-	public MiniBossPlayerFallBullet* playerFallBullet
-	{
-		get
-		{
-			fixed (byte* p_playerFallBullet = _playerFallBullet)
-				return (MiniBossPlayerFallBullet*)p_playerFallBullet;
-		}
-	}
+    public MiniBossPlayerFallBullet* playerFallBullet
+    {
+        get
+        {
+            fixed (byte* p_playerFallBullet = _playerFallBullet)
+                return (MiniBossPlayerFallBullet*)p_playerFallBullet;
+        }
+    }
 
     [FieldOffset(2636)] public fixed byte /* MiniBossGatlingRevolverBullet[3] */ _gatlingRevolverBullet[120];
 
-	public MiniBossGatlingRevolverBullet* gatlingRevolverBullet
-	{
-		get
-		{
-			fixed (byte* p_gatlingRevolverBullet = _gatlingRevolverBullet)
-				return (MiniBossGatlingRevolverBullet*)p_gatlingRevolverBullet;
-		}
-	}
+    public MiniBossGatlingRevolverBullet* gatlingRevolverBullet
+    {
+        get
+        {
+            fixed (byte* p_gatlingRevolverBullet = _gatlingRevolverBullet)
+                return (MiniBossGatlingRevolverBullet*)p_gatlingRevolverBullet;
+        }
+    }
 
     [FieldOffset(2756)] public fixed byte /* MiniBossWinderBullet[3] */ _winderBullet[132];
 
-	public MiniBossWinderBullet* winderBullet
-	{
-		get
-		{
-			fixed (byte* p_winderBullet = _winderBullet)
-				return (MiniBossWinderBullet*)p_winderBullet;
-		}
-	}
+    public MiniBossWinderBullet* winderBullet
+    {
+        get
+        {
+            fixed (byte* p_winderBullet = _winderBullet)
+                return (MiniBossWinderBullet*)p_winderBullet;
+        }
+    }
 
     [FieldOffset(2888)] public fixed byte /* MiniBossShotgunBullet[3] */ _shotgunBullet[132];
 
-	public MiniBossShotgunBullet* shotgunBullet
-	{
-		get
-		{
-			fixed (byte* p_shotgunBullet = _shotgunBullet)
-				return (MiniBossShotgunBullet*)p_shotgunBullet;
-		}
-	}
+    public MiniBossShotgunBullet* shotgunBullet
+    {
+        get
+        {
+            fixed (byte* p_shotgunBullet = _shotgunBullet)
+                return (MiniBossShotgunBullet*)p_shotgunBullet;
+        }
+    }
 
     [FieldOffset(3020)] public fixed byte /* MiniBossChagerAirDrop[3] */ _airDrop[144];
 
-	public MiniBossChagerAirDrop* airDrop
-	{
-		get
-		{
-			fixed (byte* p_airDrop = _airDrop)
-				return (MiniBossChagerAirDrop*)p_airDrop;
-		}
-	}
+    public MiniBossChagerAirDrop* airDrop
+    {
+        get
+        {
+            fixed (byte* p_airDrop = _airDrop)
+                return (MiniBossChagerAirDrop*)p_airDrop;
+        }
+    }
 
     [FieldOffset(3164)] public fixed byte /* MiniBossChagerGroundObj[3] */ _groundObj[180];
 
-	public MiniBossChagerGroundObj* groundObj
-	{
-		get
-		{
-			fixed (byte* p_groundObj = _groundObj)
-				return (MiniBossChagerGroundObj*)p_groundObj;
-		}
-	}
+    public MiniBossChagerGroundObj* groundObj
+    {
+        get
+        {
+            fixed (byte* p_groundObj = _groundObj)
+                return (MiniBossChagerGroundObj*)p_groundObj;
+        }
+    }
 
     [FieldOffset(3344)] public fixed byte /* MiniBossChagerDiffuseLaser[3] */ _diffuseLaser[1008];
 
-	public MiniBossChagerDiffuseLaser* diffuseLaser
-	{
-		get
-		{
-			fixed (byte* p_diffuseLaser = _diffuseLaser)
-				return (MiniBossChagerDiffuseLaser*)p_diffuseLaser;
-		}
-	}
+    public MiniBossChagerDiffuseLaser* diffuseLaser
+    {
+        get
+        {
+            fixed (byte* p_diffuseLaser = _diffuseLaser)
+                return (MiniBossChagerDiffuseLaser*)p_diffuseLaser;
+        }
+    }
 
     [FieldOffset(4352)] public fixed byte /* MiniBossChagerChaseShot[3] */ _chaseShot[1152];
 
-	public MiniBossChagerChaseShot* chaseShot
-	{
-		get
-		{
-			fixed (byte* p_chaseShot = _chaseShot)
-				return (MiniBossChagerChaseShot*)p_chaseShot;
-		}
-	}
+    public MiniBossChagerChaseShot* chaseShot
+    {
+        get
+        {
+            fixed (byte* p_chaseShot = _chaseShot)
+                return (MiniBossChagerChaseShot*)p_chaseShot;
+        }
+    }
 
     [FieldOffset(5504)] public MiniBossChargerCatchParam atkCatch;
 }
@@ -646,26 +646,26 @@ public struct MiniBossChargerLevelBand
     [FieldOffset(28)]  public float chanceTimeAddSpeed;
     [FieldOffset(32)]  public fixed byte /* AttackType[10] */ _attackTable[40];
 
-	public AttackType* attackTable
-	{
-		get
-		{
-			fixed (byte* p_attackTable = _attackTable)
-				return (AttackType*)p_attackTable;
-		}
-	}
+    public AttackType* attackTable
+    {
+        get
+        {
+            fixed (byte* p_attackTable = _attackTable)
+                return (AttackType*)p_attackTable;
+        }
+    }
 
     [FieldOffset(72)]  public fixed int attackIndexTable[10];
     [FieldOffset(112)] public fixed byte /* MiniBossChargerHPRateParam[3] */ _hpRateParams[72];
 
-	public MiniBossChargerHPRateParam* hpRateParams
-	{
-		get
-		{
-			fixed (byte* p_hpRateParams = _hpRateParams)
-				return (MiniBossChargerHPRateParam*)p_hpRateParams;
-		}
-	}
+    public MiniBossChargerHPRateParam* hpRateParams
+    {
+        get
+        {
+            fixed (byte* p_hpRateParams = _hpRateParams)
+                return (MiniBossChargerHPRateParam*)p_hpRateParams;
+        }
+    }
 }
 
 public enum MiniBossChargerLevel1_AttackType : int
@@ -698,14 +698,14 @@ public struct MiniBossChargerLevel1
     [FieldOffset(0)]  public float range;
     [FieldOffset(4)]  public fixed byte /* MiniBossChargerLevel1_AttackType[2] */ _attackTable[8];
 
-	public MiniBossChargerLevel1_AttackType* attackTable
-	{
-		get
-		{
-			fixed (byte* p_attackTable = _attackTable)
-				return (MiniBossChargerLevel1_AttackType*)p_attackTable;
-		}
-	}
+    public MiniBossChargerLevel1_AttackType* attackTable
+    {
+        get
+        {
+            fixed (byte* p_attackTable = _attackTable)
+                return (MiniBossChargerLevel1_AttackType*)p_attackTable;
+        }
+    }
 
     [FieldOffset(12)] public fixed int attackIndexTable[2];
 }
@@ -716,35 +716,35 @@ public struct MiniBossChargerConfig
     [FieldOffset(0)]    public MiniBossChargerCommonParam commonParam;
     [FieldOffset(5568)] public fixed byte /* MiniBossChargerLevelParam[5] */ _levelParams[300];
 
-	public MiniBossChargerLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossChargerLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossChargerLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossChargerLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(5872)] public fixed byte /* MiniBossChargerLevelBand[5] */ _levelBands[920];
 
-	public MiniBossChargerLevelBand* levelBands
-	{
-		get
-		{
-			fixed (byte* p_levelBands = _levelBands)
-				return (MiniBossChargerLevelBand*)p_levelBands;
-		}
-	}
+    public MiniBossChargerLevelBand* levelBands
+    {
+        get
+        {
+            fixed (byte* p_levelBands = _levelBands)
+                return (MiniBossChargerLevelBand*)p_levelBands;
+        }
+    }
 
     [FieldOffset(6792)] public fixed byte /* MiniBossChargerLevel1[2] */ _level1Params[40];
 
-	public MiniBossChargerLevel1* level1Params
-	{
-		get
-		{
-			fixed (byte* p_level1Params = _level1Params)
-				return (MiniBossChargerLevel1*)p_level1Params;
-		}
-	}
+    public MiniBossChargerLevel1* level1Params
+    {
+        get
+        {
+            fixed (byte* p_level1Params = _level1Params)
+                return (MiniBossChargerLevel1*)p_level1Params;
+        }
+    }
 }
 

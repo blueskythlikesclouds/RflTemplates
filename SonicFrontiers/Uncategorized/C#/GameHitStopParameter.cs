@@ -33,13 +33,13 @@ public struct GameHitStopParameter
 {
     [FieldOffset(0)] public fixed byte /* GameHitStopParameterData[64] */ _data[2560];
 
-	public GameHitStopParameterData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (GameHitStopParameterData*)p_data;
-		}
-	}
+    public GameHitStopParameterData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (GameHitStopParameterData*)p_data;
+        }
+    }
 }
 

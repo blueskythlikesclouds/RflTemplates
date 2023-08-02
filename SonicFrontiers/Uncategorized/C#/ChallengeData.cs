@@ -78,14 +78,14 @@ public struct CyberStageContainerData
 {
     [FieldOffset(0)] public fixed byte /* CyberStageData[32] */ _actStages[768];
 
-	public CyberStageData* actStages
-	{
-		get
-		{
-			fixed (byte* p_actStages = _actStages)
-				return (CyberStageData*)p_actStages;
-		}
-	}
+    public CyberStageData* actStages
+    {
+        get
+        {
+            fixed (byte* p_actStages = _actStages)
+                return (CyberStageData*)p_actStages;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 908)]
@@ -103,14 +103,14 @@ public struct ChallengeCyberStageContainerData
 {
     [FieldOffset(0)] public fixed byte /* ChallengeCyberStageData[5] */ _stages[4540];
 
-	public ChallengeCyberStageData* stages
-	{
-		get
-		{
-			fixed (byte* p_stages = _stages)
-				return (ChallengeCyberStageData*)p_stages;
-		}
-	}
+    public ChallengeCyberStageData* stages
+    {
+        get
+        {
+            fixed (byte* p_stages = _stages)
+                return (ChallengeCyberStageData*)p_stages;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 20)]
@@ -129,14 +129,14 @@ public struct ChallengeBattleRushData
     [FieldOffset(0)] public uint status;
     [FieldOffset(4)] public fixed byte /* ChallengeBattleRushScoreData[16] */ _scores[320];
 
-	public ChallengeBattleRushScoreData* scores
-	{
-		get
-		{
-			fixed (byte* p_scores = _scores)
-				return (ChallengeBattleRushScoreData*)p_scores;
-		}
-	}
+    public ChallengeBattleRushScoreData* scores
+    {
+        get
+        {
+            fixed (byte* p_scores = _scores)
+                return (ChallengeBattleRushScoreData*)p_scores;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1296)]
@@ -144,14 +144,14 @@ public struct ChallengeBattleRushContainerData
 {
     [FieldOffset(0)] public fixed byte /* ChallengeBattleRushData[4] */ _stages[1296];
 
-	public ChallengeBattleRushData* stages
-	{
-		get
-		{
-			fixed (byte* p_stages = _stages)
-				return (ChallengeBattleRushData*)p_stages;
-		}
-	}
+    public ChallengeBattleRushData* stages
+    {
+        get
+        {
+            fixed (byte* p_stages = _stages)
+                return (ChallengeBattleRushData*)p_stages;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 7192)]

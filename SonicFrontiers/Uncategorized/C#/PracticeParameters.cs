@@ -104,14 +104,14 @@ public struct PracticeSubject
     [FieldOffset(0)]   public Checker checker;
     [FieldOffset(8)]   public fixed byte /* PracticeAction[6] */ _actions[192];
 
-	public PracticeAction* actions
-	{
-		get
-		{
-			fixed (byte* p_actions = _actions)
-				return (PracticeAction*)p_actions;
-		}
-	}
+    public PracticeAction* actions
+    {
+        get
+        {
+            fixed (byte* p_actions = _actions)
+                return (PracticeAction*)p_actions;
+        }
+    }
 
     [FieldOffset(200)] public int count;
     [FieldOffset(208)] public PracticePrerequisite prerequisite;
@@ -123,14 +123,14 @@ public struct PracticeText
 {
     [FieldOffset(0)] public fixed byte /* CString[10] */ _labels[2550];
 
-	public CString* labels
-	{
-		get
-		{
-			fixed (byte* p_labels = _labels)
-				return (CString*)p_labels;
-		}
-	}
+    public CString* labels
+    {
+        get
+        {
+            fixed (byte* p_labels = _labels)
+                return (CString*)p_labels;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 28)]
@@ -175,39 +175,39 @@ public struct PracticeParameters
 {
     [FieldOffset(0)]     public fixed byte /* PracticeSubject[200] */ _subjects[52800];
 
-	public PracticeSubject* subjects
-	{
-		get
-		{
-			fixed (byte* p_subjects = _subjects)
-				return (PracticeSubject*)p_subjects;
-		}
-	}
+    public PracticeSubject* subjects
+    {
+        get
+        {
+            fixed (byte* p_subjects = _subjects)
+                return (PracticeSubject*)p_subjects;
+        }
+    }
 
     [FieldOffset(52800)] public PracticeText text;
     [FieldOffset(52960)] public PracticeTime time;
     [FieldOffset(52988)] public float notifyTime;
     [FieldOffset(52992)] public fixed byte /* PracticeTips[256] */ _tips[3072];
 
-	public PracticeTips* tips
-	{
-		get
-		{
-			fixed (byte* p_tips = _tips)
-				return (PracticeTips*)p_tips;
-		}
-	}
+    public PracticeTips* tips
+    {
+        get
+        {
+            fixed (byte* p_tips = _tips)
+                return (PracticeTips*)p_tips;
+        }
+    }
 
     [FieldOffset(56064)] public float tipsMinViewTime;
     [FieldOffset(56068)] public fixed byte /* PracticeSet[81] */ _sets[17820];
 
-	public PracticeSet* sets
-	{
-		get
-		{
-			fixed (byte* p_sets = _sets)
-				return (PracticeSet*)p_sets;
-		}
-	}
+    public PracticeSet* sets
+    {
+        get
+        {
+            fixed (byte* p_sets = _sets)
+                return (PracticeSet*)p_sets;
+        }
+    }
 }
 

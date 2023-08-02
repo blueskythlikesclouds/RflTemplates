@@ -189,14 +189,14 @@ public struct PlayerParamLocus
 {
     [FieldOffset(0)] public fixed byte /* PlayerParamLocusData[4] */ _data[64];
 
-	public PlayerParamLocusData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (PlayerParamLocusData*)p_data;
-		}
-	}
+    public PlayerParamLocusData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (PlayerParamLocusData*)p_data;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 16)]
@@ -234,14 +234,14 @@ public struct PlayerParamDamageRate
 {
     [FieldOffset(0)] public fixed byte /* PlayerParamDamageRateLevel[4] */ _diffculties[80];
 
-	public PlayerParamDamageRateLevel* diffculties
-	{
-		get
-		{
-			fixed (byte* p_diffculties = _diffculties)
-				return (PlayerParamDamageRateLevel*)p_diffculties;
-		}
-	}
+    public PlayerParamDamageRateLevel* diffculties
+    {
+        get
+        {
+            fixed (byte* p_diffculties = _diffculties)
+                return (PlayerParamDamageRateLevel*)p_diffculties;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 15776)]
@@ -495,25 +495,25 @@ public struct PlayerParamCrossSlash
     [FieldOffset(32)]  public fixed float spawnDelayTime[2];
     [FieldOffset(48)]  public fixed byte /* Vector3[2] */ _spawnLocalTranslation[32];
 
-	public Vector3* spawnLocalTranslation
-	{
-		get
-		{
-			fixed (byte* p_spawnLocalTranslation = _spawnLocalTranslation)
-				return (Vector3*)p_spawnLocalTranslation;
-		}
-	}
+    public Vector3* spawnLocalTranslation
+    {
+        get
+        {
+            fixed (byte* p_spawnLocalTranslation = _spawnLocalTranslation)
+                return (Vector3*)p_spawnLocalTranslation;
+        }
+    }
 
     [FieldOffset(80)]  public fixed byte /* Vector3[2] */ _spawnLocalAngle[32];
 
-	public Vector3* spawnLocalAngle
-	{
-		get
-		{
-			fixed (byte* p_spawnLocalAngle = _spawnLocalAngle)
-				return (Vector3*)p_spawnLocalAngle;
-		}
-	}
+    public Vector3* spawnLocalAngle
+    {
+        get
+        {
+            fixed (byte* p_spawnLocalAngle = _spawnLocalAngle)
+                return (Vector3*)p_spawnLocalAngle;
+        }
+    }
 
     [FieldOffset(112)] public float speed;
     [FieldOffset(116)] public float maxSpeed;
@@ -579,14 +579,14 @@ public struct PlayerParamSmash
     [FieldOffset(48)] public PlayerParamAttackCollider hit2;
     [FieldOffset(96)] public fixed byte /* Vector3[16] */ _offsets[256];
 
-	public Vector3* offsets
-	{
-		get
-		{
-			fixed (byte* p_offsets = _offsets)
-				return (Vector3*)p_offsets;
-		}
-	}
+    public Vector3* offsets
+    {
+        get
+        {
+            fixed (byte* p_offsets = _offsets)
+                return (Vector3*)p_offsets;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1056)]
@@ -685,36 +685,36 @@ public struct PlayerParamComboTransit
 {
     [FieldOffset(0)]  public fixed byte /* Action[6] */ _transitExistTarget[6];
 
-	public Action* transitExistTarget
-	{
-		get
-		{
-			fixed (byte* p_transitExistTarget = _transitExistTarget)
-				return (Action*)p_transitExistTarget;
-		}
-	}
+    public Action* transitExistTarget
+    {
+        get
+        {
+            fixed (byte* p_transitExistTarget = _transitExistTarget)
+                return (Action*)p_transitExistTarget;
+        }
+    }
 
     [FieldOffset(6)]  public fixed byte /* Action[6] */ _transitInAir[6];
 
-	public Action* transitInAir
-	{
-		get
-		{
-			fixed (byte* p_transitInAir = _transitInAir)
-				return (Action*)p_transitInAir;
-		}
-	}
+    public Action* transitInAir
+    {
+        get
+        {
+            fixed (byte* p_transitInAir = _transitInAir)
+                return (Action*)p_transitInAir;
+        }
+    }
 
     [FieldOffset(12)] public fixed byte /* Action[6] */ _transitNotExistTarget[6];
 
-	public Action* transitNotExistTarget
-	{
-		get
-		{
-			fixed (byte* p_transitNotExistTarget = _transitNotExistTarget)
-				return (Action*)p_transitNotExistTarget;
-		}
-	}
+    public Action* transitNotExistTarget
+    {
+        get
+        {
+            fixed (byte* p_transitNotExistTarget = _transitNotExistTarget)
+                return (Action*)p_transitNotExistTarget;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 630)]
@@ -799,7 +799,7 @@ public struct ColorF
 [StructLayout(LayoutKind.Explicit, Size = 168)]
 public struct CyloopTransparentLocusParameter
 {
-    [FieldOffset(0)]   CyloopSlashEffectBaseParameter cyloopSlashEffectBaseParameter;
+    [FieldOffset(0)]   public CyloopSlashEffectBaseParameter cyloopSlashEffectBaseParameter;
     [FieldOffset(88)]  public ColorF m_color0;
     [FieldOffset(104)] public ColorF m_color1;
     [FieldOffset(120)] public float m_luminance;
@@ -820,19 +820,19 @@ public struct OpaqueLineUvCell
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct CyloopOpaqueLocusParameter
 {
-    [FieldOffset(0)]   CyloopSlashEffectBaseParameter cyloopSlashEffectBaseParameter;
+    [FieldOffset(0)]   public CyloopSlashEffectBaseParameter cyloopSlashEffectBaseParameter;
     [FieldOffset(88)]  public ColorF m_color;
     [FieldOffset(104)] public float m_alphaThreshold;
     [FieldOffset(108)] public fixed byte /* OpaqueLineUvCell[2] */ _m_uvCells[24];
 
-	public OpaqueLineUvCell* m_uvCells
-	{
-		get
-		{
-			fixed (byte* p_m_uvCells = _m_uvCells)
-				return (OpaqueLineUvCell*)p_m_uvCells;
-		}
-	}
+    public OpaqueLineUvCell* m_uvCells
+    {
+        get
+        {
+            fixed (byte* p_m_uvCells = _m_uvCells)
+                return (OpaqueLineUvCell*)p_m_uvCells;
+        }
+    }
 
     [FieldOffset(132)] public float m_uvLineScaleX;
     [FieldOffset(136)] public float m_uvLineScaleY;
@@ -892,26 +892,26 @@ public struct CyloopLocusParameter
     [FieldOffset(0)]    public int m_numTransparentLines;
     [FieldOffset(8)]    public fixed byte /* CyloopTransparentLocusParameter[3] */ _m_transparentLines[504];
 
-	public CyloopTransparentLocusParameter* m_transparentLines
-	{
-		get
-		{
-			fixed (byte* p_m_transparentLines = _m_transparentLines)
-				return (CyloopTransparentLocusParameter*)p_m_transparentLines;
-		}
-	}
+    public CyloopTransparentLocusParameter* m_transparentLines
+    {
+        get
+        {
+            fixed (byte* p_m_transparentLines = _m_transparentLines)
+                return (CyloopTransparentLocusParameter*)p_m_transparentLines;
+        }
+    }
 
     [FieldOffset(512)]  public int m_numOpaqueLines;
     [FieldOffset(520)]  public fixed byte /* CyloopOpaqueLocusParameter[3] */ _m_opaqueLines[480];
 
-	public CyloopOpaqueLocusParameter* m_opaqueLines
-	{
-		get
-		{
-			fixed (byte* p_m_opaqueLines = _m_opaqueLines)
-				return (CyloopOpaqueLocusParameter*)p_m_opaqueLines;
-		}
-	}
+    public CyloopOpaqueLocusParameter* m_opaqueLines
+    {
+        get
+        {
+            fixed (byte* p_m_opaqueLines = _m_opaqueLines)
+                return (CyloopOpaqueLocusParameter*)p_m_opaqueLines;
+        }
+    }
 
     [FieldOffset(1000)] public int m_numCrossLines;
     [FieldOffset(1008)] public CyloopCrossLineParameter m_crossline;
@@ -956,14 +956,14 @@ public struct CyloopShapeWindEffectParaemter
 {
     [FieldOffset(0)] public fixed byte /* CyloopShapeWindCountParameter[5] */ _param[80];
 
-	public CyloopShapeWindCountParameter* param
-	{
-		get
-		{
-			fixed (byte* p_param = _param)
-				return (CyloopShapeWindCountParameter*)p_param;
-		}
-	}
+    public CyloopShapeWindCountParameter* param
+    {
+        get
+        {
+            fixed (byte* p_param = _param)
+                return (CyloopShapeWindCountParameter*)p_param;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 80)]
@@ -1018,14 +1018,14 @@ public struct PlayerParamSuperSonic
     [FieldOffset(12)] public float moveSoundSpeed;
     [FieldOffset(16)] public fixed byte /* PlayerParamSuperSonicShapeAttackData[32] */ _shapeEffects[2560];
 
-	public PlayerParamSuperSonicShapeAttackData* shapeEffects
-	{
-		get
-		{
-			fixed (byte* p_shapeEffects = _shapeEffects)
-				return (PlayerParamSuperSonicShapeAttackData*)p_shapeEffects;
-		}
-	}
+    public PlayerParamSuperSonicShapeAttackData* shapeEffects
+    {
+        get
+        {
+            fixed (byte* p_shapeEffects = _shapeEffects)
+                return (PlayerParamSuperSonicShapeAttackData*)p_shapeEffects;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 48)]
@@ -1093,20 +1093,20 @@ public struct PlayerParamRunWithKodama
     [FieldOffset(4)] public float gravitySize;
     [FieldOffset(8)] public fixed byte /* PlayerParamRunWithKodamaParam[8] */ __params[160];
 
-	public PlayerParamRunWithKodamaParam* _params
-	{
-		get
-		{
-			fixed (byte* p__params = __params)
-				return (PlayerParamRunWithKodamaParam*)p__params;
-		}
-	}
+    public PlayerParamRunWithKodamaParam* _params
+    {
+        get
+        {
+            fixed (byte* p__params = __params)
+                return (PlayerParamRunWithKodamaParam*)p__params;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 29552)]
 public struct CommonPackageSonic
 {
-    [FieldOffset(0)]     CommonPackage commonPackage;
+    [FieldOffset(0)]     public CommonPackage commonPackage;
     [FieldOffset(15776)] public PlayerParamAcceleMode acceleMode;
     [FieldOffset(15808)] public PlayerParamAcceleComboSet acceleComboSet;
     [FieldOffset(16000)] public PlayerParamLoopKickSet loopKickSet;
@@ -1872,14 +1872,14 @@ public struct PlayerParamAvoid
     [FieldOffset(24)]  public float addFallSpeed;
     [FieldOffset(28)]  public fixed byte /* PlayerParamAvoidData[7] */ _data[112];
 
-	public PlayerParamAvoidData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (PlayerParamAvoidData*)p_data;
-		}
-	}
+    public PlayerParamAvoidData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (PlayerParamAvoidData*)p_data;
+        }
+    }
 
     [FieldOffset(140)] public float baseDistance;
     [FieldOffset(144)] public float limitAngle;
@@ -2245,7 +2245,7 @@ public struct PlayerParamCyberMode
 [StructLayout(LayoutKind.Explicit, Size = 3136)]
 public struct ModePackageSonic
 {
-    [FieldOffset(0)]    ModePackage modePackage;
+    [FieldOffset(0)]    public ModePackage modePackage;
     [FieldOffset(2144)] public PlayerParamStorm storm;
     [FieldOffset(2212)] public PlayerParamCloudJump cloudJump;
     [FieldOffset(2240)] public PlayerParamAquaBall aquaball;

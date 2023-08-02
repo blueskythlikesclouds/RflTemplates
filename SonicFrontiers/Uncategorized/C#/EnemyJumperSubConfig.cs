@@ -39,24 +39,24 @@ public struct EnemyJumperSubConfig
     [FieldOffset(0)]   public EnemyJumperSubCommonParam commonParam;
     [FieldOffset(20)]  public fixed byte /* EnemyJumperSubLevelParam[5] */ _levelParams[80];
 
-	public EnemyJumperSubLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyJumperSubLevelParam*)p_levelParams;
-		}
-	}
+    public EnemyJumperSubLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyJumperSubLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(100)] public fixed byte /* EnemyJumperSubLevelBand[5] */ _levelBand[20];
 
-	public EnemyJumperSubLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (EnemyJumperSubLevelBand*)p_levelBand;
-		}
-	}
+    public EnemyJumperSubLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (EnemyJumperSubLevelBand*)p_levelBand;
+        }
+    }
 }
 

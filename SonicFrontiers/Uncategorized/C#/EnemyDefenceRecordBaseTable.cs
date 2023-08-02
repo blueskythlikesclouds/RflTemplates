@@ -22,7 +22,7 @@ public struct CString
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct EnemyDefenceRecord
 {
-    [FieldOffset(0)]  Record record;
+    [FieldOffset(0)]  public Record record;
     [FieldOffset(8)]  public CString name;
     [FieldOffset(24)] public float baseRate;
     [FieldOffset(28)] public float slashRate;
@@ -36,13 +36,13 @@ public struct EnemyDefenceRecordBaseTable
 {
     [FieldOffset(0)] public fixed byte /* EnemyDefenceRecord[64] */ _data[3072];
 
-	public EnemyDefenceRecord* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (EnemyDefenceRecord*)p_data;
-		}
-	}
+    public EnemyDefenceRecord* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (EnemyDefenceRecord*)p_data;
+        }
+    }
 }
 

@@ -35,13 +35,13 @@ public struct QuestCollectItemParameter
 {
     [FieldOffset(0)] public fixed byte /* QuestCollectItemParameterElement[3] */ _element[132];
 
-	public QuestCollectItemParameterElement* element
-	{
-		get
-		{
-			fixed (byte* p_element = _element)
-				return (QuestCollectItemParameterElement*)p_element;
-		}
-	}
+    public QuestCollectItemParameterElement* element
+    {
+        get
+        {
+            fixed (byte* p_element = _element)
+                return (QuestCollectItemParameterElement*)p_element;
+        }
+    }
 }
 

@@ -110,36 +110,36 @@ public struct MiniBossSpiderActionParam
     [FieldOffset(0)]   public float nearRange;
     [FieldOffset(4)]   public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _nearRates[64];
 
-	public MiniBossSpiderLevelBandRate* nearRates
-	{
-		get
-		{
-			fixed (byte* p_nearRates = _nearRates)
-				return (MiniBossSpiderLevelBandRate*)p_nearRates;
-		}
-	}
+    public MiniBossSpiderLevelBandRate* nearRates
+    {
+        get
+        {
+            fixed (byte* p_nearRates = _nearRates)
+                return (MiniBossSpiderLevelBandRate*)p_nearRates;
+        }
+    }
 
     [FieldOffset(68)]  public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _farRates[64];
 
-	public MiniBossSpiderLevelBandRate* farRates
-	{
-		get
-		{
-			fixed (byte* p_farRates = _farRates)
-				return (MiniBossSpiderLevelBandRate*)p_farRates;
-		}
-	}
+    public MiniBossSpiderLevelBandRate* farRates
+    {
+        get
+        {
+            fixed (byte* p_farRates = _farRates)
+                return (MiniBossSpiderLevelBandRate*)p_farRates;
+        }
+    }
 
     [FieldOffset(132)] public fixed byte /* MiniBossSpiderLevelBandInterval[2] */ _interval[64];
 
-	public MiniBossSpiderLevelBandInterval* interval
-	{
-		get
-		{
-			fixed (byte* p_interval = _interval)
-				return (MiniBossSpiderLevelBandInterval*)p_interval;
-		}
-	}
+    public MiniBossSpiderLevelBandInterval* interval
+    {
+        get
+        {
+            fixed (byte* p_interval = _interval)
+                return (MiniBossSpiderLevelBandInterval*)p_interval;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1520)]
@@ -191,14 +191,14 @@ public struct MiniBossSpiderCommonParam
     [FieldOffset(264)] public RingParameter ringParam;
     [FieldOffset(292)] public fixed byte /* MiniBossSpiderWaveParam[8] */ _waveParams[288];
 
-	public MiniBossSpiderWaveParam* waveParams
-	{
-		get
-		{
-			fixed (byte* p_waveParams = _waveParams)
-				return (MiniBossSpiderWaveParam*)p_waveParams;
-		}
-	}
+    public MiniBossSpiderWaveParam* waveParams
+    {
+        get
+        {
+            fixed (byte* p_waveParams = _waveParams)
+                return (MiniBossSpiderWaveParam*)p_waveParams;
+        }
+    }
 
     [FieldOffset(580)] public MiniBossSpiderCameraLockOn cameraLockBreakArmor;
     [FieldOffset(604)] public MiniBossSpiderCameraLockOn cameraLockBlownUp;
@@ -208,25 +208,25 @@ public struct MiniBossSpiderCommonParam
     [FieldOffset(700)] public DebrisParameter debrisSet;
     [FieldOffset(716)] public fixed byte /* MiniBossSpiderBreakType[8] */ _rotationTypeTable[8];
 
-	public MiniBossSpiderBreakType* rotationTypeTable
-	{
-		get
-		{
-			fixed (byte* p_rotationTypeTable = _rotationTypeTable)
-				return (MiniBossSpiderBreakType*)p_rotationTypeTable;
-		}
-	}
+    public MiniBossSpiderBreakType* rotationTypeTable
+    {
+        get
+        {
+            fixed (byte* p_rotationTypeTable = _rotationTypeTable)
+                return (MiniBossSpiderBreakType*)p_rotationTypeTable;
+        }
+    }
 
     [FieldOffset(724)] public fixed byte /* MiniBossSpiderActionParam[4] */ _rotationActionTable[784];
 
-	public MiniBossSpiderActionParam* rotationActionTable
-	{
-		get
-		{
-			fixed (byte* p_rotationActionTable = _rotationActionTable)
-				return (MiniBossSpiderActionParam*)p_rotationActionTable;
-		}
-	}
+    public MiniBossSpiderActionParam* rotationActionTable
+    {
+        get
+        {
+            fixed (byte* p_rotationActionTable = _rotationActionTable)
+                return (MiniBossSpiderActionParam*)p_rotationActionTable;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 52)]
@@ -315,58 +315,58 @@ public struct MiniBossSpiderLevelBand
     [FieldOffset(100)] public float nearRange;
     [FieldOffset(104)] public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _nearRates[64];
 
-	public MiniBossSpiderLevelBandRate* nearRates
-	{
-		get
-		{
-			fixed (byte* p_nearRates = _nearRates)
-				return (MiniBossSpiderLevelBandRate*)p_nearRates;
-		}
-	}
+    public MiniBossSpiderLevelBandRate* nearRates
+    {
+        get
+        {
+            fixed (byte* p_nearRates = _nearRates)
+                return (MiniBossSpiderLevelBandRate*)p_nearRates;
+        }
+    }
 
     [FieldOffset(168)] public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _farRates[64];
 
-	public MiniBossSpiderLevelBandRate* farRates
-	{
-		get
-		{
-			fixed (byte* p_farRates = _farRates)
-				return (MiniBossSpiderLevelBandRate*)p_farRates;
-		}
-	}
+    public MiniBossSpiderLevelBandRate* farRates
+    {
+        get
+        {
+            fixed (byte* p_farRates = _farRates)
+                return (MiniBossSpiderLevelBandRate*)p_farRates;
+        }
+    }
 
     [FieldOffset(232)] public fixed byte /* MiniBossSpiderLevelPhaseAction[2] */ _phases[24];
 
-	public MiniBossSpiderLevelPhaseAction* phases
-	{
-		get
-		{
-			fixed (byte* p_phases = _phases)
-				return (MiniBossSpiderLevelPhaseAction*)p_phases;
-		}
-	}
+    public MiniBossSpiderLevelPhaseAction* phases
+    {
+        get
+        {
+            fixed (byte* p_phases = _phases)
+                return (MiniBossSpiderLevelPhaseAction*)p_phases;
+        }
+    }
 
     [FieldOffset(256)] public fixed byte /* MiniBossSpiderLevelBandInterval[2] */ _interval[64];
 
-	public MiniBossSpiderLevelBandInterval* interval
-	{
-		get
-		{
-			fixed (byte* p_interval = _interval)
-				return (MiniBossSpiderLevelBandInterval*)p_interval;
-		}
-	}
+    public MiniBossSpiderLevelBandInterval* interval
+    {
+        get
+        {
+            fixed (byte* p_interval = _interval)
+                return (MiniBossSpiderLevelBandInterval*)p_interval;
+        }
+    }
 
     [FieldOffset(320)] public fixed byte /* MiniBossSpiderLevelPhaseDiving[2] */ _diving[8];
 
-	public MiniBossSpiderLevelPhaseDiving* diving
-	{
-		get
-		{
-			fixed (byte* p_diving = _diving)
-				return (MiniBossSpiderLevelPhaseDiving*)p_diving;
-		}
-	}
+    public MiniBossSpiderLevelPhaseDiving* diving
+    {
+        get
+        {
+            fixed (byte* p_diving = _diving)
+                return (MiniBossSpiderLevelPhaseDiving*)p_diving;
+        }
+    }
 
     [FieldOffset(328)] public fixed float slowRate[2];
 }
@@ -377,24 +377,24 @@ public struct MiniBossSpiderConfig
     [FieldOffset(0)]    public MiniBossSpiderCommonParam commonParam;
     [FieldOffset(1520)] public fixed byte /* MiniBossSpiderLevelParam[5] */ _levelParams[420];
 
-	public MiniBossSpiderLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossSpiderLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossSpiderLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossSpiderLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(1940)] public fixed byte /* MiniBossSpiderLevelBand[5] */ _levelBands[1680];
 
-	public MiniBossSpiderLevelBand* levelBands
-	{
-		get
-		{
-			fixed (byte* p_levelBands = _levelBands)
-				return (MiniBossSpiderLevelBand*)p_levelBands;
-		}
-	}
+    public MiniBossSpiderLevelBand* levelBands
+    {
+        get
+        {
+            fixed (byte* p_levelBands = _levelBands)
+                return (MiniBossSpiderLevelBand*)p_levelBands;
+        }
+    }
 }
 

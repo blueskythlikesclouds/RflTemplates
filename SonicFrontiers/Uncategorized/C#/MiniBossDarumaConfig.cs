@@ -54,20 +54,20 @@ public struct MiniBossDarumaSpecialShotParamBase
     [FieldOffset(44)] public float featherLifeTime;
     [FieldOffset(48)] public fixed byte /* ScatterType[6] */ _m_scatterTypeTable[6];
 
-	public ScatterType* m_scatterTypeTable
-	{
-		get
-		{
-			fixed (byte* p_m_scatterTypeTable = _m_scatterTypeTable)
-				return (ScatterType*)p_m_scatterTypeTable;
-		}
-	}
+    public ScatterType* m_scatterTypeTable
+    {
+        get
+        {
+            fixed (byte* p_m_scatterTypeTable = _m_scatterTypeTable)
+                return (ScatterType*)p_m_scatterTypeTable;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 68)]
 public struct MiniBossDarumaBombParam
 {
-    [FieldOffset(0)]  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
+    [FieldOffset(0)]  public MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
     [FieldOffset(56)] public float explosionRadius;
     [FieldOffset(60)] public float explosionEffectScale;
     [FieldOffset(64)] public float explosionTime;
@@ -76,14 +76,14 @@ public struct MiniBossDarumaBombParam
 [StructLayout(LayoutKind.Explicit, Size = 60)]
 public struct MiniBossDarumaFlamePillarParam
 {
-    [FieldOffset(0)]  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
+    [FieldOffset(0)]  public MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
     [FieldOffset(56)] public float burnLifeTime;
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct MiniBossDarumaWaveBombParam
 {
-    [FieldOffset(0)]  MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
+    [FieldOffset(0)]  public MiniBossDarumaSpecialShotParamBase miniBossDarumaSpecialShotParamBase;
     [FieldOffset(56)] public float burnLifeTime;
     [FieldOffset(60)] public float cycleTime;
     [FieldOffset(64)] public float cycleDistance;
@@ -206,47 +206,47 @@ public struct MiniBossDarumaCommonParam
     [FieldOffset(600)]  public MiniBossDarumaStompingParam stompingThorn;
     [FieldOffset(720)]  public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest[360];
 
-	public MiniBossDarumaStompingParam* stompingQuest
-	{
-		get
-		{
-			fixed (byte* p_stompingQuest = _stompingQuest)
-				return (MiniBossDarumaStompingParam*)p_stompingQuest;
-		}
-	}
+    public MiniBossDarumaStompingParam* stompingQuest
+    {
+        get
+        {
+            fixed (byte* p_stompingQuest = _stompingQuest)
+                return (MiniBossDarumaStompingParam*)p_stompingQuest;
+        }
+    }
 
     [FieldOffset(1080)] public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuestHigh[360];
 
-	public MiniBossDarumaStompingParam* stompingQuestHigh
-	{
-		get
-		{
-			fixed (byte* p_stompingQuestHigh = _stompingQuestHigh)
-				return (MiniBossDarumaStompingParam*)p_stompingQuestHigh;
-		}
-	}
+    public MiniBossDarumaStompingParam* stompingQuestHigh
+    {
+        get
+        {
+            fixed (byte* p_stompingQuestHigh = _stompingQuestHigh)
+                return (MiniBossDarumaStompingParam*)p_stompingQuestHigh;
+        }
+    }
 
     [FieldOffset(1440)] public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest2[360];
 
-	public MiniBossDarumaStompingParam* stompingQuest2
-	{
-		get
-		{
-			fixed (byte* p_stompingQuest2 = _stompingQuest2)
-				return (MiniBossDarumaStompingParam*)p_stompingQuest2;
-		}
-	}
+    public MiniBossDarumaStompingParam* stompingQuest2
+    {
+        get
+        {
+            fixed (byte* p_stompingQuest2 = _stompingQuest2)
+                return (MiniBossDarumaStompingParam*)p_stompingQuest2;
+        }
+    }
 
     [FieldOffset(1800)] public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest2High[360];
 
-	public MiniBossDarumaStompingParam* stompingQuest2High
-	{
-		get
-		{
-			fixed (byte* p_stompingQuest2High = _stompingQuest2High)
-				return (MiniBossDarumaStompingParam*)p_stompingQuest2High;
-		}
-	}
+    public MiniBossDarumaStompingParam* stompingQuest2High
+    {
+        get
+        {
+            fixed (byte* p_stompingQuest2High = _stompingQuest2High)
+                return (MiniBossDarumaStompingParam*)p_stompingQuest2High;
+        }
+    }
 
     [FieldOffset(2160)] public MiniBossDarumaCyloopReactionParam cyloopReaction;
     [FieldOffset(2240)] public MiniBossDarumaShotParam shotBerserk;
@@ -328,25 +328,25 @@ public struct MiniBossDarumaConfig
     [FieldOffset(0)]    public MiniBossDarumaCommonParam commonParam;
     [FieldOffset(2912)] public fixed byte /* MiniBossDarumaLevelParam[5] */ _levelParams[280];
 
-	public MiniBossDarumaLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossDarumaLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossDarumaLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossDarumaLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(3200)] public fixed byte /* MiniBossDarumaLevelBand[5] */ _levelBands[240];
 
-	public MiniBossDarumaLevelBand* levelBands
-	{
-		get
-		{
-			fixed (byte* p_levelBands = _levelBands)
-				return (MiniBossDarumaLevelBand*)p_levelBands;
-		}
-	}
+    public MiniBossDarumaLevelBand* levelBands
+    {
+        get
+        {
+            fixed (byte* p_levelBands = _levelBands)
+                return (MiniBossDarumaLevelBand*)p_levelBands;
+        }
+    }
 
     [FieldOffset(3440)] public MiniBossDarumaLevelParam levelParamQuest;
     [FieldOffset(3504)] public MiniBossDarumaLevelBand levelBandQuest;

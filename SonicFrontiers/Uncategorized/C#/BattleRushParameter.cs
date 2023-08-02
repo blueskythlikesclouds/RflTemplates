@@ -38,25 +38,25 @@ public struct BattleRushStageParameter
     [FieldOffset(92)]  public fixed float phaseResultTime[11];
     [FieldOffset(136)] public fixed byte /* BattleRushPhaseRankParameter[11] */ _phaseRank[352];
 
-	public BattleRushPhaseRankParameter* phaseRank
-	{
-		get
-		{
-			fixed (byte* p_phaseRank = _phaseRank)
-				return (BattleRushPhaseRankParameter*)p_phaseRank;
-		}
-	}
+    public BattleRushPhaseRankParameter* phaseRank
+    {
+        get
+        {
+            fixed (byte* p_phaseRank = _phaseRank)
+                return (BattleRushPhaseRankParameter*)p_phaseRank;
+        }
+    }
 
     [FieldOffset(488)] public fixed byte /* BgmType[11] */ _phaseBgmType[11];
 
-	public BgmType* phaseBgmType
-	{
-		get
-		{
-			fixed (byte* p_phaseBgmType = _phaseBgmType)
-				return (BgmType*)p_phaseBgmType;
-		}
-	}
+    public BgmType* phaseBgmType
+    {
+        get
+        {
+            fixed (byte* p_phaseBgmType = _phaseBgmType)
+                return (BgmType*)p_phaseBgmType;
+        }
+    }
 
     [FieldOffset(500)] public uint hour;
     [FieldOffset(504)] public uint minute;
@@ -67,14 +67,14 @@ public struct BattleRushParameter
 {
     [FieldOffset(0)]    public fixed byte /* BattleRushStageParameter[4] */ _stages[2032];
 
-	public BattleRushStageParameter* stages
-	{
-		get
-		{
-			fixed (byte* p_stages = _stages)
-				return (BattleRushStageParameter*)p_stages;
-		}
-	}
+    public BattleRushStageParameter* stages
+    {
+        get
+        {
+            fixed (byte* p_stages = _stages)
+                return (BattleRushStageParameter*)p_stages;
+        }
+    }
 
     [FieldOffset(2032)] public float viewPaseResultTime;
 }

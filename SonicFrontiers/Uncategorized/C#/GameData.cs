@@ -133,14 +133,14 @@ public struct IslandMapData
 {
     [FieldOffset(0)]   public fixed byte /* IslandMapGridData[136] */ _grid[272];
 
-	public IslandMapGridData* grid
-	{
-		get
-		{
-			fixed (byte* p_grid = _grid)
-				return (IslandMapGridData*)p_grid;
-		}
-	}
+    public IslandMapGridData* grid
+    {
+        get
+        {
+            fixed (byte* p_grid = _grid)
+                return (IslandMapGridData*)p_grid;
+        }
+    }
 
     [FieldOffset(272)] public ushort numReleaseGrids;
 }
@@ -159,14 +159,14 @@ public struct IslandStageContainerData
 {
     [FieldOffset(0)] public fixed byte /* IslandStageData[5] */ _islands[1600];
 
-	public IslandStageData* islands
-	{
-		get
-		{
-			fixed (byte* p_islands = _islands)
-				return (IslandStageData*)p_islands;
-		}
-	}
+    public IslandStageData* islands
+    {
+        get
+        {
+            fixed (byte* p_islands = _islands)
+                return (IslandStageData*)p_islands;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
@@ -182,14 +182,14 @@ public struct CyberStageContainerData
 {
     [FieldOffset(0)] public fixed byte /* CyberStageData[32] */ _actStages[768];
 
-	public CyberStageData* actStages
-	{
-		get
-		{
-			fixed (byte* p_actStages = _actStages)
-				return (CyberStageData*)p_actStages;
-		}
-	}
+    public CyberStageData* actStages
+    {
+        get
+        {
+            fixed (byte* p_actStages = _actStages)
+                return (CyberStageData*)p_actStages;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 288)]
@@ -213,14 +213,14 @@ public struct WorldFlagContainerData
 {
     [FieldOffset(0)]     public fixed byte /* WorldFlagData[5] */ _worldDatas[35840];
 
-	public WorldFlagData* worldDatas
-	{
-		get
-		{
-			fixed (byte* p_worldDatas = _worldDatas)
-				return (WorldFlagData*)p_worldDatas;
-		}
-	}
+    public WorldFlagData* worldDatas
+    {
+        get
+        {
+            fixed (byte* p_worldDatas = _worldDatas)
+                return (WorldFlagData*)p_worldDatas;
+        }
+    }
 
     [FieldOffset(35840)] public WorldFlagData debugWorldData;
 }
@@ -254,14 +254,14 @@ public struct ActionChainStruct
 {
     [FieldOffset(0)] public fixed byte /* ScoreAndRnakData[200] */ _hightState[2400];
 
-	public ScoreAndRnakData* hightState
-	{
-		get
-		{
-			fixed (byte* p_hightState = _hightState)
-				return (ScoreAndRnakData*)p_hightState;
-		}
-	}
+    public ScoreAndRnakData* hightState
+    {
+        get
+        {
+            fixed (byte* p_hightState = _hightState)
+                return (ScoreAndRnakData*)p_hightState;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 602864)]
@@ -282,14 +282,14 @@ public struct StatsContainerData
 {
     [FieldOffset(0)] public fixed byte /* StatValue[3393] */ _stats[27144];
 
-	public StatValue* stats
-	{
-		get
-		{
-			fixed (byte* p_stats = _stats)
-				return (StatValue*)p_stats;
-		}
-	}
+    public StatValue* stats
+    {
+        get
+        {
+            fixed (byte* p_stats = _stats)
+                return (StatValue*)p_stats;
+        }
+    }
 }
 
 public enum Type : sbyte

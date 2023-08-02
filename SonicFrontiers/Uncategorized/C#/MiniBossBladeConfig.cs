@@ -127,14 +127,14 @@ public struct MiniBossBladeLevelBand
     [FieldOffset(0)] public uint level;
     [FieldOffset(4)] public fixed byte /* MiniBossBladeLevelPhaseAction[2] */ _phases[120];
 
-	public MiniBossBladeLevelPhaseAction* phases
-	{
-		get
-		{
-			fixed (byte* p_phases = _phases)
-				return (MiniBossBladeLevelPhaseAction*)p_phases;
-		}
-	}
+    public MiniBossBladeLevelPhaseAction* phases
+    {
+        get
+        {
+            fixed (byte* p_phases = _phases)
+                return (MiniBossBladeLevelPhaseAction*)p_phases;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 28)]
@@ -155,25 +155,25 @@ public struct MiniBossBladeConfig
     [FieldOffset(0)]    public MiniBossBladeCommonParam commonParam;
     [FieldOffset(112)]  public fixed byte /* MiniBossBladeLevelParam[5] */ _levelParams[780];
 
-	public MiniBossBladeLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossBladeLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossBladeLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossBladeLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(892)]  public fixed byte /* MiniBossBladeLevelBand[5] */ _levelBands[620];
 
-	public MiniBossBladeLevelBand* levelBands
-	{
-		get
-		{
-			fixed (byte* p_levelBands = _levelBands)
-				return (MiniBossBladeLevelBand*)p_levelBands;
-		}
-	}
+    public MiniBossBladeLevelBand* levelBands
+    {
+        get
+        {
+            fixed (byte* p_levelBands = _levelBands)
+                return (MiniBossBladeLevelBand*)p_levelBands;
+        }
+    }
 
     [FieldOffset(1512)] public RingParameter ringParam;
 }

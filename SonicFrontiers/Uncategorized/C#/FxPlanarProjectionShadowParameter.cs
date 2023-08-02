@@ -8,14 +8,14 @@ public struct FxPlanarProjectionShadowParameter
     [FieldOffset(16)]  public Vector4 projectionPlane;
     [FieldOffset(32)]  public fixed byte /* Vector3[4] */ _lightPosition[64];
 
-	public Vector3* lightPosition
-	{
-		get
-		{
-			fixed (byte* p_lightPosition = _lightPosition)
-				return (Vector3*)p_lightPosition;
-		}
-	}
+    public Vector3* lightPosition
+    {
+        get
+        {
+            fixed (byte* p_lightPosition = _lightPosition)
+                return (Vector3*)p_lightPosition;
+        }
+    }
 
     [FieldOffset(96)]  public sbyte lightCount;
     [FieldOffset(100)] public float vanishStart;

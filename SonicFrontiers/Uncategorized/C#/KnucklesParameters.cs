@@ -189,14 +189,14 @@ public struct PlayerParamLocus
 {
     [FieldOffset(0)] public fixed byte /* PlayerParamLocusData[4] */ _data[64];
 
-	public PlayerParamLocusData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (PlayerParamLocusData*)p_data;
-		}
-	}
+    public PlayerParamLocusData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (PlayerParamLocusData*)p_data;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 16)]
@@ -234,14 +234,14 @@ public struct PlayerParamDamageRate
 {
     [FieldOffset(0)] public fixed byte /* PlayerParamDamageRateLevel[4] */ _diffculties[80];
 
-	public PlayerParamDamageRateLevel* diffculties
-	{
-		get
-		{
-			fixed (byte* p_diffculties = _diffculties)
-				return (PlayerParamDamageRateLevel*)p_diffculties;
-		}
-	}
+    public PlayerParamDamageRateLevel* diffculties
+    {
+        get
+        {
+            fixed (byte* p_diffculties = _diffculties)
+                return (PlayerParamDamageRateLevel*)p_diffculties;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 15776)]
@@ -336,36 +336,36 @@ public struct PlayerParamComboTransit
 {
     [FieldOffset(0)]  public fixed byte /* Action[6] */ _transitExistTarget[6];
 
-	public Action* transitExistTarget
-	{
-		get
-		{
-			fixed (byte* p_transitExistTarget = _transitExistTarget)
-				return (Action*)p_transitExistTarget;
-		}
-	}
+    public Action* transitExistTarget
+    {
+        get
+        {
+            fixed (byte* p_transitExistTarget = _transitExistTarget)
+                return (Action*)p_transitExistTarget;
+        }
+    }
 
     [FieldOffset(6)]  public fixed byte /* Action[6] */ _transitInAir[6];
 
-	public Action* transitInAir
-	{
-		get
-		{
-			fixed (byte* p_transitInAir = _transitInAir)
-				return (Action*)p_transitInAir;
-		}
-	}
+    public Action* transitInAir
+    {
+        get
+        {
+            fixed (byte* p_transitInAir = _transitInAir)
+                return (Action*)p_transitInAir;
+        }
+    }
 
     [FieldOffset(12)] public fixed byte /* Action[6] */ _transitNotExistTarget[6];
 
-	public Action* transitNotExistTarget
-	{
-		get
-		{
-			fixed (byte* p_transitNotExistTarget = _transitNotExistTarget)
-				return (Action*)p_transitNotExistTarget;
-		}
-	}
+    public Action* transitNotExistTarget
+    {
+        get
+        {
+            fixed (byte* p_transitNotExistTarget = _transitNotExistTarget)
+                return (Action*)p_transitNotExistTarget;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 630)]
@@ -469,7 +469,7 @@ public struct KnucklesParamComboUppercut
 [StructLayout(LayoutKind.Explicit, Size = 16656)]
 public struct CommonPackageKnuckles
 {
-    [FieldOffset(0)]     CommonPackage commonPackage;
+    [FieldOffset(0)]     public CommonPackage commonPackage;
     [FieldOffset(15776)] public PlayerParamCombo combo;
     [FieldOffset(16464)] public KnucklesParamComboPunch1 comboPunch1;
     [FieldOffset(16528)] public KnucklesParamComboPunch2 comboPunch2;
@@ -1219,14 +1219,14 @@ public struct PlayerParamAvoid
     [FieldOffset(24)]  public float addFallSpeed;
     [FieldOffset(28)]  public fixed byte /* PlayerParamAvoidData[7] */ _data[112];
 
-	public PlayerParamAvoidData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (PlayerParamAvoidData*)p_data;
-		}
-	}
+    public PlayerParamAvoidData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (PlayerParamAvoidData*)p_data;
+        }
+    }
 
     [FieldOffset(140)] public float baseDistance;
     [FieldOffset(144)] public float limitAngle;
@@ -1415,7 +1415,7 @@ public struct PlayerParamSpinBoost
 [StructLayout(LayoutKind.Explicit, Size = 2592)]
 public struct ModePackageKnuckles
 {
-    [FieldOffset(0)]    ModePackage modePackage;
+    [FieldOffset(0)]    public ModePackage modePackage;
     [FieldOffset(2144)] public KnucklesParamGliding gliding;
     [FieldOffset(2200)] public KnucklesParamCyKnuckle cyknuckle;
     [FieldOffset(2220)] public KnucklesParamCyKnuckleDig cyknuckleDig;

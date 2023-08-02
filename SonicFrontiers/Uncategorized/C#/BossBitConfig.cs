@@ -131,14 +131,14 @@ public struct BossBitConfig
     [FieldOffset(8)]    public SmallBitLaserBulletParameter smallBitLaserParam;
     [FieldOffset(56)]   public fixed byte /* SmallBitSetPatternParameter[64] */ _smallBitPatternDatas[7680];
 
-	public SmallBitSetPatternParameter* smallBitPatternDatas
-	{
-		get
-		{
-			fixed (byte* p_smallBitPatternDatas = _smallBitPatternDatas)
-				return (SmallBitSetPatternParameter*)p_smallBitPatternDatas;
-		}
-	}
+    public SmallBitSetPatternParameter* smallBitPatternDatas
+    {
+        get
+        {
+            fixed (byte* p_smallBitPatternDatas = _smallBitPatternDatas)
+                return (SmallBitSetPatternParameter*)p_smallBitPatternDatas;
+        }
+    }
 
     [FieldOffset(7736)] public SmallBitFormationParameter smallBitFormation;
 }

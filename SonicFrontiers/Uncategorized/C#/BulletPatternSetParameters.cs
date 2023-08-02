@@ -63,14 +63,14 @@ public struct BulletPatternParameter
     [FieldOffset(36)] public bool animation;
     [FieldOffset(40)] public fixed byte /* AnimationParameter[8] */ _animParam[64];
 
-	public AnimationParameter* animParam
-	{
-		get
-		{
-			fixed (byte* p_animParam = _animParam)
-				return (AnimationParameter*)p_animParam;
-		}
-	}
+    public AnimationParameter* animParam
+    {
+        get
+        {
+            fixed (byte* p_animParam = _animParam)
+                return (AnimationParameter*)p_animParam;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 120)]
@@ -86,13 +86,13 @@ public struct BulletPatternSetParameters
     [FieldOffset(0)]  public HackingBulletParameter bulletParam;
     [FieldOffset(32)] public fixed byte /* BulletPatternSetParameter[256] */ _data[30720];
 
-	public BulletPatternSetParameter* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (BulletPatternSetParameter*)p_data;
-		}
-	}
+    public BulletPatternSetParameter* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (BulletPatternSetParameter*)p_data;
+        }
+    }
 }
 

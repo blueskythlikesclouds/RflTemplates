@@ -40,14 +40,14 @@ public struct ReelParam
 {
     [FieldOffset(0)]  public fixed byte /* Symbol[16] */ _symbols[16];
 
-	public Symbol* symbols
-	{
-		get
-		{
-			fixed (byte* p_symbols = _symbols)
-				return (Symbol*)p_symbols;
-		}
-	}
+    public Symbol* symbols
+    {
+        get
+        {
+            fixed (byte* p_symbols = _symbols)
+                return (Symbol*)p_symbols;
+        }
+    }
 
     [FieldOffset(16)] public float spinSpeedMin;
     [FieldOffset(20)] public float spinSpeedMax;
@@ -70,14 +70,14 @@ public struct RateInfo
 {
     [FieldOffset(0)] public fixed byte /* RateInfo_Symbol[3] */ _symbols[3];
 
-	public RateInfo_Symbol* symbols
-	{
-		get
-		{
-			fixed (byte* p_symbols = _symbols)
-				return (RateInfo_Symbol*)p_symbols;
-		}
-	}
+    public RateInfo_Symbol* symbols
+    {
+        get
+        {
+            fixed (byte* p_symbols = _symbols)
+                return (RateInfo_Symbol*)p_symbols;
+        }
+    }
 
     [FieldOffset(4)] public float rate;
 }
@@ -97,14 +97,14 @@ public struct CeilingInfo
 {
     [FieldOffset(0)] public fixed byte /* CeilingInfo_Symbol[3] */ _symbols[3];
 
-	public CeilingInfo_Symbol* symbols
-	{
-		get
-		{
-			fixed (byte* p_symbols = _symbols)
-				return (CeilingInfo_Symbol*)p_symbols;
-		}
-	}
+    public CeilingInfo_Symbol* symbols
+    {
+        get
+        {
+            fixed (byte* p_symbols = _symbols)
+                return (CeilingInfo_Symbol*)p_symbols;
+        }
+    }
 
     [FieldOffset(4)] public uint rollCount;
 }
@@ -124,14 +124,14 @@ public struct PayoutInfo
 {
     [FieldOffset(0)] public fixed byte /* PayoutInfo_Symbol[3] */ _symbols[3];
 
-	public PayoutInfo_Symbol* symbols
-	{
-		get
-		{
-			fixed (byte* p_symbols = _symbols)
-				return (PayoutInfo_Symbol*)p_symbols;
-		}
-	}
+    public PayoutInfo_Symbol* symbols
+    {
+        get
+        {
+            fixed (byte* p_symbols = _symbols)
+                return (PayoutInfo_Symbol*)p_symbols;
+        }
+    }
 
     [FieldOffset(4)] public uint payout;
 }
@@ -141,48 +141,48 @@ public struct ObjBonusSlotConfig
 {
     [FieldOffset(0)]   public fixed byte /* ReelParam[3] */ _reelParams[96];
 
-	public ReelParam* reelParams
-	{
-		get
-		{
-			fixed (byte* p_reelParams = _reelParams)
-				return (ReelParam*)p_reelParams;
-		}
-	}
+    public ReelParam* reelParams
+    {
+        get
+        {
+            fixed (byte* p_reelParams = _reelParams)
+                return (ReelParam*)p_reelParams;
+        }
+    }
 
     [FieldOffset(96)]  public float spinInterval;
     [FieldOffset(100)] public fixed byte /* RateInfo[4] */ _rateInfos[32];
 
-	public RateInfo* rateInfos
-	{
-		get
-		{
-			fixed (byte* p_rateInfos = _rateInfos)
-				return (RateInfo*)p_rateInfos;
-		}
-	}
+    public RateInfo* rateInfos
+    {
+        get
+        {
+            fixed (byte* p_rateInfos = _rateInfos)
+                return (RateInfo*)p_rateInfos;
+        }
+    }
 
     [FieldOffset(132)] public fixed byte /* CeilingInfo[4] */ _ceilingInfos[32];
 
-	public CeilingInfo* ceilingInfos
-	{
-		get
-		{
-			fixed (byte* p_ceilingInfos = _ceilingInfos)
-				return (CeilingInfo*)p_ceilingInfos;
-		}
-	}
+    public CeilingInfo* ceilingInfos
+    {
+        get
+        {
+            fixed (byte* p_ceilingInfos = _ceilingInfos)
+                return (CeilingInfo*)p_ceilingInfos;
+        }
+    }
 
     [FieldOffset(164)] public fixed byte /* PayoutInfo[4] */ _payoutInfos[32];
 
-	public PayoutInfo* payoutInfos
-	{
-		get
-		{
-			fixed (byte* p_payoutInfos = _payoutInfos)
-				return (PayoutInfo*)p_payoutInfos;
-		}
-	}
+    public PayoutInfo* payoutInfos
+    {
+        get
+        {
+            fixed (byte* p_payoutInfos = _payoutInfos)
+                return (PayoutInfo*)p_payoutInfos;
+        }
+    }
 
     [FieldOffset(196)] public uint payoutOnBlank;
     [FieldOffset(200)] public bool WinEvenWithPush;

@@ -39,13 +39,13 @@ public struct CameraShakeTable
 {
     [FieldOffset(0)] public fixed byte /* CameraShakeRecord[64] */ _records[3072];
 
-	public CameraShakeRecord* records
-	{
-		get
-		{
-			fixed (byte* p_records = _records)
-				return (CameraShakeRecord*)p_records;
-		}
-	}
+    public CameraShakeRecord* records
+    {
+        get
+        {
+            fixed (byte* p_records = _records)
+                return (CameraShakeRecord*)p_records;
+        }
+    }
 }
 

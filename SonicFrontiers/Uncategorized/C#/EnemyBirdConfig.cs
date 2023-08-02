@@ -178,25 +178,25 @@ public struct EnemyBirdConfig
     [FieldOffset(0)]   public EnemyBirdCommonParam commonParam;
     [FieldOffset(112)] public fixed byte /* EnemyBirdLevelParam[5] */ _levelParams[80];
 
-	public EnemyBirdLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyBirdLevelParam*)p_levelParams;
-		}
-	}
+    public EnemyBirdLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyBirdLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(192)] public fixed byte /* EnemyBirdLevelBand[5] */ _levelBand[20];
 
-	public EnemyBirdLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (EnemyBirdLevelBand*)p_levelBand;
-		}
-	}
+    public EnemyBirdLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (EnemyBirdLevelBand*)p_levelBand;
+        }
+    }
 
     [FieldOffset(224)] public EnemyBirdParam birdParam;
 }

@@ -75,14 +75,14 @@ public struct BossStatusConfig
     [FieldOffset(136)] public PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
     [FieldOffset(224)] public fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
 
-	public BossPhaseParam* phaseParams
-	{
-		get
-		{
-			fixed (byte* p_phaseParams = _phaseParams)
-				return (BossPhaseParam*)p_phaseParams;
-		}
-	}
+    public BossPhaseParam* phaseParams
+    {
+        get
+        {
+            fixed (byte* p_phaseParams = _phaseParams)
+                return (BossPhaseParam*)p_phaseParams;
+        }
+    }
 
     [FieldOffset(288)] public BossLockOnCameraParam cameraParam;
     [FieldOffset(400)] public bool isDebugDraw;
@@ -151,14 +151,14 @@ public struct BossPillarConfig
     [FieldOffset(12)]  public float attackIntervalTimeAll;
     [FieldOffset(16)]  public fixed byte /* BossPillarParam[32] */ _pillars[896];
 
-	public BossPillarParam* pillars
-	{
-		get
-		{
-			fixed (byte* p_pillars = _pillars)
-				return (BossPillarParam*)p_pillars;
-		}
-	}
+    public BossPillarParam* pillars
+    {
+        get
+        {
+            fixed (byte* p_pillars = _pillars)
+                return (BossPillarParam*)p_pillars;
+        }
+    }
 
     [FieldOffset(912)] public CString spawnPositionName;
     [FieldOffset(928)] public uint pillarHealthPoint;
@@ -224,14 +224,14 @@ public struct BossColliderStatus
     [FieldOffset(0)]  public ColliderActiveType type;
     [FieldOffset(2)]  public fixed byte /* ColliderProperty[4] */ _propertys[8];
 
-	public ColliderProperty* propertys
-	{
-		get
-		{
-			fixed (byte* p_propertys = _propertys)
-				return (ColliderProperty*)p_propertys;
-		}
-	}
+    public ColliderProperty* propertys
+    {
+        get
+        {
+            fixed (byte* p_propertys = _propertys)
+                return (ColliderProperty*)p_propertys;
+        }
+    }
 
     [FieldOffset(16)] public CString text;
 }
@@ -255,14 +255,14 @@ public struct BossPerceivePartsWithCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
 
-	public BossPerceiveCollisionParam* perceiveCollisions
-	{
-		get
-		{
-			fixed (byte* p_perceiveCollisions = _perceiveCollisions)
-				return (BossPerceiveCollisionParam*)p_perceiveCollisions;
-		}
-	}
+    public BossPerceiveCollisionParam* perceiveCollisions
+    {
+        get
+        {
+            fixed (byte* p_perceiveCollisions = _perceiveCollisions)
+                return (BossPerceiveCollisionParam*)p_perceiveCollisions;
+        }
+    }
 
     [FieldOffset(8192)] public bool isDebugDraw;
 }
@@ -366,14 +366,14 @@ public struct BossMeshFrameConfig
 {
     [FieldOffset(0)]     public fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
 
-	public BossMeshFrameParam* meshShapeKeyFrames
-	{
-		get
-		{
-			fixed (byte* p_meshShapeKeyFrames = _meshShapeKeyFrames)
-				return (BossMeshFrameParam*)p_meshShapeKeyFrames;
-		}
-	}
+    public BossMeshFrameParam* meshShapeKeyFrames
+    {
+        get
+        {
+            fixed (byte* p_meshShapeKeyFrames = _meshShapeKeyFrames)
+                return (BossMeshFrameParam*)p_meshShapeKeyFrames;
+        }
+    }
 
     [FieldOffset(57344)] public bool isDebugDraw;
     [FieldOffset(57345)] public bool isDebugDrawPoint;
@@ -402,14 +402,14 @@ public struct BossAttackCollisionParam
     [FieldOffset(24)] public float damageVelocityRaito;
     [FieldOffset(28)] public fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
 
-	public BossAttackCollisionParam_AttackType* types
-	{
-		get
-		{
-			fixed (byte* p_types = _types)
-				return (BossAttackCollisionParam_AttackType*)p_types;
-		}
-	}
+    public BossAttackCollisionParam_AttackType* types
+    {
+        get
+        {
+            fixed (byte* p_types = _types)
+                return (BossAttackCollisionParam_AttackType*)p_types;
+        }
+    }
 
     [FieldOffset(32)] public BossColliderStatus status;
     [FieldOffset(64)] public float size;
@@ -422,14 +422,14 @@ public struct BossAttackCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
 
-	public BossAttackCollisionParam* attackCollisions
-	{
-		get
-		{
-			fixed (byte* p_attackCollisions = _attackCollisions)
-				return (BossAttackCollisionParam*)p_attackCollisions;
-		}
-	}
+    public BossAttackCollisionParam* attackCollisions
+    {
+        get
+        {
+            fixed (byte* p_attackCollisions = _attackCollisions)
+                return (BossAttackCollisionParam*)p_attackCollisions;
+        }
+    }
 
     [FieldOffset(7168)] public bool isDebugDraw;
 }
@@ -453,14 +453,14 @@ public struct BossBattlePhaseCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
 
-	public BossBattlePhaseCollisionParam* battleCollisions
-	{
-		get
-		{
-			fixed (byte* p_battleCollisions = _battleCollisions)
-				return (BossBattlePhaseCollisionParam*)p_battleCollisions;
-		}
-	}
+    public BossBattlePhaseCollisionParam* battleCollisions
+    {
+        get
+        {
+            fixed (byte* p_battleCollisions = _battleCollisions)
+                return (BossBattlePhaseCollisionParam*)p_battleCollisions;
+        }
+    }
 
     [FieldOffset(1536)] public bool isDebugDraw;
 }
@@ -527,25 +527,25 @@ public struct BossRifleBeastAttackPatternParam
 {
     [FieldOffset(0)]    public fixed byte /* BossRifleBeastAttackData[16] */ _attackDatas[896];
 
-	public BossRifleBeastAttackData* attackDatas
-	{
-		get
-		{
-			fixed (byte* p_attackDatas = _attackDatas)
-				return (BossRifleBeastAttackData*)p_attackDatas;
-		}
-	}
+    public BossRifleBeastAttackData* attackDatas
+    {
+        get
+        {
+            fixed (byte* p_attackDatas = _attackDatas)
+                return (BossRifleBeastAttackData*)p_attackDatas;
+        }
+    }
 
     [FieldOffset(896)]  public fixed byte /* BossRifleBeastAttackData[2] */ _bitBreakAttackDatas[112];
 
-	public BossRifleBeastAttackData* bitBreakAttackDatas
-	{
-		get
-		{
-			fixed (byte* p_bitBreakAttackDatas = _bitBreakAttackDatas)
-				return (BossRifleBeastAttackData*)p_bitBreakAttackDatas;
-		}
-	}
+    public BossRifleBeastAttackData* bitBreakAttackDatas
+    {
+        get
+        {
+            fixed (byte* p_bitBreakAttackDatas = _bitBreakAttackDatas)
+                return (BossRifleBeastAttackData*)p_bitBreakAttackDatas;
+        }
+    }
 
     [FieldOffset(1008)] public uint breakBitNum;
 }
@@ -558,14 +558,14 @@ public struct BossRifleBeastPhaseParam
     [FieldOffset(8)]    public uint knockbackCountMax;
     [FieldOffset(16)]   public fixed byte /* BossRifleBeastAttackPatternParam[4] */ _patterns[4064];
 
-	public BossRifleBeastAttackPatternParam* patterns
-	{
-		get
-		{
-			fixed (byte* p_patterns = _patterns)
-				return (BossRifleBeastAttackPatternParam*)p_patterns;
-		}
-	}
+    public BossRifleBeastAttackPatternParam* patterns
+    {
+        get
+        {
+            fixed (byte* p_patterns = _patterns)
+                return (BossRifleBeastAttackPatternParam*)p_patterns;
+        }
+    }
 
     [FieldOffset(4080)] public fixed float patternChangeHpRatios[4];
 }
@@ -663,14 +663,14 @@ public struct BossRifleBeastBattleAttackHomingLaserAttackParam
     [FieldOffset(132)] public float delay;
     [FieldOffset(136)] public fixed byte /* BossRifleBeastBattleAttackHomingLaserShotPoint[32] */ _points[384];
 
-	public BossRifleBeastBattleAttackHomingLaserShotPoint* points
-	{
-		get
-		{
-			fixed (byte* p_points = _points)
-				return (BossRifleBeastBattleAttackHomingLaserShotPoint*)p_points;
-		}
-	}
+    public BossRifleBeastBattleAttackHomingLaserShotPoint* points
+    {
+        get
+        {
+            fixed (byte* p_points = _points)
+                return (BossRifleBeastBattleAttackHomingLaserShotPoint*)p_points;
+        }
+    }
 
     [FieldOffset(528)] public Vector3 fixedCameraEyePos;
     [FieldOffset(544)] public Vector3 fixedCameraLookAtPos;
@@ -720,25 +720,25 @@ public struct BossRifleBeastBattleAttackHandLaser
     [FieldOffset(28)]  public float keepVelocity;
     [FieldOffset(32)]  public fixed byte /* BossRifleBeastBattleAttackHandLaserPatternParam[4] */ _handLeftPatterns[320];
 
-	public BossRifleBeastBattleAttackHandLaserPatternParam* handLeftPatterns
-	{
-		get
-		{
-			fixed (byte* p_handLeftPatterns = _handLeftPatterns)
-				return (BossRifleBeastBattleAttackHandLaserPatternParam*)p_handLeftPatterns;
-		}
-	}
+    public BossRifleBeastBattleAttackHandLaserPatternParam* handLeftPatterns
+    {
+        get
+        {
+            fixed (byte* p_handLeftPatterns = _handLeftPatterns)
+                return (BossRifleBeastBattleAttackHandLaserPatternParam*)p_handLeftPatterns;
+        }
+    }
 
     [FieldOffset(352)] public fixed byte /* BossRifleBeastBattleAttackHandLaserPatternParam[4] */ _handRightPatterns[320];
 
-	public BossRifleBeastBattleAttackHandLaserPatternParam* handRightPatterns
-	{
-		get
-		{
-			fixed (byte* p_handRightPatterns = _handRightPatterns)
-				return (BossRifleBeastBattleAttackHandLaserPatternParam*)p_handRightPatterns;
-		}
-	}
+    public BossRifleBeastBattleAttackHandLaserPatternParam* handRightPatterns
+    {
+        get
+        {
+            fixed (byte* p_handRightPatterns = _handRightPatterns)
+                return (BossRifleBeastBattleAttackHandLaserPatternParam*)p_handRightPatterns;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
@@ -772,25 +772,25 @@ public struct BossRifleBeastBattleCameraParam
 {
     [FieldOffset(0)]  public fixed byte /* BossRifleBeastBattleZoomCamera[2] */ _normalCamera[80];
 
-	public BossRifleBeastBattleZoomCamera* normalCamera
-	{
-		get
-		{
-			fixed (byte* p_normalCamera = _normalCamera)
-				return (BossRifleBeastBattleZoomCamera*)p_normalCamera;
-		}
-	}
+    public BossRifleBeastBattleZoomCamera* normalCamera
+    {
+        get
+        {
+            fixed (byte* p_normalCamera = _normalCamera)
+                return (BossRifleBeastBattleZoomCamera*)p_normalCamera;
+        }
+    }
 
     [FieldOffset(80)] public fixed byte /* BossRifleBeastBattleZoomCamera[2] */ _flyCamera[80];
 
-	public BossRifleBeastBattleZoomCamera* flyCamera
-	{
-		get
-		{
-			fixed (byte* p_flyCamera = _flyCamera)
-				return (BossRifleBeastBattleZoomCamera*)p_flyCamera;
-		}
-	}
+    public BossRifleBeastBattleZoomCamera* flyCamera
+    {
+        get
+        {
+            fixed (byte* p_flyCamera = _flyCamera)
+                return (BossRifleBeastBattleZoomCamera*)p_flyCamera;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 16)]
@@ -815,36 +815,36 @@ public struct BossRifleBeastBattleParam
 {
     [FieldOffset(0)]     public fixed byte /* BossRifleBeastPhaseParam[4] */ _giantPhaseParams[16384];
 
-	public BossRifleBeastPhaseParam* giantPhaseParams
-	{
-		get
-		{
-			fixed (byte* p_giantPhaseParams = _giantPhaseParams)
-				return (BossRifleBeastPhaseParam*)p_giantPhaseParams;
-		}
-	}
+    public BossRifleBeastPhaseParam* giantPhaseParams
+    {
+        get
+        {
+            fixed (byte* p_giantPhaseParams = _giantPhaseParams)
+                return (BossRifleBeastPhaseParam*)p_giantPhaseParams;
+        }
+    }
 
     [FieldOffset(16384)] public fixed byte /* BossRifleBeastPhaseAttackActionParam[16] */ _actionParams[1152];
 
-	public BossRifleBeastPhaseAttackActionParam* actionParams
-	{
-		get
-		{
-			fixed (byte* p_actionParams = _actionParams)
-				return (BossRifleBeastPhaseAttackActionParam*)p_actionParams;
-		}
-	}
+    public BossRifleBeastPhaseAttackActionParam* actionParams
+    {
+        get
+        {
+            fixed (byte* p_actionParams = _actionParams)
+                return (BossRifleBeastPhaseAttackActionParam*)p_actionParams;
+        }
+    }
 
     [FieldOffset(17536)] public fixed byte /* BossRifleBeastBattleParam_ActionType[20] */ _immediateActions[20];
 
-	public BossRifleBeastBattleParam_ActionType* immediateActions
-	{
-		get
-		{
-			fixed (byte* p_immediateActions = _immediateActions)
-				return (BossRifleBeastBattleParam_ActionType*)p_immediateActions;
-		}
-	}
+    public BossRifleBeastBattleParam_ActionType* immediateActions
+    {
+        get
+        {
+            fixed (byte* p_immediateActions = _immediateActions)
+                return (BossRifleBeastBattleParam_ActionType*)p_immediateActions;
+        }
+    }
 
     [FieldOffset(17556)] public BossRifleBeastCyloopFloatActionParam cyloopFloatAction;
     [FieldOffset(17568)] public BossRifleBeastBattleAttackHomingLaser attackHomingLaser;
@@ -876,7 +876,7 @@ public struct BossRifleBeastNotifierParam
 [StructLayout(LayoutKind.Explicit, Size = 96144)]
 public struct BossRifleBeastConfig
 {
-    [FieldOffset(0)]     BossBaseConfig bossBaseConfig;
+    [FieldOffset(0)]     public BossBaseConfig bossBaseConfig;
     [FieldOffset(75712)] public BossRifleBeastBattleParam battleParam;
     [FieldOffset(96128)] public BossRifleBeastNotifierParam notifierParam;
 }

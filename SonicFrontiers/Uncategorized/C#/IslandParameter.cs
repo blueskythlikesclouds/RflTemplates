@@ -13,14 +13,14 @@ public struct IslandParam
 {
     [FieldOffset(0)] public fixed byte /* ChaosEmeraldStorageParam[7] */ _storages[14];
 
-	public ChaosEmeraldStorageParam* storages
-	{
-		get
-		{
-			fixed (byte* p_storages = _storages)
-				return (ChaosEmeraldStorageParam*)p_storages;
-		}
-	}
+    public ChaosEmeraldStorageParam* storages
+    {
+        get
+        {
+            fixed (byte* p_storages = _storages)
+                return (ChaosEmeraldStorageParam*)p_storages;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 16)]
@@ -67,14 +67,14 @@ public struct KodamaHermitParam
 {
     [FieldOffset(0)] public fixed byte /* KodamaHermitLvUpParam[99] */ _levelupSeedNum[1188];
 
-	public KodamaHermitLvUpParam* levelupSeedNum
-	{
-		get
-		{
-			fixed (byte* p_levelupSeedNum = _levelupSeedNum)
-				return (KodamaHermitLvUpParam*)p_levelupSeedNum;
-		}
-	}
+    public KodamaHermitLvUpParam* levelupSeedNum
+    {
+        get
+        {
+            fixed (byte* p_levelupSeedNum = _levelupSeedNum)
+                return (KodamaHermitLvUpParam*)p_levelupSeedNum;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 20)]
@@ -95,14 +95,14 @@ public struct KodamaParam
     [FieldOffset(52)]   public KodamaHermitParam hermit;
     [FieldOffset(1240)] public fixed byte /* KodamaNewFormParam[8] */ _newform[160];
 
-	public KodamaNewFormParam* newform
-	{
-		get
-		{
-			fixed (byte* p_newform = _newform)
-				return (KodamaNewFormParam*)p_newform;
-		}
-	}
+    public KodamaNewFormParam* newform
+    {
+        get
+        {
+            fixed (byte* p_newform = _newform)
+                return (KodamaNewFormParam*)p_newform;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 8)]
@@ -117,14 +117,14 @@ public struct IslandParameter
 {
     [FieldOffset(0)]    public fixed byte /* IslandParam[5] */ _islands[70];
 
-	public IslandParam* islands
-	{
-		get
-		{
-			fixed (byte* p_islands = _islands)
-				return (IslandParam*)p_islands;
-		}
-	}
+    public IslandParam* islands
+    {
+        get
+        {
+            fixed (byte* p_islands = _islands)
+                return (IslandParam*)p_islands;
+        }
+    }
 
     [FieldOffset(72)]   public KodamaParam kodama;
     [FieldOffset(1472)] public NpcParam npc;

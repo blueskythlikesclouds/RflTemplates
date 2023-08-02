@@ -30,13 +30,13 @@ public struct TalkEventCameraPresetParameters
 {
     [FieldOffset(0)] public fixed byte /* TalkEventCameraPresetParameter[16] */ _param[576];
 
-	public TalkEventCameraPresetParameter* param
-	{
-		get
-		{
-			fixed (byte* p_param = _param)
-				return (TalkEventCameraPresetParameter*)p_param;
-		}
-	}
+    public TalkEventCameraPresetParameter* param
+    {
+        get
+        {
+            fixed (byte* p_param = _param)
+                return (TalkEventCameraPresetParameter*)p_param;
+        }
+    }
 }
 

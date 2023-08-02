@@ -90,24 +90,24 @@ public struct EnemyBubbleConfig
     [FieldOffset(0)]   public EnemyBubbleCommonParam commonParam;
     [FieldOffset(124)] public fixed byte /* EnemyBubbleLevelParam[5] */ _levelParams[80];
 
-	public EnemyBubbleLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyBubbleLevelParam*)p_levelParams;
-		}
-	}
+    public EnemyBubbleLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyBubbleLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(204)] public fixed byte /* EnemyBubbleLevelBand[5] */ _levelBand[20];
 
-	public EnemyBubbleLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (EnemyBubbleLevelBand*)p_levelBand;
-		}
-	}
+    public EnemyBubbleLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (EnemyBubbleLevelBand*)p_levelBand;
+        }
+    }
 }
 

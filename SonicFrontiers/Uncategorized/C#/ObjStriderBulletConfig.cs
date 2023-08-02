@@ -21,7 +21,7 @@ public struct CommonBulletParam
 [StructLayout(LayoutKind.Explicit, Size = 36)]
 public struct HomingBulletParam
 {
-    [FieldOffset(0)]  CommonBulletParam commonBulletParam;
+    [FieldOffset(0)]  public CommonBulletParam commonBulletParam;
     [FieldOffset(20)] public float railChangeDelay;
     [FieldOffset(24)] public float turnaroundTime;
     [FieldOffset(28)] public float splinePositionDistance;
@@ -31,7 +31,7 @@ public struct HomingBulletParam
 [StructLayout(LayoutKind.Explicit, Size = 36)]
 public struct ReverseHomingBulletParam
 {
-    [FieldOffset(0)]  CommonBulletParam commonBulletParam;
+    [FieldOffset(0)]  public CommonBulletParam commonBulletParam;
     [FieldOffset(20)] public float railChangeDelay;
     [FieldOffset(24)] public float turnaroundTime;
     [FieldOffset(28)] public float splinePositionDistance;
@@ -41,7 +41,7 @@ public struct ReverseHomingBulletParam
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct SameBodyRailBulletParam
 {
-    [FieldOffset(0)] CommonBulletParam commonBulletParam;
+    [FieldOffset(0)] public CommonBulletParam commonBulletParam;
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 92)]

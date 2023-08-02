@@ -68,14 +68,14 @@ public struct CyberStageContainerData
 {
     [FieldOffset(0)] public fixed byte /* CyberStageData[32] */ _actStages[768];
 
-	public CyberStageData* actStages
-	{
-		get
-		{
-			fixed (byte* p_actStages = _actStages)
-				return (CyberStageData*)p_actStages;
-		}
-	}
+    public CyberStageData* actStages
+    {
+        get
+        {
+            fixed (byte* p_actStages = _actStages)
+                return (CyberStageData*)p_actStages;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 828)]

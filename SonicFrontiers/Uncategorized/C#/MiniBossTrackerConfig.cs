@@ -155,14 +155,14 @@ public struct MiniBossTrackerActionParam
     [FieldOffset(0)]   public fixed float intervalTable[20];
     [FieldOffset(80)]  public fixed byte /* ActionType[20] */ _actionTable[20];
 
-	public ActionType* actionTable
-	{
-		get
-		{
-			fixed (byte* p_actionTable = _actionTable)
-				return (ActionType*)p_actionTable;
-		}
-	}
+    public ActionType* actionTable
+    {
+        get
+        {
+            fixed (byte* p_actionTable = _actionTable)
+                return (ActionType*)p_actionTable;
+        }
+    }
 
     [FieldOffset(100)] public int nextPoint;
 }
@@ -189,25 +189,25 @@ public struct MiniBossTrackerConfig
     [FieldOffset(0)]    public MiniBossTrackerCommonParam commonParam;
     [FieldOffset(64)]   public fixed byte /* MiniBossTrackerLevelParam[5] */ _levelParams[280];
 
-	public MiniBossTrackerLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (MiniBossTrackerLevelParam*)p_levelParams;
-		}
-	}
+    public MiniBossTrackerLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (MiniBossTrackerLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(344)]  public fixed byte /* MiniBossTrackerLevelBand[5] */ _levelBand[20];
 
-	public MiniBossTrackerLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (MiniBossTrackerLevelBand*)p_levelBand;
-		}
-	}
+    public MiniBossTrackerLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (MiniBossTrackerLevelBand*)p_levelBand;
+        }
+    }
 
     [FieldOffset(364)]  public MiniBossTrackerCameraLockOn cameraLockDamage;
     [FieldOffset(388)]  public MiniBossTrackerMoveParam move;

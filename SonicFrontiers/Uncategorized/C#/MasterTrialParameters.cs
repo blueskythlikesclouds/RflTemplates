@@ -18,14 +18,14 @@ public struct MasterTrialParameterElement
     [FieldOffset(0)] public int applicableFailedCount;
     [FieldOffset(4)] public fixed byte /* MasterTrialStageParameter[4] */ _stages[96];
 
-	public MasterTrialStageParameter* stages
-	{
-		get
-		{
-			fixed (byte* p_stages = _stages)
-				return (MasterTrialStageParameter*)p_stages;
-		}
-	}
+    public MasterTrialStageParameter* stages
+    {
+        get
+        {
+            fixed (byte* p_stages = _stages)
+                return (MasterTrialStageParameter*)p_stages;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 324)]
@@ -39,13 +39,13 @@ public struct MasterTrialParameters
     [FieldOffset(20)] public float failedWaitTime;
     [FieldOffset(24)] public fixed byte /* MasterTrialParameterElement[3] */ _element[300];
 
-	public MasterTrialParameterElement* element
-	{
-		get
-		{
-			fixed (byte* p_element = _element)
-				return (MasterTrialParameterElement*)p_element;
-		}
-	}
+    public MasterTrialParameterElement* element
+    {
+        get
+        {
+            fixed (byte* p_element = _element)
+                return (MasterTrialParameterElement*)p_element;
+        }
+    }
 }
 

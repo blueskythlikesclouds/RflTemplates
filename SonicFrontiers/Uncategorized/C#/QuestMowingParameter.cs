@@ -47,14 +47,14 @@ public struct QuestMowingParameterElement
     [FieldOffset(12)]  public uint pointParamNum;
     [FieldOffset(16)]  public fixed byte /* QuestMowingPointParameter[5] */ _pointParam[40];
 
-	public QuestMowingPointParameter* pointParam
-	{
-		get
-		{
-			fixed (byte* p_pointParam = _pointParam)
-				return (QuestMowingPointParameter*)p_pointParam;
-		}
-	}
+    public QuestMowingPointParameter* pointParam
+    {
+        get
+        {
+            fixed (byte* p_pointParam = _pointParam)
+                return (QuestMowingPointParameter*)p_pointParam;
+        }
+    }
 
     [FieldOffset(56)]  public QuestMowingTimerParameter timerParam;
     [FieldOffset(80)]  public QuestMowingEarnedScoreParameter scoreUIParam;
@@ -66,13 +66,13 @@ public struct QuestMowingParameter
 {
     [FieldOffset(0)] public fixed byte /* QuestMowingParameterElement[3] */ _element[384];
 
-	public QuestMowingParameterElement* element
-	{
-		get
-		{
-			fixed (byte* p_element = _element)
-				return (QuestMowingParameterElement*)p_element;
-		}
-	}
+    public QuestMowingParameterElement* element
+    {
+        get
+        {
+            fixed (byte* p_element = _element)
+                return (QuestMowingParameterElement*)p_element;
+        }
+    }
 }
 

@@ -88,14 +88,14 @@ public struct EnemyWolfCommonParam
     [FieldOffset(80)] public Vector3 cursorOffset;
     [FieldOffset(96)] public fixed byte /* WolfMappingPairInfo[32] */ _mappingPairInfo[3584];
 
-	public WolfMappingPairInfo* mappingPairInfo
-	{
-		get
-		{
-			fixed (byte* p_mappingPairInfo = _mappingPairInfo)
-				return (WolfMappingPairInfo*)p_mappingPairInfo;
-		}
-	}
+    public WolfMappingPairInfo* mappingPairInfo
+    {
+        get
+        {
+            fixed (byte* p_mappingPairInfo = _mappingPairInfo)
+                return (WolfMappingPairInfo*)p_mappingPairInfo;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 12)]
@@ -126,24 +126,24 @@ public struct EnemyWolfConfig
     [FieldOffset(0)]    public EnemyWolfCommonParam commonParam;
     [FieldOffset(3680)] public fixed byte /* EnemyWolfLevelParam[5] */ _levelParams[80];
 
-	public EnemyWolfLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyWolfLevelParam*)p_levelParams;
-		}
-	}
+    public EnemyWolfLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyWolfLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(3760)] public fixed byte /* EnemyWolfLevelBand[5] */ _levelBand[20];
 
-	public EnemyWolfLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (EnemyWolfLevelBand*)p_levelBand;
-		}
-	}
+    public EnemyWolfLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (EnemyWolfLevelBand*)p_levelBand;
+        }
+    }
 }
 

@@ -88,13 +88,13 @@ public struct NoisePresetParameters
 {
     [FieldOffset(0)] public fixed byte /* FxCyberSpaceStartNoiseParameter[8] */ _presets[1312];
 
-	public FxCyberSpaceStartNoiseParameter* presets
-	{
-		get
-		{
-			fixed (byte* p_presets = _presets)
-				return (FxCyberSpaceStartNoiseParameter*)p_presets;
-		}
-	}
+    public FxCyberSpaceStartNoiseParameter* presets
+    {
+        get
+        {
+            fixed (byte* p_presets = _presets)
+                return (FxCyberSpaceStartNoiseParameter*)p_presets;
+        }
+    }
 }
 

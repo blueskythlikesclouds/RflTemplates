@@ -112,25 +112,25 @@ public struct EnemyJumperConfig
     [FieldOffset(0)]   public EnemyJumperCommonParam commonParam;
     [FieldOffset(128)] public fixed byte /* EnemyJumperLevelParam[5] */ _levelParams[80];
 
-	public EnemyJumperLevelParam* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyJumperLevelParam*)p_levelParams;
-		}
-	}
+    public EnemyJumperLevelParam* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyJumperLevelParam*)p_levelParams;
+        }
+    }
 
     [FieldOffset(208)] public fixed byte /* EnemyJumperLevelBand[5] */ _levelBand[20];
 
-	public EnemyJumperLevelBand* levelBand
-	{
-		get
-		{
-			fixed (byte* p_levelBand = _levelBand)
-				return (EnemyJumperLevelBand*)p_levelBand;
-		}
-	}
+    public EnemyJumperLevelBand* levelBand
+    {
+        get
+        {
+            fixed (byte* p_levelBand = _levelBand)
+                return (EnemyJumperLevelBand*)p_levelBand;
+        }
+    }
 
     [FieldOffset(240)] public CharacterControllerCollision characterControllerCollision;
     [FieldOffset(288)] public MovementParam movement;

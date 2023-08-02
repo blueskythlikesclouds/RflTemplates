@@ -28,13 +28,13 @@ public struct GameGrassInteractionParameter
 {
     [FieldOffset(0)] public fixed byte /* GameGrassInteractionParameterData[32] */ _data[1024];
 
-	public GameGrassInteractionParameterData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (GameGrassInteractionParameterData*)p_data;
-		}
-	}
+    public GameGrassInteractionParameterData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (GameGrassInteractionParameterData*)p_data;
+        }
+    }
 }
 

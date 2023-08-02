@@ -110,14 +110,14 @@ public struct EnemyCommonConfig
     [FieldOffset(100)] public int codeXDropNumMax;
     [FieldOffset(112)] public fixed byte /* MappingPairInfo[32] */ _mappingPairInfo[5632];
 
-	public MappingPairInfo* mappingPairInfo
-	{
-		get
-		{
-			fixed (byte* p_mappingPairInfo = _mappingPairInfo)
-				return (MappingPairInfo*)p_mappingPairInfo;
-		}
-	}
+    public MappingPairInfo* mappingPairInfo
+    {
+        get
+        {
+            fixed (byte* p_mappingPairInfo = _mappingPairInfo)
+                return (MappingPairInfo*)p_mappingPairInfo;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 60)]
@@ -180,14 +180,14 @@ public struct JellymanHumanActionConfig
 {
     [FieldOffset(0)]   public fixed byte /* JellymanHumanActionRate[4] */ _rateTable[80];
 
-	public JellymanHumanActionRate* rateTable
-	{
-		get
-		{
-			fixed (byte* p_rateTable = _rateTable)
-				return (JellymanHumanActionRate*)p_rateTable;
-		}
-	}
+    public JellymanHumanActionRate* rateTable
+    {
+        get
+        {
+            fixed (byte* p_rateTable = _rateTable)
+                return (JellymanHumanActionRate*)p_rateTable;
+        }
+    }
 
     [FieldOffset(80)]  public fixed float coolTime[5];
     [FieldOffset(100)] public float attackCoolTime;
@@ -231,14 +231,14 @@ public struct EnemySquadConfig
 {
     [FieldOffset(0)] public fixed byte /* EnemySquadAvarageLevelConfig[5] */ _averageLevelConfig[160];
 
-	public EnemySquadAvarageLevelConfig* averageLevelConfig
-	{
-		get
-		{
-			fixed (byte* p_averageLevelConfig = _averageLevelConfig)
-				return (EnemySquadAvarageLevelConfig*)p_averageLevelConfig;
-		}
-	}
+    public EnemySquadAvarageLevelConfig* averageLevelConfig
+    {
+        get
+        {
+            fixed (byte* p_averageLevelConfig = _averageLevelConfig)
+                return (EnemySquadAvarageLevelConfig*)p_averageLevelConfig;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 7408)]
@@ -247,25 +247,25 @@ public struct EnemyJellymanConfig
     [FieldOffset(0)]    public EnemyCommonConfig commonParams;
     [FieldOffset(5744)] public fixed byte /* EnemyLevelConfig[8] */ _levelParams[640];
 
-	public EnemyLevelConfig* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyLevelConfig*)p_levelParams;
-		}
-	}
+    public EnemyLevelConfig* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyLevelConfig*)p_levelParams;
+        }
+    }
 
     [FieldOffset(6384)] public fixed byte /* EnemyLevelBandConfig[5] */ _levelBands[860];
 
-	public EnemyLevelBandConfig* levelBands
-	{
-		get
-		{
-			fixed (byte* p_levelBands = _levelBands)
-				return (EnemyLevelBandConfig*)p_levelBands;
-		}
-	}
+    public EnemyLevelBandConfig* levelBands
+    {
+        get
+        {
+            fixed (byte* p_levelBands = _levelBands)
+                return (EnemyLevelBandConfig*)p_levelBands;
+        }
+    }
 
     [FieldOffset(7244)] public EnemySquadConfig squadParams;
 }

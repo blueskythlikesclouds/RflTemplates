@@ -22,17 +22,17 @@ public struct CString
 [StructLayout(LayoutKind.Explicit, Size = 88)]
 public struct EffectRecord
 {
-    [FieldOffset(0)] Record record;
+    [FieldOffset(0)] public Record record;
     [FieldOffset(8)] public fixed byte /* CString[5] */ _emitterSetName[1275];
 
-	public CString* emitterSetName
-	{
-		get
-		{
-			fixed (byte* p_emitterSetName = _emitterSetName)
-				return (CString*)p_emitterSetName;
-		}
-	}
+    public CString* emitterSetName
+    {
+        get
+        {
+            fixed (byte* p_emitterSetName = _emitterSetName)
+                return (CString*)p_emitterSetName;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 22440)]
@@ -40,13 +40,13 @@ public struct EffectRecordTable
 {
     [FieldOffset(0)] public fixed byte /* EffectRecord[255] */ _data[22440];
 
-	public EffectRecord* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (EffectRecord*)p_data;
-		}
-	}
+    public EffectRecord* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (EffectRecord*)p_data;
+        }
+    }
 }
 

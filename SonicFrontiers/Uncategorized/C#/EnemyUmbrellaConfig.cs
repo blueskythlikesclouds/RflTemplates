@@ -81,24 +81,24 @@ public struct EnemyUmbrellaConfig
     [FieldOffset(0)]   public EnemyUmbrellaCommonConfig commonParams;
     [FieldOffset(64)]  public fixed byte /* EnemyUmbrellaLevelConfig[5] */ _levelParams[300];
 
-	public EnemyUmbrellaLevelConfig* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyUmbrellaLevelConfig*)p_levelParams;
-		}
-	}
+    public EnemyUmbrellaLevelConfig* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyUmbrellaLevelConfig*)p_levelParams;
+        }
+    }
 
     [FieldOffset(364)] public fixed byte /* EnemyUmbrellaLevelBandConfig[5] */ _levelBands[40];
 
-	public EnemyUmbrellaLevelBandConfig* levelBands
-	{
-		get
-		{
-			fixed (byte* p_levelBands = _levelBands)
-				return (EnemyUmbrellaLevelBandConfig*)p_levelBands;
-		}
-	}
+    public EnemyUmbrellaLevelBandConfig* levelBands
+    {
+        get
+        {
+            fixed (byte* p_levelBands = _levelBands)
+                return (EnemyUmbrellaLevelBandConfig*)p_levelBands;
+        }
+    }
 }
 

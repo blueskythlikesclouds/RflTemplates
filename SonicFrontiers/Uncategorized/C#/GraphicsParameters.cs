@@ -29,14 +29,14 @@ public struct AuraEffectLerpParameter
     [FieldOffset(0)]  public CString name;
     [FieldOffset(16)] public fixed byte /* AuraEffectLerpNode[2] */ _node[40];
 
-	public AuraEffectLerpNode* node
-	{
-		get
-		{
-			fixed (byte* p_node = _node)
-				return (AuraEffectLerpNode*)p_node;
-		}
-	}
+    public AuraEffectLerpNode* node
+    {
+        get
+        {
+            fixed (byte* p_node = _node)
+                return (AuraEffectLerpNode*)p_node;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 224)]
@@ -44,14 +44,14 @@ public struct AuraEffectParameters
 {
     [FieldOffset(0)] public fixed byte /* AuraEffectLerpParameter[4] */ __params[224];
 
-	public AuraEffectLerpParameter* _params
-	{
-		get
-		{
-			fixed (byte* p__params = __params)
-				return (AuraEffectLerpParameter*)p__params;
-		}
-	}
+    public AuraEffectLerpParameter* _params
+    {
+        get
+        {
+            fixed (byte* p__params = __params)
+                return (AuraEffectLerpParameter*)p__params;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 8)]
@@ -74,14 +74,14 @@ public struct WeatherTypeParameter
     [FieldOffset(0)] public fixed byte transitWeights[5];
     [FieldOffset(5)] public fixed byte /* WeatherBlockParameter[5] */ _blockParams[25];
 
-	public WeatherBlockParameter* blockParams
-	{
-		get
-		{
-			fixed (byte* p_blockParams = _blockParams)
-				return (WeatherBlockParameter*)p_blockParams;
-		}
-	}
+    public WeatherBlockParameter* blockParams
+    {
+        get
+        {
+            fixed (byte* p_blockParams = _blockParams)
+                return (WeatherBlockParameter*)p_blockParams;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 2)]
@@ -106,14 +106,14 @@ public struct WeatherParameters
 {
     [FieldOffset(0)]   public fixed byte /* WeatherTypeParameter[5] */ _type[150];
 
-	public WeatherTypeParameter* type
-	{
-		get
-		{
-			fixed (byte* p_type = _type)
-				return (WeatherTypeParameter*)p_type;
-		}
-	}
+    public WeatherTypeParameter* type
+    {
+        get
+        {
+            fixed (byte* p_type = _type)
+                return (WeatherTypeParameter*)p_type;
+        }
+    }
 
     [FieldOffset(150)] public WeatherTimeControlParameter timeControl;
 }

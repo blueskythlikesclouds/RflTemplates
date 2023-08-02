@@ -72,13 +72,13 @@ public struct EnemyDefenderConfig
     [FieldOffset(0)]   public EnemyDefenderCommonConfig commonParams;
     [FieldOffset(128)] public fixed byte /* EnemyDefenderLevelConfig[5] */ _levelParams[80];
 
-	public EnemyDefenderLevelConfig* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemyDefenderLevelConfig*)p_levelParams;
-		}
-	}
+    public EnemyDefenderLevelConfig* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemyDefenderLevelConfig*)p_levelParams;
+        }
+    }
 }
 

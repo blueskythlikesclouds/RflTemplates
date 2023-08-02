@@ -293,36 +293,36 @@ public struct OptionControlsData
 {
     [FieldOffset(0)]   public fixed byte /* InputKey[62] */ _padMappings[248];
 
-	public InputKey* padMappings
-	{
-		get
-		{
-			fixed (byte* p_padMappings = _padMappings)
-				return (InputKey*)p_padMappings;
-		}
-	}
+    public InputKey* padMappings
+    {
+        get
+        {
+            fixed (byte* p_padMappings = _padMappings)
+                return (InputKey*)p_padMappings;
+        }
+    }
 
     [FieldOffset(248)] public fixed byte /* InputKey[62] */ _mainMappings[248];
 
-	public InputKey* mainMappings
-	{
-		get
-		{
-			fixed (byte* p_mainMappings = _mainMappings)
-				return (InputKey*)p_mainMappings;
-		}
-	}
+    public InputKey* mainMappings
+    {
+        get
+        {
+            fixed (byte* p_mainMappings = _mainMappings)
+                return (InputKey*)p_mainMappings;
+        }
+    }
 
     [FieldOffset(496)] public fixed byte /* InputKey[62] */ _subMappings[248];
 
-	public InputKey* subMappings
-	{
-		get
-		{
-			fixed (byte* p_subMappings = _subMappings)
-				return (InputKey*)p_subMappings;
-		}
-	}
+    public InputKey* subMappings
+    {
+        get
+        {
+            fixed (byte* p_subMappings = _subMappings)
+                return (InputKey*)p_subMappings;
+        }
+    }
 }
 
 public enum MovementStyle : sbyte

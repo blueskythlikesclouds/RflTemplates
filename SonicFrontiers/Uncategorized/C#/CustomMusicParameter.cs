@@ -41,14 +41,14 @@ public struct CustomMusicParameter
     [FieldOffset(0)]    public CustomMusicTransitInfo transitInfo;
     [FieldOffset(8)]    public fixed byte /* CustomMusicInfo[128] */ _musicInfos[3072];
 
-	public CustomMusicInfo* musicInfos
-	{
-		get
-		{
-			fixed (byte* p_musicInfos = _musicInfos)
-				return (CustomMusicInfo*)p_musicInfos;
-		}
-	}
+    public CustomMusicInfo* musicInfos
+    {
+        get
+        {
+            fixed (byte* p_musicInfos = _musicInfos)
+                return (CustomMusicInfo*)p_musicInfos;
+        }
+    }
 
     [FieldOffset(3080)] public float idlingViewTime;
 }

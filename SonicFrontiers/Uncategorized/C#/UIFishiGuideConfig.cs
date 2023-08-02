@@ -14,13 +14,13 @@ public struct UIFishiGuideConfig
 {
     [FieldOffset(0)] public fixed byte /* FishCameraParam[105] */ _fishList[5040];
 
-	public FishCameraParam* fishList
-	{
-		get
-		{
-			fixed (byte* p_fishList = _fishList)
-				return (FishCameraParam*)p_fishList;
-		}
-	}
+    public FishCameraParam* fishList
+    {
+        get
+        {
+            fixed (byte* p_fishList = _fishList)
+                return (FishCameraParam*)p_fishList;
+        }
+    }
 }
 

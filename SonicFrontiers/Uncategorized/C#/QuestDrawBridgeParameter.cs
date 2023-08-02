@@ -23,13 +23,13 @@ public struct QuestDrawBridgeParameter
 {
     [FieldOffset(0)] public fixed byte /* QuestDrawBridgeParameterElement[3] */ _element[60];
 
-	public QuestDrawBridgeParameterElement* element
-	{
-		get
-		{
-			fixed (byte* p_element = _element)
-				return (QuestDrawBridgeParameterElement*)p_element;
-		}
-	}
+    public QuestDrawBridgeParameterElement* element
+    {
+        get
+        {
+            fixed (byte* p_element = _element)
+                return (QuestDrawBridgeParameterElement*)p_element;
+        }
+    }
 }
 

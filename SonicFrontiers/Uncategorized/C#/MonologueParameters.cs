@@ -19,14 +19,14 @@ public struct MonologueIslandParameters
     [FieldOffset(0)] public float playSpanTime;
     [FieldOffset(8)] public fixed byte /* CString[24] */ _labelNames[6120];
 
-	public CString* labelNames
-	{
-		get
-		{
-			fixed (byte* p_labelNames = _labelNames)
-				return (CString*)p_labelNames;
-		}
-	}
+    public CString* labelNames
+    {
+        get
+        {
+            fixed (byte* p_labelNames = _labelNames)
+                return (CString*)p_labelNames;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 64)]
@@ -34,14 +34,14 @@ public struct MonologueMultiTextParameters
 {
     [FieldOffset(0)] public fixed byte /* CString[4] */ _labelNames[1020];
 
-	public CString* labelNames
-	{
-		get
-		{
-			fixed (byte* p_labelNames = _labelNames)
-				return (CString*)p_labelNames;
-		}
-	}
+    public CString* labelNames
+    {
+        get
+        {
+            fixed (byte* p_labelNames = _labelNames)
+                return (CString*)p_labelNames;
+        }
+    }
 }
 
 public enum Value : sbyte
@@ -61,14 +61,14 @@ public struct MonologueParameters
 {
     [FieldOffset(0)]    public fixed byte /* MonologueIslandParameters[5] */ _islands[1960];
 
-	public MonologueIslandParameters* islands
-	{
-		get
-		{
-			fixed (byte* p_islands = _islands)
-				return (MonologueIslandParameters*)p_islands;
-		}
-	}
+    public MonologueIslandParameters* islands
+    {
+        get
+        {
+            fixed (byte* p_islands = _islands)
+                return (MonologueIslandParameters*)p_islands;
+        }
+    }
 
     [FieldOffset(1960)] public MonologueMultiTextParameters multiText;
     [FieldOffset(2024)] public sbyte firstTheEndNotifyCount;

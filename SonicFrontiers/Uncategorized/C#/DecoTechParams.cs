@@ -92,14 +92,14 @@ public struct DecoTechParam
     [FieldOffset(40)] public int numPasses;
     [FieldOffset(44)] public fixed byte /* DecoPassParam[5] */ _passParams[240];
 
-	public DecoPassParam* passParams
-	{
-		get
-		{
-			fixed (byte* p_passParams = _passParams)
-				return (DecoPassParam*)p_passParams;
-		}
-	}
+    public DecoPassParam* passParams
+    {
+        get
+        {
+            fixed (byte* p_passParams = _passParams)
+                return (DecoPassParam*)p_passParams;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 147456)]
@@ -107,13 +107,13 @@ public struct DecoTechParams
 {
     [FieldOffset(0)] public fixed byte /* DecoTechParam[512] */ __params[147456];
 
-	public DecoTechParam* _params
-	{
-		get
-		{
-			fixed (byte* p__params = __params)
-				return (DecoTechParam*)p__params;
-		}
-	}
+    public DecoTechParam* _params
+    {
+        get
+        {
+            fixed (byte* p__params = __params)
+                return (DecoTechParam*)p__params;
+        }
+    }
 }
 

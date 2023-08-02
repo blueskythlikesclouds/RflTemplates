@@ -83,24 +83,24 @@ public struct EnemySniperConfig
     [FieldOffset(0)]   public EnemySniperCommonConfig commonParams;
     [FieldOffset(88)]  public fixed byte /* EnemySniperLevelConfig[5] */ _levelParams[360];
 
-	public EnemySniperLevelConfig* levelParams
-	{
-		get
-		{
-			fixed (byte* p_levelParams = _levelParams)
-				return (EnemySniperLevelConfig*)p_levelParams;
-		}
-	}
+    public EnemySniperLevelConfig* levelParams
+    {
+        get
+        {
+            fixed (byte* p_levelParams = _levelParams)
+                return (EnemySniperLevelConfig*)p_levelParams;
+        }
+    }
 
     [FieldOffset(448)] public fixed byte /* EnemySniperLevelBandConfig[5] */ _levelBands[40];
 
-	public EnemySniperLevelBandConfig* levelBands
-	{
-		get
-		{
-			fixed (byte* p_levelBands = _levelBands)
-				return (EnemySniperLevelBandConfig*)p_levelBands;
-		}
-	}
+    public EnemySniperLevelBandConfig* levelBands
+    {
+        get
+        {
+            fixed (byte* p_levelBands = _levelBands)
+                return (EnemySniperLevelBandConfig*)p_levelBands;
+        }
+    }
 }
 

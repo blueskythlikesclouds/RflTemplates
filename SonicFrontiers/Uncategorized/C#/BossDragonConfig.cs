@@ -75,14 +75,14 @@ public struct BossStatusConfig
     [FieldOffset(136)] public PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
     [FieldOffset(224)] public fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
 
-	public BossPhaseParam* phaseParams
-	{
-		get
-		{
-			fixed (byte* p_phaseParams = _phaseParams)
-				return (BossPhaseParam*)p_phaseParams;
-		}
-	}
+    public BossPhaseParam* phaseParams
+    {
+        get
+        {
+            fixed (byte* p_phaseParams = _phaseParams)
+                return (BossPhaseParam*)p_phaseParams;
+        }
+    }
 
     [FieldOffset(288)] public BossLockOnCameraParam cameraParam;
     [FieldOffset(400)] public bool isDebugDraw;
@@ -151,14 +151,14 @@ public struct BossPillarConfig
     [FieldOffset(12)]  public float attackIntervalTimeAll;
     [FieldOffset(16)]  public fixed byte /* BossPillarParam[32] */ _pillars[896];
 
-	public BossPillarParam* pillars
-	{
-		get
-		{
-			fixed (byte* p_pillars = _pillars)
-				return (BossPillarParam*)p_pillars;
-		}
-	}
+    public BossPillarParam* pillars
+    {
+        get
+        {
+            fixed (byte* p_pillars = _pillars)
+                return (BossPillarParam*)p_pillars;
+        }
+    }
 
     [FieldOffset(912)] public CString spawnPositionName;
     [FieldOffset(928)] public uint pillarHealthPoint;
@@ -224,14 +224,14 @@ public struct BossColliderStatus
     [FieldOffset(0)]  public ColliderActiveType type;
     [FieldOffset(2)]  public fixed byte /* ColliderProperty[4] */ _propertys[8];
 
-	public ColliderProperty* propertys
-	{
-		get
-		{
-			fixed (byte* p_propertys = _propertys)
-				return (ColliderProperty*)p_propertys;
-		}
-	}
+    public ColliderProperty* propertys
+    {
+        get
+        {
+            fixed (byte* p_propertys = _propertys)
+                return (ColliderProperty*)p_propertys;
+        }
+    }
 
     [FieldOffset(16)] public CString text;
 }
@@ -255,14 +255,14 @@ public struct BossPerceivePartsWithCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
 
-	public BossPerceiveCollisionParam* perceiveCollisions
-	{
-		get
-		{
-			fixed (byte* p_perceiveCollisions = _perceiveCollisions)
-				return (BossPerceiveCollisionParam*)p_perceiveCollisions;
-		}
-	}
+    public BossPerceiveCollisionParam* perceiveCollisions
+    {
+        get
+        {
+            fixed (byte* p_perceiveCollisions = _perceiveCollisions)
+                return (BossPerceiveCollisionParam*)p_perceiveCollisions;
+        }
+    }
 
     [FieldOffset(8192)] public bool isDebugDraw;
 }
@@ -366,14 +366,14 @@ public struct BossMeshFrameConfig
 {
     [FieldOffset(0)]     public fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
 
-	public BossMeshFrameParam* meshShapeKeyFrames
-	{
-		get
-		{
-			fixed (byte* p_meshShapeKeyFrames = _meshShapeKeyFrames)
-				return (BossMeshFrameParam*)p_meshShapeKeyFrames;
-		}
-	}
+    public BossMeshFrameParam* meshShapeKeyFrames
+    {
+        get
+        {
+            fixed (byte* p_meshShapeKeyFrames = _meshShapeKeyFrames)
+                return (BossMeshFrameParam*)p_meshShapeKeyFrames;
+        }
+    }
 
     [FieldOffset(57344)] public bool isDebugDraw;
     [FieldOffset(57345)] public bool isDebugDrawPoint;
@@ -402,14 +402,14 @@ public struct BossAttackCollisionParam
     [FieldOffset(24)] public float damageVelocityRaito;
     [FieldOffset(28)] public fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
 
-	public BossAttackCollisionParam_AttackType* types
-	{
-		get
-		{
-			fixed (byte* p_types = _types)
-				return (BossAttackCollisionParam_AttackType*)p_types;
-		}
-	}
+    public BossAttackCollisionParam_AttackType* types
+    {
+        get
+        {
+            fixed (byte* p_types = _types)
+                return (BossAttackCollisionParam_AttackType*)p_types;
+        }
+    }
 
     [FieldOffset(32)] public BossColliderStatus status;
     [FieldOffset(64)] public float size;
@@ -422,14 +422,14 @@ public struct BossAttackCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
 
-	public BossAttackCollisionParam* attackCollisions
-	{
-		get
-		{
-			fixed (byte* p_attackCollisions = _attackCollisions)
-				return (BossAttackCollisionParam*)p_attackCollisions;
-		}
-	}
+    public BossAttackCollisionParam* attackCollisions
+    {
+        get
+        {
+            fixed (byte* p_attackCollisions = _attackCollisions)
+                return (BossAttackCollisionParam*)p_attackCollisions;
+        }
+    }
 
     [FieldOffset(7168)] public bool isDebugDraw;
 }
@@ -453,14 +453,14 @@ public struct BossBattlePhaseCollisionConfig
 {
     [FieldOffset(0)]    public fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
 
-	public BossBattlePhaseCollisionParam* battleCollisions
-	{
-		get
-		{
-			fixed (byte* p_battleCollisions = _battleCollisions)
-				return (BossBattlePhaseCollisionParam*)p_battleCollisions;
-		}
-	}
+    public BossBattlePhaseCollisionParam* battleCollisions
+    {
+        get
+        {
+            fixed (byte* p_battleCollisions = _battleCollisions)
+                return (BossBattlePhaseCollisionParam*)p_battleCollisions;
+        }
+    }
 
     [FieldOffset(1536)] public bool isDebugDraw;
 }
@@ -500,14 +500,14 @@ public struct BossDragonCollisionParamBase
 [StructLayout(LayoutKind.Explicit, Size = 96)]
 public struct BossDragonHitBoxParam
 {
-    [FieldOffset(0)]  BossDragonCollisionParamBase bossDragonCollisionParamBase;
+    [FieldOffset(0)]  public BossDragonCollisionParamBase bossDragonCollisionParamBase;
     [FieldOffset(80)] public Vector3 damageVelocity;
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 144)]
 public struct BossDragonHurtBoxParam
 {
-    [FieldOffset(0)]   BossDragonCollisionParamBase bossDragonCollisionParamBase;
+    [FieldOffset(0)]   public BossDragonCollisionParamBase bossDragonCollisionParamBase;
     [FieldOffset(80)]  public bool isEnableHoming;
     [FieldOffset(88)]  public CString homingNode;
     [FieldOffset(104)] public CString homingNodeMirror;
@@ -715,14 +715,14 @@ public struct BossDragonRingSupplyParam
     [FieldOffset(24)] public float rotSpeed;
     [FieldOffset(28)] public fixed byte /* BossDragonRingSupplyMissileParam[3] */ _missile[24];
 
-	public BossDragonRingSupplyMissileParam* missile
-	{
-		get
-		{
-			fixed (byte* p_missile = _missile)
-				return (BossDragonRingSupplyMissileParam*)p_missile;
-		}
-	}
+    public BossDragonRingSupplyMissileParam* missile
+    {
+        get
+        {
+            fixed (byte* p_missile = _missile)
+                return (BossDragonRingSupplyMissileParam*)p_missile;
+        }
+    }
 }
 
 public enum BossDragonLayoutParam_EaseType : sbyte
@@ -765,25 +765,25 @@ public struct BossDragonMoveParam
 {
     [FieldOffset(0)]   public fixed byte /* Vector3[8] */ _playerNodes[128];
 
-	public Vector3* playerNodes
-	{
-		get
-		{
-			fixed (byte* p_playerNodes = _playerNodes)
-				return (Vector3*)p_playerNodes;
-		}
-	}
+    public Vector3* playerNodes
+    {
+        get
+        {
+            fixed (byte* p_playerNodes = _playerNodes)
+                return (Vector3*)p_playerNodes;
+        }
+    }
 
     [FieldOffset(128)] public fixed byte /* Vector3[8] */ _bossNodes[128];
 
-	public Vector3* bossNodes
-	{
-		get
-		{
-			fixed (byte* p_bossNodes = _bossNodes)
-				return (Vector3*)p_bossNodes;
-		}
-	}
+    public Vector3* bossNodes
+    {
+        get
+        {
+            fixed (byte* p_bossNodes = _bossNodes)
+                return (Vector3*)p_bossNodes;
+        }
+    }
 
     [FieldOffset(256)] public int playerNodeCount;
     [FieldOffset(260)] public int bossNodeCount;
@@ -848,25 +848,25 @@ public struct BossDragonRoadParam
     [FieldOffset(24)]  public BossDragonEscapeShotParam shot;
     [FieldOffset(52)]  public fixed byte /* BossDragonObstacleParam[64] */ _obstacles[512];
 
-	public BossDragonObstacleParam* obstacles
-	{
-		get
-		{
-			fixed (byte* p_obstacles = _obstacles)
-				return (BossDragonObstacleParam*)p_obstacles;
-		}
-	}
+    public BossDragonObstacleParam* obstacles
+    {
+        get
+        {
+            fixed (byte* p_obstacles = _obstacles)
+                return (BossDragonObstacleParam*)p_obstacles;
+        }
+    }
 
     [FieldOffset(564)] public fixed byte /* BossDragonHoleParam[16] */ _holes[128];
 
-	public BossDragonHoleParam* holes
-	{
-		get
-		{
-			fixed (byte* p_holes = _holes)
-				return (BossDragonHoleParam*)p_holes;
-		}
-	}
+    public BossDragonHoleParam* holes
+    {
+        get
+        {
+            fixed (byte* p_holes = _holes)
+                return (BossDragonHoleParam*)p_holes;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 160)]
@@ -956,36 +956,36 @@ public struct BossDragonMissileParam
     [FieldOffset(20)]  public float lifeTime;
     [FieldOffset(24)]  public fixed byte /* BossDragonMissileIndividualParam[16] */ _individuals[384];
 
-	public BossDragonMissileIndividualParam* individuals
-	{
-		get
-		{
-			fixed (byte* p_individuals = _individuals)
-				return (BossDragonMissileIndividualParam*)p_individuals;
-		}
-	}
+    public BossDragonMissileIndividualParam* individuals
+    {
+        get
+        {
+            fixed (byte* p_individuals = _individuals)
+                return (BossDragonMissileIndividualParam*)p_individuals;
+        }
+    }
 
     [FieldOffset(408)] public fixed byte /* BossDragonMissileIndividualParam[8] */ _badIndividuals[192];
 
-	public BossDragonMissileIndividualParam* badIndividuals
-	{
-		get
-		{
-			fixed (byte* p_badIndividuals = _badIndividuals)
-				return (BossDragonMissileIndividualParam*)p_badIndividuals;
-		}
-	}
+    public BossDragonMissileIndividualParam* badIndividuals
+    {
+        get
+        {
+            fixed (byte* p_badIndividuals = _badIndividuals)
+                return (BossDragonMissileIndividualParam*)p_badIndividuals;
+        }
+    }
 
     [FieldOffset(600)] public fixed byte /* BossDragonMissileFirePattern[8] */ _firePatterns[160];
 
-	public BossDragonMissileFirePattern* firePatterns
-	{
-		get
-		{
-			fixed (byte* p_firePatterns = _firePatterns)
-				return (BossDragonMissileFirePattern*)p_firePatterns;
-		}
-	}
+    public BossDragonMissileFirePattern* firePatterns
+    {
+        get
+        {
+            fixed (byte* p_firePatterns = _firePatterns)
+                return (BossDragonMissileFirePattern*)p_firePatterns;
+        }
+    }
 }
 
 public enum BossDragonSequence : sbyte
@@ -1048,14 +1048,14 @@ public struct BossDragonParryParam
 {
     [FieldOffset(0)] public fixed byte /* BossDragonParrySlowParam[2] */ _slowParams[32];
 
-	public BossDragonParrySlowParam* slowParams
-	{
-		get
-		{
-			fixed (byte* p_slowParams = _slowParams)
-				return (BossDragonParrySlowParam*)p_slowParams;
-		}
-	}
+    public BossDragonParrySlowParam* slowParams
+    {
+        get
+        {
+            fixed (byte* p_slowParams = _slowParams)
+                return (BossDragonParrySlowParam*)p_slowParams;
+        }
+    }
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
@@ -1082,7 +1082,7 @@ public struct BossDragonNotifierParam
 [StructLayout(LayoutKind.Explicit, Size = 95632)]
 public struct BossDragonConfig
 {
-    [FieldOffset(0)]     BossBaseConfig bossBaseConfig;
+    [FieldOffset(0)]     public BossBaseConfig bossBaseConfig;
     [FieldOffset(75712)] public float cruisePathSpeed;
     [FieldOffset(75716)] public float patrolPathSpeed;
     [FieldOffset(75720)] public float approachPathSpeedMin;
@@ -1110,36 +1110,36 @@ public struct BossDragonConfig
     [FieldOffset(75808)] public int qte1Damage;
     [FieldOffset(75816)] public fixed byte /* CString[16] */ _accessNodeNames[4080];
 
-	public CString* accessNodeNames
-	{
-		get
-		{
-			fixed (byte* p_accessNodeNames = _accessNodeNames)
-				return (CString*)p_accessNodeNames;
-		}
-	}
+    public CString* accessNodeNames
+    {
+        get
+        {
+            fixed (byte* p_accessNodeNames = _accessNodeNames)
+                return (CString*)p_accessNodeNames;
+        }
+    }
 
     [FieldOffset(76080)] public fixed byte /* BossDragonHitBoxParam[32] */ _hitBoxes[3072];
 
-	public BossDragonHitBoxParam* hitBoxes
-	{
-		get
-		{
-			fixed (byte* p_hitBoxes = _hitBoxes)
-				return (BossDragonHitBoxParam*)p_hitBoxes;
-		}
-	}
+    public BossDragonHitBoxParam* hitBoxes
+    {
+        get
+        {
+            fixed (byte* p_hitBoxes = _hitBoxes)
+                return (BossDragonHitBoxParam*)p_hitBoxes;
+        }
+    }
 
     [FieldOffset(79152)] public fixed byte /* BossDragonHurtBoxParam[32] */ _hurtBoxes[4608];
 
-	public BossDragonHurtBoxParam* hurtBoxes
-	{
-		get
-		{
-			fixed (byte* p_hurtBoxes = _hurtBoxes)
-				return (BossDragonHurtBoxParam*)p_hurtBoxes;
-		}
-	}
+    public BossDragonHurtBoxParam* hurtBoxes
+    {
+        get
+        {
+            fixed (byte* p_hurtBoxes = _hurtBoxes)
+                return (BossDragonHurtBoxParam*)p_hurtBoxes;
+        }
+    }
 
     [FieldOffset(83760)] public BossDragonScratchParam scratch;
     [FieldOffset(83768)] public BossDragonReflectShotParam reflect;
@@ -1161,25 +1161,25 @@ public struct BossDragonConfig
     [FieldOffset(84432)] public fixed float damageRates[4];
     [FieldOffset(84448)] public fixed byte /* BossDragonLayoutParam[46] */ _layouts[3680];
 
-	public BossDragonLayoutParam* layouts
-	{
-		get
-		{
-			fixed (byte* p_layouts = _layouts)
-				return (BossDragonLayoutParam*)p_layouts;
-		}
-	}
+    public BossDragonLayoutParam* layouts
+    {
+        get
+        {
+            fixed (byte* p_layouts = _layouts)
+                return (BossDragonLayoutParam*)p_layouts;
+        }
+    }
 
     [FieldOffset(88128)] public fixed byte /* BossDragonCameraParam[47] */ _cameras[5264];
 
-	public BossDragonCameraParam* cameras
-	{
-		get
-		{
-			fixed (byte* p_cameras = _cameras)
-				return (BossDragonCameraParam*)p_cameras;
-		}
-	}
+    public BossDragonCameraParam* cameras
+    {
+        get
+        {
+            fixed (byte* p_cameras = _cameras)
+                return (BossDragonCameraParam*)p_cameras;
+        }
+    }
 
     [FieldOffset(93392)] public BossDragonMoveParam swapMove;
     [FieldOffset(93664)] public BossDragonRoadParam road;
@@ -1189,48 +1189,48 @@ public struct BossDragonConfig
     [FieldOffset(94596)] public BossDragonMissileParam missile;
     [FieldOffset(95356)] public fixed byte /* BossDragonSequence[16] */ _seq[16];
 
-	public BossDragonSequence* seq
-	{
-		get
-		{
-			fixed (byte* p_seq = _seq)
-				return (BossDragonSequence*)p_seq;
-		}
-	}
+    public BossDragonSequence* seq
+    {
+        get
+        {
+            fixed (byte* p_seq = _seq)
+                return (BossDragonSequence*)p_seq;
+        }
+    }
 
     [FieldOffset(95372)] public fixed byte /* BossDragonSequence[16] */ _seq2[16];
 
-	public BossDragonSequence* seq2
-	{
-		get
-		{
-			fixed (byte* p_seq2 = _seq2)
-				return (BossDragonSequence*)p_seq2;
-		}
-	}
+    public BossDragonSequence* seq2
+    {
+        get
+        {
+            fixed (byte* p_seq2 = _seq2)
+                return (BossDragonSequence*)p_seq2;
+        }
+    }
 
     [FieldOffset(95388)] public fixed byte /* BossDragonInterruptParam[8] */ _interrupts[64];
 
-	public BossDragonInterruptParam* interrupts
-	{
-		get
-		{
-			fixed (byte* p_interrupts = _interrupts)
-				return (BossDragonInterruptParam*)p_interrupts;
-		}
-	}
+    public BossDragonInterruptParam* interrupts
+    {
+        get
+        {
+            fixed (byte* p_interrupts = _interrupts)
+                return (BossDragonInterruptParam*)p_interrupts;
+        }
+    }
 
     [FieldOffset(95452)] public BossDragonCyloopBindParam cyloopBind;
     [FieldOffset(95468)] public fixed byte /* BossDragonParryParam[4] */ _parry[128];
 
-	public BossDragonParryParam* parry
-	{
-		get
-		{
-			fixed (byte* p_parry = _parry)
-				return (BossDragonParryParam*)p_parry;
-		}
-	}
+    public BossDragonParryParam* parry
+    {
+        get
+        {
+            fixed (byte* p_parry = _parry)
+                return (BossDragonParryParam*)p_parry;
+        }
+    }
 
     [FieldOffset(95596)] public BossDragonAttackSignParam attackSign;
     [FieldOffset(95620)] public BossDragonNotifierParam notifier;

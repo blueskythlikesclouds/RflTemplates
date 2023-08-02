@@ -87,13 +87,13 @@ public struct HeightFieldConfig
 {
     [FieldOffset(0)] public fixed byte /* HeightFieldConfigData[255] */ _data[1275];
 
-	public HeightFieldConfigData* data
-	{
-		get
-		{
-			fixed (byte* p_data = _data)
-				return (HeightFieldConfigData*)p_data;
-		}
-	}
+    public HeightFieldConfigData* data
+    {
+        get
+        {
+            fixed (byte* p_data = _data)
+                return (HeightFieldConfigData*)p_data;
+        }
+    }
 }
 
