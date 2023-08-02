@@ -1,17 +1,20 @@
-using System.Numerics;
-using System.Runtime.InteropServices;
-
-public enum QualityType : sbyte
+Library "FxFXAAParameter"
 {
-    QUALITY_LOW = 0,
-    QUALITY_MEDIUM = 1,
-    QUALITY_HIGH = 2,
-    QUALITY_COUNT = 3
-}
+    using System.Numerics;
+    using System.Runtime.InteropServices;
 
-[StructLayout(LayoutKind.Explicit, Size = 1)]
-public struct FxFXAAParameter
+    public enum QualityType : sbyte
 {
-    [FieldOffset(0)] public QualityType qualityType;
-}
+        QUALITY_LOW = 0,
+        QUALITY_MEDIUM = 1,
+        QUALITY_HIGH = 2,
+        QUALITY_COUNT = 3
+    }
 
+    [StructLayout(LayoutKind.Explicit, Size = 1)]
+    public struct FxFXAAParameter
+    {
+        [FieldOffset(0)] public QualityType qualityType;
+    }
+
+}

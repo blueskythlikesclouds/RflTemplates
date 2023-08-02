@@ -1,9 +1,12 @@
-using System.Numerics;
-using System.Runtime.InteropServices;
-
-[StructLayout(LayoutKind.Explicit, Size = 1)]
-public struct DLCParameter
+Library "DLCParameter"
 {
-    [FieldOffset(0)] public byte dummy;
-}
+    using System.Numerics;
+    using System.Runtime.InteropServices;
 
+    [StructLayout(LayoutKind.Explicit, Size = 1)]
+    public struct DLCParameter
+    {
+        [FieldOffset(0)] public byte dummy;
+    }
+
+}

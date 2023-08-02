@@ -3,54 +3,53 @@ using System.Runtime.InteropServices;
 
 public class EffectRecordBaseTableClass
 {
-
-[StructLayout(LayoutKind.Explicit, Size = 1)]
-public struct Record
-{
-    [FieldOffset(0)] public byte no;
-}
-
-[StructLayout(LayoutKind.Explicit, Size=16)]
-public struct CString
-{
-    [FieldOffset(0)] public long pValue;
-
-    public string Value
+    [StructLayout(LayoutKind.Explicit, Size = 1)]
+    public struct Record
     {
-    	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
-    	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        [FieldOffset(0)] public byte no;
     }
-}
 
-[StructLayout(LayoutKind.Explicit, Size = 88)]
-public struct EffectRecord
-{
-    [FieldOffset(0)] public Record record;
-    [FieldOffset(8)] public unsafe fixed byte /* CString[5] */ _emitterSetName[1275];
-
-    public unsafe CString* emitterSetName
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CString
     {
-        get
+        [FieldOffset(0)] public long pValue;
+
+        public string Value
         {
-            fixed (byte* p_emitterSetName = _emitterSetName)
-                return (CString*)p_emitterSetName;
+        	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
+        	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
         }
     }
-}
 
-[StructLayout(LayoutKind.Explicit, Size = 8800)]
-public struct EffectRecordBaseTable
-{
-    [FieldOffset(0)] public unsafe fixed byte /* EffectRecord[100] */ _data[8800];
-
-    public unsafe EffectRecord* data
+    [StructLayout(LayoutKind.Explicit, Size = 88)]
+    public struct EffectRecord
     {
-        get
+        [FieldOffset(0)] public Record record;
+        [FieldOffset(8)] public unsafe fixed byte /* CString[5] */ _emitterSetName[1275];
+
+        public unsafe CString* emitterSetName
         {
-            fixed (byte* p_data = _data)
-                return (EffectRecord*)p_data;
+            get
+            {
+                fixed (byte* p_emitterSetName = _emitterSetName)
+                    return (CString*)p_emitterSetName;
+            }
         }
     }
-}
 
-} // EffectRecordBaseTableClass
+    [StructLayout(LayoutKind.Explicit, Size = 8800)]
+    public struct EffectRecordBaseTable
+    {
+        [FieldOffset(0)] public unsafe fixed byte /* EffectRecord[100] */ _data[8800];
+
+        public unsafe EffectRecord* data
+        {
+            get
+            {
+                fixed (byte* p_data = _data)
+                    return (EffectRecord*)p_data;
+            }
+        }
+    }
+
+}

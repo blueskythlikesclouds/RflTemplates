@@ -1,39 +1,42 @@
-using System.Numerics;
-using System.Runtime.InteropServices;
-
-[StructLayout(LayoutKind.Explicit, Size = 2)]
-public struct AddDatabaseInfo
+Library "ContentParameter"
 {
-    [FieldOffset(0)] public byte recordNo;
-    [FieldOffset(1)] public byte numRecords;
-}
+    using System.Numerics;
+    using System.Runtime.InteropServices;
 
-[StructLayout(LayoutKind.Explicit, Size=16)]
-public struct CString
-{
-    [FieldOffset(0)] public long pValue;
-
-    public string Value
+    [StructLayout(LayoutKind.Explicit, Size = 2)]
+    public struct AddDatabaseInfo
     {
-    	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
-    	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        [FieldOffset(0)] public byte recordNo;
+        [FieldOffset(1)] public byte numRecords;
     }
-}
 
-[StructLayout(LayoutKind.Explicit, Size = 24)]
-public struct ContentParameter
-{
-    [FieldOffset(0)] public unsafe fixed byte /* AddDatabaseInfo[2] */ _databases[4];
-
-    public unsafe AddDatabaseInfo* databases
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CString
     {
-        get
+        [FieldOffset(0)] public long pValue;
+
+        public string Value
         {
-            fixed (byte* p_databases = _databases)
-                return (AddDatabaseInfo*)p_databases;
+        	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
+        	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
         }
     }
 
-    [FieldOffset(8)] public CString stagedata;
-}
+    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    public struct ContentParameter
+    {
+        [FieldOffset(0)] public unsafe fixed byte /* AddDatabaseInfo[2] */ _databases[4];
 
+        public unsafe AddDatabaseInfo* databases
+        {
+            get
+            {
+                fixed (byte* p_databases = _databases)
+                    return (AddDatabaseInfo*)p_databases;
+            }
+        }
+
+        [FieldOffset(8)] public CString stagedata;
+    }
+
+}

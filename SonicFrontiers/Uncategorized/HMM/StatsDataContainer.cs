@@ -1,25 +1,35 @@
-using System.Numerics;
-using System.Runtime.InteropServices;
-
-public enum StatsType : int
+Library "StatsDataContainer"
 {
-    TYPE_INVALID = 0,
-    TYPE_UINT64 = 1,
-    TYPE_UINT32 = 2,
-    TYPE_SINT32 = 3,
-    TYPE_FLOAT = 4
-}
+    using System.Numerics;
+    using System.Runtime.InteropServices;
 
-[StructLayout(LayoutKind.Explicit, Size = 16)]
-public struct StatsDataValue
+    public enum StatsType : int
 {
-    [FieldOffset(0)] public StatsType type;
-    [FieldOffset(8)] public ulong value;
-}
+        TYPE_INVALID = 0,
+        TYPE_UINT64 = 1,
+        TYPE_UINT32 = 2,
+        TYPE_SINT32 = 3,
+        TYPE_FLOAT = 4
+    }
 
-[StructLayout(LayoutKind.Explicit, Size = 32)]
-public struct StatsDataContainer
-{
-    [FieldOffset(0)] public StatsDataValue data;
-}
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct StatsDataValue
+    {
+        [FieldOffset(0)] public StatsType type;
+        [FieldOffset(8)] public ulong value;
+    }
 
+    [StructLayout(LayoutKind.Explicit, Size = 32)]
+    public struct StatsDataValueArray
+    {
+        [FieldOffset(0)] public ulong pData;
+        [FieldOffset(8)] public ulong Size;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 32)]
+    public struct StatsDataContainer
+    {
+        [FieldOffset(0)] public StatsDataValueArray data;
+    }
+
+}

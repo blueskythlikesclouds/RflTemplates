@@ -1,16 +1,19 @@
-using System.Numerics;
-using System.Runtime.InteropServices;
-
-public enum SeedType : byte
+Library "SeedParameter"
 {
-    SeedSensor = 0,
-    ObjItem = 1
-}
+    using System.Numerics;
+    using System.Runtime.InteropServices;
 
-[StructLayout(LayoutKind.Explicit, Size = 8)]
-public struct SeedParameter
+    public enum SeedType : byte
 {
-    [FieldOffset(0)] public float suckedTime;
-    [FieldOffset(4)] public SeedType seedType;
-}
+        SeedSensor = 0,
+        ObjItem = 1
+    }
 
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct SeedParameter
+    {
+        [FieldOffset(0)] public float suckedTime;
+        [FieldOffset(4)] public SeedType seedType;
+    }
+
+}

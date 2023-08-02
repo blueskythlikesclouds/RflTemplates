@@ -1,9 +1,12 @@
-using System.Numerics;
-using System.Runtime.InteropServices;
-
-[StructLayout(LayoutKind.Explicit, Size = 4)]
-public struct BossStatusParameterBase
+Library "BossStatusParameterBase"
 {
-    [FieldOffset(0)] public int maxHp;
-}
+    using System.Numerics;
+    using System.Runtime.InteropServices;
 
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct BossStatusParameterBase
+    {
+        [FieldOffset(0)] public int maxHp;
+    }
+
+}

@@ -3,24 +3,30 @@ using System.Runtime.InteropServices;
 
 public class BakeCameraParameterClass
 {
-
-[StructLayout(LayoutKind.Explicit, Size=16)]
-public struct CString
-{
-    [FieldOffset(0)] public long pValue;
-
-    public string Value
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CString
     {
-    	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
-    	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        [FieldOffset(0)] public long pValue;
+
+        public string Value
+        {
+        	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
+        	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        }
     }
-}
 
-[StructLayout(LayoutKind.Explicit, Size = 48)]
-public struct BakeCameraParameter
-{
-    [FieldOffset(0)]  public CString name;
-    [FieldOffset(16)] public BakeCameraParameter data;
-}
+    [StructLayout(LayoutKind.Explicit, Size = 32)]
+    public struct BakeCameraParameterArray
+    {
+        [FieldOffset(0)] public ulong pData;
+        [FieldOffset(8)] public ulong Size;
+    }
 
-} // BakeCameraParameterClass
+    [StructLayout(LayoutKind.Explicit, Size = 48)]
+    public struct BakeCameraParameter
+    {
+        [FieldOffset(0)]  public CString name;
+        [FieldOffset(16)] public BakeCameraParameterArray data;
+    }
+
+}

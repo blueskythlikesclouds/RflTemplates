@@ -1,17 +1,20 @@
-using System.Numerics;
-using System.Runtime.InteropServices;
-
-public enum LaserType : sbyte
+Library "BossRifleThresholdRingSupplyParam"
 {
-    LT_NONE = 0,
-    LT_STRAIGHT = 1,
-    LT_HOMING = 2
-}
+    using System.Numerics;
+    using System.Runtime.InteropServices;
 
-[StructLayout(LayoutKind.Explicit, Size = 8)]
-public struct BossRifleThresholdRingSupplyParam
+    public enum LaserType : sbyte
 {
-    [FieldOffset(0)] public float hpRatio;
-    [FieldOffset(4)] public LaserType type;
-}
+        LT_NONE = 0,
+        LT_STRAIGHT = 1,
+        LT_HOMING = 2
+    }
 
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct BossRifleThresholdRingSupplyParam
+    {
+        [FieldOffset(0)] public float hpRatio;
+        [FieldOffset(4)] public LaserType type;
+    }
+
+}
