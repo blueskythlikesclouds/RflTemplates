@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxHeightMapParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct FxHeightMapParameter
 {
@@ -18,3 +21,4 @@ public struct FxHeightMapParameter
     [FieldOffset(96)] public Matrix4x4 projMatrix;
 }
 
+} // FxHeightMapParameterClass

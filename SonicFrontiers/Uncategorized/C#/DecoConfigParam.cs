@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class DecoConfigParamClass
+{
+
 public struct Color8
 {
     public byte A;
@@ -18,3 +21,4 @@ public struct DecoConfigParam
     [FieldOffset(12)] public Color8 endGradationGuideColor;
 }
 
+} // DecoConfigParamClass

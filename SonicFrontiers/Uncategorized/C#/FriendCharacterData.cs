@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FriendCharacterDataClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct FriendCharacterData
 {
@@ -18,3 +21,4 @@ public struct FriendCharacterData
     [FieldOffset(28)] public uint reserved3;
 }
 
+} // FriendCharacterDataClass

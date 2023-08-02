@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxFXAAParameterClass
+{
+
 public enum QualityType : sbyte
 {
     QUALITY_LOW = 0,
@@ -15,3 +18,4 @@ public struct FxFXAAParameter
     [FieldOffset(0)] public QualityType qualityType;
 }
 
+} // FxFXAAParameterClass

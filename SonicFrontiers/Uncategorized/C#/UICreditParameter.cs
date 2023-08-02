@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class UICreditParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct UICreditParameter
 {
@@ -12,3 +15,4 @@ public struct UICreditParameter
     [FieldOffset(20)] public float WaitTime;
 }
 
+} // UICreditParameterClass

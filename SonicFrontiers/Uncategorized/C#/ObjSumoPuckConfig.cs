@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjSumoPuckConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 56)]
 public struct ObjSumoPuckConfig
 {
@@ -20,3 +23,4 @@ public struct ObjSumoPuckConfig
     [FieldOffset(52)] public float decelerationParried;
 }
 
+} // ObjSumoPuckConfigClass

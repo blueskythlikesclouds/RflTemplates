@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class CaptionParameterClass
+{
+
 public enum DisplayType : sbyte
 {
     Caption = 0,
@@ -30,9 +33,9 @@ public struct LabelData
 [StructLayout(LayoutKind.Explicit, Size = 648)]
 public struct Discussion
 {
-    [FieldOffset(0)]   public fixed byte /* LabelData[20] */ _labels[640];
+    [FieldOffset(0)]   public unsafe fixed byte /* LabelData[20] */ _labels[640];
 
-    public LabelData* labels
+    public unsafe LabelData* labels
     {
         get
         {
@@ -47,9 +50,9 @@ public struct Discussion
 [StructLayout(LayoutKind.Explicit, Size = 6480)]
 public struct CaptionParameter
 {
-    [FieldOffset(0)] public fixed byte /* Discussion[10] */ _discussions[6480];
+    [FieldOffset(0)] public unsafe fixed byte /* Discussion[10] */ _discussions[6480];
 
-    public Discussion* discussions
+    public unsafe Discussion* discussions
     {
         get
         {
@@ -59,3 +62,4 @@ public struct CaptionParameter
     }
 }
 
+} // CaptionParameterClass

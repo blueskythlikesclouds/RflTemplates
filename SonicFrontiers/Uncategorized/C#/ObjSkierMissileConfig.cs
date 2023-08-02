@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjSkierMissileConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct ObjSkierMissileConfig
 {
@@ -13,3 +16,4 @@ public struct ObjSkierMissileConfig
     [FieldOffset(44)] public float inducedExplosionTimePerDistance;
 }
 
+} // ObjSkierMissileConfigClass

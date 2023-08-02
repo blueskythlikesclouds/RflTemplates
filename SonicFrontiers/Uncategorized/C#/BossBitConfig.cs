@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BossBitConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct LargeBitLaserParameter
 {
@@ -129,9 +132,9 @@ public struct BossBitConfig
 {
     [FieldOffset(0)]    public LargeBitLaserParameter largeBitLaserParam;
     [FieldOffset(8)]    public SmallBitLaserBulletParameter smallBitLaserParam;
-    [FieldOffset(56)]   public fixed byte /* SmallBitSetPatternParameter[64] */ _smallBitPatternDatas[7680];
+    [FieldOffset(56)]   public unsafe fixed byte /* SmallBitSetPatternParameter[64] */ _smallBitPatternDatas[7680];
 
-    public SmallBitSetPatternParameter* smallBitPatternDatas
+    public unsafe SmallBitSetPatternParameter* smallBitPatternDatas
     {
         get
         {
@@ -143,3 +146,4 @@ public struct BossBitConfig
     [FieldOffset(7736)] public SmallBitFormationParameter smallBitFormation;
 }
 
+} // BossBitConfigClass

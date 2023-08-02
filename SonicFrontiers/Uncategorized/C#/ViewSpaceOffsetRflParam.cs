@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ViewSpaceOffsetRflParamClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct ViewSpaceOffsetRflParam
 {
@@ -8,3 +11,4 @@ public struct ViewSpaceOffsetRflParam
     [FieldOffset(16)] public Vector3 eyeOffset;
 }
 
+} // ViewSpaceOffsetRflParamClass

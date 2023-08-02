@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ChallengeDataClass
+{
+
 public enum Status : sbyte
 {
     STATUS_ZERO_FILL = 0,
@@ -52,7 +55,7 @@ public struct HeaderData
     [FieldOffset(15)] public byte reserved1;
     [FieldOffset(16)] public uint saveDate;
     [FieldOffset(20)] public byte index;
-    [FieldOffset(24)] public fixed uint reserved[4];
+    [FieldOffset(24)] public unsafe fixed uint reserved[4];
 }
 
 public enum Value : sbyte
@@ -70,15 +73,15 @@ public struct CyberStageData
 {
     [FieldOffset(0)] public ushort flags;
     [FieldOffset(4)] public uint bestTime;
-    [FieldOffset(8)] public fixed uint reserved[4];
+    [FieldOffset(8)] public unsafe fixed uint reserved[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 768)]
 public struct CyberStageContainerData
 {
-    [FieldOffset(0)] public fixed byte /* CyberStageData[32] */ _actStages[768];
+    [FieldOffset(0)] public unsafe fixed byte /* CyberStageData[32] */ _actStages[768];
 
-    public CyberStageData* actStages
+    public unsafe CyberStageData* actStages
     {
         get
         {
@@ -95,15 +98,15 @@ public struct ChallengeCyberStageData
     [FieldOffset(4)]   public uint totalBestTime;
     [FieldOffset(8)]   public Value totalBestRank;
     [FieldOffset(12)]  public CyberStageContainerData stages;
-    [FieldOffset(780)] public fixed int stageNos[32];
+    [FieldOffset(780)] public unsafe fixed int stageNos[32];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 4540)]
 public struct ChallengeCyberStageContainerData
 {
-    [FieldOffset(0)] public fixed byte /* ChallengeCyberStageData[5] */ _stages[4540];
+    [FieldOffset(0)] public unsafe fixed byte /* ChallengeCyberStageData[5] */ _stages[4540];
 
-    public ChallengeCyberStageData* stages
+    public unsafe ChallengeCyberStageData* stages
     {
         get
         {
@@ -127,9 +130,9 @@ public struct ChallengeBattleRushScoreData
 public struct ChallengeBattleRushData
 {
     [FieldOffset(0)] public uint status;
-    [FieldOffset(4)] public fixed byte /* ChallengeBattleRushScoreData[16] */ _scores[320];
+    [FieldOffset(4)] public unsafe fixed byte /* ChallengeBattleRushScoreData[16] */ _scores[320];
 
-    public ChallengeBattleRushScoreData* scores
+    public unsafe ChallengeBattleRushScoreData* scores
     {
         get
         {
@@ -142,9 +145,9 @@ public struct ChallengeBattleRushData
 [StructLayout(LayoutKind.Explicit, Size = 1296)]
 public struct ChallengeBattleRushContainerData
 {
-    [FieldOffset(0)] public fixed byte /* ChallengeBattleRushData[4] */ _stages[1296];
+    [FieldOffset(0)] public unsafe fixed byte /* ChallengeBattleRushData[4] */ _stages[1296];
 
-    public ChallengeBattleRushData* stages
+    public unsafe ChallengeBattleRushData* stages
     {
         get
         {
@@ -168,3 +171,4 @@ public struct ChallengeData
     [FieldOffset(7188)] public uint reserved3;
 }
 
+} // ChallengeDataClass

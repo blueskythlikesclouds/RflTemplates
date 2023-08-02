@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class PhotoModeParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct PhotoModeCameraParameters
 {
@@ -45,3 +48,4 @@ public struct PhotoModeParameters
     [FieldOffset(48)] public PhotoModeFilterParameters filter;
 }
 
+} // PhotoModeParametersClass

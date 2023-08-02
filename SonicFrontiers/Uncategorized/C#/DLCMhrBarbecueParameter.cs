@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class DLCMhrBarbecueParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 16)]
 public struct DLCMhrBarbecueTokenParam
 {
@@ -22,9 +25,9 @@ public struct DLCMhrBarbecueParameter
     [FieldOffset(24)] public float missTime;
     [FieldOffset(28)] public float resultUIDelaySuccess;
     [FieldOffset(32)] public float resultUIDelayFaild;
-    [FieldOffset(36)] public fixed byte /* DLCMhrBarbecueTokenParam[4] */ _tokenParam[64];
+    [FieldOffset(36)] public unsafe fixed byte /* DLCMhrBarbecueTokenParam[4] */ _tokenParam[64];
 
-    public DLCMhrBarbecueTokenParam* tokenParam
+    public unsafe DLCMhrBarbecueTokenParam* tokenParam
     {
         get
         {
@@ -34,3 +37,4 @@ public struct DLCMhrBarbecueParameter
     }
 }
 
+} // DLCMhrBarbecueParameterClass

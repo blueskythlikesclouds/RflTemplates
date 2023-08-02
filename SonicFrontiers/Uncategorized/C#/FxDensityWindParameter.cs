@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxDensityWindParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct FxDensityWindParameter
 {
@@ -14,3 +17,4 @@ public struct FxDensityWindParameter
     [FieldOffset(28)] public float windRtpower;
 }
 
+} // FxDensityWindParameterClass

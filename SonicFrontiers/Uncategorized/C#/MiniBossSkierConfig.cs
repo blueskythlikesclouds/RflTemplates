@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossSkierConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -113,10 +116,10 @@ public struct MiniBossSkierCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -211,9 +214,9 @@ public struct MiniBossSkierTailAttackPylonParam
 public struct MiniBossSkierLevelBand
 {
     [FieldOffset(0)]   public int level;
-    [FieldOffset(4)]   public fixed byte /* MiniBossSkierBattlePhaseParam[3] */ _phaseParam[96];
+    [FieldOffset(4)]   public unsafe fixed byte /* MiniBossSkierBattlePhaseParam[3] */ _phaseParam[96];
 
-    public MiniBossSkierBattlePhaseParam* phaseParam
+    public unsafe MiniBossSkierBattlePhaseParam* phaseParam
     {
         get
         {
@@ -233,9 +236,9 @@ public struct MiniBossSkierLevelBand
 public struct MiniBossSkierConfig
 {
     [FieldOffset(0)]   public MiniBossSkierCommonParam commonParam;
-    [FieldOffset(320)] public fixed byte /* MiniBossSkierLevelParam[5] */ _levelParams[280];
+    [FieldOffset(320)] public unsafe fixed byte /* MiniBossSkierLevelParam[5] */ _levelParams[280];
 
-    public MiniBossSkierLevelParam* levelParams
+    public unsafe MiniBossSkierLevelParam* levelParams
     {
         get
         {
@@ -244,9 +247,9 @@ public struct MiniBossSkierConfig
         }
     }
 
-    [FieldOffset(600)] public fixed byte /* MiniBossSkierLevelBand[5] */ _levelBand[1140];
+    [FieldOffset(600)] public unsafe fixed byte /* MiniBossSkierLevelBand[5] */ _levelBand[1140];
 
-    public MiniBossSkierLevelBand* levelBand
+    public unsafe MiniBossSkierLevelBand* levelBand
     {
         get
         {
@@ -256,3 +259,4 @@ public struct MiniBossSkierConfig
     }
 }
 
+} // MiniBossSkierConfigClass

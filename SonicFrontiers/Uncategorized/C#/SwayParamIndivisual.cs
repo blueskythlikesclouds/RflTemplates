@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class SwayParamIndivisualClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -50,9 +53,9 @@ public struct SwayParamCollision
 [StructLayout(LayoutKind.Explicit, Size = 768)]
 public struct SwayParamNodeCollision
 {
-    [FieldOffset(0)] public fixed byte /* SwayParamCollision[8] */ _collisionParam[768];
+    [FieldOffset(0)] public unsafe fixed byte /* SwayParamCollision[8] */ _collisionParam[768];
 
-    public SwayParamCollision* collisionParam
+    public unsafe SwayParamCollision* collisionParam
     {
         get
         {
@@ -66,9 +69,9 @@ public struct SwayParamNodeCollision
 public struct SwayParamIndivisual
 {
     [FieldOffset(0)]    public CString idName;
-    [FieldOffset(16)]   public fixed byte /* SwayParamNode[16] */ _nodeParam[1024];
+    [FieldOffset(16)]   public unsafe fixed byte /* SwayParamNode[16] */ _nodeParam[1024];
 
-    public SwayParamNode* nodeParam
+    public unsafe SwayParamNode* nodeParam
     {
         get
         {
@@ -77,9 +80,9 @@ public struct SwayParamIndivisual
         }
     }
 
-    [FieldOffset(1040)] public fixed byte /* SwayParamNodeCollision[16] */ _collisionParam[12288];
+    [FieldOffset(1040)] public unsafe fixed byte /* SwayParamNodeCollision[16] */ _collisionParam[12288];
 
-    public SwayParamNodeCollision* collisionParam
+    public unsafe SwayParamNodeCollision* collisionParam
     {
         get
         {
@@ -89,3 +92,4 @@ public struct SwayParamIndivisual
     }
 }
 
+} // SwayParamIndivisualClass

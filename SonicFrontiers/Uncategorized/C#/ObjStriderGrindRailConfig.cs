@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjStriderGrindRailConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct ObjStriderGrindRailConfig
 {
@@ -26,3 +29,4 @@ public struct ObjStriderGrindRailConfig
     [FieldOffset(76)] public float timeToMaxEffectScale;
 }
 
+} // ObjStriderGrindRailConfigClass

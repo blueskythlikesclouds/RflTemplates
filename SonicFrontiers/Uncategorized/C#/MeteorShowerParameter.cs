@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MeteorShowerParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 96)]
 public struct MeteorShowerEffectParameter
 {
@@ -38,9 +41,9 @@ public enum Symbol : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct ReelParam
 {
-    [FieldOffset(0)]  public fixed byte /* Symbol[16] */ _symbols[16];
+    [FieldOffset(0)]  public unsafe fixed byte /* Symbol[16] */ _symbols[16];
 
-    public Symbol* symbols
+    public unsafe Symbol* symbols
     {
         get
         {
@@ -68,9 +71,9 @@ public enum RateInfo_Symbol : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct RateInfo
 {
-    [FieldOffset(0)] public fixed byte /* RateInfo_Symbol[3] */ _symbols[3];
+    [FieldOffset(0)] public unsafe fixed byte /* RateInfo_Symbol[3] */ _symbols[3];
 
-    public RateInfo_Symbol* symbols
+    public unsafe RateInfo_Symbol* symbols
     {
         get
         {
@@ -95,9 +98,9 @@ public enum CeilingInfo_Symbol : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct CeilingInfo
 {
-    [FieldOffset(0)] public fixed byte /* CeilingInfo_Symbol[3] */ _symbols[3];
+    [FieldOffset(0)] public unsafe fixed byte /* CeilingInfo_Symbol[3] */ _symbols[3];
 
-    public CeilingInfo_Symbol* symbols
+    public unsafe CeilingInfo_Symbol* symbols
     {
         get
         {
@@ -122,9 +125,9 @@ public enum PayoutInfo_Symbol : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct PayoutInfo
 {
-    [FieldOffset(0)] public fixed byte /* PayoutInfo_Symbol[3] */ _symbols[3];
+    [FieldOffset(0)] public unsafe fixed byte /* PayoutInfo_Symbol[3] */ _symbols[3];
 
-    public PayoutInfo_Symbol* symbols
+    public unsafe PayoutInfo_Symbol* symbols
     {
         get
         {
@@ -139,9 +142,9 @@ public struct PayoutInfo
 [StructLayout(LayoutKind.Explicit, Size = 216)]
 public struct ObjBonusSlotConfig
 {
-    [FieldOffset(0)]   public fixed byte /* ReelParam[3] */ _reelParams[96];
+    [FieldOffset(0)]   public unsafe fixed byte /* ReelParam[3] */ _reelParams[96];
 
-    public ReelParam* reelParams
+    public unsafe ReelParam* reelParams
     {
         get
         {
@@ -151,9 +154,9 @@ public struct ObjBonusSlotConfig
     }
 
     [FieldOffset(96)]  public float spinInterval;
-    [FieldOffset(100)] public fixed byte /* RateInfo[4] */ _rateInfos[32];
+    [FieldOffset(100)] public unsafe fixed byte /* RateInfo[4] */ _rateInfos[32];
 
-    public RateInfo* rateInfos
+    public unsafe RateInfo* rateInfos
     {
         get
         {
@@ -162,9 +165,9 @@ public struct ObjBonusSlotConfig
         }
     }
 
-    [FieldOffset(132)] public fixed byte /* CeilingInfo[4] */ _ceilingInfos[32];
+    [FieldOffset(132)] public unsafe fixed byte /* CeilingInfo[4] */ _ceilingInfos[32];
 
-    public CeilingInfo* ceilingInfos
+    public unsafe CeilingInfo* ceilingInfos
     {
         get
         {
@@ -173,9 +176,9 @@ public struct ObjBonusSlotConfig
         }
     }
 
-    [FieldOffset(164)] public fixed byte /* PayoutInfo[4] */ _payoutInfos[32];
+    [FieldOffset(164)] public unsafe fixed byte /* PayoutInfo[4] */ _payoutInfos[32];
 
-    public PayoutInfo* payoutInfos
+    public unsafe PayoutInfo* payoutInfos
     {
         get
         {
@@ -204,3 +207,4 @@ public struct MeteorShowerParameter
     [FieldOffset(128)] public ObjBonusSlotConfig bonusSlotConfig;
 }
 
+} // MeteorShowerParameterClass

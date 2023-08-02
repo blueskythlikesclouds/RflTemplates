@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxCloudShadowParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct FxCloudShadowParameter
 {
@@ -9,3 +12,4 @@ public struct FxCloudShadowParameter
     [FieldOffset(8)] public float shadowValueMin;
 }
 
+} // FxCloudShadowParameterClass

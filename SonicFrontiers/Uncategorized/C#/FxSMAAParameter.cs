@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxSMAAParameterClass
+{
+
 public enum Preset : sbyte
 {
     PRESET_SPEED = 0,
@@ -21,3 +24,4 @@ public struct FxSMAAParameter
     [FieldOffset(1)] public TestMode testMode;
 }
 
+} // FxSMAAParameterClass

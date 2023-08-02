@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyWolfConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct RingParameter
 {
@@ -86,9 +89,9 @@ public struct EnemyWolfCommonParam
     [FieldOffset(68)] public float damageColliderHeight;
     [FieldOffset(72)] public float eyesightDistance;
     [FieldOffset(80)] public Vector3 cursorOffset;
-    [FieldOffset(96)] public fixed byte /* WolfMappingPairInfo[32] */ _mappingPairInfo[3584];
+    [FieldOffset(96)] public unsafe fixed byte /* WolfMappingPairInfo[32] */ _mappingPairInfo[3584];
 
-    public WolfMappingPairInfo* mappingPairInfo
+    public unsafe WolfMappingPairInfo* mappingPairInfo
     {
         get
         {
@@ -124,9 +127,9 @@ public struct EnemyWolfLevelBand
 public struct EnemyWolfConfig
 {
     [FieldOffset(0)]    public EnemyWolfCommonParam commonParam;
-    [FieldOffset(3680)] public fixed byte /* EnemyWolfLevelParam[5] */ _levelParams[80];
+    [FieldOffset(3680)] public unsafe fixed byte /* EnemyWolfLevelParam[5] */ _levelParams[80];
 
-    public EnemyWolfLevelParam* levelParams
+    public unsafe EnemyWolfLevelParam* levelParams
     {
         get
         {
@@ -135,9 +138,9 @@ public struct EnemyWolfConfig
         }
     }
 
-    [FieldOffset(3760)] public fixed byte /* EnemyWolfLevelBand[5] */ _levelBand[20];
+    [FieldOffset(3760)] public unsafe fixed byte /* EnemyWolfLevelBand[5] */ _levelBand[20];
 
-    public EnemyWolfLevelBand* levelBand
+    public unsafe EnemyWolfLevelBand* levelBand
     {
         get
         {
@@ -147,3 +150,4 @@ public struct EnemyWolfConfig
     }
 }
 
+} // EnemyWolfConfigClass

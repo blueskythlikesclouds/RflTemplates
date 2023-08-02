@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class OcclusionCapsuleListClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -43,9 +46,9 @@ public struct CapsuleParam
 [StructLayout(LayoutKind.Explicit, Size = 7168)]
 public struct OcclusionCapsuleList
 {
-    [FieldOffset(0)] public fixed byte /* CapsuleParam[64] */ _capsules[7168];
+    [FieldOffset(0)] public unsafe fixed byte /* CapsuleParam[64] */ _capsules[7168];
 
-    public CapsuleParam* capsules
+    public unsafe CapsuleParam* capsules
     {
         get
         {
@@ -55,3 +58,4 @@ public struct OcclusionCapsuleList
     }
 }
 
+} // OcclusionCapsuleListClass

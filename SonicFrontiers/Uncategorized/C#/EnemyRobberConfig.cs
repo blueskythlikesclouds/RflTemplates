@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyRobberConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct RingParameter
 {
@@ -47,9 +50,9 @@ public struct EnemyRobberLevelConfig
 public struct EnemyRobberConfig
 {
     [FieldOffset(0)]  public EnemyRobberCommonConfig commonParams;
-    [FieldOffset(60)] public fixed byte /* EnemyRobberLevelConfig[5] */ _levelParams[80];
+    [FieldOffset(60)] public unsafe fixed byte /* EnemyRobberLevelConfig[5] */ _levelParams[80];
 
-    public EnemyRobberLevelConfig* levelParams
+    public unsafe EnemyRobberLevelConfig* levelParams
     {
         get
         {
@@ -59,3 +62,4 @@ public struct EnemyRobberConfig
     }
 }
 
+} // EnemyRobberConfigClass

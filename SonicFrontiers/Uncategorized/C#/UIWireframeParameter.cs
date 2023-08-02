@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class UIWireframeParameterClass
+{
+
 public enum RenderTargetSize : int
 {
     RTSIZE_FULL_SCALE = 0,
@@ -48,3 +51,4 @@ public struct UIWireframeParameter
     [FieldOffset(32)] public FxDOFParameter dofparam;
 }
 
+} // UIWireframeParameterClass

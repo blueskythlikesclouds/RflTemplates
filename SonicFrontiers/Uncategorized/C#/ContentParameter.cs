@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ContentParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 2)]
 public struct AddDatabaseInfo
 {
@@ -23,9 +26,9 @@ public struct CString
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct ContentParameter
 {
-    [FieldOffset(0)] public fixed byte /* AddDatabaseInfo[2] */ _databases[4];
+    [FieldOffset(0)] public unsafe fixed byte /* AddDatabaseInfo[2] */ _databases[4];
 
-    public AddDatabaseInfo* databases
+    public unsafe AddDatabaseInfo* databases
     {
         get
         {
@@ -37,3 +40,4 @@ public struct ContentParameter
     [FieldOffset(8)] public CString stagedata;
 }
 
+} // ContentParameterClass

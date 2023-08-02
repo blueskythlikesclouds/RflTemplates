@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BakeCameraParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -20,3 +23,4 @@ public struct BakeCameraParameter
     [FieldOffset(16)] public BakeCameraParameter data;
 }
 
+} // BakeCameraParameterClass

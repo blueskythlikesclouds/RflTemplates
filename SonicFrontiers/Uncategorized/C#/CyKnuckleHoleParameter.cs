@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class CyKnuckleHoleParameterClass
+{
+
 public enum EasingType : byte
 {
     LINEAR_EASEIN = 0,
@@ -59,3 +62,4 @@ public struct CyKnuckleHoleParameter
     [FieldOffset(48)] public CyKnuckleHoleTransitionParameter openToOpenSmall;
 }
 
+} // CyKnuckleHoleParameterClass

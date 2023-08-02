@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class SequenceParameterClass
+{
+
 public enum SequenceType : byte
 {
     SequenceSensor = 0,
@@ -14,3 +17,4 @@ public struct SequenceParameter
     [FieldOffset(4)] public SequenceType sequenceType;
 }
 
+} // SequenceParameterClass

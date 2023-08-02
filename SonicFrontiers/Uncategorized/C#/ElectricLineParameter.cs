@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ElectricLineParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct ElectricLineConnectData
 {
@@ -13,9 +16,9 @@ public struct ElectricLineConnectParameter
 {
     [FieldOffset(0)] public int challengeNo0;
     [FieldOffset(4)] public int challengeNo1;
-    [FieldOffset(8)] public fixed byte /* ElectricLineConnectData[3] */ _data[24];
+    [FieldOffset(8)] public unsafe fixed byte /* ElectricLineConnectData[3] */ _data[24];
 
-    public ElectricLineConnectData* data
+    public unsafe ElectricLineConnectData* data
     {
         get
         {
@@ -28,9 +31,9 @@ public struct ElectricLineConnectParameter
 [StructLayout(LayoutKind.Explicit, Size = 6400)]
 public struct ElectricLineParameter
 {
-    [FieldOffset(0)] public fixed byte /* ElectricLineConnectParameter[200] */ _connect[6400];
+    [FieldOffset(0)] public unsafe fixed byte /* ElectricLineConnectParameter[200] */ _connect[6400];
 
-    public ElectricLineConnectParameter* connect
+    public unsafe ElectricLineConnectParameter* connect
     {
         get
         {
@@ -40,3 +43,4 @@ public struct ElectricLineParameter
     }
 }
 
+} // ElectricLineParameterClass

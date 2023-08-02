@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class NeedleFxSceneDataClass
+{
+
 public enum DOFRenderTargetSize : int
 {
     DOF_RTSIZE_FULL_SCALE = 0,
@@ -53,7 +56,7 @@ public struct StageCommonAtmosphereParameter
 public struct FxLODParameter
 {
     [FieldOffset(0)] public bool enableDebugDrawLayerRange;
-    [FieldOffset(4)] public fixed float layerRange[32];
+    [FieldOffset(4)] public unsafe fixed float layerRange[32];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 8)]
@@ -118,9 +121,9 @@ public struct StageCommonTimeProgressParameter
     [FieldOffset(24)]  public int day;
     [FieldOffset(28)]  public float time;
     [FieldOffset(32)]  public float hourlyTime;
-    [FieldOffset(36)]  public fixed byte /* ProgressTimePairData[8] */ _overrideSpeeds[64];
+    [FieldOffset(36)]  public unsafe fixed byte /* ProgressTimePairData[8] */ _overrideSpeeds[64];
 
-    public ProgressTimePairData* overrideSpeeds
+    public unsafe ProgressTimePairData* overrideSpeeds
     {
         get
         {
@@ -387,9 +390,9 @@ public struct FxRenderOption
     [FieldOffset(52)]  public AmbientSpecularType debugAmbientSpecularType;
     [FieldOffset(53)]  public bool debugEnableSGGIVer2nd;
     [FieldOffset(54)]  public bool debugEnableAOGI;
-    [FieldOffset(56)]  public fixed byte /* DebugScreenOption[16] */ _debugScreen[384];
+    [FieldOffset(56)]  public unsafe fixed byte /* DebugScreenOption[16] */ _debugScreen[384];
 
-    public DebugScreenOption* debugScreen
+    public unsafe DebugScreenOption* debugScreen
     {
         get
         {
@@ -405,9 +408,9 @@ public struct FxRenderOption
     [FieldOffset(444)] public int debugDrawFrustumCullGroupSettingIndex;
     [FieldOffset(448)] public bool debugEnableOcclusionCullingView;
     [FieldOffset(452)] public int debugOccluderVertThreshold;
-    [FieldOffset(464)] public fixed byte /* GlobalUserParamOption[4] */ _globalUserParam[128];
+    [FieldOffset(464)] public unsafe fixed byte /* GlobalUserParamOption[4] */ _globalUserParam[128];
 
-    public GlobalUserParamOption* globalUserParam
+    public unsafe GlobalUserParamOption* globalUserParam
     {
         get
         {
@@ -592,7 +595,7 @@ public struct FxColorContrastParameter
     [FieldOffset(44)] public float hlsHueOffset;
     [FieldOffset(48)] public float hlsLightnessOffset;
     [FieldOffset(52)] public float hlsSaturationOffset;
-    [FieldOffset(56)] public fixed int hlsColorOffset[3];
+    [FieldOffset(56)] public unsafe fixed int hlsColorOffset[3];
     [FieldOffset(68)] public float hlsColorizeRate;
     [FieldOffset(72)] public float hlsColorizeHue;
 }
@@ -714,13 +717,13 @@ public struct FxShadowMapParameter
     [FieldOffset(5)]   public FitNearFar fitNearFar;
     [FieldOffset(6)]   public PartitionType partitionType;
     [FieldOffset(8)]   public float sceneRange;
-    [FieldOffset(12)]  public fixed float sceneCenter[3];
-    [FieldOffset(24)]  public fixed float manualLightPos[3];
+    [FieldOffset(12)]  public unsafe fixed float sceneCenter[3];
+    [FieldOffset(24)]  public unsafe fixed float manualLightPos[3];
     [FieldOffset(36)]  public float pssmLambda;
     [FieldOffset(40)]  public float cascadeOffset;
     [FieldOffset(44)]  public int cascadeLevel;
-    [FieldOffset(48)]  public fixed float cascadeSplits[4];
-    [FieldOffset(64)]  public fixed float cascadeBias[4];
+    [FieldOffset(48)]  public unsafe fixed float cascadeSplits[4];
+    [FieldOffset(64)]  public unsafe fixed float cascadeBias[4];
     [FieldOffset(80)]  public float bias;
     [FieldOffset(84)]  public float offset;
     [FieldOffset(88)]  public float normalBias;
@@ -739,7 +742,7 @@ public struct FxShadowMapParameter
     [FieldOffset(140)] public bool csmCacheParallaxCorrectionEnabled;
     [FieldOffset(144)] public float csmCacheParallaxCorrectionHorizontalBias;
     [FieldOffset(148)] public float csmCacheParallaxCorrectionVerticalBias;
-    [FieldOffset(152)] public fixed int csmCacheFramesToRender[3];
+    [FieldOffset(152)] public unsafe fixed int csmCacheFramesToRender[3];
     [FieldOffset(164)] public float csmCacheFadeLightElevationAngle;
     [FieldOffset(168)] public float csmCacheMinLightElevationAngle;
     [FieldOffset(176)] public Matrix4x4 shadowCameraViewMatrix;
@@ -947,9 +950,9 @@ public struct FxOcclusionCapsuleParameter
     [FieldOffset(44)]  public float cullingDistance;
     [FieldOffset(48)]  public bool enableManualLight;
     [FieldOffset(52)]  public int manualLightCount;
-    [FieldOffset(64)]  public fixed byte /* Vector3[4] */ _manualLightPos[64];
+    [FieldOffset(64)]  public unsafe fixed byte /* Vector3[4] */ _manualLightPos[64];
 
-    public Vector3* manualLightPos
+    public unsafe Vector3* manualLightPos
     {
         get
         {
@@ -971,7 +974,7 @@ public struct FxEffectParameter
     [FieldOffset(48)] public float directionalLightIntensityOverwrite;
     [FieldOffset(52)] public bool overwriteDirectionalLight;
     [FieldOffset(56)] public float localLightIntensityScale;
-    [FieldOffset(60)] public fixed float lodDistances[8];
+    [FieldOffset(60)] public unsafe fixed float lodDistances[8];
     [FieldOffset(92)] public bool enableVisualizeOverdraw;
     [FieldOffset(93)] public bool renderWireframe;
     [FieldOffset(94)] public bool upsampleBilateral;
@@ -1330,7 +1333,7 @@ public struct FxSceneEnvironmentParameter
     [FieldOffset(4)]  public float windStrength;
     [FieldOffset(8)]  public float windNoise;
     [FieldOffset(12)] public float windAmplitude;
-    [FieldOffset(16)] public fixed float windFrequencies[4];
+    [FieldOffset(16)] public unsafe fixed float windFrequencies[4];
     [FieldOffset(32)] public bool enableTreadGrass;
     [FieldOffset(48)] public Vector4 grassLodDistance;
     [FieldOffset(64)] public bool enableHighLight;
@@ -1391,8 +1394,8 @@ public struct FxDensityDebugParameter
 {
     [FieldOffset(0)]   public bool underSelect;
     [FieldOffset(4)]   public float factor;
-    [FieldOffset(8)]   public fixed float unit[32];
-    [FieldOffset(136)] public fixed sbyte chunk[32];
+    [FieldOffset(8)]   public unsafe fixed float unit[32];
+    [FieldOffset(136)] public unsafe fixed sbyte chunk[32];
     [FieldOffset(168)] public float lodAddition;
     [FieldOffset(172)] public int chunkAddition;
     [FieldOffset(176)] public float drawLimitLenght;
@@ -1746,7 +1749,7 @@ public struct FxColorAccessibilityFilterParameter
     [FieldOffset(16)] public float tritanopiaFactor;
     [FieldOffset(20)] public float brightness;
     [FieldOffset(24)] public float contrast;
-    [FieldOffset(28)] public fixed float maskIntensity[5];
+    [FieldOffset(28)] public unsafe fixed float maskIntensity[5];
     [FieldOffset(48)] public ColorblinidSimulationType simulationType;
 }
 
@@ -1768,9 +1771,9 @@ public struct FxSeparableSSSParameter
     [FieldOffset(4)]  public float width;
     [FieldOffset(8)]  public float normalOffset;
     [FieldOffset(12)] public float blurOffsetMax;
-    [FieldOffset(16)] public fixed byte /* Vector4[16] */ _strength[256];
+    [FieldOffset(16)] public unsafe fixed byte /* Vector4[16] */ _strength[256];
 
-    public Vector4* strength
+    public unsafe Vector4* strength
     {
         get
         {
@@ -1934,9 +1937,9 @@ public struct StageConfig
 public struct NeedleFxSceneData
 {
     [FieldOffset(0)]      public NeedleFxSceneConfig config;
-    [FieldOffset(320)]    public fixed byte /* NeedleFxParameter[16] */ _items[75520];
+    [FieldOffset(320)]    public unsafe fixed byte /* NeedleFxParameter[16] */ _items[75520];
 
-    public NeedleFxParameter* items
+    public unsafe NeedleFxParameter* items
     {
         get
         {
@@ -1945,9 +1948,9 @@ public struct NeedleFxSceneData
         }
     }
 
-    [FieldOffset(75840)]  public fixed byte /* TimeProgressNeedleFxParam[24] */ _timeItems[38784];
+    [FieldOffset(75840)]  public unsafe fixed byte /* TimeProgressNeedleFxParam[24] */ _timeItems[38784];
 
-    public TimeProgressNeedleFxParam* timeItems
+    public unsafe TimeProgressNeedleFxParam* timeItems
     {
         get
         {
@@ -1956,9 +1959,9 @@ public struct NeedleFxSceneData
         }
     }
 
-    [FieldOffset(114624)] public fixed byte /* WeatherFxParameter[7] */ _weatherItems[12432];
+    [FieldOffset(114624)] public unsafe fixed byte /* WeatherFxParameter[7] */ _weatherItems[12432];
 
-    public WeatherFxParameter* weatherItems
+    public unsafe WeatherFxParameter* weatherItems
     {
         get
         {
@@ -1970,3 +1973,4 @@ public struct NeedleFxSceneData
     [FieldOffset(127056)] public StageConfig stageConfig;
 }
 
+} // NeedleFxSceneDataClass

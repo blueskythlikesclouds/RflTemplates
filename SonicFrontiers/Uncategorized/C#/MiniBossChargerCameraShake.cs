@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossChargerCameraShakeClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct MiniBossChargerCameraShake
 {
@@ -11,3 +14,4 @@ public struct MiniBossChargerCameraShake
     [FieldOffset(16)] public float shakeRange;
 }
 
+} // MiniBossChargerCameraShakeClass

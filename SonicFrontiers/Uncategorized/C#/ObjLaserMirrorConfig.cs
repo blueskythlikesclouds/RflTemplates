@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjLaserMirrorConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct GimmickCameraParam
 {
@@ -18,3 +21,4 @@ public struct ObjLaserMirrorConfig
     [FieldOffset(96)] public GimmickCameraParam moveMirror;
 }
 
+} // ObjLaserMirrorConfigClass

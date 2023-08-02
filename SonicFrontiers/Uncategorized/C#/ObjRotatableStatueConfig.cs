@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjRotatableStatueConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct GimmickCameraParam
 {
@@ -16,3 +19,4 @@ public struct ObjRotatableStatueConfig
     [FieldOffset(0)] public GimmickCameraParam cameraParam;
 }
 
+} // ObjRotatableStatueConfigClass

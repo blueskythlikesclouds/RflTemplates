@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class OptionDataClass
+{
+
 public enum Status : sbyte
 {
     STATUS_ZERO_FILL = 0,
@@ -52,7 +55,7 @@ public struct HeaderData
     [FieldOffset(15)] public byte reserved1;
     [FieldOffset(16)] public uint saveDate;
     [FieldOffset(20)] public byte index;
-    [FieldOffset(24)] public fixed uint reserved[4];
+    [FieldOffset(24)] public unsafe fixed uint reserved[4];
 }
 
 public enum VoiceLanguageType : sbyte
@@ -291,9 +294,9 @@ public enum InputKey : int
 [StructLayout(LayoutKind.Explicit, Size = 744)]
 public struct OptionControlsData
 {
-    [FieldOffset(0)]   public fixed byte /* InputKey[62] */ _padMappings[248];
+    [FieldOffset(0)]   public unsafe fixed byte /* InputKey[62] */ _padMappings[248];
 
-    public InputKey* padMappings
+    public unsafe InputKey* padMappings
     {
         get
         {
@@ -302,9 +305,9 @@ public struct OptionControlsData
         }
     }
 
-    [FieldOffset(248)] public fixed byte /* InputKey[62] */ _mainMappings[248];
+    [FieldOffset(248)] public unsafe fixed byte /* InputKey[62] */ _mainMappings[248];
 
-    public InputKey* mainMappings
+    public unsafe InputKey* mainMappings
     {
         get
         {
@@ -313,9 +316,9 @@ public struct OptionControlsData
         }
     }
 
-    [FieldOffset(496)] public fixed byte /* InputKey[62] */ _subMappings[248];
+    [FieldOffset(496)] public unsafe fixed byte /* InputKey[62] */ _subMappings[248];
 
-    public InputKey* subMappings
+    public unsafe InputKey* subMappings
     {
         get
         {
@@ -345,7 +348,7 @@ public struct OptionCameraData
     [FieldOffset(26)] public byte fovyRate;
     [FieldOffset(27)] public MovementStyle movementStyle;
     [FieldOffset(28)] public byte config;
-    [FieldOffset(32)] public fixed uint reserved[4];
+    [FieldOffset(32)] public unsafe fixed uint reserved[4];
 }
 
 public enum MusicSelect : sbyte
@@ -372,7 +375,7 @@ public struct OptionAudioData
     [FieldOffset(5)] public MusicSelectType musicSelectType;
     [FieldOffset(6)] public byte flags;
     [FieldOffset(7)] public byte padding;
-    [FieldOffset(8)] public fixed uint reserved[3];
+    [FieldOffset(8)] public unsafe fixed uint reserved[3];
 }
 
 public enum Resolution : sbyte
@@ -465,7 +468,7 @@ public struct OptionGraphicsData
     [FieldOffset(14)] public ushort width;
     [FieldOffset(16)] public ushort height;
     [FieldOffset(18)] public ushort padding0;
-    [FieldOffset(20)] public fixed uint reserved[2];
+    [FieldOffset(20)] public unsafe fixed uint reserved[2];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 912)]
@@ -479,3 +482,4 @@ public struct OptionData
     [FieldOffset(884)] public OptionGraphicsData graphics;
 }
 
+} // OptionDataClass

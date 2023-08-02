@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyDefenderConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct RingParameter
 {
@@ -70,9 +73,9 @@ public struct EnemyDefenderLevelConfig
 public struct EnemyDefenderConfig
 {
     [FieldOffset(0)]   public EnemyDefenderCommonConfig commonParams;
-    [FieldOffset(128)] public fixed byte /* EnemyDefenderLevelConfig[5] */ _levelParams[80];
+    [FieldOffset(128)] public unsafe fixed byte /* EnemyDefenderLevelConfig[5] */ _levelParams[80];
 
-    public EnemyDefenderLevelConfig* levelParams
+    public unsafe EnemyDefenderLevelConfig* levelParams
     {
         get
         {
@@ -82,3 +85,4 @@ public struct EnemyDefenderConfig
     }
 }
 
+} // EnemyDefenderConfigClass

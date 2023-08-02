@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class PlayerParamBehindFinishClass
+{
+
 public enum Condition : sbyte
 {
     Time = 0,
@@ -32,3 +35,4 @@ public struct PlayerParamBehindFinish
     [FieldOffset(48)] public float ignoreSwingingTime;
 }
 
+} // PlayerParamBehindFinishClass

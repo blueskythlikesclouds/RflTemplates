@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjStriderBulletConfigClass
+{
+
 public enum ShootingDirection : byte
 {
     Sonic = 0,
@@ -52,3 +55,4 @@ public struct ObjStriderBulletConfig
     [FieldOffset(72)] public SameBodyRailBulletParam sameBodyRailBulletParam;
 }
 
+} // ObjStriderBulletConfigClass

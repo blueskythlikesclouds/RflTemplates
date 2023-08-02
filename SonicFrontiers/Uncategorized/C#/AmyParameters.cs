@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class AmyParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct PlayerParamOffensive
 {
@@ -187,9 +190,9 @@ public struct PlayerParamLocusData
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct PlayerParamLocus
 {
-    [FieldOffset(0)] public fixed byte /* PlayerParamLocusData[4] */ _data[64];
+    [FieldOffset(0)] public unsafe fixed byte /* PlayerParamLocusData[4] */ _data[64];
 
-    public PlayerParamLocusData* data
+    public unsafe PlayerParamLocusData* data
     {
         get
         {
@@ -226,15 +229,15 @@ public struct PlayerParamBarrierWall
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct PlayerParamDamageRateLevel
 {
-    [FieldOffset(0)] public fixed float rates[5];
+    [FieldOffset(0)] public unsafe fixed float rates[5];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct PlayerParamDamageRate
 {
-    [FieldOffset(0)] public fixed byte /* PlayerParamDamageRateLevel[4] */ _diffculties[80];
+    [FieldOffset(0)] public unsafe fixed byte /* PlayerParamDamageRateLevel[4] */ _diffculties[80];
 
-    public PlayerParamDamageRateLevel* diffculties
+    public unsafe PlayerParamDamageRateLevel* diffculties
     {
         get
         {
@@ -334,9 +337,9 @@ public enum Action : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 18)]
 public struct PlayerParamComboTransit
 {
-    [FieldOffset(0)]  public fixed byte /* Action[6] */ _transitExistTarget[6];
+    [FieldOffset(0)]  public unsafe fixed byte /* Action[6] */ _transitExistTarget[6];
 
-    public Action* transitExistTarget
+    public unsafe Action* transitExistTarget
     {
         get
         {
@@ -345,9 +348,9 @@ public struct PlayerParamComboTransit
         }
     }
 
-    [FieldOffset(6)]  public fixed byte /* Action[6] */ _transitInAir[6];
+    [FieldOffset(6)]  public unsafe fixed byte /* Action[6] */ _transitInAir[6];
 
-    public Action* transitInAir
+    public unsafe Action* transitInAir
     {
         get
         {
@@ -356,9 +359,9 @@ public struct PlayerParamComboTransit
         }
     }
 
-    [FieldOffset(12)] public fixed byte /* Action[6] */ _transitNotExistTarget[6];
+    [FieldOffset(12)] public unsafe fixed byte /* Action[6] */ _transitNotExistTarget[6];
 
-    public Action* transitNotExistTarget
+    public unsafe Action* transitNotExistTarget
     {
         get
         {
@@ -1058,7 +1061,7 @@ public struct PlayerParamBoost
     [FieldOffset(16)] public float reigniteRatio;
     [FieldOffset(20)] public float recoveryByRing;
     [FieldOffset(24)] public float recoveryByAttack;
-    [FieldOffset(28)] public fixed float blurPowers[3];
+    [FieldOffset(28)] public unsafe fixed float blurPowers[3];
     [FieldOffset(40)] public float blurEaseInTime;
     [FieldOffset(44)] public float blurEaseOutTime;
     [FieldOffset(48)] public float endSpeed;
@@ -1166,9 +1169,9 @@ public struct PlayerParamAvoid
     [FieldOffset(16)]  public float frontAngle;
     [FieldOffset(20)]  public float backAngle;
     [FieldOffset(24)]  public float addFallSpeed;
-    [FieldOffset(28)]  public fixed byte /* PlayerParamAvoidData[7] */ _data[112];
+    [FieldOffset(28)]  public unsafe fixed byte /* PlayerParamAvoidData[7] */ _data[112];
 
-    public PlayerParamAvoidData* data
+    public unsafe PlayerParamAvoidData* data
     {
         get
         {
@@ -1375,3 +1378,4 @@ public struct AmyParameters
     [FieldOffset(19040)] public WaterModePackage water;
 }
 
+} // AmyParametersClass

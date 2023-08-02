@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class WolfVolumeSizeClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct WolfVolumeSize
 {
@@ -9,3 +12,4 @@ public struct WolfVolumeSize
     [FieldOffset(8)] public float depth;
 }
 
+} // WolfVolumeSizeClass

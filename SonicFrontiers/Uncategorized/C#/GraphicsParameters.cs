@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GraphicsParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -27,9 +30,9 @@ public struct AuraEffectLerpNode
 public struct AuraEffectLerpParameter
 {
     [FieldOffset(0)]  public CString name;
-    [FieldOffset(16)] public fixed byte /* AuraEffectLerpNode[2] */ _node[40];
+    [FieldOffset(16)] public unsafe fixed byte /* AuraEffectLerpNode[2] */ _node[40];
 
-    public AuraEffectLerpNode* node
+    public unsafe AuraEffectLerpNode* node
     {
         get
         {
@@ -42,9 +45,9 @@ public struct AuraEffectLerpParameter
 [StructLayout(LayoutKind.Explicit, Size = 224)]
 public struct AuraEffectParameters
 {
-    [FieldOffset(0)] public fixed byte /* AuraEffectLerpParameter[4] */ __params[224];
+    [FieldOffset(0)] public unsafe fixed byte /* AuraEffectLerpParameter[4] */ __params[224];
 
-    public AuraEffectLerpParameter* _params
+    public unsafe AuraEffectLerpParameter* _params
     {
         get
         {
@@ -65,16 +68,16 @@ public struct EffectParameters
 [StructLayout(LayoutKind.Explicit, Size = 5)]
 public struct WeatherBlockParameter
 {
-    [FieldOffset(0)] public fixed byte blockWeights[5];
+    [FieldOffset(0)] public unsafe fixed byte blockWeights[5];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 30)]
 public struct WeatherTypeParameter
 {
-    [FieldOffset(0)] public fixed byte transitWeights[5];
-    [FieldOffset(5)] public fixed byte /* WeatherBlockParameter[5] */ _blockParams[25];
+    [FieldOffset(0)] public unsafe fixed byte transitWeights[5];
+    [FieldOffset(5)] public unsafe fixed byte /* WeatherBlockParameter[5] */ _blockParams[25];
 
-    public WeatherBlockParameter* blockParams
+    public unsafe WeatherBlockParameter* blockParams
     {
         get
         {
@@ -104,9 +107,9 @@ public struct WeatherTimeControlParameter
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct WeatherParameters
 {
-    [FieldOffset(0)]   public fixed byte /* WeatherTypeParameter[5] */ _type[150];
+    [FieldOffset(0)]   public unsafe fixed byte /* WeatherTypeParameter[5] */ _type[150];
 
-    public WeatherTypeParameter* type
+    public unsafe WeatherTypeParameter* type
     {
         get
         {
@@ -126,3 +129,4 @@ public struct GraphicsParameters
     [FieldOffset(232)] public WeatherParameters weather;
 }
 
+} // GraphicsParametersClass

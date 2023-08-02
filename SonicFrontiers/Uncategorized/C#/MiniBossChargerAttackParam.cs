@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossChargerAttackParamClass
+{
+
 public enum AttackType : int
 {
     AttackTypeInvalid = 0,
@@ -34,3 +37,4 @@ public struct MiniBossChargerAttackParam
     [FieldOffset(12)] public float restTime;
 }
 
+} // MiniBossChargerAttackParamClass

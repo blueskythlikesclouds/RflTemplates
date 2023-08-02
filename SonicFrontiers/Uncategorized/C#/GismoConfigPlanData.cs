@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GismoConfigPlanDataClass
+{
+
 public enum ContactDamageType : sbyte
 {
     CONTACT_DAMAGE_NONE = 0,
@@ -18,3 +21,4 @@ public struct GismoConfigPlanData
     [FieldOffset(3)] public bool aerialBounce;
 }
 
+} // GismoConfigPlanDataClass

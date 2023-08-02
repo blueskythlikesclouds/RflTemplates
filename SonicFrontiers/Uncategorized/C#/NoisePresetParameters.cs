@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class NoisePresetParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct UVShift
 {
@@ -86,9 +89,9 @@ public struct FxCyberSpaceStartNoiseParameter
 [StructLayout(LayoutKind.Explicit, Size = 1312)]
 public struct NoisePresetParameters
 {
-    [FieldOffset(0)] public fixed byte /* FxCyberSpaceStartNoiseParameter[8] */ _presets[1312];
+    [FieldOffset(0)] public unsafe fixed byte /* FxCyberSpaceStartNoiseParameter[8] */ _presets[1312];
 
-    public FxCyberSpaceStartNoiseParameter* presets
+    public unsafe FxCyberSpaceStartNoiseParameter* presets
     {
         get
         {
@@ -98,3 +101,4 @@ public struct NoisePresetParameters
     }
 }
 
+} // NoisePresetParametersClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjSumoPoleConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 36)]
 public struct ObjSumoPoleColliderConfig
 {
@@ -62,9 +65,9 @@ public struct ObjSumoPoleSlingshotLineConfig
     [FieldOffset(12)] public float uvScrollSpeedMin;
     [FieldOffset(16)] public float uvScrollSpeedMax;
     [FieldOffset(20)] public int reflectCountSpeedMax;
-    [FieldOffset(24)] public fixed byte /* Color8[5] */ _colors[1275];
+    [FieldOffset(24)] public unsafe fixed byte /* Color8[5] */ _colors[1275];
 
-    public Color8* colors
+    public unsafe Color8* colors
     {
         get
         {
@@ -131,3 +134,4 @@ public struct ObjSumoPoleConfig
     [FieldOffset(168)] public ObjSumoPoleRopeConfig rope;
 }
 
+} // ObjSumoPoleConfigClass

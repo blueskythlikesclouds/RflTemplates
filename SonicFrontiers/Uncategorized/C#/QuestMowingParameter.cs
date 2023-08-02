@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class QuestMowingParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 4)]
 public struct QuestMowingPlayerParameter
 {
@@ -45,9 +48,9 @@ public struct QuestMowingParameterElement
     [FieldOffset(4)]   public uint questClearPoint;
     [FieldOffset(8)]   public QuestMowingPlayerParameter playerParam;
     [FieldOffset(12)]  public uint pointParamNum;
-    [FieldOffset(16)]  public fixed byte /* QuestMowingPointParameter[5] */ _pointParam[40];
+    [FieldOffset(16)]  public unsafe fixed byte /* QuestMowingPointParameter[5] */ _pointParam[40];
 
-    public QuestMowingPointParameter* pointParam
+    public unsafe QuestMowingPointParameter* pointParam
     {
         get
         {
@@ -64,9 +67,9 @@ public struct QuestMowingParameterElement
 [StructLayout(LayoutKind.Explicit, Size = 384)]
 public struct QuestMowingParameter
 {
-    [FieldOffset(0)] public fixed byte /* QuestMowingParameterElement[3] */ _element[384];
+    [FieldOffset(0)] public unsafe fixed byte /* QuestMowingParameterElement[3] */ _element[384];
 
-    public QuestMowingParameterElement* element
+    public unsafe QuestMowingParameterElement* element
     {
         get
         {
@@ -76,3 +79,4 @@ public struct QuestMowingParameter
     }
 }
 
+} // QuestMowingParameterClass

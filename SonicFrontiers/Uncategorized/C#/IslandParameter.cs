@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class IslandParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 2)]
 public struct ChaosEmeraldStorageParam
 {
@@ -11,9 +14,9 @@ public struct ChaosEmeraldStorageParam
 [StructLayout(LayoutKind.Explicit, Size = 14)]
 public struct IslandParam
 {
-    [FieldOffset(0)] public fixed byte /* ChaosEmeraldStorageParam[7] */ _storages[14];
+    [FieldOffset(0)] public unsafe fixed byte /* ChaosEmeraldStorageParam[7] */ _storages[14];
 
-    public ChaosEmeraldStorageParam* storages
+    public unsafe ChaosEmeraldStorageParam* storages
     {
         get
         {
@@ -53,21 +56,21 @@ public struct KodamaNormalParam
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct KodamaElderParam
 {
-    [FieldOffset(0)] public fixed int levelupKodamaNum[3];
+    [FieldOffset(0)] public unsafe fixed int levelupKodamaNum[3];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct KodamaHermitLvUpParam
 {
-    [FieldOffset(0)] public fixed int difficulty[3];
+    [FieldOffset(0)] public unsafe fixed int difficulty[3];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1188)]
 public struct KodamaHermitParam
 {
-    [FieldOffset(0)] public fixed byte /* KodamaHermitLvUpParam[99] */ _levelupSeedNum[1188];
+    [FieldOffset(0)] public unsafe fixed byte /* KodamaHermitLvUpParam[99] */ _levelupSeedNum[1188];
 
-    public KodamaHermitLvUpParam* levelupSeedNum
+    public unsafe KodamaHermitLvUpParam* levelupSeedNum
     {
         get
         {
@@ -93,9 +96,9 @@ public struct KodamaParam
     [FieldOffset(0)]    public KodamaNormalParam normal;
     [FieldOffset(40)]   public KodamaElderParam elder;
     [FieldOffset(52)]   public KodamaHermitParam hermit;
-    [FieldOffset(1240)] public fixed byte /* KodamaNewFormParam[8] */ _newform[160];
+    [FieldOffset(1240)] public unsafe fixed byte /* KodamaNewFormParam[8] */ _newform[160];
 
-    public KodamaNewFormParam* newform
+    public unsafe KodamaNewFormParam* newform
     {
         get
         {
@@ -115,9 +118,9 @@ public struct NpcParam
 [StructLayout(LayoutKind.Explicit, Size = 1484)]
 public struct IslandParameter
 {
-    [FieldOffset(0)]    public fixed byte /* IslandParam[5] */ _islands[70];
+    [FieldOffset(0)]    public unsafe fixed byte /* IslandParam[5] */ _islands[70];
 
-    public IslandParam* islands
+    public unsafe IslandParam* islands
     {
         get
         {
@@ -131,3 +134,4 @@ public struct IslandParameter
     [FieldOffset(1480)] public int portalExtraKeyNum;
 }
 
+} // IslandParameterClass

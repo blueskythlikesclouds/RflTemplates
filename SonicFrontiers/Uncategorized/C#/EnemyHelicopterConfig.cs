@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyHelicopterConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct HeliDamageCol
 {
@@ -47,3 +50,4 @@ public struct EnemyHelicopterConfig
     [FieldOffset(72)] public HeliBomb attackBomb;
 }
 
+} // EnemyHelicopterConfigClass

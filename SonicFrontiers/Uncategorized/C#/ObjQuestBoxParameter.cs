@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjQuestBoxParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct ObjQuestBoxParameter
 {
@@ -16,3 +19,4 @@ public struct ObjQuestBoxParameter
     [FieldOffset(48)] public Vector3 maxSpeed;
 }
 
+} // ObjQuestBoxParameterClass

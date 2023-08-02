@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ActionChainParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 44)]
 public struct ActionChainScoreParameter
 {
@@ -180,3 +183,4 @@ public struct ActionChainParameter
     [FieldOffset(3336)] public bool isChainBoosterLevelUp;
 }
 
+} // ActionChainParameterClass

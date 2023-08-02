@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BossKnightConfigClass
+{
+
 public struct CSetObjectID
 {
     public byte GUID[16];
@@ -68,14 +71,14 @@ public struct BossStatusConfig
 {
     [FieldOffset(0)]   public uint healthPoint;
     [FieldOffset(4)]   public float stunTime;
-    [FieldOffset(8)]   public fixed float maxStunPoint[3];
-    [FieldOffset(20)]  public fixed float maxStaggerPoint[5];
+    [FieldOffset(8)]   public unsafe fixed float maxStunPoint[3];
+    [FieldOffset(20)]  public unsafe fixed float maxStaggerPoint[5];
     [FieldOffset(40)]  public ushort exp;
     [FieldOffset(48)]  public PlayerMoveableRangeParam moveRangeParam;
     [FieldOffset(136)] public PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
-    [FieldOffset(224)] public fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
+    [FieldOffset(224)] public unsafe fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
 
-    public BossPhaseParam* phaseParams
+    public unsafe BossPhaseParam* phaseParams
     {
         get
         {
@@ -149,9 +152,9 @@ public struct BossPillarConfig
     [FieldOffset(4)]   public float gimmickIntervalTimeAll;
     [FieldOffset(8)]   public AttackType attackTypeAll;
     [FieldOffset(12)]  public float attackIntervalTimeAll;
-    [FieldOffset(16)]  public fixed byte /* BossPillarParam[32] */ _pillars[896];
+    [FieldOffset(16)]  public unsafe fixed byte /* BossPillarParam[32] */ _pillars[896];
 
-    public BossPillarParam* pillars
+    public unsafe BossPillarParam* pillars
     {
         get
         {
@@ -222,9 +225,9 @@ public enum ColliderProperty : short
 public struct BossColliderStatus
 {
     [FieldOffset(0)]  public ColliderActiveType type;
-    [FieldOffset(2)]  public fixed byte /* ColliderProperty[4] */ _propertys[8];
+    [FieldOffset(2)]  public unsafe fixed byte /* ColliderProperty[4] */ _propertys[8];
 
-    public ColliderProperty* propertys
+    public unsafe ColliderProperty* propertys
     {
         get
         {
@@ -253,9 +256,9 @@ public struct BossPerceiveCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 8208)]
 public struct BossPerceivePartsWithCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
 
-    public BossPerceiveCollisionParam* perceiveCollisions
+    public unsafe BossPerceiveCollisionParam* perceiveCollisions
     {
         get
         {
@@ -356,7 +359,7 @@ public struct BossMeshFrameParam
     [FieldOffset(88)]  public BossStickParam stickParam;
     [FieldOffset(96)]  public BossDamagePointParam damagePoint;
     [FieldOffset(120)] public BossDashCirclPointParam dashCirclPoint;
-    [FieldOffset(160)] public fixed int linkNums[5];
+    [FieldOffset(160)] public unsafe fixed int linkNums[5];
     [FieldOffset(192)] public Vector3 offsetPos;
     [FieldOffset(208)] public Vector3 offsetRot;
 }
@@ -364,9 +367,9 @@ public struct BossMeshFrameParam
 [StructLayout(LayoutKind.Explicit, Size = 57360)]
 public struct BossMeshFrameConfig
 {
-    [FieldOffset(0)]     public fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
+    [FieldOffset(0)]     public unsafe fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
 
-    public BossMeshFrameParam* meshShapeKeyFrames
+    public unsafe BossMeshFrameParam* meshShapeKeyFrames
     {
         get
         {
@@ -400,9 +403,9 @@ public struct BossAttackCollisionParam
     [FieldOffset(0)]  public bool isUse;
     [FieldOffset(8)]  public CString attachNodeName;
     [FieldOffset(24)] public float damageVelocityRaito;
-    [FieldOffset(28)] public fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
+    [FieldOffset(28)] public unsafe fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
 
-    public BossAttackCollisionParam_AttackType* types
+    public unsafe BossAttackCollisionParam_AttackType* types
     {
         get
         {
@@ -420,9 +423,9 @@ public struct BossAttackCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 7184)]
 public struct BossAttackCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
 
-    public BossAttackCollisionParam* attackCollisions
+    public unsafe BossAttackCollisionParam* attackCollisions
     {
         get
         {
@@ -451,9 +454,9 @@ public struct BossBattlePhaseCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 1552)]
 public struct BossBattlePhaseCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
 
-    public BossBattlePhaseCollisionParam* battleCollisions
+    public unsafe BossBattlePhaseCollisionParam* battleCollisions
     {
         get
         {
@@ -734,7 +737,7 @@ public struct KnightShieldRideConfig
     [FieldOffset(232)] public float staggerValue;
     [FieldOffset(236)] public float knockbackDistance;
     [FieldOffset(240)] public float durationAfterHit;
-    [FieldOffset(244)] public fixed uint missileHitPattern[10];
+    [FieldOffset(244)] public unsafe fixed uint missileHitPattern[10];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 20)]
@@ -846,7 +849,7 @@ public struct KnightBattle1Rage
 public struct KnightAerialCamera
 {
     [FieldOffset(0)]  public float downTime;
-    [FieldOffset(4)]  public fixed float downCutChangeTime[2];
+    [FieldOffset(4)]  public unsafe fixed float downCutChangeTime[2];
     [FieldOffset(16)] public Vector3 downCamOffset;
     [FieldOffset(32)] public float riseTime;
     [FieldOffset(48)] public Vector3 riseCamOffset;
@@ -863,9 +866,9 @@ public struct KnightBattle1Config
     [FieldOffset(336)] public KnightBattle1InterruptConfig interrupt;
     [FieldOffset(356)] public float normalKnockbackDistance;
     [FieldOffset(360)] public KnightBattle1CyFloat cyFloat;
-    [FieldOffset(396)] public fixed byte /* KnightThresholdRingSupplyParam[3] */ _ringSupply[36];
+    [FieldOffset(396)] public unsafe fixed byte /* KnightThresholdRingSupplyParam[3] */ _ringSupply[36];
 
-    public KnightThresholdRingSupplyParam* ringSupply
+    public unsafe KnightThresholdRingSupplyParam* ringSupply
     {
         get
         {
@@ -935,9 +938,9 @@ public struct KnightBattle2ShieldUTurnCameraConfig
 [StructLayout(LayoutKind.Explicit, Size = 368)]
 public struct KnightBattle2ShieldConfig
 {
-    [FieldOffset(0)]   public fixed byte /* KnightBattle2ShieldSplineNode[8] */ _nodesStraight[128];
+    [FieldOffset(0)]   public unsafe fixed byte /* KnightBattle2ShieldSplineNode[8] */ _nodesStraight[128];
 
-    public KnightBattle2ShieldSplineNode* nodesStraight
+    public unsafe KnightBattle2ShieldSplineNode* nodesStraight
     {
         get
         {
@@ -955,9 +958,9 @@ public struct KnightBattle2ShieldConfig
     [FieldOffset(152)] public float hitPosXStraight;
     [FieldOffset(156)] public float uTurnEndPosStraight;
     [FieldOffset(160)] public float swordDelayStraight;
-    [FieldOffset(164)] public fixed byte /* KnightBattle2ShieldSplineNode[8] */ _nodesSlalom[128];
+    [FieldOffset(164)] public unsafe fixed byte /* KnightBattle2ShieldSplineNode[8] */ _nodesSlalom[128];
 
-    public KnightBattle2ShieldSplineNode* nodesSlalom
+    public unsafe KnightBattle2ShieldSplineNode* nodesSlalom
     {
         get
         {
@@ -1034,9 +1037,9 @@ public struct KnightSonicSpecialConfig
 [StructLayout(LayoutKind.Explicit, Size = 320)]
 public struct KnightCyFloatSpearConfig
 {
-    [FieldOffset(0)]   public fixed byte /* Vector3[8] */ _upOffset[128];
+    [FieldOffset(0)]   public unsafe fixed byte /* Vector3[8] */ _upOffset[128];
 
-    public Vector3* upOffset
+    public unsafe Vector3* upOffset
     {
         get
         {
@@ -1045,9 +1048,9 @@ public struct KnightCyFloatSpearConfig
         }
     }
 
-    [FieldOffset(128)] public fixed byte /* Vector3[8] */ _upRotationAngle[128];
+    [FieldOffset(128)] public unsafe fixed byte /* Vector3[8] */ _upRotationAngle[128];
 
-    public Vector3* upRotationAngle
+    public unsafe Vector3* upRotationAngle
     {
         get
         {
@@ -1059,14 +1062,14 @@ public struct KnightCyFloatSpearConfig
     [FieldOffset(256)] public float upMoveDistanceOffset;
     [FieldOffset(272)] public Vector3 downOffset;
     [FieldOffset(288)] public float downMoveDelay;
-    [FieldOffset(292)] public fixed float downMoveDistance[3];
-    [FieldOffset(304)] public fixed float downMoveDuration[3];
+    [FieldOffset(292)] public unsafe fixed float downMoveDistance[3];
+    [FieldOffset(304)] public unsafe fixed float downMoveDuration[3];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct KnightAttackSignParam
 {
-    [FieldOffset(0)] public fixed float delayTime[6];
+    [FieldOffset(0)] public unsafe fixed float delayTime[6];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 3)]
@@ -1096,8 +1099,9 @@ public struct BossKnightConfig
     [FieldOffset(77680)] public KnightSonicSpecialConfig sonicSpecial;
     [FieldOffset(77696)] public KnightCyFloatSpearConfig cyFloatSpear;
     [FieldOffset(78016)] public byte knockbackStaggerCount;
-    [FieldOffset(78020)] public fixed float thresholdDamageEffectHPRatio[3];
+    [FieldOffset(78020)] public unsafe fixed float thresholdDamageEffectHPRatio[3];
     [FieldOffset(78032)] public KnightAttackSignParam attackSign;
     [FieldOffset(78056)] public BossKnightNotifierParam notifier;
 }
 
+} // BossKnightConfigClass

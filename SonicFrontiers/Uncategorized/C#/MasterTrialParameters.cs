@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MasterTrialParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct MasterTrialStageParameter
 {
@@ -16,9 +19,9 @@ public struct MasterTrialStageParameter
 public struct MasterTrialParameterElement
 {
     [FieldOffset(0)] public int applicableFailedCount;
-    [FieldOffset(4)] public fixed byte /* MasterTrialStageParameter[4] */ _stages[96];
+    [FieldOffset(4)] public unsafe fixed byte /* MasterTrialStageParameter[4] */ _stages[96];
 
-    public MasterTrialStageParameter* stages
+    public unsafe MasterTrialStageParameter* stages
     {
         get
         {
@@ -37,9 +40,9 @@ public struct MasterTrialParameters
     [FieldOffset(12)] public float failedTime;
     [FieldOffset(16)] public float clearWaitTime;
     [FieldOffset(20)] public float failedWaitTime;
-    [FieldOffset(24)] public fixed byte /* MasterTrialParameterElement[3] */ _element[300];
+    [FieldOffset(24)] public unsafe fixed byte /* MasterTrialParameterElement[3] */ _element[300];
 
-    public MasterTrialParameterElement* element
+    public unsafe MasterTrialParameterElement* element
     {
         get
         {
@@ -49,3 +52,4 @@ public struct MasterTrialParameters
     }
 }
 
+} // MasterTrialParametersClass

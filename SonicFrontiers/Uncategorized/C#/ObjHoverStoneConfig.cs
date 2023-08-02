@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjHoverStoneConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct ObjHoverStoneConfig
 {
@@ -9,3 +12,4 @@ public struct ObjHoverStoneConfig
     [FieldOffset(8)] public float homingAttackBounce;
 }
 
+} // ObjHoverStoneConfigClass

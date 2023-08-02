@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class VolumeSizeClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct VolumeSize
 {
@@ -9,3 +12,4 @@ public struct VolumeSize
     [FieldOffset(8)] public float depth;
 }
 
+} // VolumeSizeClass

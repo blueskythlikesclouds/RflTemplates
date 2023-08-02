@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossFlyerConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -58,9 +61,9 @@ public enum HorizontalType : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 6)]
 public struct FlyerEscapeShotTableData
 {
-    [FieldOffset(0)] public fixed byte /* HorizontalType[6] */ _horz[6];
+    [FieldOffset(0)] public unsafe fixed byte /* HorizontalType[6] */ _horz[6];
 
-    public HorizontalType* horz
+    public unsafe HorizontalType* horz
     {
         get
         {
@@ -73,9 +76,9 @@ public struct FlyerEscapeShotTableData
 [StructLayout(LayoutKind.Explicit, Size = 136)]
 public struct FlyerEscapeShotParam
 {
-    [FieldOffset(0)]   public fixed byte /* FlyerEscapeShotTableData[16] */ _posTable[96];
+    [FieldOffset(0)]   public unsafe fixed byte /* FlyerEscapeShotTableData[16] */ _posTable[96];
 
-    public FlyerEscapeShotTableData* posTable
+    public unsafe FlyerEscapeShotTableData* posTable
     {
         get
         {
@@ -158,7 +161,7 @@ public struct FlyerIdlingNearParam
 {
     [FieldOffset(0)] public float durationMin;
     [FieldOffset(4)] public float durationMax;
-    [FieldOffset(8)] public fixed uint selectRatio[2];
+    [FieldOffset(8)] public unsafe fixed uint selectRatio[2];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 4)]
@@ -223,10 +226,10 @@ public struct MiniBossFlyerCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -252,9 +255,9 @@ public struct FlayerEscapeShotSequenceTable
 public struct FlayerEscapeShotSequenceTableData
 {
     [FieldOffset(0)] public bool isUse;
-    [FieldOffset(4)] public fixed byte /* FlayerEscapeShotSequenceTable[8] */ _table[64];
+    [FieldOffset(4)] public unsafe fixed byte /* FlayerEscapeShotSequenceTable[8] */ _table[64];
 
-    public FlayerEscapeShotSequenceTable* table
+    public unsafe FlayerEscapeShotSequenceTable* table
     {
         get
         {
@@ -268,9 +271,9 @@ public struct FlayerEscapeShotSequenceTableData
 public struct MiniBossFlyerLevelBand
 {
     [FieldOffset(0)] public int level;
-    [FieldOffset(4)] public fixed byte /* FlayerEscapeShotSequenceTableData[16] */ _sequence[1088];
+    [FieldOffset(4)] public unsafe fixed byte /* FlayerEscapeShotSequenceTableData[16] */ _sequence[1088];
 
-    public FlayerEscapeShotSequenceTableData* sequence
+    public unsafe FlayerEscapeShotSequenceTableData* sequence
     {
         get
         {
@@ -284,9 +287,9 @@ public struct MiniBossFlyerLevelBand
 public struct MiniBossFlyerConfig
 {
     [FieldOffset(0)]   public MiniBossFlyerCommonParam commonParam;
-    [FieldOffset(560)] public fixed byte /* MiniBossFlyerLevelParam[5] */ _levelParams[280];
+    [FieldOffset(560)] public unsafe fixed byte /* MiniBossFlyerLevelParam[5] */ _levelParams[280];
 
-    public MiniBossFlyerLevelParam* levelParams
+    public unsafe MiniBossFlyerLevelParam* levelParams
     {
         get
         {
@@ -295,9 +298,9 @@ public struct MiniBossFlyerConfig
         }
     }
 
-    [FieldOffset(840)] public fixed byte /* MiniBossFlyerLevelBand[5] */ _levelBand[5460];
+    [FieldOffset(840)] public unsafe fixed byte /* MiniBossFlyerLevelBand[5] */ _levelBand[5460];
 
-    public MiniBossFlyerLevelBand* levelBand
+    public unsafe MiniBossFlyerLevelBand* levelBand
     {
         get
         {
@@ -307,3 +310,4 @@ public struct MiniBossFlyerConfig
     }
 }
 
+} // MiniBossFlyerConfigClass

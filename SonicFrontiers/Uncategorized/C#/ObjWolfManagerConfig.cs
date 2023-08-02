@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjWolfManagerConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct FocusCameraConfig
 {
@@ -30,3 +33,4 @@ public struct ObjWolfManagerConfig
     [FieldOffset(68)] public float shotAngle;
 }
 
+} // ObjWolfManagerConfigClass

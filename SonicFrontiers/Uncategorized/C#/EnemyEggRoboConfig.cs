@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyEggRoboConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 112)]
 public struct EnemyEggRoboConfig
 {
@@ -18,3 +21,4 @@ public struct EnemyEggRoboConfig
     [FieldOffset(96)] public Vector3 missileColliderOffset;
 }
 
+} // EnemyEggRoboConfigClass

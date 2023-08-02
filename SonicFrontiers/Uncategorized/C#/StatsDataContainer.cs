@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class StatsDataContainerClass
+{
+
 public enum StatsType : int
 {
     TYPE_INVALID = 0,
@@ -23,3 +26,4 @@ public struct StatsDataContainer
     [FieldOffset(0)] public StatsDataValue data;
 }
 
+} // StatsDataContainerClass

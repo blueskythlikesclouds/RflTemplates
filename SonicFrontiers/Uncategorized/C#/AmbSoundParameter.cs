@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class AmbSoundParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -64,9 +67,9 @@ public struct AmbRiverParameter_Multiple3D
 [StructLayout(LayoutKind.Explicit, Size = 360)]
 public struct AmbSoundParameter
 {
-    [FieldOffset(0)]   public fixed byte /* AmbInfo[8] */ _ambSoundInfo[192];
+    [FieldOffset(0)]   public unsafe fixed byte /* AmbInfo[8] */ _ambSoundInfo[192];
 
-    public AmbInfo* ambSoundInfo
+    public unsafe AmbInfo* ambSoundInfo
     {
         get
         {
@@ -83,3 +86,4 @@ public struct AmbSoundParameter
     [FieldOffset(336)] public AmbRiverParameter_Multiple3D riverMultiple3D;
 }
 
+} // AmbSoundParameterClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BossGiantConfigClass
+{
+
 public struct CSetObjectID
 {
     public byte GUID[16];
@@ -68,14 +71,14 @@ public struct BossStatusConfig
 {
     [FieldOffset(0)]   public uint healthPoint;
     [FieldOffset(4)]   public float stunTime;
-    [FieldOffset(8)]   public fixed float maxStunPoint[3];
-    [FieldOffset(20)]  public fixed float maxStaggerPoint[5];
+    [FieldOffset(8)]   public unsafe fixed float maxStunPoint[3];
+    [FieldOffset(20)]  public unsafe fixed float maxStaggerPoint[5];
     [FieldOffset(40)]  public ushort exp;
     [FieldOffset(48)]  public PlayerMoveableRangeParam moveRangeParam;
     [FieldOffset(136)] public PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
-    [FieldOffset(224)] public fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
+    [FieldOffset(224)] public unsafe fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
 
-    public BossPhaseParam* phaseParams
+    public unsafe BossPhaseParam* phaseParams
     {
         get
         {
@@ -149,9 +152,9 @@ public struct BossPillarConfig
     [FieldOffset(4)]   public float gimmickIntervalTimeAll;
     [FieldOffset(8)]   public AttackType attackTypeAll;
     [FieldOffset(12)]  public float attackIntervalTimeAll;
-    [FieldOffset(16)]  public fixed byte /* BossPillarParam[32] */ _pillars[896];
+    [FieldOffset(16)]  public unsafe fixed byte /* BossPillarParam[32] */ _pillars[896];
 
-    public BossPillarParam* pillars
+    public unsafe BossPillarParam* pillars
     {
         get
         {
@@ -222,9 +225,9 @@ public enum ColliderProperty : short
 public struct BossColliderStatus
 {
     [FieldOffset(0)]  public ColliderActiveType type;
-    [FieldOffset(2)]  public fixed byte /* ColliderProperty[4] */ _propertys[8];
+    [FieldOffset(2)]  public unsafe fixed byte /* ColliderProperty[4] */ _propertys[8];
 
-    public ColliderProperty* propertys
+    public unsafe ColliderProperty* propertys
     {
         get
         {
@@ -253,9 +256,9 @@ public struct BossPerceiveCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 8208)]
 public struct BossPerceivePartsWithCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
 
-    public BossPerceiveCollisionParam* perceiveCollisions
+    public unsafe BossPerceiveCollisionParam* perceiveCollisions
     {
         get
         {
@@ -356,7 +359,7 @@ public struct BossMeshFrameParam
     [FieldOffset(88)]  public BossStickParam stickParam;
     [FieldOffset(96)]  public BossDamagePointParam damagePoint;
     [FieldOffset(120)] public BossDashCirclPointParam dashCirclPoint;
-    [FieldOffset(160)] public fixed int linkNums[5];
+    [FieldOffset(160)] public unsafe fixed int linkNums[5];
     [FieldOffset(192)] public Vector3 offsetPos;
     [FieldOffset(208)] public Vector3 offsetRot;
 }
@@ -364,9 +367,9 @@ public struct BossMeshFrameParam
 [StructLayout(LayoutKind.Explicit, Size = 57360)]
 public struct BossMeshFrameConfig
 {
-    [FieldOffset(0)]     public fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
+    [FieldOffset(0)]     public unsafe fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
 
-    public BossMeshFrameParam* meshShapeKeyFrames
+    public unsafe BossMeshFrameParam* meshShapeKeyFrames
     {
         get
         {
@@ -400,9 +403,9 @@ public struct BossAttackCollisionParam
     [FieldOffset(0)]  public bool isUse;
     [FieldOffset(8)]  public CString attachNodeName;
     [FieldOffset(24)] public float damageVelocityRaito;
-    [FieldOffset(28)] public fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
+    [FieldOffset(28)] public unsafe fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
 
-    public BossAttackCollisionParam_AttackType* types
+    public unsafe BossAttackCollisionParam_AttackType* types
     {
         get
         {
@@ -420,9 +423,9 @@ public struct BossAttackCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 7184)]
 public struct BossAttackCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
 
-    public BossAttackCollisionParam* attackCollisions
+    public unsafe BossAttackCollisionParam* attackCollisions
     {
         get
         {
@@ -451,9 +454,9 @@ public struct BossBattlePhaseCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 1552)]
 public struct BossBattlePhaseCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
 
-    public BossBattlePhaseCollisionParam* battleCollisions
+    public unsafe BossBattlePhaseCollisionParam* battleCollisions
     {
         get
         {
@@ -514,9 +517,9 @@ public struct BossGiantPhaseParam
     [FieldOffset(0)]  public float attackWaitTime;
     [FieldOffset(4)]  public float attackSpeedRatio;
     [FieldOffset(8)]  public uint knockbackCountMax;
-    [FieldOffset(12)] public fixed byte /* ActionType[16] */ _attackTypes[16];
+    [FieldOffset(12)] public unsafe fixed byte /* ActionType[16] */ _attackTypes[16];
 
-    public ActionType* attackTypes
+    public unsafe ActionType* attackTypes
     {
         get
         {
@@ -606,9 +609,9 @@ public struct BossGiantThresholdRingSupplyParam
 [StructLayout(LayoutKind.Explicit, Size = 1260)]
 public struct BossGiantBattleParam
 {
-    [FieldOffset(0)]    public fixed byte /* BossGiantPhaseParam[4] */ _giantPhaseParams[112];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossGiantPhaseParam[4] */ _giantPhaseParams[112];
 
-    public BossGiantPhaseParam* giantPhaseParams
+    public unsafe BossGiantPhaseParam* giantPhaseParams
     {
         get
         {
@@ -617,9 +620,9 @@ public struct BossGiantBattleParam
         }
     }
 
-    [FieldOffset(112)]  public fixed byte /* BossGiantPhaseAttackActionParam[15] */ _actionParams[1080];
+    [FieldOffset(112)]  public unsafe fixed byte /* BossGiantPhaseAttackActionParam[15] */ _actionParams[1080];
 
-    public BossGiantPhaseAttackActionParam* actionParams
+    public unsafe BossGiantPhaseAttackActionParam* actionParams
     {
         get
         {
@@ -628,9 +631,9 @@ public struct BossGiantBattleParam
         }
     }
 
-    [FieldOffset(1192)] public fixed byte /* BossGiantBattleParam_ActionType[20] */ _immediateActions[20];
+    [FieldOffset(1192)] public unsafe fixed byte /* BossGiantBattleParam_ActionType[20] */ _immediateActions[20];
 
-    public BossGiantBattleParam_ActionType* immediateActions
+    public unsafe BossGiantBattleParam_ActionType* immediateActions
     {
         get
         {
@@ -640,9 +643,9 @@ public struct BossGiantBattleParam
     }
 
     [FieldOffset(1212)] public BossGiantCyloopFloatActionParam cyloopFloatAction;
-    [FieldOffset(1220)] public fixed byte /* BossGiantThresholdRingSupplyParam[3] */ _thresholdRingSupply[24];
+    [FieldOffset(1220)] public unsafe fixed byte /* BossGiantThresholdRingSupplyParam[3] */ _thresholdRingSupply[24];
 
-    public BossGiantThresholdRingSupplyParam* thresholdRingSupply
+    public unsafe BossGiantThresholdRingSupplyParam* thresholdRingSupply
     {
         get
         {
@@ -651,7 +654,7 @@ public struct BossGiantBattleParam
         }
     }
 
-    [FieldOffset(1244)] public fixed float thresholdDamageEffectHPRatio[3];
+    [FieldOffset(1244)] public unsafe fixed float thresholdDamageEffectHPRatio[3];
     [FieldOffset(1256)] public bool isDebugDraw;
 }
 
@@ -678,3 +681,4 @@ public struct BossGiantConfig
     [FieldOffset(76972)] public BossGiantNotifierParam notifierParam;
 }
 
+} // BossGiantConfigClass

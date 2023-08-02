@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BakeBoxParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -21,3 +24,4 @@ public struct BakeBoxParameter
     [FieldOffset(32)] public Vector3 halfExtents;
 }
 
+} // BakeBoxParameterClass

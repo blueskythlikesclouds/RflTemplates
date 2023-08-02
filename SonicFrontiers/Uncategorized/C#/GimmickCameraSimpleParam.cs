@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GimmickCameraSimpleParamClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct GimmickCameraSimpleParam
 {
@@ -8,3 +11,4 @@ public struct GimmickCameraSimpleParam
     [FieldOffset(16)] public Vector3 cameraPosOffset;
 }
 
+} // GimmickCameraSimpleParamClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjStriderLaserConfigClass
+{
+
 public struct ColorF
 {
     public float A;
@@ -50,3 +53,4 @@ public struct ObjStriderLaserConfig
     [FieldOffset(32)] public ArcLaserConfig arcLaserConfig;
 }
 
+} // ObjStriderLaserConfigClass

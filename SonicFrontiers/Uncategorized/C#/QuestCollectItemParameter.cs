@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class QuestCollectItemParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 16)]
 public struct QuestCollectitemTimerParameter
 {
@@ -33,9 +36,9 @@ public struct QuestCollectItemParameterElement
 [StructLayout(LayoutKind.Explicit, Size = 132)]
 public struct QuestCollectItemParameter
 {
-    [FieldOffset(0)] public fixed byte /* QuestCollectItemParameterElement[3] */ _element[132];
+    [FieldOffset(0)] public unsafe fixed byte /* QuestCollectItemParameterElement[3] */ _element[132];
 
-    public QuestCollectItemParameterElement* element
+    public unsafe QuestCollectItemParameterElement* element
     {
         get
         {
@@ -45,3 +48,4 @@ public struct QuestCollectItemParameter
     }
 }
 
+} // QuestCollectItemParameterClass

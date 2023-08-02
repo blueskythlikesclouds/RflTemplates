@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BGMInfoParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -80,9 +83,9 @@ public struct BGMSceneInfo
 [StructLayout(LayoutKind.Explicit, Size = 3680)]
 public struct BGMInfoParameter
 {
-    [FieldOffset(0)]    public fixed byte /* BGMInfo[32] */ _changeBgmInfo[2048];
+    [FieldOffset(0)]    public unsafe fixed byte /* BGMInfo[32] */ _changeBgmInfo[2048];
 
-    public BGMInfo* changeBgmInfo
+    public unsafe BGMInfo* changeBgmInfo
     {
         get
         {
@@ -91,9 +94,9 @@ public struct BGMInfoParameter
         }
     }
 
-    [FieldOffset(2048)] public fixed byte /* BGMTransitInfo[32] */ _transitBgmInfo[1536];
+    [FieldOffset(2048)] public unsafe fixed byte /* BGMTransitInfo[32] */ _transitBgmInfo[1536];
 
-    public BGMTransitInfo* transitBgmInfo
+    public unsafe BGMTransitInfo* transitBgmInfo
     {
         get
         {
@@ -102,9 +105,9 @@ public struct BGMInfoParameter
         }
     }
 
-    [FieldOffset(3584)] public fixed byte /* BGMSceneInfo[4] */ _sceneBgmInfo[96];
+    [FieldOffset(3584)] public unsafe fixed byte /* BGMSceneInfo[4] */ _sceneBgmInfo[96];
 
-    public BGMSceneInfo* sceneBgmInfo
+    public unsafe BGMSceneInfo* sceneBgmInfo
     {
         get
         {
@@ -114,3 +117,4 @@ public struct BGMInfoParameter
     }
 }
 
+} // BGMInfoParameterClass

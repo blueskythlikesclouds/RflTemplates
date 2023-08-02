@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjBossRingSupplyConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct RingParameter
 {
@@ -19,6 +22,7 @@ public struct ObjBossRingSupplyConfig
     [FieldOffset(0)]  public RingParameter ringParam;
     [FieldOffset(28)] public float requestTime;
     [FieldOffset(32)] public float accessDistance;
-    [FieldOffset(36)] public fixed uint numRings[3];
+    [FieldOffset(36)] public unsafe fixed uint numRings[3];
 }
 
+} // ObjBossRingSupplyConfigClass

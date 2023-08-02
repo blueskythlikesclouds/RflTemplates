@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GameDataInPlayLogClass
+{
+
 public enum Status : sbyte
 {
     STATUS_ZERO_FILL = 0,
@@ -52,7 +55,7 @@ public struct HeaderData
     [FieldOffset(15)] public byte reserved1;
     [FieldOffset(16)] public uint saveDate;
     [FieldOffset(20)] public byte index;
-    [FieldOffset(24)] public fixed uint reserved[4];
+    [FieldOffset(24)] public unsafe fixed uint reserved[4];
 }
 
 public enum GamePlayData_Status : sbyte
@@ -85,7 +88,7 @@ public struct GamePlayData
     [FieldOffset(52)] public uint hour;
     [FieldOffset(56)] public uint minute;
     [FieldOffset(60)] public float second;
-    [FieldOffset(64)] public fixed uint reserved[4];
+    [FieldOffset(64)] public unsafe fixed uint reserved[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 96)]
@@ -96,7 +99,7 @@ public struct CharacterData
     [FieldOffset(3)]  public byte speedLevel;
     [FieldOffset(4)]  public byte obtainChaosEmeralds;
     [FieldOffset(5)]  public byte hasChaosEmeralds;
-    [FieldOffset(6)]  public fixed byte skillLevel[30];
+    [FieldOffset(6)]  public unsafe fixed byte skillLevel[30];
     [FieldOffset(36)] public byte skillPointOld;
     [FieldOffset(37)] public byte levelOld;
     [FieldOffset(38)] public ushort padding0;
@@ -131,9 +134,9 @@ public struct IslandMapGridData
 [StructLayout(LayoutKind.Explicit, Size = 274)]
 public struct IslandMapData
 {
-    [FieldOffset(0)]   public fixed byte /* IslandMapGridData[136] */ _grid[272];
+    [FieldOffset(0)]   public unsafe fixed byte /* IslandMapGridData[136] */ _grid[272];
 
-    public IslandMapGridData* grid
+    public unsafe IslandMapGridData* grid
     {
         get
         {
@@ -151,15 +154,15 @@ public struct IslandStageData
     [FieldOffset(0)]   public Vector3 destination;
     [FieldOffset(16)]  public uint flags;
     [FieldOffset(20)]  public IslandMapData map;
-    [FieldOffset(296)] public fixed uint reserved[4];
+    [FieldOffset(296)] public unsafe fixed uint reserved[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1600)]
 public struct IslandStageContainerData
 {
-    [FieldOffset(0)] public fixed byte /* IslandStageData[5] */ _islands[1600];
+    [FieldOffset(0)] public unsafe fixed byte /* IslandStageData[5] */ _islands[1600];
 
-    public IslandStageData* islands
+    public unsafe IslandStageData* islands
     {
         get
         {
@@ -174,15 +177,15 @@ public struct CyberStageData
 {
     [FieldOffset(0)] public ushort flags;
     [FieldOffset(4)] public uint bestTime;
-    [FieldOffset(8)] public fixed uint reserved[4];
+    [FieldOffset(8)] public unsafe fixed uint reserved[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 768)]
 public struct CyberStageContainerData
 {
-    [FieldOffset(0)] public fixed byte /* CyberStageData[32] */ _actStages[768];
+    [FieldOffset(0)] public unsafe fixed byte /* CyberStageData[32] */ _actStages[768];
 
-    public CyberStageData* actStages
+    public unsafe CyberStageData* actStages
     {
         get
         {
@@ -195,25 +198,25 @@ public struct CyberStageContainerData
 [StructLayout(LayoutKind.Explicit, Size = 288)]
 public struct FlagContainerData
 {
-    [FieldOffset(0)]   public fixed uint bitFlags[24];
-    [FieldOffset(96)]  public fixed sbyte byteFlags[128];
-    [FieldOffset(224)] public fixed uint intDatas[16];
+    [FieldOffset(0)]   public unsafe fixed uint bitFlags[24];
+    [FieldOffset(96)]  public unsafe fixed sbyte byteFlags[128];
+    [FieldOffset(224)] public unsafe fixed uint intDatas[16];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 7168)]
 public struct WorldFlagData
 {
-    [FieldOffset(0)]    public fixed uint bitFlags[1024];
-    [FieldOffset(4096)] public fixed sbyte byteFlags[1024];
-    [FieldOffset(5120)] public fixed uint intDatas[512];
+    [FieldOffset(0)]    public unsafe fixed uint bitFlags[1024];
+    [FieldOffset(4096)] public unsafe fixed sbyte byteFlags[1024];
+    [FieldOffset(5120)] public unsafe fixed uint intDatas[512];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 43008)]
 public struct WorldFlagContainerData
 {
-    [FieldOffset(0)]     public fixed byte /* WorldFlagData[5] */ _worldDatas[35840];
+    [FieldOffset(0)]     public unsafe fixed byte /* WorldFlagData[5] */ _worldDatas[35840];
 
-    public WorldFlagData* worldDatas
+    public unsafe WorldFlagData* worldDatas
     {
         get
         {
@@ -265,9 +268,9 @@ public struct PlayLogData
 {
     [FieldOffset(0)]      public uint numFootMarks;
     [FieldOffset(4)]      public uint footMarksIndex;
-    [FieldOffset(8)]      public fixed byte /* PlayLogCoordData[36000] */ _footmarks[216000];
+    [FieldOffset(8)]      public unsafe fixed byte /* PlayLogCoordData[36000] */ _footmarks[216000];
 
-    public PlayLogCoordData* footmarks
+    public unsafe PlayLogCoordData* footmarks
     {
         get
         {
@@ -278,9 +281,9 @@ public struct PlayLogData
 
     [FieldOffset(216008)] public uint numEvents;
     [FieldOffset(216012)] public uint eventsIndex;
-    [FieldOffset(216016)] public fixed byte /* PlayLogEventData[50000] */ _events[400000];
+    [FieldOffset(216016)] public unsafe fixed byte /* PlayLogEventData[50000] */ _events[400000];
 
-    public PlayLogEventData* events
+    public unsafe PlayLogEventData* events
     {
         get
         {
@@ -300,9 +303,9 @@ public struct StatValue
 [StructLayout(LayoutKind.Explicit, Size = 27144)]
 public struct StatsContainerData
 {
-    [FieldOffset(0)] public fixed byte /* StatValue[3393] */ _stats[27144];
+    [FieldOffset(0)] public unsafe fixed byte /* StatValue[3393] */ _stats[27144];
 
-    public StatValue* stats
+    public unsafe StatValue* stats
     {
         get
         {
@@ -365,7 +368,7 @@ public struct WeatherData
     [FieldOffset(4)]  public WeatherTimerData timer;
     [FieldOffset(12)] public WeatherBlockData block;
     [FieldOffset(32)] public int stageNo;
-    [FieldOffset(36)] public fixed uint reserved[4];
+    [FieldOffset(36)] public unsafe fixed uint reserved[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 689104)]
@@ -383,3 +386,4 @@ public struct GameDataInPlayLog
     [FieldOffset(689048)] public WeatherData weather;
 }
 
+} // GameDataInPlayLogClass

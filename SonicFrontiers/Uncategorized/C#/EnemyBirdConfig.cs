@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyBirdConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 112)]
 public struct EnemyBirdCommonParam
 {
@@ -176,9 +179,9 @@ public struct EnemyBirdParam
 public struct EnemyBirdConfig
 {
     [FieldOffset(0)]   public EnemyBirdCommonParam commonParam;
-    [FieldOffset(112)] public fixed byte /* EnemyBirdLevelParam[5] */ _levelParams[80];
+    [FieldOffset(112)] public unsafe fixed byte /* EnemyBirdLevelParam[5] */ _levelParams[80];
 
-    public EnemyBirdLevelParam* levelParams
+    public unsafe EnemyBirdLevelParam* levelParams
     {
         get
         {
@@ -187,9 +190,9 @@ public struct EnemyBirdConfig
         }
     }
 
-    [FieldOffset(192)] public fixed byte /* EnemyBirdLevelBand[5] */ _levelBand[20];
+    [FieldOffset(192)] public unsafe fixed byte /* EnemyBirdLevelBand[5] */ _levelBand[20];
 
-    public EnemyBirdLevelBand* levelBand
+    public unsafe EnemyBirdLevelBand* levelBand
     {
         get
         {
@@ -201,3 +204,4 @@ public struct EnemyBirdConfig
     [FieldOffset(224)] public EnemyBirdParam birdParam;
 }
 
+} // EnemyBirdConfigClass

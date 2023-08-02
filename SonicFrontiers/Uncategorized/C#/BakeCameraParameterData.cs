@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BakeCameraParameterDataClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct BakeCameraParameterData
 {
@@ -8,3 +11,4 @@ public struct BakeCameraParameterData
     [FieldOffset(16)] public Vector3 eye;
 }
 
+} // BakeCameraParameterDataClass

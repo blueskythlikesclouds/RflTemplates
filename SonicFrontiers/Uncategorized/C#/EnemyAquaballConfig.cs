@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyAquaballConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct RingParameter
 {
@@ -31,7 +34,7 @@ public struct EnemyAquaballPatrolConfig
 public struct EnemyAquaballActionConfig
 {
     [FieldOffset(0)]  public int maxSuccessCount;
-    [FieldOffset(4)]  public fixed Vector2 bounceSuccessTiming[3];
+    [FieldOffset(4)]  public unsafe fixed Vector2 bounceSuccessTiming[3];
     [FieldOffset(28)] public float captureLimitTime;
     [FieldOffset(32)] public float captureLimitHeight;
     [FieldOffset(36)] public float failLimitTime;
@@ -79,9 +82,9 @@ public struct EnemyAquaballLevelBand
 public struct EnemyAquaballConfig
 {
     [FieldOffset(0)]   public EnemyAquaballCommonParam commonParam;
-    [FieldOffset(136)] public fixed byte /* EnemyAquaballLevelParam[5] */ _levelParams[80];
+    [FieldOffset(136)] public unsafe fixed byte /* EnemyAquaballLevelParam[5] */ _levelParams[80];
 
-    public EnemyAquaballLevelParam* levelParams
+    public unsafe EnemyAquaballLevelParam* levelParams
     {
         get
         {
@@ -90,9 +93,9 @@ public struct EnemyAquaballConfig
         }
     }
 
-    [FieldOffset(216)] public fixed byte /* EnemyAquaballLevelBand[5] */ _levelBand[20];
+    [FieldOffset(216)] public unsafe fixed byte /* EnemyAquaballLevelBand[5] */ _levelBand[20];
 
-    public EnemyAquaballLevelBand* levelBand
+    public unsafe EnemyAquaballLevelBand* levelBand
     {
         get
         {
@@ -102,3 +105,4 @@ public struct EnemyAquaballConfig
     }
 }
 
+} // EnemyAquaballConfigClass

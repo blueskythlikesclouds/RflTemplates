@@ -1,11 +1,14 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BattleRushParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct BattleRushPhaseRankParameter
 {
-    [FieldOffset(0)]  public fixed uint rankTime[4];
-    [FieldOffset(16)] public fixed uint rankTimeAll[4];
+    [FieldOffset(0)]  public unsafe fixed uint rankTime[4];
+    [FieldOffset(16)] public unsafe fixed uint rankTimeAll[4];
 }
 
 public enum BgmType : sbyte
@@ -33,12 +36,12 @@ public enum BgmType : sbyte
 public struct BattleRushStageParameter
 {
     [FieldOffset(0)]   public uint numPhases;
-    [FieldOffset(4)]   public fixed float phaseLimitTime[11];
-    [FieldOffset(48)]  public fixed float phaseClearedTime[11];
-    [FieldOffset(92)]  public fixed float phaseResultTime[11];
-    [FieldOffset(136)] public fixed byte /* BattleRushPhaseRankParameter[11] */ _phaseRank[352];
+    [FieldOffset(4)]   public unsafe fixed float phaseLimitTime[11];
+    [FieldOffset(48)]  public unsafe fixed float phaseClearedTime[11];
+    [FieldOffset(92)]  public unsafe fixed float phaseResultTime[11];
+    [FieldOffset(136)] public unsafe fixed byte /* BattleRushPhaseRankParameter[11] */ _phaseRank[352];
 
-    public BattleRushPhaseRankParameter* phaseRank
+    public unsafe BattleRushPhaseRankParameter* phaseRank
     {
         get
         {
@@ -47,9 +50,9 @@ public struct BattleRushStageParameter
         }
     }
 
-    [FieldOffset(488)] public fixed byte /* BgmType[11] */ _phaseBgmType[11];
+    [FieldOffset(488)] public unsafe fixed byte /* BgmType[11] */ _phaseBgmType[11];
 
-    public BgmType* phaseBgmType
+    public unsafe BgmType* phaseBgmType
     {
         get
         {
@@ -65,9 +68,9 @@ public struct BattleRushStageParameter
 [StructLayout(LayoutKind.Explicit, Size = 2036)]
 public struct BattleRushParameter
 {
-    [FieldOffset(0)]    public fixed byte /* BattleRushStageParameter[4] */ _stages[2032];
+    [FieldOffset(0)]    public unsafe fixed byte /* BattleRushStageParameter[4] */ _stages[2032];
 
-    public BattleRushStageParameter* stages
+    public unsafe BattleRushStageParameter* stages
     {
         get
         {
@@ -79,3 +82,4 @@ public struct BattleRushParameter
     [FieldOffset(2032)] public float viewPaseResultTime;
 }
 
+} // BattleRushParameterClass

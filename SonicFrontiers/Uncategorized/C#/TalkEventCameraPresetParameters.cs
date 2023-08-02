@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class TalkEventCameraPresetParametersClass
+{
+
 public enum GazePositionType : sbyte
 {
     Base = 0,
@@ -28,9 +31,9 @@ public struct TalkEventCameraPresetParameter
 [StructLayout(LayoutKind.Explicit, Size = 576)]
 public struct TalkEventCameraPresetParameters
 {
-    [FieldOffset(0)] public fixed byte /* TalkEventCameraPresetParameter[16] */ _param[576];
+    [FieldOffset(0)] public unsafe fixed byte /* TalkEventCameraPresetParameter[16] */ _param[576];
 
-    public TalkEventCameraPresetParameter* param
+    public unsafe TalkEventCameraPresetParameter* param
     {
         get
         {
@@ -40,3 +43,4 @@ public struct TalkEventCameraPresetParameters
     }
 }
 
+} // TalkEventCameraPresetParametersClass

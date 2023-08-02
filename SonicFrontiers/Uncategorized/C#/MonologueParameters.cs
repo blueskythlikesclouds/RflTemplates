@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MonologueParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -17,9 +20,9 @@ public struct CString
 public struct MonologueIslandParameters
 {
     [FieldOffset(0)] public float playSpanTime;
-    [FieldOffset(8)] public fixed byte /* CString[24] */ _labelNames[6120];
+    [FieldOffset(8)] public unsafe fixed byte /* CString[24] */ _labelNames[6120];
 
-    public CString* labelNames
+    public unsafe CString* labelNames
     {
         get
         {
@@ -32,9 +35,9 @@ public struct MonologueIslandParameters
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MonologueMultiTextParameters
 {
-    [FieldOffset(0)] public fixed byte /* CString[4] */ _labelNames[1020];
+    [FieldOffset(0)] public unsafe fixed byte /* CString[4] */ _labelNames[1020];
 
-    public CString* labelNames
+    public unsafe CString* labelNames
     {
         get
         {
@@ -59,9 +62,9 @@ public enum Value : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 2032)]
 public struct MonologueParameters
 {
-    [FieldOffset(0)]    public fixed byte /* MonologueIslandParameters[5] */ _islands[1960];
+    [FieldOffset(0)]    public unsafe fixed byte /* MonologueIslandParameters[5] */ _islands[1960];
 
-    public MonologueIslandParameters* islands
+    public unsafe MonologueIslandParameters* islands
     {
         get
         {
@@ -76,3 +79,4 @@ public struct MonologueParameters
     [FieldOffset(2026)] public Value dummy;
 }
 
+} // MonologueParametersClass

@@ -1,18 +1,21 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class UIMapParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct ChallengeID1DimParameter
 {
-    [FieldOffset(0)] public fixed int challengeID[40];
+    [FieldOffset(0)] public unsafe fixed int challengeID[40];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 6400)]
 public struct IslandMapParameter
 {
-    [FieldOffset(0)] public fixed byte /* ChallengeID1DimParameter[40] */ _challengeIDHorizonGridGroup[6400];
+    [FieldOffset(0)] public unsafe fixed byte /* ChallengeID1DimParameter[40] */ _challengeIDHorizonGridGroup[6400];
 
-    public ChallengeID1DimParameter* challengeIDHorizonGridGroup
+    public unsafe ChallengeID1DimParameter* challengeIDHorizonGridGroup
     {
         get
         {
@@ -40,9 +43,9 @@ public struct IDColor
 [StructLayout(LayoutKind.Explicit, Size = 33088)]
 public struct UIMapParameter
 {
-    [FieldOffset(0)]     public fixed byte /* IslandMapParameter[5] */ _islandMapParam[32000];
+    [FieldOffset(0)]     public unsafe fixed byte /* IslandMapParameter[5] */ _islandMapParam[32000];
 
-    public IslandMapParameter* islandMapParam
+    public unsafe IslandMapParameter* islandMapParam
     {
         get
         {
@@ -51,9 +54,9 @@ public struct UIMapParameter
         }
     }
 
-    [FieldOffset(32000)] public fixed byte /* IDColor[136] */ _idColors[1088];
+    [FieldOffset(32000)] public unsafe fixed byte /* IDColor[136] */ _idColors[1088];
 
-    public IDColor* idColors
+    public unsafe IDColor* idColors
     {
         get
         {
@@ -63,3 +66,4 @@ public struct UIMapParameter
     }
 }
 
+} // UIMapParameterClass

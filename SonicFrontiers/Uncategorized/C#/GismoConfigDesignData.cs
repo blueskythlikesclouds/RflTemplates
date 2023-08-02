@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GismoConfigDesignDataClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -98,9 +101,9 @@ public struct MotionData
 [StructLayout(LayoutKind.Explicit, Size = 144)]
 public struct MirageAnimData
 {
-    [FieldOffset(0)]  public fixed byte /* CString[3] */ _texSrtAnimName[765];
+    [FieldOffset(0)]  public unsafe fixed byte /* CString[3] */ _texSrtAnimName[765];
 
-    public CString* texSrtAnimName
+    public unsafe CString* texSrtAnimName
     {
         get
         {
@@ -109,9 +112,9 @@ public struct MirageAnimData
         }
     }
 
-    [FieldOffset(48)] public fixed byte /* CString[3] */ _texPatAnimName[765];
+    [FieldOffset(48)] public unsafe fixed byte /* CString[3] */ _texPatAnimName[765];
 
-    public CString* texPatAnimName
+    public unsafe CString* texPatAnimName
     {
         get
         {
@@ -120,9 +123,9 @@ public struct MirageAnimData
         }
     }
 
-    [FieldOffset(96)] public fixed byte /* CString[3] */ _matAnimName[765];
+    [FieldOffset(96)] public unsafe fixed byte /* CString[3] */ _matAnimName[765];
 
-    public CString* matAnimName
+    public unsafe CString* matAnimName
     {
         get
         {
@@ -218,3 +221,4 @@ public struct GismoConfigDesignData
     [FieldOffset(2064)] public bool ignoreMeteorShowerAndRespawnOnReenterRange;
 }
 
+} // GismoConfigDesignDataClass

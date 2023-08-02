@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GameGrassInteractionParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -26,9 +29,9 @@ public struct GameGrassInteractionParameterData
 [StructLayout(LayoutKind.Explicit, Size = 1024)]
 public struct GameGrassInteractionParameter
 {
-    [FieldOffset(0)] public fixed byte /* GameGrassInteractionParameterData[32] */ _data[1024];
+    [FieldOffset(0)] public unsafe fixed byte /* GameGrassInteractionParameterData[32] */ _data[1024];
 
-    public GameGrassInteractionParameterData* data
+    public unsafe GameGrassInteractionParameterData* data
     {
         get
         {
@@ -38,3 +41,4 @@ public struct GameGrassInteractionParameter
     }
 }
 
+} // GameGrassInteractionParameterClass

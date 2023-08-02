@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ReflexesPanelParamClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct ReflexesPanelCameraParam
 {
@@ -22,3 +25,4 @@ public struct ReflexesPanelParam
     [FieldOffset(16)] public ReflexesPanelPanelParam panelParam;
 }
 
+} // ReflexesPanelParamClass

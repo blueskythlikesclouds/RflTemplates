@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjTimeBallConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct CollisionConfig
 {
@@ -32,3 +35,4 @@ public struct ObjTimeBallConfig
     [FieldOffset(40)] public CorrectionsConfig correctionsConfig;
 }
 
+} // ObjTimeBallConfigClass

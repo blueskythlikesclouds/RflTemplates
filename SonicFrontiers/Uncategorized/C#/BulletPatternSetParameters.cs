@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BulletPatternSetParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct HackingBulletParameter
 {
@@ -61,9 +64,9 @@ public struct BulletPatternParameter
     [FieldOffset(28)] public float laserLength;
     [FieldOffset(32)] public float lifeTime;
     [FieldOffset(36)] public bool animation;
-    [FieldOffset(40)] public fixed byte /* AnimationParameter[8] */ _animParam[64];
+    [FieldOffset(40)] public unsafe fixed byte /* AnimationParameter[8] */ _animParam[64];
 
-    public AnimationParameter* animParam
+    public unsafe AnimationParameter* animParam
     {
         get
         {
@@ -84,9 +87,9 @@ public struct BulletPatternSetParameter
 public struct BulletPatternSetParameters
 {
     [FieldOffset(0)]  public HackingBulletParameter bulletParam;
-    [FieldOffset(32)] public fixed byte /* BulletPatternSetParameter[256] */ _data[30720];
+    [FieldOffset(32)] public unsafe fixed byte /* BulletPatternSetParameter[256] */ _data[30720];
 
-    public BulletPatternSetParameter* data
+    public unsafe BulletPatternSetParameter* data
     {
         get
         {
@@ -96,3 +99,4 @@ public struct BulletPatternSetParameters
     }
 }
 
+} // BulletPatternSetParametersClass

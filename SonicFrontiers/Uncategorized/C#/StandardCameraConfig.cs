@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class StandardCameraConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 104)]
 public struct StandardCameraCommonParameter
 {
@@ -153,3 +156,4 @@ public struct StandardCameraConfig
     [FieldOffset(652)] public StandardCameraOptionParameter option;
 }
 
+} // StandardCameraConfigClass

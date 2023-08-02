@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjKodamaEscortParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 144)]
 public struct ObjKodamaEscortParameterElement
 {
@@ -39,9 +42,9 @@ public struct ObjKodamaEscortParameterElement
 [StructLayout(LayoutKind.Explicit, Size = 432)]
 public struct ObjKodamaEscortParameter
 {
-    [FieldOffset(0)] public fixed byte /* ObjKodamaEscortParameterElement[3] */ _element[432];
+    [FieldOffset(0)] public unsafe fixed byte /* ObjKodamaEscortParameterElement[3] */ _element[432];
 
-    public ObjKodamaEscortParameterElement* element
+    public unsafe ObjKodamaEscortParameterElement* element
     {
         get
         {
@@ -51,3 +54,4 @@ public struct ObjKodamaEscortParameter
     }
 }
 
+} // ObjKodamaEscortParameterClass

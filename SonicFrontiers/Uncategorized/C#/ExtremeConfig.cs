@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ExtremeConfigClass
+{
+
 public enum LineType : sbyte
 {
     LINE3 = 0,
@@ -34,3 +37,4 @@ public struct ExtremeConfig
     [FieldOffset(68)] public float cameraShakeOffset;
 }
 
+} // ExtremeConfigClass

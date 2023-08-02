@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossDarumaConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -52,9 +55,9 @@ public struct MiniBossDarumaSpecialShotParamBase
     [FieldOffset(36)] public float accel;
     [FieldOffset(40)] public float waitTime;
     [FieldOffset(44)] public float featherLifeTime;
-    [FieldOffset(48)] public fixed byte /* ScatterType[6] */ _m_scatterTypeTable[6];
+    [FieldOffset(48)] public unsafe fixed byte /* ScatterType[6] */ _m_scatterTypeTable[6];
 
-    public ScatterType* m_scatterTypeTable
+    public unsafe ScatterType* m_scatterTypeTable
     {
         get
         {
@@ -195,7 +198,7 @@ public struct MiniBossDarumaCommonParam
     [FieldOffset(104)]  public float stunTime;
     [FieldOffset(108)]  public float maxSpeed;
     [FieldOffset(112)]  public float stompingTransitRange;
-    [FieldOffset(116)]  public fixed int questKodamaMaxNum[3];
+    [FieldOffset(116)]  public unsafe fixed int questKodamaMaxNum[3];
     [FieldOffset(128)]  public MiniBossDarumaShotParam shot;
     [FieldOffset(176)]  public MiniBossDarumaShotParam shot3way;
     [FieldOffset(224)]  public MiniBossDarumaShotParam shot5way;
@@ -204,9 +207,9 @@ public struct MiniBossDarumaCommonParam
     [FieldOffset(400)]  public MiniBossDarumaWaveBombParam waveBomb;
     [FieldOffset(480)]  public MiniBossDarumaStompingParam stomping;
     [FieldOffset(600)]  public MiniBossDarumaStompingParam stompingThorn;
-    [FieldOffset(720)]  public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest[360];
+    [FieldOffset(720)]  public unsafe fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest[360];
 
-    public MiniBossDarumaStompingParam* stompingQuest
+    public unsafe MiniBossDarumaStompingParam* stompingQuest
     {
         get
         {
@@ -215,9 +218,9 @@ public struct MiniBossDarumaCommonParam
         }
     }
 
-    [FieldOffset(1080)] public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuestHigh[360];
+    [FieldOffset(1080)] public unsafe fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuestHigh[360];
 
-    public MiniBossDarumaStompingParam* stompingQuestHigh
+    public unsafe MiniBossDarumaStompingParam* stompingQuestHigh
     {
         get
         {
@@ -226,9 +229,9 @@ public struct MiniBossDarumaCommonParam
         }
     }
 
-    [FieldOffset(1440)] public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest2[360];
+    [FieldOffset(1440)] public unsafe fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest2[360];
 
-    public MiniBossDarumaStompingParam* stompingQuest2
+    public unsafe MiniBossDarumaStompingParam* stompingQuest2
     {
         get
         {
@@ -237,9 +240,9 @@ public struct MiniBossDarumaCommonParam
         }
     }
 
-    [FieldOffset(1800)] public fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest2High[360];
+    [FieldOffset(1800)] public unsafe fixed byte /* MiniBossDarumaStompingParam[3] */ _stompingQuest2High[360];
 
-    public MiniBossDarumaStompingParam* stompingQuest2High
+    public unsafe MiniBossDarumaStompingParam* stompingQuest2High
     {
         get
         {
@@ -266,10 +269,10 @@ public struct MiniBossDarumaCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -326,9 +329,9 @@ public struct MiniBossDarumaLevelBand
 public struct MiniBossDarumaConfig
 {
     [FieldOffset(0)]    public MiniBossDarumaCommonParam commonParam;
-    [FieldOffset(2912)] public fixed byte /* MiniBossDarumaLevelParam[5] */ _levelParams[280];
+    [FieldOffset(2912)] public unsafe fixed byte /* MiniBossDarumaLevelParam[5] */ _levelParams[280];
 
-    public MiniBossDarumaLevelParam* levelParams
+    public unsafe MiniBossDarumaLevelParam* levelParams
     {
         get
         {
@@ -337,9 +340,9 @@ public struct MiniBossDarumaConfig
         }
     }
 
-    [FieldOffset(3200)] public fixed byte /* MiniBossDarumaLevelBand[5] */ _levelBands[240];
+    [FieldOffset(3200)] public unsafe fixed byte /* MiniBossDarumaLevelBand[5] */ _levelBands[240];
 
-    public MiniBossDarumaLevelBand* levelBands
+    public unsafe MiniBossDarumaLevelBand* levelBands
     {
         get
         {
@@ -352,3 +355,4 @@ public struct MiniBossDarumaConfig
     [FieldOffset(3504)] public MiniBossDarumaLevelBand levelBandQuest;
 }
 
+} // MiniBossDarumaConfigClass

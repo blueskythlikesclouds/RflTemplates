@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyJumperConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 52)]
 public struct EnemyJumperPatrolConfig
 {
@@ -110,9 +113,9 @@ public struct BattleParam
 public struct EnemyJumperConfig
 {
     [FieldOffset(0)]   public EnemyJumperCommonParam commonParam;
-    [FieldOffset(128)] public fixed byte /* EnemyJumperLevelParam[5] */ _levelParams[80];
+    [FieldOffset(128)] public unsafe fixed byte /* EnemyJumperLevelParam[5] */ _levelParams[80];
 
-    public EnemyJumperLevelParam* levelParams
+    public unsafe EnemyJumperLevelParam* levelParams
     {
         get
         {
@@ -121,9 +124,9 @@ public struct EnemyJumperConfig
         }
     }
 
-    [FieldOffset(208)] public fixed byte /* EnemyJumperLevelBand[5] */ _levelBand[20];
+    [FieldOffset(208)] public unsafe fixed byte /* EnemyJumperLevelBand[5] */ _levelBand[20];
 
-    public EnemyJumperLevelBand* levelBand
+    public unsafe EnemyJumperLevelBand* levelBand
     {
         get
         {
@@ -137,3 +140,4 @@ public struct EnemyJumperConfig
     [FieldOffset(304)] public BattleParam battleParam;
 }
 
+} // EnemyJumperConfigClass

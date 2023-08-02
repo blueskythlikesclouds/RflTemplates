@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class RecordDataClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -73,3 +76,4 @@ public struct RecordData
     [FieldOffset(0)] public AnimData animDatas;
 }
 
+} // RecordDataClass

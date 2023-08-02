@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class HeightFieldConfigClass
+{
+
 public enum LayerType : sbyte
 {
     LAYER_NONE = 0,
@@ -85,9 +88,9 @@ public struct HeightFieldConfigData
 [StructLayout(LayoutKind.Explicit, Size = 1275)]
 public struct HeightFieldConfig
 {
-    [FieldOffset(0)] public fixed byte /* HeightFieldConfigData[255] */ _data[1275];
+    [FieldOffset(0)] public unsafe fixed byte /* HeightFieldConfigData[255] */ _data[1275];
 
-    public HeightFieldConfigData* data
+    public unsafe HeightFieldConfigData* data
     {
         get
         {
@@ -97,3 +100,4 @@ public struct HeightFieldConfig
     }
 }
 
+} // HeightFieldConfigClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class PlayerParamLowAltitudeJumpClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct PlayerParamLowAltitudeJump
 {
@@ -12,3 +15,4 @@ public struct PlayerParamLowAltitudeJump
     [FieldOffset(20)] public float time;
 }
 
+} // PlayerParamLowAltitudeJumpClass

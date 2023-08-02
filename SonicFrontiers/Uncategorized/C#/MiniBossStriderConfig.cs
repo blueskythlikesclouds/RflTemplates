@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossStriderConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -22,10 +25,10 @@ public struct MiniBossStriderCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -64,9 +67,9 @@ public struct AttackInfo
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct AttackPhase
 {
-    [FieldOffset(0)]  public fixed byte /* AttackInfo[2] */ _attackInfos[16];
+    [FieldOffset(0)]  public unsafe fixed byte /* AttackInfo[2] */ _attackInfos[16];
 
-    public AttackInfo* attackInfos
+    public unsafe AttackInfo* attackInfos
     {
         get
         {
@@ -81,9 +84,9 @@ public struct AttackPhase
 [StructLayout(LayoutKind.Explicit, Size = 140)]
 public struct MiniBossStriderParam
 {
-    [FieldOffset(0)]   public fixed byte /* AttackPhase[3] */ _attackPhases[60];
+    [FieldOffset(0)]   public unsafe fixed byte /* AttackPhase[3] */ _attackPhases[60];
 
-    public AttackPhase* attackPhases
+    public unsafe AttackPhase* attackPhases
     {
         get
         {
@@ -144,9 +147,9 @@ public struct ObjStriderPlatformParam
 public struct MiniBossStriderConfig
 {
     [FieldOffset(0)]   public MiniBossStriderCommonParam commonParam;
-    [FieldOffset(64)]  public fixed byte /* MiniBossStriderLevelParam[5] */ _levelParams[280];
+    [FieldOffset(64)]  public unsafe fixed byte /* MiniBossStriderLevelParam[5] */ _levelParams[280];
 
-    public MiniBossStriderLevelParam* levelParams
+    public unsafe MiniBossStriderLevelParam* levelParams
     {
         get
         {
@@ -155,9 +158,9 @@ public struct MiniBossStriderConfig
         }
     }
 
-    [FieldOffset(344)] public fixed byte /* MiniBossStriderLevelBand[5] */ _levelBand[20];
+    [FieldOffset(344)] public unsafe fixed byte /* MiniBossStriderLevelBand[5] */ _levelBand[20];
 
-    public MiniBossStriderLevelBand* levelBand
+    public unsafe MiniBossStriderLevelBand* levelBand
     {
         get
         {
@@ -171,3 +174,4 @@ public struct MiniBossStriderConfig
     [FieldOffset(552)] public ObjStriderPlatformParam platformParam;
 }
 
+} // MiniBossStriderConfigClass

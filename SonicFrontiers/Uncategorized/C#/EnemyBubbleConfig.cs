@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyBubbleConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct EnemyBubbleApproachConfig
 {
@@ -88,9 +91,9 @@ public struct EnemyBubbleLevelBand
 public struct EnemyBubbleConfig
 {
     [FieldOffset(0)]   public EnemyBubbleCommonParam commonParam;
-    [FieldOffset(124)] public fixed byte /* EnemyBubbleLevelParam[5] */ _levelParams[80];
+    [FieldOffset(124)] public unsafe fixed byte /* EnemyBubbleLevelParam[5] */ _levelParams[80];
 
-    public EnemyBubbleLevelParam* levelParams
+    public unsafe EnemyBubbleLevelParam* levelParams
     {
         get
         {
@@ -99,9 +102,9 @@ public struct EnemyBubbleConfig
         }
     }
 
-    [FieldOffset(204)] public fixed byte /* EnemyBubbleLevelBand[5] */ _levelBand[20];
+    [FieldOffset(204)] public unsafe fixed byte /* EnemyBubbleLevelBand[5] */ _levelBand[20];
 
-    public EnemyBubbleLevelBand* levelBand
+    public unsafe EnemyBubbleLevelBand* levelBand
     {
         get
         {
@@ -111,3 +114,4 @@ public struct EnemyBubbleConfig
     }
 }
 
+} // EnemyBubbleConfigClass

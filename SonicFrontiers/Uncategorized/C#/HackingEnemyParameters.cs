@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class HackingEnemyParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct HackingEnemyParameterNormal
 {
@@ -27,3 +30,4 @@ public struct HackingEnemyParameters
     [FieldOffset(20)] public HackingEnemyParameterCore coreEnemyParam;
 }
 
+} // HackingEnemyParametersClass

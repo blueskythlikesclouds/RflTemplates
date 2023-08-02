@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyLaserConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 16)]
 public struct EnemyLaserConfig
 {
@@ -10,3 +13,4 @@ public struct EnemyLaserConfig
     [FieldOffset(12)] public float bigLaserOmenTime;
 }
 
+} // EnemyLaserConfigClass

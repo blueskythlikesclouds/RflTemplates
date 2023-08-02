@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BossRifleBeastThresholdRingSupplyParamClass
+{
+
 public enum LaserType : sbyte
 {
     LT_NONE = 0,
@@ -15,3 +18,4 @@ public struct BossRifleBeastThresholdRingSupplyParam
     [FieldOffset(4)] public LaserType type;
 }
 
+} // BossRifleBeastThresholdRingSupplyParamClass

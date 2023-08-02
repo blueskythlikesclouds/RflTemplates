@@ -1,18 +1,21 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class Obj3DPuzzleBlockConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 5)]
 public struct FSRow
 {
-    [FieldOffset(0)] public fixed byte columns[5];
+    [FieldOffset(0)] public unsafe fixed byte columns[5];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 25)]
 public struct FSLayer
 {
-    [FieldOffset(0)] public fixed byte /* FSRow[5] */ _rows[25];
+    [FieldOffset(0)] public unsafe fixed byte /* FSRow[5] */ _rows[25];
 
-    public FSRow* rows
+    public unsafe FSRow* rows
     {
         get
         {
@@ -29,9 +32,9 @@ public struct FreeShape
     [FieldOffset(1)]  public byte numRows;
     [FieldOffset(2)]  public byte numColumns;
     [FieldOffset(16)] public Vector3 offsetToTopLeft;
-    [FieldOffset(32)] public fixed byte /* FSLayer[5] */ _layers[125];
+    [FieldOffset(32)] public unsafe fixed byte /* FSLayer[5] */ _layers[125];
 
-    public FSLayer* layers
+    public unsafe FSLayer* layers
     {
         get
         {
@@ -44,9 +47,9 @@ public struct FreeShape
 [StructLayout(LayoutKind.Explicit, Size = 4640)]
 public struct Obj3DPuzzleBlockConfig
 {
-    [FieldOffset(0)] public fixed byte /* FreeShape[29] */ _freeShapes[4640];
+    [FieldOffset(0)] public unsafe fixed byte /* FreeShape[29] */ _freeShapes[4640];
 
-    public FreeShape* freeShapes
+    public unsafe FreeShape* freeShapes
     {
         get
         {
@@ -56,3 +59,4 @@ public struct Obj3DPuzzleBlockConfig
     }
 }
 
+} // Obj3DPuzzleBlockConfigClass

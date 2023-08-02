@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossTyrantConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -29,10 +32,10 @@ public struct MiniBossTyrantCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -238,9 +241,9 @@ public struct MiniBossTyrantAttackParam
     [FieldOffset(24)]   public MiniBossTyrantAttackRouletteParam roulette;
     [FieldOffset(32)]   public MiniBossTyrantAttackLaserParam laser;
     [FieldOffset(64)]   public float rotSpeed;
-    [FieldOffset(72)]   public fixed byte /* MiniBossTyrantBarrageParam[16] */ _barrage[1152];
+    [FieldOffset(72)]   public unsafe fixed byte /* MiniBossTyrantBarrageParam[16] */ _barrage[1152];
 
-    public MiniBossTyrantBarrageParam* barrage
+    public unsafe MiniBossTyrantBarrageParam* barrage
     {
         get
         {
@@ -256,9 +259,9 @@ public struct MiniBossTyrantAttackParam
     [FieldOffset(1384)] public MiniBossTyrantAttackCircleBullet circleBullet;
     [FieldOffset(1424)] public MiniBossTyrantSequenceParameter sequenceParam;
     [FieldOffset(1448)] public MiniBossTyrantCyloopDamageParameter cyloopParam;
-    [FieldOffset(1464)] public fixed byte /* ActionType[10] */ _actionListGround[10];
+    [FieldOffset(1464)] public unsafe fixed byte /* ActionType[10] */ _actionListGround[10];
 
-    public ActionType* actionListGround
+    public unsafe ActionType* actionListGround
     {
         get
         {
@@ -267,9 +270,9 @@ public struct MiniBossTyrantAttackParam
         }
     }
 
-    [FieldOffset(1474)] public fixed byte /* ActionType[10] */ _actionListAir[10];
+    [FieldOffset(1474)] public unsafe fixed byte /* ActionType[10] */ _actionListAir[10];
 
-    public ActionType* actionListAir
+    public unsafe ActionType* actionListAir
     {
         get
         {
@@ -304,9 +307,9 @@ public struct MiniBossTyrantStormEffectParam
 public struct MiniBossTyrantConfig
 {
     [FieldOffset(0)]    public MiniBossTyrantCommonParam commonParam;
-    [FieldOffset(96)]   public fixed byte /* MiniBossTyrantLevelParam[5] */ _levelParams[280];
+    [FieldOffset(96)]   public unsafe fixed byte /* MiniBossTyrantLevelParam[5] */ _levelParams[280];
 
-    public MiniBossTyrantLevelParam* levelParams
+    public unsafe MiniBossTyrantLevelParam* levelParams
     {
         get
         {
@@ -315,9 +318,9 @@ public struct MiniBossTyrantConfig
         }
     }
 
-    [FieldOffset(376)]  public fixed byte /* MiniBossTyrantLevelBand[5] */ _levelBand[20];
+    [FieldOffset(376)]  public unsafe fixed byte /* MiniBossTyrantLevelBand[5] */ _levelBand[20];
 
-    public MiniBossTyrantLevelBand* levelBand
+    public unsafe MiniBossTyrantLevelBand* levelBand
     {
         get
         {
@@ -330,3 +333,4 @@ public struct MiniBossTyrantConfig
     [FieldOffset(1888)] public MiniBossTyrantStormEffectParam stormEffectParam;
 }
 
+} // MiniBossTyrantConfigClass

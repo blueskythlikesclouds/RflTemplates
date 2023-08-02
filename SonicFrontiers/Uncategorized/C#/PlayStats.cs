@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class PlayStatsClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -51,3 +54,4 @@ public struct PlayStats
     [FieldOffset(64)] public PlayStatsData playLog;
 }
 
+} // PlayStatsClass

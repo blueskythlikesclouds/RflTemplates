@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossChargerConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -296,9 +299,9 @@ public struct MiniBossChagerDiffuseLaser
     [FieldOffset(4)]   public float yOffset;
     [FieldOffset(8)]   public float scale;
     [FieldOffset(12)]  public int muzzleNum;
-    [FieldOffset(16)]  public fixed byte /* Vector3[10] */ _muzzlePosOffset[160];
+    [FieldOffset(16)]  public unsafe fixed byte /* Vector3[10] */ _muzzlePosOffset[160];
 
-    public Vector3* muzzlePosOffset
+    public unsafe Vector3* muzzlePosOffset
     {
         get
         {
@@ -307,9 +310,9 @@ public struct MiniBossChagerDiffuseLaser
         }
     }
 
-    [FieldOffset(176)] public fixed float muzzleRotOffset[10];
-    [FieldOffset(216)] public fixed float muzzleTimeOffset[10];
-    [FieldOffset(256)] public fixed float muzzleLaserStartOffset[10];
+    [FieldOffset(176)] public unsafe fixed float muzzleRotOffset[10];
+    [FieldOffset(216)] public unsafe fixed float muzzleTimeOffset[10];
+    [FieldOffset(256)] public unsafe fixed float muzzleLaserStartOffset[10];
     [FieldOffset(296)] public int laserNum;
     [FieldOffset(300)] public int attackNum;
     [FieldOffset(304)] public float laserRandomRange;
@@ -324,9 +327,9 @@ public struct MiniBossChagerChaseShot
 {
     [FieldOffset(0)]   public float startWaitTime;
     [FieldOffset(4)]   public int muzzleNum;
-    [FieldOffset(16)]  public fixed byte /* Vector3[10] */ _muzzlePosOffset[160];
+    [FieldOffset(16)]  public unsafe fixed byte /* Vector3[10] */ _muzzlePosOffset[160];
 
-    public Vector3* muzzlePosOffset
+    public unsafe Vector3* muzzlePosOffset
     {
         get
         {
@@ -335,10 +338,10 @@ public struct MiniBossChagerChaseShot
         }
     }
 
-    [FieldOffset(176)] public fixed float muzzleRotOffsetX[10];
-    [FieldOffset(216)] public fixed float muzzleRotOffsetY[10];
-    [FieldOffset(256)] public fixed float muzzleTimeOffset[10];
-    [FieldOffset(296)] public fixed float muzzleLaserStartOffset[10];
+    [FieldOffset(176)] public unsafe fixed float muzzleRotOffsetX[10];
+    [FieldOffset(216)] public unsafe fixed float muzzleRotOffsetY[10];
+    [FieldOffset(256)] public unsafe fixed float muzzleTimeOffset[10];
+    [FieldOffset(296)] public unsafe fixed float muzzleLaserStartOffset[10];
     [FieldOffset(336)] public float laserShotTimeMin;
     [FieldOffset(340)] public float laserShotTimeMax;
     [FieldOffset(344)] public int laserNum;
@@ -367,9 +370,9 @@ public struct MiniBossChargerCatchParam
 public struct MiniBossChargerCommonParam
 {
     [FieldOffset(0)]    public MiniBossCommonConfig commonConfig;
-    [FieldOffset(64)]   public fixed byte /* MiniBossChagerBarrageParam[16] */ _barrage[1408];
+    [FieldOffset(64)]   public unsafe fixed byte /* MiniBossChagerBarrageParam[16] */ _barrage[1408];
 
-    public MiniBossChagerBarrageParam* barrage
+    public unsafe MiniBossChagerBarrageParam* barrage
     {
         get
         {
@@ -378,9 +381,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(1472)] public fixed byte /* MiniBossChagerSimpleRotateBullet[3] */ _simpleRotateBullet[132];
+    [FieldOffset(1472)] public unsafe fixed byte /* MiniBossChagerSimpleRotateBullet[3] */ _simpleRotateBullet[132];
 
-    public MiniBossChagerSimpleRotateBullet* simpleRotateBullet
+    public unsafe MiniBossChagerSimpleRotateBullet* simpleRotateBullet
     {
         get
         {
@@ -389,9 +392,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(1604)] public fixed byte /* MiniBossChagerFollowLaser[3] */ _followLaser[108];
+    [FieldOffset(1604)] public unsafe fixed byte /* MiniBossChagerFollowLaser[3] */ _followLaser[108];
 
-    public MiniBossChagerFollowLaser* followLaser
+    public unsafe MiniBossChagerFollowLaser* followLaser
     {
         get
         {
@@ -400,9 +403,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(1712)] public fixed byte /* MiniBossChagerVortexLaser[3] */ _vortexLaser[96];
+    [FieldOffset(1712)] public unsafe fixed byte /* MiniBossChagerVortexLaser[3] */ _vortexLaser[96];
 
-    public MiniBossChagerVortexLaser* vortexLaser
+    public unsafe MiniBossChagerVortexLaser* vortexLaser
     {
         get
         {
@@ -411,9 +414,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(1808)] public fixed byte /* MiniBossChagerCrossLaser[3] */ _crossLaser[60];
+    [FieldOffset(1808)] public unsafe fixed byte /* MiniBossChagerCrossLaser[3] */ _crossLaser[60];
 
-    public MiniBossChagerCrossLaser* crossLaser
+    public unsafe MiniBossChagerCrossLaser* crossLaser
     {
         get
         {
@@ -422,9 +425,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(1868)] public fixed byte /* MiniBossChagerCrossBullet[3] */ _crossBullet[120];
+    [FieldOffset(1868)] public unsafe fixed byte /* MiniBossChagerCrossBullet[3] */ _crossBullet[120];
 
-    public MiniBossChagerCrossBullet* crossBullet
+    public unsafe MiniBossChagerCrossBullet* crossBullet
     {
         get
         {
@@ -433,9 +436,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(1988)] public fixed byte /* MiniBossChagerMassLaser[3] */ _massLaser[60];
+    [FieldOffset(1988)] public unsafe fixed byte /* MiniBossChagerMassLaser[3] */ _massLaser[60];
 
-    public MiniBossChagerMassLaser* massLaser
+    public unsafe MiniBossChagerMassLaser* massLaser
     {
         get
         {
@@ -444,9 +447,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2048)] public fixed byte /* MiniBossChagerVerticalRoundBullet[3] */ _verticalRoundBullet[96];
+    [FieldOffset(2048)] public unsafe fixed byte /* MiniBossChagerVerticalRoundBullet[3] */ _verticalRoundBullet[96];
 
-    public MiniBossChagerVerticalRoundBullet* verticalRoundBullet
+    public unsafe MiniBossChagerVerticalRoundBullet* verticalRoundBullet
     {
         get
         {
@@ -455,9 +458,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2144)] public fixed byte /* MiniBossPyramidRoundBullet[3] */ _pyramidRoundBullet[144];
+    [FieldOffset(2144)] public unsafe fixed byte /* MiniBossPyramidRoundBullet[3] */ _pyramidRoundBullet[144];
 
-    public MiniBossPyramidRoundBullet* pyramidRoundBullet
+    public unsafe MiniBossPyramidRoundBullet* pyramidRoundBullet
     {
         get
         {
@@ -466,9 +469,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2288)] public fixed byte /* MiniBossPlaneUpDownBullet[3] */ _planeUpDownBullet[144];
+    [FieldOffset(2288)] public unsafe fixed byte /* MiniBossPlaneUpDownBullet[3] */ _planeUpDownBullet[144];
 
-    public MiniBossPlaneUpDownBullet* planeUpDownBullet
+    public unsafe MiniBossPlaneUpDownBullet* planeUpDownBullet
     {
         get
         {
@@ -477,9 +480,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2432)] public fixed byte /* MiniBossTriangleBatteryBullet[3] */ _triangleBatteryBullet[84];
+    [FieldOffset(2432)] public unsafe fixed byte /* MiniBossTriangleBatteryBullet[3] */ _triangleBatteryBullet[84];
 
-    public MiniBossTriangleBatteryBullet* triangleBatteryBullet
+    public unsafe MiniBossTriangleBatteryBullet* triangleBatteryBullet
     {
         get
         {
@@ -488,9 +491,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2516)] public fixed byte /* MiniBossPlayerFallBullet[3] */ _playerFallBullet[120];
+    [FieldOffset(2516)] public unsafe fixed byte /* MiniBossPlayerFallBullet[3] */ _playerFallBullet[120];
 
-    public MiniBossPlayerFallBullet* playerFallBullet
+    public unsafe MiniBossPlayerFallBullet* playerFallBullet
     {
         get
         {
@@ -499,9 +502,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2636)] public fixed byte /* MiniBossGatlingRevolverBullet[3] */ _gatlingRevolverBullet[120];
+    [FieldOffset(2636)] public unsafe fixed byte /* MiniBossGatlingRevolverBullet[3] */ _gatlingRevolverBullet[120];
 
-    public MiniBossGatlingRevolverBullet* gatlingRevolverBullet
+    public unsafe MiniBossGatlingRevolverBullet* gatlingRevolverBullet
     {
         get
         {
@@ -510,9 +513,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2756)] public fixed byte /* MiniBossWinderBullet[3] */ _winderBullet[132];
+    [FieldOffset(2756)] public unsafe fixed byte /* MiniBossWinderBullet[3] */ _winderBullet[132];
 
-    public MiniBossWinderBullet* winderBullet
+    public unsafe MiniBossWinderBullet* winderBullet
     {
         get
         {
@@ -521,9 +524,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(2888)] public fixed byte /* MiniBossShotgunBullet[3] */ _shotgunBullet[132];
+    [FieldOffset(2888)] public unsafe fixed byte /* MiniBossShotgunBullet[3] */ _shotgunBullet[132];
 
-    public MiniBossShotgunBullet* shotgunBullet
+    public unsafe MiniBossShotgunBullet* shotgunBullet
     {
         get
         {
@@ -532,9 +535,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(3020)] public fixed byte /* MiniBossChagerAirDrop[3] */ _airDrop[144];
+    [FieldOffset(3020)] public unsafe fixed byte /* MiniBossChagerAirDrop[3] */ _airDrop[144];
 
-    public MiniBossChagerAirDrop* airDrop
+    public unsafe MiniBossChagerAirDrop* airDrop
     {
         get
         {
@@ -543,9 +546,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(3164)] public fixed byte /* MiniBossChagerGroundObj[3] */ _groundObj[180];
+    [FieldOffset(3164)] public unsafe fixed byte /* MiniBossChagerGroundObj[3] */ _groundObj[180];
 
-    public MiniBossChagerGroundObj* groundObj
+    public unsafe MiniBossChagerGroundObj* groundObj
     {
         get
         {
@@ -554,9 +557,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(3344)] public fixed byte /* MiniBossChagerDiffuseLaser[3] */ _diffuseLaser[1008];
+    [FieldOffset(3344)] public unsafe fixed byte /* MiniBossChagerDiffuseLaser[3] */ _diffuseLaser[1008];
 
-    public MiniBossChagerDiffuseLaser* diffuseLaser
+    public unsafe MiniBossChagerDiffuseLaser* diffuseLaser
     {
         get
         {
@@ -565,9 +568,9 @@ public struct MiniBossChargerCommonParam
         }
     }
 
-    [FieldOffset(4352)] public fixed byte /* MiniBossChagerChaseShot[3] */ _chaseShot[1152];
+    [FieldOffset(4352)] public unsafe fixed byte /* MiniBossChagerChaseShot[3] */ _chaseShot[1152];
 
-    public MiniBossChagerChaseShot* chaseShot
+    public unsafe MiniBossChagerChaseShot* chaseShot
     {
         get
         {
@@ -583,10 +586,10 @@ public struct MiniBossChargerCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -644,9 +647,9 @@ public struct MiniBossChargerLevelBand
     [FieldOffset(20)]  public float chanceTimeSpeedMin;
     [FieldOffset(24)]  public float damageTime;
     [FieldOffset(28)]  public float chanceTimeAddSpeed;
-    [FieldOffset(32)]  public fixed byte /* AttackType[10] */ _attackTable[40];
+    [FieldOffset(32)]  public unsafe fixed byte /* AttackType[10] */ _attackTable[40];
 
-    public AttackType* attackTable
+    public unsafe AttackType* attackTable
     {
         get
         {
@@ -655,10 +658,10 @@ public struct MiniBossChargerLevelBand
         }
     }
 
-    [FieldOffset(72)]  public fixed int attackIndexTable[10];
-    [FieldOffset(112)] public fixed byte /* MiniBossChargerHPRateParam[3] */ _hpRateParams[72];
+    [FieldOffset(72)]  public unsafe fixed int attackIndexTable[10];
+    [FieldOffset(112)] public unsafe fixed byte /* MiniBossChargerHPRateParam[3] */ _hpRateParams[72];
 
-    public MiniBossChargerHPRateParam* hpRateParams
+    public unsafe MiniBossChargerHPRateParam* hpRateParams
     {
         get
         {
@@ -696,9 +699,9 @@ public enum MiniBossChargerLevel1_AttackType : int
 public struct MiniBossChargerLevel1
 {
     [FieldOffset(0)]  public float range;
-    [FieldOffset(4)]  public fixed byte /* MiniBossChargerLevel1_AttackType[2] */ _attackTable[8];
+    [FieldOffset(4)]  public unsafe fixed byte /* MiniBossChargerLevel1_AttackType[2] */ _attackTable[8];
 
-    public MiniBossChargerLevel1_AttackType* attackTable
+    public unsafe MiniBossChargerLevel1_AttackType* attackTable
     {
         get
         {
@@ -707,16 +710,16 @@ public struct MiniBossChargerLevel1
         }
     }
 
-    [FieldOffset(12)] public fixed int attackIndexTable[2];
+    [FieldOffset(12)] public unsafe fixed int attackIndexTable[2];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 6832)]
 public struct MiniBossChargerConfig
 {
     [FieldOffset(0)]    public MiniBossChargerCommonParam commonParam;
-    [FieldOffset(5568)] public fixed byte /* MiniBossChargerLevelParam[5] */ _levelParams[300];
+    [FieldOffset(5568)] public unsafe fixed byte /* MiniBossChargerLevelParam[5] */ _levelParams[300];
 
-    public MiniBossChargerLevelParam* levelParams
+    public unsafe MiniBossChargerLevelParam* levelParams
     {
         get
         {
@@ -725,9 +728,9 @@ public struct MiniBossChargerConfig
         }
     }
 
-    [FieldOffset(5872)] public fixed byte /* MiniBossChargerLevelBand[5] */ _levelBands[920];
+    [FieldOffset(5872)] public unsafe fixed byte /* MiniBossChargerLevelBand[5] */ _levelBands[920];
 
-    public MiniBossChargerLevelBand* levelBands
+    public unsafe MiniBossChargerLevelBand* levelBands
     {
         get
         {
@@ -736,9 +739,9 @@ public struct MiniBossChargerConfig
         }
     }
 
-    [FieldOffset(6792)] public fixed byte /* MiniBossChargerLevel1[2] */ _level1Params[40];
+    [FieldOffset(6792)] public unsafe fixed byte /* MiniBossChargerLevel1[2] */ _level1Params[40];
 
-    public MiniBossChargerLevel1* level1Params
+    public unsafe MiniBossChargerLevel1* level1Params
     {
         get
         {
@@ -748,3 +751,4 @@ public struct MiniBossChargerConfig
     }
 }
 
+} // MiniBossChargerConfigClass

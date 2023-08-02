@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class PlayerCameraSetParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -57,9 +60,9 @@ public struct PlayerCameraSetParameter
     [FieldOffset(0)]  public CString name;
     [FieldOffset(16)] public float easeoutTime;
     [FieldOffset(20)] public Priority priority;
-    [FieldOffset(32)] public fixed byte /* PlayerCameraParameter[8] */ _param[896];
+    [FieldOffset(32)] public unsafe fixed byte /* PlayerCameraParameter[8] */ _param[896];
 
-    public PlayerCameraParameter* param
+    public unsafe PlayerCameraParameter* param
     {
         get
         {
@@ -72,9 +75,9 @@ public struct PlayerCameraSetParameter
 [StructLayout(LayoutKind.Explicit, Size = 41760)]
 public struct PlayerCameraSetParameters
 {
-    [FieldOffset(0)] public fixed byte /* PlayerCameraSetParameter[45] */ _data[41760];
+    [FieldOffset(0)] public unsafe fixed byte /* PlayerCameraSetParameter[45] */ _data[41760];
 
-    public PlayerCameraSetParameter* data
+    public unsafe PlayerCameraSetParameter* data
     {
         get
         {
@@ -84,3 +87,4 @@ public struct PlayerCameraSetParameters
     }
 }
 
+} // PlayerCameraSetParametersClass

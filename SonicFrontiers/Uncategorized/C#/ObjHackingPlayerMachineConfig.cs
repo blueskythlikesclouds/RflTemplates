@@ -1,12 +1,15 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjHackingPlayerMachineConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 144)]
 public struct PlayerMachineConfig
 {
     [FieldOffset(0)]   public int baseHp;
     [FieldOffset(4)]   public int lifeCount;
-    [FieldOffset(8)]   public fixed int lifeUpFailedCount[6];
+    [FieldOffset(8)]   public unsafe fixed int lifeUpFailedCount[6];
     [FieldOffset(32)]  public int lifeMax;
     [FieldOffset(36)]  public float gageUpVolume;
     [FieldOffset(40)]  public float gageMax;
@@ -72,3 +75,4 @@ public struct ObjHackingPlayerMachineConfig
     [FieldOffset(208)] public HackingConfig hacking;
 }
 
+} // ObjHackingPlayerMachineConfigClass

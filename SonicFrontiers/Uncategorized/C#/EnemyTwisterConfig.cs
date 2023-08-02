@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyTwisterConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct RingParameter
 {
@@ -55,9 +58,9 @@ public struct EnemyTwisterLevelConfig
 public struct EnemyTwisterConfig
 {
     [FieldOffset(0)]  public EnemyTwisterCommonConfig commonParams;
-    [FieldOffset(68)] public fixed byte /* EnemyTwisterLevelConfig[5] */ _levelParams[80];
+    [FieldOffset(68)] public unsafe fixed byte /* EnemyTwisterLevelConfig[5] */ _levelParams[80];
 
-    public EnemyTwisterLevelConfig* levelParams
+    public unsafe EnemyTwisterLevelConfig* levelParams
     {
         get
         {
@@ -67,3 +70,4 @@ public struct EnemyTwisterConfig
     }
 }
 
+} // EnemyTwisterConfigClass

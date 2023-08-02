@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjShotGunTouchParamClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct ObjShotGunTouchTargetParam
 {
@@ -25,3 +28,4 @@ public struct ObjShotGunTouchParam
     [FieldOffset(32)] public ObjShotGunTouchCameraParam cameraParam;
 }
 
+} // ObjShotGunTouchParamClass

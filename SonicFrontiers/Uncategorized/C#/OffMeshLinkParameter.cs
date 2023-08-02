@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class OffMeshLinkParameterClass
+{
+
 public enum OffMeshLinkDirection : byte
 {
     OffMeshLinkUnidirectional = 0,
@@ -25,3 +28,4 @@ public struct OffMeshLinkParameter
     [FieldOffset(0)] public OffMeshLinkElement elements;
 }
 
+} // OffMeshLinkParameterClass

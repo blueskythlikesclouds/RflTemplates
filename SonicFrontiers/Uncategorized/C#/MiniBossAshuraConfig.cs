@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossAshuraConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -22,10 +25,10 @@ public struct MiniBossAshuraCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -136,9 +139,9 @@ public struct MiniBossAshuraPhaseParam
     [FieldOffset(1)]   public bool isCrawlSpark;
     [FieldOffset(2)]   public bool isAttackArmWave;
     [FieldOffset(3)]   public bool isAttackArmCircleBulletOnArm;
-    [FieldOffset(4)]   public fixed byte /* MiniBossAshuraPhaseOnArmCircleBulletPos[8] */ _onArmCircleBullets[128];
+    [FieldOffset(4)]   public unsafe fixed byte /* MiniBossAshuraPhaseOnArmCircleBulletPos[8] */ _onArmCircleBullets[128];
 
-    public MiniBossAshuraPhaseOnArmCircleBulletPos* onArmCircleBullets
+    public unsafe MiniBossAshuraPhaseOnArmCircleBulletPos* onArmCircleBullets
     {
         get
         {
@@ -160,9 +163,9 @@ public struct MiniBossAshuraPhaseParam
 public struct MiniBossAshuraConfig
 {
     [FieldOffset(0)]   public MiniBossAshuraCommonParam commonParam;
-    [FieldOffset(64)]  public fixed byte /* MiniBossAshuraLevelParam[5] */ _levelParams[280];
+    [FieldOffset(64)]  public unsafe fixed byte /* MiniBossAshuraLevelParam[5] */ _levelParams[280];
 
-    public MiniBossAshuraLevelParam* levelParams
+    public unsafe MiniBossAshuraLevelParam* levelParams
     {
         get
         {
@@ -171,9 +174,9 @@ public struct MiniBossAshuraConfig
         }
     }
 
-    [FieldOffset(344)] public fixed byte /* MiniBossAshuraLevelBand[5] */ _levelBand[20];
+    [FieldOffset(344)] public unsafe fixed byte /* MiniBossAshuraLevelBand[5] */ _levelBand[20];
 
-    public MiniBossAshuraLevelBand* levelBand
+    public unsafe MiniBossAshuraLevelBand* levelBand
     {
         get
         {
@@ -183,9 +186,9 @@ public struct MiniBossAshuraConfig
     }
 
     [FieldOffset(364)] public MiniBossAshuraObjectParam objectParam;
-    [FieldOffset(492)] public fixed byte /* MiniBossAshuraPhaseParam[3] */ _phaseParam[480];
+    [FieldOffset(492)] public unsafe fixed byte /* MiniBossAshuraPhaseParam[3] */ _phaseParam[480];
 
-    public MiniBossAshuraPhaseParam* phaseParam
+    public unsafe MiniBossAshuraPhaseParam* phaseParam
     {
         get
         {
@@ -195,3 +198,4 @@ public struct MiniBossAshuraConfig
     }
 }
 
+} // MiniBossAshuraConfigClass

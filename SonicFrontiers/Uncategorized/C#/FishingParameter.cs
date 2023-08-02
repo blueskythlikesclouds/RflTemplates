@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FishingParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct FishingCommonParam
 {
@@ -51,9 +54,9 @@ public struct FishingWaveParam
 [StructLayout(LayoutKind.Explicit, Size = 60)]
 public struct FishingWaveGroupParam
 {
-    [FieldOffset(0)] public fixed byte /* FishingWaveParam[5] */ _waves[60];
+    [FieldOffset(0)] public unsafe fixed byte /* FishingWaveParam[5] */ _waves[60];
 
-    public FishingWaveParam* waves
+    public unsafe FishingWaveParam* waves
     {
         get
         {
@@ -74,9 +77,9 @@ public struct FishingWavePatternParam
     [FieldOffset(20)] public float addRadiusMin;
     [FieldOffset(24)] public float addRadiusMax;
     [FieldOffset(28)] public uint waveGroupNum;
-    [FieldOffset(32)] public fixed byte /* FishingWaveGroupParam[10] */ _waveGroups[600];
+    [FieldOffset(32)] public unsafe fixed byte /* FishingWaveGroupParam[10] */ _waveGroups[600];
 
-    public FishingWaveGroupParam* waveGroups
+    public unsafe FishingWaveGroupParam* waveGroups
     {
         get
         {
@@ -141,7 +144,7 @@ public struct FishingFishParam
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct FishingSpotSpawnFishParam
 {
-    [FieldOffset(0)] public fixed int spawnFishId[20];
+    [FieldOffset(0)] public unsafe fixed int spawnFishId[20];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 8)]
@@ -156,9 +159,9 @@ public struct FishingSpotFixedResultParam
 {
     [FieldOffset(0)] public uint tableSize;
     [FieldOffset(4)] public uint achievementUnlockCount;
-    [FieldOffset(8)] public fixed byte /* FishingFixedResultParam[50] */ _fixedResultList[400];
+    [FieldOffset(8)] public unsafe fixed byte /* FishingFixedResultParam[50] */ _fixedResultList[400];
 
-    public FishingFixedResultParam* fixedResultList
+    public unsafe FishingFixedResultParam* fixedResultList
     {
         get
         {
@@ -171,9 +174,9 @@ public struct FishingSpotFixedResultParam
 [StructLayout(LayoutKind.Explicit, Size = 1984)]
 public struct FishingSpotParam
 {
-    [FieldOffset(0)]    public fixed byte /* FishingSpotSpawnFishParam[4] */ _spawnFish[320];
+    [FieldOffset(0)]    public unsafe fixed byte /* FishingSpotSpawnFishParam[4] */ _spawnFish[320];
 
-    public FishingSpotSpawnFishParam* spawnFish
+    public unsafe FishingSpotSpawnFishParam* spawnFish
     {
         get
         {
@@ -182,9 +185,9 @@ public struct FishingSpotParam
         }
     }
 
-    [FieldOffset(320)]  public fixed byte /* FishingSpotFixedResultParam[4] */ _fixedResults[1632];
+    [FieldOffset(320)]  public unsafe fixed byte /* FishingSpotFixedResultParam[4] */ _fixedResults[1632];
 
-    public FishingSpotFixedResultParam* fixedResults
+    public unsafe FishingSpotFixedResultParam* fixedResults
     {
         get
         {
@@ -193,8 +196,8 @@ public struct FishingSpotParam
         }
     }
 
-    [FieldOffset(1952)] public fixed uint useFishCoinNum[4];
-    [FieldOffset(1968)] public fixed uint tokenRate[4];
+    [FieldOffset(1952)] public unsafe fixed uint useFishCoinNum[4];
+    [FieldOffset(1968)] public unsafe fixed uint tokenRate[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 1272)]
@@ -209,15 +212,15 @@ public struct FishingTutorialParam
 [StructLayout(LayoutKind.Explicit, Size = 9)]
 public struct FishingTradeTableParma
 {
-    [FieldOffset(0)] public fixed byte sales[9];
+    [FieldOffset(0)] public unsafe fixed byte sales[9];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 63)]
 public struct FishingTradeParam
 {
-    [FieldOffset(0)]  public fixed byte /* FishingTradeTableParma[4] */ _spot[36];
+    [FieldOffset(0)]  public unsafe fixed byte /* FishingTradeTableParma[4] */ _spot[36];
 
-    public FishingTradeTableParma* spot
+    public unsafe FishingTradeTableParma* spot
     {
         get
         {
@@ -226,18 +229,18 @@ public struct FishingTradeParam
         }
     }
 
-    [FieldOffset(36)] public fixed byte prices[9];
-    [FieldOffset(45)] public fixed byte pricesVeryHard[9];
-    [FieldOffset(54)] public fixed byte counts[9];
+    [FieldOffset(36)] public unsafe fixed byte prices[9];
+    [FieldOffset(45)] public unsafe fixed byte pricesVeryHard[9];
+    [FieldOffset(54)] public unsafe fixed byte counts[9];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 18176)]
 public struct FishingParameter
 {
     [FieldOffset(0)]     public FishingCommonParam common;
-    [FieldOffset(80)]    public fixed byte /* FishingSuccessPatternParam[10] */ _successPattern[80];
+    [FieldOffset(80)]    public unsafe fixed byte /* FishingSuccessPatternParam[10] */ _successPattern[80];
 
-    public FishingSuccessPatternParam* successPattern
+    public unsafe FishingSuccessPatternParam* successPattern
     {
         get
         {
@@ -246,9 +249,9 @@ public struct FishingParameter
         }
     }
 
-    [FieldOffset(160)]   public fixed byte /* FishingWavePatternParam[10] */ _wavePattern[6320];
+    [FieldOffset(160)]   public unsafe fixed byte /* FishingWavePatternParam[10] */ _wavePattern[6320];
 
-    public FishingWavePatternParam* wavePattern
+    public unsafe FishingWavePatternParam* wavePattern
     {
         get
         {
@@ -257,9 +260,9 @@ public struct FishingParameter
         }
     }
 
-    [FieldOffset(6480)]  public fixed byte /* FishingFishGroupParam[10] */ _fishGroup[40];
+    [FieldOffset(6480)]  public unsafe fixed byte /* FishingFishGroupParam[10] */ _fishGroup[40];
 
-    public FishingFishGroupParam* fishGroup
+    public unsafe FishingFishGroupParam* fishGroup
     {
         get
         {
@@ -268,9 +271,9 @@ public struct FishingParameter
         }
     }
 
-    [FieldOffset(6528)]  public fixed byte /* FishingFishParam[130] */ _fish[8320];
+    [FieldOffset(6528)]  public unsafe fixed byte /* FishingFishParam[130] */ _fish[8320];
 
-    public FishingFishParam* fish
+    public unsafe FishingFishParam* fish
     {
         get
         {
@@ -284,3 +287,4 @@ public struct FishingParameter
     [FieldOffset(18104)] public FishingTradeParam trade;
 }
 
+} // FishingParameterClass

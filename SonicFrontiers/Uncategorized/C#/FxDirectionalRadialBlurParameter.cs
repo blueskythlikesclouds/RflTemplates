@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxDirectionalRadialBlurParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct FxDirectionalRadialBlurParameter
 {
@@ -14,3 +17,4 @@ public struct FxDirectionalRadialBlurParameter
     [FieldOffset(64)] public int sampleNum;
 }
 
+} // FxDirectionalRadialBlurParameterClass

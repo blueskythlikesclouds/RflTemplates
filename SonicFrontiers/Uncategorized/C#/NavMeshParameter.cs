@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class NavMeshParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public struct World
 {
@@ -89,3 +92,4 @@ public struct NavMeshParameter
     [FieldOffset(88)] public Tiling tiling;
 }
 
+} // NavMeshParameterClass

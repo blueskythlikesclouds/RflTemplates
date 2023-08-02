@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjNormalFloorConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct NormalFloorSize
 {
@@ -12,9 +15,9 @@ public struct NormalFloorSize
 [StructLayout(LayoutKind.Explicit, Size = 120)]
 public struct ObjNormalFloorConfig
 {
-    [FieldOffset(0)] public fixed byte /* NormalFloorSize[10] */ _sizeInfo[120];
+    [FieldOffset(0)] public unsafe fixed byte /* NormalFloorSize[10] */ _sizeInfo[120];
 
-    public NormalFloorSize* sizeInfo
+    public unsafe NormalFloorSize* sizeInfo
     {
         get
         {
@@ -24,3 +27,4 @@ public struct ObjNormalFloorConfig
     }
 }
 
+} // ObjNormalFloorConfigClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyDefenceRecordBaseTableClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 1)]
 public struct Record
 {
@@ -34,9 +37,9 @@ public struct EnemyDefenceRecord
 [StructLayout(LayoutKind.Explicit, Size = 3072)]
 public struct EnemyDefenceRecordBaseTable
 {
-    [FieldOffset(0)] public fixed byte /* EnemyDefenceRecord[64] */ _data[3072];
+    [FieldOffset(0)] public unsafe fixed byte /* EnemyDefenceRecord[64] */ _data[3072];
 
-    public EnemyDefenceRecord* data
+    public unsafe EnemyDefenceRecord* data
     {
         get
         {
@@ -46,3 +49,4 @@ public struct EnemyDefenceRecordBaseTable
     }
 }
 
+} // EnemyDefenceRecordBaseTableClass

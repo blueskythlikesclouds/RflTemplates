@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class QuestDrawBridgeParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 16)]
 public struct QuestDrawBridgeTimerParameter
 {
@@ -21,9 +24,9 @@ public struct QuestDrawBridgeParameterElement
 [StructLayout(LayoutKind.Explicit, Size = 60)]
 public struct QuestDrawBridgeParameter
 {
-    [FieldOffset(0)] public fixed byte /* QuestDrawBridgeParameterElement[3] */ _element[60];
+    [FieldOffset(0)] public unsafe fixed byte /* QuestDrawBridgeParameterElement[3] */ _element[60];
 
-    public QuestDrawBridgeParameterElement* element
+    public unsafe QuestDrawBridgeParameterElement* element
     {
         get
         {
@@ -33,3 +36,4 @@ public struct QuestDrawBridgeParameter
     }
 }
 
+} // QuestDrawBridgeParameterClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class PracticeParametersClass
+{
+
 public enum Checker : sbyte
 {
     InvalidChecker = -1,
@@ -102,9 +105,9 @@ public struct PracticePrerequisite
 public struct PracticeSubject
 {
     [FieldOffset(0)]   public Checker checker;
-    [FieldOffset(8)]   public fixed byte /* PracticeAction[6] */ _actions[192];
+    [FieldOffset(8)]   public unsafe fixed byte /* PracticeAction[6] */ _actions[192];
 
-    public PracticeAction* actions
+    public unsafe PracticeAction* actions
     {
         get
         {
@@ -121,9 +124,9 @@ public struct PracticeSubject
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct PracticeText
 {
-    [FieldOffset(0)] public fixed byte /* CString[10] */ _labels[2550];
+    [FieldOffset(0)] public unsafe fixed byte /* CString[10] */ _labels[2550];
 
-    public CString* labels
+    public unsafe CString* labels
     {
         get
         {
@@ -166,16 +169,16 @@ public struct PracticeTips
 [StructLayout(LayoutKind.Explicit, Size = 220)]
 public struct PracticeSet
 {
-    [FieldOffset(0)]  public fixed sbyte subjects[20];
-    [FieldOffset(20)] public fixed short tips[100];
+    [FieldOffset(0)]  public unsafe fixed sbyte subjects[20];
+    [FieldOffset(20)] public unsafe fixed short tips[100];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 73888)]
 public struct PracticeParameters
 {
-    [FieldOffset(0)]     public fixed byte /* PracticeSubject[200] */ _subjects[52800];
+    [FieldOffset(0)]     public unsafe fixed byte /* PracticeSubject[200] */ _subjects[52800];
 
-    public PracticeSubject* subjects
+    public unsafe PracticeSubject* subjects
     {
         get
         {
@@ -187,9 +190,9 @@ public struct PracticeParameters
     [FieldOffset(52800)] public PracticeText text;
     [FieldOffset(52960)] public PracticeTime time;
     [FieldOffset(52988)] public float notifyTime;
-    [FieldOffset(52992)] public fixed byte /* PracticeTips[256] */ _tips[3072];
+    [FieldOffset(52992)] public unsafe fixed byte /* PracticeTips[256] */ _tips[3072];
 
-    public PracticeTips* tips
+    public unsafe PracticeTips* tips
     {
         get
         {
@@ -199,9 +202,9 @@ public struct PracticeParameters
     }
 
     [FieldOffset(56064)] public float tipsMinViewTime;
-    [FieldOffset(56068)] public fixed byte /* PracticeSet[81] */ _sets[17820];
+    [FieldOffset(56068)] public unsafe fixed byte /* PracticeSet[81] */ _sets[17820];
 
-    public PracticeSet* sets
+    public unsafe PracticeSet* sets
     {
         get
         {
@@ -211,3 +214,4 @@ public struct PracticeParameters
     }
 }
 
+} // PracticeParametersClass

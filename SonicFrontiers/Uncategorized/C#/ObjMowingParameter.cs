@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjMowingParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 4)]
 public struct ObjMowingGrassParameter
 {
@@ -48,9 +51,9 @@ public struct ObjMowingParameterElement
 [StructLayout(LayoutKind.Explicit, Size = 528)]
 public struct ObjMowingParameter
 {
-    [FieldOffset(0)] public fixed byte /* ObjMowingParameterElement[3] */ _element[528];
+    [FieldOffset(0)] public unsafe fixed byte /* ObjMowingParameterElement[3] */ _element[528];
 
-    public ObjMowingParameterElement* element
+    public unsafe ObjMowingParameterElement* element
     {
         get
         {
@@ -60,3 +63,4 @@ public struct ObjMowingParameter
     }
 }
 
+} // ObjMowingParameterClass

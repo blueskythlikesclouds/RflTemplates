@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjEffectDebrisParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct ExplosionParameter
 {
@@ -34,9 +37,9 @@ public struct DebrisPhaseParameter
 [StructLayout(LayoutKind.Explicit, Size = 336)]
 public struct EffectDebrisParameter
 {
-    [FieldOffset(0)] public fixed byte /* DebrisPhaseParameter[3] */ _debrisPhaseParameters[336];
+    [FieldOffset(0)] public unsafe fixed byte /* DebrisPhaseParameter[3] */ _debrisPhaseParameters[336];
 
-    public DebrisPhaseParameter* debrisPhaseParameters
+    public unsafe DebrisPhaseParameter* debrisPhaseParameters
     {
         get
         {
@@ -49,9 +52,9 @@ public struct EffectDebrisParameter
 [StructLayout(LayoutKind.Explicit, Size = 3360)]
 public struct ObjEffectDebrisParameters
 {
-    [FieldOffset(0)] public fixed byte /* EffectDebrisParameter[10] */ _effectDebrisParameters[3360];
+    [FieldOffset(0)] public unsafe fixed byte /* EffectDebrisParameter[10] */ _effectDebrisParameters[3360];
 
-    public EffectDebrisParameter* effectDebrisParameters
+    public unsafe EffectDebrisParameter* effectDebrisParameters
     {
         get
         {
@@ -61,3 +64,4 @@ public struct ObjEffectDebrisParameters
     }
 }
 
+} // ObjEffectDebrisParametersClass

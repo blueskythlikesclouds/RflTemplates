@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class TornadoRingParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct TornadoRingParameter
 {
@@ -13,3 +16,4 @@ public struct TornadoRingParameter
     [FieldOffset(24)] public float lifeTime;
 }
 
+} // TornadoRingParameterClass

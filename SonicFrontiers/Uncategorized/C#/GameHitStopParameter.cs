@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GameHitStopParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -31,9 +34,9 @@ public struct GameHitStopParameterData
 [StructLayout(LayoutKind.Explicit, Size = 2560)]
 public struct GameHitStopParameter
 {
-    [FieldOffset(0)] public fixed byte /* GameHitStopParameterData[64] */ _data[2560];
+    [FieldOffset(0)] public unsafe fixed byte /* GameHitStopParameterData[64] */ _data[2560];
 
-    public GameHitStopParameterData* data
+    public unsafe GameHitStopParameterData* data
     {
         get
         {
@@ -43,3 +46,4 @@ public struct GameHitStopParameter
     }
 }
 
+} // GameHitStopParameterClass

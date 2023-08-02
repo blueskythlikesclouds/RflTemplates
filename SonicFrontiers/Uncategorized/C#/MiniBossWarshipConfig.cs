@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossWarshipConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -98,10 +101,10 @@ public struct MiniBossWarshipCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -185,9 +188,9 @@ public struct WarshipPathSectionInfo
 public struct WarshipEscapePathInfo
 {
     [FieldOffset(0)]   public CString followPaths;
-    [FieldOffset(16)]  public fixed byte /* WarshipPathSectionInfo[50] */ _usePathInfo[600];
+    [FieldOffset(16)]  public unsafe fixed byte /* WarshipPathSectionInfo[50] */ _usePathInfo[600];
 
-    public WarshipPathSectionInfo* usePathInfo
+    public unsafe WarshipPathSectionInfo* usePathInfo
     {
         get
         {
@@ -196,9 +199,9 @@ public struct WarshipEscapePathInfo
         }
     }
 
-    [FieldOffset(616)] public fixed byte /* WarshipPathSectionInfo[50] */ _accelInfo[600];
+    [FieldOffset(616)] public unsafe fixed byte /* WarshipPathSectionInfo[50] */ _accelInfo[600];
 
-    public WarshipPathSectionInfo* accelInfo
+    public unsafe WarshipPathSectionInfo* accelInfo
     {
         get
         {
@@ -211,9 +214,9 @@ public struct WarshipEscapePathInfo
 [StructLayout(LayoutKind.Explicit, Size = 6080)]
 public struct MiniBossWarshipEscapePathParam
 {
-    [FieldOffset(0)] public fixed byte /* WarshipEscapePathInfo[5] */ _escapePathInfo[6080];
+    [FieldOffset(0)] public unsafe fixed byte /* WarshipEscapePathInfo[5] */ _escapePathInfo[6080];
 
-    public WarshipEscapePathInfo* escapePathInfo
+    public unsafe WarshipEscapePathInfo* escapePathInfo
     {
         get
         {
@@ -247,9 +250,9 @@ public struct MiniBossWarshipAttackStateCameraParam
 public struct MiniBossWarshipConfig
 {
     [FieldOffset(0)]     public MiniBossWarshipCommonParam commonParam;
-    [FieldOffset(304)]   public fixed byte /* MiniBossWarshipLevelParam[5] */ _levelParams[280];
+    [FieldOffset(304)]   public unsafe fixed byte /* MiniBossWarshipLevelParam[5] */ _levelParams[280];
 
-    public MiniBossWarshipLevelParam* levelParams
+    public unsafe MiniBossWarshipLevelParam* levelParams
     {
         get
         {
@@ -258,9 +261,9 @@ public struct MiniBossWarshipConfig
         }
     }
 
-    [FieldOffset(584)]   public fixed byte /* MiniBossWarshipLevelBand[5] */ _levelBand[20];
+    [FieldOffset(584)]   public unsafe fixed byte /* MiniBossWarshipLevelBand[5] */ _levelBand[20];
 
-    public MiniBossWarshipLevelBand* levelBand
+    public unsafe MiniBossWarshipLevelBand* levelBand
     {
         get
         {
@@ -283,9 +286,9 @@ public struct MiniBossWarshipConfig
     [FieldOffset(732)]   public float cameraChangeTime;
     [FieldOffset(736)]   public float cameraAppearTime;
     [FieldOffset(740)]   public float spreadHomingDistance;
-    [FieldOffset(744)]   public fixed byte /* MiniBossWarshipEscapePathParam[5] */ _escapePathID[30400];
+    [FieldOffset(744)]   public unsafe fixed byte /* MiniBossWarshipEscapePathParam[5] */ _escapePathID[30400];
 
-    public MiniBossWarshipEscapePathParam* escapePathID
+    public unsafe MiniBossWarshipEscapePathParam* escapePathID
     {
         get
         {
@@ -294,9 +297,9 @@ public struct MiniBossWarshipConfig
         }
     }
 
-    [FieldOffset(31144)] public fixed byte /* MiniBossWarshipAttackStateCameraParam[5] */ _bombAttackCameraParam[300];
+    [FieldOffset(31144)] public unsafe fixed byte /* MiniBossWarshipAttackStateCameraParam[5] */ _bombAttackCameraParam[300];
 
-    public MiniBossWarshipAttackStateCameraParam* bombAttackCameraParam
+    public unsafe MiniBossWarshipAttackStateCameraParam* bombAttackCameraParam
     {
         get
         {
@@ -306,3 +309,4 @@ public struct MiniBossWarshipConfig
     }
 }
 
+} // MiniBossWarshipConfigClass

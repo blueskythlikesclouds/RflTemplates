@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class DecoTechParamsClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -90,9 +93,9 @@ public struct DecoTechParam
     [FieldOffset(20)] public DecoGradationParam fontGradParam;
     [FieldOffset(36)] public DecoLayerBlendOp layerBlendOp;
     [FieldOffset(40)] public int numPasses;
-    [FieldOffset(44)] public fixed byte /* DecoPassParam[5] */ _passParams[240];
+    [FieldOffset(44)] public unsafe fixed byte /* DecoPassParam[5] */ _passParams[240];
 
-    public DecoPassParam* passParams
+    public unsafe DecoPassParam* passParams
     {
         get
         {
@@ -105,9 +108,9 @@ public struct DecoTechParam
 [StructLayout(LayoutKind.Explicit, Size = 147456)]
 public struct DecoTechParams
 {
-    [FieldOffset(0)] public fixed byte /* DecoTechParam[512] */ __params[147456];
+    [FieldOffset(0)] public unsafe fixed byte /* DecoTechParam[512] */ __params[147456];
 
-    public DecoTechParam* _params
+    public unsafe DecoTechParam* _params
     {
         get
         {
@@ -117,3 +120,4 @@ public struct DecoTechParams
     }
 }
 
+} // DecoTechParamsClass

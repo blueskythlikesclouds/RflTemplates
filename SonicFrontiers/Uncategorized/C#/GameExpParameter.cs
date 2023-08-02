@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GameExpParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct GameExpParameter
 {
@@ -8,3 +11,4 @@ public struct GameExpParameter
     [FieldOffset(4)] public uint maxExpPointAdd;
 }
 
+} // GameExpParameterClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class PlayerParamAerialFinishClass
+{
+
 public enum Condition : sbyte
 {
     Time = 0,
@@ -32,3 +35,4 @@ public struct PlayerParamAerialFinish
     [FieldOffset(48)] public float ignoreSwingingTime;
 }
 
+} // PlayerParamAerialFinishClass

@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyJellymanConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 16)]
 public struct Movement
 {
@@ -38,7 +41,7 @@ public struct EnemyJellymanModeConfig
 public struct JellymanHumanCommonConfig
 {
     [FieldOffset(0)]  public EnemyJellymanModeConfig common;
-    [FieldOffset(40)] public fixed float actionDistance[5];
+    [FieldOffset(40)] public unsafe fixed float actionDistance[5];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 28)]
@@ -108,9 +111,9 @@ public struct EnemyCommonConfig
     [FieldOffset(92)]  public int codeDropNumMax;
     [FieldOffset(96)]  public int codeXDropNumMin;
     [FieldOffset(100)] public int codeXDropNumMax;
-    [FieldOffset(112)] public fixed byte /* MappingPairInfo[32] */ _mappingPairInfo[5632];
+    [FieldOffset(112)] public unsafe fixed byte /* MappingPairInfo[32] */ _mappingPairInfo[5632];
 
-    public MappingPairInfo* mappingPairInfo
+    public unsafe MappingPairInfo* mappingPairInfo
     {
         get
         {
@@ -124,10 +127,10 @@ public struct EnemyCommonConfig
 public struct JellymanCommonLevelConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float stunTime;
@@ -172,15 +175,15 @@ public struct JellymanCommonActionConfig
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct JellymanHumanActionRate
 {
-    [FieldOffset(0)] public fixed float actionRate[5];
+    [FieldOffset(0)] public unsafe fixed float actionRate[5];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct JellymanHumanActionConfig
 {
-    [FieldOffset(0)]   public fixed byte /* JellymanHumanActionRate[4] */ _rateTable[80];
+    [FieldOffset(0)]   public unsafe fixed byte /* JellymanHumanActionRate[4] */ _rateTable[80];
 
-    public JellymanHumanActionRate* rateTable
+    public unsafe JellymanHumanActionRate* rateTable
     {
         get
         {
@@ -189,7 +192,7 @@ public struct JellymanHumanActionConfig
         }
     }
 
-    [FieldOffset(80)]  public fixed float coolTime[5];
+    [FieldOffset(80)]  public unsafe fixed float coolTime[5];
     [FieldOffset(100)] public float attackCoolTime;
     [FieldOffset(104)] public float nearRange;
     [FieldOffset(108)] public int nearRateId;
@@ -223,15 +226,15 @@ public struct EnemySquadAvarageLevelConfig
     [FieldOffset(0)]  public int level;
     [FieldOffset(4)]  public int maxActionCount;
     [FieldOffset(8)]  public float spAttackWaitTime;
-    [FieldOffset(12)] public fixed int humanMaxActionCount[5];
+    [FieldOffset(12)] public unsafe fixed int humanMaxActionCount[5];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct EnemySquadConfig
 {
-    [FieldOffset(0)] public fixed byte /* EnemySquadAvarageLevelConfig[5] */ _averageLevelConfig[160];
+    [FieldOffset(0)] public unsafe fixed byte /* EnemySquadAvarageLevelConfig[5] */ _averageLevelConfig[160];
 
-    public EnemySquadAvarageLevelConfig* averageLevelConfig
+    public unsafe EnemySquadAvarageLevelConfig* averageLevelConfig
     {
         get
         {
@@ -245,9 +248,9 @@ public struct EnemySquadConfig
 public struct EnemyJellymanConfig
 {
     [FieldOffset(0)]    public EnemyCommonConfig commonParams;
-    [FieldOffset(5744)] public fixed byte /* EnemyLevelConfig[8] */ _levelParams[640];
+    [FieldOffset(5744)] public unsafe fixed byte /* EnemyLevelConfig[8] */ _levelParams[640];
 
-    public EnemyLevelConfig* levelParams
+    public unsafe EnemyLevelConfig* levelParams
     {
         get
         {
@@ -256,9 +259,9 @@ public struct EnemyJellymanConfig
         }
     }
 
-    [FieldOffset(6384)] public fixed byte /* EnemyLevelBandConfig[5] */ _levelBands[860];
+    [FieldOffset(6384)] public unsafe fixed byte /* EnemyLevelBandConfig[5] */ _levelBands[860];
 
-    public EnemyLevelBandConfig* levelBands
+    public unsafe EnemyLevelBandConfig* levelBands
     {
         get
         {
@@ -270,3 +273,4 @@ public struct EnemyJellymanConfig
     [FieldOffset(7244)] public EnemySquadConfig squadParams;
 }
 
+} // EnemyJellymanConfigClass

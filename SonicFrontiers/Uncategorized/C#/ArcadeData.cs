@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ArcadeDataClass
+{
+
 public enum Status : sbyte
 {
     STATUS_ZERO_FILL = 0,
@@ -52,7 +55,7 @@ public struct HeaderData
     [FieldOffset(15)] public byte reserved1;
     [FieldOffset(16)] public uint saveDate;
     [FieldOffset(20)] public byte index;
-    [FieldOffset(24)] public fixed uint reserved[4];
+    [FieldOffset(24)] public unsafe fixed uint reserved[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 24)]
@@ -60,15 +63,15 @@ public struct CyberStageData
 {
     [FieldOffset(0)] public ushort flags;
     [FieldOffset(4)] public uint bestTime;
-    [FieldOffset(8)] public fixed uint reserved[4];
+    [FieldOffset(8)] public unsafe fixed uint reserved[4];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 768)]
 public struct CyberStageContainerData
 {
-    [FieldOffset(0)] public fixed byte /* CyberStageData[32] */ _actStages[768];
+    [FieldOffset(0)] public unsafe fixed byte /* CyberStageData[32] */ _actStages[768];
 
-    public CyberStageData* actStages
+    public unsafe CyberStageData* actStages
     {
         get
         {
@@ -84,6 +87,7 @@ public struct ArcadeData
     [FieldOffset(0)]   public HeaderData header;
     [FieldOffset(40)]  public bool unlocked;
     [FieldOffset(44)]  public CyberStageContainerData stages;
-    [FieldOffset(812)] public fixed uint reserved[4];
+    [FieldOffset(812)] public unsafe fixed uint reserved[4];
 }
 
+} // ArcadeDataClass

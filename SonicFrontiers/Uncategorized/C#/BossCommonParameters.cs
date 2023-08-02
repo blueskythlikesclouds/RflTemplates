@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BossCommonParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -36,9 +39,9 @@ public struct HoldPoint
 [StructLayout(LayoutKind.Explicit, Size = 10240)]
 public struct HoldPointParameter
 {
-    [FieldOffset(0)] public fixed byte /* HoldPoint[128] */ _holdPoints[10240];
+    [FieldOffset(0)] public unsafe fixed byte /* HoldPoint[128] */ _holdPoints[10240];
 
-    public HoldPoint* holdPoints
+    public unsafe HoldPoint* holdPoints
     {
         get
         {
@@ -71,9 +74,9 @@ public struct CollisionPart
 [StructLayout(LayoutKind.Explicit, Size = 3072)]
 public struct CollisionPartParameter
 {
-    [FieldOffset(0)] public fixed byte /* CollisionPart[32] */ _colParts[3072];
+    [FieldOffset(0)] public unsafe fixed byte /* CollisionPart[32] */ _colParts[3072];
 
-    public CollisionPart* colParts
+    public unsafe CollisionPart* colParts
     {
         get
         {
@@ -91,3 +94,4 @@ public struct BossCommonParameters
     [FieldOffset(10320)] public CollisionPartParameter colParam;
 }
 
+} // BossCommonParametersClass

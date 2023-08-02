@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class DevConfigParametersClass
+{
+
 public enum Value : sbyte
 {
     Invalid = -1,
@@ -29,3 +32,4 @@ public struct DevConfigParameters
     [FieldOffset(11)] public Value character;
 }
 
+} // DevConfigParametersClass

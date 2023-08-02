@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EffectRecordBaseTableClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 1)]
 public struct Record
 {
@@ -23,9 +26,9 @@ public struct CString
 public struct EffectRecord
 {
     [FieldOffset(0)] public Record record;
-    [FieldOffset(8)] public fixed byte /* CString[5] */ _emitterSetName[1275];
+    [FieldOffset(8)] public unsafe fixed byte /* CString[5] */ _emitterSetName[1275];
 
-    public CString* emitterSetName
+    public unsafe CString* emitterSetName
     {
         get
         {
@@ -38,9 +41,9 @@ public struct EffectRecord
 [StructLayout(LayoutKind.Explicit, Size = 8800)]
 public struct EffectRecordBaseTable
 {
-    [FieldOffset(0)] public fixed byte /* EffectRecord[100] */ _data[8800];
+    [FieldOffset(0)] public unsafe fixed byte /* EffectRecord[100] */ _data[8800];
 
-    public EffectRecord* data
+    public unsafe EffectRecord* data
     {
         get
         {
@@ -50,3 +53,4 @@ public struct EffectRecordBaseTable
     }
 }
 
+} // EffectRecordBaseTableClass

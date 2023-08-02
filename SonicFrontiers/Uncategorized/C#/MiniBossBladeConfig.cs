@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossBladeConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -40,10 +43,10 @@ public struct MiniBossBladeCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -125,9 +128,9 @@ public struct MiniBossBladeLevelPhaseAction
 public struct MiniBossBladeLevelBand
 {
     [FieldOffset(0)] public uint level;
-    [FieldOffset(4)] public fixed byte /* MiniBossBladeLevelPhaseAction[2] */ _phases[120];
+    [FieldOffset(4)] public unsafe fixed byte /* MiniBossBladeLevelPhaseAction[2] */ _phases[120];
 
-    public MiniBossBladeLevelPhaseAction* phases
+    public unsafe MiniBossBladeLevelPhaseAction* phases
     {
         get
         {
@@ -153,9 +156,9 @@ public struct RingParameter
 public struct MiniBossBladeConfig
 {
     [FieldOffset(0)]    public MiniBossBladeCommonParam commonParam;
-    [FieldOffset(112)]  public fixed byte /* MiniBossBladeLevelParam[5] */ _levelParams[780];
+    [FieldOffset(112)]  public unsafe fixed byte /* MiniBossBladeLevelParam[5] */ _levelParams[780];
 
-    public MiniBossBladeLevelParam* levelParams
+    public unsafe MiniBossBladeLevelParam* levelParams
     {
         get
         {
@@ -164,9 +167,9 @@ public struct MiniBossBladeConfig
         }
     }
 
-    [FieldOffset(892)]  public fixed byte /* MiniBossBladeLevelBand[5] */ _levelBands[620];
+    [FieldOffset(892)]  public unsafe fixed byte /* MiniBossBladeLevelBand[5] */ _levelBands[620];
 
-    public MiniBossBladeLevelBand* levelBands
+    public unsafe MiniBossBladeLevelBand* levelBands
     {
         get
         {
@@ -178,3 +181,4 @@ public struct MiniBossBladeConfig
     [FieldOffset(1512)] public RingParameter ringParam;
 }
 
+} // MiniBossBladeConfigClass

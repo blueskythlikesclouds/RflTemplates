@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class SoundCommonParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct BGMVolumeChangeInfo
 {
@@ -115,9 +118,9 @@ public struct SoundCommonParameter
     [FieldOffset(12)]   public float leaveCyberResultFadeOutTime;
     [FieldOffset(16)]   public BGMVolumeChangeInfoList bgmVolumeInfo;
     [FieldOffset(100)]  public AisacChangeInfoList aisacInfo;
-    [FieldOffset(144)]  public fixed byte /* BGMInfo[128] */ _changeBgmInfo[8192];
+    [FieldOffset(144)]  public unsafe fixed byte /* BGMInfo[128] */ _changeBgmInfo[8192];
 
-    public BGMInfo* changeBgmInfo
+    public unsafe BGMInfo* changeBgmInfo
     {
         get
         {
@@ -126,9 +129,9 @@ public struct SoundCommonParameter
         }
     }
 
-    [FieldOffset(8336)] public fixed byte /* BGMTransitInfo[128] */ _transitBgmInfo[6144];
+    [FieldOffset(8336)] public unsafe fixed byte /* BGMTransitInfo[128] */ _transitBgmInfo[6144];
 
-    public BGMTransitInfo* transitBgmInfo
+    public unsafe BGMTransitInfo* transitBgmInfo
     {
         get
         {
@@ -138,3 +141,4 @@ public struct SoundCommonParameter
     }
 }
 
+} // SoundCommonParameterClass

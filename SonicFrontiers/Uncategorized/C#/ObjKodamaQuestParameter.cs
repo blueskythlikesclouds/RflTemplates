@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjKodamaQuestParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct QuestKodamaCollectionBaseParameter
 {
@@ -84,9 +87,9 @@ public struct ObjKodamaQuestDesertIslandParameter
 [StructLayout(LayoutKind.Explicit, Size = 1008)]
 public struct ObjKodamaQuestParameter
 {
-    [FieldOffset(0)]   public fixed byte /* ObjKodamaQuestGrassIslandParameter[3] */ _grassIslandParam[480];
+    [FieldOffset(0)]   public unsafe fixed byte /* ObjKodamaQuestGrassIslandParameter[3] */ _grassIslandParam[480];
 
-    public ObjKodamaQuestGrassIslandParameter* grassIslandParam
+    public unsafe ObjKodamaQuestGrassIslandParameter* grassIslandParam
     {
         get
         {
@@ -95,9 +98,9 @@ public struct ObjKodamaQuestParameter
         }
     }
 
-    [FieldOffset(480)] public fixed byte /* ObjKodamaQuestDesertIslandParameter[3] */ _desertIslandParam[528];
+    [FieldOffset(480)] public unsafe fixed byte /* ObjKodamaQuestDesertIslandParameter[3] */ _desertIslandParam[528];
 
-    public ObjKodamaQuestDesertIslandParameter* desertIslandParam
+    public unsafe ObjKodamaQuestDesertIslandParameter* desertIslandParam
     {
         get
         {
@@ -107,3 +110,4 @@ public struct ObjKodamaQuestParameter
     }
 }
 
+} // ObjKodamaQuestParameterClass

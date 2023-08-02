@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class MiniBossSpiderConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct MiniBossCommonConfig
 {
@@ -108,9 +111,9 @@ public struct MiniBossSpiderLevelBandInterval
 public struct MiniBossSpiderActionParam
 {
     [FieldOffset(0)]   public float nearRange;
-    [FieldOffset(4)]   public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _nearRates[64];
+    [FieldOffset(4)]   public unsafe fixed byte /* MiniBossSpiderLevelBandRate[2] */ _nearRates[64];
 
-    public MiniBossSpiderLevelBandRate* nearRates
+    public unsafe MiniBossSpiderLevelBandRate* nearRates
     {
         get
         {
@@ -119,9 +122,9 @@ public struct MiniBossSpiderActionParam
         }
     }
 
-    [FieldOffset(68)]  public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _farRates[64];
+    [FieldOffset(68)]  public unsafe fixed byte /* MiniBossSpiderLevelBandRate[2] */ _farRates[64];
 
-    public MiniBossSpiderLevelBandRate* farRates
+    public unsafe MiniBossSpiderLevelBandRate* farRates
     {
         get
         {
@@ -130,9 +133,9 @@ public struct MiniBossSpiderActionParam
         }
     }
 
-    [FieldOffset(132)] public fixed byte /* MiniBossSpiderLevelBandInterval[2] */ _interval[64];
+    [FieldOffset(132)] public unsafe fixed byte /* MiniBossSpiderLevelBandInterval[2] */ _interval[64];
 
-    public MiniBossSpiderLevelBandInterval* interval
+    public unsafe MiniBossSpiderLevelBandInterval* interval
     {
         get
         {
@@ -189,9 +192,9 @@ public struct MiniBossSpiderCommonParam
     [FieldOffset(224)] public MiniBossSpiderCameraShake cameraShakeWalk;
     [FieldOffset(244)] public MiniBossSpiderCameraShake cameraShakeAttack;
     [FieldOffset(264)] public RingParameter ringParam;
-    [FieldOffset(292)] public fixed byte /* MiniBossSpiderWaveParam[8] */ _waveParams[288];
+    [FieldOffset(292)] public unsafe fixed byte /* MiniBossSpiderWaveParam[8] */ _waveParams[288];
 
-    public MiniBossSpiderWaveParam* waveParams
+    public unsafe MiniBossSpiderWaveParam* waveParams
     {
         get
         {
@@ -206,9 +209,9 @@ public struct MiniBossSpiderCommonParam
     [FieldOffset(652)] public MiniBossSpiderCameraLockOn cameraLockFootUp;
     [FieldOffset(676)] public MiniBossSpiderCameraLockOn cameraLockFall;
     [FieldOffset(700)] public DebrisParameter debrisSet;
-    [FieldOffset(716)] public fixed byte /* MiniBossSpiderBreakType[8] */ _rotationTypeTable[8];
+    [FieldOffset(716)] public unsafe fixed byte /* MiniBossSpiderBreakType[8] */ _rotationTypeTable[8];
 
-    public MiniBossSpiderBreakType* rotationTypeTable
+    public unsafe MiniBossSpiderBreakType* rotationTypeTable
     {
         get
         {
@@ -217,9 +220,9 @@ public struct MiniBossSpiderCommonParam
         }
     }
 
-    [FieldOffset(724)] public fixed byte /* MiniBossSpiderActionParam[4] */ _rotationActionTable[784];
+    [FieldOffset(724)] public unsafe fixed byte /* MiniBossSpiderActionParam[4] */ _rotationActionTable[784];
 
-    public MiniBossSpiderActionParam* rotationActionTable
+    public unsafe MiniBossSpiderActionParam* rotationActionTable
     {
         get
         {
@@ -233,10 +236,10 @@ public struct MiniBossSpiderCommonParam
 public struct MiniBossLevelCommonConfig
 {
     [FieldOffset(0)]  public int maxHealthPoint;
-    [FieldOffset(4)]  public fixed float maxStunPoint[3];
+    [FieldOffset(4)]  public unsafe fixed float maxStunPoint[3];
     [FieldOffset(16)] public float stunDecreaseStartTime;
     [FieldOffset(20)] public float stunDecreaseSpeed;
-    [FieldOffset(24)] public fixed float maxStaggerPoint[3];
+    [FieldOffset(24)] public unsafe fixed float maxStaggerPoint[3];
     [FieldOffset(36)] public float staggerDecreaseStartTime;
     [FieldOffset(40)] public float staggerDecreaseSpeed;
     [FieldOffset(44)] public float attackRate;
@@ -313,9 +316,9 @@ public struct MiniBossSpiderLevelBand
     [FieldOffset(92)]  public int chainWaveNum;
     [FieldOffset(96)]  public bool enableReProtect;
     [FieldOffset(100)] public float nearRange;
-    [FieldOffset(104)] public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _nearRates[64];
+    [FieldOffset(104)] public unsafe fixed byte /* MiniBossSpiderLevelBandRate[2] */ _nearRates[64];
 
-    public MiniBossSpiderLevelBandRate* nearRates
+    public unsafe MiniBossSpiderLevelBandRate* nearRates
     {
         get
         {
@@ -324,9 +327,9 @@ public struct MiniBossSpiderLevelBand
         }
     }
 
-    [FieldOffset(168)] public fixed byte /* MiniBossSpiderLevelBandRate[2] */ _farRates[64];
+    [FieldOffset(168)] public unsafe fixed byte /* MiniBossSpiderLevelBandRate[2] */ _farRates[64];
 
-    public MiniBossSpiderLevelBandRate* farRates
+    public unsafe MiniBossSpiderLevelBandRate* farRates
     {
         get
         {
@@ -335,9 +338,9 @@ public struct MiniBossSpiderLevelBand
         }
     }
 
-    [FieldOffset(232)] public fixed byte /* MiniBossSpiderLevelPhaseAction[2] */ _phases[24];
+    [FieldOffset(232)] public unsafe fixed byte /* MiniBossSpiderLevelPhaseAction[2] */ _phases[24];
 
-    public MiniBossSpiderLevelPhaseAction* phases
+    public unsafe MiniBossSpiderLevelPhaseAction* phases
     {
         get
         {
@@ -346,9 +349,9 @@ public struct MiniBossSpiderLevelBand
         }
     }
 
-    [FieldOffset(256)] public fixed byte /* MiniBossSpiderLevelBandInterval[2] */ _interval[64];
+    [FieldOffset(256)] public unsafe fixed byte /* MiniBossSpiderLevelBandInterval[2] */ _interval[64];
 
-    public MiniBossSpiderLevelBandInterval* interval
+    public unsafe MiniBossSpiderLevelBandInterval* interval
     {
         get
         {
@@ -357,9 +360,9 @@ public struct MiniBossSpiderLevelBand
         }
     }
 
-    [FieldOffset(320)] public fixed byte /* MiniBossSpiderLevelPhaseDiving[2] */ _diving[8];
+    [FieldOffset(320)] public unsafe fixed byte /* MiniBossSpiderLevelPhaseDiving[2] */ _diving[8];
 
-    public MiniBossSpiderLevelPhaseDiving* diving
+    public unsafe MiniBossSpiderLevelPhaseDiving* diving
     {
         get
         {
@@ -368,16 +371,16 @@ public struct MiniBossSpiderLevelBand
         }
     }
 
-    [FieldOffset(328)] public fixed float slowRate[2];
+    [FieldOffset(328)] public unsafe fixed float slowRate[2];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 3632)]
 public struct MiniBossSpiderConfig
 {
     [FieldOffset(0)]    public MiniBossSpiderCommonParam commonParam;
-    [FieldOffset(1520)] public fixed byte /* MiniBossSpiderLevelParam[5] */ _levelParams[420];
+    [FieldOffset(1520)] public unsafe fixed byte /* MiniBossSpiderLevelParam[5] */ _levelParams[420];
 
-    public MiniBossSpiderLevelParam* levelParams
+    public unsafe MiniBossSpiderLevelParam* levelParams
     {
         get
         {
@@ -386,9 +389,9 @@ public struct MiniBossSpiderConfig
         }
     }
 
-    [FieldOffset(1940)] public fixed byte /* MiniBossSpiderLevelBand[5] */ _levelBands[1680];
+    [FieldOffset(1940)] public unsafe fixed byte /* MiniBossSpiderLevelBand[5] */ _levelBands[1680];
 
-    public MiniBossSpiderLevelBand* levelBands
+    public unsafe MiniBossSpiderLevelBand* levelBands
     {
         get
         {
@@ -398,3 +401,4 @@ public struct MiniBossSpiderConfig
     }
 }
 
+} // MiniBossSpiderConfigClass

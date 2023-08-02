@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class BossRifleConfigClass
+{
+
 public struct CSetObjectID
 {
     public byte GUID[16];
@@ -68,14 +71,14 @@ public struct BossStatusConfig
 {
     [FieldOffset(0)]   public uint healthPoint;
     [FieldOffset(4)]   public float stunTime;
-    [FieldOffset(8)]   public fixed float maxStunPoint[3];
-    [FieldOffset(20)]  public fixed float maxStaggerPoint[5];
+    [FieldOffset(8)]   public unsafe fixed float maxStunPoint[3];
+    [FieldOffset(20)]  public unsafe fixed float maxStaggerPoint[5];
     [FieldOffset(40)]  public ushort exp;
     [FieldOffset(48)]  public PlayerMoveableRangeParam moveRangeParam;
     [FieldOffset(136)] public PlayerMoveableRangeParam cyloopDamageMoveRangeParam;
-    [FieldOffset(224)] public fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
+    [FieldOffset(224)] public unsafe fixed byte /* BossPhaseParam[8] */ _phaseParams[64];
 
-    public BossPhaseParam* phaseParams
+    public unsafe BossPhaseParam* phaseParams
     {
         get
         {
@@ -149,9 +152,9 @@ public struct BossPillarConfig
     [FieldOffset(4)]   public float gimmickIntervalTimeAll;
     [FieldOffset(8)]   public AttackType attackTypeAll;
     [FieldOffset(12)]  public float attackIntervalTimeAll;
-    [FieldOffset(16)]  public fixed byte /* BossPillarParam[32] */ _pillars[896];
+    [FieldOffset(16)]  public unsafe fixed byte /* BossPillarParam[32] */ _pillars[896];
 
-    public BossPillarParam* pillars
+    public unsafe BossPillarParam* pillars
     {
         get
         {
@@ -222,9 +225,9 @@ public enum ColliderProperty : short
 public struct BossColliderStatus
 {
     [FieldOffset(0)]  public ColliderActiveType type;
-    [FieldOffset(2)]  public fixed byte /* ColliderProperty[4] */ _propertys[8];
+    [FieldOffset(2)]  public unsafe fixed byte /* ColliderProperty[4] */ _propertys[8];
 
-    public ColliderProperty* propertys
+    public unsafe ColliderProperty* propertys
     {
         get
         {
@@ -253,9 +256,9 @@ public struct BossPerceiveCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 8208)]
 public struct BossPerceivePartsWithCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossPerceiveCollisionParam[64] */ _perceiveCollisions[8192];
 
-    public BossPerceiveCollisionParam* perceiveCollisions
+    public unsafe BossPerceiveCollisionParam* perceiveCollisions
     {
         get
         {
@@ -356,7 +359,7 @@ public struct BossMeshFrameParam
     [FieldOffset(88)]  public BossStickParam stickParam;
     [FieldOffset(96)]  public BossDamagePointParam damagePoint;
     [FieldOffset(120)] public BossDashCirclPointParam dashCirclPoint;
-    [FieldOffset(160)] public fixed int linkNums[5];
+    [FieldOffset(160)] public unsafe fixed int linkNums[5];
     [FieldOffset(192)] public Vector3 offsetPos;
     [FieldOffset(208)] public Vector3 offsetRot;
 }
@@ -364,9 +367,9 @@ public struct BossMeshFrameParam
 [StructLayout(LayoutKind.Explicit, Size = 57360)]
 public struct BossMeshFrameConfig
 {
-    [FieldOffset(0)]     public fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
+    [FieldOffset(0)]     public unsafe fixed byte /* BossMeshFrameParam[256] */ _meshShapeKeyFrames[57344];
 
-    public BossMeshFrameParam* meshShapeKeyFrames
+    public unsafe BossMeshFrameParam* meshShapeKeyFrames
     {
         get
         {
@@ -400,9 +403,9 @@ public struct BossAttackCollisionParam
     [FieldOffset(0)]  public bool isUse;
     [FieldOffset(8)]  public CString attachNodeName;
     [FieldOffset(24)] public float damageVelocityRaito;
-    [FieldOffset(28)] public fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
+    [FieldOffset(28)] public unsafe fixed byte /* BossAttackCollisionParam_AttackType[4] */ _types[4];
 
-    public BossAttackCollisionParam_AttackType* types
+    public unsafe BossAttackCollisionParam_AttackType* types
     {
         get
         {
@@ -420,9 +423,9 @@ public struct BossAttackCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 7184)]
 public struct BossAttackCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossAttackCollisionParam[64] */ _attackCollisions[7168];
 
-    public BossAttackCollisionParam* attackCollisions
+    public unsafe BossAttackCollisionParam* attackCollisions
     {
         get
         {
@@ -451,9 +454,9 @@ public struct BossBattlePhaseCollisionParam
 [StructLayout(LayoutKind.Explicit, Size = 1552)]
 public struct BossBattlePhaseCollisionConfig
 {
-    [FieldOffset(0)]    public fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossBattlePhaseCollisionParam[16] */ _battleCollisions[1536];
 
-    public BossBattlePhaseCollisionParam* battleCollisions
+    public unsafe BossBattlePhaseCollisionParam* battleCollisions
     {
         get
         {
@@ -525,9 +528,9 @@ public struct BossRifleAttackData
 [StructLayout(LayoutKind.Explicit, Size = 1016)]
 public struct BossRifleAttackPatternParam
 {
-    [FieldOffset(0)]    public fixed byte /* BossRifleAttackData[16] */ _attackDatas[896];
+    [FieldOffset(0)]    public unsafe fixed byte /* BossRifleAttackData[16] */ _attackDatas[896];
 
-    public BossRifleAttackData* attackDatas
+    public unsafe BossRifleAttackData* attackDatas
     {
         get
         {
@@ -536,9 +539,9 @@ public struct BossRifleAttackPatternParam
         }
     }
 
-    [FieldOffset(896)]  public fixed byte /* BossRifleAttackData[2] */ _bitBreakAttackDatas[112];
+    [FieldOffset(896)]  public unsafe fixed byte /* BossRifleAttackData[2] */ _bitBreakAttackDatas[112];
 
-    public BossRifleAttackData* bitBreakAttackDatas
+    public unsafe BossRifleAttackData* bitBreakAttackDatas
     {
         get
         {
@@ -556,9 +559,9 @@ public struct BossRiflePhaseParam
     [FieldOffset(0)]    public float attackWaitTime;
     [FieldOffset(4)]    public float attackSpeedRatio;
     [FieldOffset(8)]    public uint knockbackCountMax;
-    [FieldOffset(16)]   public fixed byte /* BossRifleAttackPatternParam[4] */ _patterns[4064];
+    [FieldOffset(16)]   public unsafe fixed byte /* BossRifleAttackPatternParam[4] */ _patterns[4064];
 
-    public BossRifleAttackPatternParam* patterns
+    public unsafe BossRifleAttackPatternParam* patterns
     {
         get
         {
@@ -567,7 +570,7 @@ public struct BossRiflePhaseParam
         }
     }
 
-    [FieldOffset(4080)] public fixed float patternChangeHpRatios[4];
+    [FieldOffset(4080)] public unsafe fixed float patternChangeHpRatios[4];
 }
 
 public enum ActionAttribute : sbyte
@@ -659,11 +662,11 @@ public struct BossRifleBattleAttackHomingLaserAttackParam
     [FieldOffset(88)]  public float acceleDelay;
     [FieldOffset(92)]  public float acceleTime;
     [FieldOffset(96)]  public float interval;
-    [FieldOffset(100)] public fixed float intervals[8];
+    [FieldOffset(100)] public unsafe fixed float intervals[8];
     [FieldOffset(132)] public float delay;
-    [FieldOffset(136)] public fixed byte /* BossRifleBattleAttackHomingLaserShotPoint[32] */ _points[384];
+    [FieldOffset(136)] public unsafe fixed byte /* BossRifleBattleAttackHomingLaserShotPoint[32] */ _points[384];
 
-    public BossRifleBattleAttackHomingLaserShotPoint* points
+    public unsafe BossRifleBattleAttackHomingLaserShotPoint* points
     {
         get
         {
@@ -718,9 +721,9 @@ public struct BossRifleBattleAttackHandLaser
     [FieldOffset(20)]  public float blowoffSpeed;
     [FieldOffset(24)]  public float outOfControlTime;
     [FieldOffset(28)]  public float keepVelocity;
-    [FieldOffset(32)]  public fixed byte /* BossRifleBattleAttackHandLaserPatternParam[4] */ _handLeftPatterns[320];
+    [FieldOffset(32)]  public unsafe fixed byte /* BossRifleBattleAttackHandLaserPatternParam[4] */ _handLeftPatterns[320];
 
-    public BossRifleBattleAttackHandLaserPatternParam* handLeftPatterns
+    public unsafe BossRifleBattleAttackHandLaserPatternParam* handLeftPatterns
     {
         get
         {
@@ -729,9 +732,9 @@ public struct BossRifleBattleAttackHandLaser
         }
     }
 
-    [FieldOffset(352)] public fixed byte /* BossRifleBattleAttackHandLaserPatternParam[4] */ _handRightPatterns[320];
+    [FieldOffset(352)] public unsafe fixed byte /* BossRifleBattleAttackHandLaserPatternParam[4] */ _handRightPatterns[320];
 
-    public BossRifleBattleAttackHandLaserPatternParam* handRightPatterns
+    public unsafe BossRifleBattleAttackHandLaserPatternParam* handRightPatterns
     {
         get
         {
@@ -770,9 +773,9 @@ public struct BossRifleBattleZoomCamera
 [StructLayout(LayoutKind.Explicit, Size = 160)]
 public struct BossRifleBattleCameraParam
 {
-    [FieldOffset(0)]  public fixed byte /* BossRifleBattleZoomCamera[2] */ _normalCamera[80];
+    [FieldOffset(0)]  public unsafe fixed byte /* BossRifleBattleZoomCamera[2] */ _normalCamera[80];
 
-    public BossRifleBattleZoomCamera* normalCamera
+    public unsafe BossRifleBattleZoomCamera* normalCamera
     {
         get
         {
@@ -781,9 +784,9 @@ public struct BossRifleBattleCameraParam
         }
     }
 
-    [FieldOffset(80)] public fixed byte /* BossRifleBattleZoomCamera[2] */ _flyCamera[80];
+    [FieldOffset(80)] public unsafe fixed byte /* BossRifleBattleZoomCamera[2] */ _flyCamera[80];
 
-    public BossRifleBattleZoomCamera* flyCamera
+    public unsafe BossRifleBattleZoomCamera* flyCamera
     {
         get
         {
@@ -813,9 +816,9 @@ public struct BossRifleParryParam
 [StructLayout(LayoutKind.Explicit, Size = 20416)]
 public struct BossRifleBattleParam
 {
-    [FieldOffset(0)]     public fixed byte /* BossRiflePhaseParam[4] */ _giantPhaseParams[16384];
+    [FieldOffset(0)]     public unsafe fixed byte /* BossRiflePhaseParam[4] */ _giantPhaseParams[16384];
 
-    public BossRiflePhaseParam* giantPhaseParams
+    public unsafe BossRiflePhaseParam* giantPhaseParams
     {
         get
         {
@@ -824,9 +827,9 @@ public struct BossRifleBattleParam
         }
     }
 
-    [FieldOffset(16384)] public fixed byte /* BossRiflePhaseAttackActionParam[16] */ _actionParams[1152];
+    [FieldOffset(16384)] public unsafe fixed byte /* BossRiflePhaseAttackActionParam[16] */ _actionParams[1152];
 
-    public BossRiflePhaseAttackActionParam* actionParams
+    public unsafe BossRiflePhaseAttackActionParam* actionParams
     {
         get
         {
@@ -835,9 +838,9 @@ public struct BossRifleBattleParam
         }
     }
 
-    [FieldOffset(17536)] public fixed byte /* BossRifleBattleParam_ActionType[20] */ _immediateActions[20];
+    [FieldOffset(17536)] public unsafe fixed byte /* BossRifleBattleParam_ActionType[20] */ _immediateActions[20];
 
-    public BossRifleBattleParam_ActionType* immediateActions
+    public unsafe BossRifleBattleParam_ActionType* immediateActions
     {
         get
         {
@@ -852,8 +855,8 @@ public struct BossRifleBattleParam
     [FieldOffset(20144)] public BossRifleBattleFlyParam flyParam;
     [FieldOffset(20168)] public BossRifleBattleCameraParam cameraParam;
     [FieldOffset(20328)] public BossRifleParryParam parryParam;
-    [FieldOffset(20376)] public fixed float thresholdDamageEffectHPRatio[3];
-    [FieldOffset(20388)] public fixed float qteSucceedWaitTimes[4];
+    [FieldOffset(20376)] public unsafe fixed float thresholdDamageEffectHPRatio[3];
+    [FieldOffset(20388)] public unsafe fixed float qteSucceedWaitTimes[4];
     [FieldOffset(20404)] public bool isDebugDraw;
     [FieldOffset(20405)] public bool isSkip;
 }
@@ -881,3 +884,4 @@ public struct BossRifleConfig
     [FieldOffset(96128)] public BossRifleNotifierParam notifierParam;
 }
 
+} // BossRifleConfigClass

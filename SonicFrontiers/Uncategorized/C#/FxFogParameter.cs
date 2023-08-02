@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxFogParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct FxDistanceFogParameter
 {
@@ -32,3 +35,4 @@ public struct FxFogParameter
     [FieldOffset(48)] public FxHeightFogParameter heightFogParam;
 }
 
+} // FxFogParameterClass

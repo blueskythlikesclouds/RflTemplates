@@ -1,14 +1,17 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class FxPlanarProjectionShadowParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 144)]
 public struct FxPlanarProjectionShadowParameter
 {
     [FieldOffset(0)]   public bool enable;
     [FieldOffset(16)]  public Vector4 projectionPlane;
-    [FieldOffset(32)]  public fixed byte /* Vector3[4] */ _lightPosition[64];
+    [FieldOffset(32)]  public unsafe fixed byte /* Vector3[4] */ _lightPosition[64];
 
-    public Vector3* lightPosition
+    public unsafe Vector3* lightPosition
     {
         get
         {
@@ -25,3 +28,4 @@ public struct FxPlanarProjectionShadowParameter
     [FieldOffset(128)] public Vector3 shadowMapBoxOffset;
 }
 
+} // FxPlanarProjectionShadowParameterClass

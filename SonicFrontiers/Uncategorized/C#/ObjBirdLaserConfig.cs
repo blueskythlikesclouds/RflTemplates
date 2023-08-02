@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjBirdLaserConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 12)]
 public struct SpeedInfo
 {
@@ -20,3 +23,4 @@ public struct ObjBirdLaserConfig
     [FieldOffset(48)] public Vector3 laserScale;
 }
 
+} // ObjBirdLaserConfigClass

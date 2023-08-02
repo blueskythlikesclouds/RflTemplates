@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class UIFishiGuideConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 48)]
 public struct FishCameraParam
 {
@@ -12,9 +15,9 @@ public struct FishCameraParam
 [StructLayout(LayoutKind.Explicit, Size = 5040)]
 public struct UIFishiGuideConfig
 {
-    [FieldOffset(0)] public fixed byte /* FishCameraParam[105] */ _fishList[5040];
+    [FieldOffset(0)] public unsafe fixed byte /* FishCameraParam[105] */ _fishList[5040];
 
-    public FishCameraParam* fishList
+    public unsafe FishCameraParam* fishList
     {
         get
         {
@@ -24,3 +27,4 @@ public struct UIFishiGuideConfig
     }
 }
 
+} // UIFishiGuideConfigClass

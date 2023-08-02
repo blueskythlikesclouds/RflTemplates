@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class EnemyUmbrellaConfigClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 28)]
 public struct RingParameter
 {
@@ -79,9 +82,9 @@ public struct EnemyUmbrellaLevelBandConfig
 public struct EnemyUmbrellaConfig
 {
     [FieldOffset(0)]   public EnemyUmbrellaCommonConfig commonParams;
-    [FieldOffset(64)]  public fixed byte /* EnemyUmbrellaLevelConfig[5] */ _levelParams[300];
+    [FieldOffset(64)]  public unsafe fixed byte /* EnemyUmbrellaLevelConfig[5] */ _levelParams[300];
 
-    public EnemyUmbrellaLevelConfig* levelParams
+    public unsafe EnemyUmbrellaLevelConfig* levelParams
     {
         get
         {
@@ -90,9 +93,9 @@ public struct EnemyUmbrellaConfig
         }
     }
 
-    [FieldOffset(364)] public fixed byte /* EnemyUmbrellaLevelBandConfig[5] */ _levelBands[40];
+    [FieldOffset(364)] public unsafe fixed byte /* EnemyUmbrellaLevelBandConfig[5] */ _levelBands[40];
 
-    public EnemyUmbrellaLevelBandConfig* levelBands
+    public unsafe EnemyUmbrellaLevelBandConfig* levelBands
     {
         get
         {
@@ -102,3 +105,4 @@ public struct EnemyUmbrellaConfig
     }
 }
 
+} // EnemyUmbrellaConfigClass

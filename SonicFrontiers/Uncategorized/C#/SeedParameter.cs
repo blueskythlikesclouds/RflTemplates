@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class SeedParameterClass
+{
+
 public enum SeedType : byte
 {
     SeedSensor = 0,
@@ -14,3 +17,4 @@ public struct SeedParameter
     [FieldOffset(4)] public SeedType seedType;
 }
 
+} // SeedParameterClass

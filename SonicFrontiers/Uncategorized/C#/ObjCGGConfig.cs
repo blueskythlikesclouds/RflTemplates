@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ObjCGGConfigClass
+{
+
 public struct Color8
 {
     public byte A;
@@ -85,3 +88,4 @@ public struct ObjCGGConfig
     [FieldOffset(196)] public ObjCGGAttachmentConfig attachment;
 }
 
+} // ObjCGGConfigClass

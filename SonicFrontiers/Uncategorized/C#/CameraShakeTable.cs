@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class CameraShakeTableClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size=16)]
 public struct CString
 {
@@ -37,9 +40,9 @@ public struct CameraShakeRecord
 [StructLayout(LayoutKind.Explicit, Size = 3072)]
 public struct CameraShakeTable
 {
-    [FieldOffset(0)] public fixed byte /* CameraShakeRecord[64] */ _records[3072];
+    [FieldOffset(0)] public unsafe fixed byte /* CameraShakeRecord[64] */ _records[3072];
 
-    public CameraShakeRecord* records
+    public unsafe CameraShakeRecord* records
     {
         get
         {
@@ -49,3 +52,4 @@ public struct CameraShakeTable
     }
 }
 
+} // CameraShakeTableClass

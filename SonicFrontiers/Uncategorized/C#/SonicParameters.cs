@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class SonicParametersClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public struct PlayerParamOffensive
 {
@@ -187,9 +190,9 @@ public struct PlayerParamLocusData
 [StructLayout(LayoutKind.Explicit, Size = 64)]
 public struct PlayerParamLocus
 {
-    [FieldOffset(0)] public fixed byte /* PlayerParamLocusData[4] */ _data[64];
+    [FieldOffset(0)] public unsafe fixed byte /* PlayerParamLocusData[4] */ _data[64];
 
-    public PlayerParamLocusData* data
+    public unsafe PlayerParamLocusData* data
     {
         get
         {
@@ -226,15 +229,15 @@ public struct PlayerParamBarrierWall
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public struct PlayerParamDamageRateLevel
 {
-    [FieldOffset(0)] public fixed float rates[5];
+    [FieldOffset(0)] public unsafe fixed float rates[5];
 }
 
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct PlayerParamDamageRate
 {
-    [FieldOffset(0)] public fixed byte /* PlayerParamDamageRateLevel[4] */ _diffculties[80];
+    [FieldOffset(0)] public unsafe fixed byte /* PlayerParamDamageRateLevel[4] */ _diffculties[80];
 
-    public PlayerParamDamageRateLevel* diffculties
+    public unsafe PlayerParamDamageRateLevel* diffculties
     {
         get
         {
@@ -334,9 +337,9 @@ public struct PlayerParamLoopKickSet
 public struct PlayerParamCrasher
 {
     [FieldOffset(0)]   public float startWait;
-    [FieldOffset(4)]   public fixed float distanceRatios[5];
-    [FieldOffset(24)]  public fixed float angles[5];
-    [FieldOffset(44)]  public fixed float radii[5];
+    [FieldOffset(4)]   public unsafe fixed float distanceRatios[5];
+    [FieldOffset(24)]  public unsafe fixed float angles[5];
+    [FieldOffset(44)]  public unsafe fixed float radii[5];
     [FieldOffset(64)]  public float distanceMax;
     [FieldOffset(68)]  public float zigzagBeginOneStepTime;
     [FieldOffset(72)]  public float zigzagEndOneStepTime;
@@ -492,10 +495,10 @@ public struct PlayerParamCrossSlash
     [FieldOffset(20)]  public float spinPhase;
     [FieldOffset(24)]  public float spinRadius;
     [FieldOffset(28)]  public float spinSpeed;
-    [FieldOffset(32)]  public fixed float spawnDelayTime[2];
-    [FieldOffset(48)]  public fixed byte /* Vector3[2] */ _spawnLocalTranslation[32];
+    [FieldOffset(32)]  public unsafe fixed float spawnDelayTime[2];
+    [FieldOffset(48)]  public unsafe fixed byte /* Vector3[2] */ _spawnLocalTranslation[32];
 
-    public Vector3* spawnLocalTranslation
+    public unsafe Vector3* spawnLocalTranslation
     {
         get
         {
@@ -504,9 +507,9 @@ public struct PlayerParamCrossSlash
         }
     }
 
-    [FieldOffset(80)]  public fixed byte /* Vector3[2] */ _spawnLocalAngle[32];
+    [FieldOffset(80)]  public unsafe fixed byte /* Vector3[2] */ _spawnLocalAngle[32];
 
-    public Vector3* spawnLocalAngle
+    public unsafe Vector3* spawnLocalAngle
     {
         get
         {
@@ -577,9 +580,9 @@ public struct PlayerParamSmash
 {
     [FieldOffset(0)]  public PlayerParamAttackCollider hit1;
     [FieldOffset(48)] public PlayerParamAttackCollider hit2;
-    [FieldOffset(96)] public fixed byte /* Vector3[16] */ _offsets[256];
+    [FieldOffset(96)] public unsafe fixed byte /* Vector3[16] */ _offsets[256];
 
-    public Vector3* offsets
+    public unsafe Vector3* offsets
     {
         get
         {
@@ -683,9 +686,9 @@ public enum Action : sbyte
 [StructLayout(LayoutKind.Explicit, Size = 18)]
 public struct PlayerParamComboTransit
 {
-    [FieldOffset(0)]  public fixed byte /* Action[6] */ _transitExistTarget[6];
+    [FieldOffset(0)]  public unsafe fixed byte /* Action[6] */ _transitExistTarget[6];
 
-    public Action* transitExistTarget
+    public unsafe Action* transitExistTarget
     {
         get
         {
@@ -694,9 +697,9 @@ public struct PlayerParamComboTransit
         }
     }
 
-    [FieldOffset(6)]  public fixed byte /* Action[6] */ _transitInAir[6];
+    [FieldOffset(6)]  public unsafe fixed byte /* Action[6] */ _transitInAir[6];
 
-    public Action* transitInAir
+    public unsafe Action* transitInAir
     {
         get
         {
@@ -705,9 +708,9 @@ public struct PlayerParamComboTransit
         }
     }
 
-    [FieldOffset(12)] public fixed byte /* Action[6] */ _transitNotExistTarget[6];
+    [FieldOffset(12)] public unsafe fixed byte /* Action[6] */ _transitNotExistTarget[6];
 
-    public Action* transitNotExistTarget
+    public unsafe Action* transitNotExistTarget
     {
         get
         {
@@ -823,9 +826,9 @@ public struct CyloopOpaqueLocusParameter
     [FieldOffset(0)]   public CyloopSlashEffectBaseParameter cyloopSlashEffectBaseParameter;
     [FieldOffset(88)]  public ColorF m_color;
     [FieldOffset(104)] public float m_alphaThreshold;
-    [FieldOffset(108)] public fixed byte /* OpaqueLineUvCell[2] */ _m_uvCells[24];
+    [FieldOffset(108)] public unsafe fixed byte /* OpaqueLineUvCell[2] */ _m_uvCells[24];
 
-    public OpaqueLineUvCell* m_uvCells
+    public unsafe OpaqueLineUvCell* m_uvCells
     {
         get
         {
@@ -890,9 +893,9 @@ public struct CyloopCrossLineParameter
 public struct CyloopLocusParameter
 {
     [FieldOffset(0)]    public int m_numTransparentLines;
-    [FieldOffset(8)]    public fixed byte /* CyloopTransparentLocusParameter[3] */ _m_transparentLines[504];
+    [FieldOffset(8)]    public unsafe fixed byte /* CyloopTransparentLocusParameter[3] */ _m_transparentLines[504];
 
-    public CyloopTransparentLocusParameter* m_transparentLines
+    public unsafe CyloopTransparentLocusParameter* m_transparentLines
     {
         get
         {
@@ -902,9 +905,9 @@ public struct CyloopLocusParameter
     }
 
     [FieldOffset(512)]  public int m_numOpaqueLines;
-    [FieldOffset(520)]  public fixed byte /* CyloopOpaqueLocusParameter[3] */ _m_opaqueLines[480];
+    [FieldOffset(520)]  public unsafe fixed byte /* CyloopOpaqueLocusParameter[3] */ _m_opaqueLines[480];
 
-    public CyloopOpaqueLocusParameter* m_opaqueLines
+    public unsafe CyloopOpaqueLocusParameter* m_opaqueLines
     {
         get
         {
@@ -954,9 +957,9 @@ public struct CyloopShapeWindCountParameter
 [StructLayout(LayoutKind.Explicit, Size = 80)]
 public struct CyloopShapeWindEffectParaemter
 {
-    [FieldOffset(0)] public fixed byte /* CyloopShapeWindCountParameter[5] */ _param[80];
+    [FieldOffset(0)] public unsafe fixed byte /* CyloopShapeWindCountParameter[5] */ _param[80];
 
-    public CyloopShapeWindCountParameter* param
+    public unsafe CyloopShapeWindCountParameter* param
     {
         get
         {
@@ -1016,9 +1019,9 @@ public struct PlayerParamSuperSonic
     [FieldOffset(4)]  public float decreaseSec;
     [FieldOffset(8)]  public float inletRadius;
     [FieldOffset(12)] public float moveSoundSpeed;
-    [FieldOffset(16)] public fixed byte /* PlayerParamSuperSonicShapeAttackData[32] */ _shapeEffects[2560];
+    [FieldOffset(16)] public unsafe fixed byte /* PlayerParamSuperSonicShapeAttackData[32] */ _shapeEffects[2560];
 
-    public PlayerParamSuperSonicShapeAttackData* shapeEffects
+    public unsafe PlayerParamSuperSonicShapeAttackData* shapeEffects
     {
         get
         {
@@ -1091,9 +1094,9 @@ public struct PlayerParamRunWithKodama
 {
     [FieldOffset(0)] public int maxKodamas;
     [FieldOffset(4)] public float gravitySize;
-    [FieldOffset(8)] public fixed byte /* PlayerParamRunWithKodamaParam[8] */ __params[160];
+    [FieldOffset(8)] public unsafe fixed byte /* PlayerParamRunWithKodamaParam[8] */ __params[160];
 
-    public PlayerParamRunWithKodamaParam* _params
+    public unsafe PlayerParamRunWithKodamaParam* _params
     {
         get
         {
@@ -1762,7 +1765,7 @@ public struct PlayerParamBoost
     [FieldOffset(16)] public float reigniteRatio;
     [FieldOffset(20)] public float recoveryByRing;
     [FieldOffset(24)] public float recoveryByAttack;
-    [FieldOffset(28)] public fixed float blurPowers[3];
+    [FieldOffset(28)] public unsafe fixed float blurPowers[3];
     [FieldOffset(40)] public float blurEaseInTime;
     [FieldOffset(44)] public float blurEaseOutTime;
     [FieldOffset(48)] public float endSpeed;
@@ -1870,9 +1873,9 @@ public struct PlayerParamAvoid
     [FieldOffset(16)]  public float frontAngle;
     [FieldOffset(20)]  public float backAngle;
     [FieldOffset(24)]  public float addFallSpeed;
-    [FieldOffset(28)]  public fixed byte /* PlayerParamAvoidData[7] */ _data[112];
+    [FieldOffset(28)]  public unsafe fixed byte /* PlayerParamAvoidData[7] */ _data[112];
 
-    public PlayerParamAvoidData* data
+    public unsafe PlayerParamAvoidData* data
     {
         get
         {
@@ -2286,3 +2289,4 @@ public struct SonicParameters
     [FieldOffset(36256)] public ModePackageSonic cyberspaceSV;
 }
 
+} // SonicParametersClass

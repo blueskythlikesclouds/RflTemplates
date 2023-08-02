@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class GameSkillParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 3)]
 public struct SkillParam
 {
@@ -55,9 +58,9 @@ public struct SkillNodeParam
 [StructLayout(LayoutKind.Explicit, Size = 151)]
 public struct SkillTreeParam
 {
-    [FieldOffset(0)]   public fixed byte /* SkillNodeParam[30] */ _nodeParams[150];
+    [FieldOffset(0)]   public unsafe fixed byte /* SkillNodeParam[30] */ _nodeParams[150];
 
-    public SkillNodeParam* nodeParams
+    public unsafe SkillNodeParam* nodeParams
     {
         get
         {
@@ -72,9 +75,9 @@ public struct SkillTreeParam
 [StructLayout(LayoutKind.Explicit, Size = 211)]
 public struct GameSkillParameter
 {
-    [FieldOffset(0)]  public fixed byte /* SkillParam[20] */ _skillParams[60];
+    [FieldOffset(0)]  public unsafe fixed byte /* SkillParam[20] */ _skillParams[60];
 
-    public SkillParam* skillParams
+    public unsafe SkillParam* skillParams
     {
         get
         {
@@ -86,3 +89,4 @@ public struct GameSkillParameter
     [FieldOffset(60)] public SkillTreeParam treeParams;
 }
 
+} // GameSkillParameterClass

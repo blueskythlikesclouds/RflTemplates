@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class ActionChainStageParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 16)]
 public struct ActionChainScoreThresholdParameter
 {
@@ -23,9 +26,9 @@ public struct ActionChainPlaceParameter
 [StructLayout(LayoutKind.Explicit, Size = 1088)]
 public struct ActionChainStageParameter
 {
-    [FieldOffset(0)] public fixed byte /* ActionChainPlaceParameter[16] */ _placeParam[1088];
+    [FieldOffset(0)] public unsafe fixed byte /* ActionChainPlaceParameter[16] */ _placeParam[1088];
 
-    public ActionChainPlaceParameter* placeParam
+    public unsafe ActionChainPlaceParameter* placeParam
     {
         get
         {
@@ -35,3 +38,4 @@ public struct ActionChainStageParameter
     }
 }
 
+} // ActionChainStageParameterClass

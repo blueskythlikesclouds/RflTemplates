@@ -1,6 +1,9 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
+public class CustomMusicParameterClass
+{
+
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public struct CustomMusicTransitInfo
 {
@@ -39,9 +42,9 @@ public struct CustomMusicInfo
 public struct CustomMusicParameter
 {
     [FieldOffset(0)]    public CustomMusicTransitInfo transitInfo;
-    [FieldOffset(8)]    public fixed byte /* CustomMusicInfo[128] */ _musicInfos[3072];
+    [FieldOffset(8)]    public unsafe fixed byte /* CustomMusicInfo[128] */ _musicInfos[3072];
 
-    public CustomMusicInfo* musicInfos
+    public unsafe CustomMusicInfo* musicInfos
     {
         get
         {
@@ -53,3 +56,4 @@ public struct CustomMusicParameter
     [FieldOffset(3080)] public float idlingViewTime;
 }
 
+} // CustomMusicParameterClass
