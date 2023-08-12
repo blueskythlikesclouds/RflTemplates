@@ -1,0 +1,1233 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring effectName<comment="エフェクト名">;
+    FSeek(p + 16); cstring effectNodeName<comment="アタッチノード名">;
+    FSeek(p + 32); bool follow<comment="アタッチノードに追従するか">;
+
+    FSeek(p + 40);
+} EffectInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  EffectInfo effectInfo;
+    FSeek(p + 40); uint32 frames[2]<comment="エフェクトの発生フレーム",optimize=false>;
+
+    FSeek(p + 48);
+} OneShotEffectInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring flyAnim<comment="アニメーション名：飛行">;
+    FSeek(p + 32);  cstring attackAnim<comment="アニメーション名：攻撃">;
+    FSeek(p + 48);  cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 64);  float radius<comment="デバッグ描画用の球の半径">;
+    FSeek(p + 72);  EffectInfo burnerEffectInfos[2]<comment="エフェクト情報：バーニア",optimize=false>;
+    FSeek(p + 152); OneShotEffectInfo strongBurnerEffectInfos[2]<comment="ワンショットエフェクト情報：バーニア",optimize=false>;
+
+    FSeek(p + 248);
+} BeetonObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); BeetonObjectResourceRflParam beetonObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 248);
+} BeetonObjectRflParam;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} RoundTripObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring moveAnim<comment="アニメーション名：走り">;
+    FSeek(p + 32);  cstring waitAnim<comment="アニメーション名：待機">;
+    FSeek(p + 48);  cstring jumpAnim<comment="アニメーション名：ジャンプ">;
+    FSeek(p + 64);  cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 80);  float radius<comment="デバッグ描画用の球の半径">;
+    FSeek(p + 88);  EffectInfo effectMoveGrass<comment="エフェクト情報：走り(草)">;
+    FSeek(p + 128); OneShotEffectInfo effectJumpGrass<comment="ワンショットエフェクト情報：ジャンプ(草)">;
+    FSeek(p + 176); OneShotEffectInfo effectLandingGrass<comment="ワンショットエフェクト情報：着地(草)">;
+    FSeek(p + 224); EffectInfo effectMoveRock<comment="エフェクト情報：走り(岩)">;
+    FSeek(p + 264); OneShotEffectInfo effectJumpRock<comment="ワンショットエフェクト情報：ジャンプ(岩)">;
+    FSeek(p + 312); OneShotEffectInfo effectLandingRock<comment="ワンショットエフェクト情報：着地(岩)">;
+    FSeek(p + 360); bool isLeaningOnPath<comment="90度傾かせるか">;
+
+    FSeek(p + 368);
+} RoundTripObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   RoundTripObjectResourceRflParam roundTripObjectResourceRflParam;
+    FSeek(p + 368); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 376);
+} MotoraObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); RoundTripObjectRflParam roundTripObjectRflParam;
+    FSeek(p + 8); MotoraObjectResourceRflParam motoraObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 384);
+} MotoraObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} WaterObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring animation<comment="アニメーション名">;
+    FSeek(p + 32);  cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 48);  float radius<comment="デバッグ描画用の球の半径">;
+    FSeek(p + 56);  OneShotEffectInfo effectJump<comment="ワンショットエフェクト情報：ジャンプ">;
+    FSeek(p + 104); OneShotEffectInfo effectTouchdown<comment="ワンショットエフェクト情報：着水">;
+    FSeek(p + 152); OneShotEffectInfo effectWaterDrop<comment="ワンショットエフェクト情報：水滴">;
+
+    FSeek(p + 200);
+} WaterObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   WaterObjectResourceRflParam waterObjectResourceRflParam;
+    FSeek(p + 200); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 208);
+} BatabataObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); WaterObjectRflParam waterObjectRflParam;
+    FSeek(p + 8); BatabataObjectResourceRflParam batabataObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 216);
+} BatabataObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   WaterObjectResourceRflParam waterObjectResourceRflParam;
+    FSeek(p + 200); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 208);
+} RockyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); WaterObjectRflParam waterObjectRflParam;
+    FSeek(p + 8); RockyObjectResourceRflParam rockyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 216);
+} RockyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} GroundObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring animation<comment="アニメーション名">;
+    FSeek(p + 32);  cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 48);  float radius<comment="デバッグ描画用の球の半径">;
+    FSeek(p + 56);  OneShotEffectInfo effectJumpGrass<comment="ワンショットエフェクト情報：ジャンプ(草)">;
+    FSeek(p + 104); OneShotEffectInfo effectLandingGrass<comment="ワンショットエフェクト情報：着地(草)">;
+    FSeek(p + 152); OneShotEffectInfo effectJumpRock<comment="ワンショットエフェクト情報：ジャンプ(岩)">;
+    FSeek(p + 200); OneShotEffectInfo effectLandingRock<comment="ワンショットエフェクト情報：着地(岩)">;
+
+    FSeek(p + 248);
+} GroundObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GroundObjectResourceRflParam groundObjectResourceRflParam;
+    FSeek(p + 248); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 256);
+} FlickyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GroundObjectRflParam groundObjectRflParam;
+    FSeek(p + 8); FlickyObjectResourceRflParam flickyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 264);
+} FlickyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   WaterObjectResourceRflParam waterObjectResourceRflParam;
+    FSeek(p + 200); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 208);
+} PeckyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); WaterObjectRflParam waterObjectRflParam;
+    FSeek(p + 8); PeckyObjectResourceRflParam peckyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 216);
+} PeckyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GroundObjectResourceRflParam groundObjectResourceRflParam;
+    FSeek(p + 248); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 256);
+} RickyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GroundObjectRflParam groundObjectRflParam;
+    FSeek(p + 8); RickyObjectResourceRflParam rickyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 264);
+} RickyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GroundObjectResourceRflParam groundObjectResourceRflParam;
+    FSeek(p + 248); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 256);
+} CuckyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GroundObjectRflParam groundObjectRflParam;
+    FSeek(p + 8); CuckyObjectResourceRflParam cuckyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 264);
+} CuckyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GroundObjectResourceRflParam groundObjectResourceRflParam;
+    FSeek(p + 248); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 256);
+} PickyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GroundObjectRflParam groundObjectRflParam;
+    FSeek(p + 8); PickyObjectResourceRflParam pickyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 264);
+} PickyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   GroundObjectResourceRflParam groundObjectResourceRflParam;
+    FSeek(p + 248); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 256);
+} PockyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GroundObjectRflParam groundObjectRflParam;
+    FSeek(p + 8); PockyObjectResourceRflParam pockyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 264);
+} PockyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} CommonObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isActive<comment="有効">;
+    FSeek(p + 8); cstring uvAnimNames[2]<comment="UVアニメーション名",optimize=false>;
+
+    FSeek(p + 40);
+} UVAnimationInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isActive<comment="有効">;
+    FSeek(p + 8); cstring visAnimNames<comment="VISアニメーション名">;
+
+    FSeek(p + 24);
+} VISAnimationInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring animation<comment="アニメーション名">;
+    FSeek(p + 32);  cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 48);  float radius<comment="デバッグ描画用の球の半径">;
+    FSeek(p + 56);  EffectInfo effectInfos[2]<comment="エフェクト情報",optimize=false>;
+    FSeek(p + 136); OneShotEffectInfo oneShotEffectInfos[2]<comment="ワンショットエフェクト情報",optimize=false>;
+    FSeek(p + 232); UVAnimationInfo loopUVAnimInfo<comment="UVアニメーション情報：ループ再生">;
+    FSeek(p + 272); VISAnimationInfo loopVISAnimInfo<comment="VISアニメーション情報：ループ再生">;
+
+    FSeek(p + 296);
+} CommonObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} TornadoObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); TornadoObjectResourceRflParam tornadoObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} TornadoObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} EggroboObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); EggroboObjectResourceRflParam eggroboObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} EggroboObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} MogumoguObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); MogumoguObjectResourceRflParam mogumoguObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} MogumoguObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} ValkyneObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); ValkyneObjectResourceRflParam valkyneObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} ValkyneObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} SkyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring model<comment="モデル名">;
+    FSeek(p + 16); cstring animation<comment="アニメーション名">;
+    FSeek(p + 32); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 48); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 56);
+} SkyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  SkyObjectResourceRflParam skyObjectResourceRflParam;
+    FSeek(p + 56); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 64);
+} PatabataObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); SkyObjectRflParam skyObjectRflParam;
+    FSeek(p + 8); PatabataObjectResourceRflParam patabataObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 72);
+} PatabataObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} MetalSonicObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); MetalSonicObjectResourceRflParam metalSonicObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} MetalSonicObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   RoundTripObjectResourceRflParam roundTripObjectResourceRflParam;
+    FSeek(p + 368); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 376);
+} AntonObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); RoundTripObjectRflParam roundTripObjectRflParam;
+    FSeek(p + 8); AntonObjectResourceRflParam antonObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 384);
+} AntonObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} AiaiObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); AiaiObjectResourceRflParam aiaiObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} AiaiObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} LanderObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); LanderObjectResourceRflParam landerObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} LanderObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} LinePathObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring animation<comment="アニメーション名">;
+    FSeek(p + 32);  cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 48);  float radius<comment="デバッグ描画用の球の半径">;
+    FSeek(p + 56);  EffectInfo effectInfos[2]<comment="エフェクト情報",optimize=false>;
+    FSeek(p + 136); VISAnimationInfo loopVISAnimInfo<comment="VISアニメーション情報：ループ再生">;
+
+    FSeek(p + 160);
+} LinePathObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LinePathObjectResourceRflParam linePathObjectResourceRflParam;
+    FSeek(p + 160); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 168);
+} FlickyBlueObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); FlickyBlueObjectResourceRflParam flickyBlueObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 176);
+} FlickyBlueObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LinePathObjectResourceRflParam linePathObjectResourceRflParam;
+    FSeek(p + 160); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 168);
+} FlickyGreenObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); FlickyGreenObjectResourceRflParam flickyGreenObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 176);
+} FlickyGreenObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LinePathObjectResourceRflParam linePathObjectResourceRflParam;
+    FSeek(p + 160); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 168);
+} FlickyPinkObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); FlickyPinkObjectResourceRflParam flickyPinkObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 176);
+} FlickyPinkObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LinePathObjectResourceRflParam linePathObjectResourceRflParam;
+    FSeek(p + 160); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 168);
+} FlickyRedObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); FlickyRedObjectResourceRflParam flickyRedObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 176);
+} FlickyRedObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LinePathObjectResourceRflParam linePathObjectResourceRflParam;
+    FSeek(p + 160); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 168);
+} WaterSonicObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); WaterSonicObjectResourceRflParam waterSonicObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 176);
+} WaterSonicObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LinePathObjectResourceRflParam linePathObjectResourceRflParam;
+    FSeek(p + 160); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 168);
+} SuperSonicObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); SuperSonicObjectResourceRflParam superSonicObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 176);
+} SuperSonicObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   LinePathObjectResourceRflParam linePathObjectResourceRflParam;
+    FSeek(p + 160); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 168);
+} FlyingTailsObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); FlyingTailsObjectResourceRflParam flyingTailsObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 176);
+} FlyingTailsObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring normalWaitAnim<comment="アニメーション名：通常待機">;
+    FSeek(p + 32);  cstring islandAnims[4]<comment="アニメーション名：島固有",optimize=false>;
+    FSeek(p + 96);  cstring islandCommonWaitAnimA<comment="アニメーション名：全島共通待機A">;
+    FSeek(p + 112); cstring islandCommonWaitAnimB<comment="アニメーション名：全島共通待機B">;
+    FSeek(p + 128); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 144); UVAnimationInfo islandEyeUVAnimInfos[4]<comment="UVアニメーション情報：両目(島固有)",optimize=false>;
+    FSeek(p + 304); UVAnimationInfo islandCommonWaitBEyeUVAnimInfo<comment="UVアニメーション情報：両目(全島共通待機B)">;
+    FSeek(p + 344); VISAnimationInfo islandVISAnimInfos[4]<comment="VISアニメーション情報：島固有",optimize=false>;
+    FSeek(p + 440); VISAnimationInfo normalWaitVISAnimInfo<comment="VISアニメーション情報：通常待機">;
+    FSeek(p + 464); VISAnimationInfo islandCommonWaitAVISAnimInfo<comment="VISアニメーション情報：全島共通待機A">;
+    FSeek(p + 488); VISAnimationInfo islandCommonWaitBVISAnimInfo<comment="VISアニメーション情報：全島共通待機B">;
+    FSeek(p + 512); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 520);
+} IslandCommonSonicObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandCommonSonicObjectResourceRflParam islandCommonSonicObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 520);
+} IslandCommonSonicObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} IslandW2SonicObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); IslandW2SonicObjectResourceRflParam islandW2SonicObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} IslandW2SonicObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring sonicModel<comment="モデル名：ソニック">;
+    FSeek(p + 16);  cstring sonicAnim<comment="アニメーション名：ソニック">;
+    FSeek(p + 32);  cstring sonicAnimR<comment="アニメーション名：ソニック (反転)">;
+    FSeek(p + 48);  cstring sonicAnimSwitch<comment="アニメーション名：ソニック,持ち替え">;
+    FSeek(p + 64);  cstring sonicAnimSwitchR<comment="アニメーション名：ソニック,持ち替え (反転)">;
+    FSeek(p + 80);  cstring sonicSkeleton<comment="スケルトン名：ソニック">;
+    FSeek(p + 96);  cstring drumModel<comment="モデル名：ドラム缶">;
+    FSeek(p + 112); cstring drumAnim<comment="アニメーション名：ドラム缶">;
+    FSeek(p + 128); cstring drumAnimR<comment="アニメーション名：ドラム缶 (反転)">;
+    FSeek(p + 144); cstring drumAnimSwitch<comment="アニメーション名：ドラム缶,持ち替え">;
+    FSeek(p + 160); cstring drumAnimSwitchR<comment="アニメーション名：ドラム缶,持ち替え (反転)">;
+    FSeek(p + 176); cstring drumSkeleton<comment="スケルトン名：ドラム缶">;
+    FSeek(p + 192); OneShotEffectInfo effectDrum<comment="ワンショットエフェクト情報：オールの水飛沫">;
+    FSeek(p + 240); OneShotEffectInfo effectDrumR<comment="ワンショットエフェクト情報：オールの水飛沫 (反転)">;
+    FSeek(p + 288); VISAnimationInfo loopVISAnimInfo<comment="VISアニメーション情報：ループ再生">;
+    FSeek(p + 312); VISAnimationInfo loopVISAnimInfoR<comment="VISアニメーション情報：ループ再生 (反転)">;
+    FSeek(p + 336); VISAnimationInfo switchVISAnimInfo<comment="VISアニメーション情報：持ち替え">;
+    FSeek(p + 360); VISAnimationInfo switchVISAnimInfoR<comment="VISアニメーション情報：持ち替え (反転)">;
+    FSeek(p + 384); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 392);
+} IslandW5SonicObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandW5SonicObjectResourceRflParam islandW5SonicObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 392);
+} IslandW5SonicObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring normalWaitAnim<comment="アニメーション名：通常待機">;
+    FSeek(p + 32);  cstring islandAnims[5]<comment="アニメーション名：島固有",optimize=false>;
+    FSeek(p + 112); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 128); UVAnimationInfo islandEyeUVAnimInfos[5]<comment="UVアニメーション情報：両目(島固有)",optimize=false>;
+    FSeek(p + 328); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 336);
+} IslandCommonTailsObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandCommonTailsObjectResourceRflParam islandCommonTailsObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 336);
+} IslandCommonTailsObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring normalWaitAnim<comment="アニメーション名：通常待機">;
+    FSeek(p + 32);  cstring islandAnims[5]<comment="アニメーション名：島固有",optimize=false>;
+    FSeek(p + 112); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 128); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 136);
+} IslandCommonEggmanObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandCommonEggmanObjectResourceRflParam islandCommonEggmanObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 136);
+} IslandCommonEggmanObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring model<comment="モデル名">;
+    FSeek(p + 16); cstring normalWaitAnim<comment="アニメーション名：通常待機">;
+    FSeek(p + 32); cstring islandLeftAnim<comment="アニメーション名：島固有(左)">;
+    FSeek(p + 48); cstring islandRightAnim<comment="アニメーション名：島固有(右)">;
+    FSeek(p + 64); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 80); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 88);
+} IslandW1EggmanObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandW1EggmanObjectResourceRflParam islandW1EggmanObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 88);
+} IslandW1EggmanObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring normalWaitAnim<comment="アニメーション名：通常待機">;
+    FSeek(p + 32);  cstring islandAnims[6]<comment="アニメーション名：島固有",optimize=false>;
+    FSeek(p + 128); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 144); VISAnimationInfo islandVISAnimInfos[6]<comment="VISアニメーション情報：島固有",optimize=false>;
+    FSeek(p + 288); VISAnimationInfo normalWaitVISAnimInfo<comment="VISアニメーション情報：通常待機">;
+    FSeek(p + 312); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 320);
+} IslandCommonKnucklesObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandCommonKnucklesObjectResourceRflParam islandCommonKnucklesObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 320);
+} IslandCommonKnucklesObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring model<comment="モデル名">;
+    FSeek(p + 16); cstring animation<comment="アニメーション名">;
+    FSeek(p + 32); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 48); VISAnimationInfo VISAnimInfo<comment="VISアニメーション情報">;
+    FSeek(p + 72); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 80);
+} IslandW5KnucklesObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandW5KnucklesObjectResourceRflParam islandW5KnucklesObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 80);
+} IslandW5KnucklesObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring islandAnims[6]<comment="アニメーション名：島固有",optimize=false>;
+    FSeek(p + 112); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 128); VISAnimationInfo islandVISAnimInfos[6]<comment="VISアニメーション情報：島固有",optimize=false>;
+    FSeek(p + 272); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 280);
+} GlidingKnucklesObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LinePathObjectRflParam linePathObjectRflParam;
+    FSeek(p + 8); GlidingKnucklesObjectResourceRflParam glidingKnucklesObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 288);
+} GlidingKnucklesObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring normalWaitAnim<comment="アニメーション名：通常待機">;
+    FSeek(p + 32);  cstring islandAnims[6]<comment="アニメーション名：島固有",optimize=false>;
+    FSeek(p + 128); cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 144); VISAnimationInfo islandVISAnimInfos[6]<comment="VISアニメーション情報：島固有",optimize=false>;
+    FSeek(p + 288); VISAnimationInfo normalWaitVISAnimInfo<comment="VISアニメーション情報：通常待機">;
+    FSeek(p + 312); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 320);
+} IslandCommonAmyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandCommonAmyObjectResourceRflParam islandCommonAmyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 320);
+} IslandCommonAmyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  EffectInfo effectInfo;
+    FSeek(p + 40); uint32 frame<comment="エフェクトの発生フレーム">;
+
+    FSeek(p + 48);
+} AmyOneShotEffectInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring model<comment="モデル名">;
+    FSeek(p + 16);  cstring idleAnim<comment="アニメーション名：待機">;
+    FSeek(p + 32);  cstring islandAnim<comment="アニメーション名：固有">;
+    FSeek(p + 48);  cstring skeleton<comment="スケルトン名">;
+    FSeek(p + 64);  AmyOneShotEffectInfo oneShotEffect<comment="ワンショットエフェクト情報：投げキッス">;
+    FSeek(p + 112); VISAnimationInfo idleVISAnimInfo<comment="VISアニメーション情報：待機">;
+    FSeek(p + 136); VISAnimationInfo islandVISAnimInfo<comment="VISアニメーション情報：固有">;
+    FSeek(p + 160); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 168);
+} IslandW3AmyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandW3AmyObjectResourceRflParam islandW3AmyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 168);
+} IslandW3AmyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  EffectInfo effectInfo;
+    FSeek(p + 40); uint32 startFrame<comment="エフェクトの開始フレーム">;
+    FSeek(p + 44); uint32 endFrame<comment="エフェクトの終了フレーム">;
+
+    FSeek(p + 48);
+} AmyLoopEffectInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring amyModel<comment="モデル名：エミー">;
+    FSeek(p + 16);  cstring amyIdleAnim<comment="アニメーション名：エミー待機">;
+    FSeek(p + 32);  cstring amyIslandAnim<comment="アニメーション名：エミー固有">;
+    FSeek(p + 48);  cstring amySkeleton<comment="スケルトン名：エミー">;
+    FSeek(p + 64);  cstring hammerModel<comment="モデル名：ハンマー">;
+    FSeek(p + 80);  cstring hammerIdleAnim<comment="アニメーション名：ハンマー待機">;
+    FSeek(p + 96);  cstring hammerIslandAnim<comment="アニメーション名：ハンマー固有">;
+    FSeek(p + 112); cstring hammerSkeleton<comment="スケルトン名：ハンマー">;
+    FSeek(p + 128); AmyOneShotEffectInfo oneShotEffect<comment="ワンショットエフェクト情報：ポーズ">;
+    FSeek(p + 176); AmyLoopEffectInfo loopEffect<comment="ループエフェクト情報：ハンマー軌跡">;
+    FSeek(p + 224); VISAnimationInfo idleVISAnimInfo<comment="VISアニメーション情報：待機">;
+    FSeek(p + 248); VISAnimationInfo islandVISAnimInfo<comment="VISアニメーション情報：待機">;
+    FSeek(p + 272); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 280);
+} IslandW4AmyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandW4AmyObjectResourceRflParam islandW4AmyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 280);
+} IslandW4AmyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} StarlightfloorObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); StarlightfloorObjectResourceRflParam starlightfloorObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} StarlightfloorObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CommonObjectResourceRflParam commonObjectResourceRflParam;
+    FSeek(p + 296); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 304);
+} CarnivalDrumObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CommonObjectRflParam commonObjectRflParam;
+    FSeek(p + 8); CarnivalDrumObjectResourceRflParam carnivalDrumObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 312);
+} CarnivalDrumObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} StaticObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring model<comment="モデル名">;
+    FSeek(p + 16); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 24);
+} StaticObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  StaticObjectResourceRflParam staticObjectResourceRflParam;
+    FSeek(p + 24); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 32);
+} ShadowObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); StaticObjectRflParam staticObjectRflParam;
+    FSeek(p + 8); ShadowObjectResourceRflParam shadowObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 40);
+} ShadowObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  StaticObjectResourceRflParam staticObjectResourceRflParam;
+    FSeek(p + 24); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 32);
+} ShadowSkyObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); StaticObjectRflParam staticObjectRflParam;
+    FSeek(p + 8); ShadowSkyObjectResourceRflParam shadowSkyObjectResourceParam<comment="リソース">;
+
+    FSeek(p + 40);
+} ShadowSkyObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring model<comment="モデル名">;
+    FSeek(p + 16); float radius<comment="デバッグ描画用の球の半径">;
+
+    FSeek(p + 24);
+} IslandObjectResourceRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  IslandObjectResourceRflParam islandObjectResourceParam<comment="リソース">;
+    FSeek(p + 24); float impostorScale<comment="木のスケール">;
+
+    FSeek(p + 32);
+} IslandObjectRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     BeetonObjectRflParam beetonObject<comment="ビートン">;
+    FSeek(p + 248);   MotoraObjectRflParam motoraObject<comment="モトラ">;
+    FSeek(p + 632);   BatabataObjectRflParam batabataObject<comment="バタバタ">;
+    FSeek(p + 848);   RockyObjectRflParam rockyObject<comment="ロッキー">;
+    FSeek(p + 1064);  FlickyObjectRflParam flickyObject<comment="フリッキー">;
+    FSeek(p + 1328);  PeckyObjectRflParam peckyObject<comment="ペッキー">;
+    FSeek(p + 1544);  RickyObjectRflParam rickyObject<comment="リッキー">;
+    FSeek(p + 1808);  CuckyObjectRflParam cuckyObject<comment="クッキー">;
+    FSeek(p + 2072);  PickyObjectRflParam pickyObject<comment="ピッキー">;
+    FSeek(p + 2336);  PockyObjectRflParam pockyObject<comment="ポッキー">;
+    FSeek(p + 2600);  TornadoObjectRflParam tornadoObject<comment="トルネード号">;
+    FSeek(p + 2912);  EggroboObjectRflParam eggroboObject<comment="エッグロボ">;
+    FSeek(p + 3224);  MogumoguObjectRflParam mogumoguObject<comment="モグモグ">;
+    FSeek(p + 3536);  ValkyneObjectRflParam valkyneObject<comment="バルキーン">;
+    FSeek(p + 3848);  PatabataObjectRflParam patabataObject<comment="パタバタ">;
+    FSeek(p + 3920);  MetalSonicObjectRflParam metalSonicObject<comment="メタルソニック">;
+    FSeek(p + 4232);  AntonObjectRflParam antonObject<comment="アントン">;
+    FSeek(p + 4616);  AiaiObjectRflParam aiaiObject<comment="アイアイ">;
+    FSeek(p + 4928);  LanderObjectRflParam landerObject<comment="ランダー">;
+    FSeek(p + 5240);  FlickyBlueObjectRflParam flickyBlueObject<comment="フリッキー：青">;
+    FSeek(p + 5416);  FlickyGreenObjectRflParam flickyGreenObject<comment="フリッキー：緑">;
+    FSeek(p + 5592);  FlickyPinkObjectRflParam flickyPinkObject<comment="フリッキー：桃">;
+    FSeek(p + 5768);  FlickyRedObjectRflParam flickyRedObject<comment="フリッキー：赤">;
+    FSeek(p + 5944);  WaterSonicObjectRflParam waterSonicObject<comment="DLC:水上ソニック">;
+    FSeek(p + 6120);  SuperSonicObjectRflParam superSonicObject<comment="DLC:スーパーソニック">;
+    FSeek(p + 6296);  FlyingTailsObjectRflParam flyingTailsObject<comment="DLC:空中テイルス">;
+    FSeek(p + 6472);  IslandCommonSonicObjectRflParam islandCommonSonicObject<comment="DLC:汎用の島ソニック">;
+    FSeek(p + 6992);  IslandW2SonicObjectRflParam islandW2SonicObject<comment="DLC:W2用の島ソニック">;
+    FSeek(p + 7304);  IslandW5SonicObjectRflParam islandW5SonicObject<comment="DLC:W5用の島ソニック">;
+    FSeek(p + 7696);  IslandCommonTailsObjectRflParam islandCommonTailsObject<comment="DLC:汎用の島テイルス">;
+    FSeek(p + 8032);  IslandCommonEggmanObjectRflParam islandCommonEggmanObject<comment="DLC:汎用の島エッグマン">;
+    FSeek(p + 8168);  IslandW1EggmanObjectRflParam islandW1EggmanObject<comment="DLC:W1用の島エッグマン">;
+    FSeek(p + 8256);  IslandCommonKnucklesObjectRflParam islandCommonKnucklesObject<comment="DLC:汎用の島ナックルズ">;
+    FSeek(p + 8576);  IslandW5KnucklesObjectRflParam islandW5KnucklesObject<comment="DLC:W5用の島ナックルズ">;
+    FSeek(p + 8656);  GlidingKnucklesObjectRflParam glidingKnucklesObject<comment="DLC:滑空ナックルズ">;
+    FSeek(p + 8944);  IslandCommonAmyObjectRflParam islandCommonAmyObject<comment="DLC:汎用の島エミー">;
+    FSeek(p + 9264);  IslandW3AmyObjectRflParam islandW3AmyObject<comment="DLC:W3用の島エミー">;
+    FSeek(p + 9432);  IslandW4AmyObjectRflParam islandW4AmyObject<comment="DLC:W4用の島エミー">;
+    FSeek(p + 9712);  StarlightfloorObjectRflParam starlightfloorObject<comment="w1の飾り用の動く足場">;
+    FSeek(p + 10024); CarnivalDrumObjectRflParam carnivalDrumObject<comment="w4の飾り用の回転ドラム">;
+    FSeek(p + 10336); ShadowObjectRflParam shadowObject<comment="w4の影">;
+    FSeek(p + 10376); ShadowSkyObjectRflParam shadowSkyObject<comment="w4の浮上時の影">;
+    FSeek(p + 10416); IslandObjectRflParam islandObject[6]<comment="島",optimize=false>;
+
+    FSeek(p + 10608);
+} ObjectRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjectRflParam objectRflParam;

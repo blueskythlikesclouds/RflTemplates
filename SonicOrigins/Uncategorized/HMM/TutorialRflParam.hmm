@@ -1,0 +1,45 @@
+Library "TutorialRflParam"
+{
+    using System.Numerics;
+    using System.Runtime.InteropServices;
+
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct TutorialPageInfo
+    {
+        [FieldOffset(0)] public bool isEnable;
+        [FieldOffset(4)] public int movieIndex;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 32)]
+    public struct TutorialInfo
+    {
+        [FieldOffset(0)] public bool isEnable;
+        [FieldOffset(4)] public int priority;
+        [FieldOffset(8)] public unsafe fixed byte /* TutorialPageInfo[3] */ _pageInfos[24];
+
+        public unsafe TutorialPageInfo* pageInfos
+        {
+            get
+            {
+                fixed (byte* p_pageInfos = _pageInfos)
+                    return (TutorialPageInfo*)p_pageInfos;
+            }
+        }
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 2048)]
+    public struct TutorialRflParam
+    {
+        [FieldOffset(0)] public unsafe fixed byte /* TutorialInfo[64] */ _infos[2048];
+
+        public unsafe TutorialInfo* infos
+        {
+            get
+            {
+                fixed (byte* p_infos = _infos)
+                    return (TutorialInfo*)p_infos;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,31 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 addCoin<comment="追加コイン数">;
+
+    FSeek(p + 4);
+} BonusDLCParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); BonusDLCParam bonusDLCParam<comment="予約特典">;
+
+    FSeek(p + 4);
+} ContentRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ContentRflParam contentRflParam;

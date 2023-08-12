@@ -1,0 +1,40 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    float m[4 * 4];
+} matrix44;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable<comment="有効">;
+    FSeek(p + 1);  bool enableMultiHeightmap<comment="画面分割時に独立させる">;
+    FSeek(p + 2);  bool debugDrawFrustum<comment="フラスタム描画有効">;
+    FSeek(p + 3);  bool reprojection<comment="reprojection">;
+    FSeek(p + 4);  uint32 renderTargetWidth<comment="レンダーターゲット幅">;
+    FSeek(p + 8);  uint32 renderTargetHeight<comment="レンダーターゲット高さ">;
+    FSeek(p + 12); float referenceValue<comment="クリア値">;
+    FSeek(p + 16); float heightScale<comment="高さスケール">;
+    FSeek(p + 20); float fadeTime<comment="消失時間">;
+    FSeek(p + 24); float colorMask<comment="変位による色影響度">;
+    FSeek(p + 32); matrix44 viewMatrix<comment="viewMatrix">;
+    FSeek(p + 96); matrix44 projMatrix<comment="projMatrix">;
+
+    FSeek(p + 160);
+} FxHeightMapParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxHeightMapParameter fxHeightMapParameter;

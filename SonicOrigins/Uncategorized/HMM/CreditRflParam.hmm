@@ -1,0 +1,98 @@
+Library "CreditRflParam"
+{
+    using System.Numerics;
+    using System.Runtime.InteropServices;
+
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CString
+    {
+        [FieldOffset(0)] public long pValue;
+
+        public string Value
+        {
+        	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
+        	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        }
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
+    public struct StuffRollTime
+    {
+        [FieldOffset(0)] public float timeIn;
+        [FieldOffset(4)] public float timeRunning;
+        [FieldOffset(8)] public float timeOut;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    public struct DecoAndMovieTime
+    {
+        [FieldOffset(0)]  public float timeIn;
+        [FieldOffset(4)]  public float timeRunning1;
+        [FieldOffset(8)]  public float timeRunningCD;
+        [FieldOffset(12)] public float timeRunning2;
+        [FieldOffset(16)] public float timeRunning3K;
+        [FieldOffset(20)] public float timeRunningHite;
+    }
+
+    public enum TextDecoType : sbyte
+    {
+        position = 0,
+        name = 1,
+        category = 2,
+        logo = 3,
+        empty = 4,
+        num = 5,
+        min = 0,
+        max = 4
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 40)]
+    public struct CreditStringDataRflParam
+    {
+        [FieldOffset(0)]  public CString stringLeft;
+        [FieldOffset(16)] public CString stringRight;
+        [FieldOffset(32)] public TextDecoType decoType;
+        [FieldOffset(36)] public float size;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct TextDecoTypeSize
+    {
+        [FieldOffset(0)]  public float position;
+        [FieldOffset(4)]  public float name;
+        [FieldOffset(8)]  public float category;
+        [FieldOffset(12)] public float empty;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 82064)]
+    public struct CreditRflParam
+    {
+        [FieldOffset(0)]     public float soundVolume;
+        [FieldOffset(8)]     public unsafe fixed byte /* CString[5] */ _movieNames[1275];
+
+        public unsafe CString* movieNames
+        {
+            get
+            {
+                fixed (byte* p_movieNames = _movieNames)
+                    return (CString*)p_movieNames;
+            }
+        }
+
+        [FieldOffset(88)]    public StuffRollTime staffRollTime;
+        [FieldOffset(100)]   public DecoAndMovieTime decoAndMovieTime;
+        [FieldOffset(128)]   public unsafe fixed byte /* CreditStringDataRflParam[2048] */ _stringData[81920];
+
+        public unsafe CreditStringDataRflParam* stringData
+        {
+            get
+            {
+                fixed (byte* p_stringData = _stringData)
+                    return (CreditStringDataRflParam*)p_stringData;
+            }
+        }
+
+        [FieldOffset(82048)] public TextDecoTypeSize textDecoTypeSize;
+    }
+
+}

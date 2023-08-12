@@ -1,0 +1,96 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable<comment="有効なデータか否か">;
+    FSeek(p + 4);  float gravity<comment="重力 (重さx重力加速度)">;
+    FSeek(p + 8);  float resist<comment="抵抗力 (空気抵抗的なもの)">;
+    FSeek(p + 12); float resist_decay<comment="抵抗力の子ノード減衰値(Resist -= ResistDecay * n)">;
+    FSeek(p + 16); float recover<comment="復元力 (形状維持力)">;
+    FSeek(p + 20); float recover_decay<comment="復元力の子ノード減衰値(Recover -= RecoverDecay * n)">;
+    FSeek(p + 24); float spring<comment="バネ係数">;
+    FSeek(p + 28); float radius<comment="コリジョン半径">;
+    FSeek(p + 32); float transmit<comment="親の動きの伝播量">;
+    FSeek(p + 36); float inertia<comment="慣性">;
+    FSeek(p + 40); float angle_limit<comment="制限角度(Radian)">;
+    FSeek(p + 48); cstring nodeName<comment="ノード名">;
+
+    FSeek(p + 64);
+} SwayParamNode;
+
+typedef byte sint8;
+
+enum<sint8> CollisionType
+{
+    SWAY_COLLISTION_TYPE_NONE = 0,
+    SWAY_COLLISTION_TYPE_SPHERE = 1
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  CollisionType type<comment="コリジョンタイプ">;
+    FSeek(p + 16); vector3 translation<comment="位置オフセット">;
+    FSeek(p + 32); vector3 rotation<comment="回転オフセット">;
+    FSeek(p + 48); vector3 scale<comment="スケールオフセット">;
+    FSeek(p + 64); sint32 modelPartId<comment="コリジョン接続先モデルＩＤ">;
+    FSeek(p + 72); cstring modelNodeName<comment="コリジョン接続先モデルノード名">;
+
+    FSeek(p + 96);
+} SwayParamCollision;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); SwayParamCollision collisionParam[8]<comment="collisionParam",optimize=false>;
+
+    FSeek(p + 768);
+} SwayParamNodeCollision;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    cstring idName<comment="識別名">;
+    FSeek(p + 16);   SwayParamNode nodeParam[16]<comment="ノードごとのデータ",optimize=false>;
+    FSeek(p + 1040); SwayParamNodeCollision collisionParam[16]<comment="ノードごとのコリジョンデータ",optimize=false>;
+
+    FSeek(p + 13328);
+} SwayParamIndivisual;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+SwayParamIndivisual swayParamIndivisual;

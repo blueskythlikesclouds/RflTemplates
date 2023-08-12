@@ -1,0 +1,36 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w;
+} vector4;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable<comment="SeparableSSSを有効">;
+    FSeek(p + 4);  float width<comment="幅">;
+    FSeek(p + 8);  float normalOffset<comment="法線押し出し">;
+    FSeek(p + 12); float blurOffsetMax<comment="ブラー閾値">;
+    FSeek(p + 16); vector4 strength[16]<comment="CDRF各インデックスごとのカラー",optimize=false>;
+
+    FSeek(p + 272);
+} FxSeparableSSSParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxSeparableSSSParameter fxSeparableSSSParameter;

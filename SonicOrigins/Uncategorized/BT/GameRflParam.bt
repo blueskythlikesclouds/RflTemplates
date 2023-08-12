@@ -1,0 +1,406 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float foregroundBokehMaxDepth<comment="前ボケ最大深度(近)">;
+    FSeek(p + 4);  float foregroundBokehStartDepth<comment="前ボケ最小深度">;
+    FSeek(p + 8);  float backgroundBokehStartDepth<comment="後ボケ最小深度">;
+    FSeek(p + 12); float backgroundBokehMaxDepth<comment="後ボケ最大深度(遠)">;
+
+    FSeek(p + 16);
+} CameraDOFRflParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float fovy<comment="画角">;
+    FSeek(p + 16); vector3 targetOffset<comment="注視座標オフセット">;
+    FSeek(p + 32); vector3 eyeOffset<comment="視点座標オフセット">;
+    FSeek(p + 48); CameraDOFRflParameter dof<comment="被写界深度">;
+
+    FSeek(p + 64);
+} IslandCameraRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); vector3 floatingOffset<comment="浮遊するときのY軸オフセット値">;
+
+    FSeek(p + 16);
+} IslandFloatingRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float moveDistance<comment="左右移動距離">;
+    FSeek(p + 4); float interpolateTime<comment="補間時間">;
+
+    FSeek(p + 8);
+} CursorMoveCameraRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float playSpeed<comment="再生スピード">;
+
+    FSeek(p + 4);
+} MapAnimCameraRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float interpolateTime<comment="補間時間">;
+
+    FSeek(p + 4);
+} TitleMoveCameraRflParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool use<comment="手ぶれカメラ有効">;
+    FSeek(p + 4);  sint32 index<comment="手ぶれインデックス">;
+    FSeek(p + 8);  float amplitude<comment="振れ幅">;
+    FSeek(p + 12); float periodMin<comment="周期の最小値">;
+    FSeek(p + 16); float periodMax<comment="周期の最大値">;
+
+    FSeek(p + 20);
+} ShakeCameraRflParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 IBLIndex<comment="IBLインデックス">;
+
+    FSeek(p + 4);
+} TimeChangeCameraRflParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float yawMax<comment="左方向限界">;
+    FSeek(p + 4);  float yawMin<comment="右方向限界">;
+    FSeek(p + 8);  float pitchMax<comment="下方向上限">;
+    FSeek(p + 12); float pitchMin<comment="上方向上限">;
+
+    FSeek(p + 16);
+} RotateAngleLimitRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float fovYMax<comment="Y視野角最大値(引き)">;
+    FSeek(p + 4);  float fovYMin<comment="Y視野角最小値(寄り)">;
+    FSeek(p + 8);  float fovYAddSpeed<comment="Y視野角変更速度">;
+    FSeek(p + 12); float rotateSpeedMax<comment="速度最大値(引き時)">;
+    FSeek(p + 16); float rotateSpeedMin<comment="速度最小値(寄り時)">;
+    FSeek(p + 20); RotateAngleLimitRflParam rotateLimitNear<comment="カメラ寄り時の範囲限界">;
+    FSeek(p + 36); RotateAngleLimitRflParam rotateLimitFar<comment="カメラ引き時の範囲限界">;
+
+    FSeek(p + 52);
+} MapCameraRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MapCameraRflParam params[7]<comment="各島分のパラメータ",optimize=false>;
+
+    FSeek(p + 364);
+} MapCameraRflParams;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    IslandCameraRflParam islandCameraParam[7]<comment="島個別カメラ",optimize=false>;
+    FSeek(p + 448);  IslandCameraRflParam titleCameraParam[7]<comment="タイトルカメラ",optimize=false>;
+    FSeek(p + 896);  IslandCameraRflParam islandSky3KCameraParam<comment="島個別カメラ:エンジェルアイランド浮遊時">;
+    FSeek(p + 960);  IslandCameraRflParam titleSky3KCameraParam<comment="タイトルカメラ：エンジェルアイランド浮遊時の">;
+    FSeek(p + 1024); IslandFloatingRflParam islandSky3KFlaotingParam<comment="w4の浮遊パラメータ">;
+    FSeek(p + 1040); CursorMoveCameraRflParam cursorMoveCamera<comment="左右移動カメラ">;
+    FSeek(p + 1048); MapAnimCameraRflParam mapAnimCameraRflParam<comment="全体マップアニメーションカメラ">;
+    FSeek(p + 1052); TitleMoveCameraRflParam titleMoveCameraParam<comment="タイトル移動カメラ">;
+    FSeek(p + 1056); ShakeCameraRflParameter shakeCameraParamIsland<comment="手振れカメラ島フォーカス">;
+    FSeek(p + 1076); ShakeCameraRflParameter shakeCameraParamTitle<comment="手振れカメラタイトル">;
+    FSeek(p + 1096); ShakeCameraRflParameter shakeCameraParamAllMap<comment="手振れカメラ全体マップ">;
+    FSeek(p + 1116); ShakeCameraRflParameter shakeCameraParamFree<comment="手振れカメラフリー">;
+    FSeek(p + 1136); bool enableShakeCameraNX<comment="手振れカメラをNXで有効にするかどうか">;
+    FSeek(p + 1140); TimeChangeCameraRflParameter timeChangeDefaultParam<comment="昼パラメータ">;
+    FSeek(p + 1144); TimeChangeCameraRflParameter timeChangeNightParam<comment="夜パラメータ">;
+    FSeek(p + 1148); MapCameraRflParams mapFreeCameraParam<comment="島閲覧モードのパラメータ">;
+    FSeek(p + 1512); float alphaFadeTime<comment="島出現時の透過フェード時間">;
+    FSeek(p + 1516); float zNear<comment="ニア">;
+    FSeek(p + 1520); float zFar<comment="ファー">;
+    FSeek(p + 1524); sint32 sceneParamIndexDefault<comment="シーンパラメータ番号デフォルト">;
+    FSeek(p + 1528); sint32 sceneParamIndexAllMap<comment="シーンパラメータ番号全体マップ">;
+
+    FSeek(p + 1536);
+} CameraRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float failed_RetryWindowViewWaitTime<comment="失敗時のリトライ表示までの待機時間">;
+    FSeek(p + 4);  float success_AddCoinTime<comment="成功時のコイン増加演出時間">;
+    FSeek(p + 8);  float success_AddCoinStartWaitTime<comment="成功時のコイン増加演出開始までの待機時間">;
+    FSeek(p + 12); float success_AddCoinEndWaitTime<comment="成功時のコイン増加演出終了までの待機時間">;
+
+    FSeek(p + 16);
+} MissionResultRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float hud_TimeLimit<comment="ミッションHUDの制限時間がこれ以下だとアニメーションが変化">;
+    FSeek(p + 4); MissionResultRflParam result<comment="ミッション結果">;
+
+    FSeek(p + 20);
+} MissionRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float failed_RetryWindowViewWaitTime<comment="失敗時のリトライ表示までの待機時間">;
+    FSeek(p + 4); float success_RestartWaitTime<comment="成功時の次の開始演出までの待機時間">;
+
+    FSeek(p + 8);
+} BossrushResultRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  BossrushResultRflParam result<comment="ボスラッシュ結果">;
+    FSeek(p + 8);  sint32 clearCoin<comment="クリア報酬コイン">;
+    FSeek(p + 12); float startFade_LoopWaitTime<comment="開始演出のloopアニメーション表示時間">;
+
+    FSeek(p + 16);
+} BossrushRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 dummy<comment="ダミー">;
+
+    FSeek(p + 4);
+} AnniversaryRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 consumeCoinCount<comment="消費コイン数">;
+    FSeek(p + 4); sint32 ui_seekbarActionMove<comment="シークバーが１秒間で移動するサイズ">;
+    FSeek(p + 8); float ui_seekbarWheelRatio<comment="シークバーがホイール時に移動する割合">;
+
+    FSeek(p + 12);
+} RewindModeRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 consumeCoinCount<comment="消費コイン数">;
+
+    FSeek(p + 4);
+} SpecialStageRflParam;
+
+typedef struct {
+    float x;
+    float y;
+} vector2;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float zoomTime<comment="画像が最小から最大になるまでにかかる秒数">;
+    FSeek(p + 4);  float maxMoveSpeed<comment="画像移動の最大速度[/s]">;
+    FSeek(p + 8);  float speedUpTime<comment="画像が静止から移動速度最大になるまでの秒数">;
+    FSeek(p + 12); float speedDownTime<comment="画像が移動速度最大から静止するまでの秒数">;
+    FSeek(p + 16); vector2 limitLeftUp<comment="画像の位置制限：左上">;
+    FSeek(p + 24); vector2 limitRightDown<comment="画像の位置制限：右下">;
+    FSeek(p + 32); bool isInverted<comment="画像の移動を反転するか">;
+    FSeek(p + 36); float minMoveThreshold<comment="画像移動入力の閾値：最小 (0.0から1.0)">;
+    FSeek(p + 40); float maxMoveThreshold<comment="画像移動入力の閾値：最大 (0.0から1.0)">;
+    FSeek(p + 44); bool isSwitchContinuous<comment="画像の連続切り替えを有効にするか">;
+    FSeek(p + 48); float switchWaitTime<comment="画像の連続切り替えまでの待機時間">;
+    FSeek(p + 52); float switchIntervalTime<comment="画像の連続切り替えのインターバル">;
+    FSeek(p + 56); bool isSwitchPageContinuous<comment="ページの連続切り替えを有効にするか">;
+    FSeek(p + 60); float switchPageWaitTime<comment="ページの連続切り替えまでの待機時間">;
+    FSeek(p + 64); float switchPageIntervalTime<comment="ページの連続切り替えのインターバル">;
+
+    FSeek(p + 68);
+} MuseumArtGraphicPlayerRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MuseumArtGraphicPlayerRflParam artGraphicPlayer<comment="アートグラフィックプレイヤー">;
+
+    FSeek(p + 68);
+} MuseumArtGalleryRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool isSwitchContinuous<comment="音楽の連続切り替えを有効にするか">;
+    FSeek(p + 4); float switchWaitTime<comment="音楽の連続切り替えまでの待機時間">;
+    FSeek(p + 8); float switchIntervalTime<comment="音楽の連続切り替えのインターバル">;
+
+    FSeek(p + 12);
+} MuseumMusicPlayerRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MuseumMusicPlayerRflParam musicPlayer<comment="ミュージックプレイヤー">;
+
+    FSeek(p + 12);
+} MuseumMusicHallRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isSwitchContinuous<comment="動画の連続切り替えを有効にするか">;
+    FSeek(p + 4);  float switchWaitTime<comment="動画の連続切り替えまでの待機時間">;
+    FSeek(p + 8);  float switchIntervalTime<comment="動画の連続切り替えのインターバル">;
+    FSeek(p + 12); float movieVolume<comment="動画の音量">;
+
+    FSeek(p + 16);
+} MuseumMoviePlayerRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MuseumMoviePlayerRflParam moviePlayer<comment="ミュージックプレイヤー">;
+
+    FSeek(p + 16);
+} MuseumMovieTheaterRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  MuseumArtGalleryRflParam artGallery<comment="アートギャラリー">;
+    FSeek(p + 68); MuseumMusicHallRflParam musicHall<comment="ミュージックホール">;
+    FSeek(p + 80); MuseumMovieTheaterRflParam movieTheater<comment="ムービーシアター">;
+
+    FSeek(p + 96);
+} MuseumModeRflParam;
+
+typedef byte sint8;
+
+enum<sint8> CreditType
+{
+    HITE = 0,
+    SONICCD_GOODEND = 1,
+    SONICCD_BADEND = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CreditType type<comment="クレジットのタイプ：デバッグ用">;
+
+    FSeek(p + 1);
+} CreditModeRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float stickAndDigitalKeyConversion<comment="スティックからのデジタルキー変換閾値">;
+
+    FSeek(p + 4);
+} InputRflParam;
+
+enum<sint32> FadeType
+{
+    WHITE = 0,
+    BLACK = 1,
+    NONE = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); FadeType fadeType<comment="フェードタイプ">;
+    FSeek(p + 4); float fadeOutTime<comment="フェードアウト時間">;
+    FSeek(p + 8); float fadeInTime<comment="フェードイン時間">;
+
+    FSeek(p + 12);
+} SceneFadeRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); SceneFadeRflParam fadeParam<comment="フェード">;
+
+    FSeek(p + 12);
+} GameSceneRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    CameraRflParam camera<comment="カメラ">;
+    FSeek(p + 1536); MissionRflParam mission<comment="ミッション">;
+    FSeek(p + 1556); BossrushRflParam bossrush<comment="ボスラッシュ">;
+    FSeek(p + 1572); AnniversaryRflParam anniversary<comment="アニバーサリー">;
+    FSeek(p + 1576); RewindModeRflParam rewindMode<comment="巻き戻しモード">;
+    FSeek(p + 1588); SpecialStageRflParam specialStage<comment="スペシャルステージ">;
+    FSeek(p + 1592); MuseumModeRflParam museum<comment="ミュージアム">;
+    FSeek(p + 1688); CreditModeRflParam credit<comment="クレジット">;
+    FSeek(p + 1692); InputRflParam inputParam<comment="入力のパラメータ">;
+    FSeek(p + 1696); GameSceneRflParam sceneParam[16]<comment="ゲームシーンパラメータ",optimize=false>;
+
+    FSeek(p + 1888);
+} GameRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameRflParam gameRflParam;

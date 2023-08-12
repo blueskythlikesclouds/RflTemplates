@@ -1,0 +1,84 @@
+Library "CreditSonicCDRflParam"
+{
+    using System.Numerics;
+    using System.Runtime.InteropServices;
+
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CString
+    {
+        [FieldOffset(0)] public long pValue;
+
+        public string Value
+        {
+        	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
+        	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        }
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 32)]
+    public struct CreditSonicCDTime
+    {
+        [FieldOffset(0)]  public float timeInMovie;
+        [FieldOffset(4)]  public float timeInStaffRoll;
+        [FieldOffset(8)]  public float timeOutStaffRoll;
+        [FieldOffset(12)] public float timeInResult;
+        [FieldOffset(16)] public float timeOutResult;
+        [FieldOffset(20)] public float timeInLogo;
+        [FieldOffset(24)] public float timeOutLogo;
+        [FieldOffset(28)] public float timeOut;
+    }
+
+    public enum SonicCDTextDecoType : sbyte
+    {
+        position = 0,
+        name = 1,
+        sub = 2,
+        category = 3,
+        empty = 4,
+        num = 5,
+        min = 0,
+        max = 4
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    public struct CreditSonicCDStringDataRflParam
+    {
+        [FieldOffset(0)]  public CString _string;
+        [FieldOffset(16)] public SonicCDTextDecoType decoType;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 20)]
+    public struct SonicCDTextDecoTypeSize
+    {
+        [FieldOffset(0)]  public float position;
+        [FieldOffset(4)]  public float name;
+        [FieldOffset(8)]  public float sub;
+        [FieldOffset(12)] public float category;
+        [FieldOffset(16)] public float empty;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 49256)]
+    public struct CreditSonicCDRflParam
+    {
+        [FieldOffset(0)]     public float soundVolume;
+        [FieldOffset(8)]     public CString movieNameGoodEnd;
+        [FieldOffset(24)]    public CString movieNameBadEnd;
+        [FieldOffset(40)]    public byte movieGoodEndSoundCount;
+        [FieldOffset(41)]    public byte movieBadEndSoundCount;
+        [FieldOffset(44)]    public CreditSonicCDTime creditTime;
+        [FieldOffset(80)]    public unsafe fixed byte /* CreditSonicCDStringDataRflParam[2048] */ _stringData[49152];
+
+        public unsafe CreditSonicCDStringDataRflParam* stringData
+        {
+            get
+            {
+                fixed (byte* p_stringData = _stringData)
+                    return (CreditSonicCDStringDataRflParam*)p_stringData;
+            }
+        }
+
+        [FieldOffset(49232)] public SonicCDTextDecoTypeSize textDecoTypeSize;
+        [FieldOffset(49252)] public bool isCanSkip;
+    }
+
+}

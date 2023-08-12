@@ -1,0 +1,22 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 m_value<comment="数値">;
+
+    FSeek(p + 4);
+} TimeData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+TimeData timeData;

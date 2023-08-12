@@ -1,0 +1,232 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float itemMargin<comment="入力ヘルプの表示間隔">;
+
+    FSeek(p + 4);
+} InputHelpRflParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> MainMenuMode
+{
+    MAINMENU_MODE_SONIC1 = 0,
+    MAINMENU_MODE_SONICCD = 1,
+    MAINMENU_MODE_SONIC2 = 2,
+    MAINMENU_MODE_SONIC3K = 3,
+    MAINMENU_MODE_MISSION = 4,
+    MAINMENU_MODE_DATA = 5,
+    MAINMENU_MODE_NUM = 6
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MainMenuMode menuMode<comment="メニューモード">;
+    FSeek(p + 1); bool isRepeate<comment="キーリピート有効">;
+
+    FSeek(p + 2);
+} AllMapMenuItemParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); AllMapMenuItemParam itemUp<comment="上移動">;
+    FSeek(p + 2); AllMapMenuItemParam itemDown<comment="下移動">;
+    FSeek(p + 4); AllMapMenuItemParam itemLeft<comment="左移動">;
+    FSeek(p + 6); AllMapMenuItemParam itemRight<comment="右移動">;
+
+    FSeek(p + 8);
+} AllMapMenuRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float textScrollSpeed<comment="テキストスクロールスピード">;
+    FSeek(p + 4);  bool textScrollLoop<comment="テキストスクロールループ">;
+    FSeek(p + 5);  AllMapMenuRflParam allMapMenu[6]<comment="全体マップ設定",optimize=false>;
+    FSeek(p + 56); float backTitleInputTime<comment="長押し入力時間">;
+
+    FSeek(p + 60);
+} MainMenuRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool fixedFrame<comment="固定フレームにする">;
+    FSeek(p + 1); bool isFPS30<comment="FPSを30にする">;
+
+    FSeek(p + 2);
+} MenuFPSRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  InputHelpRflParam inputHelpParam<comment="入力ヘルプのパラメータ">;
+    FSeek(p + 4);  MainMenuRflParam mainMenuParam<comment="メインメニューのパラメータ">;
+    FSeek(p + 64); MenuFPSRflParam fpsParam<comment="フレームレート設定デフォルト">;
+    FSeek(p + 66); MenuFPSRflParam fpsParamNX<comment="フレームレート設定NX">;
+    FSeek(p + 68); MenuFPSRflParam fpsParamORBIS<comment="フレームレート設定ORBIS">;
+    FSeek(p + 70); MenuFPSRflParam fpsParamDURANGO<comment="フレームレート設定DURANGO">;
+    FSeek(p + 72); float missionOutWaitTimer<comment="キャンセル遷移待機時間ミッション">;
+    FSeek(p + 76); float mydataOutWaitTimer<comment="キャンセル遷移待機時間マイデータ">;
+    FSeek(p + 80); float museumOutWaitTimer<comment="キャンセル遷移待機時間ミュージアム">;
+    FSeek(p + 84); float optionOutWaitTimer<comment="キャンセル遷移待機時間オプション">;
+
+    FSeek(p + 88);
+} MenuRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float CESA_autoTimer<comment="CESE:自動進行時間">;
+    FSeek(p + 4);  float CESA_skipTimer<comment="CESE:スキップ可能までの待機時間:0以下はスキップ不可">;
+    FSeek(p + 8);  float CESA_startTimer<comment="CESE:開始待ち時間">;
+    FSeek(p + 12); float CESA_endTimer<comment="CESE:終了待ち時間">;
+    FSeek(p + 16); float CAUTION_LIGHT_autoTimer<comment="光過敏:自動進行時間">;
+    FSeek(p + 20); float CAUTION_LIGHT_skipTimer<comment="光過敏:スキップ可能までの待機時間:0以下はスキップ不可">;
+    FSeek(p + 24); float CAUTION_LIGHT_startTimer<comment="光過敏:開始待ち時間">;
+    FSeek(p + 28); float CAUTION_LIGHT_endTimer<comment="光過敏:終了待ち時間">;
+    FSeek(p + 32); float SEGA_LOGO_autoTimer<comment="SEGA_LOGO:自動進行時間">;
+    FSeek(p + 36); float SEGA_LOGO_skipTimer<comment="SEGA_LOGO:スキップ可能までの待機時間:0以下はスキップ不可">;
+    FSeek(p + 40); float SEGA_LOGO_startTimer<comment="SEGA_LOGO:開始待ち時間">;
+    FSeek(p + 44); float SEGA_LOGO_endTimer<comment="SEGA_LOGO:終了待ち時間">;
+    FSeek(p + 48); float SONICTEAM_LOGO_autoTimer<comment="ソニチ_LOGO:自動進行時間">;
+    FSeek(p + 52); float SONICTEAM_LOGO_skipTimer<comment="ソニチ_LOGO:スキップ可能までの待機時間:0以下はスキップ不可">;
+    FSeek(p + 56); float SONICTEAM_LOGO_startTimer<comment="ソニチ_LOGO:開始待ち時間">;
+    FSeek(p + 60); float SONICTEAM_LOGO_endTimer<comment="ソニチ_LOGO:終了待ち時間">;
+    FSeek(p + 64); float RSDK_CRI_LOGO_autoTimer<comment="RSDK_CRI_LOGO:自動進行時間">;
+    FSeek(p + 68); float RSDK_CRI_LOGO_skipTimer<comment="RSDK_CRI_LOGO:スキップ可能までの待機時間:0以下はスキップ不可">;
+    FSeek(p + 72); float RSDK_CRI_LOGO_startTimer<comment="RSDK_CRI_LOGO:開始待ち時間">;
+    FSeek(p + 76); float RSDK_CRI_LOGO_endTimer<comment="RSDK_CRI_LOGO:終了待ち時間">;
+
+    FSeek(p + 80);
+} AdvertiseRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float toMovieTimer<comment="タイトルムービーへ遷移するまでの時間">;
+    FSeek(p + 4); float movieVolume<comment="タイトルムービーボリューム">;
+    FSeek(p + 8); float cancelInputTime<comment="長押し入力時間">;
+
+    FSeek(p + 12);
+} TitleRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enableEdit[12]<comment="エディット可能言語設定",optimize=false>;
+
+    FSeek(p + 12);
+} OptionLanguageEditRflParam;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  sint32 enableDLC1LetterBoxKinds[10]<comment="DLC1で有効となるレターボックス番号",optimize=false>;
+    FSeek(p + 40); sint32 enableDLC2LetterBoxKinds[20]<comment="DLC2で有効となるレターボックス番号",optimize=false>;
+
+    FSeek(p + 120);
+} OptionLetterBoxEditRflParam;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring addText<comment="プラットフォーム毎の個別テキスト">;
+    FSeek(p + 16); sint32 addTextSize<comment="プラットフォーム毎の個別テキスト数">;
+    FSeek(p + 24); cstring addCommonTagJP<comment="JPリージョンのCOMMONタグテキスト">;
+    FSeek(p + 40); cstring addCommonTagUS<comment="USリージョンのCOMMONタグテキスト">;
+    FSeek(p + 56); cstring addCommonTagEU<comment="EUリージョンのCOMMONタグテキスト">;
+
+    FSeek(p + 72);
+} OptionLicensePFParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   sint32 commonTextSize<comment="COMMONのテキスト数">;
+    FSeek(p + 8);   OptionLicensePFParam licensePS<comment="PS4/PS5のライセンス表記">;
+    FSeek(p + 80);  OptionLicensePFParam licenseXBOX<comment="XBOX/SCARLETTのライセンス表記">;
+    FSeek(p + 152); OptionLicensePFParam licenseSWITCH<comment="SWITCHのライセンス表記">;
+    FSeek(p + 224); OptionLicensePFParam licenseSTEAM<comment="STEAMのライセンス表記">;
+    FSeek(p + 296); OptionLicensePFParam licenseEPIC<comment="EPICのライセンス表記">;
+
+    FSeek(p + 368);
+} OptionLicenseRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   OptionLanguageEditRflParam languageEdit<comment="言語設定">;
+    FSeek(p + 12);  OptionLetterBoxEditRflParam letterBoxEdit<comment="レターボックス設定">;
+    FSeek(p + 136); OptionLicenseRflParam licenseParam<comment="ライセンス表記">;
+    FSeek(p + 504); sint32 ui_seekbarActionMove<comment="シークバーが１秒間で移動するサイズ">;
+    FSeek(p + 508); float ui_seekbarWheelRatio<comment="シークバーがホイール時に移動する割合">;
+    FSeek(p + 512); sint32 applyTimer<comment="変更適用ウィンドウのタイマー">;
+
+    FSeek(p + 520);
+} OptionRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float minimumDisplayTime<comment="最低表示時間">;
+
+    FSeek(p + 4);
+} SaveIconRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   MenuRflParam menuParam<comment="メニュー用のパラメータ">;
+    FSeek(p + 88);  AdvertiseRflParam advertiseParam<comment="アドバタイズ用のパラメータ">;
+    FSeek(p + 168); TitleRflParam titleParam<comment="タイトル用のパラメータ">;
+    FSeek(p + 184); OptionRflParam optionParam<comment="オプション用のパラメータ">;
+    FSeek(p + 704); SaveIconRflParam saveIconParam<comment="セーブアイコン用のパラメータ">;
+
+    FSeek(p + 712);
+} UIRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+UIRflParam uIRflParam;

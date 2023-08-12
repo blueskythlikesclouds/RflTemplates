@@ -1,0 +1,51 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
+} color8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable<comment="スキャン表示有効">;
+    FSeek(p + 16); vector3 centerPos<comment="スキャン中心座標">;
+    FSeek(p + 32); color8 color<comment="カラー">;
+    FSeek(p + 36); float radius1<comment="スキャン円1 半径">;
+    FSeek(p + 40); float radius2<comment="スキャン円2 半径">;
+    FSeek(p + 44); float radius3<comment="スキャン円3 半径">;
+    FSeek(p + 48); float intensity1<comment="スキャン円1 明るさ">;
+    FSeek(p + 52); float intensity2<comment="スキャン円2 明るさ">;
+    FSeek(p + 56); float intensity3<comment="スキャン円3 明るさ">;
+    FSeek(p + 60); float gridIntensity<comment="グリッドの明るさ">;
+    FSeek(p + 64); float innerWidth<comment="円内のグラデーションの幅">;
+    FSeek(p + 68); float gridLineWidth<comment="グリッドの線細さ（値が大きいほど細い）">;
+    FSeek(p + 72); float gridLineSpan<comment="グリッドの間隔">;
+
+    FSeek(p + 80);
+} FxFieldScanEffectRenderParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxFieldScanEffectRenderParameter fxFieldScanEffectRenderParameter;

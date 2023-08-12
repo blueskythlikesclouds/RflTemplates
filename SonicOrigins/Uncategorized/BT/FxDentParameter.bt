@@ -1,0 +1,29 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable<comment="有効">;
+    FSeek(p + 4);  float simRadius<comment="シミュレーション半径">;
+    FSeek(p + 8);  float dentDepth<comment="凹む深さ">;
+    FSeek(p + 12); float normalIntensity<comment="法線の強さ">;
+    FSeek(p + 16); float edgeBulge<comment="境界部の盛り上がり">;
+
+    FSeek(p + 20);
+} FxDentParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxDentParameter fxDentParameter;

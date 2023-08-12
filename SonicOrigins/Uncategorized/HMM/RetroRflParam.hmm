@@ -1,0 +1,386 @@
+Library "RetroRflParam"
+{
+    using System.Numerics;
+    using System.Runtime.InteropServices;
+
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CString
+    {
+        [FieldOffset(0)] public long pValue;
+
+        public string Value
+        {
+        	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
+        	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        }
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 48)]
+    public struct RetroSfxData
+    {
+        [FieldOffset(0)]  public CString m_sfx;
+        [FieldOffset(16)] public CString m_cue;
+        [FieldOffset(32)] public CString m_music;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 40)]
+    public struct RetroMusicData
+    {
+        [FieldOffset(0)]  public CString m_music;
+        [FieldOffset(16)] public CString m_cue;
+        [FieldOffset(32)] public float m_speed;
+    }
+
+    public enum StageKind : sbyte
+    {
+        STAGEKIND_NONE = 0,
+        STAGEKIND_SONIC1_START = 1,
+        STAGEKIND_GREEN_HILL_ZONE_ACT_1 = 1,
+        STAGEKIND_GREEN_HILL_ZONE_ACT_2 = 2,
+        STAGEKIND_GREEN_HILL_ZONE_ACT_3 = 3,
+        STAGEKIND_MARBLE_ZONE_ACT_1 = 4,
+        STAGEKIND_MARBLE_ZONE_ACT_2 = 5,
+        STAGEKIND_MARBLE_ZONE_ACT_3 = 6,
+        STAGEKIND_SPRING_YARD_ZONE_ACT_1 = 7,
+        STAGEKIND_SPRING_YARD_ZONE_ACT_2 = 8,
+        STAGEKIND_SPRING_YARD_ZONE_ACT_3 = 9,
+        STAGEKIND_LABYRINTH_ZONE_ACT_1 = 10,
+        STAGEKIND_LABYRINTH_ZONE_ACT_2 = 11,
+        STAGEKIND_LABYRINTH_ZONE_ACT_3 = 12,
+        STAGEKIND_STAR_LIGHT_ZONE_ACT_1 = 13,
+        STAGEKIND_STAR_LIGHT_ZONE_ACT_2 = 14,
+        STAGEKIND_STAR_LIGHT_ZONE_ACT_3 = 15,
+        STAGEKIND_SCRAP_BRAIN_ZONE_ACT_1 = 16,
+        STAGEKIND_SCRAP_BRAIN_ZONE_ACT_2 = 17,
+        STAGEKIND_SCRAP_BRAIN_ZONE_ACT_3 = 18,
+        STAGEKIND_FINAL_ZONE = 19,
+        STAGEKIND_SONIC1_SPECIAL_STAGE_1 = 20,
+        STAGEKIND_SONIC1_SPECIAL_STAGE_2 = 21,
+        STAGEKIND_SONIC1_SPECIAL_STAGE_3 = 22,
+        STAGEKIND_SONIC1_SPECIAL_STAGE_4 = 23,
+        STAGEKIND_SONIC1_SPECIAL_STAGE_5 = 24,
+        STAGEKIND_SONIC1_SPECIAL_STAGE_6 = 25,
+        STAGEKIND_SONIC1_ALL_STAGE = 26,
+        STAGEKIND_SONIC1_END = 27,
+        STAGEKIND_SONIC2_START = 27,
+        STAGEKIND_EMERALD_HILL_ZONE_ACT_1 = 27,
+        STAGEKIND_EMERALD_HILL_ZONE_ACT_2 = 28,
+        STAGEKIND_CHEMICAL_PLANT_ZONE_ACT_1 = 29,
+        STAGEKIND_CHEMICAL_PLANT_ZONE_ACT_2 = 30,
+        STAGEKIND_AQUATIC_RUIN_ZONE_ACT_1 = 31,
+        STAGEKIND_AQUATIC_RUIN_ZONE_ACT_2 = 32,
+        STAGEKIND_CASINO_NIGHT_ZONE_ACT_1 = 33,
+        STAGEKIND_CASINO_NIGHT_ZONE_ACT_2 = 34,
+        STAGEKIND_HILL_TOP_ZONE_ACT_1 = 35,
+        STAGEKIND_HILL_TOP_ZONE_ACT_2 = 36,
+        STAGEKIND_MYSTIC_CAVE_ZONE_ACT_1 = 37,
+        STAGEKIND_MYSTIC_CAVE_ZONE_ACT_2 = 38,
+        STAGEKIND_OIL_OCEAN_ZONE_ACT_1 = 39,
+        STAGEKIND_OIL_OCEAN_ZONE_ACT_2 = 40,
+        STAGEKIND_METROPOLIS_ZONE_ACT_1 = 41,
+        STAGEKIND_METROPOLIS_ZONE_ACT_2 = 42,
+        STAGEKIND_METROPOLIS_ZONE_ACT_3 = 43,
+        STAGEKIND_SKY_CHASE_ZONE = 44,
+        STAGEKIND_WING_FORTRESS_ZONE = 45,
+        STAGEKIND_DEATH_EGG_ZONE = 46,
+        STAGEKIND_SONIC2_SPECIAL_STAGE_1 = 47,
+        STAGEKIND_SONIC2_SPECIAL_STAGE_2 = 48,
+        STAGEKIND_SONIC2_SPECIAL_STAGE_3 = 49,
+        STAGEKIND_SONIC2_SPECIAL_STAGE_4 = 50,
+        STAGEKIND_SONIC2_SPECIAL_STAGE_5 = 51,
+        STAGEKIND_SONIC2_SPECIAL_STAGE_6 = 52,
+        STAGEKIND_SONIC2_SPECIAL_STAGE_7 = 53,
+        STAGEKIND_SONIC2_ALL_STAGE = 54,
+        STAGEKIND_SONIC2_END = 55,
+        STAGEKIND_SONIC3K_START = 55,
+        STAGEKIND_ANGEL_ISLAND_ZONE_ACT_1 = 55,
+        STAGEKIND_ANGEL_ISLAND_ZONE_ACT_2 = 56,
+        STAGEKIND_HYDROCITY_ZONE_ACT_1 = 57,
+        STAGEKIND_HYDROCITY_ZONE_ACT_2 = 58,
+        STAGEKIND_MARBLE_GARDEN_ZONE_ACT_1 = 59,
+        STAGEKIND_MARBLE_GARDEN_ZONE_ACT_2 = 60,
+        STAGEKIND_CARNIVAL_NIGHT_ZONE_ACT_1 = 61,
+        STAGEKIND_CARNIVAL_NIGHT_ZONE_ACT_2 = 62,
+        STAGEKIND_ICE_CAP_ZONE_ACT_1 = 63,
+        STAGEKIND_ICE_CAP_ZONE_ACT_2 = 64,
+        STAGEKIND_LAUNCH_BASE_ZONE_ACT_1 = 65,
+        STAGEKIND_LAUNCH_BASE_ZONE_ACT_2 = 66,
+        STAGEKIND_MUSHROOM_HILL_ZONE_ACT_1 = 67,
+        STAGEKIND_MUSHROOM_HILL_ZONE_ACT_2 = 68,
+        STAGEKIND_FLYING_BATTERY_ZONE_ACT_1 = 69,
+        STAGEKIND_FLYING_BATTERY_ZONE_ACT_2 = 70,
+        STAGEKIND_SANDOPOLIS_ZONE_ACT_1 = 71,
+        STAGEKIND_SANDOPOLIS_ZONE_ACT_2 = 72,
+        STAGEKIND_LAVA_REEF_ZONE_ACT_1 = 73,
+        STAGEKIND_LAVA_REEF_ZONE_ACT_2 = 74,
+        STAGEKIND_HIDDEN_PALACE_ZONE = 75,
+        STAGEKIND_SKY_SANCTUARY_ZONE_ACT_1 = 76,
+        STAGEKIND_SKY_SANCTUARY_ZONE_ACT_2 = 77,
+        STAGEKIND_DEATH_EGG_ZONE_ACT_1 = 78,
+        STAGEKIND_DEATH_EGG_ZONE_ACT_2 = 79,
+        STAGEKIND_THE_DOOMSDAY_ZONE = 80,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_1 = 81,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_2 = 82,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_3 = 83,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_4 = 84,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_5 = 85,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_6 = 86,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_7 = 87,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_8 = 88,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_9 = 89,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_10 = 90,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_11 = 91,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_12 = 92,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_13 = 93,
+        STAGEKIND_SONIC3K_SPECIAL_STAGE_14 = 94,
+        STAGEKIND_SONIC3K_ALL_STAGE = 95,
+        STAGEKIND_SONIC3K_END = 96,
+        STAGEKIND_SONICCD_START = 96,
+        STAGEKIND_PALMTREE_PANIC_ZONE1 = 96,
+        STAGEKIND_PALMTREE_PANIC_ZONE2 = 97,
+        STAGEKIND_PALMTREE_PANIC_ZONE3 = 98,
+        STAGEKIND_COLLISION_CHAOS_ZONE1 = 99,
+        STAGEKIND_COLLISION_CHAOS_ZONE2 = 100,
+        STAGEKIND_COLLISION_CHAOS_ZONE3 = 101,
+        STAGEKIND_TIDAL_TEMPEST_ZONE1 = 102,
+        STAGEKIND_TIDAL_TEMPEST_ZONE2 = 103,
+        STAGEKIND_TIDAL_TEMPEST_ZONE3 = 104,
+        STAGEKIND_QUARTZ_QUADRANT_ZONE1 = 105,
+        STAGEKIND_QUARTZ_QUADRANT_ZONE2 = 106,
+        STAGEKIND_QUARTZ_QUADRANT_ZONE3 = 107,
+        STAGEKIND_WACKY_WORKBENCH_ZONE1 = 108,
+        STAGEKIND_WACKY_WORKBENCH_ZONE2 = 109,
+        STAGEKIND_WACKY_WORKBENCH_ZONE3 = 110,
+        STAGEKIND_STARDUST_SPEEDWAY_ZONE1 = 111,
+        STAGEKIND_STARDUST_SPEEDWAY_ZONE2 = 112,
+        STAGEKIND_STARDUST_SPEEDWAY_ZONE3 = 113,
+        STAGEKIND_METALLIC_MADNESS_ZONE1 = 114,
+        STAGEKIND_METALLIC_MADNESS_ZONE2 = 115,
+        STAGEKIND_METALLIC_MADNESS_ZONE3 = 116,
+        STAGEKIND_SONICCD_SPECIAL_STAGE_1 = 117,
+        STAGEKIND_SONICCD_SPECIAL_STAGE_2 = 118,
+        STAGEKIND_SONICCD_SPECIAL_STAGE_3 = 119,
+        STAGEKIND_SONICCD_SPECIAL_STAGE_4 = 120,
+        STAGEKIND_SONICCD_SPECIAL_STAGE_5 = 121,
+        STAGEKIND_SONICCD_SPECIAL_STAGE_6 = 122,
+        STAGEKIND_SONICCD_SPECIAL_STAGE_7 = 123,
+        STAGEKIND_SONICCD_ALL_STAGE = 124,
+        STAGEKIND_SONICCD_END = 125,
+        STAGEKIND_NUM = 125,
+        STAGEKIND_SONIC1_NUM = 26,
+        STAGEKIND_SONIC2_NUM = 28,
+        STAGEKIND_SONIC3K_NUM = 41,
+        STAGEKIND_SONICCD_NUM = 29,
+        STAGEKIND_ALL_START = 1,
+        STAGEKIND_ALL_END = 125,
+        STAGEKIND_STORY_END = 80
+    }
+
+    public enum BossKind : sbyte
+    {
+        BOSSKIND_NONE = 0,
+        BOSSKIND_EGG_WRECKER = 1,
+        BOSSKIND_EGG_SCORCHER = 2,
+        BOSSKIND_EGG_STINGER = 3,
+        BOSSKIND_EGG_MOBILE_ = 4,
+        BOSSKIND_EGG_SPIKER = 5,
+        BOSSKIND_EGG_CRUSHER = 6,
+        BOSSKIND_EGG_DRILLSTER = 7,
+        BOSSKIND_EGG_POISON = 8,
+        BOSSKIND_EGG_HAMMER = 9,
+        BOSSKIND_EGG_CLAW = 10,
+        BOSSKIND_EGG_SCORCHER_MK_II = 11,
+        BOSSKIND_EGG_DIGGER = 12,
+        BOSSKIND_EGGMARINE = 13,
+        BOSSKIND_EGG_BOUNCER = 14,
+        BOSSKIND_LASER_PRISON = 15,
+        BOSSKIND_MECHA_SONIC = 16,
+        BOSSKIND_DEATH_EGG_ROBO = 17,
+        BOSSKIND_EGG_SCORCHER_MK_III = 18,
+        BOSSKIND_EGG_VORTEX = 19,
+        BOSSKIND_EGG_DRILLSTER_MK_II = 20,
+        BOSSKIND_EGG_GRAVITRON = 21,
+        BOSSKIND_EGG_FROSTER = 22,
+        BOSSKIND_EGG_CANNON = 23,
+        BOSSKIND_EGG_ROCKET = 24,
+        BOSSKIND_BIG_ARMS = 25,
+        BOSSKIND_EGG_SCRAMBLER = 26,
+        BOSSKIND_EGG_HANGER = 27,
+        BOSSKIND_EGG_GOLEM = 28,
+        BOSSKIND_EGG_INFERNO = 29,
+        BOSSKIND_GIANT_EGGMAN_ROBO = 30,
+        BOSSKIND_DEATH_EGG_ROCKET = 31,
+        BOSSKIND_EGG_HVC_001 = 32,
+        BOSSKIND_EGG_TILTER = 33,
+        BOSSKIND_EGG_BUBBLE = 34,
+        BOSSKIND_EGG_CONVEYER = 35,
+        BOSSKIND_EGG_RAZER = 36,
+        BOSSKIND_METAL_SONIC = 37,
+        BOSSKIND_EGG_SPINNER = 38,
+        BOSSKIND_MECHA_SONIC_MK_II = 39,
+        BOSSKIND_SUPER_MECHA_SONIC_MK_II = 40,
+        BOSSKIND_NUM = 41
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct RetroBossrushData
+    {
+        [FieldOffset(0)]  public byte m_category;
+        [FieldOffset(1)]  public byte m_stage;
+        [FieldOffset(2)]  public ushort m_entity;
+        [FieldOffset(4)]  public ushort m_waterstate;
+        [FieldOffset(8)]  public uint m_waterlevel;
+        [FieldOffset(12)] public StageKind m_hiteStageKind;
+        [FieldOffset(13)] public BossKind m_hiteBossKind;
+        [FieldOffset(14)] public BossKind m_hiteBossKind2;
+        [FieldOffset(15)] public BossKind m_hiteBossKind3;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 38088)]
+    public struct RetroRflParam
+    {
+        [FieldOffset(0)]     public unsafe fixed byte /* RetroSfxData[84] */ _m_RetroSfxSonic1[4032];
+
+        public unsafe RetroSfxData* m_RetroSfxSonic1
+        {
+            get
+            {
+                fixed (byte* p_m_RetroSfxSonic1 = _m_RetroSfxSonic1)
+                    return (RetroSfxData*)p_m_RetroSfxSonic1;
+            }
+        }
+
+        [FieldOffset(4032)]  public unsafe fixed byte /* RetroSfxData[127] */ _m_RetroSfxSonic2[6096];
+
+        public unsafe RetroSfxData* m_RetroSfxSonic2
+        {
+            get
+            {
+                fixed (byte* p_m_RetroSfxSonic2 = _m_RetroSfxSonic2)
+                    return (RetroSfxData*)p_m_RetroSfxSonic2;
+            }
+        }
+
+        [FieldOffset(10128)] public unsafe fixed byte /* RetroSfxData[262] */ _m_RetroSfxSonic3k[12576];
+
+        public unsafe RetroSfxData* m_RetroSfxSonic3k
+        {
+            get
+            {
+                fixed (byte* p_m_RetroSfxSonic3k = _m_RetroSfxSonic3k)
+                    return (RetroSfxData*)p_m_RetroSfxSonic3k;
+            }
+        }
+
+        [FieldOffset(22704)] public unsafe fixed byte /* RetroSfxData[92] */ _m_RetroSfxSonicCD[4416];
+
+        public unsafe RetroSfxData* m_RetroSfxSonicCD
+        {
+            get
+            {
+                fixed (byte* p_m_RetroSfxSonicCD = _m_RetroSfxSonicCD)
+                    return (RetroSfxData*)p_m_RetroSfxSonicCD;
+            }
+        }
+
+        [FieldOffset(27120)] public unsafe fixed byte /* RetroMusicData[29] */ _m_RetroMusicSonic1[1160];
+
+        public unsafe RetroMusicData* m_RetroMusicSonic1
+        {
+            get
+            {
+                fixed (byte* p_m_RetroMusicSonic1 = _m_RetroMusicSonic1)
+                    return (RetroMusicData*)p_m_RetroMusicSonic1;
+            }
+        }
+
+        [FieldOffset(28280)] public unsafe fixed byte /* RetroMusicData[47] */ _m_RetroMusicSonic2[1880];
+
+        public unsafe RetroMusicData* m_RetroMusicSonic2
+        {
+            get
+            {
+                fixed (byte* p_m_RetroMusicSonic2 = _m_RetroMusicSonic2)
+                    return (RetroMusicData*)p_m_RetroMusicSonic2;
+            }
+        }
+
+        [FieldOffset(30160)] public unsafe fixed byte /* RetroMusicData[113] */ _m_RetroMusicSonic3k[4520];
+
+        public unsafe RetroMusicData* m_RetroMusicSonic3k
+        {
+            get
+            {
+                fixed (byte* p_m_RetroMusicSonic3k = _m_RetroMusicSonic3k)
+                    return (RetroMusicData*)p_m_RetroMusicSonic3k;
+            }
+        }
+
+        [FieldOffset(34680)] public unsafe fixed byte /* RetroMusicData[68] */ _m_RetroMusicSonicCD[2720];
+
+        public unsafe RetroMusicData* m_RetroMusicSonicCD
+        {
+            get
+            {
+                fixed (byte* p_m_RetroMusicSonicCD = _m_RetroMusicSonicCD)
+                    return (RetroMusicData*)p_m_RetroMusicSonicCD;
+            }
+        }
+
+        [FieldOffset(37400)] public unsafe fixed byte /* RetroBossrushData[6] */ _m_RetroBossrushSonic1[96];
+
+        public unsafe RetroBossrushData* m_RetroBossrushSonic1
+        {
+            get
+            {
+                fixed (byte* p_m_RetroBossrushSonic1 = _m_RetroBossrushSonic1)
+                    return (RetroBossrushData*)p_m_RetroBossrushSonic1;
+            }
+        }
+
+        [FieldOffset(37496)] public unsafe fixed byte /* RetroBossrushData[10] */ _m_RetroBossrushSonic2[160];
+
+        public unsafe RetroBossrushData* m_RetroBossrushSonic2
+        {
+            get
+            {
+                fixed (byte* p_m_RetroBossrushSonic2 = _m_RetroBossrushSonic2)
+                    return (RetroBossrushData*)p_m_RetroBossrushSonic2;
+            }
+        }
+
+        [FieldOffset(37656)] public unsafe fixed byte /* RetroBossrushData[11] */ _m_RetroBossrushSonic3k[176];
+
+        public unsafe RetroBossrushData* m_RetroBossrushSonic3k
+        {
+            get
+            {
+                fixed (byte* p_m_RetroBossrushSonic3k = _m_RetroBossrushSonic3k)
+                    return (RetroBossrushData*)p_m_RetroBossrushSonic3k;
+            }
+        }
+
+        [FieldOffset(37832)] public unsafe fixed byte /* RetroBossrushData[9] */ _m_RetroBossrushSonic3kk[144];
+
+        public unsafe RetroBossrushData* m_RetroBossrushSonic3kk
+        {
+            get
+            {
+                fixed (byte* p_m_RetroBossrushSonic3kk = _m_RetroBossrushSonic3kk)
+                    return (RetroBossrushData*)p_m_RetroBossrushSonic3kk;
+            }
+        }
+
+        [FieldOffset(37976)] public unsafe fixed byte /* RetroBossrushData[7] */ _m_RetroBossrushSonicCD[112];
+
+        public unsafe RetroBossrushData* m_RetroBossrushSonicCD
+        {
+            get
+            {
+                fixed (byte* p_m_RetroBossrushSonicCD = _m_RetroBossrushSonicCD)
+                    return (RetroBossrushData*)p_m_RetroBossrushSonicCD;
+            }
+        }
+    }
+
+}

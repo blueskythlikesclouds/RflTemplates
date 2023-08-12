@@ -1,0 +1,97 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeInMovie<comment="動画を再生開始する時間">;
+    FSeek(p + 4);  float timeInStaffRoll<comment="クレジットの文字が流れ始める時間">;
+    FSeek(p + 8);  float timeOutStaffRoll<comment="クレジットの文字が流れ終わる時間">;
+    FSeek(p + 12); float timeInResult<comment="YOURE TOO COOLの文字が現れる時間">;
+    FSeek(p + 16); float timeOutResult<comment="YOURE TOO COOLの文字が消える時間">;
+    FSeek(p + 20); float timeInLogo<comment="セガロゴが現れる時間">;
+    FSeek(p + 24); float timeOutLogo<comment="セガロゴが消える時間">;
+    FSeek(p + 28); float timeOut<comment="クレジットが終了する時間">;
+
+    FSeek(p + 32);
+} CreditSonicCDTime;
+
+typedef byte sint8;
+
+enum<sint8> SonicCDTextDecoType
+{
+    position = 0,
+    name = 1,
+    sub = 2,
+    category = 3,
+    empty = 4,
+    num = 5,
+    min = 0,
+    max = 4
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring string<comment="文字">;
+    FSeek(p + 16); SonicCDTextDecoType decoType<comment="装飾タイプ">;
+
+    FSeek(p + 24);
+} CreditSonicCDStringDataRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float position<comment="役職">;
+    FSeek(p + 4);  float name<comment="名前">;
+    FSeek(p + 8);  float sub<comment="サブ">;
+    FSeek(p + 12); float category<comment="カテゴリ">;
+    FSeek(p + 16); float empty<comment="空行">;
+
+    FSeek(p + 20);
+} SonicCDTextDecoTypeSize;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     float soundVolume<comment="音楽の音量">;
+    FSeek(p + 8);     cstring movieNameGoodEnd<comment="動画名：グッドエンド">;
+    FSeek(p + 24);    cstring movieNameBadEnd<comment="動画名：バッドエンド">;
+    FSeek(p + 40);    uint8 movieGoodEndSoundCount<comment="グッドエンド動画のサウンドトラック数">;
+    FSeek(p + 41);    uint8 movieBadEndSoundCount<comment="バッドエンド動画のサウンドトラック数">;
+    FSeek(p + 44);    CreditSonicCDTime creditTime<comment="クレジットの時間制御用パラメータ">;
+    FSeek(p + 80);    CreditSonicCDStringDataRflParam stringData[2048]<comment="クレジットの文字",optimize=false>;
+    FSeek(p + 49232); SonicCDTextDecoTypeSize textDecoTypeSize<comment="各装飾タイプの行間">;
+    FSeek(p + 49252); bool isCanSkip<comment="キャンセルボタンでスキップ可能か">;
+
+    FSeek(p + 49256);
+} CreditSonicCDRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+CreditSonicCDRflParam creditSonicCDRflParam;

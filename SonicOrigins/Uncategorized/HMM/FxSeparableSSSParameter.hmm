@@ -1,0 +1,25 @@
+Library "FxSeparableSSSParameter"
+{
+    using System.Numerics;
+    using System.Runtime.InteropServices;
+
+    [StructLayout(LayoutKind.Explicit, Size = 272)]
+    public struct FxSeparableSSSParameter
+    {
+        [FieldOffset(0)]  public bool enable;
+        [FieldOffset(4)]  public float width;
+        [FieldOffset(8)]  public float normalOffset;
+        [FieldOffset(12)] public float blurOffsetMax;
+        [FieldOffset(16)] public unsafe fixed byte /* Vector4[16] */ _strength[256];
+
+        public unsafe Vector4* strength
+        {
+            get
+            {
+                fixed (byte* p_strength = _strength)
+                    return (Vector4*)p_strength;
+            }
+        }
+    }
+
+}

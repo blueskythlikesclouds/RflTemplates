@@ -1,0 +1,237 @@
+Library "MuseumItemRflParam"
+{
+    using System.Numerics;
+    using System.Runtime.InteropServices;
+
+    public enum MuseumSectionKind : int
+    {
+        MUSEUMSECTIONKIND_NORMAL = 0,
+        MUSEUMSECTIONKIND_PREMIUM = 1,
+        MUSEUMSECTIONKIND_NUM = 2
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CString
+    {
+        [FieldOffset(0)] public long pValue;
+
+        public string Value
+        {
+        	get => Marshal.PtrToStringAnsi((IntPtr)pValue);
+        	set => pValue = (long)Marshal.StringToHGlobalAnsi(value);
+        }
+    }
+
+    public enum MuseumItemCategory : int
+    {
+        MUSEUMITEMCATEGORY_NONE = 0,
+        MUSEUMITEMCATEGORY_TITLE_START = 1,
+        MUSEUMITEMCATEGORY_TITLE_SONIC_1 = 1,
+        MUSEUMITEMCATEGORY_TITLE_SONIC_CD = 2,
+        MUSEUMITEMCATEGORY_TITLE_SONIC_2 = 3,
+        MUSEUMITEMCATEGORY_TITLE_SONIC_3K = 4,
+        MUSEUMITEMCATEGORY_TITLE_SONIC_ORIGINS = 5,
+        MUSEUMITEMCATEGORY_TITLE_ETC = 6,
+        MUSEUMITEMCATEGORY_TITLE_SONIC_SPINBALL = 7,
+        MUSEUMITEMCATEGORY_TITLE_CHAOTIX = 8,
+        MUSEUMITEMCATEGORY_TITLE_SONIC_3D_BLAST = 9,
+        MUSEUMITEMCATEGORY_TITLE_RESERVE_1 = 10,
+        MUSEUMITEMCATEGORY_TITLE_END = 11,
+        MUSEUMITEMCATEGORY_SOUND_START = 11,
+        MUSEUMITEMCATEGORY_SOUND_BGM_MENU = 11,
+        MUSEUMITEMCATEGORY_SOUND_BGM_STAGE = 12,
+        MUSEUMITEMCATEGORY_SOUND_JINGLE = 13,
+        MUSEUMITEMCATEGORY_SOUND_ETC = 14,
+        MUSEUMITEMCATEGORY_SOUND_RESERVE_1 = 15,
+        MUSEUMITEMCATEGORY_SOUND_END = 16,
+        MUSEUMITEMCATEGORY_CHARA_START = 16,
+        MUSEUMITEMCATEGORY_CHARA_SONIC = 16,
+        MUSEUMITEMCATEGORY_CHARA_TAILS = 17,
+        MUSEUMITEMCATEGORY_CHARA_KNUCKLES = 18,
+        MUSEUMITEMCATEGORY_CHARA_AMY = 19,
+        MUSEUMITEMCATEGORY_CHARA_EGGMAN = 20,
+        MUSEUMITEMCATEGORY_CHARA_METALSONIC = 21,
+        MUSEUMITEMCATEGORY_CHARA_ETC = 22,
+        MUSEUMITEMCATEGORY_CHARA_RESERVE_1 = 23,
+        MUSEUMITEMCATEGORY_CHARA_END = 24,
+        MUSEUMITEMCATEGORY_PICTURE_START = 24,
+        MUSEUMITEMCATEGORY_PICTURE_INITIAL = 24,
+        MUSEUMITEMCATEGORY_PICTURE_COLOR = 25,
+        MUSEUMITEMCATEGORY_PICTURE_DOCUMENT = 26,
+        MUSEUMITEMCATEGORY_PICTURE_PACKAGE = 27,
+        MUSEUMITEMCATEGORY_PICTURE_ETC = 28,
+        MUSEUMITEMCATEGORY_PICTURE_END = 29,
+        MUSEUMITEMCATEGORY_NUM = 29,
+        MUSEUMITEMCATEGORY_TITLE_NUM = 10,
+        MUSEUMITEMCATEGORY_SOUND_NUM = 5,
+        MUSEUMITEMCATEGORY_CHARA_NUM = 8,
+        MUSEUMITEMCATEGORY_PICTURE_NUM = 5
+    }
+
+    public enum MuseumItemOpenState : int
+    {
+        MUSEUMITEMOPENSTATE_UNKNOWN = 0,
+        MUSEUMITEMOPENSTATE_OPEN = 1,
+        MUSEUMITEMOPENSTATE_COIN = 2,
+        MUSEUMITEMOPENSTATE_STATS = 3,
+        MUSEUMITEMOPENSTATE_NUM = 4
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
+    public struct MuseumUnlockInfo
+    {
+        [FieldOffset(0)] public MuseumItemOpenState openState;
+        [FieldOffset(4)] public int unlockAchievementNo;
+        [FieldOffset(8)] public int unlockCoinNum;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 104)]
+    public struct MuseumItemInfo
+    {
+        [FieldOffset(0)]  public bool isEnable;
+        [FieldOffset(4)]  public int number;
+        [FieldOffset(8)]  public MuseumSectionKind sectionKind;
+        [FieldOffset(16)] public CString assetName;
+        [FieldOffset(32)] public int playTime;
+        [FieldOffset(36)] public bool fadeOutMusic;
+        [FieldOffset(40)] public unsafe fixed byte /* MuseumItemCategory[10] */ _categories[40];
+
+        public unsafe MuseumItemCategory* categories
+        {
+            get
+            {
+                fixed (byte* p_categories = _categories)
+                    return (MuseumItemCategory*)p_categories;
+            }
+        }
+
+        [FieldOffset(80)] public bool isDLCItem;
+        [FieldOffset(81)] public bool isTypeSD;
+        [FieldOffset(82)] public bool is4KAvailable;
+        [FieldOffset(83)] public byte soundTexNum;
+        [FieldOffset(84)] public byte artPageCount;
+        [FieldOffset(85)] public byte movieSoundCount;
+        [FieldOffset(88)] public MuseumUnlockInfo unlockInfo;
+    }
+
+    public enum MuseumSortInfo_MuseumItemCategory : int
+    {
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_NONE = 0,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_START = 1,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_1 = 1,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_CD = 2,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_2 = 3,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_3K = 4,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_ORIGINS = 5,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_ETC = 6,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_SPINBALL = 7,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_CHAOTIX = 8,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_3D_BLAST = 9,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_RESERVE_1 = 10,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_END = 11,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_START = 11,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_BGM_MENU = 11,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_BGM_STAGE = 12,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_JINGLE = 13,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_ETC = 14,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_RESERVE_1 = 15,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_END = 16,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_START = 16,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_SONIC = 16,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_TAILS = 17,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_KNUCKLES = 18,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_AMY = 19,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_EGGMAN = 20,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_METALSONIC = 21,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_ETC = 22,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_RESERVE_1 = 23,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_END = 24,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_START = 24,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_INITIAL = 24,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_COLOR = 25,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_DOCUMENT = 26,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_PACKAGE = 27,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_ETC = 28,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_END = 29,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_NUM = 29,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_NUM = 10,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_NUM = 5,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_NUM = 8,
+        MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_NUM = 5
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct MuseumSortInfo
+    {
+        [FieldOffset(0)] public MuseumSortInfo_MuseumItemCategory category;
+        [FieldOffset(4)] public bool isDLCCategory;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct MusicFadeOutInfo
+    {
+        [FieldOffset(0)] public float time;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 73360)]
+    public struct MuseumItemRflParam
+    {
+        [FieldOffset(0)]     public unsafe fixed byte /* MuseumItemInfo[401] */ _musicItems[41704];
+
+        public unsafe MuseumItemInfo* musicItems
+        {
+            get
+            {
+                fixed (byte* p_musicItems = _musicItems)
+                    return (MuseumItemInfo*)p_musicItems;
+            }
+        }
+
+        [FieldOffset(41704)] public unsafe fixed byte /* MuseumItemInfo[251] */ _artItems[26104];
+
+        public unsafe MuseumItemInfo* artItems
+        {
+            get
+            {
+                fixed (byte* p_artItems = _artItems)
+                    return (MuseumItemInfo*)p_artItems;
+            }
+        }
+
+        [FieldOffset(67808)] public unsafe fixed byte /* MuseumItemInfo[51] */ _movieItems[5304];
+
+        public unsafe MuseumItemInfo* movieItems
+        {
+            get
+            {
+                fixed (byte* p_movieItems = _movieItems)
+                    return (MuseumItemInfo*)p_movieItems;
+            }
+        }
+
+        [FieldOffset(73112)] public unsafe fixed byte /* MuseumSortInfo[15] */ _musicSortInfos[120];
+
+        public unsafe MuseumSortInfo* musicSortInfos
+        {
+            get
+            {
+                fixed (byte* p_musicSortInfos = _musicSortInfos)
+                    return (MuseumSortInfo*)p_musicSortInfos;
+            }
+        }
+
+        [FieldOffset(73232)] public unsafe fixed byte /* MuseumSortInfo[15] */ _artSortInfos[120];
+
+        public unsafe MuseumSortInfo* artSortInfos
+        {
+            get
+            {
+                fixed (byte* p_artSortInfos = _artSortInfos)
+                    return (MuseumSortInfo*)p_artSortInfos;
+            }
+        }
+
+        [FieldOffset(73352)] public MusicFadeOutInfo musicFadeOutInfo;
+    }
+
+}
