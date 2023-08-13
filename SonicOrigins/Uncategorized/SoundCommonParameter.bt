@@ -1,0 +1,135 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float value<comment="音量">;
+    FSeek(p + 4); float delayTime<comment="開始遅延時間">;
+    FSeek(p + 8); float fadeTime<comment="フェード時間">;
+
+    FSeek(p + 12);
+} BGMVolumeChangeInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   BGMVolumeChangeInfo playerStop<comment="ソニック停止">;
+    FSeek(p + 12);  BGMVolumeChangeInfo playerWalk<comment="ソニック低速">;
+    FSeek(p + 24);  BGMVolumeChangeInfo playerRun<comment="ソニック高速">;
+    FSeek(p + 36);  BGMVolumeChangeInfo breakPortalStart<comment="ポータル解放開始">;
+    FSeek(p + 48);  BGMVolumeChangeInfo breakPortalEnd<comment="ポータル解放終了">;
+    FSeek(p + 60);  BGMVolumeChangeInfo getEmeraldStart<comment="カオスエメラルド取得開始">;
+    FSeek(p + 72);  BGMVolumeChangeInfo getEmeraldEnd<comment="カオスエメラルド取得終了">;
+    FSeek(p + 84);  BGMVolumeChangeInfo getEmeraldEndBoss<comment="カオスエメラルド取得終了[ボス]">;
+    FSeek(p + 96);  BGMVolumeChangeInfo bossAreaIn<comment="ボスエリア入場">;
+    FSeek(p + 108); BGMVolumeChangeInfo bossAreaOut<comment="ボスエリア退場">;
+    FSeek(p + 120); BGMVolumeChangeInfo fishingHitIn<comment="釣り浮き沈み開始">;
+    FSeek(p + 132); BGMVolumeChangeInfo fishingHitOut<comment="釣り浮き沈み終了">;
+
+    FSeek(p + 144);
+} BGMVolumeChangeInfoList;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> Priority
+{
+    PRIORITY_LOW = 0,
+    PRIORITY_DEFAULT = 1,
+    PRIORITY_HIGH = 2,
+    PRIORITY_SUPER_HIGH = 3,
+    NUM_PRIORITY = 4,
+    PRIORITY_INVALID = -1
+};
+
+enum<sint8> InterruptType
+{
+    INTERRUPT_TYPE_STOP = 0,
+    INTERRUPT_TYPE_PAUSE = 1,
+    INTERRUPT_TYPE_OVERLAP = 2,
+    NUM_INTERRUPT_TYPE = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName<comment="Cue名">;
+    FSeek(p + 16); sint32 blockId<comment="BlockID">;
+    FSeek(p + 20); float fadeInTime<comment="フェードイン時間">;
+    FSeek(p + 24); float fadeOutTime<comment="フェードアウト時間">;
+    FSeek(p + 28); float delayTime<comment="再生遅延時間">;
+    FSeek(p + 32); cstring aisacName<comment="AISAC名">;
+    FSeek(p + 48); float aisacValue<comment="AISAC値">;
+    FSeek(p + 52); float aisacFadeTime<comment="AISAC値フェード時間">;
+    FSeek(p + 56); bool isVolumeControl<comment="入力に応じた音量調整を行う">;
+    FSeek(p + 57); bool isOverlapPlay<comment="重複再生する">;
+    FSeek(p + 58); Priority priority<comment="プライオリティ">;
+    FSeek(p + 59); InterruptType interruptType<comment="他BGMに割り込まれた時の動作">;
+
+    FSeek(p + 64);
+} BGMInfo;
+
+enum<sint8> BGMTransitInfo_InterruptType
+{
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_STOP = 0,
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_PAUSE = 1,
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_OVERLAP = 2,
+    BGMTransitInfo_InterruptType_NUM_INTERRUPT_TYPE = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring tagName<comment="タグ名">;
+    FSeek(p + 16); sint32 beforeId<comment="遷移前のBGM番号">;
+    FSeek(p + 20); sint32 afterId<comment="遷移後のBGM番号">;
+    FSeek(p + 24); BGMTransitInfo_InterruptType type<comment="[前]停止タイプ">;
+    FSeek(p + 28); float fadeOutTime<comment="[前]フェードアウト時間">;
+    FSeek(p + 32); float fadeInTime<comment="[後]フェードイン時間">;
+    FSeek(p + 36); float delayTime<comment="[後]再生遅延時間">;
+
+    FSeek(p + 40);
+} BGMTransitInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    float pauseFadeOutTime<comment="ポーズ開始時のフェードアウト時間">;
+    FSeek(p + 4);    float pauseFadeInTime<comment="ポーズ終了時のフェードイン時間">;
+    FSeek(p + 8);    float enterCyberFadeOutTime<comment="電脳空間へ移動開始時のフェードアウト時間">;
+    FSeek(p + 12);   BGMVolumeChangeInfoList bgmVolumeInfo<comment="BGM音量変化">;
+    FSeek(p + 160);  BGMInfo changeBgmInfo[99]<comment="BGM情報",optimize=false>;
+    FSeek(p + 6496); BGMTransitInfo transitBgmInfo[99]<comment="BGM切り替え時の特殊設定",optimize=false>;
+
+    FSeek(p + 10456);
+} SoundCommonParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+SoundCommonParameter soundCommonParameter;

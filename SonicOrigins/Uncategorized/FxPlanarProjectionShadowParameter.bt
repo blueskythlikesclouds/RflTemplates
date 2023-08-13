@@ -1,0 +1,49 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w;
+} vector4;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef byte sint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool enable<comment="有効">;
+    FSeek(p + 16);  vector4 projectionPlane<comment="投影する平面">;
+    FSeek(p + 32);  vector3 lightPosition[4]<comment="平面投影のライト位置",optimize=false>;
+    FSeek(p + 96);  sint8 lightCount<comment="平面投影のライト数">;
+    FSeek(p + 100); float vanishStart<comment="影が消え始める距離">;
+    FSeek(p + 104); float vanishDistance<comment="影が消える距離">;
+    FSeek(p + 108); float projectionBias<comment="投影時の潰すバイアス">;
+    FSeek(p + 112); vector3 shadowMapBoxSize<comment="描画範囲のボックスサイズ">;
+    FSeek(p + 128); vector3 shadowMapBoxOffset<comment="描画範囲のボックスオフセット">;
+
+    FSeek(p + 144);
+} FxPlanarProjectionShadowParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxPlanarProjectionShadowParameter fxPlanarProjectionShadowParameter;

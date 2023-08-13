@@ -1,0 +1,137 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
+} color8;
+
+typedef byte sint8;
+
+enum<sint8> Orientation
+{
+    ORIENTATION_NONE = 0,
+    ORIENTATION_HORIZONTAL = 1,
+    ORIENTATION_VERTICAL = 2,
+    ORIENTATION_DIAGONAL = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Orientation orientation<comment="方向">;
+    FSeek(p + 1);  sint8 srcPosX<comment="src座標X">;
+    FSeek(p + 2);  sint8 srcPosY<comment="src座標Y">;
+    FSeek(p + 3);  sint8 dstPosX<comment="dst座標X">;
+    FSeek(p + 4);  sint8 dstPosY<comment="dst座標Y">;
+    FSeek(p + 8);  color8 srcColor<comment="srcカラー">;
+    FSeek(p + 12); color8 dstColor<comment="dstカラー">;
+
+    FSeek(p + 16);
+} DecoGradationParam;
+
+enum<sint8> DecoLayerBlendOp
+{
+    DECO_LAYER_BLEND_OP_BLEND = 0,
+    DECO_LAYER_BLEND_OP_SUBTRACT_ALPHA = 1
+};
+
+typedef int32 sint32;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); color8 color<comment="カラー">;
+    FSeek(p + 4); uint8 size<comment="サイズ">;
+    FSeek(p + 5); uint8 spread<comment="スプレッド">;
+    FSeek(p + 6); sint8 distanceX<comment="距離(X)">;
+    FSeek(p + 7); sint8 distanceY<comment="距離(Y)">;
+
+    FSeek(p + 8);
+} DecoDropShadowParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  color8 color<comment="カラー">;
+    FSeek(p + 4);  sint32 thickness<comment="太さ">;
+    FSeek(p + 8);  sint32 offsetX<comment="オフセット X">;
+    FSeek(p + 12); sint32 offsetY<comment="オフセット Y">;
+
+    FSeek(p + 16);
+} DecoRimParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 radius<comment="半径">;
+
+    FSeek(p + 4);
+} DecoBlurParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  DecoDropShadowParam dropShadow<comment="ドロップシャドウ">;
+    FSeek(p + 8);  DecoRimParam rim<comment="縁取り">;
+    FSeek(p + 24); DecoGradationParam gradation<comment="グラデーション">;
+    FSeek(p + 40); DecoBlurParam blur<comment="ブラー">;
+    FSeek(p + 44); bool avoidEdgeArtifact<comment="エッジのアーティファクトを回避する">;
+
+    FSeek(p + 48);
+} DecoPassParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring name<comment="名前">;
+    FSeek(p + 16); color8 fontColor<comment="フォントカラー">;
+    FSeek(p + 20); DecoGradationParam fontGradParam<comment="フォントグラデーション">;
+    FSeek(p + 36); DecoLayerBlendOp layerBlendOp<comment="レイヤー合成方式">;
+    FSeek(p + 40); sint32 numPasses<comment="パス数">;
+    FSeek(p + 44); DecoPassParam passParams[5]<comment="パスパラメーター",optimize=false>;
+
+    FSeek(p + 288);
+} DecoTechParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); DecoTechParam params[512]<comment="テクニックプリセット",optimize=false>;
+
+    FSeek(p + 147456);
+} DecoTechParams;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+DecoTechParams decoTechParams;

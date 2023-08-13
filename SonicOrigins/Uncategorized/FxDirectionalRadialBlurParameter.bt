@@ -1,0 +1,41 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enable<comment="有効">;
+    FSeek(p + 16); vector3 center<comment="中心">;
+    FSeek(p + 32); vector3 direction<comment="方向">;
+    FSeek(p + 48); float blurPowerMax<comment="ブラーの強さ最大">;
+    FSeek(p + 52); float blurPowerMin<comment="ブラーの強さ最小">;
+    FSeek(p + 56); float focusRange<comment="ブラーがかからない範囲">;
+    FSeek(p + 60); float alphaSlope<comment="ブラーのα値スケール">;
+    FSeek(p + 64); sint32 sampleNum<comment="サンプル数">;
+
+    FSeek(p + 80);
+} FxDirectionalRadialBlurParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxDirectionalRadialBlurParameter fxDirectionalRadialBlurParameter;

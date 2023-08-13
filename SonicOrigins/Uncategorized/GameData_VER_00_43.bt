@@ -1,0 +1,597 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef ubyte uint8;
+
+typedef byte sint8;
+
+enum<sint8> Status
+{
+    STATUS_ZERO_FILL = 0,
+    STATUS_INITIALIZED = 1
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 signature<comment="シグニチャ">;
+    FSeek(p + 4);  uint8 version<comment="バージョン:メジャー">;
+    FSeek(p + 5);  uint8 minorVersion<comment="バージョン:マイナー">;
+    FSeek(p + 6);  Status status<comment="ステータス">;
+    FSeek(p + 7);  uint8 config<comment="config">;
+    FSeek(p + 8);  uint32 playTime<comment="プレイ時間">;
+    FSeek(p + 12); uint32 playCount<comment="playCount">;
+    FSeek(p + 16); uint32 saveDate<comment="保存日時">;
+    FSeek(p + 20); uint8 index<comment="index">;
+    FSeek(p + 21); uint8 flags<comment="フラグ">;
+    FSeek(p + 22); uint8 padding1[2]<comment="padding1",optimize=false>;
+    FSeek(p + 24); uint32 crc<comment="crc">;
+    FSeek(p + 28); uint8 padding2[32]<comment="padding2",optimize=false>;
+
+    FSeek(p + 60);
+} HeaderData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 gameDataCompressSize<comment="圧縮されたゲームデータの容量">;
+
+    FSeek(p + 4);
+} HeaderSubData;
+
+enum<sint8> GameModeData_VER_00_43_Status
+{
+    STATUS_NONE = 0
+};
+
+enum<sint8> MainMenuMode
+{
+    MAINMENU_MODE_SONIC1 = 0,
+    MAINMENU_MODE_SONICCD = 1,
+    MAINMENU_MODE_SONIC2 = 2,
+    MAINMENU_MODE_SONIC3K = 3,
+    MAINMENU_MODE_MISSION = 4,
+    MAINMENU_MODE_DATA = 5,
+    MAINMENU_MODE_NUM = 6
+};
+
+enum<sint8> BootPlayMode
+{
+    BOOT_PLAYMODE_CLASSIC = 0,
+    BOOT_PLAYMODE_ANNIVERSARY = 1,
+    BOOT_PLAYMODE_BOSSRUSH = 2,
+    BOOT_PLAYMODE_MIRRORING = 3,
+    BOOT_PLAYMODE_MISSION = 4,
+    BOOT_PLAYMODE_STORY = 5,
+    BOOT_PLAYMODE_BLUE_SPHERES_ORIGINAL = 6,
+    BOOT_PLAYMODE_BLUE_SPHERES_NEW = 7,
+    BOOT_PLAYMODE_GAMEPLAY_COUNT = 8,
+    BOOT_PLAYMODE_MUSEUM = 8,
+    BOOT_PLAYMODE_RANKING = 9,
+    BOOT_PLAYMODE_OPTION = 10,
+    BOOT_PLAYMODE_TO_DLC = 11,
+    BOOT_PLAYMODE_GAMEGEAR = 12,
+    BOOT_PLAYMODE_PUZZLE = 13,
+    BOOT_PLAYMODE_NUM = 14,
+    BOOT_PLAYMODE_NONE = -1
+};
+
+enum<sint8> BootPlayer
+{
+    BOOT_PLAYER_SONIC = 0,
+    BOOT_PLAYER_TAILS = 1,
+    BOOT_PLAYER_KNUCKLES = 2,
+    BOOT_PLAYER_SONIC_TAILS = 3,
+    BOOT_PLAYER_KNUCKLES_TAILS = 4,
+    BOOT_PLAYER_AMY = 5,
+    BOOT_PLAYER_AMY_TAILS = 6,
+    BOOT_PLAYER_NUM = 7,
+    BOOT_PLAYER_NONE = -1
+};
+
+typedef int32 sint32;
+
+enum<sint32> TerrainLevel
+{
+    LEVEL0 = 0,
+    LEVEL1 = 1,
+    LEVEL2 = 2,
+    LEVEL3 = 3,
+    NUM_LEVEL_TYPES = 4
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); TerrainLevel terrainLevel<comment="マップの地形レベル">;
+    FSeek(p + 4); bool userManual<comment="ユーザーがマップを固定したか">;
+    FSeek(p + 5); sint8 dym[3]<comment="dym",optimize=false>;
+
+    FSeek(p + 8);
+} TerrainLevelData;
+
+enum<sint8> GamePlayData_Status
+{
+    STATUS_NEWGAME = 0,
+    STATUS_CONTINUE = 1
+};
+
+enum<sint8> GamePlayData_BootPlayer
+{
+    GamePlayData_BootPlayer_BOOT_PLAYER_SONIC = 0,
+    GamePlayData_BootPlayer_BOOT_PLAYER_TAILS = 1,
+    GamePlayData_BootPlayer_BOOT_PLAYER_KNUCKLES = 2,
+    GamePlayData_BootPlayer_BOOT_PLAYER_SONIC_TAILS = 3,
+    GamePlayData_BootPlayer_BOOT_PLAYER_KNUCKLES_TAILS = 4,
+    GamePlayData_BootPlayer_BOOT_PLAYER_AMY = 5,
+    GamePlayData_BootPlayer_BOOT_PLAYER_AMY_TAILS = 6,
+    GamePlayData_BootPlayer_BOOT_PLAYER_NUM = 7,
+    GamePlayData_BootPlayer_BOOT_PLAYER_NONE = -1
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 allEmeraldFlags<comment="ビットフラグ:Sonic3K用">;
+    FSeek(p + 4); sint32 currentSlotNo<comment="3K:セーブスロット番号">;
+
+    FSeek(p + 8);
+} Sonic3KSlotPlayData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); GamePlayData_Status status<comment="ステータス">;
+    FSeek(p + 1); uint8 lastPlayedStageNo<comment="最後にプレイしていたステージ">;
+    FSeek(p + 2); uint8 lastPlayedBossRushStageIndex<comment="最後にプレイしていたボスラッシュ用ステージインデックス">;
+    FSeek(p + 3); GamePlayData_BootPlayer player<comment="プレイキャラ">;
+    FSeek(p + 4); uint32 flags<comment="ビットフラグ">;
+    FSeek(p + 8); Sonic3KSlotPlayData sonic3KSlotPlayData<comment="Sonic3Kセーブスロット">;
+
+    FSeek(p + 16);
+} GamePlayData;
+
+enum<sint8> LegacyModeData_Status
+{
+    STATUS_SAVED = 0
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); LegacyModeData_Status status<comment="ステータス">;
+    FSeek(p + 1); uint8 legacySaveData[65536]<comment="legacySaveData",optimize=false>;
+
+    FSeek(p + 65537);
+} LegacyModeData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);       GameModeData_VER_00_43_Status status<comment="ステータス">;
+    FSeek(p + 1);       MainMenuMode lastMainMenuMode<comment="最後に選択していたメニュー">;
+    FSeek(p + 2);       BootPlayMode lastPlayedMode[4]<comment="最後にプレイしていたモード",optimize=false>;
+    FSeek(p + 6);       BootPlayer lastPlayerClassic[4]<comment="最後にプレイしていたキャラ:クラシック",optimize=false>;
+    FSeek(p + 10);      BootPlayer lastPlayerAnniversary[4]<comment="最後にプレイしていたキャラ:アニバーサリー",optimize=false>;
+    FSeek(p + 14);      BootPlayer lastPlayerMirroring[4]<comment="最後にプレイしていたキャラ:ミラー",optimize=false>;
+    FSeek(p + 18);      BootPlayer lastPlayerBossRush[4]<comment="最後にプレイしていたキャラ:ボスラッシュ",optimize=false>;
+    FSeek(p + 22);      uint8 storyProgress<comment="ストーリーモードの進行度">;
+    FSeek(p + 24);      TerrainLevelData terrainLevelData[7]<comment="各マップの地形レベル",optimize=false>;
+    FSeek(p + 80);      uint32 spinDashType<comment="SonicCD SpinDashType">;
+    FSeek(p + 84);      uint8 reserved[4]<comment="reserved",optimize=false>;
+    FSeek(p + 88);      uint32 flags<comment="ビットフラグ">;
+    FSeek(p + 92);      GamePlayData gamePlayData[51]<comment="ゲームプレイ",optimize=false>;
+    FSeek(p + 908);     LegacyModeData legacyModeData[37]<comment="RSDK上のセーブデータ",optimize=false>;
+    FSeek(p + 2425777); bool clearStoryStage[125]<comment="Activity用:ストリーのクリアフラグ",optimize=false>;
+
+    FSeek(p + 2425904);
+} GameModeData_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 coin<comment="コイン数">;
+
+    FSeek(p + 4);
+} CollectionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint8 data[160]<comment="data",optimize=false>;
+
+    FSeek(p + 160);
+} CheckPointSave;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CheckPointSave checkPointSave[48]<comment="checkPointSave",optimize=false>;
+
+    FSeek(p + 7680);
+} CheckPointSaveData_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint8 data[32768]<comment="data",optimize=false>;
+
+    FSeek(p + 32768);
+} AnywareSave;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); AnywareSave anywareSave[48]<comment="anywareSave",optimize=false>;
+
+    FSeek(p + 1572864);
+} AnywareSaveData_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 value<comment="値">;
+    FSeek(p + 4); bool assigned<comment="アサイン済みか">;
+
+    FSeek(p + 8);
+} StatValue;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   StatValue stats[64]<comment="統計",optimize=false>;
+    FSeek(p + 512); StatValue barrierStats[3]<comment="barrierStats",optimize=false>;
+
+    FSeek(p + 536);
+} StatsContainerData;
+
+enum<sint8> RankType
+{
+    RANKTYPE_S = 0,
+    RANKTYPE_A = 1,
+    RANKTYPE_B = 2,
+    RANKTYPE_C = 3,
+    RANKTYPE_NUM = 4,
+    RANKTYPE_INVALID = 4
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 playCount<comment="playCount">;
+    FSeek(p + 4);  uint32 clearCount<comment="clearCount">;
+    FSeek(p + 8);  uint32 clearCountSRank<comment="clearCountSRank">;
+    FSeek(p + 12); RankType clearRank<comment="clearRank">;
+    FSeek(p + 13); bool unlocked<comment="unlocked">;
+    FSeek(p + 14); uint16 dmy<comment="dmy">;
+
+    FSeek(p + 16);
+} MissionStageSaveData;
+
+enum<sint8> MissionKind
+{
+    MISSIONKIND_NONE = 0,
+    MISSIONKIND_SONIC1_START = 1,
+    MISSIONKIND_SONIC1_1 = 1,
+    MISSIONKIND_SONIC1_2 = 2,
+    MISSIONKIND_SONIC1_3 = 3,
+    MISSIONKIND_SONIC1_4 = 4,
+    MISSIONKIND_SONIC1_5 = 5,
+    MISSIONKIND_SONIC1_6 = 6,
+    MISSIONKIND_SONIC1_7 = 7,
+    MISSIONKIND_SONIC1_8 = 8,
+    MISSIONKIND_SONIC1_9 = 9,
+    MISSIONKIND_SONIC1_10 = 10,
+    MISSIONKIND_SONIC1_11 = 11,
+    MISSIONKIND_SONIC1_12 = 12,
+    MISSIONKIND_SONIC1_13 = 13,
+    MISSIONKIND_SONIC1_14 = 14,
+    MISSIONKIND_SONIC1_15 = 15,
+    MISSIONKIND_SONIC1_16 = 16,
+    MISSIONKIND_SONIC1_17 = 17,
+    MISSIONKIND_SONIC1_18 = 18,
+    MISSIONKIND_SONIC1_19 = 19,
+    MISSIONKIND_SONIC1_20 = 20,
+    MISSIONKIND_SONIC1_21 = 21,
+    MISSIONKIND_SONIC1_22 = 22,
+    MISSIONKIND_SONIC1_23 = 23,
+    MISSIONKIND_SONIC1_24 = 24,
+    MISSIONKIND_SONIC1_25 = 25,
+    MISSIONKIND_SONIC1_END = 26,
+    MISSIONKIND_SONIC2_START = 26,
+    MISSIONKIND_SONIC2_1 = 26,
+    MISSIONKIND_SONIC2_2 = 27,
+    MISSIONKIND_SONIC2_3 = 28,
+    MISSIONKIND_SONIC2_4 = 29,
+    MISSIONKIND_SONIC2_5 = 30,
+    MISSIONKIND_SONIC2_6 = 31,
+    MISSIONKIND_SONIC2_7 = 32,
+    MISSIONKIND_SONIC2_8 = 33,
+    MISSIONKIND_SONIC2_9 = 34,
+    MISSIONKIND_SONIC2_10 = 35,
+    MISSIONKIND_SONIC2_11 = 36,
+    MISSIONKIND_SONIC2_12 = 37,
+    MISSIONKIND_SONIC2_13 = 38,
+    MISSIONKIND_SONIC2_14 = 39,
+    MISSIONKIND_SONIC2_15 = 40,
+    MISSIONKIND_SONIC2_16 = 41,
+    MISSIONKIND_SONIC2_17 = 42,
+    MISSIONKIND_SONIC2_18 = 43,
+    MISSIONKIND_SONIC2_19 = 44,
+    MISSIONKIND_SONIC2_20 = 45,
+    MISSIONKIND_SONIC2_21 = 46,
+    MISSIONKIND_SONIC2_22 = 47,
+    MISSIONKIND_SONIC2_23 = 48,
+    MISSIONKIND_SONIC2_24 = 49,
+    MISSIONKIND_SONIC2_25 = 50,
+    MISSIONKIND_SONIC2_END = 51,
+    MISSIONKIND_SONIC3K_START = 51,
+    MISSIONKIND_SONIC3K_1 = 51,
+    MISSIONKIND_SONIC3K_2 = 52,
+    MISSIONKIND_SONIC3K_3 = 53,
+    MISSIONKIND_SONIC3K_4 = 54,
+    MISSIONKIND_SONIC3K_5 = 55,
+    MISSIONKIND_SONIC3K_6 = 56,
+    MISSIONKIND_SONIC3K_7 = 57,
+    MISSIONKIND_SONIC3K_8 = 58,
+    MISSIONKIND_SONIC3K_9 = 59,
+    MISSIONKIND_SONIC3K_10 = 60,
+    MISSIONKIND_SONIC3K_11 = 61,
+    MISSIONKIND_SONIC3K_12 = 62,
+    MISSIONKIND_SONIC3K_13 = 63,
+    MISSIONKIND_SONIC3K_14 = 64,
+    MISSIONKIND_SONIC3K_15 = 65,
+    MISSIONKIND_SONIC3K_16 = 66,
+    MISSIONKIND_SONIC3K_17 = 67,
+    MISSIONKIND_SONIC3K_18 = 68,
+    MISSIONKIND_SONIC3K_19 = 69,
+    MISSIONKIND_SONIC3K_20 = 70,
+    MISSIONKIND_SONIC3K_21 = 71,
+    MISSIONKIND_SONIC3K_22 = 72,
+    MISSIONKIND_SONIC3K_23 = 73,
+    MISSIONKIND_SONIC3K_24 = 74,
+    MISSIONKIND_SONIC3K_25 = 75,
+    MISSIONKIND_SONIC3K_END = 76,
+    MISSIONKIND_SONICCD_START = 76,
+    MISSIONKIND_SONICCD_1 = 76,
+    MISSIONKIND_SONICCD_2 = 77,
+    MISSIONKIND_SONICCD_3 = 78,
+    MISSIONKIND_SONICCD_4 = 79,
+    MISSIONKIND_SONICCD_5 = 80,
+    MISSIONKIND_SONICCD_6 = 81,
+    MISSIONKIND_SONICCD_7 = 82,
+    MISSIONKIND_SONICCD_8 = 83,
+    MISSIONKIND_SONICCD_9 = 84,
+    MISSIONKIND_SONICCD_10 = 85,
+    MISSIONKIND_SONICCD_11 = 86,
+    MISSIONKIND_SONICCD_12 = 87,
+    MISSIONKIND_SONICCD_13 = 88,
+    MISSIONKIND_SONICCD_14 = 89,
+    MISSIONKIND_SONICCD_15 = 90,
+    MISSIONKIND_SONICCD_16 = 91,
+    MISSIONKIND_SONICCD_17 = 92,
+    MISSIONKIND_SONICCD_18 = 93,
+    MISSIONKIND_SONICCD_19 = 94,
+    MISSIONKIND_SONICCD_20 = 95,
+    MISSIONKIND_SONICCD_21 = 96,
+    MISSIONKIND_SONICCD_22 = 97,
+    MISSIONKIND_SONICCD_23 = 98,
+    MISSIONKIND_SONICCD_24 = 99,
+    MISSIONKIND_SONICCD_25 = 100,
+    MISSIONKIND_SONICCD_END = 101,
+    MISSIONKIND_DLC_START = 101,
+    MISSIONKIND_DLC_1 = 101,
+    MISSIONKIND_DLC_2 = 102,
+    MISSIONKIND_DLC_3 = 103,
+    MISSIONKIND_DLC_4 = 104,
+    MISSIONKIND_DLC_5 = 105,
+    MISSIONKIND_DLC_6 = 106,
+    MISSIONKIND_DLC_7 = 107,
+    MISSIONKIND_DLC_8 = 108,
+    MISSIONKIND_DLC_9 = 109,
+    MISSIONKIND_DLC_10 = 110,
+    MISSIONKIND_DLC_11 = 111,
+    MISSIONKIND_DLC_END = 112,
+    MISSIONKIND_NUM = 112,
+    MISSIONKIND_SONIC1_NUM = 25,
+    MISSIONKIND_SONIC2_NUM = 25,
+    MISSIONKIND_SONIC3K_NUM = 25,
+    MISSIONKIND_SONICCD_NUM = 25,
+    MISSIONKIND_DLC_NUM = 11,
+    MISSIONKIND_ALL_START = 1,
+    MISSIONKIND_ALL_END = 112
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    MissionStageSaveData missionStages[112]<comment="missionStages",optimize=false>;
+    FSeek(p + 1792); MissionKind lastPlayedMissionKind<comment="lastPlayedMissionKind">;
+    FSeek(p + 1793); uint8 dmy[3]<comment="dmy",optimize=false>;
+
+    FSeek(p + 1796);
+} MissionSaveData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 clearTime<comment="clearTime">;
+    FSeek(p + 4); uint8 charaKind<comment="charaKind">;
+    FSeek(p + 5); bool cleared<comment="cleared">;
+    FSeek(p + 6); bool displayed<comment="displayed">;
+    FSeek(p + 7); bool uploaded<comment="uploaded">;
+
+    FSeek(p + 8);
+} ClearData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    ClearData clearData[441]<comment="clearData",optimize=false>;
+    FSeek(p + 3528); sint32 bossRushSonicWork[4]<comment="bossRushSonicWork",optimize=false>;
+    FSeek(p + 3544); sint32 bossRushTailsWork[4]<comment="bossRushTailsWork",optimize=false>;
+    FSeek(p + 3560); sint32 bossRushKnucklesWork[4]<comment="bossRushKnucklesWork",optimize=false>;
+
+    FSeek(p + 3576);
+} StageClearData_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool unlocked<comment="unlocked">;
+    FSeek(p + 1); bool unlockedInfo<comment="unlockedInfo">;
+    FSeek(p + 2); bool displayed<comment="displayed">;
+    FSeek(p + 3); uint8 dmy<comment="dmy">;
+
+    FSeek(p + 4);
+} UnlockData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint16 musicKind<comment="musicKind">;
+    FSeek(p + 2); uint8 reserved[2]<comment="reserved",optimize=false>;
+
+    FSeek(p + 4);
+} PlayListItem;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); PlayListItem items[300]<comment="items",optimize=false>;
+
+    FSeek(p + 1200);
+} PlayListInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    uint8 artProgress<comment="アート進捗率">;
+    FSeek(p + 1);    uint8 movieProgress<comment="ムービー進捗率">;
+    FSeek(p + 2);    uint8 musicProgress<comment="ミュージック進捗率">;
+    FSeek(p + 3);    uint8 museumChara<comment="ミュージアムキャラクタ">;
+    FSeek(p + 4);    uint8 movieSoundRegion<comment="ムービーのサウンドリージョン">;
+    FSeek(p + 5);    uint8 reserved[3]<comment="reserved",optimize=false>;
+    FSeek(p + 8);    UnlockData artParam[260]<comment="アートギャラリー",optimize=false>;
+    FSeek(p + 1048); UnlockData movieParam[60]<comment="ムービー",optimize=false>;
+    FSeek(p + 1288); UnlockData musicParam[420]<comment="ミュージック",optimize=false>;
+    FSeek(p + 2968); PlayListInfo musicPlayList[5]<comment="ミュージックプレイリスト",optimize=false>;
+
+    FSeek(p + 8968);
+} MuseumData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool displayed<comment="displayed">;
+    FSeek(p + 1); uint8 reserved[3]<comment="reserved",optimize=false>;
+
+    FSeek(p + 4);
+} TutorialParam_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); TutorialParam_VER_00_43 params[32]<comment="チュートリアル情報",optimize=false>;
+
+    FSeek(p + 128);
+} TutorialData_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 holdValue[125]<comment="holdValue",optimize=false>;
+
+    FSeek(p + 500);
+} HoldValues_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   bool isSended[125]<comment="isSended",optimize=false>;
+    FSeek(p + 125); uint8 reserved[3]<comment="reserved",optimize=false>;
+
+    FSeek(p + 128);
+} SendFlags_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     HoldValues_VER_00_43 holdValues[23]<comment="holdValues",optimize=false>;
+    FSeek(p + 11500); SendFlags_VER_00_43 sendFlags[23]<comment="sendFlags",optimize=false>;
+
+    FSeek(p + 14444);
+} PlayReportData_VER_00_43;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 flags<comment="ビットフラグ">;
+    FSeek(p + 4); sint32 bonusCoinCount<comment="残りのボーナスコイン">;
+    FSeek(p + 8); uint8 reserved[252]<comment="念のためのバッファ",optimize=false>;
+
+    FSeek(p + 260);
+} ContentData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);       HeaderData header<comment="ヘッダ">;
+    FSeek(p + 60);      HeaderSubData headerSub<comment="ヘッダ サブ">;
+    FSeek(p + 64);      GameModeData_VER_00_43 gameModeData<comment="ゲームモード">;
+    FSeek(p + 2425968); CollectionData collection<comment="コレクション">;
+    FSeek(p + 2425972); CheckPointSaveData_VER_00_43 checkPointSaveData<comment="チェックポイントセーブ">;
+    FSeek(p + 2433652); AnywareSaveData_VER_00_43 anywareSaveData<comment="どこでもセーブ">;
+    FSeek(p + 4006516); StatsContainerData stats<comment="統計コンテナ">;
+    FSeek(p + 4007052); MissionSaveData mission<comment="ミッション">;
+    FSeek(p + 4008848); StageClearData_VER_00_43 stageClear<comment="ステージクリアデータ">;
+    FSeek(p + 4012424); MuseumData museumData<comment="ミュージアムアンロックデータ">;
+    FSeek(p + 4021392); TutorialData_VER_00_43 tutorialData<comment="チュートリアルデータ">;
+    FSeek(p + 4021520); PlayReportData_VER_00_43 playreportData<comment="プレイレポートデータ">;
+    FSeek(p + 4035964); ContentData contentData<comment="DLCデータ">;
+
+    FSeek(p + 4036224);
+} GameData_VER_00_43;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameData_VER_00_43 gameData_VER_00_43;

@@ -1,0 +1,112 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> Priority
+{
+    PRIORITY_LOW = 0,
+    PRIORITY_DEFAULT = 1,
+    PRIORITY_HIGH = 2,
+    PRIORITY_SUPER_HIGH = 3,
+    NUM_PRIORITY = 4,
+    PRIORITY_INVALID = -1
+};
+
+enum<sint8> InterruptType
+{
+    INTERRUPT_TYPE_STOP = 0,
+    INTERRUPT_TYPE_PAUSE = 1,
+    INTERRUPT_TYPE_OVERLAP = 2,
+    NUM_INTERRUPT_TYPE = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring cueName<comment="Cue名">;
+    FSeek(p + 16); sint32 blockId<comment="BlockID">;
+    FSeek(p + 20); float fadeInTime<comment="フェードイン時間">;
+    FSeek(p + 24); float fadeOutTime<comment="フェードアウト時間">;
+    FSeek(p + 28); float delayTime<comment="再生遅延時間">;
+    FSeek(p + 32); cstring aisacName<comment="AISAC名">;
+    FSeek(p + 48); float aisacValue<comment="AISAC値">;
+    FSeek(p + 52); float aisacFadeTime<comment="AISAC値フェード時間">;
+    FSeek(p + 56); bool isVolumeControl<comment="入力に応じた音量調整を行う">;
+    FSeek(p + 57); bool isOverlapPlay<comment="重複再生する">;
+    FSeek(p + 58); Priority priority<comment="プライオリティ">;
+    FSeek(p + 59); InterruptType interruptType<comment="他BGMに割り込まれた時の動作">;
+
+    FSeek(p + 64);
+} BGMInfo;
+
+enum<sint8> BGMTransitInfo_InterruptType
+{
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_STOP = 0,
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_PAUSE = 1,
+    BGMTransitInfo_InterruptType_INTERRUPT_TYPE_OVERLAP = 2,
+    BGMTransitInfo_InterruptType_NUM_INTERRUPT_TYPE = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring tagName<comment="タグ名">;
+    FSeek(p + 16); sint32 beforeId<comment="遷移前のBGM番号">;
+    FSeek(p + 20); sint32 afterId<comment="遷移後のBGM番号">;
+    FSeek(p + 24); BGMTransitInfo_InterruptType type<comment="[前]停止タイプ">;
+    FSeek(p + 28); float fadeOutTime<comment="[前]フェードアウト時間">;
+    FSeek(p + 32); float fadeInTime<comment="[後]フェードイン時間">;
+    FSeek(p + 36); float delayTime<comment="[後]再生遅延時間">;
+
+    FSeek(p + 40);
+} BGMTransitInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring sceneName<comment="シーン名">;
+    FSeek(p + 16); sint32 bgmId<comment="再生するBGM番号">;
+    FSeek(p + 20); bool disableSameBgmId<comment="シーン再生開始まで同一のBGM番号の再生を無効にする">;
+
+    FSeek(p + 24);
+} BGMSceneInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BGMInfo changeBgmInfo[32]<comment="BGM情報",optimize=false>;
+    FSeek(p + 2048); BGMTransitInfo transitBgmInfo[32]<comment="BGM切り替え時の特殊設定",optimize=false>;
+    FSeek(p + 3328); BGMSceneInfo sceneBgmInfo[4]<comment="sceneBgmInfo",optimize=false>;
+
+    FSeek(p + 3424);
+} BGMInfoParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BGMInfoParameter bGMInfoParameter;

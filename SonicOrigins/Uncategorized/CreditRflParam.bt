@@ -1,0 +1,97 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float timeIn<comment="クレジット開始から文字が流れ始めるまでの時間">;
+    FSeek(p + 4); float timeRunning<comment="クレジットの文字が流れている時間">;
+    FSeek(p + 8); float timeOut<comment="文字が流れ終わってからクレジット終了までの時間">;
+
+    FSeek(p + 12);
+} StuffRollTime;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float timeIn<comment="Sonic1の動画が再生され始めるまでの時間">;
+    FSeek(p + 4);  float timeRunning1<comment="Sonic1の動画が再生され始めてから停止し始めるまでの時間">;
+    FSeek(p + 8);  float timeRunningCD<comment="SonicCDの動画が再生され始めてから停止し始めるまでの時間">;
+    FSeek(p + 12); float timeRunning2<comment="Sonic2の動画が再生され始めてから停止し始めるまでの時間">;
+    FSeek(p + 16); float timeRunning3K<comment="Sonic3&Kの動画が再生され始めてから停止し始めるまでの時間">;
+    FSeek(p + 20); float timeRunningHite<comment="HITEの動画が再生され始めてから停止し始めるまでの時間">;
+
+    FSeek(p + 24);
+} DecoAndMovieTime;
+
+typedef byte sint8;
+
+enum<sint8> TextDecoType
+{
+    position = 0,
+    name = 1,
+    category = 2,
+    logo = 3,
+    empty = 4,
+    num = 5,
+    min = 0,
+    max = 4
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring stringLeft<comment="文字：左列">;
+    FSeek(p + 16); cstring stringRight<comment="文字：右列">;
+    FSeek(p + 32); TextDecoType decoType<comment="装飾タイプ">;
+    FSeek(p + 36); float size<comment="行間：0より大きければ優先">;
+
+    FSeek(p + 40);
+} CreditStringDataRflParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float position<comment="役職">;
+    FSeek(p + 4);  float name<comment="名前">;
+    FSeek(p + 8);  float category<comment="カテゴリ">;
+    FSeek(p + 12); float empty<comment="空行">;
+
+    FSeek(p + 16);
+} TextDecoTypeSize;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     float soundVolume<comment="音楽の音量">;
+    FSeek(p + 8);     cstring movieNames[5]<comment="動画名：STH1→SCD→STH3→STH3K→HITE",optimize=false>;
+    FSeek(p + 88);    StuffRollTime staffRollTime<comment="スタッフロールの時間制御用パラメータ">;
+    FSeek(p + 100);   DecoAndMovieTime decoAndMovieTime<comment="動画の時間制御用パラメータ">;
+    FSeek(p + 128);   CreditStringDataRflParam stringData[2048]<comment="クレジットの文字",optimize=false>;
+    FSeek(p + 82048); TextDecoTypeSize textDecoTypeSize<comment="各装飾タイプの行間">;
+
+    FSeek(p + 82064);
+} CreditRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+CreditRflParam creditRflParam;

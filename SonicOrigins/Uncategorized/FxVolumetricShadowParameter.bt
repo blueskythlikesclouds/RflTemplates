@@ -1,0 +1,28 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); bool enable<comment="Enable">;
+    FSeek(p + 1); bool isUseShadowmap<comment="シャドウマップの使用">;
+    FSeek(p + 2); bool isUseCloudShadow<comment="クラウドシャドウの使用">;
+    FSeek(p + 3); bool isUseHeightmapShadow<comment="ハイトマップシャドウの使用">;
+
+    FSeek(p + 4);
+} FxVolumetricShadowParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxVolumetricShadowParameter fxVolumetricShadowParameter;

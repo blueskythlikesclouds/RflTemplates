@@ -1,0 +1,70 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef byte sint8;
+
+enum<sint8> VolumeType
+{
+    VOLUME_SPHERE = 0,
+    VOLUME_CAPSULE = 1
+};
+
+typedef int32 sint32;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+enum<sint8> LODLevel
+{
+    LOD_HIGH = 0,
+    LOD_MIDDLE = 1,
+    LOD_LOW = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   cstring type<comment="ノード">;
+    FSeek(p + 16);  VolumeType volume<comment="形状">;
+    FSeek(p + 20);  sint32 priority<comment="プライオリティ">;
+    FSeek(p + 32);  vector3 translation<comment="位置オフセット">;
+    FSeek(p + 48);  vector3 rotation<comment="回転オフセット">;
+    FSeek(p + 64);  vector3 scale<comment="スケール">;
+    FSeek(p + 80);  vector3 rate<comment="各種オクルージョンの割合">;
+    FSeek(p + 96);  float radius<comment="有効半径">;
+    FSeek(p + 100); LODLevel lod<comment="LOD">;
+
+    FSeek(p + 112);
+} CapsuleParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CapsuleParam capsules[64]<comment="パラメータ",optimize=false>;
+
+    FSeek(p + 7168);
+} OcclusionCapsuleList;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+OcclusionCapsuleList occlusionCapsuleList;

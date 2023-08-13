@@ -1,0 +1,203 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int32 sint32;
+
+enum<sint32> MuseumSectionKind
+{
+    MUSEUMSECTIONKIND_NORMAL = 0,
+    MUSEUMSECTIONKIND_PREMIUM = 1,
+    MUSEUMSECTIONKIND_NUM = 2
+};
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+enum<sint32> MuseumItemCategory
+{
+    MUSEUMITEMCATEGORY_NONE = 0,
+    MUSEUMITEMCATEGORY_TITLE_START = 1,
+    MUSEUMITEMCATEGORY_TITLE_SONIC_1 = 1,
+    MUSEUMITEMCATEGORY_TITLE_SONIC_CD = 2,
+    MUSEUMITEMCATEGORY_TITLE_SONIC_2 = 3,
+    MUSEUMITEMCATEGORY_TITLE_SONIC_3K = 4,
+    MUSEUMITEMCATEGORY_TITLE_SONIC_ORIGINS = 5,
+    MUSEUMITEMCATEGORY_TITLE_ETC = 6,
+    MUSEUMITEMCATEGORY_TITLE_SONIC_SPINBALL = 7,
+    MUSEUMITEMCATEGORY_TITLE_CHAOTIX = 8,
+    MUSEUMITEMCATEGORY_TITLE_SONIC_3D_BLAST = 9,
+    MUSEUMITEMCATEGORY_TITLE_RESERVE_1 = 10,
+    MUSEUMITEMCATEGORY_TITLE_END = 11,
+    MUSEUMITEMCATEGORY_SOUND_START = 11,
+    MUSEUMITEMCATEGORY_SOUND_BGM_MENU = 11,
+    MUSEUMITEMCATEGORY_SOUND_BGM_STAGE = 12,
+    MUSEUMITEMCATEGORY_SOUND_JINGLE = 13,
+    MUSEUMITEMCATEGORY_SOUND_ETC = 14,
+    MUSEUMITEMCATEGORY_SOUND_RESERVE_1 = 15,
+    MUSEUMITEMCATEGORY_SOUND_END = 16,
+    MUSEUMITEMCATEGORY_CHARA_START = 16,
+    MUSEUMITEMCATEGORY_CHARA_SONIC = 16,
+    MUSEUMITEMCATEGORY_CHARA_TAILS = 17,
+    MUSEUMITEMCATEGORY_CHARA_KNUCKLES = 18,
+    MUSEUMITEMCATEGORY_CHARA_AMY = 19,
+    MUSEUMITEMCATEGORY_CHARA_EGGMAN = 20,
+    MUSEUMITEMCATEGORY_CHARA_METALSONIC = 21,
+    MUSEUMITEMCATEGORY_CHARA_ETC = 22,
+    MUSEUMITEMCATEGORY_CHARA_RESERVE_1 = 23,
+    MUSEUMITEMCATEGORY_CHARA_END = 24,
+    MUSEUMITEMCATEGORY_PICTURE_START = 24,
+    MUSEUMITEMCATEGORY_PICTURE_INITIAL = 24,
+    MUSEUMITEMCATEGORY_PICTURE_COLOR = 25,
+    MUSEUMITEMCATEGORY_PICTURE_DOCUMENT = 26,
+    MUSEUMITEMCATEGORY_PICTURE_PACKAGE = 27,
+    MUSEUMITEMCATEGORY_PICTURE_ETC = 28,
+    MUSEUMITEMCATEGORY_PICTURE_END = 29,
+    MUSEUMITEMCATEGORY_NUM = 29,
+    MUSEUMITEMCATEGORY_TITLE_NUM = 10,
+    MUSEUMITEMCATEGORY_SOUND_NUM = 5,
+    MUSEUMITEMCATEGORY_CHARA_NUM = 8,
+    MUSEUMITEMCATEGORY_PICTURE_NUM = 5
+};
+
+typedef ubyte uint8;
+
+enum<sint32> MuseumItemOpenState
+{
+    MUSEUMITEMOPENSTATE_UNKNOWN = 0,
+    MUSEUMITEMOPENSTATE_OPEN = 1,
+    MUSEUMITEMOPENSTATE_COIN = 2,
+    MUSEUMITEMOPENSTATE_STATS = 3,
+    MUSEUMITEMOPENSTATE_NUM = 4
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MuseumItemOpenState openState<comment="解放条件">;
+    FSeek(p + 4); sint32 unlockAchievementNo<comment="スタッツ設定で有効：実績何番で解放されるか">;
+    FSeek(p + 8); sint32 unlockCoinNum<comment="コイン設定で有効：アンロックするためのコイン枚数">;
+
+    FSeek(p + 12);
+} MuseumUnlockInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool isEnable<comment="有効">;
+    FSeek(p + 4);  sint32 number<comment="表示番号">;
+    FSeek(p + 8);  MuseumSectionKind sectionKind<comment="区分け">;
+    FSeek(p + 16); cstring assetName<comment="アセット名">;
+    FSeek(p + 32); sint32 playTime<comment="再生秒数">;
+    FSeek(p + 36); bool fadeOutMusic<comment="音楽をフェードアウトするか (ループ曲のみ有効)">;
+    FSeek(p + 40); MuseumItemCategory categories[10]<comment="所属カテゴリ",optimize=false>;
+    FSeek(p + 80); bool isDLCItem<comment="DLCアイテムか">;
+    FSeek(p + 81); bool isTypeSD<comment="SD 4:3アイテムか">;
+    FSeek(p + 82); bool is4KAvailable<comment="4K対応あり">;
+    FSeek(p + 83); uint8 soundTexNum<comment="サウンドテクスチャ番号">;
+    FSeek(p + 84); uint8 artPageCount<comment="アートのページ数">;
+    FSeek(p + 85); uint8 movieSoundCount<comment="ムービーのサウンドトラック数">;
+    FSeek(p + 88); MuseumUnlockInfo unlockInfo<comment="アイテムオープン条件">;
+
+    FSeek(p + 104);
+} MuseumItemInfo;
+
+enum<sint32> MuseumSortInfo_MuseumItemCategory
+{
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_NONE = 0,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_START = 1,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_1 = 1,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_CD = 2,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_2 = 3,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_3K = 4,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_ORIGINS = 5,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_ETC = 6,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_SPINBALL = 7,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_CHAOTIX = 8,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_SONIC_3D_BLAST = 9,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_RESERVE_1 = 10,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_END = 11,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_START = 11,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_BGM_MENU = 11,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_BGM_STAGE = 12,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_JINGLE = 13,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_ETC = 14,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_RESERVE_1 = 15,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_END = 16,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_START = 16,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_SONIC = 16,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_TAILS = 17,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_KNUCKLES = 18,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_AMY = 19,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_EGGMAN = 20,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_METALSONIC = 21,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_ETC = 22,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_RESERVE_1 = 23,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_END = 24,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_START = 24,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_INITIAL = 24,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_COLOR = 25,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_DOCUMENT = 26,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_PACKAGE = 27,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_ETC = 28,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_END = 29,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_NUM = 29,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_TITLE_NUM = 10,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_SOUND_NUM = 5,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_CHARA_NUM = 8,
+    MuseumSortInfo_MuseumItemCategory_MUSEUMITEMCATEGORY_PICTURE_NUM = 5
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); MuseumSortInfo_MuseumItemCategory category<comment="絞り込みカテゴリ">;
+    FSeek(p + 4); bool isDLCCategory<comment="DLCカテゴリか">;
+
+    FSeek(p + 8);
+} MuseumSortInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float time<comment="フェードアウト時間[s]">;
+
+    FSeek(p + 4);
+} MusicFadeOutInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);     MuseumItemInfo musicItems[401]<comment="サウンドアイテム情報",optimize=false>;
+    FSeek(p + 41704); MuseumItemInfo artItems[251]<comment="アートアイテム情報",optimize=false>;
+    FSeek(p + 67808); MuseumItemInfo movieItems[51]<comment="ムービーアイテム情報",optimize=false>;
+    FSeek(p + 73112); MuseumSortInfo musicSortInfos[15]<comment="サウンド絞り込み情報",optimize=false>;
+    FSeek(p + 73232); MuseumSortInfo artSortInfos[15]<comment="アート絞り込み情報",optimize=false>;
+    FSeek(p + 73352); MusicFadeOutInfo musicFadeOutInfo<comment="サウンドのフェードアウト情報">;
+
+    FSeek(p + 73360);
+} MuseumItemRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+MuseumItemRflParam museumItemRflParam;
