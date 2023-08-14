@@ -521,7 +521,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); TutorialParam_VER_00_45 params[64]<comment="チュートリアル情報",optimize=false>;
+    FSeek(p + 0); TutorialParam_VER_00_45 _params[64]<comment="チュートリアル情報",optimize=false>;
 
     FSeek(p + 256);
 } TutorialData_VER_00_45;

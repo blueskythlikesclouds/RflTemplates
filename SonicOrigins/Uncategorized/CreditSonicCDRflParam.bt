@@ -45,7 +45,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  cstring string<comment="文字">;
+    FSeek(p + 0);  cstring _string<comment="文字">;
     FSeek(p + 16); SonicCDTextDecoType decoType<comment="装飾タイプ">;
 
     FSeek(p + 24);

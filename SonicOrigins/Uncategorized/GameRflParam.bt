@@ -128,7 +128,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); MapCameraRflParam params[7]<comment="各島分のパラメータ",optimize=false>;
+    FSeek(p + 0); MapCameraRflParam _params[7]<comment="各島分のパラメータ",optimize=false>;
 
     FSeek(p + 364);
 } MapCameraRflParams;

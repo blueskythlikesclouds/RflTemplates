@@ -121,7 +121,7 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); DecoTechParam params[512]<comment="テクニックプリセット",optimize=false>;
+    FSeek(p + 0); DecoTechParam _params[512]<comment="テクニックプリセット",optimize=false>;
 
     FSeek(p + 147456);
 } DecoTechParams;
