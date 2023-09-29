@@ -30,6 +30,7 @@ enum<sint8> SaveDataIcon
     IconIsland4 = 4,
     IconIsland5 = 5,
     IconLastBoss = 6,
+    IconExtra = 7,
 };
 
 enum<uint8> AppVersion
@@ -70,9 +71,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint16 flags<comment="ビットフラグ">;
-    FSeek(p + 4); uint32 bestTime<comment="ベストタイム">;
-    FSeek(p + 8); uint32 reserved[4]<comment="reserved",optimize=false>;
+    FSeek(p + 0);  uint16 flags<comment="ビットフラグ">;
+    FSeek(p + 4);  uint32 bestTime<comment="ベストタイム">;
+    FSeek(p + 8);  uint32 flags2<comment="ビットフラグ2">;
+    FSeek(p + 12); uint32 reserved[3]<comment="reserved",optimize=false>;
 
     FSeek(p + 24);
 } CyberStageData;

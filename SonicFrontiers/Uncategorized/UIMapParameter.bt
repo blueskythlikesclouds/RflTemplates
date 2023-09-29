@@ -41,10 +41,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     IslandMapParameter islandMapParam[5]<comment="島マップごとのグリッドのチェレンジID二次元配列",optimize=false>;
-    FSeek(p + 32000); IDColor idColors[136]<comment="エディタのグリッド上のID表示色",optimize=false>;
+    FSeek(p + 0);     IslandMapParameter islandMapParam[6]<comment="島マップごとのグリッドのチェレンジID二次元配列",optimize=false>;
+    FSeek(p + 38400); IDColor idColors[264]<comment="エディタのグリッド上のID表示色",optimize=false>;
 
-    FSeek(p + 33088);
+    FSeek(p + 40512);
 } UIMapParameter;
 
 LittleEndian();

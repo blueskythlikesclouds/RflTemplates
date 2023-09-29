@@ -1,0 +1,20 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); float recoveryQuickCyloopValue<comment="クイックサイループゲージの回復量">;
+
+    FSeek(p + 4);
+} ObjFlashSwitchConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjFlashSwitchConfig objFlashSwitchConfig;

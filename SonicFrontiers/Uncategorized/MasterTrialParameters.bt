@@ -10,12 +10,15 @@ typedef struct
 
     FSeek(p + 0);  uint8 prerequisite<comment="前提条件">;
     FSeek(p + 4);  float limitTime<comment="制限時間">;
-    FSeek(p + 8);  float speedUpScale<comment="敵の加速割合(通常1.0)">;
-    FSeek(p + 12); float recoveryHpTime<comment="敵の回復までの間隔">;
-    FSeek(p + 16); uint32 recoveryHpPoint<comment="敵の回復量">;
-    FSeek(p + 20); uint32 limitMistake<comment="ダメージ可能回数">;
+    FSeek(p + 8);  float defeatedWaitTime<comment="撃破後待機時間">;
+    FSeek(p + 12); float speedUpScale<comment="敵の加速割合(通常1.0)">;
+    FSeek(p + 16); float attackRate<comment="敵の攻撃倍率">;
+    FSeek(p + 20); float recoveryHpTime<comment="敵の回復までの間隔">;
+    FSeek(p + 24); uint32 recoveryHpPoint<comment="敵の回復量">;
+    FSeek(p + 28); uint32 limitMistake<comment="ダメージ可能回数">;
+    FSeek(p + 32); sint32 damagePoint<comment="ダメージ値">;
 
-    FSeek(p + 24);
+    FSeek(p + 36);
 } MasterTrialStageParameter;
 
 typedef struct
@@ -25,7 +28,7 @@ typedef struct
     FSeek(p + 0); sint32 applicableFailedCount<comment="このデータを使う失敗数">;
     FSeek(p + 4); MasterTrialStageParameter stages[4]<comment="試練ステージ",optimize=false>;
 
-    FSeek(p + 100);
+    FSeek(p + 148);
 } MasterTrialParameterElement;
 
 typedef struct
@@ -38,9 +41,13 @@ typedef struct
     FSeek(p + 12); float failedTime<comment="Faild表示時間">;
     FSeek(p + 16); float clearWaitTime<comment="クリアSEからフェードまでの待機時間">;
     FSeek(p + 20); float failedWaitTime<comment="失敗SEから選択UI表示までの待機時間">;
-    FSeek(p + 24); MasterTrialParameterElement element[3]<comment="達人ココ試練",optimize=false>;
+    FSeek(p + 24); float kodamaOrdinaryTextTime<comment="達人ココセリフ「尋常に！」表示時間">;
+    FSeek(p + 28); float kodamaFightDelayTime<comment="達人ココ「勝負！」遷移遅延時間">;
+    FSeek(p + 32); float kodamaFightTextTime<comment="達人ココセリフ「勝負！」表示時間">;
+    FSeek(p + 36); float kodamaSplendidTextTime<comment="達人ココセリフ「お見事！」表示時間">;
+    FSeek(p + 40); MasterTrialParameterElement element[3]<comment="達人ココ試練",optimize=false>;
 
-    FSeek(p + 324);
+    FSeek(p + 484);
 } MasterTrialParameters;
 
 LittleEndian();

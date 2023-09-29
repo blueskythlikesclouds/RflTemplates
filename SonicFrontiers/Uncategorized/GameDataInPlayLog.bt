@@ -30,6 +30,7 @@ enum<sint8> SaveDataIcon
     IconIsland4 = 4,
     IconIsland5 = 5,
     IconLastBoss = 6,
+    IconExtra = 7,
 };
 
 enum<uint8> AppVersion
@@ -106,7 +107,10 @@ typedef struct
     FSeek(p + 52); uint32 hour<comment="時">;
     FSeek(p + 56); uint32 minute<comment="分">;
     FSeek(p + 60); float second<comment="秒">;
-    FSeek(p + 64); uint32 reserved[4]<comment="reserved",optimize=false>;
+    FSeek(p + 64); uint8 character<comment="最後にプレイしていたキャラクタ">;
+    FSeek(p + 65); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 66); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 68); uint32 reserved[3]<comment="reserved",optimize=false>;
 
     FSeek(p + 80);
 } GamePlayData;
@@ -194,9 +198,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint16 flags<comment="ビットフラグ">;
-    FSeek(p + 4); uint32 bestTime<comment="ベストタイム">;
-    FSeek(p + 8); uint32 reserved[4]<comment="reserved",optimize=false>;
+    FSeek(p + 0);  uint16 flags<comment="ビットフラグ">;
+    FSeek(p + 4);  uint32 bestTime<comment="ベストタイム">;
+    FSeek(p + 8);  uint32 flags2<comment="ビットフラグ2">;
+    FSeek(p + 12); uint32 reserved[3]<comment="reserved",optimize=false>;
 
     FSeek(p + 24);
 } CyberStageData;

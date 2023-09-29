@@ -1,0 +1,27 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float powerGettingOn<comment="乗る時の初速">;
+    FSeek(p + 4);  float timeGettingOn<comment="乗る時の尺">;
+    FSeek(p + 8);  float powerGettingOff<comment="降りる時の初速">;
+    FSeek(p + 12); float timeGettingOff<comment="降りる時の尺">;
+    FSeek(p + 16); sint32 numberOfRotations<comment="乗り降りの自転数">;
+    FSeek(p + 20); sint32 numberOfRevolutions<comment="乗り降りの公転数">;
+
+    FSeek(p + 24);
+} ObjAnimalConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjAnimalConfig objAnimalConfig;

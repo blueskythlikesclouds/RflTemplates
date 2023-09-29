@@ -22,6 +22,7 @@ typedef byte sint8;
 
 enum<sint8> Value
 {
+    BeginSonicSkill = 0,
     Cyloop = 0,
     Smash = 1,
     QuickCyloop = 2,
@@ -37,13 +38,83 @@ enum<sint8> Value
     HomingShot = 12,
     CrossSlash = 13,
     AutoCombo = 14,
+    NumUsed = 15,
     Dummy0 = 15,
     Dummy1 = 16,
     Dummy2 = 17,
     Dummy3 = 18,
     Dummy4 = 19,
     Num = 20,
-    NumUsed = 15,
+    BeginAmySkill = 20,
+    AmyJump = 20,
+    AmyPropellerJump = 21,
+    AmyHomingAtatck = 22,
+    AmyBoost = 23,
+    AmyPowerBoost = 24,
+    AmyTarotAttack = 25,
+    AmyTarotRolling = 26,
+    AmyCharmAttack = 27,
+    AmyStomp = 28,
+    AmyHighJump = 29,
+    AmyCyHammer = 30,
+    AmyTarotRollingInfinity = 31,
+    AmySpinDash = 32,
+    AmyParry = 33,
+    AmyParryDebuff = 34,
+    AmyCyloop = 35,
+    AmyDoubleJump = 36,
+    AmyNumUsed = 37,
+    AmyDummy0 = 37,
+    AmyDummy1 = 38,
+    AmyDummy2 = 39,
+    AmyNum = 40,
+    BeginKnucklesSkill = 40,
+    KnucklesJump = 40,
+    KnucklesGliding = 41,
+    KnucklesHomingAtatck = 42,
+    KnucklesBoost = 43,
+    KnucklesWallRun = 44,
+    KnucklesPowerBoost = 45,
+    KnucklesComboAttack = 46,
+    KnucklesMaximumHeatKnuckle = 47,
+    KnucklesStomp = 48,
+    KnucklesCyKnuckle = 49,
+    KnucklesGlidingInfinity = 50,
+    KnucklesSpinDash = 51,
+    KnucklesParry = 52,
+    KnucklesDoubleJump = 53,
+    KnucklesParryDebuff = 54,
+    KnucklesCyloop = 55,
+    KnucklesNumUsed = 56,
+    KnucklesDummy0 = 56,
+    KnucklesDummy1 = 57,
+    KnucklesDummy2 = 58,
+    KnucklesDummy3 = 59,
+    KnucklesNum = 60,
+    BeginTailsSkill = 60,
+    TailsJump = 60,
+    TailsFly = 61,
+    TailsHomingAtatck = 62,
+    TailsBoost = 63,
+    TailsPowerBoost = 64,
+    TailsSpannerAttack = 65,
+    TailsChargeSpanner = 66,
+    TailsStomp = 67,
+    TailsCyBlaster = 68,
+    TailsCycloneCannon = 69,
+    TailsSpinDash = 70,
+    TailsParry = 71,
+    TailsDoubleJump = 72,
+    TailsParryDebuff = 73,
+    TailsCyloop = 74,
+    TailsNumUsed = 75,
+    TailsDummy0 = 75,
+    TailsDummy1 = 76,
+    TailsDummy2 = 77,
+    TailsDummy3 = 78,
+    TailsDummy4 = 79,
+    TailsNum = 80,
+    AllNum = 80,
     Invalid = -1,
 };
 
@@ -83,10 +154,13 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  SkillParam skillParams[20]<comment="スキルパラメータ",optimize=false>;
-    FSeek(p + 60); SkillTreeParam treeParams<comment="スキルツリー/ソニック">;
+    FSeek(p + 0);   SkillParam skillParams[80]<comment="スキルパラメータ",optimize=false>;
+    FSeek(p + 240); SkillTreeParam treeParams<comment="スキルツリー/ソニック">;
+    FSeek(p + 391); SkillTreeParam treeParamsAmy<comment="スキルツリー/エミー">;
+    FSeek(p + 542); SkillTreeParam treeParamsKnuckles<comment="スキルツリー/ナックルズ">;
+    FSeek(p + 693); SkillTreeParam treeParamsTails<comment="スキルツリー/テイルス">;
 
-    FSeek(p + 211);
+    FSeek(p + 844);
 } GameSkillParameter;
 
 LittleEndian();

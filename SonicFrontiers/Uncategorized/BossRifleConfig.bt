@@ -236,7 +236,9 @@ enum<sint16> ColliderProperty
     CpPointD = 22,
     CpCyloopDownUnuse = 23,
     CpDummyDamage = 24,
-    NUM_COLLIDER_PROPERTY = 25,
+    CpCable = 25,
+    CpTackleHand = 26,
+    NUM_COLLIDER_PROPERTY = 27,
 };
 
 typedef struct
@@ -417,7 +419,8 @@ enum<sint8> BossAttackCollisionParam_AttackType
     AT_KILLING = 3,
     AT_NOTPARRY = 4,
     AT_NOTDAMAGE = 5,
-    BossAttackCollisionParam_AttackType_NUM_ATTACK_TYPE = 6,
+    AT_NOTDAMAGETRIGGER = 6,
+    BossAttackCollisionParam_AttackType_NUM_ATTACK_TYPE = 7,
 };
 
 typedef struct

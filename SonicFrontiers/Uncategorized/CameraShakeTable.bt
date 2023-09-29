@@ -16,6 +16,7 @@ enum<uint8> ShakeType
     Directional = 0,
     WorldY = 1,
     Random = 2,
+    DirectionalStaticUp = 3,
 };
 
 enum<byte> bool {

@@ -30,6 +30,7 @@ enum<sint8> SaveDataIcon
     IconIsland4 = 4,
     IconIsland5 = 5,
     IconLastBoss = 6,
+    IconExtra = 7,
 };
 
 enum<uint8> AppVersion
@@ -106,7 +107,10 @@ typedef struct
     FSeek(p + 52); uint32 hour<comment="時">;
     FSeek(p + 56); uint32 minute<comment="分">;
     FSeek(p + 60); float second<comment="秒">;
-    FSeek(p + 64); uint32 reserved[4]<comment="reserved",optimize=false>;
+    FSeek(p + 64); uint8 character<comment="最後にプレイしていたキャラクタ">;
+    FSeek(p + 65); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 66); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 68); uint32 reserved[3]<comment="reserved",optimize=false>;
 
     FSeek(p + 80);
 } GamePlayData;
@@ -194,9 +198,10 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint16 flags<comment="ビットフラグ">;
-    FSeek(p + 4); uint32 bestTime<comment="ベストタイム">;
-    FSeek(p + 8); uint32 reserved[4]<comment="reserved",optimize=false>;
+    FSeek(p + 0);  uint16 flags<comment="ビットフラグ">;
+    FSeek(p + 4);  uint32 bestTime<comment="ベストタイム">;
+    FSeek(p + 8);  uint32 flags2<comment="ビットフラグ2">;
+    FSeek(p + 12); uint32 reserved[3]<comment="reserved",optimize=false>;
 
     FSeek(p + 24);
 } CyberStageData;
@@ -288,9 +293,65 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); uint8 reserved[602864]<comment="reserved",optimize=false>;
+    FSeek(p + 0);  uint32 bossRushNumRings<comment="達人王ココ試練用リング数">;
+    FSeek(p + 4);  float bossRushQuickCyloopGauge<comment="達人王ココ試練用サイループゲージ">;
+    FSeek(p + 8);  uint32 bossRushFlags<comment="達人王ココ試練用フラグ">;
+    FSeek(p + 12); uint32 reserved3<comment="reserved3">;
+    FSeek(p + 16); uint32 reserved4<comment="reserved4">;
+    FSeek(p + 20); uint32 reserved5<comment="reserved5">;
+    FSeek(p + 24); uint32 reserved6<comment="reserved6">;
+    FSeek(p + 28); uint32 reserved7<comment="reserved7">;
+    FSeek(p + 32); uint32 reserved8<comment="reserved8">;
+    FSeek(p + 36); uint32 reserved9<comment="reserved9">;
+    FSeek(p + 40); uint32 reserved10<comment="reserved10">;
+    FSeek(p + 44); uint32 reserved11<comment="reserved11">;
+    FSeek(p + 48); uint32 reserved12<comment="reserved12">;
+    FSeek(p + 52); uint32 reserved13<comment="reserved13">;
+    FSeek(p + 56); uint32 reserved14<comment="reserved14">;
+    FSeek(p + 60); uint32 reserved15<comment="reserved15">;
+    FSeek(p + 64); uint32 reserved16<comment="reserved16">;
+    FSeek(p + 68); uint32 reserved17<comment="reserved17">;
+    FSeek(p + 72); uint32 reserved18<comment="reserved18">;
+    FSeek(p + 76); uint32 reserved19<comment="reserved19">;
 
-    FSeek(p + 602864);
+    FSeek(p + 80);
+} ExtraCharacterData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   CharacterData characters[3]<comment="フレンズキャラクターデータ",optimize=false>;
+    FSeek(p + 288); ExtraCharacterData extras[4]<comment="拡張キャラクターデータ",optimize=false>;
+
+    FSeek(p + 608);
+} ExtraCharacterContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); CyberStageData actStages[16]<comment="電脳空間ステージ情報",optimize=false>;
+
+    FSeek(p + 384);
+} ExtraCyberStageContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); IslandStageData islands<comment="島データ">;
+
+    FSeek(p + 320);
+} ExtraIslandStageContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint8 reserved[601552]<comment="reserved",optimize=false>;
+
+    FSeek(p + 601552);
 } ReservedData;
 
 typedef int32 sint32;
@@ -397,7 +458,10 @@ typedef struct
     FSeek(p + 2880);   WorldFlagContainerData worldFlags<comment="ワールド別フラグコンテナ">;
     FSeek(p + 45888);  ExtraFlagContainerData extraFlags<comment="Extraフラグコンテナ">;
     FSeek(p + 56640);  ActionChainStruct actionChain<comment="アクションチェイン">;
-    FSeek(p + 59040);  ReservedData reserved<comment="reserved">;
+    FSeek(p + 59040);  ExtraCharacterContainerData extraCharacters<comment="エキストラキャラクターコンテナ">;
+    FSeek(p + 59648);  ExtraCyberStageContainerData extraStages<comment="Extra電脳ステージコンテナ">;
+    FSeek(p + 60032);  ExtraIslandStageContainerData extraIslands<comment="Extra島ステージコンテナ">;
+    FSeek(p + 60352);  ReservedData reserved<comment="reserved">;
     FSeek(p + 661904); StatsContainerData stats<comment="統計コンテナ">;
     FSeek(p + 689048); WeatherData weather<comment="天候">;
 

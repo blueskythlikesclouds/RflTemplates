@@ -30,6 +30,7 @@ enum<sint8> SaveDataIcon
     IconIsland4 = 4,
     IconIsland5 = 5,
     IconLastBoss = 6,
+    IconExtra = 7,
 };
 
 enum<uint8> AppVersion

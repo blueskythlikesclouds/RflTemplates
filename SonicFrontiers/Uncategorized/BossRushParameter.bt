@@ -1,0 +1,54 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); uint32 hour<comment="時間:時">;
+    FSeek(p + 4); uint32 minute<comment="時間:分">;
+    FSeek(p + 8); uint32 healthPoint<comment="ボス体力値">;
+
+    FSeek(p + 12);
+} BossRushStageParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0); sint32 applicableFailedCount<comment="このデータを使う失敗数">;
+    FSeek(p + 4); BossRushStageParameter stages[3]<comment="ボスラッシュステージ",optimize=false>;
+
+    FSeek(p + 40);
+} BossRushParameterElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   BossRushParameterElement element[3]<comment="難易度別パラメータ",optimize=false>;
+    FSeek(p + 120); uint32 defaultRing<comment="初期リング数">;
+    FSeek(p + 124); float defaultCyloopGauge<comment="初期サイループゲージ">;
+    FSeek(p + 128); float readyTime<comment="Ready表示時間">;
+    FSeek(p + 132); float clearTime<comment="Clear表示時間">;
+    FSeek(p + 136); float failedTime<comment="Faild表示時間">;
+    FSeek(p + 140); float clearWaitTime<comment="クリアSEからフェードまでの待機時間">;
+    FSeek(p + 144); float failedWaitTime<comment="失敗SEから選択UI表示までの待機時間">;
+    FSeek(p + 148); float kodamaOrdinaryTextTime<comment="達人王ココセリフ「尋常に！」表示時間">;
+    FSeek(p + 152); float kodamaFightDelayTime<comment="達人王ココ「勝負！」遷移遅延時間">;
+    FSeek(p + 156); float kodamaFightTextTime<comment="達人王ココセリフ「勝負！」表示時間">;
+    FSeek(p + 160); float kodamaSplendidTextTime<comment="達人王ココセリフ「お見事！」表示時間">;
+
+    FSeek(p + 164);
+} BossRushParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossRushParameter bossRushParameter;

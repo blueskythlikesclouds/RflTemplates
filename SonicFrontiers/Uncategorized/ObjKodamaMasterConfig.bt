@@ -1,0 +1,51 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 camLookAtOffset<comment="カメラ注視点オフセット[達人ココ基準]">;
+    FSeek(p + 16); vector3 camEyeOffset<comment="カメラ位置オフセット[達人ココ基準]">;
+    FSeek(p + 32); float camFovy<comment="カメラ画角">;
+    FSeek(p + 36); float camRoll<comment="カメラ姿勢">;
+    FSeek(p + 40); float camEaseInTime<comment="カメラ開始補間時間">;
+    FSeek(p + 44); float camEaseOutTime<comment="カメラ終了補間時間">;
+
+    FSeek(p + 48);
+} KodamaMasterCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float followingDistance<comment="追跡場所への距離">;
+    FSeek(p + 4);  float followingNormalSpeed<comment="移動時の通常速度">;
+    FSeek(p + 8);  float followingDecelerationSpeed<comment="移動時の減速した時の速度">;
+    FSeek(p + 12); float followingDecelerationDistance<comment="移動時の減速を始める距離">;
+    FSeek(p + 16); float followingHomingDistance<comment="ホーミング時の2キャラの中央からの距離">;
+    FSeek(p + 20); float followingHomingNormalSpeed<comment="移動時の通常速度">;
+    FSeek(p + 24); float followingHomingDecelerationSpeed<comment="移動時の減速した時の速度">;
+    FSeek(p + 28); float followingHomingDecelerationDistance<comment="移動時の減速を始める距離">;
+    FSeek(p + 32); float followingHeightPosition<comment="ココの浮遊する高さ設定">;
+    FSeek(p + 48); KodamaMasterCamera beginCamera<comment="試練開始時カメラ">;
+    FSeek(p + 96); KodamaMasterCamera endCamera<comment="試練終了時カメラ">;
+
+    FSeek(p + 144);
+} ObjKodamaMasterConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjKodamaMasterConfig objKodamaMasterConfig;

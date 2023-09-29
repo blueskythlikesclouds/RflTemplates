@@ -152,10 +152,13 @@ typedef struct
     FSeek(p + 12);  uint32 startMinute<comment="発生分">;
     FSeek(p + 16);  uint32 durationHour<comment="流星雨継続時間">;
     FSeek(p + 20);  uint32 durationMinute<comment="流星雨継続分">;
-    FSeek(p + 32);  MeteorShowerEffectParameter effect<comment="流星エフェクト設定">;
-    FSeek(p + 128); ObjBonusSlotConfig bonusSlotConfig<comment="ボーナススロット設定">;
+    FSeek(p + 24);  uint32 extraIslandSeedRate<comment="第3弾島用タネ入手倍率">;
+    FSeek(p + 28);  uint32 extraIslandKodamaRate<comment="第3弾島用コダマ入手倍率">;
+    FSeek(p + 32);  uint32 extraIntervalDay<comment="第3弾島用間隔日数">;
+    FSeek(p + 48);  MeteorShowerEffectParameter effect<comment="流星エフェクト設定">;
+    FSeek(p + 144); ObjBonusSlotConfig bonusSlotConfig<comment="ボーナススロット設定">;
 
-    FSeek(p + 352);
+    FSeek(p + 368);
 } MeteorShowerParameter;
 
 LittleEndian();

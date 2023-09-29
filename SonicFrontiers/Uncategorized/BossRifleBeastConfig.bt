@@ -236,7 +236,9 @@ enum<sint16> ColliderProperty
     CpPointD = 22,
     CpCyloopDownUnuse = 23,
     CpDummyDamage = 24,
-    NUM_COLLIDER_PROPERTY = 25,
+    CpCable = 25,
+    CpTackleHand = 26,
+    NUM_COLLIDER_PROPERTY = 27,
 };
 
 typedef struct
@@ -417,7 +419,8 @@ enum<sint8> BossAttackCollisionParam_AttackType
     AT_KILLING = 3,
     AT_NOTPARRY = 4,
     AT_NOTDAMAGE = 5,
-    BossAttackCollisionParam_AttackType_NUM_ATTACK_TYPE = 6,
+    AT_NOTDAMAGETRIGGER = 6,
+    BossAttackCollisionParam_AttackType_NUM_ATTACK_TYPE = 7,
 };
 
 typedef struct
@@ -501,244 +504,366 @@ typedef struct
     FSeek(p + 75712);
 } BossBaseConfig;
 
-enum<sint8> ActionType
-{
-    ActionType_AT_NONE = 0,
-    AT_HAND_L = 1,
-    AT_HAND_R = 2,
-    AT_SHOT1 = 3,
-    AT_SHOT2 = 4,
-    AT_SHOT3 = 5,
-    AT_SHOT4 = 6,
-    AT_QTE_NONE = 7,
-    AT_WAIT = 8,
-    AT_LASER = 9,
-    AT_HOMINGLASER_NORMAL = 10,
-    AT_HOMINGLASER_FLY = 11,
-    AT_BIT_WAVE = 12,
-    AT_BIT_WAVE_END = 13,
-    AT_COUNTER_BLOW = 14,
-    AT_SP01 = 15,
-    AT_SP02 = 16,
-    NUM_ACTION_TYPE = 17,
-};
-
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  ActionType attackType<comment="アクション">;
-    FSeek(p + 8);  cstring waveName<comment="Wave1名[ビット攻撃時のみ有効]">;
-    FSeek(p + 24); cstring subWaveName<comment="Wave2名[ビット攻撃時のみ有効]">;
-    FSeek(p + 40); float actionTime<comment="アクション時間[待機など選択時に反映]">;
-    FSeek(p + 44); sint16 nextStep<comment="次へ[1:一つ後に進む -1:一つ前に戻る]">;
-    FSeek(p + 46); bool isBitActionReset<comment="ビット攻撃のリセット">;
-    FSeek(p + 47); bool isFlyMoveReverse<comment="浮遊移動方向反転">;
-    FSeek(p + 48); bool isFlyWait<comment="浮遊移動停止">;
+    FSeek(p + 0);  float coolTime<comment="再使用時間">;
+    FSeek(p + 4);  float initCoolTime<comment="初回使用制限時間">;
+    FSeek(p + 8);  float cableDamege<comment="ケーブル接続時のダメージ倍率">;
+    FSeek(p + 12); float cableRecoveryTime<comment="ケーブル接続時の回復するまでの時間">;
+    FSeek(p + 16); float cableRecovering<comment="ケーブル接続時の回復量">;
+    FSeek(p + 20); uint16 cableLowestHp<comment="ケーブル接続時の最低HP">;
+    FSeek(p + 24); float changePatternHP<comment="攻撃パターン変更HP">;
+    FSeek(p + 28); float changeHP<comment="フェイズ変更HP">;
 
-    FSeek(p + 56);
-} BossRifleBeastAttackData;
-
-typedef struct
-{
-    local uint64 p<hidden=true> = FTell();
-
-    FSeek(p + 0);    BossRifleBeastAttackData attackDatas[16]<comment="アクション一覧[順番に実行]",optimize=false>;
-    FSeek(p + 896);  BossRifleBeastAttackData bitBreakAttackDatas[2]<comment="ビット破壊時のアクション一覧[順番に実行]",optimize=false>;
-    FSeek(p + 1008); uint32 breakBitNum<comment="必要ビット破壊数">;
-
-    FSeek(p + 1016);
-} BossRifleBeastAttackPatternParam;
-
-typedef struct
-{
-    local uint64 p<hidden=true> = FTell();
-
-    FSeek(p + 0);    float attackWaitTime<comment="攻撃後待機時間">;
-    FSeek(p + 4);    float attackSpeedRatio<comment="攻撃速度倍率">;
-    FSeek(p + 8);    uint32 knockbackCountMax<comment="ノックバック発生条件[割り込みカウンター回数]">;
-    FSeek(p + 16);   BossRifleBeastAttackPatternParam patterns[4]<comment="パターン一覧[残HP依存]",optimize=false>;
-    FSeek(p + 4080); float patternChangeHpRatios[4]<comment="パターンが切り替わるHPの閾値[100～0]",optimize=false>;
-
-    FSeek(p + 4096);
-} BossRifleBeastPhaseParam;
-
-enum<sint8> ActionAttribute
-{
-    AA_NONE = 0,
-    AA_ALL = 1,
-    AA_FRONT = 2,
-    AA_BACK = 3,
-    AA_LEFT = 4,
-    AA_RIGHT = 5,
-};
-
-typedef struct
-{
-    local uint64 p<hidden=true> = FTell();
-
-    FSeek(p + 0);  ActionAttribute attribute1<comment="属性1">;
-    FSeek(p + 1);  ActionAttribute attribute2<comment="属性2">;
-    FSeek(p + 4);  float useDistanceMin<comment="距離[最小]">;
-    FSeek(p + 8);  float useDistanceMax<comment="距離[最大]">;
-    FSeek(p + 12); float useHeightMin<comment="高度[最小]">;
-    FSeek(p + 16); float useHeightMax<comment="高度[最大]">;
-    FSeek(p + 20); float useAngleMin<comment="角度[最小]">;
-    FSeek(p + 24); float useAngleMax<comment="角度[最大]">;
-    FSeek(p + 28); float useAbsAngleOver<comment="正面からの最小角度">;
-    FSeek(p + 32); float useHpRatioMin<comment="残HP %[最小]">;
-    FSeek(p + 36); float useHpRatioMax<comment="残HP %[最大]">;
-    FSeek(p + 40); float useAreaOver<comment="中央からの距離[0は無効]">;
-    FSeek(p + 44); uint32 priority<comment="優先度">;
-    FSeek(p + 48); float coolTime<comment="再使用時間[1000秒以上は再使用不能]">;
-    FSeek(p + 52); float initCoolTime<comment="初回使用制限時間">;
-    FSeek(p + 56); float readyTime<comment="攻撃前準備時間">;
-    FSeek(p + 60); uint32 consecutiveUsesLimit<comment="連続使用制限[0で無制限]">;
-    FSeek(p + 64); float consecutiveUsesLimitCoolTime<comment="連続使用後の再使用時間[1000秒以上は再使用不能]">;
-    FSeek(p + 68); bool isCounterUse<comment="カウンター攻撃フラグ[false時はカウンターとして使用しない]">;
-    FSeek(p + 69); bool isCounterOnly<comment="カウンター時専用攻撃フラグ[false時は通常攻撃として使用しない]">;
-
-    FSeek(p + 72);
+    FSeek(p + 32);
 } BossRifleBeastPhaseAttackActionParam;
 
-enum<sint8> BossRifleBeastBattleParam_ActionType
+enum<sint8> AtackType
 {
-    BossRifleBeastBattleParam_ActionType_AT_NONE = 0,
-    BossRifleBeastBattleParam_ActionType_AT_HAND_L = 1,
-    BossRifleBeastBattleParam_ActionType_AT_HAND_R = 2,
-    BossRifleBeastBattleParam_ActionType_AT_SHOT1 = 3,
-    BossRifleBeastBattleParam_ActionType_AT_SHOT2 = 4,
-    BossRifleBeastBattleParam_ActionType_AT_SHOT3 = 5,
-    BossRifleBeastBattleParam_ActionType_AT_SHOT4 = 6,
-    BossRifleBeastBattleParam_ActionType_AT_QTE_NONE = 7,
-    BossRifleBeastBattleParam_ActionType_AT_WAIT = 8,
-    BossRifleBeastBattleParam_ActionType_AT_LASER = 9,
-    BossRifleBeastBattleParam_ActionType_AT_HOMINGLASER_NORMAL = 10,
-    BossRifleBeastBattleParam_ActionType_AT_HOMINGLASER_FLY = 11,
-    BossRifleBeastBattleParam_ActionType_AT_BIT_WAVE = 12,
-    BossRifleBeastBattleParam_ActionType_AT_BIT_WAVE_END = 13,
-    BossRifleBeastBattleParam_ActionType_AT_COUNTER_BLOW = 14,
-    BossRifleBeastBattleParam_ActionType_AT_SP01 = 15,
-    BossRifleBeastBattleParam_ActionType_AT_SP02 = 16,
-    BossRifleBeastBattleParam_ActionType_NUM_ACTION_TYPE = 17,
+    AT_HIMING00 = 0,
+    AT_HIMING01 = 1,
+    AT_HIMING02 = 2,
+    AT_HIMING03 = 3,
+    AT_HIMING04 = 4,
+    AT_HIMING05 = 5,
+    AT_HIMING06 = 6,
+    AT_HIMING07 = 7,
+    AT_HIMING08 = 8,
+    AT_HIMING09 = 9,
+    AT_CROW_L = 10,
+    AT_CROW_R = 11,
+    AT_TACKLE = 12,
+    NUM_ACTION_TYPE = 13,
 };
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); float landingCounterHPRatio<comment="叩きつけ後カウンター攻撃使用残HP[%]">;
-    FSeek(p + 4); float floatCounterHPRatio<comment="浮上中カウンター攻撃使用残HP[%]">;
+    FSeek(p + 0);  AtackType attackPattern[10]<comment="攻撃の組み合わせ番号",optimize=false>;
+    FSeek(p + 12); sint32 attackNum<comment="攻撃の数">;
+    FSeek(p + 16); bool isUse<comment="抽選に使用するか">;
 
-    FSeek(p + 8);
-} BossRifleBeastCyloopFloatActionParam;
-
-typedef struct
-{
-    local uint64 p<hidden=true> = FTell();
-
-    FSeek(p + 0); bool isParry<comment="パリィフラグ">;
-    FSeek(p + 1); bool isUse<comment="使用フラグ">;
-    FSeek(p + 4); float shotDirElevation<comment="発射方向角度調整[仰角]">;
-    FSeek(p + 8); float shotDirRoll<comment="発射方向角度調整[回転]">;
-
-    FSeek(p + 12);
-} BossRifleBeastBattleAttackHomingLaserShotPoint;
+    FSeek(p + 20);
+} BossRifleBeastBattleAttackPattern;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   cstring nodeName<comment="発射位置ノード">;
-    FSeek(p + 16);  vector3 nodePos<comment="発射位置調整">;
-    FSeek(p + 32);  vector3 nodeFront<comment="発射位置ノードの正面方向[基本X＋設定]">;
-    FSeek(p + 48);  vector3 nodeAxis<comment="発射位置ノードの軸[角度設定時用]">;
-    FSeek(p + 64);  float straightKeepTime<comment="直進時間[発射直後]">;
-    FSeek(p + 68);  uint32 parryMax<comment="パリィ可能数最大値">;
-    FSeek(p + 72);  uint32 num<comment="同時発射数">;
-    FSeek(p + 76);  uint32 countMax<comment="発射数回数">;
-    FSeek(p + 80);  float initSpeed<comment="初速">;
-    FSeek(p + 84);  float speed<comment="速度">;
-    FSeek(p + 88);  float acceleDelay<comment="加速開始遅延時間">;
-    FSeek(p + 92);  float acceleTime<comment="加速時間[初速→速度]">;
-    FSeek(p + 96);  float interval<comment="発射間隔">;
-    FSeek(p + 100); float intervals[8]<comment="発射間隔[個別設定]",optimize=false>;
-    FSeek(p + 132); float delay<comment="発射遅延">;
-    FSeek(p + 136); BossRifleBeastBattleAttackHomingLaserShotPoint points[32]<comment="各発射ポイントの設定",optimize=false>;
-    FSeek(p + 528); vector3 fixedCameraEyePos<comment="カメラ視点座標[ボスのローカル座標]">;
-    FSeek(p + 544); vector3 fixedCameraLookAtPos<comment="カメラ注視点座標[ボスのローカル座標]">;
-    FSeek(p + 560); float fixedCameraDelay<comment="カメラ開始遅延時間">;
-    FSeek(p + 564); float fixedCameraTime<comment="カメラ維持時間">;
-    FSeek(p + 568); float fixedCameraStartEaseTime<comment="カメラ補間時間[開始]">;
-    FSeek(p + 572); float fixedCameraEndEaseTime<comment="カメラ補間時間[終了]">;
-    FSeek(p + 576); vector3 parryCameraEyePos<comment="カメラ視点座標[パリィ用プレイヤー位置基準]">;
-    FSeek(p + 592); vector3 parryCameraLookAtPos<comment="カメラ注視点座標[パリィ用プレイヤー位置基準]">;
-    FSeek(p + 608); float parryCameraStartEaseTime<comment="カメラ補間時間[開始]">;
-    FSeek(p + 612); float parryCameraEndEaseTime<comment="カメラ補間時間[終了]">;
-    FSeek(p + 616); bool isParrySlow<comment="パリィ時のスロー設定">;
+    FSeek(p + 0);  float angleX<comment="突き刺さり角度[X軸]">;
+    FSeek(p + 4);  float angleY<comment="突き刺さり角度[Y軸]">;
+    FSeek(p + 8);  float angleZ<comment="突き刺さり角度[Z軸]">;
+    FSeek(p + 16); vector3 endPosition<comment="突き刺さり位置[ボス基準]">;
+    FSeek(p + 32); vector3 collOffset<comment="ホーミングコリジョンオフセット突き刺さり前[銃基準]">;
+    FSeek(p + 48); vector3 collEndOffset<comment="ホーミングコリジョンオフセット突き刺さり後[銃基準]">;
+    FSeek(p + 64); float collSize<comment="ホーミングコリジョン半径">;
 
-    FSeek(p + 624);
-} BossRifleBeastBattleAttackHomingLaserAttackParam;
+    FSeek(p + 80);
+} BossRifleBeastBattleDownRifle;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);    float bulletScale<comment="弾のスケール値">;
-    FSeek(p + 4);    float parryMoveTime<comment="パリィ成功時に目標に到達する時間">;
-    FSeek(p + 16);   BossRifleBeastBattleAttackHomingLaserAttackParam headShotParam<comment="追撃用レーザー発射設定">;
-    FSeek(p + 640);  BossRifleBeastBattleAttackHomingLaserAttackParam headShotFlyParam<comment="追撃用レーザー発射設定[浮遊時]">;
-    FSeek(p + 1264); BossRifleBeastBattleAttackHomingLaserAttackParam normalShotParam<comment="通常時用レーザー発射設定[カメラは不使用]">;
-    FSeek(p + 1888); bool isDebugDraw<comment="デバック表示">;
+    FSeek(p + 0);  float waitTime<comment="ダウンしている時間">;
+    FSeek(p + 4);  uint16 lowerHP<comment="それ以下にならないHP">;
+    FSeek(p + 8);  float fase4DownTime<comment="フェイズ4でのダウン時間">;
+    FSeek(p + 12); bool isPlayerFixHeight<comment="プレイヤー高度固定を有効化">;
+    FSeek(p + 16); float playerHeight<comment="プレイヤー高度">;
+    FSeek(p + 32); BossRifleBeastBattleDownRifle rifle<comment="銃単体設定">;
 
-    FSeek(p + 1904);
+    FSeek(p + 112);
+} BossRifleBeastBattleDownState;
+
+enum<sint8> ArmType
+{
+    AL = 0,
+    BL = 1,
+    C = 2,
+    BR = 3,
+    AR = 4,
+    ArmType_NUM_ACTION_TYPE = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float waitTime<comment="次の弾を撃つまでの待機時間 連続発射の場合は使用不可">;
+    FSeek(p + 4);  ArmType armNum<comment="発射する腕">;
+    FSeek(p + 5);  bool isContinuousFire<comment="次の弾を連続で発射するか">;
+    FSeek(p + 8);  float plusSpeed<comment="プラスする弾の速度">;
+    FSeek(p + 12); bool useSpecialCamera<comment="パリィ時に特別なカメラを使用するか">;
+    FSeek(p + 13); bool useUpMotion<comment="モーションの再生速度を上げるか">;
+
+    FSeek(p + 16);
+} BossRifleBeastBattleAttackHomingLaserBase;
+
+enum<sint8> CameraType
+{
+    CameraPatern0 = 0,
+    CameraPatern1 = 1,
+    CameraPatern2 = 2,
+    CameraPatern3 = 3,
+    CameraPatern4 = 4,
+    CameraType_NUM_ACTION_TYPE = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   BossRifleBeastBattleAttackHomingLaserBase patterns[20]<comment="弾の挙動",optimize=false>;
+    FSeek(p + 320); sint32 laserNum<comment="発射する弾の数">;
+    FSeek(p + 324); CameraType cameraPatern<comment="カメラの指定">;
+    FSeek(p + 328); float endCamera<comment="カメラ終了時間">;
+    FSeek(p + 332); float delayCamera<comment="カメラ先行開始時間">;
+
+    FSeek(p + 336);
+} BossRifleBeastBattleAttackHomingLaserPattern;
+
+enum<sint8> BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType
+{
+    BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType_CameraPatern0 = 0,
+    BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType_CameraPatern1 = 1,
+    BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType_CameraPatern2 = 2,
+    BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType_CameraPatern3 = 3,
+    BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType_CameraPatern4 = 4,
+    BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType_NUM_ACTION_TYPE = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   BossRifleBeastBattleAttackHomingLaserBase patterns[20]<comment="弾の挙動",optimize=false>;
+    FSeek(p + 320); uint16 Num<comment="繰り返し回数">;
+    FSeek(p + 324); sint32 laserNum<comment="発射する弾の数">;
+    FSeek(p + 328); float endTime<comment="最後の弾当たった後イベントに入るまでの待機時間">;
+    FSeek(p + 332); BossRifleBeastBattleFirstAttackHomingLaserPattern_CameraType cameraPatern<comment="カメラの指定">;
+    FSeek(p + 336); float endCamera<comment="カメラ終了時間">;
+    FSeek(p + 340); float delayCamera<comment="カメラ先行開始時間">;
+
+    FSeek(p + 344);
+} BossRifleBeastBattleFirstAttackHomingLaserPattern;
+
+enum<sint8> BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType
+{
+    BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType_CameraPatern0 = 0,
+    BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType_CameraPatern1 = 1,
+    BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType_CameraPatern2 = 2,
+    BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType_CameraPatern3 = 3,
+    BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType_CameraPatern4 = 4,
+    BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType_NUM_ACTION_TYPE = 5,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   BossRifleBeastBattleAttackHomingLaserBase patterns[8]<comment="弾の挙動",optimize=false>;
+    FSeek(p + 128); uint16 Num<comment="繰り返し回数">;
+    FSeek(p + 132); sint32 laserNum<comment="発射する弾の数">;
+    FSeek(p + 136); BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern_CameraType cameraPatern<comment="カメラの指定">;
+    FSeek(p + 140); float endCamera<comment="カメラ終了時間">;
+    FSeek(p + 144); float delayCamera<comment="カメラ先行開始時間">;
+
+    FSeek(p + 148);
+} BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float angleSide<comment="左右の発射角度">;
+    FSeek(p + 4);  float angleFront<comment="前後の発射角度">;
+    FSeek(p + 8);  float upLine<comment="山なり具合">;
+    FSeek(p + 12); float linePos<comment="山になる位置">;
+
+    FSeek(p + 16);
+} BossRifleBeastBattleArmSetting;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float radius<comment="弾の当たり判定の大きさ">;
+    FSeek(p + 4);   float speed<comment="弾の速度">;
+    FSeek(p + 8);   sint32 EasyDamage<comment="イージーでの弾を食らった時のダメージ.">;
+    FSeek(p + 12);  sint32 NormalDamage<comment="ノーマルでの弾を食らった時のダメージ.">;
+    FSeek(p + 16);  sint32 HardDamage<comment="ハードでの弾を食らった時のダメージ.">;
+    FSeek(p + 20);  sint32 VeryHardDamage<comment="ベリーハードでの弾を食らった時のダメージ.">;
+    FSeek(p + 24);  sint32 EnemyDamage<comment="敵へのダメージの値.">;
+    FSeek(p + 28);  float velocity<comment="初速">;
+    FSeek(p + 32);  float velocityKeepTime<comment="吹き飛ばし持続時間">;
+    FSeek(p + 36);  float controlTime<comment="操作不能時間">;
+    FSeek(p + 40);  sint32 spritBomb<comment="元気玉被弾時にセットするリング枚数">;
+    FSeek(p + 44);  float homingRatio<comment="ホーミング性能 最大[100]">;
+    FSeek(p + 48);  BossRifleBeastBattleArmSetting armSet[5]<comment="腕毎のホーミングレーザー設定",optimize=false>;
+    FSeek(p + 128); float motionSeed<comment="モーションの再生速度">;
+
+    FSeek(p + 132);
 } BossRifleBeastBattleAttackHomingLaser;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float intarvalDistance<comment="発生間隔[距離]">;
-    FSeek(p + 4);  float delay<comment="発生遅延[コリジョン有効化後からの遅延]">;
-    FSeek(p + 16); vector3 localStartPos<comment="起点位置">;
-    FSeek(p + 32); vector3 localEndPos<comment="終点位置">;
-    FSeek(p + 48); vector3 localStartDir<comment="起点の向き[湾曲具合の調整]">;
-    FSeek(p + 64); vector3 localEndDir<comment="終点の向き[湾曲具合の調整]">;
+    FSeek(p + 0); BossRifleBeastBattleArmSetting armSet[5]<comment="腕毎のホーミングレーザー設定",optimize=false>;
 
     FSeek(p + 80);
-} BossRifleBeastBattleAttackHandLaserPatternParam;
+} BossRifleBeastBattleCyloopAttackHomingLaser;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);   float bulletRadius<comment="弾の半径">;
-    FSeek(p + 4);   float bulletSpeed<comment="弾の速度">;
-    FSeek(p + 8);   float wayAngle<comment="Way角度">;
-    FSeek(p + 12);  uint32 wayNum<comment="Way数">;
-    FSeek(p + 16);  float limitDistance<comment="距離限界">;
-    FSeek(p + 20);  float blowoffSpeed<comment="接触時の吹き飛ばし力">;
-    FSeek(p + 24);  float outOfControlTime<comment="接触時の操作無効時間">;
-    FSeek(p + 28);  float keepVelocity<comment="接触時の速度維持時間">;
-    FSeek(p + 32);  BossRifleBeastBattleAttackHandLaserPatternParam handLeftPatterns[4]<comment="左殴り用",optimize=false>;
-    FSeek(p + 352); BossRifleBeastBattleAttackHandLaserPatternParam handRightPatterns[4]<comment="右殴り用",optimize=false>;
+    FSeek(p + 0);  vector3 camLookAtOffset<comment="カメラ注視点オフセット(ボス原点)">;
+    FSeek(p + 16); vector3 camEyeOffset<comment="カメラ位置オフセット(ボス原点)">;
+    FSeek(p + 32); float camFovy<comment="カメラ画角">;
+    FSeek(p + 36); float camEaseInTime<comment="カメラ開始補間時間">;
+    FSeek(p + 40); float camEaseOutTime<comment="カメラ終了補間時間">;
 
-    FSeek(p + 672);
-} BossRifleBeastBattleAttackHandLaser;
+    FSeek(p + 48);
+} RifleBeastClawCamera;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float flyHeight<comment="浮遊時の高さ">;
-    FSeek(p + 4);  float flyRotationSpeed<comment="浮遊時の旋回速度">;
-    FSeek(p + 8);  float flyMoveHitDamageDownSpeedRatio<comment="浮遊時にビットが攻撃された際の速度減少率[1.0が減速無し]">;
-    FSeek(p + 12); float flyMoveHitDamageDownSpeedTime<comment="浮遊時にビットが攻撃された際の速度減少時間">;
-    FSeek(p + 16); float flyMoveSpeed<comment="浮遊時の移動速度">;
-    FSeek(p + 20); float flyMoveCircleRadius<comment="浮遊時の移動半径[デフォルト時用、パス指定時はそちらを優先]">;
+    FSeek(p + 0);  float useDistanceMin<comment="距離[最小]">;
+    FSeek(p + 4);  float useDistanceMax<comment="距離[最大]">;
+    FSeek(p + 8);  float useHeightMin<comment="高度[最小]">;
+    FSeek(p + 12); float useHeightMax<comment="高度[最大]">;
+    FSeek(p + 16); float useAngleMin<comment="角度[最小]">;
+    FSeek(p + 20); float useAngleMax<comment="角度[最大]">;
+    FSeek(p + 24); float useAbsAngleOver<comment="正面からの最小角度">;
+    FSeek(p + 28); float useAreaOver<comment="中央からの距離[0は無効]">;
+
+    FSeek(p + 32);
+} RifleBeastClawRange;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float QTEStunTime<comment="QTE後のパリーの時間">;
+    FSeek(p + 4);   BossRifleBeastBattleAttackHomingLaserPattern laserPattern<comment="ホーミングレーザーパターン">;
+    FSeek(p + 340); float FirstShot<comment="最初のレーザーを撃つまでの待機時間">;
+    FSeek(p + 344); float IntervalShot<comment="再度ホーミングレーザーを撃つまでの待機時間">;
+    FSeek(p + 352); vector3 QTEPlayerPos<comment="QTE成功時のプレイヤーの位置">;
+
+    FSeek(p + 368);
+} RifleBeastClawQTE;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   RifleBeastClawCamera camera[2]<comment="カメラ設定",optimize=false>;
+    FSeek(p + 96);  RifleBeastClawRange range<comment="攻撃範囲設定">;
+    FSeek(p + 128); float waitTime<comment="パリィ成功後ひるみ時間">;
+    FSeek(p + 132); float damageWaitTime<comment="パリィ失敗時の次の攻撃までの待機時間">;
+    FSeek(p + 144); vector3 playerPos[2]<comment="攻撃時プレイヤー固定位置[ボス基準]",optimize=false>;
+    FSeek(p + 176); float stateWaitTime<comment="パリィ成功時のステート移動の待機時間">;
+    FSeek(p + 180); bool useSlow<comment="パリィしたときスローにするか">;
+    FSeek(p + 192); RifleBeastClawQTE QTEParam<comment="QTE後のパラメーター">;
+
+    FSeek(p + 560);
+} BossRifleBeastBattleAttackClaw;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 camLookAtOffset<comment="カメラ注視点オフセット(スパソニ原点)">;
+    FSeek(p + 16); vector3 camEyeOffset<comment="カメラ位置オフセット(スパソニ原点)">;
+    FSeek(p + 32); float camFovy<comment="カメラ画角">;
+    FSeek(p + 36); float camEaseInTime<comment="カメラ開始補間時間">;
+    FSeek(p + 40); float camEaseOutTime<comment="カメラ終了補間時間">;
+
+    FSeek(p + 48);
+} RifleBeastTackleCamera;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  bool enabled<comment="カメラ振動を有効にするか">;
+    FSeek(p + 4);  float waitTime<comment="カメラ振動待機時間">;
+    FSeek(p + 8);  float magnitude<comment="振動の大きさ">;
+    FSeek(p + 12); float shakeTime<comment="振動時間">;
+    FSeek(p + 16); float attnRatio<comment="振動の減衰率[残り時間に応じて小さくなる割合]">;
+    FSeek(p + 20); uint8 freq<comment="周波数[1秒間に何回振動するか]">;
 
     FSeek(p + 24);
-} BossRifleBeastBattleFlyParam;
+} BossRifleBeastBattleCyloopCameraShake;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring nodeName<comment="注視するノード名[未設定時はオブジェクトの原点]">;
+    FSeek(p + 16); float fovyDeg<comment="画角">;
+    FSeek(p + 20); float rollDeg<comment="姿勢">;
+    FSeek(p + 32); vector3 targetOffset<comment="注視点位置オフセット[ノード位置基準]">;
+    FSeek(p + 48); vector3 cameraOffset<comment="カメラ位置オフセット[プレイヤー位置基準]">;
+    FSeek(p + 64); float playTime<comment="カメラ維持時間">;
+    FSeek(p + 68); float easeInTime<comment="開始時補間時間">;
+    FSeek(p + 72); float easeOutTime<comment="終了時補間時間">;
+
+    FSeek(p + 80);
+} BossRifleBeastBattleTackleCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float scale<comment="スロー倍率">;
+    FSeek(p + 4);  float time<comment="スロー時間">;
+    FSeek(p + 8);  float easeOutTime<comment="スロー終了補間時間">;
+    FSeek(p + 12); float delayTime<comment="遅延時間">;
+    FSeek(p + 16); bool cameraSlow<comment="カメラもスローに含める？">;
+
+    FSeek(p + 20);
+} BossRifleBeastParrySlowParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   RifleBeastTackleCamera barrierCamera<comment="バリアダメージ用カメラ設定">;
+    FSeek(p + 48);  RifleBeastTackleCamera behindCamera<comment="うしろ周り用カメラ設定">;
+    FSeek(p + 96);  float cameraDirection<comment="敵からどれだけ離れた位置にカメラを置くか（仕様変更前と同じカメラ再現のための物）[最大100]">;
+    FSeek(p + 100); float cameraHight<comment="地上からのカメラの高さ">;
+    FSeek(p + 104); sint32 easyBarrierHP<comment="イージーでのバリアのHP">;
+    FSeek(p + 108); sint32 normalBarrierHP<comment="ノーマルでのバリアのHP">;
+    FSeek(p + 112); sint32 hardBarrierHP<comment="ハードでのバリアのHP">;
+    FSeek(p + 116); sint32 veryHardBarrierHP<comment="ベリーハードでのバリアのHP">;
+    FSeek(p + 120); sint32 tackleDamage<comment="タックルのダメージ">;
+    FSeek(p + 124); float parryDistance<comment="パリィ後のプレイヤーの距離">;
+    FSeek(p + 128); float waitTime<comment="パリィ成功後ひるみ時間">;
+    FSeek(p + 132); float damageWaitTime<comment="パリィ失敗時の次の攻撃までの待機時間">;
+    FSeek(p + 144); vector3 tackleColliderOffset<comment="コライダーのオフセット[ボス原点]">;
+    FSeek(p + 160); vector3 tackleColliderSize<comment="コライダーの大きさ">;
+    FSeek(p + 176); BossRifleBeastBattleCyloopCameraShake cameraShake<comment="バリア攻撃時のカメラ振動">;
+    FSeek(p + 200); sint32 drummingNum[10]<comment="体当たり時のドラミング回数",optimize=false>;
+    FSeek(p + 240); vector3 playerPos<comment="開始時のプレイヤーワープ位置[ボス原点]">;
+    FSeek(p + 256); float drummingTime<comment="ドラミングの継続時間">;
+    FSeek(p + 260); float playerHoldTime<comment="プレイヤーの操作不能時間">;
+    FSeek(p + 272); BossRifleBeastBattleTackleCamera playerCamera<comment="肩越しカメラ">;
+    FSeek(p + 352); BossRifleBeastBattleTackleCamera playerCamera2<comment="肩越しカメラ2">;
+    FSeek(p + 432); vector3 BehindPos<comment="回り込む位置「ボス原点」">;
+    FSeek(p + 448); BossRifleBeastParrySlowParam behindSetting<comment="回り込み時のスロー設定">;
+    FSeek(p + 468); float behindHoldTime<comment="回り込み後のホールド時間">;
+
+    FSeek(p + 480);
+} BossRifleBeastBattleTackle;
 
 typedef struct
 {
@@ -762,55 +887,296 @@ typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  BossRifleBeastBattleZoomCamera normalCamera[2]<comment="各種設定[通常時]",optimize=false>;
-    FSeek(p + 80); BossRifleBeastBattleZoomCamera flyCamera[2]<comment="各種設定[浮遊時]",optimize=false>;
+    FSeek(p + 0);   BossRifleBeastBattleZoomCamera normalCamera[6]<comment="各種設定[通常時]",optimize=false>;
+    FSeek(p + 240); BossRifleBeastBattleZoomCamera homingCamera[5]<comment="各種設定[ホーミングレーザー時]",optimize=false>;
 
-    FSeek(p + 160);
+    FSeek(p + 440);
 } BossRifleBeastBattleCameraParam;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float scale<comment="スロー倍率">;
-    FSeek(p + 4);  float time<comment="スロー時間">;
-    FSeek(p + 8);  float easeOutTime<comment="スロー終了補間時間">;
-    FSeek(p + 12); bool cameraSlow<comment="カメラもスローに含める？">;
+    FSeek(p + 0);  float ClosedAreaRadius<comment="戦闘エリアの大きさ">;
+    FSeek(p + 4);  float ClosedAreaHeght<comment="戦闘エリア制限のコライダーの高さ">;
+    FSeek(p + 8);  float SmashDamageRatio<comment="ソニック新必殺技与ダメ(最大HP比)">;
+    FSeek(p + 12); float InitPlayerHeight<comment="イベント後のソニックの高さ">;
+    FSeek(p + 16); float RotationStartAngle<comment="小回転開始角度">;
+    FSeek(p + 20); float RotationStartAngleMiddle<comment="中回転開始角度">;
+    FSeek(p + 24); float RotationStartAngleLarge<comment="大回転開始角度">;
+    FSeek(p + 28); float RotationWaitTime<comment="回転待機時間">;
+    FSeek(p + 32); float RotationAngle<comment="回転待機時間中でも一定角度で回転する角度">;
+    FSeek(p + 36); sint32 FirstMiniHP<comment="スパソニ1の時のボスの最小HP">;
+    FSeek(p + 40); float FirstDamageRate<comment="スパソニ1の時のボスのダメージ倍率">;
 
-    FSeek(p + 16);
-} BossRifleBeastParrySlowParam;
+    FSeek(p + 44);
+} BossRifleBeastBattleState;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  cstring nodeName<comment="注視するノード名[未設定時はオブジェクトの原点]">;
+    FSeek(p + 16); float fovyDeg<comment="画角">;
+    FSeek(p + 20); float rollDeg<comment="姿勢">;
+    FSeek(p + 32); vector3 targetOffset<comment="注視点位置オフセット[ノード位置基準]">;
+    FSeek(p + 48); vector3 cameraOffset<comment="カメラ位置オフセット[ノード位置基準]">;
+    FSeek(p + 64); float delayTime<comment="開始時遅延">;
+    FSeek(p + 68); float playTime<comment="カメラ維持時間">;
+    FSeek(p + 72); float easeInTime<comment="開始時補間時間">;
+    FSeek(p + 76); float easeOutTime<comment="終了時補間時間">;
+
+    FSeek(p + 80);
+} BossRifleBeastBattleCyloopFocusFrameCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 targetOffset<comment="注視点位置オフセット[ボス基準]">;
+    FSeek(p + 16); vector3 cameraOffset<comment="カメラ位置オフセット[ボス基準]">;
+    FSeek(p + 32); float fovyDeg<comment="画角">;
+    FSeek(p + 36); float rollDeg<comment="姿勢">;
+    FSeek(p + 40); float easeInTime<comment="開始補間時間">;
+    FSeek(p + 44); float easeOutTime<comment="終了補間時間">;
+
+    FSeek(p + 48);
+} BossRifleBeastBattleCyloopCameraFixedCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   BossRifleBeastBattleCyloopFocusFrameCamera cameraFocus<comment="開始演出カメラ">;
+    FSeek(p + 80);  BossRifleBeastBattleCyloopCameraFixedCamera cameraFixed<comment="プレス時固定カメラ">;
+    FSeek(p + 128); BossRifleBeastBattleCyloopCameraShake cameraShakePress<comment="プレス時カメラ振動">;
+
+    FSeek(p + 160);
+} BossRifleBeastBattleCyloopCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 camLookAtOffset<comment="カメラ注視点オフセット(ソニック原点)">;
+    FSeek(p + 16); vector3 camEyeOffset<comment="カメラ位置オフセット(ソニック原点)">;
+    FSeek(p + 32); float camFovy<comment="カメラ画角">;
+    FSeek(p + 36); float camEaseInTime<comment="カメラ開始補間時間">;
+    FSeek(p + 40); float camEaseOutTime<comment="カメラ終了補間時間">;
+
+    FSeek(p + 48);
+} BossRifleBeastBattleCyloopLaserCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 toptOffset<comment="上エフェクトのオフセット[ボス基準]">;
+    FSeek(p + 16); vector3 bottomOffset<comment="下エフェクトのオフセット[ボス基準]">;
+
+    FSeek(p + 32);
+} BossRifleBeastBattleCyloopEffectPos;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float restraintTime<comment="拘束時間">;
+    FSeek(p + 4);   float pressDamageRatio<comment="プレス時与ダメ[最大HP比]">;
+    FSeek(p + 8);   float playerHeight<comment="プレイヤー高度">;
+    FSeek(p + 12);  float beginPressDelay<comment="プレス開始遅延">;
+    FSeek(p + 16);  float blowAwayCameraTime<comment="カウンター攻撃吹き飛び時カメラ維持時間">;
+    FSeek(p + 20);  sint32 counterDamage<comment="カウンター攻撃開始ダメージ値">;
+    FSeek(p + 32);  vector3 warpOffset<comment="開始時プレイヤーワープ位置[ボス基準]">;
+    FSeek(p + 48);  bool isUsePressVibration<comment="プレス時コントローラー振動を使用するか">;
+    FSeek(p + 56);  cstring pressVibrationName<comment="プレス時コントローラ振動名">;
+    FSeek(p + 80);  vector3 pressPlayerPos<comment="プレス時プレイヤー位置[ボス基準]">;
+    FSeek(p + 96);  BossRifleBeastBattleCyloopCamera camera<comment="カメラ">;
+    FSeek(p + 256); float StartBlowTime<comment="カウンター開始時に吹き飛ばすカメラの持続時間">;
+    FSeek(p + 260); float LaserRadius<comment="レーザーの当たり判定の太さ">;
+    FSeek(p + 264); float LaserHight<comment="レーザーの当たり判定の長さ">;
+    FSeek(p + 268); float keepCameraTime<comment="吹き飛ばしカメラの持続時間">;
+    FSeek(p + 272); vector3 cunterWarpOffset<comment="カウンター時のプレイヤーワープ位置[ボス基準]">;
+    FSeek(p + 288); BossRifleBeastBattleCyloopLaserCamera laserCamera<comment="カウンター用カメラ">;
+    FSeek(p + 336); BossRifleBeastBattleCyloopEffectPos EffectPos<comment="エフェクトの場所">;
+    FSeek(p + 368); float waitTime<comment="カウンター成功時の待機時間">;
+    FSeek(p + 372); BossRifleBeastParrySlowParam slowSetting<comment="押しつぶしスロー設定">;
+    FSeek(p + 392); float effectSize<comment="ブラーエフェクトのカメラからの距離">;
+
+    FSeek(p + 400);
+} BossRifleBeastBattleCyloop;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float blowAwayTime<comment="レーザー吹き飛び時カメラ維持時間">;
+    FSeek(p + 16);  BossRifleBeastBattleCyloopFocusFrameCamera blowUpCamera<comment="打ち上げ時カメラ">;
+    FSeek(p + 96);  BossRifleBeastBattleCyloopCameraFixedCamera cameraFixed<comment="プレス時固定カメラ">;
+    FSeek(p + 144); BossRifleBeastBattleCyloopCameraShake cameraShakePress<comment="プレス時カメラ振動">;
+    FSeek(p + 176); BossRifleBeastBattleCyloopFocusFrameCamera landingCamera<comment="落下時カメラ">;
+    FSeek(p + 256); BossRifleBeastBattleCyloopCameraShake cameraShakeLanding<comment="落下時カメラ振動">;
+
+    FSeek(p + 288);
+} BossRifleBeastBattleCyloopBlowOffCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  float changeDelay<comment="レーザー開始遅延[プレイヤー上昇完了後から]">;
+    FSeek(p + 4);  float speed<comment="弾の速度">;
+    FSeek(p + 8);  float blowOffPower<comment="吹き飛ばし力">;
+    FSeek(p + 12); float blowOffUpRate<comment="吹き飛ばし力[上方に飛ぶ比率]">;
+    FSeek(p + 16); float controlTime<comment="操作不能時間">;
+    FSeek(p + 20); float slowScale<comment="接触時スロー演出速度倍率">;
+    FSeek(p + 24); float slowTime<comment="接触時スロー演出時間">;
+    FSeek(p + 28); float slowEaseOutTime<comment="接触時スロー演出補間時間">;
+    FSeek(p + 32); BossRifleBeastBattleAttackHomingLaserPattern laserPattern<comment="ホーミングレーザーパターン">;
+
+    FSeek(p + 368);
+} BossRifleBeastBattleCyloopBlowOffLaser;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);   float restraintTime<comment="拘束時間[プレイヤー移動完了後から]">;
+    FSeek(p + 4);   float pressDamageRatio<comment="プレス時与ダメ[最大HP比]">;
+    FSeek(p + 8);   float playerHeight<comment="プレイヤー高度">;
+    FSeek(p + 12);  float floatHeight<comment="浮上高度">;
+    FSeek(p + 16);  float floatHeightChangeDelay<comment="浮上開始遅延">;
+    FSeek(p + 20);  float floatHeightChangeTime<comment="浮上高度変化時間">;
+    FSeek(p + 24);  float playerMoveTime<comment="浮上時プレイヤー移動時間">;
+    FSeek(p + 28);  float playerCurveDistance<comment="浮上時プレイヤー移動時カーブ度合">;
+    FSeek(p + 32);  vector3 playerPosFixedOffset<comment="浮上時プレイヤー移動後座標[ボス基準]">;
+    FSeek(p + 48);  vector3 pressPlayerPos<comment="プレス時プレイヤー位置[ボス基準]">;
+    FSeek(p + 64);  bool isUsePressVibration<comment="プレス時コントローラー振動を使用するか">;
+    FSeek(p + 72);  cstring pressVibrationName<comment="プレス時コントローラ振動名">;
+    FSeek(p + 88);  bool isUseLandingVibration<comment="落下時コントローラー振動を使用するか">;
+    FSeek(p + 96);  cstring landingVibrationName<comment="落下時コントローラ振動名">;
+    FSeek(p + 112); vector3 landingPlayerOffSet<comment="落下後ワープ位置オフセット[ボス基準]">;
+    FSeek(p + 128); BossRifleBeastBattleCyloopBlowOffCamera camera<comment="カメラ">;
+    FSeek(p + 416); BossRifleBeastBattleCyloopBlowOffLaser laser<comment="ホーミングレーザー">;
+    FSeek(p + 784); BossRifleBeastBattleCyloopEffectPos EffectPos<comment="エフェクトの場所">;
+    FSeek(p + 816); BossRifleBeastParrySlowParam slowSetting<comment="押しつぶしスロー設定">;
+
+    FSeek(p + 848);
+} BossRifleBeastBattleCyloopBlowOff;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossRifleBeastBattleCyloop cyloop<comment="サイループ効果1回目">;
+    FSeek(p + 400);  BossRifleBeastBattleCyloopBlowOff blowOff<comment="サイループ効果2回目">;
+    FSeek(p + 1248); float cyloopDamageRate<comment="サイループ効果中のダメージレート">;
+    FSeek(p + 1252); float waitTime<comment="カウンター後の攻撃待機時間">;
+
+    FSeek(p + 1264);
+} BossRifleBeastBattleCyloopState;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);  BossRifleBeastParrySlowParam homingLaserParrySlow<comment="連続発射ホーミングレーザーパリィ時">;
-    FSeek(p + 16); BossRifleBeastParrySlowParam homingLaserLastParrySlow<comment="連続発射最後のホーミングレーザーパリィ時">;
-    FSeek(p + 32); BossRifleBeastParrySlowParam homingLaserOneShotParrySlow<comment="一斉発射ホーミングレーザーパリィ時">;
+    FSeek(p + 20); BossRifleBeastParrySlowParam homingLaserLastParrySlow<comment="連続発射最後のホーミングレーザーパリィ時">;
+    FSeek(p + 40); BossRifleBeastParrySlowParam homingLaserOneShotParrySlow<comment="一斉発射ホーミングレーザーパリィ時">;
 
-    FSeek(p + 48);
+    FSeek(p + 60);
 } BossRifleBeastParryParam;
+
+enum<uint8> DebugCameraDrawTypeCyloop
+{
+    Cyloop1Start = 0,
+    Cyloop1Press = 1,
+    Cyloop2BlowUp = 2,
+    Cyloop2Press = 3,
+    Cyloop2Landing = 4,
+};
+
+enum<uint8> DebugPlayerWarpPosTypeCyloop
+{
+    Cyloop1PlayerStart = 0,
+    Cyloop1PlayerPress = 1,
+    Cyloop2PlayerBlowUp = 2,
+    Cyloop2PlayerPress = 3,
+    Cyloop2PlayerLanding = 4,
+};
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);     BossRifleBeastPhaseParam giantPhaseParams[4]<comment="バトルフェーズ設定",optimize=false>;
-    FSeek(p + 16384); BossRifleBeastPhaseAttackActionParam actionParams[16]<comment="アクション設定",optimize=false>;
-    FSeek(p + 17536); BossRifleBeastBattleParam_ActionType immediateActions[20]<comment="即時アクション一覧[残HP発動]",optimize=false>;
-    FSeek(p + 17556); BossRifleBeastCyloopFloatActionParam cyloopFloatAction<comment="サイループ浮上中アクション一覧[残HP発動]">;
-    FSeek(p + 17568); BossRifleBeastBattleAttackHomingLaser attackHomingLaser<comment="ホーミングレーザー攻撃設定">;
-    FSeek(p + 19472); BossRifleBeastBattleAttackHandLaser attackHandLaser<comment="殴り攻撃時のバラマキレーザー攻撃設定">;
-    FSeek(p + 20144); BossRifleBeastBattleFlyParam flyParam<comment="浮遊設定">;
-    FSeek(p + 20168); BossRifleBeastBattleCameraParam cameraParam<comment="カメラ設定">;
-    FSeek(p + 20328); BossRifleBeastParryParam parryParam<comment="パリィ演出設定">;
-    FSeek(p + 20376); float thresholdDamageEffectHPRatio[3]<comment="ダメージエフェクト再生HP閾値",optimize=false>;
-    FSeek(p + 20388); float qteSucceedWaitTimes[4]<comment="QTE成功時の待機時間",optimize=false>;
-    FSeek(p + 20404); bool isDebugDraw<comment="isDebugDraw">;
-    FSeek(p + 20405); bool isSkip<comment="ボス戦スキップ[シーケンス強制通過用対応]">;
+    FSeek(p + 0); bool startFase4<comment="Fase4から始める">;
+    FSeek(p + 1); bool skipMove<comment="ムービーをスキップできるようにする">;
+    FSeek(p + 2); bool isDebugDrawCamera<comment="サイループ効果カメラデバッグ表示を有効化">;
+    FSeek(p + 3); DebugCameraDrawTypeCyloop debugDrawTypeCyloop<comment="デバッグ表示するサイループ効果関連カメラ">;
+    FSeek(p + 4); bool isDebugDrawPlayerWarpPosCyloop<comment="サイループ効果プレイヤー位置表示を有効化">;
+    FSeek(p + 5); DebugPlayerWarpPosTypeCyloop debugDrawTypePlayerWarpPosCyloop<comment="サイループ効果プレイヤー位置表示を有効化">;
 
-    FSeek(p + 20416);
+    FSeek(p + 6);
+} BossRifleBeastDebugCommand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);    BossRifleBeastPhaseAttackActionParam actionParams[2]<comment="アクション設定",optimize=false>;
+    FSeek(p + 64);   BossRifleBeastBattleAttackPattern attackPattern[12]<comment="攻撃の組み合わせ設定:ライフル受け渡し前",optimize=false>;
+    FSeek(p + 304);  BossRifleBeastBattleAttackPattern attackPatternAfter[12]<comment="攻撃の組み合わせ設定:ライフル受け渡し後",optimize=false>;
+    FSeek(p + 544);  BossRifleBeastBattleDownState downState<comment="ダウン時の設定">;
+    FSeek(p + 656);  BossRifleBeastBattleAttackHomingLaserPattern attackHomingLaserPattern[10]<comment="ホーミングレーザーパターン設定",optimize=false>;
+    FSeek(p + 4016); BossRifleBeastBattleFirstAttackHomingLaserPattern firstAttackHomingLaserPattern<comment="スパソニ2変身前ホーミングレーザーパターン設定">;
+    FSeek(p + 4360); BossRifleBeastBattleSonic2FirstAttackHomingLaserPattern Sonic2firstAttackHomingLaserPattern<comment="スパソニ2変身直後のホーミングレーザーパターン設定">;
+    FSeek(p + 4508); BossRifleBeastBattleAttackHomingLaser attackHomingLaser<comment="ホーミングレーザー基本設定">;
+    FSeek(p + 4640); BossRifleBeastBattleCyloopAttackHomingLaser cyloopAttackHomingLaser<comment="サイループ用ホーミングレーザー設定">;
+    FSeek(p + 4720); BossRifleBeastBattleCyloopAttackHomingLaser clawStunAttackHomingLaser<comment="三連撃スタンホーミングレーザー設定">;
+    FSeek(p + 4800); BossRifleBeastBattleAttackClaw attackClaw<comment="三連撃基本設定">;
+    FSeek(p + 5360); BossRifleBeastBattleTackle attackTackle<comment="体当たり基本設定">;
+    FSeek(p + 5840); BossRifleBeastBattleCameraParam cameraParam<comment="カメラ設定">;
+    FSeek(p + 6280); BossRifleBeastBattleState battaleState<comment="バトル中の設定">;
+    FSeek(p + 6336); BossRifleBeastBattleCyloopState cyloopState<comment="サイループ効果の設定">;
+    FSeek(p + 7600); BossRifleBeastParryParam parryParam<comment="パリィ演出設定">;
+    FSeek(p + 7660); BossRifleBeastDebugCommand debugParam<comment="デバッグ設定">;
+    FSeek(p + 7668); float thresholdDamageEffectHPRatio[3]<comment="ダメージエフェクト再生HP閾値",optimize=false>;
+    FSeek(p + 7680); float qteSucceedWaitTimes[4]<comment="QTE成功時の待機時間",optimize=false>;
+    FSeek(p + 7696); bool isDebugDraw<comment="isDebugDraw">;
+    FSeek(p + 7697); bool isSkip<comment="ボス戦スキップ[シーケンス強制通過用対応]">;
+
+    FSeek(p + 7712);
 } BossRifleBeastBattleParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  vector3 camLookAtOffset<comment="カメラ注視点オフセット(ケーブル原点)">;
+    FSeek(p + 16); vector3 camEyeOffset<comment="カメラ位置オフセット(ケーブル原点)">;
+    FSeek(p + 32); float camFovy<comment="カメラ画角">;
+    FSeek(p + 36); float camEaseInTime<comment="カメラ開始補間時間">;
+    FSeek(p + 40); float camEaseOutTime<comment="カメラ終了補間時間">;
+    FSeek(p + 44); float camWaitTime<comment="カメラ表示時間">;
+    FSeek(p + 48); bool useCamera<comment="カメラ演出を使用するか">;
+
+    FSeek(p + 64);
+} RifleBeastCableCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  uint32 healthPoint<comment="HP">;
+    FSeek(p + 4);  float colliderOffsetY<comment="コリジョンの高さオフセット">;
+    FSeek(p + 8);  float attackRadius<comment="攻撃時の距離">;
+    FSeek(p + 12); float cyloopRadius<comment="Cyloop時の半径">;
+    FSeek(p + 16); float targetableTime<comment="ターゲット可能時間">;
+    FSeek(p + 20); float targetableDistance<comment="ターゲット可能距離">;
+    FSeek(p + 32); RifleBeastCableCamera camera<comment="camera">;
+
+    FSeek(p + 96);
+} BossRifleBeastCableParam;
 
 typedef struct
 {
@@ -818,19 +1184,20 @@ typedef struct
 
     FSeek(p + 0); bool usePracticeNotifier<comment="練習通知を使用するか">;
     FSeek(p + 1); sint8 practiceNo<comment="練習番号">;
-    FSeek(p + 2); sint8 tipsNo<comment="Tips番号">;
+    FSeek(p + 2); sint16 tipsNo<comment="Tips番号">;
 
-    FSeek(p + 3);
-} EnemyPracticeNotifierConfig;
+    FSeek(p + 4);
+} RifleBeastPracticeNotifierConfig;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0); EnemyPracticeNotifierConfig notifierConfigBattle1<comment="練習通知設定[フェーズ1開始時]">;
-    FSeek(p + 3); EnemyPracticeNotifierConfig notifierConfigBattle2<comment="練習通知設定[フェーズ2開始時]">;
+    FSeek(p + 0); RifleBeastPracticeNotifierConfig notifierConfigBattle1<comment="練習通知設定[戦闘開始時]">;
+    FSeek(p + 4); RifleBeastPracticeNotifierConfig notifierConfigBattle2<comment="練習通知設定[ジャストパリィ]">;
+    FSeek(p + 8); RifleBeastPracticeNotifierConfig notifierConfigBattle3<comment="練習通知設定[ケーブル破壊]">;
 
-    FSeek(p + 6);
+    FSeek(p + 12);
 } BossRifleBeastNotifierParam;
 
 typedef struct
@@ -839,9 +1206,10 @@ typedef struct
 
     FSeek(p + 0);     BossBaseConfig bossBaseConfig;
     FSeek(p + 75712); BossRifleBeastBattleParam battleParam<comment="スパソニ戦設定">;
-    FSeek(p + 96128); BossRifleBeastNotifierParam notifierParam<comment="通知設定">;
+    FSeek(p + 83424); BossRifleBeastCableParam cableParam<comment="ケーブル設定">;
+    FSeek(p + 83520); BossRifleBeastNotifierParam notifierParam<comment="通知設定">;
 
-    FSeek(p + 96144);
+    FSeek(p + 83536);
 } BossRifleBeastConfig;
 
 LittleEndian();
