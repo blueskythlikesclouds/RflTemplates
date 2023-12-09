@@ -74,10 +74,12 @@ typedef struct
 
     FSeek(p + 0);   float damageRate<comment="ダメージレート/ソニック">;
     FSeek(p + 4);   float damageRateSS<comment="ダメージレート/スーパーソニック">;
-    FSeek(p + 8);   float damageRateAcceleMode<comment="アクセルモード時のダメージ倍率">;
-    FSeek(p + 12);  float damageRateManual<comment="マニュアルモード時のダメージ倍率">;
-    FSeek(p + 16);  float stunPoint<comment="スタン値">;
-    FSeek(p + 20);  float staggerPoint<comment="よろめき値">;
+    FSeek(p + 8);   uint16 pointMin<comment="固有最小攻撃力">;
+    FSeek(p + 10);  uint16 pointMax<comment="固有最大攻撃力">;
+    FSeek(p + 12);  float damageRateAcceleMode<comment="アクセルモード時のダメージ倍率">;
+    FSeek(p + 16);  float damageRateManual<comment="マニュアルモード時のダメージ倍率">;
+    FSeek(p + 20);  float stunPoint<comment="スタン値">;
+    FSeek(p + 24);  float staggerPoint<comment="よろめき値">;
     FSeek(p + 32);  vector3 velocity<comment="ダメージ速度">;
     FSeek(p + 48);  float velocityKeepTime<comment="ダメージ速度維持時間">;
     FSeek(p + 52);  float addComboValue<comment="コンボメーター増加量">;
@@ -165,13 +167,14 @@ typedef struct
     FSeek(p + 15888); PlayerParamAttackData amyTarotAttack2<comment="Amy Tarot Attack2">;
     FSeek(p + 16240); PlayerParamAttackData amyTarotRolling<comment="Amy Tarot Rolling">;
     FSeek(p + 16592); PlayerParamAttackData amyCharmAttack<comment="Amy Charm Attack">;
-    FSeek(p + 16944); PlayerParamAttackData tailsSpanner<comment="Tails Spanner">;
-    FSeek(p + 17296); PlayerParamAttackData tailsSpannerFloat<comment="Tails Spanner Float">;
-    FSeek(p + 17648); PlayerParamAttackData tailsPowerBoost<comment="Tails Power Boost">;
-    FSeek(p + 18000); PlayerParamAttackData tailsWaveCannon<comment="Tails Wave Cannon">;
-    FSeek(p + 18352); PlayerParamAttackData tailsWaveCannonFinish<comment="Tails Wave Cannon Finish">;
+    FSeek(p + 16944); PlayerParamAttackData amyTarotBoost<comment="Amy Tarot Boost">;
+    FSeek(p + 17296); PlayerParamAttackData tailsSpanner<comment="Tails Spanner">;
+    FSeek(p + 17648); PlayerParamAttackData tailsSpannerFloat<comment="Tails Spanner Float">;
+    FSeek(p + 18000); PlayerParamAttackData tailsPowerBoost<comment="Tails Power Boost">;
+    FSeek(p + 18352); PlayerParamAttackData tailsWaveCannon<comment="Tails Wave Cannon">;
+    FSeek(p + 18704); PlayerParamAttackData tailsWaveCannonFinish<comment="Tails Wave Cannon Finish">;
 
-    FSeek(p + 18704);
+    FSeek(p + 19056);
 } PlayerParamAttack;
 
 typedef struct
@@ -310,17 +313,17 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     PlayerParamAttack attack<comment="ダメージ設定">;
-    FSeek(p + 18704); PlayerParamWaterAct wateract<comment="水中専用挙動">;
-    FSeek(p + 18720); PlayerParamBaseJump basejump<comment="BASEジャンプ">;
-    FSeek(p + 18744); PlayerParamBallMove ballmove<comment="ボール移動">;
-    FSeek(p + 18772); PlayerParamLocus locus<comment="移動軌跡">;
-    FSeek(p + 18836); PlayerParamAuraTrain auratrain<comment="オーラトレイン">;
-    FSeek(p + 18852); PlayerParamLevel level<comment="レベル段階数">;
-    FSeek(p + 18856); PlayerParamBarrierWall barrierWall<comment="結界壁">;
-    FSeek(p + 18860); PlayerParamDamageRate damageRate<comment="ダメージ倍率">;
-    FSeek(p + 18940); PlayerParamAcceleMode acceleMode<comment="アクセルモード">;
+    FSeek(p + 19056); PlayerParamWaterAct wateract<comment="水中専用挙動">;
+    FSeek(p + 19072); PlayerParamBaseJump basejump<comment="BASEジャンプ">;
+    FSeek(p + 19096); PlayerParamBallMove ballmove<comment="ボール移動">;
+    FSeek(p + 19124); PlayerParamLocus locus<comment="移動軌跡">;
+    FSeek(p + 19188); PlayerParamAuraTrain auratrain<comment="オーラトレイン">;
+    FSeek(p + 19204); PlayerParamLevel level<comment="レベル段階数">;
+    FSeek(p + 19208); PlayerParamBarrierWall barrierWall<comment="結界壁">;
+    FSeek(p + 19212); PlayerParamDamageRate damageRate<comment="ダメージ倍率">;
+    FSeek(p + 19292); PlayerParamAcceleMode acceleMode<comment="アクセルモード">;
 
-    FSeek(p + 18960);
+    FSeek(p + 19312);
 } CommonPackage;
 
 typedef struct
@@ -505,6 +508,8 @@ typedef struct
     FSeek(p + 48);
 } PlayerParamAttackCollider;
 
+typedef int32 sint32;
+
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
@@ -512,8 +517,11 @@ typedef struct
     FSeek(p + 0);  PlayerParamAttackCollider hit<comment="ヒット判定">;
     FSeek(p + 48); float motionScale<comment="移動量スケール">;
     FSeek(p + 52); float motionSpeedRate<comment="モーション再生速度比率">;
+    FSeek(p + 56); sint32 fallSpeedBaseCount<comment="重力落下開始回数">;
+    FSeek(p + 60); float fallSpeedStep<comment="重力落下速度上昇">;
+    FSeek(p + 64); float fallSpeedMax<comment="重力落下速度最大">;
 
-    FSeek(p + 64);
+    FSeek(p + 80);
 } KnucklesParamComboPunch1;
 
 typedef struct
@@ -523,8 +531,11 @@ typedef struct
     FSeek(p + 0);  PlayerParamAttackCollider hit<comment="ヒット判定">;
     FSeek(p + 48); float motionScale<comment="移動量スケール">;
     FSeek(p + 52); float motionSpeedRate<comment="モーション再生速度比率">;
+    FSeek(p + 56); sint32 fallSpeedBaseCount<comment="重力落下開始回数">;
+    FSeek(p + 60); float fallSpeedStep<comment="重力落下速度上昇">;
+    FSeek(p + 64); float fallSpeedMax<comment="重力落下速度最大">;
 
-    FSeek(p + 64);
+    FSeek(p + 80);
 } KnucklesParamComboPunch2;
 
 typedef struct
@@ -547,8 +558,6 @@ typedef struct
 
     FSeek(p + 8);
 } KnucklesParamParryDebuff;
-
-typedef int32 sint32;
 
 typedef struct {
     float x;
@@ -781,14 +790,14 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     CommonPackage commonPackage;
-    FSeek(p + 18960); PlayerParamCombo combo<comment="コンボ">;
-    FSeek(p + 19696); KnucklesParamComboPunch1 comboPunch1<comment="コンボ/パンチ1">;
-    FSeek(p + 19760); KnucklesParamComboPunch2 comboPunch2<comment="コンボ/パンチ2">;
-    FSeek(p + 19824); KnucklesParamComboUppercut comboUppercut<comment="コンボ/アッパーカット">;
-    FSeek(p + 19888); KnucklesParamParryDebuff parryDebuff<comment="パリィ防御ダウン効果">;
-    FSeek(p + 19896); PlayerParamCyloop cyloop<comment="Cyloop">;
+    FSeek(p + 19312); PlayerParamCombo combo<comment="コンボ">;
+    FSeek(p + 20048); KnucklesParamComboPunch1 comboPunch1<comment="コンボ/パンチ1">;
+    FSeek(p + 20128); KnucklesParamComboPunch2 comboPunch2<comment="コンボ/パンチ2">;
+    FSeek(p + 20208); KnucklesParamComboUppercut comboUppercut<comment="コンボ/アッパーカット">;
+    FSeek(p + 20272); KnucklesParamParryDebuff parryDebuff<comment="パリィ防御ダウン効果">;
+    FSeek(p + 20280); PlayerParamCyloop cyloop<comment="Cyloop">;
 
-    FSeek(p + 25120);
+    FSeek(p + 25504);
 } CommonPackageKnuckles;
 
 enum<sint8> SupportedPlane
@@ -1798,14 +1807,21 @@ typedef struct
     FSeek(p + 24); float maxSteerSpeed<comment="最大回転になる速度">;
     FSeek(p + 28); float rollSpeed<comment="ロール速度">;
     FSeek(p + 32); float neutralRollSpeed<comment="戻りロール速度">;
-    FSeek(p + 36); float yawSpeed<comment="ヨー速度">;
-    FSeek(p + 40); float maxRollAngle<comment="最大ロール角">;
-    FSeek(p + 44); float height<comment="挙動維持高度">;
-    FSeek(p + 48); float startHeight<comment="開始に必要な高度">;
-    FSeek(p + 52); KnucklesParamGlidingCamera camera<comment="カメラ">;
-    FSeek(p + 60); float practiceTime<comment="練習判定時間">;
+    FSeek(p + 36); float rollSpeedRingMax<comment="ロール速度/リングMAX">;
+    FSeek(p + 40); float neutralRollSpeedRingMax<comment="戻りロール速度/リングMAX">;
+    FSeek(p + 44); float yawSpeed<comment="ヨー速度">;
+    FSeek(p + 48); float yawSpeedRingMax<comment="ヨー速度/リングMAX">;
+    FSeek(p + 52); float maxRollAngle<comment="最大ロール角">;
+    FSeek(p + 56); float rollAngleRatioMin<comment="ロール角が最小になる入力角度">;
+    FSeek(p + 60); float rollAngleRatioMax<comment="ロール角が最大になる入力角度">;
+    FSeek(p + 64); float rollAngleRatioMinRingMax<comment="ロール角が最小になる入力角度/リングMAX">;
+    FSeek(p + 68); float rollAngleRatioMaxRingMax<comment="ロール角が最大になる入力角度/リングMAX">;
+    FSeek(p + 72); float height<comment="挙動維持高度">;
+    FSeek(p + 76); float startHeight<comment="開始に必要な高度">;
+    FSeek(p + 80); KnucklesParamGlidingCamera camera<comment="カメラ">;
+    FSeek(p + 88); float practiceTime<comment="練習判定時間">;
 
-    FSeek(p + 64);
+    FSeek(p + 92);
 } KnucklesParamGliding;
 
 typedef struct
@@ -1963,16 +1979,16 @@ typedef struct
 
     FSeek(p + 0);    ModePackage modePackage;
     FSeek(p + 2288); KnucklesParamGliding gliding<comment="滑空">;
-    FSeek(p + 2352); KnucklesParamCyKnuckle cyknuckle<comment="サイナックル">;
-    FSeek(p + 2384); KnucklesParamCyKnuckleDig cyknuckleDig<comment="サイナックル/穴掘り">;
-    FSeek(p + 2400); KnucklesParamCyKnuckleWarp cyknuckleWarp<comment="サイナックル/ワープ穴">;
-    FSeek(p + 2404); KnucklesParamCyKnucklePopupItem cyknucklePopupItem<comment="サイナックル/アイテム出現穴">;
-    FSeek(p + 2408); KnucklesParamCyKnuckleAppearGimmick cyknuckleAppearGimmick<comment="サイナックル/ギミック出現">;
-    FSeek(p + 2528); KnucklesParamMaximumHeatKnuckle maximumHeatKnuckle<comment="マキシマムヒートナックル">;
-    FSeek(p + 2816); KnucklesParamDrillBoost drillBoost<comment="ドリルブースト">;
-    FSeek(p + 2824); PlayerParamSpinBoost spinBoost<comment="スピンブースト">;
+    FSeek(p + 2380); KnucklesParamCyKnuckle cyknuckle<comment="サイナックル">;
+    FSeek(p + 2412); KnucklesParamCyKnuckleDig cyknuckleDig<comment="サイナックル/穴掘り">;
+    FSeek(p + 2428); KnucklesParamCyKnuckleWarp cyknuckleWarp<comment="サイナックル/ワープ穴">;
+    FSeek(p + 2432); KnucklesParamCyKnucklePopupItem cyknucklePopupItem<comment="サイナックル/アイテム出現穴">;
+    FSeek(p + 2436); KnucklesParamCyKnuckleAppearGimmick cyknuckleAppearGimmick<comment="サイナックル/ギミック出現">;
+    FSeek(p + 2544); KnucklesParamMaximumHeatKnuckle maximumHeatKnuckle<comment="マキシマムヒートナックル">;
+    FSeek(p + 2832); KnucklesParamDrillBoost drillBoost<comment="ドリルブースト">;
+    FSeek(p + 2840); PlayerParamSpinBoost spinBoost<comment="スピンブースト">;
 
-    FSeek(p + 3072);
+    FSeek(p + 3088);
 } ModePackageKnuckles;
 
 typedef struct
@@ -1994,11 +2010,11 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     CommonPackageKnuckles common<comment="共通">;
-    FSeek(p + 25120); ModePackageKnuckles forwardView<comment="通常">;
-    FSeek(p + 28192); WaterModePackage water<comment="水中">;
-    FSeek(p + 28624); ModePackageKnuckles cyberspaceSV<comment="SV">;
+    FSeek(p + 25504); ModePackageKnuckles forwardView<comment="通常">;
+    FSeek(p + 28592); WaterModePackage water<comment="水中">;
+    FSeek(p + 29024); ModePackageKnuckles cyberspaceSV<comment="SV">;
 
-    FSeek(p + 31696);
+    FSeek(p + 32112);
 } KnucklesParameters;
 
 LittleEndian();

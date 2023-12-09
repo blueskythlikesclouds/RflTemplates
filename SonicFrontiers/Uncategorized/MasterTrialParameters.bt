@@ -17,8 +17,9 @@ typedef struct
     FSeek(p + 24); uint32 recoveryHpPoint<comment="敵の回復量">;
     FSeek(p + 28); uint32 limitMistake<comment="ダメージ可能回数">;
     FSeek(p + 32); sint32 damagePoint<comment="ダメージ値">;
+    FSeek(p + 36); uint8 powerLevel<comment="チカラレベル">;
 
-    FSeek(p + 36);
+    FSeek(p + 40);
 } MasterTrialStageParameter;
 
 typedef struct
@@ -28,26 +29,27 @@ typedef struct
     FSeek(p + 0); sint32 applicableFailedCount<comment="このデータを使う失敗数">;
     FSeek(p + 4); MasterTrialStageParameter stages[4]<comment="試練ステージ",optimize=false>;
 
-    FSeek(p + 148);
+    FSeek(p + 164);
 } MasterTrialParameterElement;
 
 typedef struct
 {
     local uint64 p<hidden=true> = FTell();
 
-    FSeek(p + 0);  float subjectViewTime<comment="題目説明表示の遅延時間">;
-    FSeek(p + 4);  float readyTime<comment="Ready表示時間">;
-    FSeek(p + 8);  float clearTime<comment="Clear表示時間">;
-    FSeek(p + 12); float failedTime<comment="Faild表示時間">;
-    FSeek(p + 16); float clearWaitTime<comment="クリアSEからフェードまでの待機時間">;
-    FSeek(p + 20); float failedWaitTime<comment="失敗SEから選択UI表示までの待機時間">;
-    FSeek(p + 24); float kodamaOrdinaryTextTime<comment="達人ココセリフ「尋常に！」表示時間">;
-    FSeek(p + 28); float kodamaFightDelayTime<comment="達人ココ「勝負！」遷移遅延時間">;
-    FSeek(p + 32); float kodamaFightTextTime<comment="達人ココセリフ「勝負！」表示時間">;
-    FSeek(p + 36); float kodamaSplendidTextTime<comment="達人ココセリフ「お見事！」表示時間">;
-    FSeek(p + 40); MasterTrialParameterElement element[3]<comment="達人ココ試練",optimize=false>;
+    FSeek(p + 0);   float subjectViewTime<comment="題目説明表示の遅延時間">;
+    FSeek(p + 4);   float readyTime<comment="Ready表示時間">;
+    FSeek(p + 8);   float clearTime<comment="Clear表示時間">;
+    FSeek(p + 12);  float failedTime<comment="Faild表示時間">;
+    FSeek(p + 16);  float clearWaitTime<comment="クリアSEからフェードまでの待機時間">;
+    FSeek(p + 20);  float failedWaitTime<comment="失敗SEから選択UI表示までの待機時間">;
+    FSeek(p + 24);  float kodamaOrdinaryTextTime<comment="達人ココセリフ「尋常に！」表示時間">;
+    FSeek(p + 28);  float kodamaFightDelayTime<comment="達人ココ「勝負！」遷移遅延時間">;
+    FSeek(p + 32);  float kodamaFightTextTime<comment="達人ココセリフ「勝負！」表示時間">;
+    FSeek(p + 36);  float kodamaSplendidTextTime<comment="達人ココセリフ「お見事！」表示時間">;
+    FSeek(p + 40);  MasterTrialParameterElement element[3]<comment="達人ココ試練",optimize=false>;
+    FSeek(p + 532); MasterTrialParameterElement elementEasy[3]<comment="達人ココ試練/Easy",optimize=false>;
 
-    FSeek(p + 484);
+    FSeek(p + 1024);
 } MasterTrialParameters;
 
 LittleEndian();

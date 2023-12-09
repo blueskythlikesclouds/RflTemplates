@@ -74,10 +74,12 @@ typedef struct
 
     FSeek(p + 0);   float damageRate<comment="ダメージレート/ソニック">;
     FSeek(p + 4);   float damageRateSS<comment="ダメージレート/スーパーソニック">;
-    FSeek(p + 8);   float damageRateAcceleMode<comment="アクセルモード時のダメージ倍率">;
-    FSeek(p + 12);  float damageRateManual<comment="マニュアルモード時のダメージ倍率">;
-    FSeek(p + 16);  float stunPoint<comment="スタン値">;
-    FSeek(p + 20);  float staggerPoint<comment="よろめき値">;
+    FSeek(p + 8);   uint16 pointMin<comment="固有最小攻撃力">;
+    FSeek(p + 10);  uint16 pointMax<comment="固有最大攻撃力">;
+    FSeek(p + 12);  float damageRateAcceleMode<comment="アクセルモード時のダメージ倍率">;
+    FSeek(p + 16);  float damageRateManual<comment="マニュアルモード時のダメージ倍率">;
+    FSeek(p + 20);  float stunPoint<comment="スタン値">;
+    FSeek(p + 24);  float staggerPoint<comment="よろめき値">;
     FSeek(p + 32);  vector3 velocity<comment="ダメージ速度">;
     FSeek(p + 48);  float velocityKeepTime<comment="ダメージ速度維持時間">;
     FSeek(p + 52);  float addComboValue<comment="コンボメーター増加量">;
@@ -165,13 +167,14 @@ typedef struct
     FSeek(p + 15888); PlayerParamAttackData amyTarotAttack2<comment="Amy Tarot Attack2">;
     FSeek(p + 16240); PlayerParamAttackData amyTarotRolling<comment="Amy Tarot Rolling">;
     FSeek(p + 16592); PlayerParamAttackData amyCharmAttack<comment="Amy Charm Attack">;
-    FSeek(p + 16944); PlayerParamAttackData tailsSpanner<comment="Tails Spanner">;
-    FSeek(p + 17296); PlayerParamAttackData tailsSpannerFloat<comment="Tails Spanner Float">;
-    FSeek(p + 17648); PlayerParamAttackData tailsPowerBoost<comment="Tails Power Boost">;
-    FSeek(p + 18000); PlayerParamAttackData tailsWaveCannon<comment="Tails Wave Cannon">;
-    FSeek(p + 18352); PlayerParamAttackData tailsWaveCannonFinish<comment="Tails Wave Cannon Finish">;
+    FSeek(p + 16944); PlayerParamAttackData amyTarotBoost<comment="Amy Tarot Boost">;
+    FSeek(p + 17296); PlayerParamAttackData tailsSpanner<comment="Tails Spanner">;
+    FSeek(p + 17648); PlayerParamAttackData tailsSpannerFloat<comment="Tails Spanner Float">;
+    FSeek(p + 18000); PlayerParamAttackData tailsPowerBoost<comment="Tails Power Boost">;
+    FSeek(p + 18352); PlayerParamAttackData tailsWaveCannon<comment="Tails Wave Cannon">;
+    FSeek(p + 18704); PlayerParamAttackData tailsWaveCannonFinish<comment="Tails Wave Cannon Finish">;
 
-    FSeek(p + 18704);
+    FSeek(p + 19056);
 } PlayerParamAttack;
 
 typedef struct
@@ -310,17 +313,17 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     PlayerParamAttack attack<comment="ダメージ設定">;
-    FSeek(p + 18704); PlayerParamWaterAct wateract<comment="水中専用挙動">;
-    FSeek(p + 18720); PlayerParamBaseJump basejump<comment="BASEジャンプ">;
-    FSeek(p + 18744); PlayerParamBallMove ballmove<comment="ボール移動">;
-    FSeek(p + 18772); PlayerParamLocus locus<comment="移動軌跡">;
-    FSeek(p + 18836); PlayerParamAuraTrain auratrain<comment="オーラトレイン">;
-    FSeek(p + 18852); PlayerParamLevel level<comment="レベル段階数">;
-    FSeek(p + 18856); PlayerParamBarrierWall barrierWall<comment="結界壁">;
-    FSeek(p + 18860); PlayerParamDamageRate damageRate<comment="ダメージ倍率">;
-    FSeek(p + 18940); PlayerParamAcceleMode acceleMode<comment="アクセルモード">;
+    FSeek(p + 19056); PlayerParamWaterAct wateract<comment="水中専用挙動">;
+    FSeek(p + 19072); PlayerParamBaseJump basejump<comment="BASEジャンプ">;
+    FSeek(p + 19096); PlayerParamBallMove ballmove<comment="ボール移動">;
+    FSeek(p + 19124); PlayerParamLocus locus<comment="移動軌跡">;
+    FSeek(p + 19188); PlayerParamAuraTrain auratrain<comment="オーラトレイン">;
+    FSeek(p + 19204); PlayerParamLevel level<comment="レベル段階数">;
+    FSeek(p + 19208); PlayerParamBarrierWall barrierWall<comment="結界壁">;
+    FSeek(p + 19212); PlayerParamDamageRate damageRate<comment="ダメージ倍率">;
+    FSeek(p + 19292); PlayerParamAcceleMode acceleMode<comment="アクセルモード">;
 
-    FSeek(p + 18960);
+    FSeek(p + 19312);
 } CommonPackage;
 
 enum<sint8> Condition
@@ -1223,28 +1226,28 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     CommonPackage commonPackage;
-    FSeek(p + 18960); PlayerParamAcceleComboSet acceleComboSet<comment="攻撃Act / Accele Combo">;
-    FSeek(p + 19152); PlayerParamLoopKickSet loopKickSet<comment="攻撃Act / Loop Kick">;
-    FSeek(p + 19344); PlayerParamCrasherSet crasherSet<comment="攻撃Act / Crasher">;
-    FSeek(p + 19776); PlayerParamSpinSlashSet spinSlashSet<comment="攻撃Act / Spin Slash">;
-    FSeek(p + 20400); PlayerParamChargeAttackSet chargeAtackSet<comment="攻撃Act / Charge Attack">;
-    FSeek(p + 20880); PlayerParamStompingAttackSet stompingAttackSet<comment="攻撃Act / Stomping">;
-    FSeek(p + 21504); PlayerParamComboFinishSet comboFinishSet<comment="攻撃Act / Combo Finish">;
-    FSeek(p + 21696); PlayerParamSonicBoomSet sonicboomSet<comment="攻撃Act / Sonic Boom">;
-    FSeek(p + 21888); PlayerParamCrossSlashSet crossSlashSet<comment="攻撃Act / Cross Slash">;
-    FSeek(p + 22416); PlayerParamHomingShotSet homingShotSet<comment="攻撃Act / Homing Shot">;
-    FSeek(p + 22848); PlayerParamSmashSet smashSet<comment="攻撃Act / Smash">;
-    FSeek(p + 23904); PlayerParamBehind behind<comment="防御Act / Behind">;
-    FSeek(p + 23924); PlayerParamCombo combo<comment="コンボ">;
-    FSeek(p + 24664); PlayerParamCyloop cyloop<comment="Cyloop">;
-    FSeek(p + 29888); PlayerParamSuperSonic supersonic<comment="スーパーソニック">;
-    FSeek(p + 32480); PlayerParamSandSki sandski<comment="サンドスキー">;
-    FSeek(p + 32528); PlayerParamSlingshot slingshot<comment="スリングショット">;
-    FSeek(p + 32624); PlayerParamRunawayBee runawayBee<comment="蜂逃げ回り">;
-    FSeek(p + 32644); PlayerParamRunWithKodama runWithKodama<comment="コダマ担ぎ歩き">;
-    FSeek(p + 32812); PlayerParamMine mine<comment="地雷">;
+    FSeek(p + 19312); PlayerParamAcceleComboSet acceleComboSet<comment="攻撃Act / Accele Combo">;
+    FSeek(p + 19504); PlayerParamLoopKickSet loopKickSet<comment="攻撃Act / Loop Kick">;
+    FSeek(p + 19696); PlayerParamCrasherSet crasherSet<comment="攻撃Act / Crasher">;
+    FSeek(p + 20128); PlayerParamSpinSlashSet spinSlashSet<comment="攻撃Act / Spin Slash">;
+    FSeek(p + 20752); PlayerParamChargeAttackSet chargeAtackSet<comment="攻撃Act / Charge Attack">;
+    FSeek(p + 21232); PlayerParamStompingAttackSet stompingAttackSet<comment="攻撃Act / Stomping">;
+    FSeek(p + 21856); PlayerParamComboFinishSet comboFinishSet<comment="攻撃Act / Combo Finish">;
+    FSeek(p + 22048); PlayerParamSonicBoomSet sonicboomSet<comment="攻撃Act / Sonic Boom">;
+    FSeek(p + 22240); PlayerParamCrossSlashSet crossSlashSet<comment="攻撃Act / Cross Slash">;
+    FSeek(p + 22768); PlayerParamHomingShotSet homingShotSet<comment="攻撃Act / Homing Shot">;
+    FSeek(p + 23200); PlayerParamSmashSet smashSet<comment="攻撃Act / Smash">;
+    FSeek(p + 24256); PlayerParamBehind behind<comment="防御Act / Behind">;
+    FSeek(p + 24276); PlayerParamCombo combo<comment="コンボ">;
+    FSeek(p + 25016); PlayerParamCyloop cyloop<comment="Cyloop">;
+    FSeek(p + 30240); PlayerParamSuperSonic supersonic<comment="スーパーソニック">;
+    FSeek(p + 32832); PlayerParamSandSki sandski<comment="サンドスキー">;
+    FSeek(p + 32880); PlayerParamSlingshot slingshot<comment="スリングショット">;
+    FSeek(p + 32976); PlayerParamRunawayBee runawayBee<comment="蜂逃げ回り">;
+    FSeek(p + 32996); PlayerParamRunWithKodama runWithKodama<comment="コダマ担ぎ歩き">;
+    FSeek(p + 33164); PlayerParamMine mine<comment="地雷">;
 
-    FSeek(p + 32832);
+    FSeek(p + 33184);
 } CommonPackageSonic;
 
 enum<sint8> SupportedPlane
@@ -2687,12 +2690,12 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0);     CommonPackageSonic common<comment="共通">;
-    FSeek(p + 32832); ModePackageSonic forwardView<comment="通常">;
-    FSeek(p + 36640); WaterModePackage water<comment="水中">;
-    FSeek(p + 37072); ModePackageSonic cyberspace<comment="電脳空間/FV">;
-    FSeek(p + 40880); ModePackageSonic cyberspaceSV<comment="電脳空間/SV">;
+    FSeek(p + 33184); ModePackageSonic forwardView<comment="通常">;
+    FSeek(p + 36992); WaterModePackage water<comment="水中">;
+    FSeek(p + 37424); ModePackageSonic cyberspace<comment="電脳空間/FV">;
+    FSeek(p + 41232); ModePackageSonic cyberspaceSV<comment="電脳空間/SV">;
 
-    FSeek(p + 44688);
+    FSeek(p + 45040);
 } SonicParameters;
 
 LittleEndian();
