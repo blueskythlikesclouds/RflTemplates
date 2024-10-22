@@ -27,7 +27,7 @@ LittleEndian();
 uint32 signature<hidden=true>;
 
 if (signature == 0x414E4942)
-    BASE_OFFSET_VALUE = 0x40;
+    BASE_OFFSET_VALUE = 0x50;
 
 FSeek(BASE_OFFSET_VALUE);
 WhitespaceMapData whitespaceMapData;
