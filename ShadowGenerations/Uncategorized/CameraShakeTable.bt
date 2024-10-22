@@ -1,0 +1,81 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef ubyte uint8;
+
+enum<uint8> ShakeType
+{
+    Directional = 0,
+    WorldY = 1,
+    Random = 2
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring name<comment="名前">;
+    FSeek(p + 0x10); ShakeType type<comment="振動タイプ">;
+    FSeek(p + 0x14); float zRot<comment="[zRot方向]zRot">;
+    FSeek(p + 0x18); float duration<comment="振動時間">;
+    FSeek(p + 0x1C); float frequency<comment="周波数">;
+    FSeek(p + 0x20); float amplitude<comment="振幅">;
+    FSeek(p + 0x24); float timeAttenuationRate<comment="時間減衰率">;
+    FSeek(p + 0x28); bool enableDistanceAttenuation<comment="距離減衰するか？">;
+    FSeek(p + 0x2C); float attenuationDistance<comment="減衰距離">;
+
+    FSeek(p + 0x30);
+} CameraShakeRecord;
+
+enum<uint8> EventCameraShakeRecord_ShakeType
+{
+    LocalX = 0,
+    LocalY = 1,
+    LocalZ = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring name<comment="名前">;
+    FSeek(p + 0x10); EventCameraShakeRecord_ShakeType type<comment="振動タイプ">;
+    FSeek(p + 0x14); float duration<comment="振動時間">;
+    FSeek(p + 0x18); float scale<comment="振幅スケール">;
+    FSeek(p + 0x1C); float speed<comment="速度スケール">;
+
+    FSeek(p + 0x20);
+} EventCameraShakeRecord;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CameraShakeRecord records[74]<comment="records",optimize=false>;
+    FSeek(p + 0xDE0); EventCameraShakeRecord eventRecords[8]<comment="eventRecords",optimize=false>;
+
+    FSeek(p + 0xEE0);
+} CameraShakeTable;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+CameraShakeTable cameraShakeTable;

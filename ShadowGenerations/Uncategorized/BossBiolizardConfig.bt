@@ -1,0 +1,595 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef int32 sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); float fovy<comment="画角">;
+    FSeek(p + 0x08); float distance<comment="距離">;
+    FSeek(p + 0x0C); float offsetHeight<comment="高さ調整">;
+    FSeek(p + 0x10); float offsetHeightAdded<comment="高さ調整[追加]">;
+    FSeek(p + 0x14); float minElevation<comment="仰角最小値">;
+    FSeek(p + 0x18); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 0x1C); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 0x20); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
+    FSeek(p + 0x24); float time<comment="持続時間[0以下で無限]">;
+
+    FSeek(p + 0x28);
+} BossBiolizardLockonCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float pressBodyCollisionRadius<comment="胴体のダメージコリジョン半径">;
+    FSeek(p + 0x04); float pressBodyCollisionHeight<comment="胴体のダメージコリジョン高さ">;
+    FSeek(p + 0x10); vector3 pressNeckCollisionSize<comment="首から尻尾のダメージコリジョンサイズ">;
+    FSeek(p + 0x20); float pressBodySensorRadius<comment="胴体のセンサーコリジョン半径">;
+    FSeek(p + 0x24); float pressBodySensorHeight<comment="胴体のセンサーコリジョン高さ">;
+    FSeek(p + 0x30); vector3 pressNeckSensorSize<comment="首から尻尾のセンサーコリジョンサイズ">;
+    FSeek(p + 0x40); vector3 pressNeckSideSensorSize<comment="首内側のセンサーコリジョンサイズ">;
+    FSeek(p + 0x50); vector3 pressNeckSideSensorOffset<comment="首内側のセンサーコリジョンオフセット">;
+    FSeek(p + 0x60); float pressStartTime<comment="開始までのセンサー検知時間">;
+    FSeek(p + 0x64); BossBiolizardLockonCameraParam lockonCamera<comment="ロックオンカメラ">;
+
+    FSeek(p + 0x90);
+} BossBiolizardBodyPressParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float damageColliderRadius<comment="被ダメージコリジョン半径">;
+    FSeek(p + 0x04); float damageColliderHeight<comment="被ダメージコリジョン高さ">;
+    FSeek(p + 0x10); vector3 damageColliderOffset<comment="被ダメージコリジョンのオフセット">;
+    FSeek(p + 0x20); float shockwaveColliderRadius<comment="コア衝撃波コリジョン半径">;
+    FSeek(p + 0x24); float shockwaveColliderHeight<comment="コア衝撃波コリジョン高さ">;
+    FSeek(p + 0x30); vector3 shockwaveColliderOffset<comment="コア衝撃波コリジョンの半径オフセット">;
+    FSeek(p + 0x40); sint32 coreDropRingNum<comment="コア攻撃時の獲得リング数[時間停止攻撃時]">;
+    FSeek(p + 0x50); vector3 coreDropRingOffset<comment="獲得リング出現位置オフセット">;
+    FSeek(p + 0x60); float waterFlowRotateSpeed<comment="水流の回転速度">;
+    FSeek(p + 0x64); float waterFlowIntakeSpeed<comment="水流の吸引速度">;
+    FSeek(p + 0x70); BossBiolizardBodyPressParam bodyPress<comment="ボディプレス">;
+
+    FSeek(p + 0x100);
+} BossBiolizardCommonParam;
+
+enum<sint32> ActionType
+{
+    INVALID_ACTION = 0,
+    PHASE1_IDLE = 1,
+    PHASE1_Y_ROT_HEAD = 2,
+    PHASE1_Y_ROT_TAIL = 3,
+    PHASE1_ENERGY_BALL = 4,
+    PHASE1_DOWN = 5,
+    PHASE2_IDLE = 6,
+    PHASE2_HAND_NORMAL = 7,
+    PHASE2_HAND_WAVE = 8,
+    PHASE2_HAND_IKURA = 9,
+    PHASE2_HAND_TRIPLE_0 = 10,
+    PHASE2_HAND_TRIPLE_1 = 11,
+    PHASE2_HAND_TRIPLE_2 = 12,
+    PHASE2_HAND_TRIPLE_3 = 13,
+    PHASE2_JUMP = 14,
+    PHASE3_IDLE = 15,
+    PHASE3_HOMING_IKURA_0 = 16,
+    PHASE3_HOMING_IKURA_1 = 17,
+    PHASE3_HOMING_IKURA_2 = 18,
+    PHASE3_HOMING_IKURA_3 = 19,
+    PHASE3_GIANT_IKURA = 20,
+    ACTION_TYPE_NUM = 21
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ActionType actionType<comment="アクションの種類">;
+    FSeek(p + 0x04); float time<comment="持続時間[一部のアクションでは無効]">;
+
+    FSeek(p + 0x08);
+} BossBiolizardActionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 lifeCount<comment="耐久値">;
+    FSeek(p + 0x04); sint32 healthPoint<comment="耐久値を1減らすのに必要なダメージ">;
+    FSeek(p + 0x08); BossBiolizardActionData actionTable[16]<comment="アクションテーブル",optimize=false>;
+    FSeek(p + 0x88); BossBiolizardActionData actionTable2[16]<comment="予備のアクションテーブル",optimize=false>;
+    FSeek(p + 0x108); BossBiolizardActionData actionTable3[16]<comment="予備のアクションテーブル2",optimize=false>;
+    FSeek(p + 0x188); BossBiolizardActionData actionTableByHard[16]<comment="アクションテーブル[高難易度]",optimize=false>;
+    FSeek(p + 0x208); BossBiolizardActionData actionTable2ByHard[16]<comment="予備のアクションテーブル[高難易度]",optimize=false>;
+    FSeek(p + 0x288); BossBiolizardActionData actionTable3ByHard[16]<comment="予備のアクションテーブル2[高難易度]",optimize=false>;
+    FSeek(p + 0x308); sint32 useActTblHealthPoint2<comment="予備のアクションに切り替わるための耐久値[0で無効]">;
+    FSeek(p + 0x30C); sint32 useActTblHealthPoint3<comment="予備2のアクションに切り替わるための耐久値[0で無効]">;
+
+    FSeek(p + 0x310);
+} BossBiolizardPhaseParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float motionSpeed<comment="モーション速度倍率[確定後モーションさんへ連絡]">;
+    FSeek(p + 0x10); vector3 headCollisionSize<comment="頭のダメージコリジョンサイズ">;
+    FSeek(p + 0x20); vector3 tailCollisionSize<comment="尻尾のダメージコリジョンサイズ">;
+    FSeek(p + 0x30); vector3 headBlockSize<comment="頭剛体サイズ">;
+    FSeek(p + 0x40); vector3 tailBlockSize<comment="尻尾剛体サイズ">;
+    FSeek(p + 0x50); float footCollisionRadius<comment="足踏みのダメージコリジョン半径">;
+    FSeek(p + 0x54); float footCollisionHeight<comment="足踏みのダメージコリジョン高さ">;
+    FSeek(p + 0x58); float blendMotionDistanceMin<comment="ブレンドモーションに使用する距離の最小値">;
+    FSeek(p + 0x5C); float blendMotionDistanceMax<comment="ブレンドモーションに使用する距離の最大値">;
+    FSeek(p + 0x60); BossBiolizardLockonCameraParam lockonCamera<comment="ロックオンカメラ">;
+    FSeek(p + 0x88); float waitTime<comment="動き始めるまでの時間">;
+    FSeek(p + 0x8C); float changeDelayTime<comment="回転方向切替チェック間隔">;
+    FSeek(p + 0x90); float neckMoveDelayTime<comment="首伸縮にかける時間">;
+    FSeek(p + 0x94); float hitWaitTime<comment="ヒット後動き始めるまでの時間">;
+
+    FSeek(p + 0xA0);
+} BossBiolizardYRotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float chargeTime<comment="チャージ時間">;
+    FSeek(p + 0x04); float chargeTimeByHard<comment="チャージ時間[高難易度]">;
+    FSeek(p + 0x08); sint32 shotNum<comment="発射数">;
+    FSeek(p + 0x0C); sint32 shotNumByHard<comment="発射数[高難易度]">;
+    FSeek(p + 0x10); float shotDelayTime<comment="発射間隔">;
+    FSeek(p + 0x14); float shotDelayTimeByHard<comment="発射間隔[高難易度]">;
+    FSeek(p + 0x18); float frontSpeed<comment="進行速度">;
+    FSeek(p + 0x1C); float frontSpeedByHard<comment="進行速度[高難易度]">;
+    FSeek(p + 0x20); float sideSpeed<comment="追従横移動速度">;
+    FSeek(p + 0x24); float sideSpeedByHard<comment="追従横移動速度[高難易度]">;
+    FSeek(p + 0x28); float startSize<comment="サイズ[開始]">;
+    FSeek(p + 0x2C); float startSizeByHard<comment="サイズ[開始][高難易度]">;
+    FSeek(p + 0x30); float maxSize<comment="サイズ[最大]">;
+    FSeek(p + 0x34); float maxSizeByHard<comment="サイズ[最大][高難易度]">;
+    FSeek(p + 0x38); float endSize<comment="サイズ[終了]">;
+    FSeek(p + 0x3C); float endSizeByHard<comment="サイズ[終了][高難易度]">;
+    FSeek(p + 0x40); float startHeight<comment="高さ[開始]">;
+    FSeek(p + 0x44); float startHeightByHard<comment="高さ[開始][高難易度]">;
+    FSeek(p + 0x48); float maxHeight<comment="高さ[最大]">;
+    FSeek(p + 0x4C); float maxHeightByHard<comment="高さ[最大][高難易度]">;
+    FSeek(p + 0x50); float endHeight<comment="高さ[終了]">;
+    FSeek(p + 0x54); float endHeightByHard<comment="高さ[終了][高難易度]">;
+    FSeek(p + 0x58); float sizeUpDist<comment="最大サイズになるまでの進行距離">;
+    FSeek(p + 0x5C); float sizeUpDistByHard<comment="最大サイズになるまでの進行距離[高難易度]">;
+    FSeek(p + 0x60); float keepMaxDist<comment="最大サイズを維持する進行距離">;
+    FSeek(p + 0x64); float keepMaxDistByHard<comment="最大サイズを維持する進行距離[高難易度]">;
+    FSeek(p + 0x68); float sizeDownDist<comment="最小サイズになるまでの進行距離">;
+    FSeek(p + 0x6C); float sizeDownDistByHard<comment="最小サイズになるまでの進行距離[高難易度]">;
+    FSeek(p + 0x70); float endDist<comment="破裂する進行距離">;
+    FSeek(p + 0x74); float endDistByHard<comment="破裂する進行距離[高難易度]">;
+    FSeek(p + 0x78); float explodeSize<comment="破裂ダメージ判定サイズ">;
+    FSeek(p + 0x7C); float explodeSizeByHard<comment="破裂ダメージ判定サイズ[高難易度]">;
+    FSeek(p + 0x80); float explodeTime<comment="破裂ダメージ判定時間">;
+    FSeek(p + 0x84); float explodeTimeByHard<comment="破裂ダメージ判定時間[高難易度]">;
+    FSeek(p + 0x88); float hitWaitTime<comment="ヒット後動き始めるまでの時間">;
+    FSeek(p + 0x8C); float hitWaitTimeByHard<comment="ヒット後動き始めるまでの時間[高難易度]">;
+    FSeek(p + 0x90); BossBiolizardLockonCameraParam lockonCamera<comment="ロックオンカメラ">;
+    FSeek(p + 0xC0); vector3 spawnOffset<comment="生成位置オフセット">;
+
+    FSeek(p + 0xD0);
+} BossBiolizardEnergyBallParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float addDistance<comment="カメラ距離">;
+    FSeek(p + 0x04); float addElevationOffset<comment="仰角オフセット">;
+    FSeek(p + 0x08); float addTargetUpOffset<comment="基準上方向オフセット">;
+    FSeek(p + 0x0C); float addLookatUpOffset<comment="注視点上方向オフセット">;
+    FSeek(p + 0x10); float addLookatWorldUpOffset<comment="注視点上方向オフセット[ワールド空間]">;
+    FSeek(p + 0x14); bool isDisableAvoidance<comment="迂回処理無効化">;
+    FSeek(p + 0x18); float easeIn<comment="開始補間">;
+    FSeek(p + 0x1C); float easeOut<comment="終了補間">;
+
+    FSeek(p + 0x20);
+} BossBiolizardPhase1CameraExtensionInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float nearCameraRange<comment="近接カメラ範囲半径">;
+    FSeek(p + 0x04); float nearCameraMargin<comment="近接カメラ範囲余剰">;
+    FSeek(p + 0x08); BossBiolizardPhase1CameraExtensionInfo nearCameraInfo<comment="近接カメラ設定">;
+    FSeek(p + 0x28); float outrangeCameraAngle<comment="範囲外カメラ角度">;
+    FSeek(p + 0x2C); float outrangeCameraAngleOffset<comment="範囲外カメラ角度調整">;
+    FSeek(p + 0x30); float outrangeCameraAngleMargin<comment="範囲外カメラ角度余剰">;
+    FSeek(p + 0x34); BossBiolizardPhase1CameraExtensionInfo outrangeCameraInfo<comment="範囲外カメラ設定">;
+
+    FSeek(p + 0x54);
+} BossBiolizardPhase1CameraExtensionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossBiolizardYRotParam yRotParam<comment="Y-ROT">;
+    FSeek(p + 0xA0); BossBiolizardEnergyBallParam energyBall<comment="エネルギー弾">;
+    FSeek(p + 0x170); BossBiolizardLockonCameraParam waterLockonCamera<comment="水没時のロックオンカメラ">;
+    FSeek(p + 0x198); BossBiolizardLockonCameraParam downLockonCamera<comment="息切れ中ロックオンカメラ">;
+    FSeek(p + 0x1C0); BossBiolizardPhase1CameraExtensionParam extensionCamera<comment="範囲外用カメラ[Y-Rot]">;
+    FSeek(p + 0x214); BossBiolizardPhase1CameraExtensionParam extensionCameraEB<comment="範囲外用カメラ[エネルギー弾]">;
+    FSeek(p + 0x268); float downPanCameraRatio<comment="パンカメラ有効範囲[0.0~1.0]">;
+    FSeek(p + 0x270); vector3 downPanCameraOffset<comment="パンカメラ位置オフセット">;
+    FSeek(p + 0x280); vector3 downPanCameraOffsetPlayer<comment="パンカメラ注視点オフセット">;
+    FSeek(p + 0x290); float downPanCameraFadeTime<comment="パンカメラ終了補間時間">;
+    FSeek(p + 0x294); float downRailCameraDistance<comment="レールカメラ距離">;
+    FSeek(p + 0x2A0); vector3 downRailCameraOffsetPlayer<comment="レールカメラ注視点オフセット">;
+    FSeek(p + 0x2B0); float downRailCameraAzimuth<comment="レールカメラ方位角">;
+    FSeek(p + 0x2B4); float downRailCameraElavation<comment="レールカメラ仰角">;
+    FSeek(p + 0x2B8); float downRailCameraAnglePerSec<comment="レールカメラ視点方向の感度">;
+    FSeek(p + 0x2BC); float downRailCameraFadeTime<comment="レールカメラ終了補間時間">;
+    FSeek(p + 0x2C0); float downRailGrindBoosterSpeed<comment="レール逆走防止ブースター速度">;
+    FSeek(p + 0x2C4); BossBiolizardLockonCameraParam downSpringLockonCamera<comment="レール終端ジャンプ時のロックオンカメラ">;
+    FSeek(p + 0x2F0); vector3 downSpringVelocity<comment="レール終端からのジャンプベクトル">;
+    FSeek(p + 0x300); BossBiolizardLockonCameraParam downEndHitCamera<comment="コア攻撃成功時演出カメラ">;
+    FSeek(p + 0x328); BossBiolizardLockonCameraParam downEndMissCamera<comment="コア攻撃失敗時演出カメラ">;
+    FSeek(p + 0x350); float downEndHitMoveSpeed<comment="コア攻撃成功時ジャンプ速度">;
+    FSeek(p + 0x354); float downEndMissMoveSpeed<comment="コア攻撃失敗時ジャンプ速度">;
+    FSeek(p + 0x358); float downEndHitSlideDistance<comment="コア攻撃成功時地面スライド距離">;
+    FSeek(p + 0x35C); float downEndMissSlideDistance<comment="コア攻撃失敗時地面スライド距離">;
+
+    FSeek(p + 0x360);
+} BossBiolizardPhase1Param;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool isWave[3]<comment="衝撃波の有無",optimize=false>;
+    FSeek(p + 0x03); bool isDebris[3]<comment="瓦礫の有無",optimize=false>;
+
+    FSeek(p + 0x06);
+} BossBiolizardRoeArmTripleAttackInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 roeHandHp<comment="耐久値">;
+    FSeek(p + 0x04); sint32 roeHandHpByHard[4]<comment="耐久値[高難易度]",optimize=false>;
+    FSeek(p + 0x14); float roeHandSwingWaitTime<comment="殴り攻撃時のタメ時間">;
+    FSeek(p + 0x18); float roeHandBreakDamageTime<comment="破壊時の待機時間">;
+    FSeek(p + 0x1C); float roeHandBreakDamageTimeByHard<comment="破壊時の待機時間[高難易度]">;
+    FSeek(p + 0x20); float rangeDistanceMin<comment="攻撃可能距離最小">;
+    FSeek(p + 0x24); float rangeDistanceMax<comment="攻撃可能距離最大">;
+    FSeek(p + 0x28); float rangeAngel<comment="攻撃可能角度[0～360]">;
+    FSeek(p + 0x2C); float rangeAngelOffset<comment="攻撃可能角度調整[0～360 範囲が左右に移動]">;
+    FSeek(p + 0x30); float targetDelay<comment="腕が攻撃可能になるまでの遅延">;
+    FSeek(p + 0x34); float breakPlayerHoldTime<comment="腕破壊後プレイヤーの操作不能時間">;
+    FSeek(p + 0x38); BossBiolizardRoeArmTripleAttackInfo tripleAttacks[4]<comment="3連続攻撃設定",optimize=false>;
+    FSeek(p + 0x50); BossBiolizardRoeArmTripleAttackInfo tripleAttacksByHard[4]<comment="3連続攻撃設定[高難易度]",optimize=false>;
+
+    FSeek(p + 0x68);
+} BossBiolizardRoeArm;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float time<comment="衝撃波時間">;
+    FSeek(p + 0x04); float damageByHand<comment="衝撃波ダメージ半径[殴り]">;
+    FSeek(p + 0x08); float damageByBody<comment="衝撃波ダメージ半径[本体]">;
+    FSeek(p + 0x0C); float delay<comment="衝撃波発生遅延">;
+
+    FSeek(p + 0x10);
+} BossBiolizardAttackImpactWave;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 roeHandAttackDropIkuraNum<comment="イクラドロップ数[殴り攻撃時]">;
+    FSeek(p + 0x04); sint32 boundNum<comment="バウンド数">;
+    FSeek(p + 0x08); float boundDecRatio<comment="バウンド時の減衰">;
+    FSeek(p + 0x0C); float moveSpeed<comment="移動速度">;
+    FSeek(p + 0x10); float moveSpeedRandomRange<comment="移動速度のランダム振れ幅の値">;
+    FSeek(p + 0x14); float shotAngleRandomRange<comment="移動方向の角度のランダム振れ幅の値">;
+    FSeek(p + 0x18); float downSpeed<comment="下降速度">;
+    FSeek(p + 0x1C); sint32 chaosSpearBreakRingNum<comment="カオススピアで破壊時のドロップリング数">;
+    FSeek(p + 0x20); sint32 chaosSpearBreakRingNumByHard<comment="カオススピアで破壊時のドロップリング数[高難易度]">;
+    FSeek(p + 0x24); float dBlownPowerRatioY<comment="Dブロー時移動量調整値[打ち上げ時]">;
+    FSeek(p + 0x28); float dBlownPowerRatioXZ<comment="Dブロー時移動量調整値[吹き飛ばし時]">;
+
+    FSeek(p + 0x2C);
+} BossBiolizardDropIkura;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float fovy<comment="画角">;
+    FSeek(p + 0x04); float toPointDistanceMin<comment="相対距離[最小]">;
+    FSeek(p + 0x08); float toPointDistanceMax<comment="相対距離[最大]">;
+    FSeek(p + 0x0C); float distanceMin<comment="カメラ距離[最小]">;
+    FSeek(p + 0x10); float distanceMax<comment="カメラ距離[最大]">;
+    FSeek(p + 0x14); float gravityOffsetMin<comment="重力方向オフセット[最小]">;
+    FSeek(p + 0x18); float gravityOffsetMax<comment="重力方向オフセット[最大]">;
+    FSeek(p + 0x20); vector3 playerOffsetMin<comment="プレイヤー座標オフセット[最小]">;
+    FSeek(p + 0x30); vector3 playerOffsetMax<comment="プレイヤー座標オフセット[最大]">;
+    FSeek(p + 0x40); vector3 worldOffsetMin<comment="ワールド座標オフセット[最小]">;
+    FSeek(p + 0x50); vector3 worldOffsetMax<comment="ワールド座標オフセット[最大]">;
+    FSeek(p + 0x60); vector3 pointLocalOffsetMin<comment="注視点ローカル座標オフセット[最小]">;
+    FSeek(p + 0x70); vector3 pointLocalOffsetMax<comment="注視点ローカル座標オフセット[最大]">;
+    FSeek(p + 0x80); cstring nodeName<comment="注視点ノード名">;
+
+    FSeek(p + 0x90);
+} BossBiolizardPointCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float fovy<comment="画角">;
+    FSeek(p + 0x04); float distance<comment="カメラ距離">;
+    FSeek(p + 0x08); float elevation<comment="仰角">;
+    FSeek(p + 0x0C); float gravityOffset<comment="重力方向オフセット">;
+    FSeek(p + 0x10); vector3 worldOffset<comment="ワールド座標オフセット">;
+    FSeek(p + 0x20); float keepTime<comment="カメラ維持時間">;
+    FSeek(p + 0x24); float easeInTime<comment="カメラ補間時間[開始]">;
+    FSeek(p + 0x28); float easeOutTime<comment="カメラ補間時間[終了]">;
+
+    FSeek(p + 0x30);
+} BossBiolizardDamageCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float fovy<comment="画角">;
+    FSeek(p + 0x04); float distance<comment="カメラ距離">;
+    FSeek(p + 0x08); float elevation<comment="仰角">;
+    FSeek(p + 0x0C); float rotation<comment="回転[水平面]">;
+    FSeek(p + 0x10); float gravityOffset<comment="重力方向オフセット">;
+    FSeek(p + 0x20); vector3 worldOffset<comment="ワールド座標オフセット">;
+    FSeek(p + 0x30); float keepTime<comment="カメラ維持時間">;
+    FSeek(p + 0x34); float easeInTime<comment="カメラ補間時間[開始]">;
+    FSeek(p + 0x38); float easeOutTime<comment="カメラ補間時間[終了]">;
+
+    FSeek(p + 0x40);
+} BossBiolizardArmBreakCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float radius<comment="半径">;
+    FSeek(p + 0x04); float height<comment="高さ">;
+    FSeek(p + 0x10); vector3 position<comment="位置">;
+    FSeek(p + 0x20); vector3 rotation<comment="回転">;
+
+    FSeek(p + 0x30);
+} BossBiolizardStuckCollisionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float roeArmBreakIkuraTime<comment="イクラ腕破壊時のイクラ生存時間">;
+    FSeek(p + 0x04); float battleAreaMoveDistance<comment="移動可能範囲[ステージ中央]">;
+    FSeek(p + 0x08); float defaultCameraDistanceScale<comment="カメラ距離スケール値[通常時]">;
+    FSeek(p + 0x0C); float ikuraCameraDistanceScale<comment="イクラ渡り中のカメラ距離スケール値">;
+    FSeek(p + 0x10); float ikuraCameraDistanceKeepTime<comment="イクラ渡り中のカメラ距離スケール維持時間">;
+    FSeek(p + 0x14); float handAttackSuccessAddWaitTime<comment="殴り攻撃成功時の待機延長時間">;
+    FSeek(p + 0x18); sint32 breakRingNum<comment="腕破壊時リング獲得数">;
+    FSeek(p + 0x1C); sint32 timeStopBreakRingNum<comment="腕破壊時リング獲得数[時間停止]">;
+    FSeek(p + 0x20); sint32 breakRingNumByHard<comment="腕破壊時リング獲得数[高難易度]">;
+    FSeek(p + 0x24); sint32 timeStopBreakRingNumByHard<comment="腕破壊時リング獲得数[時間停止][高難易度]">;
+    FSeek(p + 0x28); BossBiolizardRoeArm roeArm<comment="イクラ腕">;
+    FSeek(p + 0x90); BossBiolizardAttackImpactWave wave<comment="衝撃波">;
+    FSeek(p + 0xA0); BossBiolizardAttackImpactWave waveTriple<comment="衝撃波[連続殴り時]">;
+    FSeek(p + 0xB0); BossBiolizardAttackImpactWave waveTripleByHard[4]<comment="衝撃波[高難易度連続殴り時]",optimize=false>;
+    FSeek(p + 0xF0); BossBiolizardDropIkura dropIkura<comment="ドロップイクラ">;
+    FSeek(p + 0x120); BossBiolizardPointCamera camera<comment="カメラ">;
+    FSeek(p + 0x1B0); BossBiolizardDamageCamera damageCamera<comment="腕攻撃中カメラ">;
+    FSeek(p + 0x1E0); BossBiolizardArmBreakCamera armBreakCamera<comment="腕破壊演出カメラ">;
+    FSeek(p + 0x220); BossBiolizardArmBreakCamera armBreakCameraTS<comment="腕破壊演出カメラ[時間停止による破壊]">;
+    FSeek(p + 0x260); BossBiolizardPhase1CameraExtensionInfo armBreakedDownCameraInfo<comment="腕破壊後ダウン中カメラ設定">;
+    FSeek(p + 0x280); BossBiolizardStuckCollisionData stuckCollisions[6]<comment="腕埋まり時の剛体[岩用]",optimize=false>;
+
+    FSeek(p + 0x3A0);
+} BossBiolizardPhase2Param;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 roeHandAttackDropIkuraNum<comment="イクラドロップ数[殴り攻撃時]">;
+
+    FSeek(p + 0x04);
+} BossBiolizardPhase3Param;
+
+enum<sint32> ShotType
+{
+    NONE = 0,
+    ONE_SHOT = 1,
+    ONE_SHOT_PLAYER = 2,
+    ONE_SHOT_HOMING = 3,
+    MULTI_SHOT = 4,
+    MULTI_SHOT_HOMING = 5
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ShotType type<comment="発射タイプ">;
+    FSeek(p + 0x04); sint32 num<comment="弾数">;
+    FSeek(p + 0x08); float waitTime<comment="発射間隔">;
+
+    FSeek(p + 0x0C);
+} BossBiolizardHomingIkuraTableDataParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossBiolizardHomingIkuraTableDataParam tableData[24]<comment="発射パターンテーブル",optimize=false>;
+
+    FSeek(p + 0x120);
+} BossBiolizardHomingIkuraTableParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float radius<comment="イクラの攻撃判定コリジョン半径">;
+    FSeek(p + 0x04); float hitRadius<comment="イクラの攻撃ヒット範囲半径">;
+    FSeek(p + 0x08); float bodyRadius<comment="イクラの被カオススピアコリジョン半径">;
+    FSeek(p + 0x0C); float speed<comment="[通常弾]イクラの初速度">;
+    FSeek(p + 0x10); float minSpeed<comment="[通常弾]イクラの最低速度">;
+    FSeek(p + 0x14); float decelePower<comment="[通常弾]イクラの減速力[m/s]">;
+    FSeek(p + 0x18); float speedRandom<comment="[ランダム弾]イクラの初速度">;
+    FSeek(p + 0x1C); float minSpeedRandom<comment="[ランダム弾]イクラの最低速度">;
+    FSeek(p + 0x20); float decelePowerRandom<comment="[ランダム弾]イクラの減速力[m/s]">;
+    FSeek(p + 0x24); bool enableChaosSpearRandom<comment="[ランダム弾]カオススピアロック可能か">;
+    FSeek(p + 0x28); float lifeTime<comment="イクラの生存時間">;
+    FSeek(p + 0x2C); float homingAngularSpeed<comment="ホーミング角速度">;
+    FSeek(p + 0x30); float homingEndDistance<comment="ホーミングを終了する距離">;
+    FSeek(p + 0x34); float homingEndHeight<comment="ホーミングを終了する高さ">;
+    FSeek(p + 0x38); sint32 firstSpawnNum<comment="初回生成するイクラの数">;
+    FSeek(p + 0x40); vector3 spawnAreaSize<comment="生成範囲のサイズ">;
+    FSeek(p + 0x50); vector3 spawnAreaOffset<comment="生成範囲の位置オフセット">;
+    FSeek(p + 0x60); vector3 spawnNumMax<comment="各方向の生成最大個数[整数のみ扱う]">;
+    FSeek(p + 0x70); float appearWaitTime<comment="全イクラが出現するまでの時間">;
+    FSeek(p + 0x74); float startWaitTime<comment="発射前待機時間">;
+    FSeek(p + 0x78); float endWaitTime<comment="発射後待機時間">;
+    FSeek(p + 0x7C); float endWaitTimeByGaugeMax<comment="発射後待機時間[ライトゲージMAX時]">;
+    FSeek(p + 0x80); float floatSEDelay<comment="発射SEタイミング">;
+    FSeek(p + 0x84); sint32 ringNum<comment="破壊後に出現するリング数">;
+    FSeek(p + 0x90); vector3 attackCenter<comment="攻撃範囲円の中心座標[y座標はプレイヤーy座標固定]">;
+    FSeek(p + 0xA0); float attackRadius<comment="攻撃範囲円の半径">;
+    FSeek(p + 0xA4); BossBiolizardLockonCameraParam nearDistLockonCamera<comment="近距離時のロックオンカメラ">;
+    FSeek(p + 0xD0); vector3 nearDistCameraOffset<comment="近距離時のロックオンカメラ注視点オフセット[ボス原点基準]">;
+    FSeek(p + 0xE0); BossBiolizardHomingIkuraTableParam numTable[4]<comment="攻撃フェーズ毎の発射パターン",optimize=false>;
+
+    FSeek(p + 0x560);
+} BossBiolizardHomingIkuraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float fovy<comment="画角">;
+    FSeek(p + 0x04); float roll<comment="ロール">;
+    FSeek(p + 0x10); vector3 target<comment="注視点[ボス基準]">;
+    FSeek(p + 0x20); vector3 position<comment="カメラ位置[ボス基準]">;
+    FSeek(p + 0x30); vector3 up<comment="カメラ空間上方向">;
+    FSeek(p + 0x40); float delay<comment="カメラ起動遅延">;
+    FSeek(p + 0x44); float keepTime<comment="カメラ維持時間">;
+    FSeek(p + 0x48); float easeInTime<comment="カメラ補間時間[開始]">;
+    FSeek(p + 0x4C); float easeOutTime<comment="カメラ補間時間[終了]">;
+
+    FSeek(p + 0x50);
+} BossBiolizardGiantIkuraStartCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 eyeLocalOffset<comment="視点">;
+    FSeek(p + 0x10); vector3 lookAtLocalOffset<comment="注視点">;
+    FSeek(p + 0x20); float fov<comment="画角">;
+    FSeek(p + 0x24); float roll<comment="ロール">;
+    FSeek(p + 0x28); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x2C); float easeOutTime<comment="補間時間[終了]">;
+    FSeek(p + 0x30); float keepTime<comment="時間">;
+
+    FSeek(p + 0x40);
+} BossBiolizardFixedCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float radius<comment="半径">;
+    FSeek(p + 0x04); float speed<comment="移動初速">;
+    FSeek(p + 0x08); sint32 health<comment="耐久力">;
+    FSeek(p + 0x0C); sint32 childNum<comment="分裂体個数">;
+    FSeek(p + 0x10); float childSpawnTime<comment="分裂体の生成時間">;
+    FSeek(p + 0x14); float childSpeedMin<comment="分裂体の最低速度">;
+    FSeek(p + 0x18); float childSpeedMax<comment="分裂体の最大速度">;
+    FSeek(p + 0x1C); float childLifeTime<comment="分裂体の生存時間">;
+    FSeek(p + 0x20); float timeStopGaugeStopTime<comment="時間停止ゲージの停止時間">;
+    FSeek(p + 0x30); BossBiolizardGiantIkuraStartCamera startCamera<comment="開始カメラ">;
+    FSeek(p + 0x80); BossBiolizardFixedCamera fixedCamera<comment="注視カメラ[ホーミング位置中心基準]">;
+    FSeek(p + 0xC0); float fixedCameraStartDelay<comment="注視カメラ開始遅延[マイナス値設定時カメラ無効]">;
+
+    FSeek(p + 0xD0);
+} BossBiolizardGiantIkuraParam;
+
+typedef byte sint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossBiolizardHomingIkuraParam homingIkura<comment="イクラばらまき">;
+    FSeek(p + 0x560); BossBiolizardHomingIkuraParam homingIkuraByHard<comment="イクラばらまき[高難易度]">;
+    FSeek(p + 0xAC0); BossBiolizardGiantIkuraParam giantIkura<comment="巨大イクラ">;
+    FSeek(p + 0xB90); float downTime<comment="ダウン時間">;
+    FSeek(p + 0xB94); float cameraDistanceScale<comment="スタンダードカメラ距離倍率">;
+    FSeek(p + 0xB98); BossBiolizardLockonCameraParam waterLockonCamera<comment="水没時のロックオンカメラ">;
+    FSeek(p + 0xBC0); vector3 waterCameraOffset<comment="水没時のロックオンカメラ注視点オフセット">;
+    FSeek(p + 0xBD0); BossBiolizardLockonCameraParam lockonCamera<comment="ボス本体注視ロックオンカメラ">;
+    FSeek(p + 0xBF8); float chaosSpearInputGuideDelayTime<comment="カオススピア操作ガイド表示タイミング">;
+    FSeek(p + 0xBFC); sint8 chaosSpearGuideDispInputCount<comment="カオススピア操作ガイド表示の入力回数">;
+
+    FSeek(p + 0xC00);
+} BossBiolizardPhase4Param;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossBiolizardCommonParam commonParam<comment="基本">;
+    FSeek(p + 0x100); BossBiolizardPhaseParam phaseParam[4]<comment="フェーズ共通",optimize=false>;
+    FSeek(p + 0xD40); BossBiolizardPhase1Param phase1<comment="フェーズ1">;
+    FSeek(p + 0x10A0); BossBiolizardPhase2Param phase2<comment="フェーズ2">;
+    FSeek(p + 0x1440); BossBiolizardPhase3Param phase3<comment="フェーズ3">;
+    FSeek(p + 0x1450); BossBiolizardPhase4Param phase4<comment="フェーズ4">;
+
+    FSeek(p + 0x2050);
+} BossBiolizardConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossBiolizardConfig bossBiolizardConfig;

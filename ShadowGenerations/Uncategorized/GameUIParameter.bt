@@ -1,0 +1,151 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float lossAnimRatio<comment="ゲージ量が指定未満の時に注意用アニメーション">;
+    FSeek(p + 0x04); float useAnimRatio<comment="ゲージ量が指定未満の時に使用中アニメーション">;
+
+    FSeek(p + 0x08);
+} GameUIBoostParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float targetCursorOffsetY<comment="シャドウカーソルのプレイヤーポジションからのYオフセット">;
+
+    FSeek(p + 0x04);
+} GameUICursorParam;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 modelPos<comment="モデル位置">;
+    FSeek(p + 0x10); vector3 cameraPos<comment="カメラ視点">;
+    FSeek(p + 0x20); vector3 cameraTarget<comment="カメラ注視点">;
+    FSeek(p + 0x30); float fovy<comment="画角">;
+
+    FSeek(p + 0x40);
+} WhiteSpaceStageUIModelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WhiteSpaceStageUIModelParam modelParam<comment="通常モデル">;
+    FSeek(p + 0x40); WhiteSpaceStageUIModelParam dwingModelParam<comment="Dウィングモデル">;
+
+    FSeek(p + 0x80);
+} WhiteSpaceStageUI;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int32 sint32;
+
+enum<sint32> OpenState
+{
+    Locked = 0,
+    Opened = 1
+};
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring headerLabel<comment="ヘッダのラベル名">;
+    FSeek(p + 0x10); cstring textLabel<comment="中身のラベル名">;
+    FSeek(p + 0x20); cstring movieName<comment="ムービー名">;
+    FSeek(p + 0x30); cstring textureName<comment="テクスチャ名">;
+
+    FSeek(p + 0x40);
+} WhiteSpaceQAPage;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); OpenState openState<comment="解放条件">;
+    FSeek(p + 0x08); WhiteSpaceQAPage pages[5]<comment="ページ内容",optimize=false>;
+
+    FSeek(p + 0x148);
+} WhiteSpaceQAInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WhiteSpaceQAInfo infos[40]<comment="QA情報",optimize=false>;
+
+    FSeek(p + 0x3340);
+} WhiteSpaceQAParamter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float mapZoomScale<comment="通常マップ拡大率">;
+    FSeek(p + 0x04); float mapUnderGroundZoomScale<comment="地下マップ拡大率">;
+    FSeek(p + 0x08); float mapScale<comment="マップ縮尺">;
+    FSeek(p + 0x0C); float mapZoomAnimRatio<comment="マップ等倍アニメ値">;
+    FSeek(p + 0x10); float mapZoomRangeX<comment="マップ拡大時の範囲X">;
+    FSeek(p + 0x14); float mapZoomRangeY<comment="マップ拡大時の範囲Y">;
+    FSeek(p + 0x20); vector3 mapUnderGroundPos<comment="地下マップ中心">;
+
+    FSeek(p + 0x30);
+} WhiteSpaceMapUI;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float itemInfoTimer<comment="アイテムウィンドウを表示するまでの秒数、0なら表示しない">;
+    FSeek(p + 0x10); WhiteSpaceStageUI stageUIParam<comment="ステージ開始前画面">;
+    FSeek(p + 0x90); WhiteSpaceQAParamter qaParam<comment="QAリスト">;
+    FSeek(p + 0x33D0); WhiteSpaceMapUI mapParam<comment="MAPパラメータ">;
+
+    FSeek(p + 0x3400);
+} GameUIWhiteSpaceParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); GameUIBoostParam boostParam<comment="ブーストゲージパラメータ">;
+    FSeek(p + 0x08); GameUICursorParam cursorParam<comment="ロックオンカーソルパラメータ">;
+    FSeek(p + 0x10); GameUIWhiteSpaceParam whiteSpaceParam<comment="ホワイトスペースパラメータ">;
+
+    FSeek(p + 0x3410);
+} GameUIParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameUIParameter gameUIParameter;

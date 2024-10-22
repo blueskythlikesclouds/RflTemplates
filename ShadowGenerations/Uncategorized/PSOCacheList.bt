@@ -1,0 +1,322 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef ubyte uint8;
+
+enum<uint8> TYPE
+{
+    GRAPHICS = 0,
+    COMPUTE = 1,
+    MESHLET = 2
+};
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        string data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_string;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring Name<comment="シェーダー名">;
+    FSeek(p + 0x10); array_string Variation<comment="バリエーション名">;
+    FSeek(p + 0x30); uint32 Hash<comment="ハッシュ">;
+
+    FSeek(p + 0x38);
+} PSOCacheShader;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+enum<uint8> BLEND
+{
+    BLEND_INVALID = 0,
+    ZERO = 1,
+    ONE = 2,
+    SRC_COLOR = 3,
+    INV_SRC_COLOR = 4,
+    SRC_ALPHA = 5,
+    INV_SRC_ALPHA = 6,
+    DEST_ALPHA = 7,
+    INV_DEST_ALPHA = 8,
+    DEST_COLOR = 9,
+    INV_DEST_COLOR = 10,
+    SRC_ALPHA_SAT = 11,
+    BLEND_FACTOR = 12,
+    INV_BLEND_FACTOR = 13,
+    SRC1_COLOR = 14,
+    INV_SRC1_COLOR = 15,
+    SRC1_ALPHA = 16,
+    INV_SRC1_ALPHA = 17
+};
+
+enum<uint8> BLEND_OP
+{
+    BLEND_OP_INVALID = 0,
+    ADD = 1,
+    SUBTRACT = 2,
+    REV_SUBTRACT = 3,
+    MIN = 4,
+    MAX = 5
+};
+
+enum<uint8> LOGIC_OP
+{
+    LOGIC_OP_CLEAR = 0,
+    LOGIC_OP_SET = 1,
+    LOGIC_OP_COPY = 2,
+    LOGIC_OP_COPY_INVERTED = 3,
+    LOGIC_OP_NOOP = 4,
+    LOGIC_OP_INVERT = 5,
+    LOGIC_OP_AND = 6,
+    LOGIC_OP_NAND = 7,
+    LOGIC_OP_OR = 8,
+    LOGIC_OP_NOR = 9,
+    LOGIC_OP_XOR = 10,
+    LOGIC_OP_EQUIV = 11,
+    LOGIC_OP_AND_REVERSE = 12,
+    LOGIC_OP_AND_INVERTED = 13,
+    LOGIC_OP_OR_REVERSE = 14,
+    LOGIC_OP_OR_INVERTED = 15
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool BlendEnable<comment="ブレンド有効">;
+    FSeek(p + 0x01); bool LogicOpEnable<comment="ロジック有効">;
+    FSeek(p + 0x02); BLEND SrcBlend<comment="ソースブレンド">;
+    FSeek(p + 0x03); BLEND DestBlend<comment="デストブレンド">;
+    FSeek(p + 0x04); BLEND_OP BlendOp<comment="ブレンドオペレーション">;
+    FSeek(p + 0x05); BLEND SrcBlendAlpha<comment="ソースブレンドα">;
+    FSeek(p + 0x06); BLEND DestBlendAlpha<comment="デストブレンドα">;
+    FSeek(p + 0x07); BLEND_OP BlendOpAlpha<comment="ブレンドオペレーションα">;
+    FSeek(p + 0x08); LOGIC_OP LogicOp<comment="ロジックオペレーション">;
+    FSeek(p + 0x09); uint8 RenderTargetWriteMask<comment="ライトマスク">;
+
+    FSeek(p + 0x0A);
+} PSOCacheRenderTargetBlend;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool AlphaToCoverageEnable<comment="αカバレージ">;
+    FSeek(p + 0x01); bool IndependentBlendEnable<comment="α独立ブレンド">;
+    FSeek(p + 0x02); PSOCacheRenderTargetBlend RenderTarget[8]<comment="ブレンドターゲット",optimize=false>;
+
+    FSeek(p + 0x52);
+} PSOCacheBlend;
+
+enum<uint8> FILL_MODE
+{
+    FILL_MODE_INVALID = 0,
+    FILL_MODE_INVALID2 = 1,
+    FILL_MODE_WIREFRAME = 2,
+    FILL_MODE_SOLID = 3
+};
+
+enum<uint8> CULL_MODE
+{
+    CULL_MODE_INVALID = 0,
+    CULL_MODE_NONE = 1,
+    CULL_MODE_FRONT = 2,
+    CULL_MODE_BACK = 3
+};
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); FILL_MODE FillMode<comment="フィルモード">;
+    FSeek(p + 0x01); CULL_MODE CullMode<comment="カリングモード">;
+    FSeek(p + 0x02); bool FrontCounterClockwise<comment="フロントカウンタ">;
+    FSeek(p + 0x04); sint32 DepthBias<comment="デプスバイアス">;
+    FSeek(p + 0x08); float DepthBiasClamp<comment="デプスバイアスクランプ">;
+    FSeek(p + 0x0C); float SlopeScaledDepthBias<comment="スロープデプスバイアス">;
+    FSeek(p + 0x10); bool DepthClipEnable<comment="デプスクリップ有効">;
+    FSeek(p + 0x11); bool MultisampleEnable<comment="マルチサンプル有効">;
+    FSeek(p + 0x12); bool AntialiasedLineEnable<comment="ラインアンチエイリアス有効">;
+    FSeek(p + 0x14); uint32 ForcedSampleCount<comment="フォースサンプルカウント">;
+    FSeek(p + 0x18); bool ConservativeRaster<comment="コンサバティブラスタライゼーション">;
+
+    FSeek(p + 0x1C);
+} PSOCacheRasterizer;
+
+enum<uint8> STENCIL_OP
+{
+    STENCIL_OP_INVALID = 0,
+    STENCIL_OP_KEEP = 1,
+    STENCIL_OP_ZERO = 2,
+    STENCIL_OP_REPLACE = 3,
+    STENCIL_OP_INCR_SAT = 4,
+    STENCIL_OP_DECR_SAT = 5,
+    STENCIL_OP_INVERT = 6,
+    STENCIL_OP_INCR = 7,
+    STENCIL_OP_DECR = 8
+};
+
+enum<uint8> COMPARISON_FUNC
+{
+    COMPARISON_FUNC_INVALID = 0,
+    COMPARISON_FUNC_NEVER = 1,
+    COMPARISON_FUNC_LESS = 2,
+    COMPARISON_FUNC_EQUAL = 3,
+    COMPARISON_FUNC_LESS_EQUAL = 4,
+    COMPARISON_FUNC_GREATER = 5,
+    COMPARISON_FUNC_NOT_EQUAL = 6,
+    COMPARISON_FUNC_GREATER_EQUAL = 7,
+    COMPARISON_FUNC_ALWAYS = 8
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); STENCIL_OP StencilFailOp<comment="ステンシルフェイルオペレーション">;
+    FSeek(p + 0x01); STENCIL_OP StencilDepthFailOp<comment="ステンシルデプスフェイルオペレーション">;
+    FSeek(p + 0x02); STENCIL_OP StencilPassOp<comment="ステンシルパスオペレーション">;
+    FSeek(p + 0x03); COMPARISON_FUNC StencilFunc<comment="ステンシルファンクション">;
+
+    FSeek(p + 0x04);
+} PSOCacheDepthStencilOp;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool DepthEnable<comment="デプス有効">;
+    FSeek(p + 0x01); bool DepthWriteMask<comment="デプス書き込み有効">;
+    FSeek(p + 0x02); PSOCacheDepthStencilOp DepthFunc<comment="デプスファンクション">;
+    FSeek(p + 0x03); bool StencilEnable<comment="ステンシル有効">;
+    FSeek(p + 0x04); uint8 StencilReadMask<comment="ステンシル読み込みマスク">;
+    FSeek(p + 0x05); uint8 StencilWriteMask<comment="ステンシルライトマスク">;
+    FSeek(p + 0x06); PSOCacheDepthStencilOp FrontFace<comment="フロントフェイス設定">;
+    FSeek(p + 0x0A); PSOCacheDepthStencilOp BackFace<comment="バックフェイス設定">;
+
+    FSeek(p + 0x0E);
+} PSOCacheDepthStencil;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring SemanticName<comment="セマンティック名">;
+    FSeek(p + 0x10); uint32 SemanticIndex<comment="セマンティックインデックス">;
+    FSeek(p + 0x14); uint32 Format<comment="フォーマット">;
+    FSeek(p + 0x18); uint32 InputSlot<comment="スロット">;
+    FSeek(p + 0x1C); uint32 AlignedByteOffset<comment="アラインオフセット">;
+    FSeek(p + 0x20); bool InputSlotClass<comment="インプットスロットクラス">;
+    FSeek(p + 0x24); uint32 InstanceDataStepRate<comment="インスタンスデータステップレート">;
+
+    FSeek(p + 0x28);
+} PSOCacheInputElement;
+
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        PSOCacheInputElement data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_PSOCacheInputElement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); array_PSOCacheInputElement InputElements<comment="エレメント">;
+
+    FSeek(p + 0x20);
+} PSOCacheInputLayout;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 Count<comment="カウント">;
+    FSeek(p + 0x04); uint32 Quality<comment="クオリティ">;
+
+    FSeek(p + 0x08);
+} PSOCacheSample;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); TYPE Type<comment="PSOCacheタイプ">;
+    FSeek(p + 0x08); PSOCacheShader VS<comment="頂点シェーダー">;
+    FSeek(p + 0x40); PSOCacheShader PS<comment="ピクセルシェーダー">;
+    FSeek(p + 0x78); PSOCacheShader CS<comment="コンピュートシェーダー">;
+    FSeek(p + 0xB0); PSOCacheBlend BlendState<comment="ブレンドステート">;
+    FSeek(p + 0x104); uint32 SampleMask<comment="サンプルマスク">;
+    FSeek(p + 0x108); PSOCacheRasterizer RasterizerState<comment="ラスタライザステート">;
+    FSeek(p + 0x124); PSOCacheDepthStencil DepthStencilState<comment="デプスステンシルステート">;
+    FSeek(p + 0x138); PSOCacheInputLayout InputLayout<comment="インプットレイアウト">;
+    FSeek(p + 0x158); uint32 IBStripCutValue<comment="インデックスバッファカットバリユー">;
+    FSeek(p + 0x15C); uint32 PrimitiveTopologyType<comment="プリミティブトポロジー">;
+    FSeek(p + 0x160); uint32 NumRenderTargets<comment="レンダーターゲット数">;
+    FSeek(p + 0x164); uint32 RTVFormats[8]<comment="レンダーターゲット",optimize=false>;
+    FSeek(p + 0x184); uint32 DSVFormat<comment="デプスステンシルフォーマット">;
+    FSeek(p + 0x188); PSOCacheSample SampleDesc<comment="マルチサンプル設定">;
+    FSeek(p + 0x190); uint32 NodeMask<comment="ノードマスク">;
+    FSeek(p + 0x194); uint32 Flags<comment="フラグ">;
+
+    FSeek(p + 0x198);
+} PSOCache;
+
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        PSOCache data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_PSOCache;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 version<comment="バージョン">;
+    FSeek(p + 0x08); array_PSOCache caches<comment="キャッシュたち">;
+
+    FSeek(p + 0x28);
+} PSOCacheList;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PSOCacheList pSOCacheList;

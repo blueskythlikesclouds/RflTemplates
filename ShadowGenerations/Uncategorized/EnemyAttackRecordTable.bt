@@ -1,0 +1,57 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 no<comment="レコード番号">;
+
+    FSeek(p + 0x01);
+} Record;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Record record;
+    FSeek(p + 0x08); cstring name<comment="ダメージ名">;
+    FSeek(p + 0x18); sint32 damage<comment="ダメージ値">;
+    FSeek(p + 0x1C); float velocityX<comment="水平吹き飛び力">;
+    FSeek(p + 0x20); float velocityY<comment="垂直吹き飛び力">;
+    FSeek(p + 0x28); cstring hitStopName<comment="ヒットストップキー名">;
+    FSeek(p + 0x38); cstring cameraShakeName<comment="カメラシェイクキー名">;
+
+    FSeek(p + 0x48);
+} EnemyAttackRecord;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyAttackRecord data[192]<comment="data",optimize=false>;
+
+    FSeek(p + 0x3600);
+} EnemyAttackRecordTable;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyAttackRecordTable enemyAttackRecordTable;

@@ -1,0 +1,26 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float suckedTime<comment="リング回収までの時間">;
+    FSeek(p + 0x04); float launchAngle<comment="噴出角度">;
+    FSeek(p + 0x08); float launchMaxSpeed<comment="噴出最高速度">;
+    FSeek(p + 0x0C); float launchMinSpeed<comment="噴出最低速度">;
+    FSeek(p + 0x10); float randomRangeMin<comment="出現地点の幅(最小)">;
+    FSeek(p + 0x14); float randomRangeMax<comment="出現地点の幅(最大)">;
+    FSeek(p + 0x18); float lifeTime<comment="消えるまでの時間(負数でデフォルト)">;
+
+    FSeek(p + 0x1C);
+} RingParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+RingParameter ringParameter;

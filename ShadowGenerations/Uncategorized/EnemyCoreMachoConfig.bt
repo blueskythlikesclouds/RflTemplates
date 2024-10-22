@@ -1,0 +1,115 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 damage_num_threshold<comment="ダメージ回数閾値">;
+    FSeek(p + 0x04); float velocity_scale_base<comment="ベロシティスケールベース乗算値">;
+    FSeek(p + 0x08); float velocity_scale_linear<comment="ベロシティスケールリニア乗算値">;
+    FSeek(p + 0x0C); float velocity_acceleration<comment="ベロシティスケール加速度">;
+    FSeek(p + 0x10); float velocity_max<comment="ベロシティスケール最大値">;
+
+    FSeek(p + 0x14);
+} TimeStopDamageVelocityParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 0x04); sint32 maxHealthPoint<comment="コア体力">;
+    FSeek(p + 0x08); sint32 maxHealthPointVehicle<comment="マッチョ体力">;
+    FSeek(p + 0x10); vector3 colliderPositionOffset<comment="コア用本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x20); vector3 colliderPositionOffsetVehicle<comment="マッチョ用本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x30); vector3 damageColliderPositionOffset<comment="コア用ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x40); vector3 damageColliderPositionOffsetVehicle<comment="マッチョ用ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x50); float colliderRadius<comment="コア本体円柱コリジョン半径">;
+    FSeek(p + 0x54); float colliderRadiusVehicle<comment="マッチョ本体円柱コリジョン半径">;
+    FSeek(p + 0x58); float colliderHeight<comment="コア本体円柱コリジョン高さ">;
+    FSeek(p + 0x5C); float colliderHeightVehicle<comment="マッチョ本体円柱コリジョン高さ">;
+    FSeek(p + 0x60); float damageColliderRadiusOffset<comment="コアダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x64); float damageColliderRadiusOffsetVehicle<comment="マッチョダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x68); float damageColliderHeightOffset<comment="コアダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x6C); float damageColliderHeightOffsetVehicle<comment="マッチョダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x70); float attackColliderRadiusOffsetVehicle<comment="マッチョ攻撃コリジョンの半径オフセット">;
+    FSeek(p + 0x80); vector3 colliderPositionOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x90); float colliderRadiusOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン半径オフセット">;
+    FSeek(p + 0x94); float colliderHeightOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン高さオフセット">;
+    FSeek(p + 0x98); float moveTime<comment="移動時間">;
+    FSeek(p + 0x9C); float attackShockWaveColliderRadiusOffset<comment="衝撃波コリジョンの半径オフセット">;
+    FSeek(p + 0xA0); float attackShockWaveColliderHeightOffset<comment="衝撃波コリジョンの高さオフセット">;
+    FSeek(p + 0xA4); uint32 changeShockWaveDamageValue<comment="衝撃波に遷移するための被弾HPダメージ量">;
+    FSeek(p + 0xA8); float readyShockWaveWaitTime<comment="衝撃波を出すまでの待ち時間">;
+    FSeek(p + 0xAC); float attackingShockWaveTime<comment="衝撃波が出ている時間">;
+    FSeek(p + 0xB0); float startMoveWaitTime<comment="移動開始するまでの待ち時間">;
+    FSeek(p + 0xB4); float attackProjectileRadius<comment="弾コリジョン半径">;
+    FSeek(p + 0xB8); float attackProjectileHeight<comment="弾コリジョン長さ">;
+    FSeek(p + 0xBC); float attackProjectileSpeed<comment="弾速度">;
+    FSeek(p + 0xC0); float attackProjectileHomingAngularSpeed<comment="弾ホーミング角速度">;
+    FSeek(p + 0xC4); float attackProjectileHomingOnTime<comment="弾ホーミング時間">;
+    FSeek(p + 0xC8); float attackProjectileLifeTime<comment="弾寿命">;
+    FSeek(p + 0xCC); float startProjectileWaitTime<comment="弾を開始するまでの待ち時間">;
+    FSeek(p + 0xD0); float readyProjectileWaitTime<comment="弾を出すまでの待ち時間">;
+    FSeek(p + 0xD4); float readyTornadoWaitTime<comment="竜巻を出すまでの待ち時間">;
+    FSeek(p + 0xD8); float rotateSpeed<comment="旋回速度">;
+    FSeek(p + 0xDC); float rotateLimitAngle<comment="旋回制限角度">;
+    FSeek(p + 0xE0); float damageFlipGuardVelocityScaleV<comment="被弾時の弾く垂直の力">;
+    FSeek(p + 0xE4); float damageFlipGuardVelocityScaleH<comment="被弾時の弾く水平の力">;
+    FSeek(p + 0xE8); float damageFlipGuardOutOfControlTime<comment="弾いた際の対象操作不能時間">;
+    FSeek(p + 0xEC); float stunTime<comment="コア用スタン時間">;
+    FSeek(p + 0xF0); float warpRadius<comment="コア用瞬間移動半径">;
+    FSeek(p + 0xF4); float warpRadiusVehicle<comment="マッチョ用瞬間移動半径">;
+    FSeek(p + 0xF8); float warpHeight<comment="コア用瞬間移動高さ">;
+    FSeek(p + 0xFC); float warpHeightVehicle<comment="マッチョ用瞬間移動高さ">;
+    FSeek(p + 0x100); vector3 warpOffsetForFV<comment="コアFV用瞬間移動位置オフセット">;
+    FSeek(p + 0x110); vector3 warpOffsetForFVVehicle<comment="マッチョFV用瞬間移動位置オフセット">;
+    FSeek(p + 0x120); vector3 warpOffsetForFVWhileBlownUp<comment="打ち上げ中FV用瞬間移動位置オフセット">;
+    FSeek(p + 0x130); vector3 warpOffsetForFVWhileBlownAway<comment="吹き飛び中FV用瞬間移動位置オフセット">;
+    FSeek(p + 0x140); float warpAngleForFV<comment="コアFV用瞬間移動角度">;
+    FSeek(p + 0x144); float warpAngleForFVVehicle<comment="マッチョFV用瞬間移動角度">;
+    FSeek(p + 0x148); float warpAngleForSV<comment="コアSV用瞬間移動角度">;
+    FSeek(p + 0x14C); float warpAngleForSVVehicle<comment="マッチョSV用瞬間移動角度">;
+    FSeek(p + 0x150); float warpAngleForFVWhileBlownUp<comment="打ち上げ中FV用瞬間移動角度">;
+    FSeek(p + 0x154); float warpAngleForSVWhileBlownUp<comment="打ち上げ中SV用瞬間移動角度">;
+    FSeek(p + 0x158); float warpAngleForFVWhileBlownAway<comment="吹き飛び中FV用瞬間移動角度">;
+    FSeek(p + 0x15C); float warpAngleForSVWhileBlownAway<comment="吹き飛び中SV用瞬間移動角度">;
+    FSeek(p + 0x160); bool warpOffsetCalcFromNowRot<comment="コア瞬間移動位置オフセットを現在回転値から算出するか初期回転値から算出するか">;
+    FSeek(p + 0x161); bool warpOffsetCalcFromNowRotVehicle<comment="マッチョ瞬間移動位置オフセットを現在回転値から算出するか初期回転値から算出するか">;
+    FSeek(p + 0x164); TimeStopDamageVelocityParam timeStopDamageVelocityParams[3]<comment="時間停止中ダメージベロシティパラメータ",optimize=false>;
+
+    FSeek(p + 0x1A0);
+} EnemyCoreMachoCommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyCoreMachoCommonParam commonParam<comment="共通パラメータ">;
+
+    FSeek(p + 0x1A0);
+} EnemyCoreMachoConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyCoreMachoConfig enemyCoreMachoConfig;

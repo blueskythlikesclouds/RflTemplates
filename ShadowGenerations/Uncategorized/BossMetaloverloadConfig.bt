@@ -1,0 +1,748 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring layerName<comment="レイヤー名[ステージコード無し]">;
+    FSeek(p + 0x10); sint32 phase<comment="フェーズ番号[1以上、0は無効]">;
+    FSeek(p + 0x14); sint32 lifeMin<comment="耐久値[最小]">;
+    FSeek(p + 0x18); sint32 lifeMax<comment="耐久値[最大]">;
+    FSeek(p + 0x20); cstring tag<comment="タグ名[タグ指定でのONOFF切り替えが最優先]">;
+    FSeek(p + 0x30); bool isChangePhaseEnable<comment="フェーズ切り替え後の状態">;
+
+    FSeek(p + 0x38);
+} BossMetaloverloadSwitchLayerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x04); float upperRotSpeed<comment="上半身旋回速度">;
+    FSeek(p + 0x08); float upperResetRotSpeed<comment="上半身旋回速度[旋回終了時]">;
+    FSeek(p + 0x10); BossMetaloverloadSwitchLayerData switchLayers[32]<comment="切替対象レイヤー登録",optimize=false>;
+
+    FSeek(p + 0x710);
+} BossMetaloverloadCommonParam;
+
+typedef byte sint8;
+
+enum<sint8> ActionType
+{
+    INVALID_ACTION = 0,
+    PHASE2_IDLE = 1,
+    PHASE2_ATTACK_MISSILE = 2,
+    PHASE2_ATTACK_SHOT = 3,
+    PHASE2_ATTACK_NORMAL_THROWING = 4,
+    PHASE2_ATTACK_SP_THROWING = 5,
+    PHASE2_RING_POP = 6,
+    PHASE2_RING_POP_1 = 7,
+    PHASE2_ATTACK_MINE = 8,
+    PHASE2_ATTACK_MINE_1 = 9,
+    PHASE2_ATTACK_MINE_2 = 10,
+    PHASE2_ATTACK_MINE_3 = 11,
+    PHASE2_ATTACK_MINE_4 = 12,
+    PHASE2_ATTACK_THORNBALL = 13,
+    ACTION_TYPE_NUM = 14
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ActionType actionType<comment="アクションの種類">;
+    FSeek(p + 0x04); float time<comment="持続時間[一部のアクションでは無効]">;
+    FSeek(p + 0x08); sint32 successSkip<comment="成功時に指定数テーブルをスキップ[成功条件は各アクション固有]">;
+    FSeek(p + 0x0C); sint32 patternIndex<comment="パターン番号[対応アクションのみ有効]">;
+
+    FSeek(p + 0x10);
+} BossMetaloverloadActionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 lifeCount<comment="耐久値">;
+    FSeek(p + 0x04); sint32 healthPoint<comment="耐久値を1減らすのに必要なダメージ">;
+    FSeek(p + 0x08); sint32 healthPointByHard<comment="耐久値を1減らすのに必要なダメージ[高難易度用]">;
+    FSeek(p + 0x0C); BossMetaloverloadActionData actionTable1[34]<comment="アクションテーブル1",optimize=false>;
+    FSeek(p + 0x22C); BossMetaloverloadActionData actionTable2[34]<comment="アクションテーブル2",optimize=false>;
+    FSeek(p + 0x44C); BossMetaloverloadActionData actionTable3[34]<comment="アクションテーブル3",optimize=false>;
+    FSeek(p + 0x66C); BossMetaloverloadActionData actionTable4[34]<comment="アクションテーブル4",optimize=false>;
+    FSeek(p + 0x88C); BossMetaloverloadActionData actionTable1ByHard[34]<comment="アクションテーブル1[高難易度]",optimize=false>;
+    FSeek(p + 0xAAC); BossMetaloverloadActionData actionTable2ByHard[34]<comment="アクションテーブル2[高難易度]",optimize=false>;
+    FSeek(p + 0xCCC); BossMetaloverloadActionData actionTable3ByHard[34]<comment="アクションテーブル3[高難易度]",optimize=false>;
+    FSeek(p + 0xEEC); BossMetaloverloadActionData actionTable4ByHard[34]<comment="アクションテーブル4[高難易度]",optimize=false>;
+
+    FSeek(p + 0x110C);
+} BossMetaloverloadPhaseParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float speed<comment="速度">;
+    FSeek(p + 0x04); float width<comment="移動可能横幅">;
+    FSeek(p + 0x08); float bossSpeedMax<comment="ボス最高速度">;
+    FSeek(p + 0x0C); float bossSpeedMin<comment="ボス最低速度">;
+    FSeek(p + 0x10); float bossAccelSpeed<comment="ボス加速性能">;
+    FSeek(p + 0x14); float bossDecelSpeed<comment="ボス減速性能">;
+    FSeek(p + 0x18); float bossKeepDistanceDefault<comment="相対維持距離">;
+    FSeek(p + 0x1C); float bossKeepDistanceLimit<comment="相対維持距離[最小]">;
+    FSeek(p + 0x20); float bossStanLostDistance<comment="スタン時に詰められる距離">;
+    FSeek(p + 0x24); float bossDefalutDistanceReturnTime<comment="元の相対維持距離に戻り始める時間">;
+    FSeek(p + 0x28); float bossDefalutDistanceReturnSpeed<comment="元の相対維持距離に戻る速度[秒速]">;
+
+    FSeek(p + 0x2C);
+} BossMetaloverloadPhase1AutorunParam;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring nodeName<comment="注視点ノード名">;
+    FSeek(p + 0x10); vector3 offset<comment="注視座標オフセット">;
+
+    FSeek(p + 0x20);
+} BossBattleLockOnCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float fovy<comment="画角">;
+    FSeek(p + 0x04); float toPointDistanceMin<comment="相対距離[最小]">;
+    FSeek(p + 0x08); float toPointDistanceMax<comment="相対距離[最大]">;
+    FSeek(p + 0x0C); float distanceMin<comment="カメラ距離[最小]">;
+    FSeek(p + 0x10); float distanceMax<comment="カメラ距離[最大]">;
+    FSeek(p + 0x14); float gravityOffsetMin<comment="重力方向オフセット[最小]">;
+    FSeek(p + 0x18); float gravityOffsetMax<comment="重力方向オフセット[最大]">;
+    FSeek(p + 0x20); vector3 playerOffsetMin<comment="プレイヤー座標オフセット[最小]">;
+    FSeek(p + 0x30); vector3 playerOffsetMax<comment="プレイヤー座標オフセット[最大]">;
+    FSeek(p + 0x40); vector3 worldOffsetMin<comment="ワールド座標オフセット[最小]">;
+    FSeek(p + 0x50); vector3 worldOffsetMax<comment="ワールド座標オフセット[最大]">;
+    FSeek(p + 0x60); vector3 pointLocalOffsetMin<comment="注視点ローカル座標オフセット[最小]">;
+    FSeek(p + 0x70); vector3 pointLocalOffsetMax<comment="注視点ローカル座標オフセット[最大]">;
+    FSeek(p + 0x80); cstring nodeName<comment="注視点ノード名">;
+    FSeek(p + 0x90); float roll<comment="ロール値">;
+    FSeek(p + 0x94); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x98); float easeOutTime<comment="補間時間[終了]">;
+    FSeek(p + 0x9C); float time<comment="持続時間">;
+
+    FSeek(p + 0xA0);
+} BossPointCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); float distance<comment="距離">;
+    FSeek(p + 0x08); float minElevation<comment="仰角最小値">;
+    FSeek(p + 0x0C); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 0x10); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 0x14); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
+    FSeek(p + 0x18); float time<comment="持続時間[0以下で無限]">;
+    FSeek(p + 0x1C); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x20); float easeOutTime<comment="補間時間[終了]">;
+
+    FSeek(p + 0x24);
+} BossMetaloverloadLockonCameraParam;
+
+enum<sint8> InputGuideKind
+{
+    INPUT_GUIDE_KIND_NONE = 0,
+    INPUT_GUIDE_KIND_LEFT_STEP = 1,
+    INPUT_GUIDE_KIND_RIGHT_STEP = 2,
+    INPUT_GUIDE_KIND_JUMP = 3,
+    INPUT_GUIDE_KIND_NUM = 4
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint8 laneNumber<comment="ロケットを発射するレーン番号(0が無効)">;
+    FSeek(p + 0x01); bool missileStepsEneble[4]<comment="ロケットの縦の段数有効/無効設定",optimize=false>;
+    FSeek(p + 0x05); bool enebleBounce<comment="ロケットが跳ね返し可能">;
+    FSeek(p + 0x08); float shotTime<comment="発射時間 (発射ボリューム接触からの時間)">;
+    FSeek(p + 0x0C); InputGuideKind inputGuideKind<comment="アクションナビ">;
+    FSeek(p + 0x0D); bool isScreenInputGuide<comment="2D画面上にアクションナビを出すか">;
+    FSeek(p + 0x10); float screenInputGuideDistance<comment="どの距離でアクションナビを出すか">;
+
+    FSeek(p + 0x14);
+} BossMetaloverloadPhase1MissileInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMetaloverloadPhase1MissileInfo missileInfoTabel[40]<comment="ロケット情報リスト",optimize=false>;
+
+    FSeek(p + 0x320);
+} BossMetaloverloadPhase1MissilePatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float backwardMoveTime<comment="後方移動時間">;
+    FSeek(p + 0x04); float backwardMoveDistance<comment="後方移動距離">;
+    FSeek(p + 0x08); float originalPosMoveTime<comment="元の場所に移動時間">;
+    FSeek(p + 0x0C); float startWaitTime<comment="開始待ち時間">;
+    FSeek(p + 0x10); float endWaitTime<comment="最後のミサイル発射後終了までの時間">;
+    FSeek(p + 0x14); float straightSpeed<comment="直線速度">;
+    FSeek(p + 0x18); float straightSpeedByHard<comment="直線速度[高難易度]">;
+    FSeek(p + 0x1C); float curveTime<comment="レーンまで時間">;
+    FSeek(p + 0x20); float curveTimeByHard<comment="レーンまで時間[高難易度]">;
+    FSeek(p + 0x24); float blowSpeed<comment="跳ね返し速度">;
+    FSeek(p + 0x28); float laneHeight<comment="レーンの水面からの高さ">;
+    FSeek(p + 0x2C); float lifeTime<comment="生存時間">;
+    FSeek(p + 0x30); float leaveDistance<comment="離れる距離">;
+    FSeek(p + 0x34); sint32 blowHitDamagePoint<comment="ダメージ値[跳ね返し時]">;
+    FSeek(p + 0x38); float blowCurvedTime<comment="跳ね返し時山なりに弧を描く時間">;
+    FSeek(p + 0x3C); float blowCurvedYMax<comment="跳ね返し時山なりに弧を描く高さ">;
+    FSeek(p + 0x40); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x44); float missileScale<comment="ミサイルスケール">;
+    FSeek(p + 0x48); float stepHeight<comment="ミサイル縦１段の高さ">;
+    FSeek(p + 0x4C); float colRadius<comment="ミサイルコリジョン半径">;
+    FSeek(p + 0x50); float colHeight<comment="ミサイルコリジョン高さ">;
+    FSeek(p + 0x60); vector3 colOffset<comment="ミサイルコリジョンオフセット座標">;
+    FSeek(p + 0x70); BossMetaloverloadPhase1MissilePatternData missilePatterns[4]<comment="ミサイルパターン",optimize=false>;
+    FSeek(p + 0xCF0); BossMetaloverloadPhase1MissilePatternData missilePatternsByHard[4]<comment="ミサイルパターン[高難易度]",optimize=false>;
+
+    FSeek(p + 0x1970);
+} BossMetaloverloadPhase1MissileParam;
+
+enum<sint8> Phase1TailAttackType
+{
+    TAIL_ACT_NONE = 0,
+    TAIL_ACT_1 = 1,
+    TAIL_ACT_2 = 2,
+    TAIL_ACT_3 = 3,
+    TAIL_ACT_4 = 4,
+    TAIL_ACT_NUM = 5
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); Phase1TailAttackType type<comment="尻尾攻撃種類">;
+
+    FSeek(p + 0x01);
+} BossMetaloverloadPhaseTailInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float attackInterval<comment="攻撃間隔の時間">;
+    FSeek(p + 0x04); BossMetaloverloadPhaseTailInfo tailTypeTabel[4]<comment="攻撃リスト(配列順に攻撃再生)",optimize=false>;
+
+    FSeek(p + 0x08);
+} BossMetaloverloadPhase1TailPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float frontMoveDistance<comment="前方移動距離">;
+    FSeek(p + 0x04); float frontMoveUpPos<comment="前方移動時の高さ">;
+    FSeek(p + 0x08); float riseAndFallMotionSpeed<comment="上昇、下降モーション速度">;
+    FSeek(p + 0x0C); float attackMotionSpeed<comment="尻尾攻撃中のモーション速度">;
+    FSeek(p + 0x10); float attackIntervalMotionSpeed<comment="尻尾攻撃の予兆中のモーション速度">;
+    FSeek(p + 0x14); float colliderOffsetHeight<comment="尻尾攻撃のコリジョン高さ">;
+    FSeek(p + 0x18); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x1C); BossMetaloverloadPhase1TailPatternData tailPatterns[4]<comment="尻尾攻撃パターン",optimize=false>;
+
+    FSeek(p + 0x3C);
+} BossMetaloverloadPhase1TailParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float backwardMoveTime<comment="後方移動時間">;
+    FSeek(p + 0x04); float backwardMoveDistance<comment="後方移動距離">;
+    FSeek(p + 0x08); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x0C); float originalPosMoveTime<comment="元の場所に移動時間">;
+    FSeek(p + 0x10); float startWaitTime<comment="開始待ち時間">;
+
+    FSeek(p + 0x14);
+} BossMetaloverloadPhase1FlameParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 stopPosNo<comment="停止位置番号（F4キーを参照(0が無効)">;
+
+    FSeek(p + 0x04);
+} BossMetaloverloadPhase1SelfRecoverDebris;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float selfRecoverActiveHp<comment="自己再生発動HP(指定HP以下で自己再生発動)">;
+    FSeek(p + 0x04); float recoverHp<comment="HP回復量">;
+    FSeek(p + 0x08); float limitRecoverHp<comment="HP回復限界(これ以上回復しない)">;
+    FSeek(p + 0x0C); float bossKeepDistance<comment="相対維持距離">;
+    FSeek(p + 0x10); float debrisSpeed<comment="回復破片の移動速度">;
+    FSeek(p + 0x14); float frontSpeed<comment="回復破片に当たったときの進行方向速度">;
+    FSeek(p + 0x18); float upSpeed<comment="回復破片に当たったときの上方向速度">;
+    FSeek(p + 0x1C); float outOfControlTime<comment="回復破片に当たったときの操作不可時間">;
+    FSeek(p + 0x20); float keepVelocityTime<comment="回復破片に当たったときの初速を維持時間">;
+    FSeek(p + 0x24); float miniDebrisCreateIntervalTime<comment="小さい破片の生成間隔時間">;
+    FSeek(p + 0x28); sint32 miniDebrisNum<comment="小さい破片の生成個数">;
+    FSeek(p + 0x2C); float miniDebrisSpeed<comment="小さい破片の移動速度">;
+    FSeek(p + 0x30); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x34); BossMetaloverloadPhase1SelfRecoverDebris debrisList[7]<comment="回復破片リスト",optimize=false>;
+
+    FSeek(p + 0x50);
+} BossMetaloverloadPhase1SelfRecoverParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float bossKeepDistance<comment="時間停止中の相対維持距離">;
+    FSeek(p + 0x04); float photonDashBossKeepDistance<comment="フォトンダッシュの相対維持距離">;
+    FSeek(p + 0x08); float photonDashBossKeepTime<comment="フォトンダッシュ終了後相対維持時間">;
+    FSeek(p + 0x0C); float photonDashDistanceOffset<comment="フォトンダッシュ中ホーミングアタック追加射程距離">;
+    FSeek(p + 0x10); float photonDashAttackAfterCameraStartTime<comment="フォトンダッシュ攻撃の瞬間移動開始から攻撃後カメラ開始までの時間">;
+    FSeek(p + 0x14); float photonDashAttackAfterCameraInvalidationTime<comment="フォトンダッシュ攻撃が当たってから攻撃後カメラ無効までの時間">;
+
+    FSeek(p + 0x18);
+} BossMetaloverloadPhase1TimeStopParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float stunTime<comment="スタン時間">;
+    FSeek(p + 0x04); float rushTime<comment="ラッシュダメージ時間">;
+    FSeek(p + 0x08); float rushCameraDelayTime<comment="ラッシュカメラ起動遅延時間">;
+    FSeek(p + 0x0C); float damageAfterTime<comment="ダメージ後待機時間">;
+    FSeek(p + 0x10); float damageAfterDistance<comment="ダメージ後離れる距離">;
+    FSeek(p + 0x14); sint32 debrisBlowHitDamagePoint<comment="破片ダメージ値通常[跳ね返し時]">;
+    FSeek(p + 0x18); sint32 debrisSurfSpinBlowHitDamagePoint<comment="破片ダメージ値サーフスピン[跳ね返し時]">;
+    FSeek(p + 0x1C); sint32 mineBlowHitDamagePoint<comment="機雷ダメージ値[跳ね返し時]">;
+    FSeek(p + 0x20); float rushFinishDamageScale<comment="自己再生からラッシュ最後の一撃の攻撃倍率">;
+    FSeek(p + 0x24); sint32 photonDashDamagePoint<comment="フォトンダッシュ攻撃のダメージ値">;
+    FSeek(p + 0x28); float phaseChangeWaitTime<comment="フェーズ切り替え待ち時間">;
+    FSeek(p + 0x2C); float photonPhaseChangeWaitTime<comment="フォトンダッシュ攻撃後フェーズ切り替え待ち時間">;
+    FSeek(p + 0x30); float blowPower<comment="プレイヤー吹き飛び力">;
+    FSeek(p + 0x34); float blowUpPower<comment="プレイヤー吹き飛び時上方向力">;
+    FSeek(p + 0x38); float blowDeceleration<comment="プレイヤー吹き飛び減速力">;
+    FSeek(p + 0x3C); float gravityPower<comment="プレイヤー吹き飛び時重力">;
+    FSeek(p + 0x40); float blowEndHeight<comment="プレイヤー吹き飛び終了高さ">;
+
+    FSeek(p + 0x44);
+} BossMetaloverloadPhase1DamageParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float distanceOffset<comment="攻撃チャンス中ホーミングアタック追加射程距離">;
+
+    FSeek(p + 0x04);
+} BossMetaloverloadPhase1AttackChanceParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 useActTblHealthPoint2<comment="アクションテーブル2に切り替わるための耐久値[0で無効]">;
+    FSeek(p + 0x04); sint8 laneNum<comment="レーン数">;
+    FSeek(p + 0x08); float laneWidth<comment="レーン幅">;
+    FSeek(p + 0x0C); BossMetaloverloadPhase1AutorunParam autorun<comment="オートラン">;
+    FSeek(p + 0x40); BossBattleLockOnCameraParam mainCamera<comment="カメラ">;
+    FSeek(p + 0x60); BossPointCameraParam damageCamera<comment="ダメージ中カメラ">;
+    FSeek(p + 0x100); BossPointCameraParam bossLookAtCamera<comment="ボス注視カメラ">;
+    FSeek(p + 0x1A0); BossMetaloverloadLockonCameraParam subCamera<comment="注視カメラ">;
+    FSeek(p + 0x1D0); BossMetaloverloadPhase1MissileParam missileParam<comment="ミサイルの設定">;
+    FSeek(p + 0x1B40); BossMetaloverloadPhase1TailParam tailParam<comment="尻尾攻撃の設定">;
+    FSeek(p + 0x1B7C); BossMetaloverloadPhase1FlameParam flameParam<comment="火炎攻撃の設定">;
+    FSeek(p + 0x1B90); BossMetaloverloadPhase1SelfRecoverParam selfRecoverParam<comment="自己再生の設定">;
+    FSeek(p + 0x1BE0); BossMetaloverloadPhase1TimeStopParam timeStopParam<comment="時間停止設定">;
+    FSeek(p + 0x1C00); BossPointCameraParam photonBeforeBossLookAtCamera<comment="フォトンダッシュ攻撃前注視カメラ">;
+    FSeek(p + 0x1CA0); BossPointCameraParam photonBossLookAtCamera<comment="フォトンダッシュ攻撃後注視カメラ">;
+    FSeek(p + 0x1D40); BossMetaloverloadPhase1DamageParam damageParam<comment="ダメージ設定">;
+    FSeek(p + 0x1D84); BossMetaloverloadPhase1AttackChanceParam attackChanceParam<comment="攻撃チャンスの設定">;
+    FSeek(p + 0x1D88); bool attackChanceBeforeBossLookAtCameraEneble<comment="攻撃チャンス注視カメラの有効、無効">;
+    FSeek(p + 0x1D90); BossPointCameraParam attackChanceBeforeBossLookAtCamera<comment="攻撃チャンス注視カメラ">;
+    FSeek(p + 0x1E30); float startCaptionTime<comment="開始字幕表示タイミング[時間]">;
+    FSeek(p + 0x1E38); cstring startCaptionLabel<comment="開始字幕ラベル名">;
+    FSeek(p + 0x1E48); float tutorialCaptionTime<comment="チュートリアル区間字幕表示タイミング[時間]">;
+    FSeek(p + 0x1E50); cstring tutorialCaptionLabel<comment="チュートリアル区間字幕ラベル名">;
+    FSeek(p + 0x1E60); float chaosBreakCaptionTime<comment="時間停止破り時字幕表示タイミング[時間]">;
+    FSeek(p + 0x1E68); cstring chaosBreakCaptionLabel<comment="時間停止破り時字幕ラベル名">;
+
+    FSeek(p + 0x1E80);
+} BossMetaloverloadPhase1Param;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float fovy<comment="画角">;
+    FSeek(p + 0x04); float toPointDistanceMin<comment="相対距離[最小]">;
+    FSeek(p + 0x08); float toPointDistanceMax<comment="相対距離[最大]">;
+    FSeek(p + 0x0C); float distanceMin<comment="カメラ距離[最小]">;
+    FSeek(p + 0x10); float distanceMax<comment="カメラ距離[最大]">;
+    FSeek(p + 0x14); float gravityOffsetMin<comment="重力方向オフセット[最小]">;
+    FSeek(p + 0x18); float gravityOffsetMax<comment="重力方向オフセット[最大]">;
+    FSeek(p + 0x20); vector3 playerOffsetMin<comment="プレイヤー座標オフセット[最小]">;
+    FSeek(p + 0x30); vector3 playerOffsetMax<comment="プレイヤー座標オフセット[最大]">;
+    FSeek(p + 0x40); vector3 worldOffsetMin<comment="ワールド座標オフセット[最小]">;
+    FSeek(p + 0x50); vector3 worldOffsetMax<comment="ワールド座標オフセット[最大]">;
+    FSeek(p + 0x60); vector3 pointLocalOffsetMin<comment="注視点ローカル座標オフセット[最小]">;
+    FSeek(p + 0x70); vector3 pointLocalOffsetMax<comment="注視点ローカル座標オフセット[最大]">;
+    FSeek(p + 0x80); cstring nodeName<comment="注視点ノード名">;
+    FSeek(p + 0x90); vector3 pointLocalDir<comment="注視点正面方向">;
+    FSeek(p + 0xA0); float baseDistance<comment="カメラ固定位置">;
+    FSeek(p + 0xA4); float addSideMoveLimitAngle<comment="左右移動量によるカメラ横移動角度">;
+    FSeek(p + 0xA8); float addSideMoveDistance<comment="左右移動量によるカメラ横移動距離">;
+    FSeek(p + 0xAC); float inputStickRotAngle<comment="入力時のカメラ方向調整[角度]">;
+    FSeek(p + 0xB0); float inputStickDistanceRatioMin<comment="入力時のカメラ距離比率[最小]">;
+    FSeek(p + 0xB4); float inputStickDistanceRatioMax<comment="入力時のカメラ距離比率[最小]">;
+    FSeek(p + 0xB8); float inputStickOffsetHeightMin<comment="入力時のカメラ高さ調整[最小]">;
+    FSeek(p + 0xBC); float inputStickOffsetHeightMax<comment="入力時のカメラ高さ調整[最大]">;
+    FSeek(p + 0xC0); float inputStickRollMin<comment="入力時のカメラロール[最小]">;
+    FSeek(p + 0xC4); float inputStickRollMax<comment="入力時のカメラロール[最大]">;
+    FSeek(p + 0xC8); float inputStickAddRatio<comment="入力時の変化値">;
+    FSeek(p + 0xCC); float noInputStickAddRatio<comment="無入力時の変化値">;
+    FSeek(p + 0xD0); float inputStickDelay<comment="入力時の遅延">;
+
+    FSeek(p + 0xE0);
+} BossSVCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint8 laneNum<comment="レーン数">;
+    FSeek(p + 0x04); float minDistance<comment="レーンの内径">;
+    FSeek(p + 0x08); float maxDistance<comment="レーンの外径">;
+    FSeek(p + 0x0C); float svPathRadius<comment="SVパス半径">;
+    FSeek(p + 0x10); float speed<comment="水流速度">;
+    FSeek(p + 0x14); float suctionPowerRatio<comment="吸い込み力">;
+    FSeek(p + 0x18); float playerBackSpeed<comment="プレイヤー後退速度[プレイヤーに対する水流速度]">;
+    FSeek(p + 0x1C); float moveDistance<comment="移動可能距離">;
+    FSeek(p + 0x20); bool moveUnlock<comment="プレイヤー移動制限解除">;
+    FSeek(p + 0x24); float bossRationAngleMin<comment="ボスの旋回開始角度[最小]">;
+    FSeek(p + 0x28); float bossRationAngleMax<comment="ボスの旋回開始角度[最大]">;
+    FSeek(p + 0x2C); float bossRationSpeedMin<comment="ボスの旋回速度[最小]">;
+    FSeek(p + 0x30); float bossRationSpeedMax<comment="ボスの旋回速度[最大]">;
+
+    FSeek(p + 0x34);
+} BossMetaloverloadPhase2WaterFlowParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float delay<comment="遅延時間">;
+    FSeek(p + 0x04); float popAngle<comment="出現位置[ボスからの角度]">;
+    FSeek(p + 0x08); float popInterval<comment="出現間隔">;
+    FSeek(p + 0x0C); sint8 num<comment="出現数">;
+
+    FSeek(p + 0x10);
+} BossMetaloverloadPhase2ThornballPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 blowHitDamagePoint<comment="ダメージ値[跳ね返し時]">;
+    FSeek(p + 0x04); float moveTime<comment="移動時間">;
+    FSeek(p + 0x08); float blowSpeed<comment="跳ね返し速度">;
+    FSeek(p + 0x0C); float blowUpRatio<comment="跳ね返し時の上昇速度率">;
+    FSeek(p + 0x10); bool firstInputGuideDisplay<comment="初回のみアクションナビ表示か(true:初回のみ,false:毎回)">;
+    FSeek(p + 0x14); BossMetaloverloadPhase2ThornballPatternData patterns[5]<comment="出現パターン",optimize=false>;
+
+    FSeek(p + 0x64);
+} BossMetaloverloadPhase2ThornballParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float delay<comment="遅延時間">;
+    FSeek(p + 0x04); float popAngle<comment="出現位置[ボスからの角度]">;
+    FSeek(p + 0x08); float popInterval<comment="出現間隔">;
+    FSeek(p + 0x0C); sint8 num<comment="出現数">;
+    FSeek(p + 0x10); float height<comment="高さ調整">;
+    FSeek(p + 0x14); float heightPatterns[4]<comment="高さ調整[個別]",optimize=false>;
+
+    FSeek(p + 0x24);
+} BossMetaloverloadPhase2MoveRingPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float moveTime<comment="移動時間">;
+    FSeek(p + 0x04); BossMetaloverloadPhase2MoveRingPatternData patterns[4]<comment="出現パターン",optimize=false>;
+
+    FSeek(p + 0x94);
+} BossMetaloverloadPhase2MoveRingParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint8 laneIndex<comment="レーン番号[0が無効]">;
+    FSeek(p + 0x01); bool isLeft<comment="左側発射[画面右側]">;
+    FSeek(p + 0x04); float popTime<comment="発射時間">;
+    FSeek(p + 0x08); float height<comment="高さ">;
+    FSeek(p + 0x0C); bool isInvincible<comment="トゲ有り[無敵属性]">;
+
+    FSeek(p + 0x10);
+} BossMetaloverloadPhase2MissileInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float hpRatioMin<comment="残HP[最小]">;
+    FSeek(p + 0x04); float hpRatioMax<comment="残HP[最大]">;
+    FSeek(p + 0x08); BossMetaloverloadPhase2MissileInfo infos[16]<comment="発射情報",optimize=false>;
+
+    FSeek(p + 0x108);
+} BossMetaloverloadPhase2MissilePatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float addDistance<comment="加算カメラ距離">;
+    FSeek(p + 0x04); float addGravityOffset<comment="加算重力方向オフセット">;
+    FSeek(p + 0x10); vector3 addPlayerOffset<comment="加算プレイヤー座標オフセット">;
+    FSeek(p + 0x20); vector3 addWorldOffset<comment="加算ワールド座標オフセット">;
+    FSeek(p + 0x30); vector3 addPointLocalOffset<comment="加算ローカル座標オフセット">;
+    FSeek(p + 0x40); float time<comment="時間">;
+    FSeek(p + 0x44); float easeIn<comment="開始補間">;
+    FSeek(p + 0x48); float easeOut<comment="終了補間">;
+
+    FSeek(p + 0x50);
+} BossMetaloverloadSVCameraExtensionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 blowHitDamagePoint<comment="ダメージ値[跳ね返し時]">;
+    FSeek(p + 0x04); float flySpeed<comment="速度[空中]">;
+    FSeek(p + 0x08); float flySpeedByHard<comment="速度[高難易度空中]">;
+    FSeek(p + 0x0C); float onWaterSpeed<comment="速度[水上]">;
+    FSeek(p + 0x10); float onWaterSpeedByHard<comment="速度[高難易度水上]">;
+    FSeek(p + 0x14); float shotAngle<comment="発射角度">;
+    FSeek(p + 0x18); float blowSpeed<comment="跳ね返し速度">;
+    FSeek(p + 0x1C); float blowUpRatio<comment="跳ね返し時の上昇速度率">;
+    FSeek(p + 0x20); float radius<comment="当たり判定サイズ[半径]">;
+    FSeek(p + 0x24); float waitTime<comment="発射後待機時間">;
+    FSeek(p + 0x28); float moveTime<comment="移動時間">;
+    FSeek(p + 0x2C); sint32 spinBlowRingNum<comment="スピンで跳ね返した際の獲得リング数">;
+    FSeek(p + 0x30); bool firstInputGuideDisplay<comment="初回のみアクションナビ表示か(true:初回のみ,false:毎回)">;
+    FSeek(p + 0x34); BossMetaloverloadPhase2MissilePatternData patterns[4]<comment="出現パターン",optimize=false>;
+    FSeek(p + 0x454); BossMetaloverloadPhase2MissilePatternData patternsByHard[4]<comment="出現パターン[高難易度]",optimize=false>;
+    FSeek(p + 0x880); BossMetaloverloadSVCameraExtensionParam cameraEx<comment="カメラ調整">;
+
+    FSeek(p + 0x8D0);
+} BossMetaloverloadPhase2MissileParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float hitstopStartTime<comment="ヒットストップ演出開始タイミング">;
+    FSeek(p + 0x04); float startTime<comment="カメラ切替タイミング">;
+    FSeek(p + 0x08); float easeOutTime<comment="カメラ補間">;
+    FSeek(p + 0x0C); float keepTime<comment="カメラ時間">;
+    FSeek(p + 0x10); vector3 localOffsetDirection<comment="オフセット方向">;
+    FSeek(p + 0x20); float offsetDistance<comment="オフセット距離">;
+    FSeek(p + 0x24); float cancelDelay<comment="中断処理解除遅延時間">;
+    FSeek(p + 0x30); vector3 guideOffset<comment="ボス方向に対するオフセット値">;
+    FSeek(p + 0x40); float targetOffsetHeight<comment="注視点高さ調整[ワールド空間]">;
+
+    FSeek(p + 0x50);
+} BossMetaloverloadPhase2ThrowingFocusCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x10); vector3 landingPos<comment="落下位置[水流の向きがZ+]">;
+    FSeek(p + 0x20); float landingTime<comment="落下時間">;
+    FSeek(p + 0x24); float blowPower<comment="吹き飛び力">;
+
+    FSeek(p + 0x30);
+} BossMetaloverloadPhase2ThrowingBreakDebrisInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 tankBlowHitDamagePoint<comment="ダメージ値[タンク瓦礫跳ね返し時]">;
+    FSeek(p + 0x04); sint32 shipBlowHitDamagePoint<comment="ダメージ値[戦艦瓦礫跳ね返し時]">;
+    FSeek(p + 0x08); sint32 tankBlowHitDamagePointByHard<comment="ダメージ値[高難易度タンク瓦礫跳ね返し時]">;
+    FSeek(p + 0x0C); sint32 shipBlowHitDamagePointByHard<comment="ダメージ値[高難易度戦艦瓦礫跳ね返し時]">;
+    FSeek(p + 0x10); float tankRadius<comment="コリジョン半径[タンク]">;
+    FSeek(p + 0x14); float shipRadius<comment="コリジョン半径[戦艦]">;
+    FSeek(p + 0x18); float blowSpeed<comment="跳ね返し速度">;
+    FSeek(p + 0x1C); float blowUpRatio<comment="跳ね返し時の上昇速度率">;
+    FSeek(p + 0x20); BossMetaloverloadPhase2ThrowingBreakDebrisInfo tankBreakDebris[16]<comment="タンク破壊時瓦礫",optimize=false>;
+    FSeek(p + 0x320); BossMetaloverloadPhase2ThrowingBreakDebrisInfo shipBreakDebris[16]<comment="戦艦破壊時瓦礫",optimize=false>;
+    FSeek(p + 0x620); BossMetaloverloadPhase2ThrowingBreakDebrisInfo tankBreakDebrisByHard[16]<comment="タンク破壊時瓦礫[高難易度]",optimize=false>;
+    FSeek(p + 0x920); BossMetaloverloadPhase2ThrowingBreakDebrisInfo shipBreakDebrisByHard[16]<comment="戦艦破壊時瓦礫[高難易度]",optimize=false>;
+
+    FSeek(p + 0xC20);
+} BossMetaloverloadPhase2ThrowingBreakDebrisParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 eyeLocalOffset<comment="視点">;
+    FSeek(p + 0x10); vector3 lookAtLocalOffset<comment="注視点">;
+    FSeek(p + 0x20); float fov<comment="画角">;
+    FSeek(p + 0x24); float roll<comment="ロール">;
+    FSeek(p + 0x28); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x2C); float easeOutTime<comment="補間時間[終了]">;
+    FSeek(p + 0x30); float keepTime<comment="時間">;
+
+    FSeek(p + 0x40);
+} BossMetaloverloadFixedCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 tankHp<comment="耐久値[タンク]">;
+    FSeek(p + 0x04); float tankWaterline<comment="タンクの喫水線調整[海上浮遊時]">;
+    FSeek(p + 0x10); vector3 tankStartVelocity<comment="タンク投げ方向">;
+    FSeek(p + 0x20); float tankEndWaitTimeByOutOfRange<comment="タンク投げ終了待機時間[範囲外時]">;
+    FSeek(p + 0x24); float tankEndWaitTimeByBreak<comment="タンク投げ終了待機時間[破壊時]">;
+    FSeek(p + 0x28); float tankMoveTime<comment="タンク生存時間">;
+    FSeek(p + 0x2C); sint32 tankKnokbackRingNum<comment="タンクを弾いた際の獲得リング数">;
+    FSeek(p + 0x30); sint32 tankNormalBreakRingNum<comment="タンク破壊時の獲得リング数">;
+    FSeek(p + 0x34); sint32 tankTimeStopBreakRingNum<comment="タンク破壊時[時間停止]の獲得リング数">;
+    FSeek(p + 0x38); sint32 shipHp<comment="耐久値[戦艦]">;
+    FSeek(p + 0x3C); sint32 shipTimeStopRefDebrisNum<comment="戦艦破壊時の時間停止跳ね返し瓦礫数">;
+    FSeek(p + 0x40); sint32 shipTimeStopRefDebrisDamage<comment="戦艦破壊時の時間停止ダメージ">;
+    FSeek(p + 0x44); sint32 shipTimeStopRefDebrisNumByHard<comment="戦艦破壊時の時間停止跳ね返し瓦礫数[高難易度]">;
+    FSeek(p + 0x48); sint32 shipTimeStopRefDebrisDamageByHard<comment="戦艦破壊時の時間停止ダメージ[高難易度]">;
+    FSeek(p + 0x4C); float shipThrowingDecleSpeedRatio<comment="戦艦投げ速度減速率[0.0-100.0]">;
+    FSeek(p + 0x50); float shipThrowingDecleTime<comment="戦艦投げ速度減速時間">;
+    FSeek(p + 0x54); float shipThrowingDecleDelay<comment="戦艦投げ速度減速開始遅延">;
+    FSeek(p + 0x60); vector3 shipStartVelocity<comment="戦艦投げ方向">;
+    FSeek(p + 0x70); float shipLandingVelocityXZ<comment="戦艦着水方向調整[XZ]">;
+    FSeek(p + 0x74); float shipLandingVelocityY<comment="戦艦着水方向調整[Y]">;
+    FSeek(p + 0x78); float shipLandingPosOffsetXZ<comment="戦艦着水位置調整[前後]">;
+    FSeek(p + 0x7C); float shipLandingPosOffsetSide<comment="戦艦着水位置調整[左右]">;
+    FSeek(p + 0x80); float shipEndWaitTimeByOutOfRange<comment="戦艦投げ終了待機時間[範囲外時]">;
+    FSeek(p + 0x84); float shipEndWaitTimeByBreak<comment="戦艦投げ終了待機時間[破壊時]">;
+    FSeek(p + 0x88); sint32 shipNormalBreakRingNum<comment="戦艦破壊時の獲得リング数">;
+    FSeek(p + 0x8C); sint32 shipTimeStopBreakRingNum<comment="戦艦破壊時[時間停止]の獲得リング数">;
+    FSeek(p + 0x90); BossMetaloverloadSVCameraExtensionParam tankCameraEx<comment="タンク投げカメラ調整">;
+    FSeek(p + 0xE0); BossMetaloverloadSVCameraExtensionParam tankBreakCameraEx<comment="タンク破壊後カメラ調整">;
+    FSeek(p + 0x130); BossMetaloverloadPhase2ThrowingFocusCameraParam camera<comment="戦艦投げカメラ設定">;
+    FSeek(p + 0x180); BossMetaloverloadSVCameraExtensionParam shipBreakCameraEx<comment="戦艦破壊後カメラ調整">;
+    FSeek(p + 0x1D0); BossMetaloverloadPhase2ThrowingBreakDebrisParam debris<comment="瓦礫設定">;
+    FSeek(p + 0xDF0); bool shipTargetEnables[6]<comment="戦艦攻撃位置",optimize=false>;
+    FSeek(p + 0xDF8); float underwaterAnimRatio<comment="入水中のモーション速度倍率">;
+    FSeek(p + 0xE00); BossMetaloverloadFixedCamera shipThrowingCamera<comment="戦艦投げ用固定カメラ">;
+    FSeek(p + 0xE40); float shipThrowingCameraDelay<comment="戦艦投げカメラ起動遅延[マイナス値でカメラ無効]">;
+
+    FSeek(p + 0xE50);
+} BossMetaloverloadPhase2ThrowingParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 reflectMaxCount<comment="最大跳ね返し回数">;
+    FSeek(p + 0x04); sint32 reflectMaxCountByHard<comment="最大跳ね返し回数[高難易度用]">;
+    FSeek(p + 0x08); sint32 blowHitDamagePoint<comment="ダメージ値[跳ね返し時]">;
+    FSeek(p + 0x0C); float speed<comment="発射速度">;
+    FSeek(p + 0x10); float shotOffset<comment="発射位置調整[前後]">;
+    FSeek(p + 0x14); float addSpeedBoss<comment="加算速度[ボス跳ね返し時]">;
+    FSeek(p + 0x18); float addSpeedBossByHard<comment="加算速度[ボス跳ね返し時][高難易度用]">;
+    FSeek(p + 0x1C); float addSpeedPlyer<comment="加算速度[プレイヤー跳ね返し時]">;
+    FSeek(p + 0x20); float scale<comment="クリスタル本体サイズ倍率">;
+    FSeek(p + 0x24); float homingParam<comment="誘導性能">;
+    FSeek(p + 0x28); sint32 knokbackRingNum<comment="弾いた際の獲得リング数">;
+    FSeek(p + 0x2C); sint32 breakRingNum<comment="破壊時の獲得リング数">;
+    FSeek(p + 0x30); bool firstInputGuideDisplay<comment="初回のみアクションナビ表示か(true:初回のみ,false:毎回)">;
+    FSeek(p + 0x40); BossMetaloverloadSVCameraExtensionParam cameraEx<comment="カメラ調整">;
+
+    FSeek(p + 0x90);
+} BossMetaloverloadPhase2ShotParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossSVCameraParam mainCamera<comment="メインカメラ">;
+    FSeek(p + 0xE0); BossMetaloverloadPhase2WaterFlowParam waterFlow<comment="水流設定">;
+    FSeek(p + 0x114); BossMetaloverloadPhase2ThornballParam thornball<comment="機雷攻撃設定">;
+    FSeek(p + 0x178); BossMetaloverloadPhase2MoveRingParam thornballEx<comment="トゲ鉄球攻撃設定">;
+    FSeek(p + 0x210); BossMetaloverloadPhase2MissileParam missile<comment="ミサイル攻撃設定">;
+    FSeek(p + 0xAE0); BossMetaloverloadPhase2ThrowingParam throwing<comment="投擲攻撃設定">;
+    FSeek(p + 0x1930); BossMetaloverloadPhase2ShotParam shot<comment="クリスタル攻撃設定">;
+    FSeek(p + 0x19C0); BossMetaloverloadPhase2MoveRingParam ring<comment="リング出現設定">;
+    FSeek(p + 0x1A54); sint32 bigDamageRaction<comment="大リアクションダメージ値[未満の場合は小リアクション]">;
+
+    FSeek(p + 0x1A60);
+} BossMetaloverloadPhase2Param;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMetaloverloadCommonParam commonParam<comment="基本">;
+    FSeek(p + 0x710); BossMetaloverloadPhaseParam phaseParam[2]<comment="フェーズ共通",optimize=false>;
+    FSeek(p + 0x2930); BossMetaloverloadPhase1Param phase1<comment="フェーズ1">;
+    FSeek(p + 0x47B0); BossMetaloverloadPhase2Param phase2<comment="フェーズ2">;
+
+    FSeek(p + 0x6210);
+} BossMetaloverloadConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossMetaloverloadConfig bossMetaloverloadConfig;

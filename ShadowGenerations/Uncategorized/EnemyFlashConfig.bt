@@ -1,0 +1,73 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 damage_num_threshold<comment="ダメージ回数閾値">;
+    FSeek(p + 0x04); float velocity_scale_base<comment="ベロシティスケールベース乗算値">;
+    FSeek(p + 0x08); float velocity_scale_linear<comment="ベロシティスケールリニア乗算値">;
+    FSeek(p + 0x0C); float velocity_acceleration<comment="ベロシティスケール加速度">;
+    FSeek(p + 0x10); float velocity_max<comment="ベロシティスケール最大値">;
+
+    FSeek(p + 0x14);
+} TimeStopDamageVelocityParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 0x04); sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 0x10); vector3 colliderPositionOffset<comment="本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x20); vector3 damageColliderPositionOffset<comment="ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x30); float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 0x34); float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 0x38); float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x3C); float damageColliderHeightOffset<comment="ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x40); vector3 colliderPositionOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x50); float colliderRadiusOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン半径オフセット">;
+    FSeek(p + 0x54); float colliderHeightOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン高さオフセット">;
+    FSeek(p + 0x58); float rotateSpeed<comment="旋回速度">;
+    FSeek(p + 0x5C); float rotateLimitAngle<comment="旋回制限角度">;
+    FSeek(p + 0x60); float shootCloneInterval<comment="分身攻撃間隔">;
+    FSeek(p + 0x64); float cloneRadius<comment="分身攻撃半径">;
+    FSeek(p + 0x68); float cloneLength<comment="分身攻撃長さ">;
+    FSeek(p + 0x6C); float cloneSpeed<comment="分身攻撃速度">;
+    FSeek(p + 0x70); float cloneAppearDelayTime<comment="分身攻撃出現遅延時間">;
+    FSeek(p + 0x74); float cloneAppearTime<comment="分身攻撃出現時間">;
+    FSeek(p + 0x78); float stunTime<comment="スタン時間">;
+    FSeek(p + 0x7C); float warpRadius<comment="瞬間移動半径">;
+    FSeek(p + 0x80); float warpHeight<comment="瞬間移動高さ">;
+    FSeek(p + 0x84); TimeStopDamageVelocityParam timeStopDamageVelocityParams[3]<comment="時間停止中ダメージベロシティパラメータ",optimize=false>;
+
+    FSeek(p + 0xC0);
+} EnemyFlashCommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyFlashCommonParam commonParam<comment="共通パラメータ">;
+
+    FSeek(p + 0xC0);
+} EnemyFlashConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyFlashConfig enemyFlashConfig;

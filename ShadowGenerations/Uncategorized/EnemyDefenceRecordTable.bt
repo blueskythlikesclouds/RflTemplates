@@ -1,0 +1,53 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 no<comment="レコード番号">;
+
+    FSeek(p + 0x01);
+} Record;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0);  Record record;
+    FSeek(p + 0x08); cstring name<comment="キー名">;
+    FSeek(p + 0x18); float baseRate<comment="通常倍率">;
+    FSeek(p + 0x1C); float stunRate<comment="スタン倍率">;
+    FSeek(p + 0x20); float staggerRate<comment="怯み倍率">;
+
+    FSeek(p + 0x28);
+} EnemyDefenceRecord;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyDefenceRecord data[128]<comment="data",optimize=false>;
+
+    FSeek(p + 0x1400);
+} EnemyDefenceRecordTable;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyDefenceRecordTable enemyDefenceRecordTable;

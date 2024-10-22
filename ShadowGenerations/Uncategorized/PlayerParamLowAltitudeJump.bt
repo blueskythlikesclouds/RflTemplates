@@ -1,0 +1,25 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float upSpeed<comment="上方向初速">;
+    FSeek(p + 0x04); float frontSpeed<comment="前方初速">;
+    FSeek(p + 0x08); float damperV<comment="垂直方向ダンパー">;
+    FSeek(p + 0x0C); float damperH<comment="水平方向ダンパー">;
+    FSeek(p + 0x10); float gravity<comment="重力加速度">;
+    FSeek(p + 0x14); float time<comment="時間">;
+
+    FSeek(p + 0x18);
+} PlayerParamLowAltitudeJump;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PlayerParamLowAltitudeJump playerParamLowAltitudeJump;

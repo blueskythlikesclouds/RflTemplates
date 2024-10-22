@@ -1,0 +1,42 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring tagName<comment="名称[未設定時無効]">;
+    FSeek(p + 0x10); float time<comment="表示時間">;
+    FSeek(p + 0x14); float delay<comment="遅延時間">;
+    FSeek(p + 0x18); float radiusMin<comment="サイズ[最小半径]">;
+    FSeek(p + 0x1C); float radiusMax<comment="サイズ[最大半径]">;
+
+    FSeek(p + 0x20);
+} BossAttackSignalParamInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossAttackSignalParamInfo _params[16]<comment="予兆情報一覧",optimize=false>;
+
+    FSeek(p + 0x200);
+} BossAttackSignalConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossAttackSignalConfig bossAttackSignalConfig;

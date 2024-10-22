@@ -1,0 +1,39 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef byte sint8;
+
+enum<sint8> ContactDamageType
+{
+    CONTACT_DAMAGE_NONE = 0,
+    CONTACT_DAMAGE_LOW_SPEED = 1,
+    CONTACT_DAMAGE_MIDDLE_SPEED = 2,
+    CONTACT_DAMAGE_HIGH_SPEED = 3
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ContactDamageType contactDamageType<comment="接触ダメージ">;
+    FSeek(p + 0x01); bool noneDamageSpin<comment="スピンアタックではダメージを受けない">;
+    FSeek(p + 0x02); bool rideOnDamage<comment="乗られた時、ダメージを受ける">;
+    FSeek(p + 0x03); bool aerialBounce<comment="空中攻撃で破壊した際のバウンド">;
+    FSeek(p + 0x04); bool enableEnemyBreak<comment="敵も破壊可能になる">;
+
+    FSeek(p + 0x05);
+} GismoConfigPlanData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GismoConfigPlanData gismoConfigPlanData;

@@ -1,0 +1,62 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef byte sint8;
+
+enum<sint8> DisplayType
+{
+    Caption = 0
+};
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); DisplayType display<comment="表示タイプ">;
+    FSeek(p + 0x08); cstring label<comment="テキストラベル">;
+    FSeek(p + 0x18); float waitTime<comment="ボイス終了後の待ち時間">;
+
+    FSeek(p + 0x20);
+} LabelData;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); LabelData labels[20]<comment="会話",optimize=false>;
+    FSeek(p + 0x280); bool isForcePlay<comment="字幕OFFでも表示するか">;
+
+    FSeek(p + 0x288);
+} Discussion;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); Discussion discussions[10]<comment="会話データ",optimize=false>;
+
+    FSeek(p + 0x1950);
+} CaptionParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+CaptionParameter captionParameter;

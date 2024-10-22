@@ -1,0 +1,57 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef byte sint8;
+
+enum<sint8> Condition
+{
+    Time = 0,
+    Animation = 1
+};
+
+enum<sint8> Shape
+{
+    Sphere = 0,
+    Cylinder = 1,
+    Box = 2
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); Condition condition<comment="判定条件">;
+    FSeek(p + 0x01); sint8 count<comment="判定回数">;
+    FSeek(p + 0x04); float spanTime<comment="間隔時間">;
+    FSeek(p + 0x08); Shape shape<comment="形状">;
+    FSeek(p + 0x10); vector3 shapeSize<comment="サイズ">;
+    FSeek(p + 0x20); vector3 shapeOffset<comment="位置オフセット">;
+
+    FSeek(p + 0x30);
+} PlayerParamAttackCollider;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); PlayerParamAttackCollider hit<comment="ヒット判定">;
+    FSeek(p + 0x30); float ignoreSwingingTime<comment="空振り無効時間">;
+
+    FSeek(p + 0x40);
+} PlayerParamAerialFinish;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PlayerParamAerialFinish playerParamAerialFinish;

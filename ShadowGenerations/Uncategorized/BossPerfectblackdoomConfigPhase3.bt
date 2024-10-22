@@ -1,0 +1,581 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float speed<comment="速度">;
+    FSeek(p + 0x04); float radius<comment="プレイヤー移動可能半径">;
+    FSeek(p + 0x08); float areaAspectRatio<comment="プレイヤー移動可能縦横比">;
+    FSeek(p + 0x0C); float bossSpeedMax<comment="ボス最高速度">;
+    FSeek(p + 0x10); float bossSpeedMin<comment="ボス最低速度">;
+    FSeek(p + 0x14); float bossAccelSpeed<comment="ボス加速性能">;
+    FSeek(p + 0x18); float bossDecelSpeed<comment="ボス減速性能">;
+    FSeek(p + 0x1C); float bossKeepDistanceDefault<comment="相対維持距離">;
+    FSeek(p + 0x20); float bossKeepDistanceLimit<comment="相対維持距離[最小]">;
+    FSeek(p + 0x24); float bossDefalutDistanceReturnTime<comment="元の相対維持距離に戻り始める時間">;
+    FSeek(p + 0x28); float bossDefalutDistanceReturnSpeed<comment="元の相対維持距離に戻る速度[秒速]">;
+    FSeek(p + 0x2C); float boostChangeDistanceSpeed<comment="ブースト時相対維持距離を縮める速度[秒速]">;
+    FSeek(p + 0x30); float boostChangeDistRatioReturnTime<comment="ブースト禁止区間を抜けた後、ブースト割合適用にかける時間">;
+    FSeek(p + 0x34); float enableHormingDistance<comment="ホーミングカーソルを有効にする距離">;
+
+    FSeek(p + 0x38);
+} BossPerfectblackdoomFinalAutorunParam;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring nodeName<comment="注視点ノード名">;
+    FSeek(p + 0x10); vector3 offset<comment="注視座標オフセット">;
+    FSeek(p + 0x20); float playerHeightOffset<comment="カメラプレイヤー基準位置高さオフセット">;
+
+    FSeek(p + 0x30);
+} BossPerfectblackdoomBattleLockOnCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float playerBlowPower<comment="プレイヤー吹き飛び力">;
+    FSeek(p + 0x04); float playerBlowUpPower<comment="プレイヤー吹き飛び時上方向力">;
+    FSeek(p + 0x08); float playerBlowDeceleration<comment="プレイヤー吹き飛び減速力">;
+    FSeek(p + 0x0C); float playerBlowGravityPower<comment="プレイヤー吹き飛び時重力">;
+    FSeek(p + 0x10); float playerBlowTime<comment="プレイヤー吹き飛び時間">;
+
+    FSeek(p + 0x14);
+} BossPerfectblackdoomFinalPlayerBlowParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効/無効">;
+    FSeek(p + 0x04); float fovy<comment="画角">;
+    FSeek(p + 0x08); float toPointDistanceMin<comment="相対距離[最小]">;
+    FSeek(p + 0x0C); float toPointDistanceMax<comment="相対距離[最大]">;
+    FSeek(p + 0x10); float distanceMin<comment="カメラ距離[最小]">;
+    FSeek(p + 0x14); float distanceMax<comment="カメラ距離[最大]">;
+    FSeek(p + 0x18); float gravityOffsetMin<comment="重力方向オフセット[最小]">;
+    FSeek(p + 0x1C); float gravityOffsetMax<comment="重力方向オフセット[最大]">;
+    FSeek(p + 0x20); vector3 playerOffsetMin<comment="プレイヤー座標オフセット[最小]">;
+    FSeek(p + 0x30); vector3 playerOffsetMax<comment="プレイヤー座標オフセット[最大]">;
+    FSeek(p + 0x40); vector3 worldOffsetMin<comment="ワールド座標オフセット[最小]">;
+    FSeek(p + 0x50); vector3 worldOffsetMax<comment="ワールド座標オフセット[最大]">;
+    FSeek(p + 0x60); vector3 pointLocalOffsetMin<comment="注視点ローカル座標オフセット[最小]">;
+    FSeek(p + 0x70); vector3 pointLocalOffsetMax<comment="注視点ローカル座標オフセット[最大]">;
+    FSeek(p + 0x80); cstring nodeName<comment="注視点ノード名">;
+    FSeek(p + 0x90); float roll<comment="ロール値">;
+    FSeek(p + 0x94); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x98); float easeOutTime<comment="補間時間[終了]">;
+    FSeek(p + 0x9C); float time<comment="持続時間">;
+
+    FSeek(p + 0xA0);
+} BossPerfectblackdoomPointCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float rushTime<comment="ラッシュ時間">;
+    FSeek(p + 0x10); vector3 bossBlowPos<comment="ボス吹き飛び位置">;
+    FSeek(p + 0x20); float bossBlowTime<comment="ボス吹き飛び時間">;
+    FSeek(p + 0x24); float bossBlowResetTime<comment="ボス吹き飛び戻す時間">;
+    FSeek(p + 0x28); float endKeepDistance<comment="終了時相対維持距離">;
+    FSeek(p + 0x2C); float endKeepDistanceTime<comment="吹き飛び後相対距離に戻る時間">;
+    FSeek(p + 0x30); BossPerfectblackdoomFinalPlayerBlowParam blowParam<comment="プレイヤー吹き飛ばし設定">;
+    FSeek(p + 0x50); BossPerfectblackdoomPointCameraParam cameraBody<comment="注視カメラ弱点腹">;
+    FSeek(p + 0xF0); BossPerfectblackdoomPointCameraParam cameraEyeF<comment="注視カメラ弱点目[前]">;
+    FSeek(p + 0x190); BossPerfectblackdoomPointCameraParam cameraEyeB<comment="注視カメラ弱点目[後]">;
+
+    FSeek(p + 0x230);
+} BossPerfectblackdoomFinalRushParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float stunTime<comment="スタン時間">;
+    FSeek(p + 0x04); float keepDistane<comment="スタン時相対維持距離">;
+    FSeek(p + 0x08); float changeKeepDistanceSpeed<comment="スタン時相対維持距離変更速度">;
+    FSeek(p + 0x0C); float boostChangeKeepDistanceSpeed<comment="スタン時ブースト中相対維持距離変更速度">;
+
+    FSeek(p + 0x10);
+} BossPerfectblackdoomFinalStunParamPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float hormingDistanceOffsetBody<comment="ホーミングアタック追加射程距離[腹部]">;
+    FSeek(p + 0x04); float endKeepDistane<comment="スタン終了時相対維持距離">;
+    FSeek(p + 0x08); float endChangeKeepDistanceSpeed<comment="スタン終了時相対維持距離変更速度">;
+    FSeek(p + 0x0C); BossPerfectblackdoomFinalStunParamPatternData pattern[3]<comment="パターン",optimize=false>;
+
+    FSeek(p + 0x3C);
+} BossPerfectblackdoomFinalStunParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float downTime<comment="ダウン時間">;
+    FSeek(p + 0x04); float hormingDistanceOffset<comment="ホーミングアタック追加射程距離">;
+    FSeek(p + 0x08); float bossBlowTime<comment="ボス吹き飛び時間">;
+    FSeek(p + 0x10); vector3 bossBlowPos<comment="ボス吹き飛び位置">;
+
+    FSeek(p + 0x20);
+} BossPerfectblackdoomFinalDownParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x01); bool actionGuide<comment="アクションナビ表示">;
+    FSeek(p + 0x02); bool playSE<comment="SEを再生するか">;
+    FSeek(p + 0x03); bool playMuzzleEff<comment="射出エフェクトを再生するか">;
+    FSeek(p + 0x04); float shotDelayTime<comment="射出遅延">;
+    FSeek(p + 0x10); vector3 direction<comment="射出方向">;
+
+    FSeek(p + 0x20);
+} BossPerfectblackdoomFinalAmoebaMultiRainLaser;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool disableCollider<comment="コリジョン生成を抑制">;
+    FSeek(p + 0x04); float speed<comment="直進時発射速度">;
+    FSeek(p + 0x08); float maxSpeed<comment="直進時最高速度">;
+    FSeek(p + 0x0C); float minSpeed<comment="直進時最低速度">;
+    FSeek(p + 0x10); float accel<comment="直進時加速度">;
+    FSeek(p + 0x14); float hormingSpeed<comment="追従時発射速度">;
+    FSeek(p + 0x18); float hormingMaxSpeed<comment="追従時最高速度">;
+    FSeek(p + 0x1C); float hormingMinSpeed<comment="追従時最低速度">;
+    FSeek(p + 0x20); float hormingAccel<comment="追従時加速度">;
+    FSeek(p + 0x24); float angularSpeedMaxDeg<comment="角速度">;
+    FSeek(p + 0x28); float straightTime<comment="直進時間">;
+    FSeek(p + 0x2C); float deadWaitTime<comment="弾の生存時間">;
+    FSeek(p + 0x30); float reflectDeadWaitTime<comment="反射時弾の生存時間">;
+    FSeek(p + 0x40); BossPerfectblackdoomFinalAmoebaMultiRainLaser laser[10]<comment="レーザー単体設定",optimize=false>;
+    FSeek(p + 0x180); bool debugDraw<comment="デバッグ表示">;
+
+    FSeek(p + 0x190);
+} BossPerfectblackdoomFinalAmoebaMultiRainLaserInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); uint32 useNo<comment="使用順番">;
+    FSeek(p + 0x08); float delayTime<comment="移動開始遅延[前の移動終了から]">;
+    FSeek(p + 0x0C); float moveTime<comment="移動時間">;
+    FSeek(p + 0x10); vector3 localPosition<comment="移動位置">;
+
+    FSeek(p + 0x20);
+} BossPerfectblackdoomFinalAmoebaMultiRainLocalMove;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); uint32 laserInfoNo<comment="弾丸パターン使用番号">;
+    FSeek(p + 0x08); float delayTime<comment="開始時遅延時間">;
+    FSeek(p + 0x0C); uint32 loopNum<comment="繰り返し回数">;
+    FSeek(p + 0x10); float loopDelayTime<comment="繰り返し時遅延時間">;
+
+    FSeek(p + 0x14);
+} BossPerfectblackdoomFinalAmoebaMultiRainLaserTable;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float actionTime<comment="攻撃時間">;
+    FSeek(p + 0x04); float finishDelayTime<comment="終了後遅延時間">;
+    FSeek(p + 0x10); BossPerfectblackdoomFinalAmoebaMultiRainLocalMove localMoveInfo[4]<comment="ローカル位置移動情報",optimize=false>;
+    FSeek(p + 0x90); BossPerfectblackdoomFinalAmoebaMultiRainLaserTable laserInfoTable[10]<comment="レーザーパターンテーブル",optimize=false>;
+    FSeek(p + 0x158); sint32 changeStunLaserReflectNum<comment="スタンに遷移する跳ね返し数">;
+    FSeek(p + 0x15C); bool debugDraw<comment="デバッグ表示">;
+
+    FSeek(p + 0x160);
+} BossPerfectblackdoomFinalAmoebaMultiRainPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float rollSpeed<comment="ロール速度">;
+    FSeek(p + 0x04); float pitchSpeed<comment="ピッチ速度">;
+    FSeek(p + 0x08); float neutralRollSpeed<comment="戻りロール速度">;
+    FSeek(p + 0x0C); float neutralPitchSpeed<comment="戻りピッチ速度">;
+    FSeek(p + 0x10); float maxRollAngle<comment="最大ロール角">;
+    FSeek(p + 0x14); float maxPitchUpAngle<comment="最大ピッチアップ角">;
+    FSeek(p + 0x18); float maxPitchDownAngle<comment="最大ピッチダウン角">;
+    FSeek(p + 0x1C); float initialSpeed<comment="開始速度">;
+    FSeek(p + 0x20); float maxBoostSpeed<comment="ブースト時の最高速度">;
+    FSeek(p + 0x24); float maxSideSpeed<comment="パス移動時の最大横移動速度">;
+    FSeek(p + 0x28); float areaAspectRatio<comment="矩形制限エリアの横幅に対する縦幅の倍率">;
+
+    FSeek(p + 0x2C);
+} BossPerfectblackdoomFinalAutoRunGlindParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float keepDistance<comment="相対維持距離">;
+    FSeek(p + 0x04); float changeDistanceTime<comment="相対維持距離変更時間">;
+    FSeek(p + 0x08); float keepDistanceMax<comment="相対維持距離最大[被弾時用]">;
+    FSeek(p + 0x0C); float endChangeDistanceTime<comment="通常終了時相対維持距離変更時間">;
+    FSeek(p + 0x10); float endKeepDistanceNormal<comment="通常終了時相対維持距離">;
+    FSeek(p + 0x14); float boostChangeKeepDistanceSpeed<comment="ブースト時相対維持距離変更速度">;
+    FSeek(p + 0x18); float localMoveResetMoveTime<comment="ローカル位置移動を元に位置に戻す時間">;
+    FSeek(p + 0x1C); float rotBodySpeed<comment="旋回角速度">;
+    FSeek(p + 0x20); float rotResetTime<comment="回転初期化にかける時間">;
+    FSeek(p + 0x24); float attackStartDelay<comment="攻撃開始遅延">;
+    FSeek(p + 0x28); float attackEndMinElevation<comment="攻撃終了時のカメラ仰角最小">;
+    FSeek(p + 0x2C); float attackEndMaxElevation<comment="攻撃終了時のカメラ仰角最大">;
+    FSeek(p + 0x30); vector3 laserCreateOffset<comment="レーザー生成位置オフセット">;
+    FSeek(p + 0x40); sint32 laserBlowDamagePoint<comment="レーザー跳ね返し時ダメージ値">;
+    FSeek(p + 0x44); sint32 laserKillRingNum<comment="レーザー相殺時獲得リング数">;
+    FSeek(p + 0x50); BossPerfectblackdoomFinalAmoebaMultiRainLaserInfo laserInfo[10]<comment="レーザーパターン",optimize=false>;
+    FSeek(p + 0xFF0); BossPerfectblackdoomFinalAmoebaMultiRainPatternData pattern[3]<comment="パターン",optimize=false>;
+    FSeek(p + 0x1410); BossPerfectblackdoomFinalAutoRunGlindParam endAccelGlindParam<comment="終了時加速用プレイヤー速度設定">;
+
+    FSeek(p + 0x1440);
+} BossPerfectblackdoomFinalAmoebaMultiRainParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float startAbsorbTime<comment="プレイヤーの引き寄せを開始する時間">;
+    FSeek(p + 0x04); float playerMoveTime<comment="プレイヤーの引き寄せを行う時間">;
+    FSeek(p + 0x08); float maxRadiusMoveTime<comment="引き寄せ開始から何秒後に最大半径へ到達するか">;
+    FSeek(p + 0x0C); float minRadiusMoveTime<comment="引き寄せ開始から何秒後に中央へ到達するか">;
+    FSeek(p + 0x10); float maxAbsorbSpeedTime<comment="引き寄せから何秒後に最大速度になるか">;
+    FSeek(p + 0x14); float maxAbsorbSpeed<comment="シャドウ引き寄せ時最大移動速度">;
+    FSeek(p + 0x18); float minAbsorbSpeed<comment="シャドウ引き寄せ時最小移動速度">;
+    FSeek(p + 0x1C); float absorbRotateSpeed<comment="引き寄せ中回転速度">;
+    FSeek(p + 0x20); float moveRadius<comment="最大回転半径">;
+    FSeek(p + 0x24); float startKeepActionTime<comment="引き寄せ開始から何秒後に踏ん張り態勢を取るか">;
+    FSeek(p + 0x28); float pathPositionMoveTime<comment="パス座標へ引き寄せ完了する時間">;
+    FSeek(p + 0x30); vector3 playerMovePos<comment="プレイヤー引き寄せ位置オフセット[パス基準]">;
+
+    FSeek(p + 0x40);
+} BossPerfectblackdoomFinalTornadoAbsorbParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blowTime<comment="プレイヤー被弾挙動時間">;
+    FSeek(p + 0x04); float angularSpeedDeg<comment="回転角速度">;
+    FSeek(p + 0x08); float backMoveSpeed<comment="後退速度">;
+    FSeek(p + 0x0C); float radiusMinSpeed<comment="回転半径縮小速さ">;
+    FSeek(p + 0x10); float backMoveDistMax<comment="最大後退距離[開始時距離+]">;
+
+    FSeek(p + 0x14);
+} BossPerfectblackdoomFinalTornadoHitPlayerParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); float startDelay<comment="カメラ開始遅延[リング生成開始から]">;
+    FSeek(p + 0x08); float easeInTime<comment="カメラ補間開始時">;
+    FSeek(p + 0x0C); float easeOutTime<comment="カメラ補間終了時">;
+    FSeek(p + 0x10); float keepTime<comment="カメラ時間[リング生成時間+]">;
+    FSeek(p + 0x14); float targetOffsetDistance<comment="軌道上の注視点位置オフセット距離[プレイヤー基準]">;
+    FSeek(p + 0x18); float distance<comment="距離">;
+    FSeek(p + 0x1C); float roll<comment="カメラ姿勢roll[Deg]">;
+    FSeek(p + 0x20); float fovy<comment="カメラfovy[Deg]">;
+
+    FSeek(p + 0x24);
+} BossPerfectblackdoomFinalTornadoFocusCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); float radius<comment="半径">;
+    FSeek(p + 0x08); uint32 num<comment="リング数">;
+
+    FSeek(p + 0x0C);
+} BossPerfectblackdoomFinalWingTornadoRingCircleInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossPerfectblackdoomFinalWingTornadoRingCircleInfo circleInfo[3]<comment="配置情報",optimize=false>;
+
+    FSeek(p + 0x24);
+} BossPerfectblackdoomFinalWingTornadoRingCirclePatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); uint32 useNumber<comment="使用順番">;
+    FSeek(p + 0x08); uint32 ringNum<comment="生成リング数">;
+    FSeek(p + 0x0C); float verticalOffset<comment="補間垂直方向オフセット">;
+    FSeek(p + 0x10); float horizontalOffset<comment="補間水平方向オフセット">;
+    FSeek(p + 0x14); float offsetMaxRingNo<comment="補間オフセット値が最大になるリング数">;
+
+    FSeek(p + 0x18);
+} BossPerfectblackdoomFinalWingTornadoMoveInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); uint32 nodeNo<comment="基準ノード">;
+    FSeek(p + 0x08); float waitTime<comment="配置間隔時間">;
+    FSeek(p + 0x0C); uint32 num<comment="配置数">;
+    FSeek(p + 0x10); uint32 pattern<comment="使用リングパターン">;
+
+    FSeek(p + 0x14);
+} BossPerfectblackdoomFinalWingTornadoCreateRingInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float attackAfterKeepDistance<comment="攻撃開始後の最終相対維持距離">;
+    FSeek(p + 0x04); float attackAfterDistanceChangeSpeed<comment="攻撃開始後の相対距離移動速度">;
+    FSeek(p + 0x08); float boostChangeKeepDistanceSpeed<comment="ブースト時相対維持距離変更速度">;
+    FSeek(p + 0x0C); float tornadoRingCreateTime<comment="トルネードリング生成時間">;
+    FSeek(p + 0x10); sint32 finishWarpLocatorNo<comment="ラッシュ終了時ワープ対象のロケーター番号">;
+    FSeek(p + 0x14); BossPerfectblackdoomFinalWingTornadoMoveInfo tornadoMoveInfo[5]<comment="トルネードリング変化パターン",optimize=false>;
+    FSeek(p + 0x8C); BossPerfectblackdoomFinalWingTornadoCreateRingInfo ringCreateInfo[5]<comment="配置リングパターン",optimize=false>;
+
+    FSeek(p + 0xF0);
+} BossPerfectblackdoomFinalWingTornadoPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossPerfectblackdoomFinalTornadoAbsorbParam absorbParam<comment="プレイヤー引き寄せ設定">;
+    FSeek(p + 0x40); BossPerfectblackdoomFinalTornadoHitPlayerParam hitPlayerParam<comment="プレイヤー吹き飛ばし設定">;
+    FSeek(p + 0x54); float keepDistance<comment="相対維持距離">;
+    FSeek(p + 0x58); float changeDistanceTime<comment="相対維持距離変更時間">;
+    FSeek(p + 0x5C); float endKeepDistanceNormal<comment="通常終了時相対維持距離">;
+    FSeek(p + 0x60); float endChangeDistanceTime<comment="終了時相対維持距離変更時間">;
+    FSeek(p + 0x64); float actionEndDelay<comment="リング生成終了後の攻撃終了判定遅延時間">;
+    FSeek(p + 0x68); float endWarpDelay<comment="ワープ開始遅延時間[最後のリングを抜けてから]">;
+    FSeek(p + 0x6C); float attackWaitTime<comment="攻撃開始遅延[移動終了後から]">;
+    FSeek(p + 0x70); float hormingDistanceOffset<comment="ホーミング距離オフセット">;
+    FSeek(p + 0x80); vector3 tornadoSpawnPosoffset<comment="トルネードリング生成位置オフセット[ボス基準]">;
+    FSeek(p + 0x90); float tornadoMoveSpeed<comment="トルネードリング移動初速">;
+    FSeek(p + 0x94); float tornadoMoveSpeedMax<comment="トルネードリング移動最高速度">;
+    FSeek(p + 0x98); float tornadoMoveAccel<comment="トルネードリング移動最高加速度">;
+    FSeek(p + 0x9C); BossPerfectblackdoomFinalTornadoFocusCameraParam camera<comment="カメラ設定">;
+    FSeek(p + 0xC0); BossPerfectblackdoomFinalWingTornadoRingCirclePatternData ringCirclePattern[5]<comment="リングサークルパターン",optimize=false>;
+    FSeek(p + 0x174); BossPerfectblackdoomFinalWingTornadoPatternData tornadRingPattern[3]<comment="トルネードリングパターン",optimize=false>;
+    FSeek(p + 0x444); BossPerfectblackdoomFinalAutoRunGlindParam endAccelGlindParam<comment="終了時加速用プレイヤー速度設定">;
+
+    FSeek(p + 0x470);
+} BossPerfectblackdoomFinalWingTornadoParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 patternNo<comment="対象のパターン番号">;
+    FSeek(p + 0x04); sint32 locatorNo<comment="対象のロケーター番号">;
+
+    FSeek(p + 0x08);
+} BossPerfectblackdoomFinalSplashBlowWarpInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 patternNo<comment="対象のパターン番号[-1で無効]">;
+    FSeek(p + 0x04); float azimuthOffset<comment="方位角追加オフセット">;
+    FSeek(p + 0x08); float elevationOffset<comment="仰角追加オフセット">;
+    FSeek(p + 0x0C); float distanceOffset<comment="距離追加オフセット">;
+    FSeek(p + 0x10); vector3 targetOffset<comment="ターゲット位置追加オフセット">;
+    FSeek(p + 0x20); float startDelayTime<comment="オフセット開始遅延時間">;
+    FSeek(p + 0x24); float offsetTime<comment="オフセット維持時間">;
+    FSeek(p + 0x28); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x2C); float easeOutTime<comment="補間時間[終了]">;
+
+    FSeek(p + 0x30);
+} BossPerfectblackdoomFinalSplashBlowCameraInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 firstEyeLocalOffset<comment="最初の視点オフセット[ボス基準]">;
+    FSeek(p + 0x10); vector3 firstLookAtLocalOffset<comment="最初の注視点オフセット[ボス基準]">;
+    FSeek(p + 0x20); vector3 secondEyeLocalOffset<comment="遷移先の視点オフセット[ボス基準]">;
+    FSeek(p + 0x30); vector3 secondLookAtLocalOffset<comment="遷移先の注視点オフセット[ボス基準]">;
+    FSeek(p + 0x40); float offsetTransitionTime<comment="遷移先オフセットへの補間時間">;
+    FSeek(p + 0x44); float fov<comment="画角">;
+    FSeek(p + 0x48); float roll<comment="ロール">;
+    FSeek(p + 0x4C); float easeInTime<comment="カメラ開始時の補間時間">;
+    FSeek(p + 0x50); float easeOutTime<comment="演出カメラ終了時の補間時間">;
+
+    FSeek(p + 0x60);
+} BossPerfectblackdoomFinalSplashBlowHitCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 eyeLocalOffset<comment="視点オフセット[ボス基準]">;
+    FSeek(p + 0x10); vector3 lookAtLocalOffset<comment="注視点オフセット[ボス基準]">;
+    FSeek(p + 0x20); float fov<comment="画角">;
+    FSeek(p + 0x24); float roll<comment="ロール">;
+    FSeek(p + 0x28); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x2C); float easeOutTime<comment="補間時間[終了]">;
+    FSeek(p + 0x30); float keepTime<comment="時間">;
+
+    FSeek(p + 0x40);
+} BossPerfectblackdoomFixedCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 hitDamage<comment="ヒット時ダメージ">;
+    FSeek(p + 0x10); BossPerfectblackdoomFixedCamera blowDownCamera<comment="復帰時カメラ">;
+
+    FSeek(p + 0x50);
+} BossPerfectblackdoomFinalSplashBlowDBlowInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 warpOffset<comment="ヒット想定位置">;
+    FSeek(p + 0x10); float endKeepDistance<comment="終了時相対維持距離">;
+    FSeek(p + 0x14); float hormingPlayerSpeed<comment="プレイヤー追従速度">;
+    FSeek(p + 0x20); vector3 sweepBoxHalfExtents<comment="当たり判定の大きさ">;
+    FSeek(p + 0x30); float verticalBlowCollisionSizeEx<comment="縦振り時の当たり判定拡張サイズ">;
+    FSeek(p + 0x40); vector3 verticalBlowCollisionOffsetPos<comment="縦振り時の当たり判定位置オフセット">;
+    FSeek(p + 0x50); float verticalBlowCollisionAngle<comment="縦振り時の当たり判定角度">;
+    FSeek(p + 0x54); float rightBlowCollisionSizeEx<comment="右振り時の当たり判定拡張サイズ">;
+    FSeek(p + 0x60); vector3 rightBlowCollisionOffsetPos<comment="右振り時の当たり判定位置オフセット">;
+    FSeek(p + 0x70); float rightBlowCollisionAngle<comment="右振り時の当たり判定角度">;
+    FSeek(p + 0x74); float leftBlowCollisionSizeEx<comment="左振り時の当たり判定拡張サイズ">;
+    FSeek(p + 0x80); vector3 leftBlowCollisionOffsetPos<comment="左振り時の当たり判定位置オフセット">;
+    FSeek(p + 0x90); float leftBlowCollisionAngle<comment="左振り時の当たり判定角度">;
+    FSeek(p + 0x94); float fourVerticalBlowCollisionSizeEx<comment="4連用縦振り時の当たり判定拡張サイズ">;
+    FSeek(p + 0xA0); vector3 fourVerticalBlowCollisionOffsetPos<comment="4連用縦振り時の当たり判定位置オフセット">;
+    FSeek(p + 0xB0); float fourVerticalBlowCollisionAngle<comment="4連用縦振り時の当たり判定角度">;
+    FSeek(p + 0xB4); float hitSplashBlowMotionSpeed<comment="スプラッシュブローヒット時のモーションスピード">;
+    FSeek(p + 0xB8); float vertHitShadowBlowPower<comment="縦スプラッシュブローヒット時のシャドウ吹き飛ばし力">;
+    FSeek(p + 0xBC); float vertHitShadowBlowAngle<comment="縦スプラッシュブローヒット時のシャドウ吹き飛ばし角度(-90で水平)">;
+    FSeek(p + 0xC0); float horizontalHitShadowBlowPower<comment="左右スプラッシュブローヒット時のシャドウ吹き飛ばし力">;
+    FSeek(p + 0xC4); BossPerfectblackdoomFinalSplashBlowWarpInfo waroInfo[4]<comment="ワープ情報",optimize=false>;
+    FSeek(p + 0xF0); BossPerfectblackdoomFinalSplashBlowCameraInfo cameraInfo[4]<comment="カメラ加算オフセット情報",optimize=false>;
+    FSeek(p + 0x1B0); BossPerfectblackdoomFinalSplashBlowHitCamera hitCamera<comment="被弾時復帰カメラ">;
+    FSeek(p + 0x210); BossPerfectblackdoomFinalSplashBlowDBlowInfo dblowInfo<comment="Dブロー設定">;
+    FSeek(p + 0x260); BossPerfectblackdoomFinalAutoRunGlindParam endAccelGlindParam<comment="終了時加速用プレイヤー速度設定">;
+
+    FSeek(p + 0x290);
+} BossPerfectblackdoomFinalSplashBlowParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float roll<comment="ロール">;
+    FSeek(p + 0x04); float fovy<comment="画角">;
+    FSeek(p + 0x10); vector3 targetOffset<comment="注視点オフセット">;
+    FSeek(p + 0x20); vector3 cameraOffset<comment="カメラ位置オフセット">;
+    FSeek(p + 0x30); float easeInTime<comment="補間時間[開始]">;
+
+    FSeek(p + 0x40);
+} BossPerfectblackdoomFinalGameOverCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float fadeDelayTime<comment="フェード開始遅延">;
+    FSeek(p + 0x04); float fadeOutTime<comment="フェード時間">;
+    FSeek(p + 0x08); float voicePlayDelay<comment="ボイス再生遅延">;
+    FSeek(p + 0x10); BossPerfectblackdoomFinalGameOverCameraParam camera<comment="カメラ">;
+
+    FSeek(p + 0x50);
+} BossPerfectblackdoomFinalGameOverParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool amoebaMultiRainShotDirDebugDraw<comment="アメーバマルチレインの射出方向デバッグ描画を表示">;
+    FSeek(p + 0x01); bool amoebaMultiRainMovePosDebugDraw<comment="アメーバマルチレインの移動位置デバッグ描画を表示">;
+    FSeek(p + 0x02); bool dblowCameraDebugDraw<comment="Dブロー終了時のカメラ位置デバッグ描画を表示">;
+    FSeek(p + 0x03); bool splashBlowCameraDebugDraw<comment="スプラッシュブロー終了時のカメラ位置デバッグ描画を表示">;
+
+    FSeek(p + 0x04);
+} BossPerfectblackdoomFinalDebugCommand;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x04); sint32 raiseRingNum<comment="開始時最低保証リング数">;
+    FSeek(p + 0x08); uint32 requestLowHPCaptionRatio<comment="HP減少時の字幕再生HP割合[0-100%]">;
+    FSeek(p + 0x0C); BossPerfectblackdoomFinalAutorunParam autorun<comment="オートラン">;
+    FSeek(p + 0x50); BossPerfectblackdoomBattleLockOnCameraParam mainCamera<comment="カメラ">;
+    FSeek(p + 0x80); BossPerfectblackdoomFinalRushParam rushParam<comment="ラッシュ設定">;
+    FSeek(p + 0x2B0); BossPerfectblackdoomFinalStunParam stunParam<comment="スタン設定">;
+    FSeek(p + 0x2F0); BossPerfectblackdoomFinalDownParam downParam<comment="ダウン設定">;
+    FSeek(p + 0x310); BossPerfectblackdoomFinalAmoebaMultiRainParam amoebaMultiRainParam<comment="アメーバマルチレインの設定">;
+    FSeek(p + 0x1750); BossPerfectblackdoomFinalWingTornadoParam wingTornadoParam<comment="ウィングトルネードの設定">;
+    FSeek(p + 0x1BC0); BossPerfectblackdoomFinalSplashBlowParam splashBlowParam<comment="スプラッシュブローの設定">;
+    FSeek(p + 0x1E50); BossPerfectblackdoomFinalGameOverParam gameOverParam<comment="ゲームオーバーの設定">;
+    FSeek(p + 0x1EA0); BossPerfectblackdoomFinalDebugCommand debug<comment="デバッグ機能">;
+
+    FSeek(p + 0x1EB0);
+} BossPerfectblackdoomConfigPhase3;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossPerfectblackdoomConfigPhase3 bossPerfectblackdoomConfigPhase3;

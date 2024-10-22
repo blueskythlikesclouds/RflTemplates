@@ -1,0 +1,27 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float windDir<comment="風向き[0 = 0,0,1]">;
+    FSeek(p + 0x04); float windPower<comment="最大角度">;
+    FSeek(p + 0x08); float windLenght<comment="風の波長">;
+    FSeek(p + 0x0C); float windSpeed<comment="風の速度">;
+    FSeek(p + 0x10); float windRalenght<comment="風のずれの波長">;
+    FSeek(p + 0x14); float windRaamp<comment="風のずれの強さ">;
+    FSeek(p + 0x18); float windRalevel<comment="風のずれの段階">;
+    FSeek(p + 0x1C); float windRtpower<comment="戻り幅の割合">;
+
+    FSeek(p + 0x20);
+} FxDensityWindParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxDensityWindParameter fxDensityWindParameter;

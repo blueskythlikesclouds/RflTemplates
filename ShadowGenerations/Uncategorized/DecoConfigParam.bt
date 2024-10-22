@@ -1,0 +1,32 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    ubyte alpha;
+    ubyte red;
+    ubyte green;
+    ubyte blue;
+} color8;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); color8 clientColor<comment="クライアント背景色">;
+    FSeek(p + 0x04); uint8 windowAlpha<comment="ウィンドウ透過率">;
+    FSeek(p + 0x08); color8 startGradationGuideColor<comment="グラデーションガイド始点色">;
+    FSeek(p + 0x0C); color8 endGradationGuideColor<comment="グラデーションガイド終点色">;
+
+    FSeek(p + 0x10);
+} DecoConfigParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+DecoConfigParam decoConfigParam;

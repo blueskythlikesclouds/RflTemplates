@@ -1,0 +1,250 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float rotateSpeedMin<comment="最小旋回力">;
+    FSeek(p + 0x04); float rotateSpeedMax<comment="最大旋回力">;
+    FSeek(p + 0x08); float rotateSpeedMaxSpeedMin<comment="最大旋回力になる最小速度">;
+    FSeek(p + 0x0C); float rotateSpeedMinSpeedMax<comment="最小旋回力になる最大速度">;
+
+    FSeek(p + 0x10);
+} Movement;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float distance<comment="距離">;
+    FSeek(p + 0x04); float angle<comment="画角">;
+
+    FSeek(p + 0x08);
+} Eyesight;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float attackRange<comment="攻撃可能距離">;
+    FSeek(p + 0x04); float attackAngle<comment="攻撃可能角度">;
+    FSeek(p + 0x08); float attackSpeed<comment="攻撃ヒット時に与える速度">;
+
+    FSeek(p + 0x0C);
+} Fight;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef byte sint8;
+
+enum<sint8> VolumeShape
+{
+    SPHERE = 0,
+    BOX = 1,
+    CYLINDER = 2,
+    CAPSULE = 3,
+    NUM = 4
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 volumeSize<comment="サイズ">;
+    FSeek(p + 0x10); vector3 volumeOffset<comment="オフセット[モデルノード座標系]">;
+    FSeek(p + 0x20); vector3 volumeRotation<comment="ローテーション[ボリューム座標系ZYX]">;
+
+    FSeek(p + 0x30);
+} VolumeInfo;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring tagName<comment="タグ名">;
+    FSeek(p + 0x10); sint8 pieceNum<comment="生成ピース数">;
+    FSeek(p + 0x14); float pieceFuncFactor<comment="ピース速度最小タイミング">;
+    FSeek(p + 0x18); VolumeShape volumeShape<comment="ボリューム形状">;
+    FSeek(p + 0x20); cstring humanNodeName<comment="人型ノード名">;
+    FSeek(p + 0x30); VolumeInfo humanVolume<comment="人型ボリューム">;
+    FSeek(p + 0x60); cstring eggNodeName<comment="卵型ノード名">;
+    FSeek(p + 0x70); VolumeInfo eggVolume<comment="卵型ボリューム">;
+    FSeek(p + 0xA0); bool effectActive<comment="エフェクト付ける">;
+    FSeek(p + 0xA1); bool debugDraw<comment="[DEBUG]ボリューム描画">;
+    FSeek(p + 0xA2); bool debugDrawVolumeAxis<comment="[DEBUG]ボリューム軸描画">;
+    FSeek(p + 0xA3); bool debugDrawAxis<comment="[DEBUG]ノード軸描画">;
+
+    FSeek(p + 0xB0);
+} MappingPairInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float collisionRadius<comment="半径">;
+    FSeek(p + 0x04); float collisionHeight<comment="高さ">;
+    FSeek(p + 0x10); vector3 collisionPosOffset<comment="位置オフセット">;
+
+    FSeek(p + 0x20);
+} EnemyBlockCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyBlockCollisionParam blockCollisionParam<comment="剛体コリジョン">;
+    FSeek(p + 0x20); float damageCollisionRadiusOffset<comment="被ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x24); float damageCollisionHeightOffset<comment="被ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x30); vector3 damageCollisionPosOffset<comment="被ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x40); float touchCollisionRadiusOffset<comment="接触与ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x44); float touchCollisionHeightOffset<comment="接触与ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x50); vector3 touchCollisionPosOffset<comment="接触与ダメージコリジョンの位置オフセット">;
+
+    FSeek(p + 0x60);
+} EnemyCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float warpRadius<comment="瞬間移動半径">;
+    FSeek(p + 0x04); float warpHeight<comment="瞬間移動高さ">;
+
+    FSeek(p + 0x08);
+} EnemyComboParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); Movement movement<comment="移動">;
+    FSeek(p + 0x10); Eyesight eyesight<comment="視野">;
+    FSeek(p + 0x18); Fight fight<comment="戦闘">;
+    FSeek(p + 0x30); MappingPairInfo mappingPairInfo[32]<comment="[変形]ノードマッピング情報",optimize=false>;
+    FSeek(p + 0x1630); EnemyCollisionParam humanCollisionParam<comment="ヒューマン用のコリジョンパラメータ">;
+    FSeek(p + 0x1690); EnemyComboParam humanComboParam<comment="ヒューマン用のコンボパラメータ">;
+    FSeek(p + 0x16A0); EnemyCollisionParam eggCollisionParam<comment="エッグ用のコリジョンパラメータ">;
+    FSeek(p + 0x1700); EnemyComboParam eggComboParam<comment="エッグ用のコンボパラメータ">;
+
+    FSeek(p + 0x1710);
+} EnemyManCommonConfig;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float actionRate[6]<comment="行動確率",optimize=false>;
+
+    FSeek(p + 0x18);
+} ManHumanActionRate;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 0x04); float maxStunPoint[3]<comment="スタン値",optimize=false>;
+    FSeek(p + 0x10); float stunDecreaseStartTime<comment="スタン値減少開始時間">;
+    FSeek(p + 0x14); float stunDecreaseSpeed<comment="スタン値減少速度">;
+    FSeek(p + 0x18); float maxStaggerPoint[3]<comment="怯み値",optimize=false>;
+    FSeek(p + 0x24); float staggerDecreaseStartTime<comment="怯み値減少開始時間">;
+    FSeek(p + 0x28); float staggerDecreaseSpeed<comment="怯み値減少速度">;
+    FSeek(p + 0x2C); float stunTime<comment="スタン時間">;
+    FSeek(p + 0x30); float attackRate<comment="攻撃倍率">;
+    FSeek(p + 0x34); float attackMotionSpeed<comment="攻撃モーション速度">;
+    FSeek(p + 0x38); float wallTime<comment="壁の持続時間">;
+    FSeek(p + 0x3C); sint32 wallLife<comment="壁の体力">;
+    FSeek(p + 0x40); float guardTime<comment="ガードの持続時間">;
+    FSeek(p + 0x44); float guardCoolTime<comment="ガードのクールタイム">;
+    FSeek(p + 0x48); ManHumanActionRate rateTable[4]<comment="行動確率テーブル",optimize=false>;
+    FSeek(p + 0xA8); float coolTime[6]<comment="行動別クールタイム",optimize=false>;
+    FSeek(p + 0xC0); float attackCoolTime<comment="行動後待機時間">;
+    FSeek(p + 0xC4); float actionDistance[6]<comment="攻撃開始距離",optimize=false>;
+    FSeek(p + 0xDC); float nearRange<comment="近距離とみなす距離">;
+    FSeek(p + 0xE0); sint32 nearRateId<comment="近距離時確率テーブルID">;
+    FSeek(p + 0xE4); sint32 farRateId<comment="遠距離時確率テーブルID">;
+    FSeek(p + 0xE8); bool isCounterGuard<comment="HAに反応してガードするか">;
+    FSeek(p + 0xE9); bool isCounterWall<comment="HAに反応して壁を作るか">;
+    FSeek(p + 0xEA); bool isSpikeWall<comment="トゲ付き壁か">;
+    FSeek(p + 0xEC); sint32 waveNum<comment="[円形]ウェーブ数">;
+    FSeek(p + 0xF0); float waveUpTime<comment="[円形]ウェーブ上昇時間">;
+    FSeek(p + 0xF4); float waveLifeTime<comment="[円形]全ウェーブ上昇後の維持時間">;
+    FSeek(p + 0xF8); float waveDownTime<comment="[円形]ウェーブ下降時間">;
+    FSeek(p + 0xFC); float waveRadius<comment="[円形]ウェーブ初回半径">;
+    FSeek(p + 0x100); float waveAddRadius<comment="[円形]ウェーブ２つ目以降増加半径">;
+    FSeek(p + 0x104); float waveSpawnTime<comment="[円形]ウェーブ２つ目以降生成間隔時間">;
+    FSeek(p + 0x108); float waveKeepRadius<comment="[円形]ウェーブダメージ発生幅[m]">;
+    FSeek(p + 0x10C); float waveHeight<comment="[円形]ウェーブコリジョンの高さ">;
+    FSeek(p + 0x110); float straightWaveUpTime<comment="[直線]ウェーブ上昇時間">;
+    FSeek(p + 0x114); float straightWaveWaitTime<comment="[直線]ウェーブ上昇後の維持時間">;
+    FSeek(p + 0x118); float straightWaveDownTime<comment="[直線]ウェーブ下降時間">;
+    FSeek(p + 0x11C); float straightWaveSpeed<comment="[直線]ウェーブ前進スピード">;
+    FSeek(p + 0x120); float straightWaveWidth<comment="[直線]ウェーブコリジョンの幅">;
+    FSeek(p + 0x124); float straightWaveHeight<comment="[直線]ウェーブコリジョンの高さ">;
+    FSeek(p + 0x128); sint32 rushNum<comment="連撃数">;
+    FSeek(p + 0x12C); float downTime<comment="ダウン時間">;
+
+    FSeek(p + 0x130);
+} EnemyManSingleConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 maxActionCount<comment="同時攻撃最大数">;
+    FSeek(p + 0x04); float spAttackWaitTime<comment="大技クールタイム[現状ウェーブ攻撃のみ]">;
+    FSeek(p + 0x08); sint32 humanMaxActionCount[6]<comment="人型同一行動最大数",optimize=false>;
+
+    FSeek(p + 0x20);
+} EnemyManSquadConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyManSingleConfig single<comment="個体パラメータ">;
+    FSeek(p + 0x130); EnemyManSquadConfig squad<comment="集団パラメータ">;
+
+    FSeek(p + 0x150);
+} EnemyManTypeConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyManCommonConfig commonParam<comment="共通パラメータ">;
+    FSeek(p + 0x1710); EnemyManTypeConfig typeParams[2]<comment="タイプ別パラメータ",optimize=false>;
+
+    FSeek(p + 0x19B0);
+} EnemyManConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyManConfig enemyManConfig;

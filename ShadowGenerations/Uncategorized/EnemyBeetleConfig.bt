@@ -1,0 +1,75 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float collisionRadius<comment="半径">;
+    FSeek(p + 0x04); float collisionHeight<comment="高さ">;
+    FSeek(p + 0x10); vector3 collisionPosOffset<comment="位置オフセット">;
+
+    FSeek(p + 0x20);
+} EnemyBlockCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyBlockCollisionParam blockCollisionParam<comment="剛体コリジョン">;
+    FSeek(p + 0x20); float damageCollisionRadiusOffset<comment="被ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x24); float damageCollisionHeightOffset<comment="被ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x30); vector3 damageCollisionPosOffset<comment="被ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x40); float touchCollisionRadiusOffset<comment="接触与ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x44); float touchCollisionHeightOffset<comment="接触与ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x50); vector3 touchCollisionPosOffset<comment="接触与ダメージコリジョンの位置オフセット">;
+
+    FSeek(p + 0x60);
+} EnemyCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float warpRadius<comment="瞬間移動半径">;
+    FSeek(p + 0x04); float warpHeight<comment="瞬間移動高さ">;
+
+    FSeek(p + 0x08);
+} EnemyComboParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float stunHp<comment="スタンHP">;
+    FSeek(p + 0x04); float chaosSpearStunTime<comment="カオススピアスタン時間">;
+    FSeek(p + 0x10); EnemyCollisionParam collisionParam<comment="コリジョンパラメータ">;
+    FSeek(p + 0x70); EnemyComboParam comboParam<comment="コンボパラメータ">;
+
+    FSeek(p + 0x80);
+} EnemyBeetleCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyBeetleCommonConfig commonParams<comment="共通パラメータ">;
+
+    FSeek(p + 0x80);
+} EnemyBeetleConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyBeetleConfig enemyBeetleConfig;

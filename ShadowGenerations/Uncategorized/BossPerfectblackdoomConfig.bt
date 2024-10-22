@@ -1,0 +1,103 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring layerName<comment="レイヤー名[ステージコード無し]">;
+    FSeek(p + 0x10); sint32 phase<comment="フェーズ番号[1以上、0は無効]">;
+    FSeek(p + 0x14); sint32 lifeMin<comment="耐久値[最小]">;
+    FSeek(p + 0x18); sint32 lifeMax<comment="耐久値[最大]">;
+    FSeek(p + 0x20); cstring tag<comment="タグ名[タグ指定でのONOFF切り替えが最優先]">;
+    FSeek(p + 0x30); bool isChangePhaseEnable<comment="フェーズ切り替え後の状態">;
+
+    FSeek(p + 0x38);
+} BossPerfectblackdoomSwitchLayerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float upperRotSpeed<comment="上半身旋回速度">;
+    FSeek(p + 0x04); float upperResetRotSpeed<comment="上半身旋回速度[旋回終了時]">;
+    FSeek(p + 0x08); BossPerfectblackdoomSwitchLayerData switchLayers[32]<comment="切替対象レイヤー登録",optimize=false>;
+
+    FSeek(p + 0x708);
+} BossPerfectblackdoomCommonParam;
+
+typedef byte sint8;
+
+enum<sint8> ActionType
+{
+    INVALID_ACTION = 0,
+    PHASE2_IDLE = 1,
+    PHASE2_ATTACK_FIREBEAM = 2,
+    PHASE2_ATTACK_FIREBOMB = 3,
+    PHASE3_IDLE = 4,
+    ACTION_TYPE_NUM = 5
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ActionType actionType<comment="アクションの種類">;
+    FSeek(p + 0x04); float time<comment="持続時間[一部のアクションでは無効]">;
+    FSeek(p + 0x08); sint32 successSkip<comment="成功時に指定数テーブルをスキップ[成功条件は各アクション固有]">;
+    FSeek(p + 0x0C); sint32 patternIndex<comment="パターン番号[対応アクションのみ有効]">;
+
+    FSeek(p + 0x10);
+} BossPerfectblackdoomActionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 lifeCount<comment="耐久値">;
+    FSeek(p + 0x04); sint32 healthPoint<comment="耐久値を1減らすのに必要なダメージ">;
+    FSeek(p + 0x08); BossPerfectblackdoomActionData actionTable1[24]<comment="アクションテーブル1",optimize=false>;
+    FSeek(p + 0x188); BossPerfectblackdoomActionData actionTable2[24]<comment="アクションテーブル2",optimize=false>;
+    FSeek(p + 0x308); BossPerfectblackdoomActionData actionTable3[24]<comment="アクションテーブル3",optimize=false>;
+    FSeek(p + 0x488); BossPerfectblackdoomActionData actionTable4[24]<comment="アクションテーブル4",optimize=false>;
+    FSeek(p + 0x608); sint32 useActTblHealthPoint1<comment="アクション2に切り替わるための残耐久値[0で無効]">;
+    FSeek(p + 0x60C); sint32 useActTblHealthPoint2<comment="アクション3に切り替わるための残耐久値[0で無効]">;
+    FSeek(p + 0x610); sint32 useActTblHealthPoint3<comment="アクション4に切り替わるための残耐久値[0で無効]">;
+
+    FSeek(p + 0x614);
+} BossPerfectblackdoomPhaseParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossPerfectblackdoomCommonParam commonParam<comment="基本">;
+    FSeek(p + 0x708); BossPerfectblackdoomPhaseParam phaseParam[3]<comment="フェーズ共通",optimize=false>;
+
+    FSeek(p + 0x1948);
+} BossPerfectblackdoomConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossPerfectblackdoomConfig bossPerfectblackdoomConfig;

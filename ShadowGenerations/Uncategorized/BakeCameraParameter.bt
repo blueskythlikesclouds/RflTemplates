@@ -1,0 +1,42 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        BakeCameraParameter data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_BakeCameraParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring name<comment="元リソース名">;
+    FSeek(p + 0x10); array_BakeCameraParameter data<comment="データ">;
+
+    FSeek(p + 0x30);
+} BakeCameraParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BakeCameraParameter bakeCameraParameter;

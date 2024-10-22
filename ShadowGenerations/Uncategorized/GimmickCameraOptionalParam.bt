@@ -1,0 +1,36 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool useCameraParam<comment="カメラパラメータ使用する">;
+    FSeek(p + 0x04); float interoplateTimeActivate<comment="カメラ起動時補間時間">;
+    FSeek(p + 0x08); float interoplateTimeDeactivate<comment="カメラ終了時補間時間">;
+    FSeek(p + 0x10); vector3 targetOffset<comment="注視点オフセット">;
+    FSeek(p + 0x20); vector3 cameraPosOffset<comment="カメラオフセット">;
+
+    FSeek(p + 0x30);
+} GimmickCameraOptionalParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GimmickCameraOptionalParam gimmickCameraOptionalParam;

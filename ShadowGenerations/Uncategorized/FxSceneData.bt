@@ -1,0 +1,397 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> GIModeTypes
+{
+    GIMODE_NORMAL = 0,
+    GIMODE_ONLY = 1,
+    GIMODE_NONE = 2,
+    GIMODE_SHADOW = 3,
+    GIMODE_SEPARATED = 4
+};
+
+enum<sint8> LightFieldModeTypes
+{
+    LFMODE_NORMAL = 0,
+    LFMODE_ONLY = 1,
+    LFMODE_NONE = 2
+};
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float gammaTVWiiU<comment="ガンマ補正WiiU(TV)">;
+    FSeek(p + 0x04); float gammaDRCWiiU<comment="ガンマ補正WiiU(DRC)">;
+    FSeek(p + 0x08); bool fixedLdr<comment="HDR処理を無効">;
+    FSeek(p + 0x09); GIModeTypes giMode<comment="（デバッグ）GIモード">;
+    FSeek(p + 0x0A); LightFieldModeTypes lightFieldMode<comment="（デバッグ）ライトフィールドモード">;
+    FSeek(p + 0x0B); bool drawLightFieldSamplingPoints<comment="ライトフィールドグリッド描画">;
+    FSeek(p + 0x0C); bool updateLightFieldEachFrame<comment="ライトフィールドを毎フレーム更新する">;
+    FSeek(p + 0x0D); bool drawLightFieldRegion<comment="ライトフィールドの領域を描画">;
+    FSeek(p + 0x10); sint32 screenshotLargeScale<comment="スクリーンショットのサイズ倍率">;
+    FSeek(p + 0x14); bool drawFxColGeom<comment="Fxコリジョンを描画する">;
+    FSeek(p + 0x15); bool drawFxColName<comment="Fxコリジョン名を描画する">;
+    FSeek(p + 0x16); bool drawLocalLightSphere<comment="ローカルライトの位置を描画する">;
+
+    FSeek(p + 0x18);
+} FxSceneConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float rangeDefault<comment="デフォルト">;
+    FSeek(p + 0x04); float rangeNear<comment="近景">;
+    FSeek(p + 0x08); float rangeMiddle<comment="中景">;
+    FSeek(p + 0x0C); float rangeFar<comment="遠景">;
+
+    FSeek(p + 0x10);
+} FxCullingSettings;
+
+enum<sint8> PeepingPlayerType
+{
+    TYPE_DEFAULT = 0,
+    TYPE_EDGE = 1
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float skyIntensityScale<comment="天球の明るさ">;
+    FSeek(p + 0x04); float skyFollowupRatioY<comment="天球のY軸追従率">;
+    FSeek(p + 0x08); bool pseudoFogEnable<comment="擬似半透明フォグ有効">;
+    FSeek(p + 0x09); bool pseudoFogWithoutFar<comment="擬似半透明フォグにおいてfarを除外">;
+    FSeek(p + 0x0A); bool pseudoDof<comment="擬似DOF有効">;
+    FSeek(p + 0x0B); bool deepBlurEnable<comment="dofブラー強化">;
+    FSeek(p + 0x0C); bool noBlurEnable<comment="dofブラー無し">;
+    FSeek(p + 0x10); float blurScale<comment="ブラースケール">;
+    FSeek(p + 0x14); bool peepingPlayerEnable<comment="キャラ前半透明有効">;
+    FSeek(p + 0x18); float occCheckedPlayerTime<comment="キャラ遮蔽判定時間(秒)">;
+    FSeek(p + 0x1C); PeepingPlayerType peepingPlayerType<comment="キャラ前半透明スタイルタイプ">;
+    FSeek(p + 0x1D); bool clearFirstSurface<comment="クリアに天球を使わない">;
+    FSeek(p + 0x1E); bool useManualZPrepass<comment="手動Zプリパスを利用する(WiiU)">;
+    FSeek(p + 0x1F); bool useCaptureFramebufferColor<comment="カラーのフレームバッファキャプチャを行う">;
+    FSeek(p + 0x20); bool useCaptureFramebufferDepth<comment="深度のフレームバッファキャプチャを行う">;
+    FSeek(p + 0x21); bool playerDrawOverlay<comment="キャラクターを後に描画する">;
+
+    FSeek(p + 0x24);
+} FxSceneSettings;
+
+enum<sint8> EyeLightMode
+{
+    LIGHTMODE_DIR = 0,
+    LIGHTMODE_POINT = 1
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool globalLightEnable<comment="グローバルライトの有効・無効">;
+    FSeek(p + 0x01); bool ambLightEnable<comment="アンビエントライトの有効・無効">;
+    FSeek(p + 0x02); bool allLocalLightEnable<comment="ローカルライトの有効・無効">;
+    FSeek(p + 0x03); bool eyeLightEnable<comment="カメラライトの有効・無効">;
+    FSeek(p + 0x04); EyeLightMode eyeLightMode<comment="カメラライトモード">;
+    FSeek(p + 0x10); vector3 eyeLightDiffuse<comment="カメラライトディフューズ(RGB)">;
+    FSeek(p + 0x20); vector3 eyeLightSpecular<comment="カメラライトスペキュラ(RGB)">;
+    FSeek(p + 0x30); float eyeLightRangeStart<comment="カメラライト距離減衰・開始">;
+    FSeek(p + 0x34); float eyeLightRangeEnd<comment="カメラライト距離減衰・終了">;
+
+    FSeek(p + 0x40);
+} FxLightSettings;
+
+enum<sint8> SaturationScalingType
+{
+    SATURATION_KEEPING_LUMINANCE = 0,
+    SATURATION_KEEPING_BRIGHTNESS = 1,
+    SATURATION_NONE = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool ignoreData<comment="無視する">;
+    FSeek(p + 0x01); sint8 defaultUpdateInterval<comment="デフォルト更新頻度">;
+    FSeek(p + 0x10); vector3 offsetColorUp<comment="オフセット値_上から(RGB)">;
+    FSeek(p + 0x20); vector3 offsetColorDown<comment="オフセット値_下から(RGB)">;
+    FSeek(p + 0x30); SaturationScalingType saturationScalingType<comment="スケーリングタイプ">;
+    FSeek(p + 0x34); float saturationScalingRate<comment="彩度スケール">;
+    FSeek(p + 0x38); float luminanceScalingRate<comment="輝度スケール">;
+    FSeek(p + 0x3C); bool disableFinalAdjustColor<comment="終段の色補正をしない">;
+    FSeek(p + 0x40); float luminanceMin<comment="輝度最低値">;
+    FSeek(p + 0x44); float luminanceMax<comment="輝度最高">;
+    FSeek(p + 0x48); float luminanceMidium<comment="輝度中間">;
+    FSeek(p + 0x4C); float intensityThreshold<comment="インテンシティの閾値">;
+    FSeek(p + 0x50); float intensityBias<comment="インテンシティのバイアス">;
+    FSeek(p + 0x54); float defaultInterruption<comment="デフォルト値_遮蔽具合">;
+    FSeek(p + 0x60); vector3 defaultColorUp<comment="デフォルト値_上から(RGB)">;
+    FSeek(p + 0x70); vector3 defaultColorDown<comment="デフォルト値_下から(RGB)">;
+
+    FSeek(p + 0x80);
+} FxLightFieldSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="Enable">;
+    FSeek(p + 0x10); vector3 color<comment="Color">;
+    FSeek(p + 0x20); float depthScale<comment="Depth Scale">;
+    FSeek(p + 0x24); float inScatteringScale<comment="In Scattering Scale">;
+    FSeek(p + 0x28); float rayleigh<comment="Rayleigh">;
+    FSeek(p + 0x2C); float mie<comment="Mie">;
+    FSeek(p + 0x30); float g<comment="Mie Power">;
+    FSeek(p + 0x34); float znear<comment="Near">;
+    FSeek(p + 0x38); float zfar<comment="Far">;
+
+    FSeek(p + 0x40);
+} FxLightScatteringSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="トーンマップ有効">;
+    FSeek(p + 0x01); bool adaptationEnable<comment="明順応有効">;
+    FSeek(p + 0x04); float adaptationRatio<comment="順応速さ">;
+    FSeek(p + 0x08); float middleGray<comment="Middle Gray">;
+    FSeek(p + 0x0C); float luminanceLow<comment="luminance_low">;
+    FSeek(p + 0x10); float luminanceHigh<comment="luminance_high">;
+
+    FSeek(p + 0x14);
+} FxHdrSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="Enable">;
+    FSeek(p + 0x04); float brightPassThreshold<comment="BrightPass_Threshold">;
+    FSeek(p + 0x08); float brightPassInvScale<comment="BrightPass_InvScale">;
+    FSeek(p + 0x0C); float persistent<comment="Persistent">;
+    FSeek(p + 0x10); float bloomScale<comment="Bloom Scale">;
+
+    FSeek(p + 0x14);
+} FxGlareSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="Enable">;
+    FSeek(p + 0x01); bool ignoreSky<comment="天球に被写界深度をかけない">;
+    FSeek(p + 0x04); float focus<comment="Focus">;
+    FSeek(p + 0x08); float znear<comment="Near">;
+    FSeek(p + 0x0C); float zfar<comment="Far">;
+    FSeek(p + 0x10); float focusRange<comment="Focus_range">;
+
+    FSeek(p + 0x14);
+} FxDofSettings;
+
+enum<sint8> TimeType
+{
+    TIME_NONE = 0,
+    TIME_MORNING = 1,
+    TIME_DAY = 2,
+    TIME_EVENING = 3,
+    TIME_NIGHT = 4
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float middleGray<comment="middle-gray">;
+    FSeek(p + 0x10); vector3 baseColor<comment="基本カラー">;
+    FSeek(p + 0x20); vector3 light<comment="ライトカラー">;
+    FSeek(p + 0x30); float skyIntensity<comment="天球明るさ">;
+    FSeek(p + 0x40); vector3 sky<comment="天球カラー">;
+    FSeek(p + 0x50); vector3 ambient<comment="アンビエント">;
+    FSeek(p + 0x60); vector3 lightScattering<comment="ライトスキャッタリング">;
+
+    FSeek(p + 0x70);
+} FxHourSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="時間変化を使う">;
+    FSeek(p + 0x01); bool ignoreSky<comment="天球の色変化を無視">;
+    FSeek(p + 0x02); TimeType timeDebugIndex<comment="時刻確認">;
+    FSeek(p + 0x04); float morning<comment="朝[0]">;
+    FSeek(p + 0x08); float day<comment="昼[1]">;
+    FSeek(p + 0x0C); float evening<comment="夕[2]">;
+    FSeek(p + 0x10); float night<comment="夜[3]">;
+    FSeek(p + 0x20); FxHourSettings hourParams[4]<comment="時間毎のパラメータ",optimize=false>;
+
+    FSeek(p + 0x1E0);
+} FxTimeChangeSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float shadowScaleX<comment="環境マップ">;
+    FSeek(p + 0x04); float shadowScaleY<comment="フォールオフ一般">;
+    FSeek(p + 0x08); float shadowScaleLightFieldY<comment="フォールオフLF">;
+
+    FSeek(p + 0x0C);
+} FxInShadowShadowScaleSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float shadowScaleZ<comment="環境マップ">;
+    FSeek(p + 0x04); float shadowScaleW<comment="フォールオフ一般">;
+    FSeek(p + 0x08); float shadowScaleLightFieldW<comment="フォールオフLF">;
+
+    FSeek(p + 0x0C);
+} FxOnSceneShadowScaleSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); FxInShadowShadowScaleSettings shadowScaleInShadow<comment="影内減衰率">;
+    FSeek(p + 0x0C); FxOnSceneShadowScaleSettings shadowScaleOnScene<comment="シーン減衰率">;
+
+    FSeek(p + 0x18);
+} FxShadowScale;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool grassIsHide<comment="描画しない">;
+    FSeek(p + 0x04); float grassHeightMin<comment="草の高さ最小">;
+    FSeek(p + 0x08); float grassHeight<comment="草の高さ">;
+    FSeek(p + 0x0C); float grassWidth<comment="草の幅">;
+    FSeek(p + 0x10); float grassFar<comment="far開始距離">;
+    FSeek(p + 0x14); float grassFarEnd<comment="far終了レンジアウト距離">;
+    FSeek(p + 0x18); float grassWindAxis<comment="風向きの軸">;
+    FSeek(p + 0x1C); float grassWindSpeed<comment="草のまばらさ">;
+    FSeek(p + 0x20); float grassWindCycle<comment="風の周期">;
+    FSeek(p + 0x24); float grassWindStrength<comment="風の強さ">;
+    FSeek(p + 0x28); uint32 grassDupCount<comment="インスタンスをコピーする数">;
+    FSeek(p + 0x2C); float grassDupRange<comment="インスタンスをコピーする間隔">;
+
+    FSeek(p + 0x30);
+} FxGrassSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool distortionIsUse<comment="効果を利用する（テクスチャが必要">;
+    FSeek(p + 0x04); float distortionSpeed<comment="速度">;
+    FSeek(p + 0x08); float distortionPower<comment="強さ(奥)">;
+    FSeek(p + 0x0C); float distortionDensity<comment="密度(奥)">;
+    FSeek(p + 0x10); float distortionDepthDensity<comment="深度の密度への影響割合">;
+    FSeek(p + 0x14); float distortionPowerBloom<comment="bloomの強さへの影響割合">;
+    FSeek(p + 0x18); float distortionPowerDepth<comment="深度の強さへの影響割合">;
+    FSeek(p + 0x1C); float distortionPowerFront<comment="強さ(手前)">;
+    FSeek(p + 0x20); float distortionDensityFront<comment="密度(手前)">;
+
+    FSeek(p + 0x24);
+} FxStageDistortion;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="ステンシルシャドウ有効">;
+    FSeek(p + 0x10); vector3 shadowColor<comment="影の色(RGB)">;
+    FSeek(p + 0x20); float shadowAlpha<comment="影の透明度">;
+
+    FSeek(p + 0x30);
+} FxStencilShadow;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float lightScale<comment="光源の影響度合い">;
+    FSeek(p + 0x04); float shadowScale<comment="減衰設定">;
+
+    FSeek(p + 0x08);
+} FxEffectSettings;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool isUseCasinoLight<comment="カジノのライト効果を利用する">;
+    FSeek(p + 0x10); vector3 casinoLightAABBMin<comment="カジノのライト効果のAABB（最少">;
+    FSeek(p + 0x20); vector3 casinoLightAABBMax<comment="カジノのライト効果のAABB（最大）">;
+    FSeek(p + 0x30); float casinoLightMoveRatio<comment="カジノのライト効果移動速度">;
+    FSeek(p + 0x34); float casinoLightStrengthMax<comment="カジノのライト効果強さ最大">;
+    FSeek(p + 0x38); float casinoLightRadMin<comment="カジノのライト効果半径最少">;
+    FSeek(p + 0x3C); float casinoLightRadMax<comment="カジノのライト効果半径最大">;
+
+    FSeek(p + 0x40);
+} FxSceneCasinoLight;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); FxCullingSettings culling<comment="カリング">;
+    FSeek(p + 0x10); FxSceneSettings scene<comment="シーン描画設定">;
+    FSeek(p + 0x40); FxLightSettings light<comment="ライト設定">;
+    FSeek(p + 0x80); FxLightFieldSettings lightField<comment="ライトフィールド設定">;
+    FSeek(p + 0x100); FxLightScatteringSettings olsNear<comment="ライトスキャッタリング設定">;
+    FSeek(p + 0x140); bool separateOlsLayer<comment="ライトスキャッタリングのレイヤーを分ける">;
+    FSeek(p + 0x150); FxLightScatteringSettings olsFar<comment="ライトスキャッタリング設定 遠景">;
+    FSeek(p + 0x190); FxHdrSettings hdr<comment="HDR設定">;
+    FSeek(p + 0x1A4); FxGlareSettings glare<comment="グレア">;
+    FSeek(p + 0x1B8); FxDofSettings dof<comment="被写界深度">;
+    FSeek(p + 0x1D0); FxTimeChangeSettings timeChange<comment="時間変化">;
+    FSeek(p + 0x3B0); FxShadowScale shadowScale<comment="shadowScale">;
+    FSeek(p + 0x3C8); FxGrassSettings grassSetting<comment="草設定">;
+    FSeek(p + 0x3F8); FxStageDistortion stageDistortion<comment="歪み設定">;
+    FSeek(p + 0x420); FxStencilShadow stencilShadow<comment="ステンシルシャドウ">;
+    FSeek(p + 0x450); FxEffectSettings effect<comment="エフェクト設定">;
+    FSeek(p + 0x460); FxSceneCasinoLight casinoLight<comment="カジノライト設定">;
+
+    FSeek(p + 0x4A0);
+} FxParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); FxSceneConfig config<comment="共通設定">;
+    FSeek(p + 0x20); FxParameter items[4]<comment="パラメータリスト",optimize=false>;
+
+    FSeek(p + 0x12A0);
+} FxSceneData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxSceneData fxSceneData;

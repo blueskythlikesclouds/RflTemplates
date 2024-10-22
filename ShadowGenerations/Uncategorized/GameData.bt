@@ -1,0 +1,291 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef ubyte uint8;
+
+typedef byte sint8;
+
+enum<sint8> Status
+{
+    STATUS_ZERO_FILL = 0,
+    STATUS_INITIALIZED = 1
+};
+
+enum<sint8> Sequence
+{
+    NewGame = 0,
+    DSpearTutorialAfter = 1,
+    FinalBossBefore = 2,
+    FinalBossAfter = 3
+};
+
+typedef int64 sint64;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 signature<comment="シグニチャ">;
+    FSeek(p + 0x04); uint8 version<comment="バージョン">;
+    FSeek(p + 0x05); Status status<comment="ステータス">;
+    FSeek(p + 0x06); uint8 config<comment="コンフィグ">;
+    FSeek(p + 0x07); Sequence sequence<comment="シーケンス">;
+    FSeek(p + 0x08); uint32 playTime<comment="プレイ時間">;
+    FSeek(p + 0x0C); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 0x0E); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 0x10); sint64 saveDate<comment="保存日時">;
+    FSeek(p + 0x18); uint8 index<comment="index">;
+    FSeek(p + 0x1C); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x30);
+} HeaderData;
+
+enum<sint8> GamePlayData_Status
+{
+    STATUS_NEWGAME = 0,
+    STATUS_CONTINUE = 1
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w;
+} quaternion;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); GamePlayData_Status status<comment="ステータス">;
+    FSeek(p + 0x01); sint8 lastPlayedStageNo<comment="最後にプレイしていたステージ">;
+    FSeek(p + 0x02); uint8 flags<comment="ビットフラグ">;
+    FSeek(p + 0x10); vector3 position<comment="座標">;
+    FSeek(p + 0x20); quaternion rotation<comment="姿勢">;
+    FSeek(p + 0x30); uint32 day<comment="日">;
+    FSeek(p + 0x34); uint32 hour<comment="時">;
+    FSeek(p + 0x38); uint32 minute<comment="分">;
+    FSeek(p + 0x3C); float second<comment="秒">;
+    FSeek(p + 0x40); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x50);
+} GamePlayData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint16 numRings<comment="リング数">;
+    FSeek(p + 0x02); uint8 numBossGateKey[5]<comment="ボスゲート鍵",optimize=false>;
+    FSeek(p + 0x07); uint8 numRocketParts<comment="ロケットのパーツ">;
+    FSeek(p + 0x08); uint8 numDgear[5]<comment="Dギア所持数",optimize=false>;
+    FSeek(p + 0x0D); uint8 numTreasureChestGear[3]<comment="宝箱ギア所持数",optimize=false>;
+    FSeek(p + 0x10); uint8 hasDpower[5]<comment="Dパワー所持状況 0:未所持 1:所持",optimize=false>;
+    FSeek(p + 0x18); uint32 flags<comment="フラグ">;
+    FSeek(p + 0x1C); uint32 reserved[3]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x28);
+} CharacterData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 destination<comment="マップ目的地">;
+    FSeek(p + 0x10); uint32 flags<comment="ビットフラグ">;
+    FSeek(p + 0x14); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x30);
+} WhitespaceStageData;
+
+enum<uint8> RankType
+{
+    RANK_S = 0,
+    RANK_A = 1,
+    RANK_B = 2,
+    RANK_C = 3,
+    RANK_D = 4,
+    RANK_NUM = 4
+};
+
+typedef int16 sint16;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint16 flags<comment="ビットフラグ">;
+    FSeek(p + 0x04); uint32 bestScore<comment="ベストスコア">;
+    FSeek(p + 0x08); uint32 bestScoreDwing<comment="Dウィング使用時ベストスコア">;
+    FSeek(p + 0x0C); uint32 bestRing<comment="ベストリング">;
+    FSeek(p + 0x10); uint32 bestRingDwing<comment="Dウィング使用時ベストリング">;
+    FSeek(p + 0x14); uint32 bestTime[3]<comment="ベストタイム上位3つ",optimize=false>;
+    FSeek(p + 0x20); uint32 bestTimeDwing[3]<comment="Dウィング使用時ベストタイム上位3つ",optimize=false>;
+    FSeek(p + 0x2C); RankType bestRank<comment="ベストランク">;
+    FSeek(p + 0x2D); RankType bestRankDwing<comment="Dウィング使用時ベストランク">;
+    FSeek(p + 0x2E); sint16 bgmId<comment="bgmId">;
+    FSeek(p + 0x30); uint8 numBossGateKey<comment="numBossGateKey">;
+    FSeek(p + 0x31); sint8 collectionGearDatas[3]<comment="collectionGearDatas",optimize=false>;
+    FSeek(p + 0x34); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x44);
+} StageData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); StageData stages[50]<comment="アクトorボスステージ情報",optimize=false>;
+
+    FSeek(p + 0xD48);
+} StageContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 flags<comment="フラグ">;
+    FSeek(p + 0x01); uint8 reserved[3]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x04);
+} UnlockData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); UnlockData artParam[140]<comment="イラスト",optimize=false>;
+    FSeek(p + 0x230); UnlockData movieParam[35]<comment="シーンリプレイ",optimize=false>;
+    FSeek(p + 0x2BC); UnlockData soundParam[120]<comment="サウンド",optimize=false>;
+    FSeek(p + 0x49C); UnlockData characterParam[20]<comment="キャラクタ",optimize=false>;
+    FSeek(p + 0x4EC); UnlockData historyParam[15]<comment="ヒストリー",optimize=false>;
+    FSeek(p + 0x528); UnlockData noteParam[30]<comment="手記",optimize=false>;
+
+    FSeek(p + 0x5A0);
+} CollectionData;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool unlocked<comment="unlocked">;
+    FSeek(p + 0x01); bool displayed<comment="displayed">;
+    FSeek(p + 0x02); uint8 reserved[2]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x04);
+} UnlockQAData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); UnlockQAData qaParam[50]<comment="QA",optimize=false>;
+
+    FSeek(p + 0xC8);
+} QAData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 bitFlags[24]<comment="ビットフラグ",optimize=false>;
+    FSeek(p + 0x60); sint8 byteFlags[128]<comment="バイトフラグ",optimize=false>;
+    FSeek(p + 0xE0); uint32 intDatas[16]<comment="uint32データ",optimize=false>;
+
+    FSeek(p + 0x120);
+} FlagContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 bitFlags[1024]<comment="ビットフラグ",optimize=false>;
+    FSeek(p + 0x1000); sint8 byteFlags[1024]<comment="バイトフラグ",optimize=false>;
+    FSeek(p + 0x1400); uint32 intDatas[512]<comment="uint32データ",optimize=false>;
+
+    FSeek(p + 0x1C00);
+} WorldFlagData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WorldFlagData worldDatas[50]<comment="ステージフラグデータ",optimize=false>;
+    FSeek(p + 0x57800); WorldFlagData debugWorldData<comment="開発用島フラグデータ">;
+
+    FSeek(p + 0x59400);
+} WorldFlagContainerData;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 value<comment="値">;
+    FSeek(p + 0x04); bool assigned<comment="アサイン済みか">;
+
+    FSeek(p + 0x08);
+} StatValue;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); StatValue stats<comment="統計">;
+    FSeek(p + 0x08); float runLength<comment="プレイヤーの走行距離">;
+    FSeek(p + 0x0C); uint32 reserved[32]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x8C);
+} StatsContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); StageData stages[10]<comment="ステージ情報",optimize=false>;
+    FSeek(p + 0x2A8); WorldFlagData worldDatas[10]<comment="ステージフラグデータ",optimize=false>;
+    FSeek(p + 0x11AA8); uint32 reserved[128]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x11CA8);
+} AddContentDataGame;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); HeaderData header<comment="ヘッダ">;
+    FSeek(p + 0x30); GamePlayData gameplay<comment="ゲームプレイ">;
+    FSeek(p + 0x80); CharacterData character<comment="キャラクタ">;
+    FSeek(p + 0xB0); WhitespaceStageData whitespace<comment="ホワイトスペースステージコンテナ">;
+    FSeek(p + 0xE0); StageContainerData stages<comment="ステージコンテナ">;
+    FSeek(p + 0xE28); CollectionData collection<comment="コレクション">;
+    FSeek(p + 0x13C8); QAData qa<comment="QA">;
+    FSeek(p + 0x1490); FlagContainerData flags<comment="フラグコンテナ">;
+    FSeek(p + 0x15B0); WorldFlagContainerData worldFlags<comment="ワールド別フラグコンテナ">;
+    FSeek(p + 0x5A9B0); StatsContainerData stats<comment="統計コンテナ">;
+    FSeek(p + 0x5AA3C); AddContentDataGame addData<comment="追加コンテンツデータ">;
+
+    FSeek(p + 0x6C6F0);
+} GameData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameData gameData;

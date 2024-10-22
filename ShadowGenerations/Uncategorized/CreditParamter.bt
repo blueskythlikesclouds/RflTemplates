@@ -1,0 +1,81 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef byte sint8;
+
+enum<sint8> CreditItemKind
+{
+    Empty = 0,
+    Category = 1,
+    Post = 2,
+    Name = 3,
+    Logo = 4,
+    Num = 5
+};
+
+typedef ubyte uint8;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CreditItemKind creditItemKind<comment="クレジットアイテム種類">;
+    FSeek(p + 0x01); uint8 numItems<comment="アイテム数(名前と空白にのみ対応)">;
+    FSeek(p + 0x02); bool isLastItem<comment="最後のアイテムか">;
+    FSeek(p + 0x08); cstring str[6]<comment="名前やテクスチャ名",optimize=false>;
+
+    FSeek(p + 0x68);
+} CreditItemInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring bgName<comment="背景画像のテクスチャ名">;
+    FSeek(p + 0x10); float displayTime<comment="表示時間">;
+
+    FSeek(p + 0x18);
+} CreditBGInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blackBGTime<comment="黒背景の尺">;
+    FSeek(p + 0x04); float emptySize<comment="空白行の大きさ">;
+    FSeek(p + 0x08); float creditTime<comment="クレジットの秒数">;
+    FSeek(p + 0x0C); float finishInterval<comment="クレジット終了のインターバル">;
+    FSeek(p + 0x10); float guideDisplayTime<comment="スキップガイドの表示時間">;
+    FSeek(p + 0x14); float lastItemStopHeight<comment="最後の項目をどこの高さで止めるか[px](真ん中ゼロ、上がプラス)">;
+    FSeek(p + 0x18); float bgmDelay<comment="BGM再生の遅延時間">;
+    FSeek(p + 0x1C); float bgmFadeOutTime<comment="BGMのフェードアウト時間">;
+    FSeek(p + 0x20); cstring unclearBGMName<comment="未クリア時のBGM名">;
+    FSeek(p + 0x30); cstring bgmName<comment="BGM名">;
+    FSeek(p + 0x40); CreditItemInfo itemInfos[2048]<comment="クレジット情報",optimize=false>;
+    FSeek(p + 0x34040); CreditBGInfo bgInfos[10]<comment="背景情報",optimize=false>;
+
+    FSeek(p + 0x34130);
+} CreditParamter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+CreditParamter creditParamter;

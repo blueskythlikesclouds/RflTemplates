@@ -1,0 +1,278 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef byte sint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float floatHeight<comment="デフォルト高さ[浮遊位置調整]">;
+    FSeek(p + 0x04); sint8 laneNum<comment="レーン数">;
+    FSeek(p + 0x08); float laneWidth<comment="レーン幅">;
+    FSeek(p + 0x0C); float distanceOfAttackBasePointFromPlayer<comment="プレイヤーから攻撃基点までの距離">;
+    FSeek(p + 0x10); float hormingDistanceOffset<comment="プレイヤーのホーミング追加距離">;
+
+    FSeek(p + 0x14);
+} BossPerfectblackdoomConfigPhase1CommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float speed<comment="速度">;
+    FSeek(p + 0x04); float width<comment="移動可能横幅">;
+    FSeek(p + 0x08); float bossSpeedMax<comment="ボス最高速度">;
+    FSeek(p + 0x0C); float bossSpeedMin<comment="ボス最低速度">;
+    FSeek(p + 0x10); float bossAccelSpeed<comment="ボス加速性能">;
+    FSeek(p + 0x14); float bossDecelSpeed<comment="ボス減速性能">;
+    FSeek(p + 0x18); float bossKeepDistanceDefault<comment="相対維持距離">;
+    FSeek(p + 0x1C); float bossKeepDistanceLimit<comment="相対維持距離[最小]">;
+    FSeek(p + 0x20); float bossStanLostDistance<comment="スタン時に詰められる距離">;
+    FSeek(p + 0x24); float bossDefalutDistanceReturnTime<comment="元の相対維持距離に戻り始める時間">;
+    FSeek(p + 0x28); float bossDefalutDistanceReturnSpeed<comment="元の相対維持距離に戻る速度[秒速]">;
+    FSeek(p + 0x2C); float nearBossAccelDecelTime<comment="プレイヤー接近時のボス加減速維持時間">;
+    FSeek(p + 0x30); float nearBossAccelSpeed<comment="プレイヤー接近時のボス加速性能">;
+    FSeek(p + 0x34); float nearBossDecelSpeed<comment="プレイヤー接近時のボス減速性能">;
+
+    FSeek(p + 0x38);
+} BossPerfectblackdoomAutorunParam;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring nodeName<comment="注視点ノード名">;
+    FSeek(p + 0x10); vector3 offset<comment="注視座標オフセット">;
+    FSeek(p + 0x20); float playerHeightOffset<comment="カメラプレイヤー基準位置高さオフセット">;
+
+    FSeek(p + 0x30);
+} BossPerfectblackdoomBattleLockOnCameraParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効/無効">;
+    FSeek(p + 0x04); float fovy<comment="画角">;
+    FSeek(p + 0x08); float toPointDistanceMin<comment="相対距離[最小]">;
+    FSeek(p + 0x0C); float toPointDistanceMax<comment="相対距離[最大]">;
+    FSeek(p + 0x10); float distanceMin<comment="カメラ距離[最小]">;
+    FSeek(p + 0x14); float distanceMax<comment="カメラ距離[最大]">;
+    FSeek(p + 0x18); float gravityOffsetMin<comment="重力方向オフセット[最小]">;
+    FSeek(p + 0x1C); float gravityOffsetMax<comment="重力方向オフセット[最大]">;
+    FSeek(p + 0x20); vector3 playerOffsetMin<comment="プレイヤー座標オフセット[最小]">;
+    FSeek(p + 0x30); vector3 playerOffsetMax<comment="プレイヤー座標オフセット[最大]">;
+    FSeek(p + 0x40); vector3 worldOffsetMin<comment="ワールド座標オフセット[最小]">;
+    FSeek(p + 0x50); vector3 worldOffsetMax<comment="ワールド座標オフセット[最大]">;
+    FSeek(p + 0x60); vector3 pointLocalOffsetMin<comment="注視点ローカル座標オフセット[最小]">;
+    FSeek(p + 0x70); vector3 pointLocalOffsetMax<comment="注視点ローカル座標オフセット[最大]">;
+    FSeek(p + 0x80); cstring nodeName<comment="注視点ノード名">;
+    FSeek(p + 0x90); float roll<comment="ロール値">;
+    FSeek(p + 0x94); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x98); float easeOutTime<comment="補間時間[終了]">;
+    FSeek(p + 0x9C); float time<comment="持続時間">;
+
+    FSeek(p + 0xA0);
+} BossPerfectblackdoomPointCameraParam;
+
+typedef int32 sint32;
+
+enum<sint8> LaserDirectionKind
+{
+    UP_DIRECTION = 0,
+    DOWN_DIRECTION = 1,
+    RIGHT_DIRECTION = 2,
+    LEFT_DIRECTION = 3,
+    UP_DOWN_DIRECTION = 4,
+    LEFT_RIGHT_DIRECTION = 5,
+    UDLR_DIRECTION = 6
+};
+
+enum<sint8> InputGuideKind
+{
+    INPUT_GUIDE_KIND_NONE = 0,
+    INPUT_GUIDE_KIND_LEFT_STEP = 1,
+    INPUT_GUIDE_KIND_RIGHT_STEP = 2,
+    INPUT_GUIDE_KIND_NUM = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint8 laneNumber<comment="生成するレーン番号(0が無効)">;
+    FSeek(p + 0x04); float height<comment="生成高さ">;
+    FSeek(p + 0x08); float createTime<comment="生成時間 (ボリューム接触からの時間)">;
+    FSeek(p + 0x0C); LaserDirectionKind laserDirKind<comment="レーザー射出方向">;
+    FSeek(p + 0x10); float rotSpeed<comment="回転速度">;
+    FSeek(p + 0x14); float moveSpeedOffset<comment="速度オフセット">;
+    FSeek(p + 0x18); float length<comment="レーザー長さ">;
+    FSeek(p + 0x1C); InputGuideKind inputGuideKind<comment="アクションナビ">;
+
+    FSeek(p + 0x20);
+} BossPerfectblackdoomPhase1MeteoriteBeamInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float endWaitTime<comment="最後のビーム生成後終了までの時間">;
+    FSeek(p + 0x04); BossPerfectblackdoomPhase1MeteoriteBeamInfo meteoriteBeamInfoTabel[80]<comment="隕石ビーム情報リスト",optimize=false>;
+    FSeek(p + 0xA04); uint32 randomSeed<comment="隕石生成位置のランダムシード値">;
+
+    FSeek(p + 0xA08);
+} BossPerfectblackdoomPhase1MeteoriteBeamPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float laneOffsetDistance<comment="攻撃基点からのレーン距離">;
+    FSeek(p + 0x04); float backwardMoveDistance<comment="後方移動距離">;
+    FSeek(p + 0x08); float startWarpWaitTime<comment="開始ワープ待ち時間">;
+    FSeek(p + 0x0C); float startWaitTime<comment="開始待ち時間">;
+    FSeek(p + 0x10); float endWarpWaitTime<comment="終了ワープ待ち時間">;
+    FSeek(p + 0x14); float colRadius<comment="隕石コリジョン半径">;
+    FSeek(p + 0x18); float dsurfBlowColScale<comment="隕石跳ね返しコリジョンスケール">;
+    FSeek(p + 0x1C); float beamColRadius<comment="ビームコリジョン半径">;
+    FSeek(p + 0x20); float curveTime<comment="レーンまでの時間">;
+    FSeek(p + 0x24); float speed<comment="直進での隕石速度">;
+    FSeek(p + 0x28); float blowSpeed<comment="跳ね返し速度">;
+    FSeek(p + 0x2C); float lifeTime<comment="生存時間">;
+    FSeek(p + 0x30); sint32 blowHitDamagePoint<comment="ダメージ値[跳ね返し時]">;
+    FSeek(p + 0x34); float leaveDistance<comment="離れる距離">;
+    FSeek(p + 0x38); float blowCurvedTime<comment="跳ね返し時山なりに弧を描く時間">;
+    FSeek(p + 0x3C); float blowCurvedYMax<comment="跳ね返し時山なりに弧を描く高さ">;
+    FSeek(p + 0x40); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x44); float moveStopDeltaTimeScale<comment="ボス移動停止時の更新時間スケール">;
+    FSeek(p + 0x48); sint32 requestMeteoriteBeamCaptionPatternNo<comment="隕石ビーム攻撃の字幕を表示するパターン番号">;
+    FSeek(p + 0x4C); float requestMeteoriteBeamCaptionTime<comment="隕石ビーム攻撃開始から対象字幕を表示開始する時間">;
+    FSeek(p + 0x50); BossPerfectblackdoomPhase1MeteoriteBeamPatternData meteoriteBeamPatterns[5]<comment="隕石ビームパターン",optimize=false>;
+
+    FSeek(p + 0x3278);
+} BossPerfectblackdoomPhase1MeteoriteBeamParam;
+
+enum<sint8> BossPerfectblackdoomPhase1MeteoriteHockeyInfo_InputGuideKind
+{
+    BossPerfectblackdoomPhase1MeteoriteHockeyInfo_InputGuideKind_INPUT_GUIDE_KIND_NONE = 0,
+    BossPerfectblackdoomPhase1MeteoriteHockeyInfo_InputGuideKind_INPUT_GUIDE_KIND_LEFT_STEP = 1,
+    BossPerfectblackdoomPhase1MeteoriteHockeyInfo_InputGuideKind_INPUT_GUIDE_KIND_RIGHT_STEP = 2,
+    BossPerfectblackdoomPhase1MeteoriteHockeyInfo_InputGuideKind_INPUT_GUIDE_KIND_NUM = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効/無効">;
+    FSeek(p + 0x01); bool isToPlayer<comment="プレイヤーを狙う">;
+    FSeek(p + 0x04); float createTime<comment="生成時間 (ボリューム接触からの時間)">;
+    FSeek(p + 0x08); float moveSpeedOffset<comment="速度オフセット">;
+    FSeek(p + 0x10); vector3 createPos<comment="生成位置">;
+    FSeek(p + 0x20); vector3 shotVelocity<comment="発射方向">;
+    FSeek(p + 0x30); BossPerfectblackdoomPhase1MeteoriteHockeyInfo_InputGuideKind inputGuideKind<comment="アクションナビ">;
+    FSeek(p + 0x31); bool colliderEnable<comment="コライダの有効/無効">;
+
+    FSeek(p + 0x40);
+} BossPerfectblackdoomPhase1MeteoriteHockeyInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float endWaitTime<comment="最後の隕石生成後終了までの時間">;
+    FSeek(p + 0x10); BossPerfectblackdoomPhase1MeteoriteHockeyInfo meteoriteHockeyInfoTabel[80]<comment="ホッケーリスト",optimize=false>;
+    FSeek(p + 0x1410); uint32 randomSeed<comment="隕石生成位置のランダムシード値">;
+
+    FSeek(p + 0x1420);
+} BossPerfectblackdoomPhase1MeteoriteHockeyPatternData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float backwardMoveDistance<comment="後方移動距離">;
+    FSeek(p + 0x04); float startWarpWaitTime<comment="開始ワープ待ち時間">;
+    FSeek(p + 0x08); float startWaitTime<comment="開始待ち時間">;
+    FSeek(p + 0x0C); float endWarpWaitTime<comment="終了ワープ待ち時間">;
+    FSeek(p + 0x10); float meteoColRadius<comment="隕石コリジョン半径">;
+    FSeek(p + 0x14); float dsurfBlowColScale<comment="隕石跳ね返しコリジョンスケール">;
+    FSeek(p + 0x18); float meteoStartMoveTime<comment="隕石生成から発射位置までの移動時間">;
+    FSeek(p + 0x1C); float meteoSpeed<comment="隕石速度">;
+    FSeek(p + 0x20); float blowSpeed<comment="跳ね返し速度">;
+    FSeek(p + 0x24); float lifeTime<comment="生存時間">;
+    FSeek(p + 0x28); sint32 blowHitDamagePoint<comment="ダメージ値[跳ね返し時]">;
+    FSeek(p + 0x2C); float leaveDistance<comment="離れる距離">;
+    FSeek(p + 0x30); float blowCurvedTime<comment="跳ね返し時山なりに弧を描く時間">;
+    FSeek(p + 0x34); float blowCurvedYMax<comment="跳ね返し時山なりに弧を描く高さ">;
+    FSeek(p + 0x38); float floatHeight<comment="高さ[浮遊位置調整]">;
+    FSeek(p + 0x40); BossPerfectblackdoomPhase1MeteoriteHockeyPatternData meteoriteHockeyPatterns[5]<comment="隕石ホッケーのパターン",optimize=false>;
+
+    FSeek(p + 0x64E0);
+} BossPerfectblackdoomPhase1MeteoriteHockeyParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float rushTime<comment="ラッシュダメージ時間">;
+    FSeek(p + 0x04); float rushCameraDelayTime<comment="ラッシュカメラ起動遅延時間">;
+    FSeek(p + 0x08); float damageAfterTime<comment="ダメージ後待機時間">;
+    FSeek(p + 0x0C); float damageAfterDistance<comment="ダメージ後離れる距離">;
+    FSeek(p + 0x10); float rushFinishDamageScale<comment="ラッシュ最後の一撃の攻撃倍率">;
+    FSeek(p + 0x14); float blowPower<comment="プレイヤー吹き飛び力">;
+    FSeek(p + 0x18); float blowUpPower<comment="プレイヤー吹き飛び時上方向力">;
+    FSeek(p + 0x1C); float blowDeceleration<comment="プレイヤー吹き飛び減速力">;
+    FSeek(p + 0x20); float gravityPower<comment="プレイヤー吹き飛び時重力">;
+    FSeek(p + 0x24); float blowEndHeight<comment="プレイヤー吹き飛び終了高さ">;
+
+    FSeek(p + 0x28);
+} BossPerfectblackdoomPhase1DamageParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossPerfectblackdoomConfigPhase1CommonParam common<comment="基本設定">;
+    FSeek(p + 0x14); BossPerfectblackdoomAutorunParam autorun<comment="オートラン">;
+    FSeek(p + 0x50); BossPerfectblackdoomBattleLockOnCameraParam mainCamera<comment="カメラ">;
+    FSeek(p + 0x80); BossPerfectblackdoomPointCameraParam damageCamera<comment="フェーズ切替ダメージ中カメラ">;
+    FSeek(p + 0x120); BossPerfectblackdoomPointCameraParam attackChanceBeforeCamera<comment="アタックチャンス前注視カメラ">;
+    FSeek(p + 0x1C0); BossPerfectblackdoomPointCameraParam rushDamageCamera<comment="ラッシュダメージ中カメラ">;
+    FSeek(p + 0x260); BossPerfectblackdoomPhase1MeteoriteBeamParam meteoriteBeamParam<comment="隕石ビームの設定">;
+    FSeek(p + 0x34E0); BossPerfectblackdoomPhase1MeteoriteHockeyParam meteoriteHockeyParam<comment="隕石ホッケーの設定">;
+    FSeek(p + 0x99C0); BossPerfectblackdoomPhase1DamageParam damageParam<comment="ダメージ設定">;
+
+    FSeek(p + 0x99F0);
+} BossPerfectblackdoomConfigPhase1;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossPerfectblackdoomConfigPhase1 bossPerfectblackdoomConfigPhase1;

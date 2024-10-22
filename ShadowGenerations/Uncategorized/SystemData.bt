@@ -1,0 +1,503 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef ubyte uint8;
+
+typedef byte sint8;
+
+enum<sint8> Status
+{
+    STATUS_ZERO_FILL = 0,
+    STATUS_INITIALIZED = 1
+};
+
+enum<sint8> Sequence
+{
+    NewGame = 0,
+    DSpearTutorialAfter = 1,
+    FinalBossBefore = 2,
+    FinalBossAfter = 3
+};
+
+typedef int64 sint64;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 signature<comment="シグニチャ">;
+    FSeek(p + 0x04); uint8 version<comment="バージョン">;
+    FSeek(p + 0x05); Status status<comment="ステータス">;
+    FSeek(p + 0x06); uint8 config<comment="コンフィグ">;
+    FSeek(p + 0x07); Sequence sequence<comment="シーケンス">;
+    FSeek(p + 0x08); uint32 playTime<comment="プレイ時間">;
+    FSeek(p + 0x0C); uint8 reserved0<comment="reserved0">;
+    FSeek(p + 0x0E); uint16 reserved1<comment="reserved1">;
+    FSeek(p + 0x10); sint64 saveDate<comment="保存日時">;
+    FSeek(p + 0x18); uint8 index<comment="index">;
+    FSeek(p + 0x1C); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x30);
+} HeaderData;
+
+enum<sint8> VoiceLanguageType
+{
+    VOICE_LANGUAGE_ENGLISH = 0,
+    VOICE_LANGUAGE_FRENCH = 1,
+    VOICE_LANGUAGE_ITALIAN = 2,
+    VOICE_LANGUAGE_GERMAN = 3,
+    VOICE_LANGUAGE_SPANISH = 4,
+    VOICE_LANGUAGE_JAPANESE = 5,
+    NUM_VOICE_LANGUAGES = 6
+};
+
+enum<sint8> LanguageType
+{
+    LANGUAGE_ENGLISH = 0,
+    LANGUAGE_FRENCH = 1,
+    LANGUAGE_ITALIAN = 2,
+    LANGUAGE_GERMAN = 3,
+    LANGUAGE_SPANISH = 4,
+    LANGUAGE_POLISH = 5,
+    LANGUAGE_PORTUGUESE = 6,
+    LANGUAGE_RUSSIAN = 7,
+    LANGUAGE_JAPANESE = 8,
+    LANGUAGE_ZHONGWEN = 9,
+    LANGUAGE_ZHONGWEN_S = 10,
+    LANGUAGE_KOREAN = 11,
+    LANGUAGE_THAI = 12,
+    NUM_LANGUAGES = 13
+};
+
+enum<sint8> SkinType
+{
+    Original = 0,
+    Type1 = 1
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 initialSpeedRate<comment="初速レート">;
+    FSeek(p + 0x01); uint8 boostInitialSpeedRate<comment="初速レート/ブースト">;
+    FSeek(p + 0x02); uint8 acceleRate<comment="加速度レート">;
+    FSeek(p + 0x03); uint8 maxSpeedRate<comment="最高速度レート">;
+    FSeek(p + 0x04); uint8 minTurnSpeedRate<comment="旋回速度レート">;
+    FSeek(p + 0x05); uint8 boostMinTurnSpeedRate<comment="旋回速度レート/ブースト">;
+    FSeek(p + 0x06); uint8 rotateForceRate<comment="旋回力レート">;
+    FSeek(p + 0x07); uint8 bumpJumpGravityRate<comment="バンプジャンプ重力レート">;
+    FSeek(p + 0x08); uint8 brakeRate<comment="ブレーキレート">;
+    FSeek(p + 0x09); VoiceLanguageType speech<comment="音声言語">;
+    FSeek(p + 0x0A); LanguageType text<comment="文字言語">;
+    FSeek(p + 0x0C); uint16 config<comment="コンフィグ">;
+    FSeek(p + 0x0E); uint8 padSensibilityRate<comment="パッド感度">;
+    FSeek(p + 0x0F); uint8 mouseSensibilityRate<comment="マウス感度">;
+    FSeek(p + 0x10); uint8 flags<comment="フラグ">;
+    FSeek(p + 0x11); SkinType dlcSkinGeneClassic<comment="[DLC]ジェネレーションズクラシックスキン">;
+    FSeek(p + 0x12); SkinType dlcSkinGeneModern<comment="[DLC]ジェネレーションズモダンスキン">;
+    FSeek(p + 0x13); SkinType dlcSkinShadow<comment="[DLC]シャドウスキン">;
+    FSeek(p + 0x14); uint8 dlcConfig<comment="[DLC]コンフィグ">;
+    FSeek(p + 0x15); uint8 reserved1[5]<comment="reserved1",optimize=false>;
+    FSeek(p + 0x1C); uint32 reserved2[2]<comment="reserved2",optimize=false>;
+
+    FSeek(p + 0x24);
+} OptionGamePlayData;
+
+enum<sint8> InputButtonImageKind
+{
+    Default = 0,
+    PS4 = 1,
+    PS5 = 2,
+    XBOX = 3,
+    SCARLETT = 4,
+    SWITCH = 5,
+    STEAM = 6,
+    Num = 7
+};
+
+enum<sint8> InputStyleKind
+{
+    InputStyleKind_Default = 0,
+    Style2 = 1,
+    Custom = 2,
+    InputStyleKind_Num = 3
+};
+
+typedef int32 sint32;
+
+enum<sint32> InputKey
+{
+    Invalid = -1,
+    GamePad_DPadLeft = 0,
+    GamePad_DPadRight = 1,
+    GamePad_DPadUp = 2,
+    GamePad_DPadDown = 3,
+    GamePad_ButtonLeft = 4,
+    GamePad_ButtonRight = 5,
+    GamePad_ButtonTop = 6,
+    GamePad_ButtonBottom = 7,
+    GamePad_LeftX = 8,
+    GamePad_LeftY = 9,
+    GamePad_RightX = 10,
+    GamePad_RightY = 11,
+    GamePad_LeftShoulder = 12,
+    GamePad_LeftTrigger = 13,
+    GamePad_LeftClick = 14,
+    GamePad_RightShoulder = 15,
+    GamePad_RightTrigger = 16,
+    GamePad_RightClick = 17,
+    GamePad_LeftStickLeft = 18,
+    GamePad_LeftStickRight = 19,
+    GamePad_LeftStickUp = 20,
+    GamePad_LeftStickDown = 21,
+    GamePad_RightStickLeft = 22,
+    GamePad_RightStickRight = 23,
+    GamePad_RightStickUp = 24,
+    GamePad_RightStickDown = 25,
+    GamePad_Start = 26,
+    GamePad_Select = 27,
+    GamePad_LeftSideTriggerLeft = 28,
+    GamePad_LeftSideTriggerRight = 29,
+    GamePad_RightSideTriggerLeft = 30,
+    GamePad_RightSideTriggerRight = 31,
+    Keyboard_Nop = 32,
+    Keyboard_A = 33,
+    Keyboard_B = 34,
+    Keyboard_C = 35,
+    Keyboard_D = 36,
+    Keyboard_E = 37,
+    Keyboard_F = 38,
+    Keyboard_G = 39,
+    Keyboard_H = 40,
+    Keyboard_I = 41,
+    Keyboard_J = 42,
+    Keyboard_K = 43,
+    Keyboard_L = 44,
+    Keyboard_M = 45,
+    Keyboard_N = 46,
+    Keyboard_O = 47,
+    Keyboard_P = 48,
+    Keyboard_Q = 49,
+    Keyboard_R = 50,
+    Keyboard_S = 51,
+    Keyboard_T = 52,
+    Keyboard_U = 53,
+    Keyboard_V = 54,
+    Keyboard_W = 55,
+    Keyboard_X = 56,
+    Keyboard_Y = 57,
+    Keyboard_Z = 58,
+    Keyboard_1 = 59,
+    Keyboard_2 = 60,
+    Keyboard_3 = 61,
+    Keyboard_4 = 62,
+    Keyboard_5 = 63,
+    Keyboard_6 = 64,
+    Keyboard_7 = 65,
+    Keyboard_8 = 66,
+    Keyboard_9 = 67,
+    Keyboard_0 = 68,
+    Keyboard_Enter = 69,
+    Keyboard_Escape = 70,
+    Keyboard_BackSpace = 71,
+    Keyboard_Tab = 72,
+    Keyboard_Spacebar = 73,
+    Keyboard_Minus = 74,
+    Keyboard_Accent = 75,
+    Keyboard_Atmark = 76,
+    Keyboard_LeftBracket = 77,
+    Keyboard_BackSlash = 78,
+    Keyboard_RightBracket = 79,
+    Keyboard_SemiColon = 80,
+    Keyboard_Colon = 81,
+    Keyboard_Comma = 82,
+    Keyboard_Period = 83,
+    Keyboard_Slash = 84,
+    Keyboard_CapsLock = 85,
+    Keyboard_Grave = 86,
+    Keyboard_Equals = 87,
+    Keyboard_Apostrophe = 88,
+    Keyboard_OEM_102 = 89,
+    Keyboard_ABNT_C1 = 90,
+    Keyboard_F1 = 91,
+    Keyboard_F2 = 92,
+    Keyboard_F3 = 93,
+    Keyboard_F4 = 94,
+    Keyboard_F5 = 95,
+    Keyboard_F6 = 96,
+    Keyboard_F7 = 97,
+    Keyboard_F8 = 98,
+    Keyboard_F9 = 99,
+    Keyboard_F10 = 100,
+    Keyboard_F11 = 101,
+    Keyboard_F12 = 102,
+    Keyboard_Insert = 103,
+    Keyboard_Home = 104,
+    Keyboard_PageUp = 105,
+    Keyboard_Delete = 106,
+    Keyboard_End = 107,
+    Keyboard_PageDown = 108,
+    Keyboard_LeftArrow = 109,
+    Keyboard_RightArrow = 110,
+    Keyboard_UpArrow = 111,
+    Keyboard_DownArrow = 112,
+    Keyboard_PadSlash = 113,
+    Keyboard_PadAsterisk = 114,
+    Keyboard_PadMinus = 115,
+    Keyboard_PadPlus = 116,
+    Keyboard_PadEnter = 117,
+    Keyboard_PadNum1 = 118,
+    Keyboard_PadNum2 = 119,
+    Keyboard_PadNum3 = 120,
+    Keyboard_PadNum4 = 121,
+    Keyboard_PadNum5 = 122,
+    Keyboard_PadNum6 = 123,
+    Keyboard_PadNum7 = 124,
+    Keyboard_PadNum8 = 125,
+    Keyboard_PadNum9 = 126,
+    Keyboard_PadNum0 = 127,
+    Keyboard_PadPeriod = 128,
+    Keyboard_LeftCtrl = 129,
+    Keyboard_RightCtrl = 130,
+    Keyboard_LeftShift = 131,
+    Keyboard_RightShift = 132,
+    Keyboard_LeftAlt = 133,
+    Keyboard_RightAlt = 134,
+    Keyboard_LeftGui = 135,
+    Keyboard_RightGui = 136,
+    Mouse_X = 137,
+    Mouse_Y = 138,
+    Mouse_ButtonLeft = 139,
+    Mouse_ButtonRight = 140,
+    Mouse_ButtonMiddle = 141,
+    Mouse_ButtonX1 = 142,
+    Mouse_ButtonX2 = 143,
+    Mouse_ButtonX3 = 144,
+    Mouse_ButtonX4 = 145,
+    Mouse_ButtonX5 = 146,
+    Mouse_Wheel = 147,
+    Mouse_WheelUp = 148,
+    Mouse_WheelDown = 149
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); InputButtonImageKind buttonImageKind<comment="ボタンイメージ">;
+    FSeek(p + 0x01); InputStyleKind gamepadStyleKind<comment="ゲームパッド操作スタイル">;
+    FSeek(p + 0x04); InputKey padMappings[45]<comment="ゲームパッド/マッピング",optimize=false>;
+    FSeek(p + 0xB8); InputKey mainMappings[45]<comment="キーボード/マッピング/メイン",optimize=false>;
+    FSeek(p + 0x16C); InputKey subMappings[45]<comment="キーボード/マッピング/サブ",optimize=false>;
+    FSeek(p + 0x220); uint8 reserved<comment="reserved">;
+
+    FSeek(p + 0x224);
+} OptionControlsData;
+
+enum<sint8> MovementStyle
+{
+    PadSimulate = 0,
+    Aiming = 1
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float rotateSpeedPad<comment="パッド操作時の回転速度">;
+    FSeek(p + 0x04); float rotateSpeedVertMouse<comment="マウス操作時の垂直回転速度">;
+    FSeek(p + 0x08); float rotateSpeedHorzMouse<comment="マウス操作時の水平回転速度">;
+    FSeek(p + 0x0C); float reticleSpeedPad<comment="パッド操作時の照準速度">;
+    FSeek(p + 0x10); float reticleSpeedVertMouse<comment="マウス操作時の垂直照準速度">;
+    FSeek(p + 0x14); float reticleSpeedHorzMouse<comment="マウス操作時の水平照準速度">;
+    FSeek(p + 0x18); uint8 rotateSpeedRate<comment="回転速度レート">;
+    FSeek(p + 0x19); uint8 distanceRate<comment="距離レート">;
+    FSeek(p + 0x1A); uint8 fovyRate<comment="画角レート">;
+    FSeek(p + 0x1B); MovementStyle movementStyle<comment="移動制御">;
+    FSeek(p + 0x1C); uint8 config<comment="コンフィグ">;
+    FSeek(p + 0x20); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x30);
+} OptionCameraData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 masterVolume<comment="マスタボリューム">;
+    FSeek(p + 0x01); uint8 sfxVolume<comment="SEボリューム">;
+    FSeek(p + 0x02); uint8 musicVolume<comment="音楽ボリューム">;
+    FSeek(p + 0x03); uint8 voiceVolume<comment="ボイスボリューム">;
+    FSeek(p + 0x04); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x14);
+} OptionAudioData;
+
+enum<sint8> FrameRate
+{
+    FPS60 = 0,
+    FPS30 = 1,
+    FPS120 = 2,
+    FPSNoLimit = 3
+};
+
+enum<sint8> Shadow
+{
+    High = 0,
+    Low = 1
+};
+
+enum<sint8> Bloom
+{
+    Bloom_High = 0,
+    Bloom_Low = 1
+};
+
+enum<sint8> VolumetricLight
+{
+    VolumetricLight_High = 0,
+    VolumetricLight_Low = 1
+};
+
+enum<sint8> AntiAliasing
+{
+    TAA = 0,
+    FXAA = 1,
+    None = 2
+};
+
+enum<sint8> AnisotropicFiltering
+{
+    AnisotropicFiltering_None = 0,
+    AnisotropicFiltering_Low = 1,
+    Medium = 2,
+    AnisotropicFiltering_High = 3
+};
+
+enum<sint8> DOF
+{
+    Disabled = 0,
+    DOF_Low = 1,
+    DOF_Medium = 2,
+    DOF_High = 3
+};
+
+enum<sint8> RederingScale
+{
+    RederingScale_High = 0,
+    RederingScale_Medium = 1,
+    RederingScale_Low = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); FrameRate frameRate<comment="FPS">;
+    FSeek(p + 0x01); Shadow shadow<comment="影の品質">;
+    FSeek(p + 0x02); Bloom bloom<comment="ブルーム">;
+    FSeek(p + 0x03); VolumetricLight volumetricLight<comment="ボリューメトリックライト">;
+    FSeek(p + 0x04); uint8 brightness<comment="Brightness">;
+    FSeek(p + 0x05); AntiAliasing antiAliasing<comment="AA">;
+    FSeek(p + 0x06); AnisotropicFiltering anisotropicFiltering<comment="AF">;
+    FSeek(p + 0x07); DOF depthOfField<comment="DOF">;
+    FSeek(p + 0x08); uint8 config<comment="コンフィグ">;
+    FSeek(p + 0x09); RederingScale renderingScale<comment="レンダリングスケール">;
+    FSeek(p + 0x0A); uint16 width<comment="幅">;
+    FSeek(p + 0x0C); uint16 height<comment="高さ">;
+    FSeek(p + 0x0E); uint8 reserved1<comment="reserved1">;
+    FSeek(p + 0x10); uint32 reserved[2]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x18);
+} OptionGraphicsData;
+
+enum<uint8> RankType
+{
+    RANK_S = 0,
+    RANK_A = 1,
+    RANK_B = 2,
+    RANK_C = 3,
+    RANK_D = 4,
+    RANK_NUM = 4
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 flags<comment="フラグ">;
+    FSeek(p + 0x04); uint32 bestScore<comment="ベストスコア">;
+    FSeek(p + 0x08); uint32 bestScoreDwing<comment="Dウィング使用時ベストスコア">;
+    FSeek(p + 0x0C); uint32 bestRing<comment="ベストリング">;
+    FSeek(p + 0x10); uint32 bestRingDwing<comment="Dウィング使用時ベストリング">;
+    FSeek(p + 0x14); uint32 bestTime[3]<comment="ベストタイム上位3つ",optimize=false>;
+    FSeek(p + 0x20); uint32 bestTimeDwing[3]<comment="Dウィング使用時ベストタイム上位3つ",optimize=false>;
+    FSeek(p + 0x2C); RankType bestRank<comment="ベストランク">;
+    FSeek(p + 0x2D); RankType bestRankDwing<comment="Dウィング使用時ベストランク">;
+    FSeek(p + 0x30); uint32 clearCount<comment="ステージクリア回数">;
+    FSeek(p + 0x34); bool uploaded<comment="アップロード済みフラグ">;
+
+    FSeek(p + 0x38);
+} RankingData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); RankingData ranking[25]<comment="ランキング",optimize=false>;
+    FSeek(p + 0x578); bool enableDWing<comment="Dウィングが使用可能か">;
+
+    FSeek(p + 0x57C);
+} RankingContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint8 uuid[40]<comment="UUID4",optimize=false>;
+    FSeek(p + 0x28); uint32 reserved[4]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x38);
+} CRMContainerData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); RankingData addRanking[10]<comment="DLCランキング",optimize=false>;
+    FSeek(p + 0x230); uint32 reserved[32]<comment="reserved",optimize=false>;
+
+    FSeek(p + 0x2B0);
+} AddContentDataSystem;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); HeaderData header<comment="ヘッダ">;
+    FSeek(p + 0x30); OptionGamePlayData gameplay<comment="ゲームプレイ">;
+    FSeek(p + 0x54); OptionControlsData controls<comment="コントロール">;
+    FSeek(p + 0x278); OptionCameraData camera<comment="カメラ">;
+    FSeek(p + 0x2A8); OptionAudioData audio<comment="音声">;
+    FSeek(p + 0x2BC); OptionGraphicsData graphics<comment="グラフィックス">;
+    FSeek(p + 0x2D4); RankingContainerData rankings<comment="ランキング">;
+    FSeek(p + 0x850); CRMContainerData crm<comment="CRM">;
+    FSeek(p + 0x888); AddContentDataSystem addData<comment="DLC">;
+
+    FSeek(p + 0xB38);
+} SystemData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+SystemData systemData;

@@ -1,0 +1,135 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float distance<comment="距離">;
+    FSeek(p + 0x04); float noiseTextureScrollSpeed<comment="ノイズスクロール速度">;
+    FSeek(p + 0x08); float blurScale<comment="ブラースケール">;
+    FSeek(p + 0x0C); float colorGain<comment="カラーゲイン">;
+    FSeek(p + 0x10); float noiseGain<comment="ノイズゲイン">;
+
+    FSeek(p + 0x14);
+} AuraEffectLerpNode;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring name<comment="名前">;
+    FSeek(p + 0x10); AuraEffectLerpNode node[2]<comment="補間パラメータ",optimize=false>;
+
+    FSeek(p + 0x38);
+} AuraEffectLerpParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); AuraEffectLerpParameter _params[4]<comment="パラメータ",optimize=false>;
+
+    FSeek(p + 0xE0);
+} AuraEffectParameters;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float localLightIntensityScale<comment="ローカルライト輝度スケール">;
+    FSeek(p + 0x04); bool dropPriorityEnabled<comment="処理落ちプライオリティを上書きする">;
+    FSeek(p + 0x05); sint8 dropPriority<comment="処理落ちプライオリティ">;
+
+    FSeek(p + 0x08);
+} EffectParameters;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 blockWeights[5]<comment="ブロック数ウェイト値",optimize=false>;
+
+    FSeek(p + 0x05);
+} WeatherBlockParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 transitWeights[5]<comment="遷移先ウェイト値",optimize=false>;
+    FSeek(p + 0x05); WeatherBlockParameter blockParams[5]<comment="天候別ブロック長",optimize=false>;
+
+    FSeek(p + 0x1E);
+} WeatherTypeParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 hour<comment="時">;
+    FSeek(p + 0x01); uint8 minute<comment="分">;
+
+    FSeek(p + 0x02);
+} WeatherTimeParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WeatherTimeParameter sunriseBeginTime<comment="日出/晴れ固定開始時間">;
+    FSeek(p + 0x02); WeatherTimeParameter dayBeginTime<comment="日出/晴れ固定終了時間">;
+    FSeek(p + 0x04); WeatherTimeParameter sunsetBeginTime<comment="日没/晴れ固定開始時間">;
+    FSeek(p + 0x06); WeatherTimeParameter nightBeginTime<comment="日没/晴れ固定終了時間">;
+    FSeek(p + 0x08); WeatherTimeParameter blockTime<comment="天候1ブロック時間">;
+
+    FSeek(p + 0x0A);
+} WeatherTimeControlParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WeatherTypeParameter type[5]<comment="天候一覧",optimize=false>;
+    FSeek(p + 0x96); WeatherTimeControlParameter timeControl<comment="時間制御">;
+
+    FSeek(p + 0xA0);
+} WeatherParameters;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); AuraEffectParameters aura<comment="オーラ">;
+    FSeek(p + 0xE0); EffectParameters effect<comment="エフェクト">;
+    FSeek(p + 0xE8); WeatherParameters weather<comment="天候">;
+
+    FSeek(p + 0x188);
+} GraphicsParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GraphicsParameters graphicsParameters;

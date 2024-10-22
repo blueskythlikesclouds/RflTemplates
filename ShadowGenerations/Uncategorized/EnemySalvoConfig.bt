@@ -1,0 +1,119 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 launch_position_offset<comment="ホーミングレーザー射出位置オフセット">;
+    FSeek(p + 0x10); vector3 launch_direction<comment="ホーミングレーザー射出方向">;
+    FSeek(p + 0x20); vector3 target_position_offset<comment="ホーミングレーザー目標位置オフセット">;
+    FSeek(p + 0x30); float speedAtStart<comment="ホーミングレーザー開始時速度">;
+    FSeek(p + 0x34); float speed<comment="ホーミングレーザー速度">;
+    FSeek(p + 0x38); float speedMin<comment="ホーミングレーザー最低速度">;
+    FSeek(p + 0x3C); float speedMax<comment="ホーミングレーザー最高速度">;
+    FSeek(p + 0x40); float speedAcceleration<comment="ホーミングレーザー加速度">;
+    FSeek(p + 0x44); float relativeSpeedToDecelerate<comment="ホーミングレーザー減速判断基準の相対速度">;
+    FSeek(p + 0x48); float decelerateAtOverRelativeSpeed<comment="ホーミングレーザー相対速度オーバー時の減速度">;
+    FSeek(p + 0x4C); float radius<comment="ホーミングレーザー半径">;
+    FSeek(p + 0x50); float length<comment="ホーミングレーザー長さ">;
+    FSeek(p + 0x54); float damage_collider_scale<comment="ホーミングレーザーダメージコライダースケール">;
+    FSeek(p + 0x58); float lifeTime<comment="ホーミングレーザー寿命">;
+    FSeek(p + 0x5C); float angularSpeed<comment="ホーミングレーザー追従角速度">;
+    FSeek(p + 0x60); float startDistance<comment="ホーミングレーザー追従開始距離from開始位置">;
+    FSeek(p + 0x64); float endDistance<comment="ホーミングレーザー追従終了距離from対象位置">;
+    FSeek(p + 0x68); float onTimeAtStart<comment="ホーミングレーザー開始時ON時間">;
+    FSeek(p + 0x6C); float onTime<comment="ホーミングレーザーON時間">;
+    FSeek(p + 0x70); float offTime<comment="ホーミングレーザーOFF時間">;
+    FSeek(p + 0x74); float directionError<comment="ホーミングレーザー方向誤差">;
+    FSeek(p + 0x78); float targetPositionEstimatedTime<comment="ホーミングレーザー目標位置推定時間">;
+
+    FSeek(p + 0x80);
+} EnemySalvoHomingLaserInfo;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 damage_num_threshold<comment="ダメージ回数閾値">;
+    FSeek(p + 0x04); float velocity_scale_base<comment="ベロシティスケールベース乗算値">;
+    FSeek(p + 0x08); float velocity_scale_linear<comment="ベロシティスケールリニア乗算値">;
+    FSeek(p + 0x0C); float velocity_acceleration<comment="ベロシティスケール加速度">;
+    FSeek(p + 0x10); float velocity_max<comment="ベロシティスケール最大値">;
+
+    FSeek(p + 0x14);
+} TimeStopDamageVelocityParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 0x04); sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 0x10); vector3 colliderPositionOffset<comment="本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x20); vector3 damageColliderPositionOffset<comment="ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x30); float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 0x34); float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 0x38); float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x3C); float damageColliderHeightOffset<comment="ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x40); vector3 colliderPositionOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x50); float colliderRadiusOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン半径オフセット">;
+    FSeek(p + 0x54); float colliderHeightOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン高さオフセット">;
+    FSeek(p + 0x58); float moveSpeed<comment="移動速度">;
+    FSeek(p + 0x5C); float retreatDistance<comment="ワープ退却移動距離">;
+    FSeek(p + 0x60); float stunTime<comment="スタン時間">;
+    FSeek(p + 0x64); float startHomingLaserRapidFireWaitTime<comment="ホーミングレーザー連射開始するまでの待ち時間">;
+    FSeek(p + 0x68); float readyHomingLaserRapidFireWaitTime<comment="ホーミングレーザー連射準備待ち時間">;
+    FSeek(p + 0x6C); float shootHomingLaserRapidFireInterval<comment="ホーミングレーザー連射間隔">;
+    FSeek(p + 0x70); EnemySalvoHomingLaserInfo homingLaserRapidFire<comment="ホーミングレーザー連射情報">;
+    FSeek(p + 0xF0); float warpRadius<comment="瞬間移動半径">;
+    FSeek(p + 0xF4); float warpHeight<comment="瞬間移動高さ">;
+    FSeek(p + 0x100); vector3 warpOffsetForFV<comment="FV用瞬間移動位置オフセット">;
+    FSeek(p + 0x110); vector3 warpOffsetForSV<comment="SV用瞬間移動位置オフセット">;
+    FSeek(p + 0x120); vector3 warpOffsetForFVWhileBlownUp<comment="打ち上げ中FV用瞬間移動位置オフセット">;
+    FSeek(p + 0x130); vector3 warpOffsetForSVWhileBlownUp<comment="打ち上げ中SV用瞬間移動位置オフセット">;
+    FSeek(p + 0x140); vector3 warpOffsetForFVWhileBlownAway<comment="吹き飛び中FV用瞬間移動位置オフセット">;
+    FSeek(p + 0x150); vector3 warpOffsetForSVWhileBlownAway<comment="吹き飛び中SV用瞬間移動位置オフセット">;
+    FSeek(p + 0x160); float warpAngleForFV<comment="FV用瞬間移動角度">;
+    FSeek(p + 0x164); float warpAngleForSV<comment="SV用瞬間移動角度">;
+    FSeek(p + 0x168); float warpAngleForFVWhileBlownUp<comment="打ち上げ中FV用瞬間移動角度">;
+    FSeek(p + 0x16C); float warpAngleForSVWhileBlownUp<comment="打ち上げ中SV用瞬間移動角度">;
+    FSeek(p + 0x170); float warpAngleForFVWhileBlownAway<comment="吹き飛び中FV用瞬間移動角度">;
+    FSeek(p + 0x174); float warpAngleForSVWhileBlownAway<comment="吹き飛び中SV用瞬間移動角度">;
+    FSeek(p + 0x178); bool warpOffsetCalcFromNowRot<comment="瞬間移動位置オフセットを現在回転値から算出するか初期回転値から算出するか">;
+    FSeek(p + 0x17C); TimeStopDamageVelocityParam timeStopDamageVelocityParams[3]<comment="時間停止中ダメージベロシティパラメータ",optimize=false>;
+
+    FSeek(p + 0x1C0);
+} EnemySalvoCommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemySalvoCommonParam commonParam<comment="共通パラメータ">;
+
+    FSeek(p + 0x1C0);
+} EnemySalvoConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemySalvoConfig enemySalvoConfig;

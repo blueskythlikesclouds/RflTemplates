@@ -1,0 +1,53 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring name<comment="設定名">;
+    FSeek(p + 0x10); float scale<comment="スケール">;
+    FSeek(p + 0x14); float time<comment="時間">;
+    FSeek(p + 0x18); float easeOutTime<comment="終了補間時間">;
+    FSeek(p + 0x1C); float delayTime<comment="発生遅延時間">;
+    FSeek(p + 0x20); bool layerPlayer<comment="レイヤー/プレイヤー">;
+    FSeek(p + 0x21); bool layerEnemy<comment="レイヤー/エネミー">;
+    FSeek(p + 0x22); bool layerDamagedEnemy<comment="レイヤー/被ダメージエネミー">;
+    FSeek(p + 0x23); bool layerGimmick<comment="レイヤー/ギミック">;
+    FSeek(p + 0x24); bool layerCamera<comment="レイヤー/カメラ">;
+    FSeek(p + 0x25); bool layerOthers<comment="レイヤー/上記以外すべて">;
+
+    FSeek(p + 0x28);
+} GameHitStopParameterData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); GameHitStopParameterData data[64]<comment="設定",optimize=false>;
+
+    FSeek(p + 0xA00);
+} GameHitStopParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameHitStopParameter gameHitStopParameter;
