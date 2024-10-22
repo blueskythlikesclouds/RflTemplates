@@ -1,0 +1,80 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 centerPosOffsetMin<comment="爆発位置オフセット最小値">;
+    FSeek(p + 0x10); vector3 centerPosOffsetMax<comment="爆発位置オフセット最大値">;
+    FSeek(p + 0x20); float range<comment="爆発が届く範囲">;
+    FSeek(p + 0x24); float powerMin<comment="力の大きさ最小値">;
+    FSeek(p + 0x28); float powerMax<comment="力の大きさ最大値">;
+
+    FSeek(p + 0x30);
+} ExplosionParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 impulseDir<comment="力の方向(後で正規化されます)">;
+    FSeek(p + 0x10); float powerMin<comment="力の大きさ最小値">;
+    FSeek(p + 0x14); float powerMax<comment="力の大きさ最大値">;
+
+    FSeek(p + 0x20);
+} ImpulseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float marginTime<comment="速度遷移マージン">;
+    FSeek(p + 0x04); float nextTime<comment="次の段階に移る時間">;
+    FSeek(p + 0x08); float gravity<comment="重力加速度">;
+    FSeek(p + 0x0C); float moveStopTime<comment="移動停止秒">;
+    FSeek(p + 0x10); bool damping<comment="速度減衰するか">;
+    FSeek(p + 0x20); ExplosionParameter explosionParam<comment="爆発パラメータ">;
+    FSeek(p + 0x50); ImpulseParameter impulseParam<comment="インパルスパラメータ">;
+
+    FSeek(p + 0x70);
+} DebrisPhaseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); DebrisPhaseParameter debrisPhaseParameters[3]<comment="debrisPhaseParameters",optimize=false>;
+
+    FSeek(p + 0x150);
+} EffectDebrisParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EffectDebrisParameter effectDebrisParameters[10]<comment="effectDebrisParameters",optimize=false>;
+
+    FSeek(p + 0xD20);
+} ObjEffectDebrisParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ObjEffectDebrisParameters objEffectDebrisParameters;

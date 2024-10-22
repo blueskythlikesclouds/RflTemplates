@@ -1,0 +1,65 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float waitTimeStart<comment="スコア演出開始までの待機時間">;
+    FSeek(p + 0x04); float waitTimeRing<comment="リング反映開始までの待機時間">;
+    FSeek(p + 0x08); float waitTimeRank<comment="ランク表示開始までの待機時間">;
+    FSeek(p + 0x0C); float waitTimeRankAS<comment="ランクAからS演出までの待機時間">;
+    FSeek(p + 0x10); float waitTimeNextRank<comment="次のランクのスコア表示開始までの待機時間">;
+    FSeek(p + 0x14); float waitTimeObj<comment="オブジェクト表示までの待機時間">;
+    FSeek(p + 0x18); float scoreChangeTime<comment="スコア反映時間最大">;
+
+    FSeek(p + 0x1C);
+} ResultViewParam;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring stageCode<comment="ステージコード">;
+    FSeek(p + 0x10); sint32 baseScore<comment="基礎スコア">;
+    FSeek(p + 0x14); sint32 coefTime<comment="タイムにかける係数">;
+    FSeek(p + 0x18); sint32 coefRing<comment="リング数にかける係数">;
+    FSeek(p + 0x1C); sint32 ringScoreMax<comment="リング数によるスコア加算上限">;
+    FSeek(p + 0x20); sint32 scoreRankS<comment="Sランクスコア">;
+    FSeek(p + 0x24); sint32 scoreRankA<comment="Aランクスコア">;
+    FSeek(p + 0x28); sint32 scoreRankB<comment="Bランクスコア">;
+    FSeek(p + 0x2C); sint32 scoreRankC<comment="Cランクスコア">;
+
+    FSeek(p + 0x30);
+} ResultScoreParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ResultViewParam viewParam<comment="表示パラメータ">;
+    FSeek(p + 0x20); ResultScoreParam defaultScore<comment="ステージ用デフォルトスコアデータ">;
+    FSeek(p + 0x50); ResultScoreParam stageScore[20]<comment="ステージ別スコアデータ",optimize=false>;
+
+    FSeek(p + 0x410);
+} GameResultParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameResultParameter gameResultParameter;

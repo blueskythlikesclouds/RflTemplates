@@ -1,0 +1,97 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef byte sint8;
+
+enum<sint8> GradationMode
+{
+    GRADATION_MODE_CIRCLE = 0,
+    GRADATION_MODE_LINE = 1
+};
+
+enum<sint8> BlendMode
+{
+    BLEND_MODE_ALPHA_BLEND = 0,
+    BLEND_MODE_ADD = 1,
+    BLEND_MODE_MUL = 2,
+    BLEND_MODE_SCREEN = 3,
+    BLEND_MODE_OVERLAY = 4
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float centerX<comment="中心点X">;
+    FSeek(p + 0x04); float centerY<comment="中心点Y">;
+    FSeek(p + 0x08); float scaleX<comment="スケールX">;
+    FSeek(p + 0x0C); float scaleY<comment="スケールY">;
+    FSeek(p + 0x10); float scale<comment="スケール全体">;
+    FSeek(p + 0x14); float rotation<comment="回転">;
+
+    FSeek(p + 0x18);
+} GameVignetteCircleParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float centerX<comment="中心点X">;
+    FSeek(p + 0x04); float centerY<comment="中心点Y">;
+    FSeek(p + 0x08); float directionX<comment="方向X">;
+    FSeek(p + 0x0C); float directionY<comment="方向Y">;
+    FSeek(p + 0x10); float rotation<comment="回転">;
+
+    FSeek(p + 0x14);
+} GameVignetteLineParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); GradationMode gradationType<comment="グラデーションタイプ">;
+    FSeek(p + 0x01); BlendMode blendMode<comment="ブレンドモード">;
+    FSeek(p + 0x10); vector3 color<comment="カラー">;
+    FSeek(p + 0x20); float opacity<comment="不透明度">;
+    FSeek(p + 0x24); GameVignetteCircleParameter imageCircle<comment="イメージサークル">;
+    FSeek(p + 0x3C); GameVignetteLineParameter line<comment="直線">;
+    FSeek(p + 0x50); float penumbraScale<comment="半影スケール">;
+    FSeek(p + 0x54); float intensity<comment="強度">;
+
+    FSeek(p + 0x60);
+} GameVignetteParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float scale<comment="スケール">;
+    FSeek(p + 0x04); float physicsTimeScale<comment="物理計算タイムスケール">;
+    FSeek(p + 0x08); float shaderTimeScale<comment="シェーダ計算タイムスケール">;
+    FSeek(p + 0x0C); float grayColorScale<comment="グレースケール">;
+    FSeek(p + 0x10); float easeOutTime<comment="終了補間時間">;
+    FSeek(p + 0x20); GameVignetteParameter vignette<comment="平常時のビネット">;
+    FSeek(p + 0x80); float vignetteTime<comment="終了前ビネット表示開始残り時間">;
+    FSeek(p + 0x84); float vignetteEaseTimeMin<comment="終了前ビネット補間時間[開始直後]">;
+    FSeek(p + 0x88); float vignetteEaseTimeMax<comment="終了前ビネット補間時間[終了直前]">;
+    FSeek(p + 0x90); GameVignetteParameter vignetteEnd1<comment="終了前ビネット1">;
+    FSeek(p + 0xF0); GameVignetteParameter vignetteEnd2<comment="終了前ビネット2">;
+
+    FSeek(p + 0x150);
+} GameTimeStopParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameTimeStopParameter gameTimeStopParameter;

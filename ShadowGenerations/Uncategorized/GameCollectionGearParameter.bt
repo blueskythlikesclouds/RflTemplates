@@ -1,0 +1,50 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+enum<sint32> Color
+{
+    NotEarned = -1,
+    Yellow = 0,
+    Blue = 1,
+    Green = 2,
+    None = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring stageID<comment="ステージID">;
+    FSeek(p + 0x10); Color color[3]<comment="ギアの色",optimize=false>;
+
+    FSeek(p + 0x20);
+} GameCollectionGearData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); GameCollectionGearData Datas[64]<comment="配置されているギア情報",optimize=false>;
+
+    FSeek(p + 0x800);
+} GameCollectionGearParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameCollectionGearParameter gameCollectionGearParameter;

@@ -1,0 +1,75 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 damage_num_threshold<comment="ダメージ回数閾値">;
+    FSeek(p + 0x04); float velocity_scale_base<comment="ベロシティスケールベース乗算値">;
+    FSeek(p + 0x08); float velocity_scale_linear<comment="ベロシティスケールリニア乗算値">;
+    FSeek(p + 0x0C); float velocity_acceleration<comment="ベロシティスケール加速度">;
+    FSeek(p + 0x10); float velocity_max<comment="ベロシティスケール最大値">;
+
+    FSeek(p + 0x14);
+} TimeStopDamageVelocityParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float killWaitTime<comment="Killされるまでの待ち時間">;
+    FSeek(p + 0x04); sint32 maxHealthPoint<comment="体力">;
+    FSeek(p + 0x10); vector3 colliderPositionOffset<comment="本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x20); vector3 damageColliderPositionOffset<comment="ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x30); float colliderRadius<comment="本体円柱コリジョン半径">;
+    FSeek(p + 0x34); float colliderHeight<comment="本体円柱コリジョン高さ">;
+    FSeek(p + 0x38); float damageColliderRadiusOffset<comment="ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x3C); float damageColliderHeightOffset<comment="ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x40); vector3 colliderPositionOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン位置オフセット">;
+    FSeek(p + 0x50); float colliderRadiusOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン半径オフセット">;
+    FSeek(p + 0x54); float colliderHeightOffsetWhileBlownUp<comment="打ち上げ中本体円柱コリジョン高さオフセット">;
+    FSeek(p + 0x60); vector3 attackBladeColliderPositionOffset<comment="斬撃攻撃位置オフセット">;
+    FSeek(p + 0x70); vector3 attackBladeColliderScale<comment="斬撃攻撃スケール">;
+    FSeek(p + 0x80); float readyAttackBladeWaitTime<comment="斬撃攻撃を出すまでの待ち時間">;
+    FSeek(p + 0x84); float attackingBladeTime<comment="斬撃攻撃が出ている時間">;
+    FSeek(p + 0x88); float attackedBladeRecoveryTime<comment="斬撃攻撃を出した後の硬直時間">;
+    FSeek(p + 0x8C); float superArmorDamageVelocityScale<comment="スーパーアーマー中ダメージベロシティスケール">;
+    FSeek(p + 0x90); float attackableAngle<comment="攻撃可能角度">;
+    FSeek(p + 0x94); float rotateSpeed<comment="待機中旋回速度">;
+    FSeek(p + 0x98); float rotateSpeedWhileMoving<comment="移動中旋回速度">;
+    FSeek(p + 0x9C); float rotateLimitAngle<comment="待機中旋回制限角度">;
+    FSeek(p + 0xA0); float stunTime<comment="スタン時間">;
+    FSeek(p + 0xA4); float warpRadius<comment="瞬間移動半径">;
+    FSeek(p + 0xA8); float warpHeight<comment="瞬間移動高さ">;
+    FSeek(p + 0xAC); TimeStopDamageVelocityParam timeStopDamageVelocityParams[3]<comment="時間停止中ダメージベロシティパラメータ",optimize=false>;
+
+    FSeek(p + 0xF0);
+} EnemySoldierCommonParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemySoldierCommonParam commonParam<comment="共通パラメータ">;
+
+    FSeek(p + 0xF0);
+} EnemySoldierConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemySoldierConfig enemySoldierConfig;

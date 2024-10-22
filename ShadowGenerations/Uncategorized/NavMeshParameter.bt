@@ -1,0 +1,145 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 aabbMin<comment="構築範囲AABBのMIN">;
+    FSeek(p + 0x10); vector3 aabbMax<comment="構築範囲AABBのMAX">;
+
+    FSeek(p + 0x20);
+} World;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float voxelSize<comment="Voxelのサイズ[m]">;
+    FSeek(p + 0x04); float voxelHeight<comment="Voxelの高さ[m]">;
+
+    FSeek(p + 0x08);
+} Rasterization;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float radius<comment="半径[m]">;
+    FSeek(p + 0x04); float height<comment="高さ[m]">;
+    FSeek(p + 0x08); float maxClimb<comment="登坂可能な高さ[m]">;
+    FSeek(p + 0x0C); float maxSlope<comment="登坂可能な角度[degree]">;
+
+    FSeek(p + 0x10);
+} Agent;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 minArea<comment="最小リージョンエリア[voxelCount]">;
+    FSeek(p + 0x04); sint32 mergeArea<comment="マージ可能リージョンエリア[voxelCount]">;
+
+    FSeek(p + 0x08);
+} Region;
+
+typedef ubyte uint8;
+
+enum<uint8> Partition
+{
+    Watershed = 0,
+    Monotone = 1,
+    Layers = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); Partition type<comment="パーティション方式">;
+
+    FSeek(p + 0x01);
+} Partitioning;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool lowHangingObstacles<comment="lowHangingObstacles">;
+    FSeek(p + 0x01); bool ledgeSpans<comment="ledgeSpans">;
+    FSeek(p + 0x02); bool walkableLowHeightSpans<comment="walkableLowHeightSpans">;
+
+    FSeek(p + 0x03);
+} Filtering;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float edgeMaxLength<comment="最大エッジ長[m]">;
+    FSeek(p + 0x04); float maxSimplificationError<comment="ベクトル化の簡略化偏差値">;
+    FSeek(p + 0x08); sint32 vertsPerPoly<comment="ポリゴンの頂点数">;
+
+    FSeek(p + 0x0C);
+} Polygonization;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float sampleDistance<comment="サンプリング距離[m]">;
+    FSeek(p + 0x04); float sampleMaxError<comment="サンプリング許容誤差[m]">;
+
+    FSeek(p + 0x08);
+} DetailMesh;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float size<comment="NavMeshのタイリングサイズ[m]">;
+    FSeek(p + 0x04); sint32 maxTiles<comment="同時読み込み最大タイル数">;
+    FSeek(p + 0x08); bool cache<comment="キャッシュタイルか">;
+
+    FSeek(p + 0x0C);
+} Tiling;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); World world<comment="World">;
+    FSeek(p + 0x20); Rasterization rasterization<comment="Rasterization">;
+    FSeek(p + 0x28); Agent agent<comment="Agent">;
+    FSeek(p + 0x38); Region region<comment="Region">;
+    FSeek(p + 0x40); Partitioning partitioning<comment="Partitioning">;
+    FSeek(p + 0x41); Filtering filtering<comment="Filtering">;
+    FSeek(p + 0x44); Polygonization polygonization<comment="Polygonization">;
+    FSeek(p + 0x50); DetailMesh detailMesh<comment="DetailMesh">;
+    FSeek(p + 0x58); Tiling tiling<comment="Tiling">;
+
+    FSeek(p + 0x70);
+} NavMeshParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+NavMeshParameter navMeshParameter;

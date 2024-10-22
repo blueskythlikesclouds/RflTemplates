@@ -1,0 +1,28 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 target<comment="注視点">;
+    FSeek(p + 0x10); vector3 eye<comment="視点">;
+
+    FSeek(p + 0x20);
+} BakeCameraParameterData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BakeCameraParameterData bakeCameraParameterData;

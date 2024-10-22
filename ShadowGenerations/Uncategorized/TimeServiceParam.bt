@@ -1,0 +1,21 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float speed<comment="時間経過を早くするプレイヤー速度">;
+    FSeek(p + 0x04); float timeMagnification<comment="一定速度を超えた時の時間経過倍率">;
+
+    FSeek(p + 0x08);
+} TimeServiceParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+TimeServiceParam timeServiceParam;

@@ -1,0 +1,39 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef byte sint8;
+
+enum<sint8> OutputType
+{
+    OUTPUT_TYPE_SDR = 0,
+    OUTPUT_TYPE_HDR = 1
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); OutputType outputType<comment="出力タイプ(SDR,HDR)">;
+    FSeek(p + 0x04); float baseNits<comment="標準的な明るさ(nits)">;
+    FSeek(p + 0x08); float maxNitsLevel<comment="明るさの上限値">;
+    FSeek(p + 0x0C); float minNitsLevel<comment="暗さの下限値">;
+    FSeek(p + 0x10); float extendHue<comment="色相方向への色の拡張率">;
+    FSeek(p + 0x14); float extendSaturation<comment="彩度方向への色の拡張率">;
+    FSeek(p + 0x18); bool autoNitsSetting<comment="自動で輝度調整をするフラグ">;
+
+    FSeek(p + 0x1C);
+} FxHDRParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxHDRParameter fxHDRParameter;

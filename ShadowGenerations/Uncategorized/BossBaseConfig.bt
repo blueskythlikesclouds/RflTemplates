@@ -1,0 +1,105 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool isUse<comment="使用フラグ">;
+    FSeek(p + 0x01); bool isUsePillar<comment="柱オブジェクト使用フラグ">;
+    FSeek(p + 0x04); float phaseChangeHpRatio<comment="フェーズ切替発生残HP[%]">;
+
+    FSeek(p + 0x08);
+} BossPhaseParam;
+
+typedef byte sint8;
+
+enum<sint8> EaseType
+{
+    ET_Sin = 0,
+    ET_Cubic = 1,
+    ET_Quadratic = 2
+};
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float easeTime<comment="補間時間">;
+    FSeek(p + 0x04); EaseType easeType<comment="補間タイプ">;
+    FSeek(p + 0x08); cstring mainLookAtNodeName<comment="注視するノード名[未設定時.はオブジェクトの原点]">;
+    FSeek(p + 0x20); vector3 mainLookOffsetPos<comment="注視位置調整">;
+    FSeek(p + 0x30); cstring subLookAtNodeName<comment="サブとして注視するノード名[未設定時はオブジェクトの原点]">;
+    FSeek(p + 0x40); vector3 subLookOffsetPos<comment="サブ注視位置調整">;
+    FSeek(p + 0x50); float distance<comment="距離">;
+    FSeek(p + 0x60); vector3 playerOffsetPos<comment="プレイヤー位置調整">;
+
+    FSeek(p + 0x70);
+} BossLockOnCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 healthPoint<comment="体力値">;
+    FSeek(p + 0x04); float stunTime<comment="スタン時間">;
+    FSeek(p + 0x08); BossPhaseParam phaseParams[8]<comment="バトルフェーズ設定",optimize=false>;
+    FSeek(p + 0x50); BossLockOnCameraParam cameraParam<comment="カメラ設定">;
+    FSeek(p + 0xC0); bool isDebugDraw<comment="デバック表示">;
+    FSeek(p + 0xC4); uint32 debugDrawPhaseIndex<comment="デバック表示するフェーズ番号">;
+
+    FSeek(p + 0xD0);
+} BossStatusConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 ringNumQuickCyloopUp<comment="枚数(Qサイループ上り)">;
+    FSeek(p + 0x04); uint32 ringNumQuickCyloopDown<comment="枚数(Qサイループ下り)">;
+    FSeek(p + 0x08); uint32 ringNumSonicSpecial<comment="枚数(ソニック必殺技)">;
+    FSeek(p + 0x0C); float ringSpawnDistance<comment="発生距離">;
+    FSeek(p + 0x10); float ringSuckedVelocity<comment="発生時のランダム初速">;
+
+    FSeek(p + 0x14);
+} BossDropRingConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossStatusConfig status<comment="ステータス">;
+    FSeek(p + 0xD0); BossDropRingConfig dropRing<comment="リング放出">;
+
+    FSeek(p + 0xF0);
+} BossBaseConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossBaseConfig bossBaseConfig;

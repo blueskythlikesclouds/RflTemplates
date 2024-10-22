@@ -1,0 +1,501 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 eyeLocalOffset<comment="視点">;
+    FSeek(p + 0x10); vector3 lookAtLocalOffset<comment="注視点">;
+    FSeek(p + 0x20); float fov<comment="画角">;
+    FSeek(p + 0x24); float roll<comment="ロール">;
+    FSeek(p + 0x28); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x2C); float easeOutTime<comment="補間時間[終了]">;
+    FSeek(p + 0x30); float keepTime<comment="時間">;
+
+    FSeek(p + 0x40);
+} BossMephilesFixedCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float VerticalPowerRatio<comment="Dブロー打ち上げ力調整値">;
+    FSeek(p + 0x04); float VerticalSpeedKeepTime<comment="打ち上げ初速維持時間">;
+    FSeek(p + 0x08); float VerticalSpeedDecelTime<comment="打ち上げ減速時間">;
+    FSeek(p + 0x0C); float HorizontalPowerRatio<comment="Dブロー吹き飛ばし力調整値">;
+    FSeek(p + 0x10); float HorizontalSpeedKeepTime<comment="吹き飛ばし初速維持時間">;
+    FSeek(p + 0x14); float HorizontalSpeedDecelTime<comment="吹き飛ばし減速時間">;
+    FSeek(p + 0x18); sint32 wallHitDamage<comment="壁衝突時ダメージ">;
+    FSeek(p + 0x1C); float waitTime<comment="衝突後待機時間[壁/爆弾柱]">;
+    FSeek(p + 0x20); BossMephilesFixedCamera bombHitCamera<comment="爆弾柱接触時カメラ">;
+    FSeek(p + 0x60); BossMephilesFixedCamera blowDownCamera<comment="叩きつけ時カメラ">;
+    FSeek(p + 0xA0); float blowDownCameraDelay<comment="叩きつけカメラ遅延時間">;
+    FSeek(p + 0xA4); float blowDownWaitTime<comment="叩きつけ時待機時間">;
+
+    FSeek(p + 0xB0);
+} BossMephilesDBlowHitParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool isEnable<comment="使用フラグ[false時はスキップ 先頭と末端は例外]">;
+    FSeek(p + 0x04); float damageTime<comment="ワープが発生する時間">;
+    FSeek(p + 0x08); float counterAtkWaitTime<comment="カウンター攻撃時の待ち時間">;
+    FSeek(p + 0x0C); float warpedWaitTime<comment="ワープ後待機時間">;
+    FSeek(p + 0x10); bool isDBlow<comment="Dブロー">;
+    FSeek(p + 0x11); bool isCounter<comment="カウンター攻撃実行">;
+
+    FSeek(p + 0x14);
+} BossMephilesWarpStatusData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesWarpStatusData warpDatas[20]<comment="設定[ワープ回数]",optimize=false>;
+
+    FSeek(p + 0x190);
+} BossMephilesWarpStatusTable;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesFixedCamera warpCamera<comment="ワープ時カメラ">;
+    FSeek(p + 0x40); vector3 warpPositions[8]<comment="ワープ先座標[0:プレイヤー基準 1～:カメラ基準]",optimize=false>;
+
+    FSeek(p + 0xC0);
+} BossMephilesWarpCameraAndPosition;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesWarpStatusTable warpTable[4]<comment="ワープ設定テーブル[アメーバ地帯展開回数]",optimize=false>;
+    FSeek(p + 0x640); BossMephilesWarpStatusTable warpTableByHard[4]<comment="ワープ設定テーブル[アメーバ地帯展開回数]",optimize=false>;
+    FSeek(p + 0xC80); float warpDistanceByNormal<comment="ワープ距離[通常]">;
+    FSeek(p + 0xC84); float warpDistanceByCounter<comment="ワープ距離[カウンター時]">;
+    FSeek(p + 0xC88); sint32 useTableIndexMax<comment="使用テーブル数最大時">;
+    FSeek(p + 0xC90); BossMephilesFixedCamera counterCamera<comment="カウンター攻撃時カメラ">;
+    FSeek(p + 0xCD0); BossMephilesWarpCameraAndPosition warpPattern[2]<comment="ワープ時カメラ・ワープ先設定",optimize=false>;
+
+    FSeek(p + 0xE50);
+} BossMephilesWarpParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float addDistance<comment="加算カメラ距離">;
+    FSeek(p + 0x04); float addElevationOffset<comment="仰角オフセット">;
+    FSeek(p + 0x08); float addTargetUpOffset<comment="基準上方向オフセット">;
+    FSeek(p + 0x0C); float addTargetFrontOffset<comment="基準前方向オフセット">;
+    FSeek(p + 0x10); float addLookatUpOffset<comment="注視点上方向オフセット">;
+    FSeek(p + 0x14); float addLookatWorldUpOffset<comment="注視点上方向オフセット[ワールド空間]">;
+    FSeek(p + 0x18); float addAzimuthOffset<comment="方位角オフセット">;
+    FSeek(p + 0x1C); bool isDisableAvoidance<comment="迂回処理無効化">;
+    FSeek(p + 0x20); float time<comment="時間">;
+    FSeek(p + 0x24); float easeIn<comment="開始補間">;
+    FSeek(p + 0x28); float easeOut<comment="終了補間">;
+
+    FSeek(p + 0x2C);
+} BossMephilesCameraExtensionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesDBlowHitParam dBlow<comment="Dブロー">;
+    FSeek(p + 0xB0); BossMephilesWarpParam warp<comment="ワープ">;
+    FSeek(p + 0xF00); float battleAwayTime<comment="攻撃中断時の猶予時間">;
+    FSeek(p + 0xF04); sint32 cumulativeDamageLimits[4]<comment="潜行挙動に移行する累積ダメージ値[アメーバ地帯展開回数]",optimize=false>;
+    FSeek(p + 0xF14); sint32 cumulativeDamageLimitsByHard[4]<comment="潜行挙動に移行する累積ダメージ値[アメーバ地帯展開回数][高難易度用]",optimize=false>;
+    FSeek(p + 0xF24); float spearDamageWaitTimes[4]<comment="スピアヒット時待機時間[アメーバ地帯展開回数]",optimize=false>;
+    FSeek(p + 0xF40); BossMephilesFixedCamera spearDamageCamera<comment="スピアヒット時カメラ">;
+    FSeek(p + 0xF80); BossMephilesCameraExtensionParam exStageOutSideCamera<comment="ステージ外周時拡張カメラ設定">;
+    FSeek(p + 0xFAC); float stageOutSideDistance<comment="ステージ外周と判定する距離">;
+    FSeek(p + 0xFB0); float stageOutSideMargin<comment="ステージ外周時の余白距離">;
+
+    FSeek(p + 0xFC0);
+} BossMephilesCommonParam;
+
+typedef byte sint8;
+
+enum<sint8> ActionType
+{
+    INVALID_ACTION = 0,
+    PHASE1_IDLE = 1,
+    PHASE1_MINION = 2,
+    PHASE1_BLADE = 3,
+    PHASE1_DEMON = 4,
+    PHASE2_IDLE = 5,
+    ACTION_TYPE_NUM = 6
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ActionType actionType<comment="アクションの種類">;
+    FSeek(p + 0x04); float time<comment="持続時間[一部のアクションでは無効]">;
+    FSeek(p + 0x08); sint32 attackIndex<comment="各攻撃設定テーブル番号[配列番号]">;
+
+    FSeek(p + 0x0C);
+} BossMephilesActionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 lifeCount<comment="耐久値">;
+    FSeek(p + 0x04); sint32 healthPoint<comment="耐久値を1減らすのに必要なダメージ">;
+    FSeek(p + 0x08); sint32 healthPointByHard<comment="耐久値を1減らすのに必要なダメージ[高難易度用]">;
+    FSeek(p + 0x0C); sint32 useTableIndexMax<comment="使用アクションテーブル数最大時">;
+    FSeek(p + 0x10); BossMephilesActionData actionTable1[24]<comment="アクションテーブル1",optimize=false>;
+    FSeek(p + 0x130); BossMephilesActionData actionTable2[24]<comment="アクションテーブル2",optimize=false>;
+    FSeek(p + 0x250); BossMephilesActionData actionTable3[24]<comment="アクションテーブル3",optimize=false>;
+    FSeek(p + 0x370); BossMephilesActionData actionTable4[24]<comment="アクションテーブル4",optimize=false>;
+
+    FSeek(p + 0x490);
+} BossMephilesPhaseParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float amoebaMoveSpeed<comment="移動速度[アメーバ地帯潜行時]">;
+    FSeek(p + 0x04); float amoebaMoveAccel<comment="加速性能[アメーバ地帯潜行時]">;
+    FSeek(p + 0x08); float amoebaMoveAngle<comment="旋回速度[アメーバ地帯潜行時]">;
+    FSeek(p + 0x0C); float amoebaEscapeDistance<comment="逃げ始める距離[平面上]">;
+    FSeek(p + 0x10); float amoebaPatrolSpeed<comment="巡回時速度[逃げ挙動範囲外]">;
+    FSeek(p + 0x14); float amoebaPatrolDistance<comment="巡回距離[切り返し頻度]">;
+    FSeek(p + 0x18); float hideEndWait<comment="潜行状態終了直後待機時間">;
+
+    FSeek(p + 0x1C);
+} BossMephilesPhase1StatusTable;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float floatingHeight<comment="浮遊高度">;
+    FSeek(p + 0x04); float initIdleTime<comment="待機時間[初回]">;
+    FSeek(p + 0x08); float idleTime<comment="待機時間">;
+    FSeek(p + 0x0C); float amoebaHitRadius<comment="当たり判定[アメーバ地帯潜行時]">;
+    FSeek(p + 0x10); BossMephilesPhase1StatusTable statusTable[4]<comment="設定テーブル",optimize=false>;
+    FSeek(p + 0x80); BossMephilesPhase1StatusTable statusTableByHard[4]<comment="設定テーブル[高難易度]",optimize=false>;
+    FSeek(p + 0xF0); BossMephilesFixedCamera hideEndCamera<comment="アメーバ地帯潜行中断時カメラ">;
+
+    FSeek(p + 0x130);
+} BossMephilesPhase1Status;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 num<comment="ミニオン数">;
+    FSeek(p + 0x04); sint32 amoebaMinionNum<comment="アメーバOBJ出現時ミニオン数">;
+    FSeek(p + 0x08); sint32 attackNum<comment="同時攻撃数">;
+    FSeek(p + 0x0C); sint32 attackCycle<comment="攻撃周期[n回毎に初期攻撃間隔を適用]">;
+    FSeek(p + 0x10); float attackInitDelayNormal<comment="攻撃間隔[初回:通常時]">;
+    FSeek(p + 0x14); float attackInitDelayAmoeba<comment="攻撃間隔[初回:アメーバ時]">;
+    FSeek(p + 0x18); float attackDelayNormal<comment="攻撃間隔[通常時]">;
+    FSeek(p + 0x1C); float attackDelayAmoeba<comment="攻撃間隔[アメーバ時]">;
+    FSeek(p + 0x20); float time<comment="時間">;
+    FSeek(p + 0x24); sint32 amoebaLotCycle<comment="撃破時アメーバターゲット出現抽選頻度[n回毎]">;
+    FSeek(p + 0x28); sint32 amoebaLotValue<comment="撃破時アメーバターゲット出現率[0 - 100]">;
+    FSeek(p + 0x2C); sint32 ringNum<comment="撃破時獲得リング数">;
+
+    FSeek(p + 0x30);
+} BossMephilesMinionTable;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float spawnRadiusMin<comment="出現距離[最小]">;
+    FSeek(p + 0x04); float spawnRadiusMax<comment="出現距離[最大]">;
+    FSeek(p + 0x08); float moveRadiusMin<comment="移動距離[最小]">;
+    FSeek(p + 0x0C); float moveRadiusMax<comment="移動距離[最大]">;
+    FSeek(p + 0x10); float moveDegree<comment="移動範囲">;
+    FSeek(p + 0x14); float shakeDegree<comment="揺れの半幅">;
+    FSeek(p + 0x18); float shakeSpeed<comment="揺れの速度">;
+    FSeek(p + 0x1C); float heightRatio<comment="高さ倍率">;
+    FSeek(p + 0x20); float attackSpeedNormal<comment="飛んでくる速度[通常時]">;
+    FSeek(p + 0x24); float attackSpeedAmoeba<comment="飛んでくる速度[アメーバ時]">;
+    FSeek(p + 0x28); float attackSpeedNormalByHard<comment="飛んでくる速度[通常時][高難易度用]">;
+    FSeek(p + 0x2C); float attackSpeedAmoebaByHard<comment="飛んでくる速度[アメーバ時][高難易度用]">;
+    FSeek(p + 0x30); float amoebaTargetActiveTime<comment="アメーバターゲット生存時間">;
+    FSeek(p + 0x34); BossMephilesMinionTable minionTable[4]<comment="攻撃設定テーブル",optimize=false>;
+    FSeek(p + 0xF4); BossMephilesMinionTable minionTableByHard[4]<comment="攻撃設定テーブル[高難易度用]",optimize=false>;
+    FSeek(p + 0x1B4); BossMephilesCameraExtensionParam exCamera<comment="拡張カメラ設定">;
+
+    FSeek(p + 0x1E0);
+} BossMephilesAttackMinion;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 num<comment="繰り返し回数">;
+    FSeek(p + 0x04); sint32 attackNum<comment="攻撃数[切り返し回数]">;
+    FSeek(p + 0x08); sint32 amoebaSpawnIdx1<comment="アメーバオブジェクト出現タイミング１[0で無効]">;
+    FSeek(p + 0x0C); sint32 amoebaSpawnIdx2<comment="アメーバオブジェクト出現タイミング２[0で無効]">;
+    FSeek(p + 0x10); sint32 amoebaSpawnIdx3<comment="アメーバオブジェクト出現タイミング３[0で無効]">;
+    FSeek(p + 0x14); float aimSpeed<comment="照準動作速度[角速度]">;
+    FSeek(p + 0x18); float aimTime<comment="照準時間">;
+    FSeek(p + 0x1C); float assaultSpeed<comment="突進速度">;
+    FSeek(p + 0x20); float time<comment="攻撃後待機時間">;
+    FSeek(p + 0x24); float amoebaTargetActiveTime<comment="アメーバターゲット生存時間">;
+
+    FSeek(p + 0x28);
+} BossMephilesBladeTable;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesBladeTable bladeTable[4]<comment="攻撃設定テーブル",optimize=false>;
+    FSeek(p + 0xA0); BossMephilesBladeTable bladeTableByHard[4]<comment="攻撃設定テーブル[高難易度用]",optimize=false>;
+    FSeek(p + 0x140); BossMephilesCameraExtensionParam exCamera<comment="拡張カメラ設定">;
+
+    FSeek(p + 0x16C);
+} BossMephilesAttackBlade;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); float distance<comment="距離">;
+    FSeek(p + 0x08); float minElevation<comment="仰角最小値">;
+    FSeek(p + 0x0C); float maxElevation<comment="仰角最大値">;
+    FSeek(p + 0x10); float panningSuspensionK<comment="パンニング遅延のバネ定数">;
+    FSeek(p + 0x14); float interiorPanningSuspensionK<comment="近距離パンニング遅延のバネ定数">;
+    FSeek(p + 0x18); float time<comment="持続時間[0以下で無限]">;
+    FSeek(p + 0x1C); float easeInTime<comment="補間時間[開始]">;
+    FSeek(p + 0x20); float easeOutTime<comment="補間時間[終了]">;
+
+    FSeek(p + 0x24);
+} BossMephilesLockonCameraParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesPhase1Status status<comment="本体設定">;
+    FSeek(p + 0x130); BossMephilesAttackMinion minion<comment="ミニオン召喚攻撃設定">;
+    FSeek(p + 0x310); BossMephilesAttackBlade blade<comment="突進攻撃設定">;
+    FSeek(p + 0x47C); BossMephilesCameraExtensionParam exCameraInit<comment="ゲーム開始直後拡張カメラ設定">;
+    FSeek(p + 0x4A8); BossMephilesCameraExtensionParam exCameraDamage<comment="被ダメージ時拡張カメラ設定">;
+    FSeek(p + 0x4D4); BossMephilesCameraExtensionParam exCameraHideChase<comment="追跡挙動時拡張カメラ設定">;
+    FSeek(p + 0x500); BossMephilesLockonCameraParam lockonCamera<comment="デフォルト注視カメラ設定">;
+
+    FSeek(p + 0x530);
+} BossMephilesPhase1Param;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring layerName<comment="レイヤー名">;
+
+    FSeek(p + 0x10);
+} BossMephilesPhase2StageLayerParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float reactionTime<comment="索敵範囲内猶予時間">;
+    FSeek(p + 0x04); float range<comment="索敵範囲[半径]">;
+    FSeek(p + 0x08); float rangeOffset<comment="索敵範囲位置調整[前後]">;
+    FSeek(p + 0x0C); float wavePointOffset<comment="攻撃時衝撃波位置調整[前後]">;
+    FSeek(p + 0x10); float waveRadus<comment="攻撃時衝撃波サイズ[半径]">;
+    FSeek(p + 0x14); float waveDelay<comment="攻撃時衝撃波発生遅延">;
+    FSeek(p + 0x18); float waveTime<comment="攻撃時衝撃波有効時間">;
+
+    FSeek(p + 0x1C);
+} BossMephilesDemonHandAttack;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 lifeCountMax<comment="耐久値">;
+    FSeek(p + 0x04); sint32 lifeCountMaxByHard<comment="耐久値[高難易度用]">;
+    FSeek(p + 0x08); sint32 hp<comment="ライフポイント[耐久値を削るのに必要なダメージ値]">;
+    FSeek(p + 0x0C); sint32 hpByHard<comment="ライフポイント[耐久値を削るのに必要なダメージ値][高難易度用]">;
+    FSeek(p + 0x10); sint32 shieldHp[4]<comment="シールド耐久値",optimize=false>;
+    FSeek(p + 0x20); float rotAnimSpeedRatios[4]<comment="旋回モーション再生速度倍率",optimize=false>;
+    FSeek(p + 0x30); float hideMoveSpeed<comment="潜行中移動速度">;
+    FSeek(p + 0x34); float rotSpeedNormal<comment="旋回速度[待機中]">;
+    FSeek(p + 0x38); float rotSpeedAttack<comment="旋回速度[叩きつけ攻撃中]">;
+    FSeek(p + 0x3C); float rotSpeedHide<comment="旋回速度[潜行中]">;
+    FSeek(p + 0x40); float waitTimeInit<comment="待機時間[初回出現演出直後]">;
+    FSeek(p + 0x44); float waitTimes[4]<comment="待機時間",optimize=false>;
+    FSeek(p + 0x54); float waitTimesByHard[4]<comment="待機時間[高難易度用]",optimize=false>;
+    FSeek(p + 0x64); float hideTime<comment="潜行時間">;
+    FSeek(p + 0x68); float hideAttackRangeMin<comment="潜行攻撃実行距離[最小]">;
+    FSeek(p + 0x6C); float hideAttackRange<comment="潜行攻撃実行距離[最大]">;
+    FSeek(p + 0x70); float hideAttackColRadius<comment="潜行攻撃コリジョンサイズ[半径]">;
+    FSeek(p + 0x74); float hideAttackDelay<comment="潜行攻撃開始遅延">;
+    FSeek(p + 0x78); float hideMoveMarginDistance<comment="潜行移動限界距離調整">;
+    FSeek(p + 0x7C); float hideEndDistance<comment="潜行強制解除距離">;
+    FSeek(p + 0x80); float laserTimes[4]<comment="レーザー攻撃時間",optimize=false>;
+    FSeek(p + 0x90); float laserAimSpeeds[4]<comment="レーザー照準速度",optimize=false>;
+    FSeek(p + 0xA0); sint32 amoebaTargetNum<comment="アメーバターゲット生成数">;
+    FSeek(p + 0xA4); float amoebaTargetActiveTime<comment="アメーバターゲット生存時間">;
+    FSeek(p + 0xA8); float amoebaTargetSpawnDistanceCycle<comment="潜行移動時にアメーバターゲット生存間隔距離[0で生成無効]">;
+    FSeek(p + 0xAC); sint32 dropRingNum<comment="撃破時リング獲得数">;
+    FSeek(p + 0xB0); sint32 dropRingNumByHard<comment="撃破時リング獲得数[高難易度用]">;
+    FSeek(p + 0xB4); float dropRingTime<comment="撃破時リング獲得タイミング">;
+    FSeek(p + 0xB8); float finishLaunchPower<comment="撃破時プレイヤー射出力">;
+    FSeek(p + 0xBC); float finishCameraLookAtHeight<comment="撃破時カメラ注視位置[固定カメラ解除後]">;
+    FSeek(p + 0xC0); float finishBreakFakerCreateTime<comment="撃破時分身生成タイミング">;
+    FSeek(p + 0xC4); float finishBreakedMessageDelayTime<comment="撃破通知タイミング[分身生成タイミング以下の数値は無効]">;
+    FSeek(p + 0xC8); float fakerAppearMoveTime<comment="撃破時分身移動時間">;
+    FSeek(p + 0xCC); float fakerAppearMoveUpRatio<comment="撃破時分身移動経路調整値[上方]">;
+    FSeek(p + 0xD0); BossMephilesDemonHandAttack handAttack<comment="近接攻撃設定">;
+    FSeek(p + 0xEC); BossMephilesDemonHandAttack handAttackByHard<comment="近接攻撃設定[高難易度用]">;
+    FSeek(p + 0x108); BossMephilesLockonCameraParam lockonCamera<comment="魔人戦注視カメラ設定">;
+    FSeek(p + 0x12C); BossMephilesCameraExtensionParam exHideAttack<comment="潜行攻撃時拡張カメラ設定">;
+    FSeek(p + 0x158); BossMephilesCameraExtensionParam exHideMove<comment="潜行中時拡張カメラ設定">;
+    FSeek(p + 0x184); BossMephilesCameraExtensionParam exLaser<comment="レーザー攻撃時拡張カメラ設定">;
+    FSeek(p + 0x1B0); BossMephilesCameraExtensionParam exDamage<comment="被ダメージ時拡張カメラ設定">;
+
+    FSeek(p + 0x1DC);
+} BossMephilesAttackDemon;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float initStartDelay<comment="初回攻撃開始遅延">;
+    FSeek(p + 0x04); float startDelay<comment="攻撃開始遅延[2回目以降]">;
+    FSeek(p + 0x08); float startDelayByHard<comment="攻撃開始遅延[2回目以降][高難易度用]">;
+    FSeek(p + 0x0C); float addStartDelay<comment="攻撃間隔">;
+    FSeek(p + 0x10); float readyTime<comment="落下準備時間[予兆]">;
+    FSeek(p + 0x14); float fallTime<comment="落下時間">;
+    FSeek(p + 0x18); float waitTime<comment="待機時間">;
+    FSeek(p + 0x1C); float waitTimeByHard<comment="待機時間[高難易度用]">;
+    FSeek(p + 0x20); float riseTime<comment="上昇時間">;
+    FSeek(p + 0x24); float launchSpeed<comment="射出速度">;
+    FSeek(p + 0x28); float launchSpeedByHard<comment="射出速度[高難易度用]">;
+    FSeek(p + 0x2C); float launchSpeedKeepTime<comment="射出速度維持時間">;
+    FSeek(p + 0x30); float launchOutOfControlTime<comment="射出時操作不能時間">;
+    FSeek(p + 0x34); float leanAngle<comment="傾斜角度">;
+    FSeek(p + 0x38); float leanTime<comment="傾斜時間">;
+    FSeek(p + 0x3C); sint32 amoebaTargetNum<comment="アメーバターゲット生成数">;
+    FSeek(p + 0x40); float amoebaTargetDelay<comment="アメーバターゲット生成までの時間">;
+    FSeek(p + 0x44); float amoebaTargetDistance<comment="アメーバターゲットと柱の距離">;
+    FSeek(p + 0x48); float waveRadius<comment="衝撃波の半径">;
+    FSeek(p + 0x4C); float waveDelay<comment="衝撃波の発生遅延">;
+    FSeek(p + 0x50); float waveTime<comment="衝撃波の展開時間">;
+    FSeek(p + 0x54); float waveTimeByHard<comment="衝撃波の展開時間[高難易度用]">;
+    FSeek(p + 0x58); float cameraHeightMin<comment="開始時カメラ高度[最小]">;
+    FSeek(p + 0x5C); float cameraHeightMax<comment="開始時カメラ高度[最大]">;
+    FSeek(p + 0x60); float cameraLookUpDelay<comment="開始時カメラ見上げ動作開始遅延">;
+    FSeek(p + 0x64); float cameraLookUpEaseTime<comment="開始時カメラ見上げ動作時間">;
+    FSeek(p + 0x68); float cameraLookUpKeepTime<comment="開始時カメラ見上げ状態維持時間">;
+    FSeek(p + 0x6C); float cameraReturnTime<comment="開始時カメラ戻し時間">;
+    FSeek(p + 0x70); cstring layerName<comment="開始時カメラ後起動レイヤー名">;
+    FSeek(p + 0x80); cstring endOffLayerName<comment="終了時OFF切り替えレイヤー名[全撃破]">;
+    FSeek(p + 0x90); BossMephilesFixedCamera fixedCamera<comment="注視カメラ[ステージ中央基準]">;
+    FSeek(p + 0xD0); float fixedCameraStartDelay<comment="注視カメラ開始遅延[マイナス値設定時カメラ無効]">;
+    FSeek(p + 0xD4); float firstReactionStartDelay<comment="初回攻撃開始モーション再生遅延">;
+    FSeek(p + 0xD8); float firstReactionEndDelay<comment="初回攻撃実施モーション再生遅延">;
+    FSeek(p + 0xDC); float firstMoveTime<comment="初回移動時間">;
+    FSeek(p + 0xE0); float firstUpRatio<comment="初回移動調整[上方向]">;
+    FSeek(p + 0xE4); float pillarCreateDelay<comment="攻撃用柱生成遅延">;
+
+    FSeek(p + 0xF0);
+} BossMephilesAttackPillar;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 num<comment="分身数">;
+    FSeek(p + 0x04); sint32 numByHard<comment="分身数[高難易度用]">;
+    FSeek(p + 0x08); sint32 spBreakNum<comment="特殊演出に必要な同時撃破数">;
+    FSeek(p + 0x0C); sint32 spBreakActiveNum<comment="特殊演出に必要な残り生存個体数">;
+    FSeek(p + 0x10); sint32 spBreakNumByHard<comment="特殊演出に必要な同時撃破数[高難易度用]">;
+    FSeek(p + 0x14); sint32 spBreakActiveNumByHard<comment="特殊演出に必要な残り生存個体数[高難易度用]">;
+    FSeek(p + 0x18); float floatingHeight<comment="浮遊高度">;
+    FSeek(p + 0x1C); float initSpawnRaidus<comment="初期配置半径[魔人撃破位置中心]">;
+    FSeek(p + 0x20); float initDelay<comment="初回攻撃開始遅延[初回攻撃間隔]">;
+    FSeek(p + 0x24); float delay<comment="攻撃間隔[2回目以降]">;
+    FSeek(p + 0x28); sint32 breakCountrNum<comment="一斉攻撃発動撃破数">;
+    FSeek(p + 0x2C); float attackPosRaidus<comment="攻撃配置半径[プレイヤー中心]">;
+    FSeek(p + 0x30); float straightAttackHitColRaidus<comment="連続攻撃時当たり判定サイズ[半径]">;
+    FSeek(p + 0x34); float straightAttackSpeed<comment="連続攻撃時の突進移動速度">;
+    FSeek(p + 0x38); float straightDelay<comment="連続攻撃時開始遅延">;
+    FSeek(p + 0x3C); float straightAddDelay<comment="連続攻撃時攻撃間隔">;
+    FSeek(p + 0x40); sint32 straightNum<comment="連続攻撃同時攻撃数">;
+    FSeek(p + 0x44); float straightDelayByHard<comment="連続攻撃時開始遅延[高難易度用]">;
+    FSeek(p + 0x48); float straightAddDelayByHard<comment="連続攻撃時攻撃間隔[高難易度用]">;
+    FSeek(p + 0x4C); sint32 straightNumByHard<comment="連続攻撃同時攻撃数[高難易度用]">;
+    FSeek(p + 0x50); BossMephilesFixedCamera attackCamera<comment="連続攻撃時カメラ">;
+    FSeek(p + 0x90); float soulSpeed<comment="消滅後光の玉速度">;
+
+    FSeek(p + 0xA0);
+} BossMephilesAttackFaker;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesPhase2StageLayerParam startActiveLayers[4]<comment="フェーズ開始時有効レイヤー一覧",optimize=false>;
+    FSeek(p + 0x40); BossMephilesAttackDemon demon<comment="魔人召喚攻撃設定">;
+    FSeek(p + 0x220); BossMephilesAttackPillar pillar<comment="柱攻撃設定">;
+    FSeek(p + 0x310); BossMephilesAttackFaker faker<comment="分身攻撃設定">;
+
+    FSeek(p + 0x3B0);
+} BossMephilesPhase2Param;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossMephilesCommonParam commonParam<comment="基本">;
+    FSeek(p + 0xFC0); BossMephilesPhaseParam phaseParam[2]<comment="フェーズ共通",optimize=false>;
+    FSeek(p + 0x18E0); BossMephilesPhase1Param phase1<comment="フェーズ1">;
+    FSeek(p + 0x1E10); BossMephilesPhase2Param phase2<comment="フェーズ2">;
+
+    FSeek(p + 0x21C0);
+} BossMephilesConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossMephilesConfig bossMephilesConfig;

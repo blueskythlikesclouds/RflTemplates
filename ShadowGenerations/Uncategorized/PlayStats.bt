@@ -1,0 +1,103 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring stagecode<comment="ステージコード">;
+    FSeek(p + 0x10); sint32 highTime<comment="最高タイム">;
+    FSeek(p + 0x14); sint32 highScore<comment="ハイスコア">;
+
+    FSeek(p + 0x18);
+} PlayStatsSummary;
+
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        PlayStatsSummary data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_PlayStatsSummary;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring stagecode<comment="ステージコード">;
+    FSeek(p + 0x10); cstring play<comment="プレイ">;
+    FSeek(p + 0x20); cstring option<comment="オプション">;
+    FSeek(p + 0x30); vector3 position<comment="座標">;
+    FSeek(p + 0x40); float time<comment="時間">;
+
+    FSeek(p + 0x50);
+} PlayLog;
+
+typedef struct {
+    uint64 pointer;
+    uint64 size;
+    if (pointer > 0 && size > 0)
+    {
+        local uint64 p<hidden=true> = FTell();
+        FSeek(BASE_OFFSET_VALUE + pointer);
+        PlayLog data[size]<optimize=false>;
+        FSeek(p);
+    }
+} array_PlayLog;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 enemies<comment="エネミー撃破数">;
+    FSeek(p + 0x04); sint32 damages<comment="ダメージ回数">;
+    FSeek(p + 0x08); sint32 misses<comment="ミス回数">;
+    FSeek(p + 0x0C); sint32 retry<comment="リトライ回数">;
+    FSeek(p + 0x10); sint32 restart<comment="リスタート回数">;
+    FSeek(p + 0x18); array_PlayLog logs<comment="プレイログ">;
+
+    FSeek(p + 0x38);
+} PlayStatsData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring username<comment="プレイユーザー">;
+    FSeek(p + 0x10); cstring time<comment="プレイ開始時刻">;
+    FSeek(p + 0x20); array_PlayStatsSummary summaries<comment="サマリ">;
+    FSeek(p + 0x40); PlayStatsData playLog<comment="ログ">;
+
+    FSeek(p + 0x78);
+} PlayStats;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PlayStats playStats;

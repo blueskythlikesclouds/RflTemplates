@@ -1,0 +1,71 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float value<comment="音量">;
+    FSeek(p + 0x04); float delayTime<comment="開始遅延時間">;
+    FSeek(p + 0x08); float fadeTime<comment="フェード時間">;
+
+    FSeek(p + 0x0C);
+} BGMVolumeChangeInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BGMVolumeChangeInfo playerStop<comment="ソニック停止">;
+    FSeek(p + 0x0C); BGMVolumeChangeInfo playerWalk<comment="ソニック低速">;
+    FSeek(p + 0x18); BGMVolumeChangeInfo playerRun<comment="ソニック高速">;
+
+    FSeek(p + 0x24);
+} BGMVolumeChangeInfoList;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float value<comment="ターゲットAisac値">;
+    FSeek(p + 0x04); float fadeTime<comment="フェード時間">;
+
+    FSeek(p + 0x08);
+} AisacChangeInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); AisacChangeInfo beginTimeStopBGM<comment="時間停止開始BGM">;
+    FSeek(p + 0x08); AisacChangeInfo endTimeStopBGM<comment="時間停止終了BGM[ターゲットAisac値は0固定]">;
+    FSeek(p + 0x10); AisacChangeInfo beginTimeStopSE<comment="時間停止開始SE">;
+    FSeek(p + 0x18); AisacChangeInfo endTimeStopSE<comment="時間停止終了SE[ターゲットAisac値は0固定]">;
+    FSeek(p + 0x20); AisacChangeInfo beginUnderWater<comment="水中開始">;
+    FSeek(p + 0x28); AisacChangeInfo endUnderWater<comment="水中終了[ターゲットAisac値は0固定]">;
+
+    FSeek(p + 0x30);
+} AisacChangeInfoList;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float pauseFadeOutTime<comment="ポーズ開始時のフェードアウト時間">;
+    FSeek(p + 0x04); float pauseFadeInTime<comment="ポーズ終了時のフェードイン時間">;
+    FSeek(p + 0x08); float enterWhitespaceFadeOutTime<comment="ホワイトスペースへ移動開始時のフェードアウト時間">;
+    FSeek(p + 0x0C); float leaveWhitespaceResultFadeOutTime<comment="ホワイトスペースリザルト終了時のフェードアウト時間">;
+    FSeek(p + 0x10); BGMVolumeChangeInfoList bgmVolumeInfo<comment="BGM音量変化">;
+    FSeek(p + 0x34); AisacChangeInfoList aisacInfo<comment="Aisac変化">;
+
+    FSeek(p + 0x64);
+} SoundCommonParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+SoundCommonParameter soundCommonParameter;

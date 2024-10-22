@@ -1,0 +1,101 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring cueName<comment="キュー名">;
+    FSeek(p + 0x10); float fadeInTime<comment="フェードイン時間">;
+    FSeek(p + 0x14); float fadeOutTime<comment="フェードアウト時間">;
+
+    FSeek(p + 0x18);
+} AmbInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring cueName<comment="キュー名">;
+
+    FSeek(p + 0x10);
+} AmbBaseNoiseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring cueName<comment="キュー名">;
+    FSeek(p + 0x10); float speedThreshold<comment="再生開始速度">;
+    FSeek(p + 0x14); float fadeTime<comment="音のフェード時間">;
+
+    FSeek(p + 0x18);
+} AmbRelativeWindParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring cueName<comment="キュー名">;
+    FSeek(p + 0x10); float sensorRebootTime<comment="センサーの再稼働時間">;
+    FSeek(p + 0x14); float sensorRepositionTime<comment="センサーの再配置時間">;
+    FSeek(p + 0x18); float lifeAreaRadius<comment="音の生存半径">;
+    FSeek(p + 0x1C); float lifeTime<comment="音の生存時間">;
+    FSeek(p + 0x20); float fadeTime<comment="音のフェード時間">;
+
+    FSeek(p + 0x28);
+} AmbNearPointParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring cueName<comment="キュー名">;
+    FSeek(p + 0x10); float sensorRadius<comment="センサー半径">;
+
+    FSeek(p + 0x18);
+} AmbRiverParameter_Nearest;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring cueName<comment="キュー名">;
+    FSeek(p + 0x10); float attenuationDistance<comment="減衰距離">;
+    FSeek(p + 0x14); float maxLevelPerPoint<comment="1点あたりの最大センドレベル">;
+
+    FSeek(p + 0x18);
+} AmbRiverParameter_Multiple3D;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); AmbInfo ambSoundInfo[8]<comment="ambSoundInfo",optimize=false>;
+    FSeek(p + 0xC0); AmbBaseNoiseParameter baseNoise<comment="ベースノイズ">;
+    FSeek(p + 0xD0); AmbRelativeWindParameter relativeWind<comment="相対風">;
+    FSeek(p + 0xE8); AmbNearPointParameter insect<comment="虫の声">;
+    FSeek(p + 0x110); AmbNearPointParameter grass<comment="草の揺れる音">;
+    FSeek(p + 0x138); AmbRiverParameter_Nearest riverNearest<comment="川[最近点バージョン]">;
+    FSeek(p + 0x150); AmbRiverParameter_Multiple3D riverMultiple3D<comment="川[複数音源バージョン]">;
+
+    FSeek(p + 0x168);
+} AmbSoundParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+AmbSoundParameter ambSoundParameter;

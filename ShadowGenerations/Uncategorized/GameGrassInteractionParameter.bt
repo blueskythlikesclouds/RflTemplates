@@ -1,0 +1,47 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring name<comment="設定名">;
+    FSeek(p + 0x10); float radius<comment="半径">;
+    FSeek(p + 0x14); float height<comment="高さ">;
+    FSeek(p + 0x18); float power<comment="強度">;
+    FSeek(p + 0x1C); bool moveHitEnabled<comment="移動区間も衝突対象とするか">;
+
+    FSeek(p + 0x20);
+} GameGrassInteractionParameterData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); GameGrassInteractionParameterData data[32]<comment="設定",optimize=false>;
+
+    FSeek(p + 0x400);
+} GameGrassInteractionParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameGrassInteractionParameter gameGrassInteractionParameter;

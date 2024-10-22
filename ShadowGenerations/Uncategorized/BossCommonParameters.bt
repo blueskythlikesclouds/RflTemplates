@@ -1,0 +1,114 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring modelName<comment="モデル名">;
+    FSeek(p + 0x10); cstring animName<comment="asm名">;
+    FSeek(p + 0x20); vector3 scale<comment="サイズの比率1.0で通常出力">;
+    FSeek(p + 0x30); cstring stageName<comment="エディタ上でロードするステージ">;
+    FSeek(p + 0x40); vector3 stagePos<comment="エディタ上でセットする位置">;
+
+    FSeek(p + 0x50);
+} BossResourceInfo;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring nodeName<comment="基準位置のモデルノード名">;
+    FSeek(p + 0x10); vector3 offset<comment="位置オフセット">;
+    FSeek(p + 0x20); vector3 rot<comment="回転オフセット">;
+    FSeek(p + 0x30); cstring tagName<comment="検索用tag">;
+    FSeek(p + 0x40); sint32 nextPointId<comment="次のポイントのID(-1で無効)">;
+
+    FSeek(p + 0x50);
+} HoldPoint;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); HoldPoint holdPoints[128]<comment="holdPoints",optimize=false>;
+
+    FSeek(p + 0x2800);
+} HoldPointParameter;
+
+typedef byte sint8;
+
+enum<sint8> Shape
+{
+    SHAPE_SPHERER = 0,
+    SHAPE_BOX = 1,
+    SHAPE_CYLINDER = 2,
+    SHAPE_CAPCULE = 3
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring nodeName<comment="基準位置のモデルノード名">;
+    FSeek(p + 0x10); Shape shape<comment="形状">;
+    FSeek(p + 0x11); bool isPhysics<comment="物理コリジョンかどうか">;
+    FSeek(p + 0x20); vector3 size<comment="サイズ ※球体時xが半径">;
+    FSeek(p + 0x30); vector3 offset<comment="位置オフセット">;
+    FSeek(p + 0x40); vector3 rot<comment="回転オフセット">;
+    FSeek(p + 0x50); cstring tagName<comment="検索用tag">;
+
+    FSeek(p + 0x60);
+} CollisionPart;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollisionPart colParts[32]<comment="colParts",optimize=false>;
+
+    FSeek(p + 0xC00);
+} CollisionPartParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); BossResourceInfo resource<comment="ボス共通リソース">;
+    FSeek(p + 0x50); HoldPointParameter holdParam<comment="HoldPoint">;
+    FSeek(p + 0x2850); CollisionPartParameter colParam<comment="Collision">;
+
+    FSeek(p + 0x3450);
+} BossCommonParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+BossCommonParameters bossCommonParameters;

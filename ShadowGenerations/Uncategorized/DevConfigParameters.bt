@@ -1,0 +1,39 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+enum<sint8> ReplayMode
+{
+    REPLAY_MODE_OFF = 0,
+    REPLAY_MODE_RECORD = 1,
+    REPLAY_MODE_PLAY = 2,
+    REPLAY_MODE_GHOST = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool autoSaveEnabled<comment="AutoSave">;
+    FSeek(p + 0x01); bool gismoEnabled<comment="Gismo">;
+    FSeek(p + 0x02); bool reportEnabled<comment="Report">;
+    FSeek(p + 0x03); bool creditsEnabled<comment="Credits">;
+    FSeek(p + 0x04); ReplayMode replayMode<comment="Replay">;
+
+    FSeek(p + 0x05);
+} DevConfigParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+DevConfigParameters devConfigParameters;

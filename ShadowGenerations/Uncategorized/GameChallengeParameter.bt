@@ -1,0 +1,128 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef ubyte uint8;
+
+enum<uint8> ChallengeType
+{
+    Ring = 0,
+    OneRing = 1,
+    TargetAnnihilation = 2,
+    ChaosControllMaster = 3,
+    CleaningSea = 4,
+    DashRing = 5,
+    ArcEscape = 6,
+    BilliardBlow = 7,
+    SpearRunner = 8,
+    HighSpeedRailCanyon = 9,
+    StoneLabyrinth = 10,
+    DeathEggRobotPanic = 11,
+    GondolaSurveyTeam = 12,
+    Num = 13
+};
+
+typedef byte sint8;
+
+enum<sint8> IconType
+{
+    RING = 0,
+    CLOCK = 1,
+    ENEMYCHAOS = 2,
+    ENEMYBEETLE = 3,
+    OBJCHAOSSPEAR = 4,
+    OBJDASHRING = 5,
+    OBJSURFSPIN = 6,
+    ENEMYEGGSTINGER = 7,
+    ENEMYTWISTER = 8,
+    None = 9,
+    NUM = 10
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float timeRankS<comment="Sランクタイム">;
+    FSeek(p + 0x04); float timeRankA<comment="Aランクタイム">;
+    FSeek(p + 0x08); float timeRankB<comment="Bランクタイム">;
+    FSeek(p + 0x0C); float timeRankC<comment="Cランクタイム">;
+
+    FSeek(p + 0x10);
+} ResultChallengeParam;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 clearCollectionNum<comment="クリアに必要な収集数">;
+
+    FSeek(p + 0x04);
+} GameChallengeCollectionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring targetIDs[8]<comment="殲滅対象のID",optimize=false>;
+    FSeek(p + 0x80); sint32 clearAnnihilationNum<comment="クリアに必要な殲滅数">;
+
+    FSeek(p + 0x88);
+} GameChallengeAnnihilationData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring targetIDs[8]<comment="接触対象のID",optimize=false>;
+    FSeek(p + 0x80); sint32 clearTouchNum<comment="クリアに必要な接触数">;
+
+    FSeek(p + 0x88);
+} GameChallengeTouchData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring stageCode<comment="ステージコード">;
+    FSeek(p + 0x10); ChallengeType challenge<comment="チャレンジモード">;
+    FSeek(p + 0x11); IconType iconType<comment="アイコンタイプ">;
+    FSeek(p + 0x14); float limitTime<comment="制限時間（秒）">;
+    FSeek(p + 0x18); cstring titleLabel<comment="チャレンジタイトルラベル">;
+    FSeek(p + 0x28); cstring explainLabel<comment="チャレンジ内容ラベル">;
+    FSeek(p + 0x38); ResultChallengeParam resultData<comment="チャレンジ別スコアデータ">;
+    FSeek(p + 0x48); GameChallengeCollectionData chalengeRingData<comment="収集チャレンジのデータ">;
+    FSeek(p + 0x50); GameChallengeAnnihilationData challengeAnnihilationData<comment="殲滅チャレンジのデータ">;
+    FSeek(p + 0xD8); GameChallengeTouchData challengeTouchData<comment="接触チャレンジのデータ">;
+
+    FSeek(p + 0x160);
+} GameChallengeData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); GameChallengeData datas[32]<comment="チャレンジモードの情報",optimize=false>;
+    FSeek(p + 0x2C00); GameChallengeData hardChallenges[11]<comment="ハードチャレンジモードの情報",optimize=false>;
+
+    FSeek(p + 0x3B20);
+} GameChallengeParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GameChallengeParameter gameChallengeParameter;

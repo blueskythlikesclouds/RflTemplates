@@ -1,0 +1,28 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 targetOffset<comment="注視点オフセット">;
+    FSeek(p + 0x10); vector3 eyeOffset<comment="視点オフセット">;
+
+    FSeek(p + 0x20);
+} ViewSpaceOffsetRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ViewSpaceOffsetRflParam viewSpaceOffsetRflParam;

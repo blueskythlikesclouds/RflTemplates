@@ -1,0 +1,260 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring modelName<comment="モデル名">;
+    FSeek(p + 0x10); cstring skeltonName<comment="スケルトン名">;
+    FSeek(p + 0x20); bool noInstance<comment="インスタンス描画適用しない">;
+
+    FSeek(p + 0x28);
+} GismoBasicParam;
+
+typedef byte sint8;
+
+enum<sint8> ShapeType
+{
+    SHAPE_BOX = 0,
+    SHAPE_SPHERE = 1,
+    SHAPE_CAPSULE = 2,
+    SHAPE_CYLINDER = 3,
+    SHAPE_MESH = 4,
+    SHAPE_NONE = 5
+};
+
+enum<sint8> BasePoint
+{
+    BASE_CENTER = 0,
+    BASE_Z_PLANE = 1,
+    BASE_X_PLANE = 2,
+    BASE_Y_PLANE = 3
+};
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); ShapeType shape<comment="コリジョン形状">;
+    FSeek(p + 0x01); BasePoint basePoint<comment="基点">;
+    FSeek(p + 0x04); float width<comment="幅/直径">;
+    FSeek(p + 0x08); float height<comment="高さ">;
+    FSeek(p + 0x0C); float depth<comment="奥行き">;
+    FSeek(p + 0x10); cstring meshName<comment="MESHコリジョン名">;
+    FSeek(p + 0x20); vector3 shapeOffset<comment="コリジョン位置オフセット">;
+    FSeek(p + 0x30); float shapeSizeOffset<comment="イベントコリジョンサイズオフセット">;
+
+    FSeek(p + 0x40);
+} GismoCollision;
+
+enum<sint8> RigidBodyType
+{
+    RIGID_BODY_NONE = 0,
+    RIGID_BODY_STATIC = 1,
+    RIGID_BODY_DYNAMIC = 2
+};
+
+enum<sint8> RigidBodyMaterial
+{
+    RIGID_BODY_MAT_NONE = 0,
+    RIGID_BODY_MAT_WOOD = 1,
+    RIGID_BODY_MAT_IRON = 2,
+    NUM_RIGID_BODY_MATS = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float mass<comment="質量">;
+    FSeek(p + 0x04); float friction<comment="摩擦係数">;
+    FSeek(p + 0x08); float gravityFactor<comment="重力スケーリング">;
+    FSeek(p + 0x0C); float restitution<comment="反発係数">;
+    FSeek(p + 0x10); float linearDamping<comment="速度減衰率">;
+    FSeek(p + 0x14); float angularDamping<comment="角速度減衰率">;
+    FSeek(p + 0x18); float maxLinearVelocity<comment="直線速度の上限">;
+
+    FSeek(p + 0x1C);
+} PhysicsParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); RigidBodyType rigidBodyType<comment="剛体">;
+    FSeek(p + 0x01); RigidBodyMaterial rigidBodyMaterial<comment="剛体のマテリアル">;
+    FSeek(p + 0x04); PhysicsParam physicsParam<comment="物理挙動パラメータ">;
+
+    FSeek(p + 0x20);
+} GismoRegidBody;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring motionName<comment="モーション名">;
+    FSeek(p + 0x10); bool syncFrame<comment="フレーム同期">;
+    FSeek(p + 0x11); bool stopEndFrame<comment="ループ再生停止時、最終フレームで停止する">;
+
+    FSeek(p + 0x18);
+} MotionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring texSrtAnimName[3]<comment="uv-anim",optimize=false>;
+    FSeek(p + 0x30); cstring texPatAnimName[3]<comment="pt-anim",optimize=false>;
+    FSeek(p + 0x60); cstring matAnimName[3]<comment="mat-anim",optimize=false>;
+
+    FSeek(p + 0x90);
+} MirageAnimData;
+
+typedef ubyte uint8;
+
+enum<uint8> MotionType
+{
+    MOTION_SWING = 0,
+    MOTION_ROTATE = 1,
+    MOTION_LINEAR_SWING = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); MotionType motionType<comment="モーションタイプ">;
+    FSeek(p + 0x10); vector3 axis<comment="軸">;
+    FSeek(p + 0x20); float power<comment="力">;
+    FSeek(p + 0x24); float speedScale<comment="速度スケール">;
+    FSeek(p + 0x28); float time<comment="時間">;
+
+    FSeek(p + 0x30);
+} ProgramMotionData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring effectName<comment="エフェクト名">;
+    FSeek(p + 0x10); bool linkMotionStop<comment="[上級者向け]モーションの停止に連動する">;
+
+    FSeek(p + 0x18);
+} EffectData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring cueName<comment="サウンド名">;
+
+    FSeek(p + 0x10);
+} SoundData;
+
+enum<sint8> KillType
+{
+    KILL_TYPE_NOT_KILL = 0,
+    KILL_TYPE_KILL = 1,
+    KILL_TYPE_BREAK = 2,
+    KILL_TYPE_MOTION = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float gravity<comment="重力加速度">;
+    FSeek(p + 0x04); float lifeTime<comment="生存時間">;
+    FSeek(p + 0x08); float mass<comment="質量">;
+    FSeek(p + 0x0C); float friction<comment="摩擦係数">;
+    FSeek(p + 0x10); float explosionScale<comment="拡散力の倍率">;
+    FSeek(p + 0x14); float impulseScale<comment="外部から受けた力の倍率">;
+
+    FSeek(p + 0x18);
+} DebrisData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); KillType killType<comment="挙動タイプ">;
+    FSeek(p + 0x04); float killTime<comment="KILL時間">;
+    FSeek(p + 0x08); cstring breakMotionName<comment="壊れモーション名">;
+    FSeek(p + 0x18); DebrisData debrisData<comment="破片パラメータ">;
+
+    FSeek(p + 0x30);
+} KillData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); MotionData motionData<comment="モーション">;
+    FSeek(p + 0x18); MirageAnimData mirageAnimData<comment="Mirageアニメーション">;
+    FSeek(p + 0xB0); ProgramMotionData programMotionData<comment="プログラム制御モーション">;
+    FSeek(p + 0xE0); EffectData effectData<comment="エフェクト">;
+    FSeek(p + 0xF8); SoundData soundData<comment="サウンド">;
+    FSeek(p + 0x108); KillData killData<comment="寿命管理">;
+
+    FSeek(p + 0x140);
+} ReactionData;
+
+enum<sint8> TimeStopEffect
+{
+    EFFECT_HIGHLIGHT = 0,
+    EFFECT_GRAY_OUT = 1,
+    EFFECT_ORIGIN = 2
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float rangeIn<comment="range_in">;
+    FSeek(p + 0x04); float rangeDistance<comment="range_distance">;
+    FSeek(p + 0x08); GismoBasicParam basicParam<comment="基本設定">;
+    FSeek(p + 0x30); GismoCollision collision<comment="コリジョン">;
+    FSeek(p + 0x70); GismoRegidBody rigidBody<comment="剛体">;
+    FSeek(p + 0x90); ReactionData reactionIdle<comment="[何もしていない時,常時再生]">;
+    FSeek(p + 0x1D0); ReactionData reactionEnter<comment="[コリジョン接触時]">;
+    FSeek(p + 0x310); ReactionData reactionLeave<comment="[コリジョン離脱時]">;
+    FSeek(p + 0x450); ReactionData reactionStay<comment="[コリジョン接触中]">;
+    FSeek(p + 0x590); ReactionData reactionStayMove<comment="[コリジョン接触中にプレイヤーが動いた時]">;
+    FSeek(p + 0x6D0); ReactionData reactionDamage<comment="[ダメージが加わった時]">;
+    FSeek(p + 0x810); bool ignoreMeteorShowerAndRespawnOnReenterRange<comment="流星雨の影響を無視し、再レンジインでリスポーンする">;
+    FSeek(p + 0x811); TimeStopEffect timeStopEffect<comment="時間停止表現の種類">;
+    FSeek(p + 0x812); bool isResetEffectOnMotionLoop<comment="モーションループ時にエフェクトを再生成する[常時再生エフェクトのみ]">;
+
+    FSeek(p + 0x820);
+} GismoConfigDesignData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GismoConfigDesignData gismoConfigDesignData;

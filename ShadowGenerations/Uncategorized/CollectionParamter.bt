@@ -1,0 +1,230 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int32 sint32;
+
+enum<sint32> OpenState
+{
+    Locked = 0,
+    LockedCollectionBox = 1,
+    Opened = 2,
+    DLC_DDX = 3
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool isEnable<comment="有効">;
+    FSeek(p + 0x04); OpenState openState<comment="解放条件">;
+    FSeek(p + 0x08); sint32 textLabelNumber<comment="テキスト番号">;
+    FSeek(p + 0x0C); sint32 textureNumber<comment="テクスチャ番号">;
+    FSeek(p + 0x10); sint32 objNumber<comment="セットオブジェクト番号">;
+
+    FSeek(p + 0x14);
+} CollectionItemInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollectionItemInfo info<comment="基本情報">;
+
+    FSeek(p + 0x14);
+} CollectionArtInfo;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollectionItemInfo info<comment="基本情報">;
+    FSeek(p + 0x18); cstring assetName<comment="サウンド名">;
+    FSeek(p + 0x28); sint32 playTime<comment="再生秒数">;
+
+    FSeek(p + 0x30);
+} CollectionSoundInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollectionItemInfo info<comment="基本情報">;
+    FSeek(p + 0x18); cstring assetName<comment="ムービー名">;
+    FSeek(p + 0x28); bool isEclipseMode<comment="エクリプス時のムービーか">;
+    FSeek(p + 0x2C); sint32 wsLevel<comment="ホワイトスペースレベル">;
+    FSeek(p + 0x30); sint32 eyeCount<comment="目の数">;
+    FSeek(p + 0x34); bool fps30<comment="30FPS固定再生">;
+
+    FSeek(p + 0x38);
+} CollectionMovieInfo;
+
+enum<sint32> CollectionCharaKind
+{
+    CollectionCharaKindShadow = 0,
+    CollectionCharaKindOmega = 1,
+    CollectionCharaKindBig = 2,
+    CollectionCharaKindMaria = 3,
+    CollectionCharaKindGerald = 4,
+    CollectionCharaKindOrbot = 5,
+    CollectionCharaKindCubot = 6,
+    CollectionCharaKindNum = 7,
+    CollectionCharaKindNone = -1
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollectionItemInfo info<comment="基本情報">;
+    FSeek(p + 0x14); CollectionCharaKind charaKind<comment="キャラクタ">;
+
+    FSeek(p + 0x18);
+} CollectionCharacterInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollectionItemInfo info<comment="基本情報">;
+
+    FSeek(p + 0x14);
+} CollectionHistoryInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollectionItemInfo info<comment="基本情報">;
+
+    FSeek(p + 0x14);
+} CollectionGeraldNoteInfo;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); vector3 modelPos<comment="モデル位置">;
+    FSeek(p + 0x10); vector3 cameraPos<comment="カメラ視点">;
+    FSeek(p + 0x20); vector3 cameraTarget<comment="カメラ注視点">;
+    FSeek(p + 0x30); float fovy<comment="画角">;
+
+    FSeek(p + 0x40);
+} CollectionCharacterModelParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float turnSpeed<comment="回転スピード倍率">;
+    FSeek(p + 0x10); CollectionCharacterModelParam charaModelParams[7]<comment="キャラクタモデルパラメータ",optimize=false>;
+
+    FSeek(p + 0x1D0);
+} CollectionCharacterMenuParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float moveSpeed<comment="近くまで移動するスピード">;
+    FSeek(p + 0x04); float tolerance<comment="許容範囲">;
+    FSeek(p + 0x08); float chairTolerance<comment="椅子に座るモーション用の許容範囲">;
+    FSeek(p + 0x0C); float chairStartWaitTime<comment="椅子に座るモーション開始から移動までの待機時間">;
+    FSeek(p + 0x10); float chairStartMoveTime<comment="椅子に座るまでの補間時間">;
+    FSeek(p + 0x14); float chairStartPosOffsetY<comment="椅子に座るモーション開始時のオフセットY">;
+    FSeek(p + 0x18); float chairEndWaitTime<comment="椅子から降りるモーション開始から移動までの待機時間">;
+    FSeek(p + 0x1C); float chairEndMoveTime<comment="椅子から降りるまでの補間時間">;
+    FSeek(p + 0x20); float chairEndMoveDistance<comment="椅子から降りる時の移動距離">;
+    FSeek(p + 0x24); float bikeTolerance<comment="バイクに座るモーション用の許容範囲">;
+    FSeek(p + 0x28); float bikeStartWaitTime<comment="バイクに座るモーション開始から移動までの待機時間">;
+    FSeek(p + 0x2C); float bikeStartMoveTime<comment="バイクに座るモーション開始後の移動補間">;
+    FSeek(p + 0x30); float bikeStartMenuOpenWait<comment="バイクに座るモーション開始からメニューオープン可能までの時間">;
+    FSeek(p + 0x34); float bikeStartPosOffsetY<comment="バイクに座るモーション開始時のオフセットY">;
+    FSeek(p + 0x38); float bikeEndWaitTime<comment="バイクから降りるモーション開始から地面設置までの待機時間">;
+    FSeek(p + 0x3C); float bikeEndMoveTime<comment="バイクから降りるモーション開始から地面設置までの補間最大時間">;
+    FSeek(p + 0x40); float bikeEndMoveDistance<comment="バイクから降りるモーション開始から地面設置までの移動距離">;
+
+    FSeek(p + 0x44);
+} CollectionRoomPlayerAction;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float moveSpeed<comment="移動時のスピード">;
+
+    FSeek(p + 0x04);
+} CollectionGeraldNotePlayer;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float beginInterpolateTime<comment="メニューカメラ開始補間時間">;
+    FSeek(p + 0x04); float endInterpolateTime<comment="メニューカメラ終了補間時間">;
+
+    FSeek(p + 0x08);
+} CollectionRoomCamera;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float endFadeTime<comment="終了時のフェード時間">;
+    FSeek(p + 0x04); float endWaitTime<comment="終了時の無音待機時間">;
+
+    FSeek(p + 0x08);
+} CollectionSoundMenuParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); CollectionArtInfo artInfos[121]<comment="イラスト",optimize=false>;
+    FSeek(p + 0x978); CollectionSoundInfo soundInfos[100]<comment="サウンド",optimize=false>;
+    FSeek(p + 0x1C38); CollectionMovieInfo movieInfos[30]<comment="ムービー",optimize=false>;
+    FSeek(p + 0x22C8); CollectionCharacterInfo charaInfos[7]<comment="キャラクタ",optimize=false>;
+    FSeek(p + 0x2370); CollectionHistoryInfo historyInfos[11]<comment="ヒストリー",optimize=false>;
+    FSeek(p + 0x244C); CollectionGeraldNoteInfo noteInfos[28]<comment="手記",optimize=false>;
+    FSeek(p + 0x2680); CollectionCharacterMenuParam charaMenuParam<comment="キャラクタメニューパラメータ">;
+    FSeek(p + 0x2850); CollectionRoomPlayerAction roomActionParam<comment="プレイヤアクションパラメータ">;
+    FSeek(p + 0x2894); CollectionGeraldNotePlayer notePlayerParam<comment="手記プレイヤーパラメータ">;
+    FSeek(p + 0x2898); CollectionRoomCamera artCamera<comment="イラストカメラ">;
+    FSeek(p + 0x28A0); CollectionRoomCamera soundCamera<comment="サウンドカメラ">;
+    FSeek(p + 0x28A8); CollectionRoomCamera movieCamera<comment="ムービーカメラ">;
+    FSeek(p + 0x28B0); CollectionRoomCamera charaCamera<comment="キャラクタカメラ">;
+    FSeek(p + 0x28B8); CollectionRoomCamera historyCamera<comment="ヒストリーカメラ">;
+    FSeek(p + 0x28C0); CollectionRoomCamera noteCamera<comment="手記カメラ">;
+    FSeek(p + 0x28C8); CollectionSoundMenuParam soundMenuParam<comment="サウンドメニューパラメータ">;
+
+    FSeek(p + 0x28D0);
+} CollectionParamter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+CollectionParamter collectionParamter;

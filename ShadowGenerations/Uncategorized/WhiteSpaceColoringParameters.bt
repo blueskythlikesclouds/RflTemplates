@@ -1,0 +1,77 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float m_startHeight<comment="開始の出現高さ">;
+    FSeek(p + 0x04); float m_endHeight<comment="終了の出現高さ">;
+    FSeek(p + 0x08); float m_coloringSpeed<comment="着色速度">;
+    FSeek(p + 0x0C); float m_width<comment="発光させる幅">;
+    FSeek(p + 0x10); float m_noisePower<comment="ノイズの強さ">;
+    FSeek(p + 0x14); float m_noiseSpeed<comment="ノイズの揺れの速さ">;
+    FSeek(p + 0x18); float m_rgb[3]<comment="輝度を含むRGB",optimize=false>;
+
+    FSeek(p + 0x24);
+} WhiteSpaceVanishingParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float m_width<comment="発光させる幅">;
+    FSeek(p + 0x04); float m_luminesPower<comment="発光の強さ">;
+    FSeek(p + 0x08); float m_luminesColoringWitdh<comment="着色フェードの幅">;
+    FSeek(p + 0x0C); float m_luminesOffset<comment="発光のオフセット">;
+    FSeek(p + 0x10); float m_rgb[3]<comment="輝度を含むRGB",optimize=false>;
+
+    FSeek(p + 0x1C);
+} WhiteSpaceMaterialLuminesParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float m_startHeight<comment="開始の出現高さ">;
+    FSeek(p + 0x04); float m_endHeight<comment="終了の出現高さ">;
+    FSeek(p + 0x08); float m_coloringSpeed<comment="着色速度">;
+    FSeek(p + 0x0C); float m_startEffectTime<comment="エフェクトが出るまでの時間">;
+    FSeek(p + 0x10); float m_cameraStartHeight<comment="カメラが起動する高さ">;
+    FSeek(p + 0x14); float m_cameraEndHeight<comment="カメラが停止する高さ">;
+    FSeek(p + 0x18); float m_middleHeight<comment="(地形専用)中間の出現高さ">;
+    FSeek(p + 0x1C); WhiteSpaceMaterialLuminesParameter luminesParam<comment="発光用のマテリアルパラメータ">;
+
+    FSeek(p + 0x38);
+} WhiteSpaceColoringParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WhiteSpaceColoringParameter coloringParam[2]<comment="アクト1,2クリア時のパラメータ",optimize=false>;
+
+    FSeek(p + 0x70);
+} WhiteSpaceStageGateColoringParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WhiteSpaceVanishingParameter vainishParam<comment="レベルアップ時のバニッシュ表現パラメータ">;
+    FSeek(p + 0x24); WhiteSpaceColoringParameter coloringParam[5]<comment="各ステージ地形の着色表現パラメータ",optimize=false>;
+    FSeek(p + 0x13C); WhiteSpaceStageGateColoringParameter stagegateParam[6]<comment="各ステージゲートの着色表現パラメータ",optimize=false>;
+    FSeek(p + 0x3DC); WhiteSpaceVanishingParameter eclipseParam<comment="エクリプス開始時のバニッシュ表現パラメータ">;
+    FSeek(p + 0x400); WhiteSpaceVanishingParameter eclipseEndParam<comment="エクリプス終了時のバニッシュ表現パラメータ">;
+
+    FSeek(p + 0x424);
+} WhiteSpaceColoringParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+WhiteSpaceColoringParameters whiteSpaceColoringParameters;

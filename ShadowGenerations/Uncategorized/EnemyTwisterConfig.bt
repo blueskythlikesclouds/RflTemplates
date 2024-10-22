@@ -1,0 +1,101 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float collisionRadius<comment="半径">;
+    FSeek(p + 0x04); float collisionHeight<comment="高さ">;
+    FSeek(p + 0x10); vector3 collisionPosOffset<comment="位置オフセット">;
+
+    FSeek(p + 0x20);
+} EnemyBlockCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyBlockCollisionParam blockCollisionParam<comment="剛体コリジョン">;
+    FSeek(p + 0x20); float damageCollisionRadiusOffset<comment="被ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x24); float damageCollisionHeightOffset<comment="被ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x30); vector3 damageCollisionPosOffset<comment="被ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x40); float touchCollisionRadiusOffset<comment="接触与ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x44); float touchCollisionHeightOffset<comment="接触与ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x50); vector3 touchCollisionPosOffset<comment="接触与ダメージコリジョンの位置オフセット">;
+
+    FSeek(p + 0x60);
+} EnemyCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float warpRadius<comment="瞬間移動半径">;
+    FSeek(p + 0x04); float warpHeight<comment="瞬間移動高さ">;
+
+    FSeek(p + 0x08);
+} EnemyComboParam;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint32 m_maxNumPieces<comment="破片最大生成数. 負の値で最大">;
+    FSeek(p + 0x04); float gravity<comment="重力加速度">;
+    FSeek(p + 0x08); float lifeTime<comment="生存時間">;
+    FSeek(p + 0x0C); float force<comment="拡散力">;
+
+    FSeek(p + 0x10);
+} DebrisParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyCollisionParam collisionParam<comment="コリジョンパラメータ">;
+    FSeek(p + 0x60); float attackColliderRadius<comment="攻撃コリジョン半径">;
+    FSeek(p + 0x64); EnemyComboParam comboParam<comment="コンボパラメータ">;
+    FSeek(p + 0x70); EnemyCollisionParam collisionParamSV<comment="[SV]コリジョンパラメータ">;
+    FSeek(p + 0xD0); float attackColliderRadiusSV<comment="[SV]攻撃コリジョン半径">;
+    FSeek(p + 0xD4); EnemyComboParam comboParamSV<comment="[SV]コンボパラメータ">;
+    FSeek(p + 0xDC); float battleDistance<comment="戦闘開始距離">;
+    FSeek(p + 0xE0); float rotateSpeed<comment="ターゲットを向くときの回転速度">;
+    FSeek(p + 0xE4); float chaosSpearStunTime<comment="カオススピアのスタン時間">;
+    FSeek(p + 0xE8); bool useUniqueDebrisSetting<comment="固有の破片設定を使用するか">;
+    FSeek(p + 0xEC); DebrisParameter debris<comment="専用破片設定">;
+
+    FSeek(p + 0x100);
+} EnemyTwisterCommonConfig;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyTwisterCommonConfig commonParams<comment="共通パラメータ">;
+
+    FSeek(p + 0x100);
+} EnemyTwisterConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyTwisterConfig enemyTwisterConfig;

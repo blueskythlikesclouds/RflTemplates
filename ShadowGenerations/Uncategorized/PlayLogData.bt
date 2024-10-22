@@ -1,0 +1,67 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint16 time<comment="時刻">;
+    FSeek(p + 0x02); uint16 x<comment="X座標">;
+    FSeek(p + 0x04); uint16 y<comment="Y座標">;
+    FSeek(p + 0x06); uint16 z<comment="Z座標">;
+
+    FSeek(p + 0x08);
+} PlayLogCoordData;
+
+typedef byte sint8;
+
+enum<sint8> EventType
+{
+    InvalidEvent = -1,
+    Dead = 0,
+    Damage = 1,
+    BeginStage = 2,
+    CompleteStage = 3,
+    RestartStage = 4,
+    GiveupStage = 5,
+    EndStage = 6,
+    TimeStop = 7,
+    QteResult = 8,
+    BossPhaseChange = 9,
+    OpenCollectionBox = 10
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); PlayLogCoordData coord<comment="座標">;
+    FSeek(p + 0x08); EventType eventType<comment="イベント">;
+    FSeek(p + 0x09); sint8 option<comment="イベント補足用">;
+
+    FSeek(p + 0x0A);
+} PlayLogEventData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 numFootMarks<comment="numFootMarks">;
+    FSeek(p + 0x04); uint32 footMarksIndex<comment="footMarksIndex">;
+    FSeek(p + 0x08); PlayLogCoordData footmarks[36000]<comment="footmarks",optimize=false>;
+    FSeek(p + 0x46508); uint32 numEvents<comment="numEvents">;
+    FSeek(p + 0x4650C); uint32 eventsIndex<comment="eventsIndex">;
+    FSeek(p + 0x46510); PlayLogEventData events[50000]<comment="events",optimize=false>;
+    FSeek(p + 0xC0630); uint32 wsPlayTime<comment="WSプレイ時間 Pauseを除く">;
+
+    FSeek(p + 0xC0634);
+} PlayLogData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+PlayLogData playLogData;

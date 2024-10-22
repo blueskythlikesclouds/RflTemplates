@@ -1,0 +1,63 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef byte sint8;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); sint8 pageIndex<comment="表示するページ">;
+    FSeek(p + 0x08); cstring label<comment="ラベル名">;
+
+    FSeek(p + 0x18);
+} LicenseItemInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool isEnable<comment="有効か">;
+    FSeek(p + 0x04); float fontScale<comment="フォントスケール">;
+    FSeek(p + 0x08); LicenseItemInfo infos[40]<comment="ライセンス情報",optimize=false>;
+
+    FSeek(p + 0x3C8);
+} LicenseInfo;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); LicenseInfo ps4_Infos<comment="ps4ライセンス情報">;
+    FSeek(p + 0x3C8); LicenseInfo ps5_Infos<comment="ps5ライセンス情報">;
+    FSeek(p + 0x790); LicenseInfo xbox_Infos<comment="xboxライセンス情報">;
+    FSeek(p + 0xB58); LicenseInfo scarlett_Infos<comment="scarlettライセンス情報">;
+    FSeek(p + 0xF20); LicenseInfo nx_Infos<comment="nxライセンス情報">;
+    FSeek(p + 0x12E8); LicenseInfo steam_Infos<comment="steamライセンス情報">;
+    FSeek(p + 0x16B0); LicenseInfo epic_Infos<comment="epicライセンス情報">;
+
+    FSeek(p + 0x1A78);
+} LicenseParamter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+LicenseParamter licenseParamter;

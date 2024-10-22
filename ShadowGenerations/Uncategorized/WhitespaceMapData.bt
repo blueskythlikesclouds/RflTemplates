@@ -1,0 +1,33 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef ubyte uint8;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint8 x<comment="x">;
+    FSeek(p + 0x01); uint8 y<comment="y">;
+
+    FSeek(p + 0x02);
+} WhitespaceMapGridData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); WhitespaceMapGridData grid[2]<comment="解放済座標",optimize=false>;
+    FSeek(p + 0x04); uint16 numReleaseGrids<comment="開放済みグリッド数">;
+
+    FSeek(p + 0x06);
+} WhitespaceMapData;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+WhitespaceMapData whitespaceMapData;

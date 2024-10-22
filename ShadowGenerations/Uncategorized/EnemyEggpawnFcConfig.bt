@@ -1,0 +1,97 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w<hidden=true>;
+} vector3;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float collisionRadius<comment="半径">;
+    FSeek(p + 0x04); float collisionHeight<comment="高さ">;
+    FSeek(p + 0x10); vector3 collisionPosOffset<comment="位置オフセット">;
+
+    FSeek(p + 0x20);
+} EnemyBlockCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); EnemyBlockCollisionParam blockCollisionParam<comment="剛体コリジョン">;
+    FSeek(p + 0x20); float damageCollisionRadiusOffset<comment="被ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x24); float damageCollisionHeightOffset<comment="被ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x30); vector3 damageCollisionPosOffset<comment="被ダメージコリジョンの位置オフセット">;
+    FSeek(p + 0x40); float touchCollisionRadiusOffset<comment="接触与ダメージコリジョンの半径オフセット">;
+    FSeek(p + 0x44); float touchCollisionHeightOffset<comment="接触与ダメージコリジョンの高さオフセット">;
+    FSeek(p + 0x50); vector3 touchCollisionPosOffset<comment="接触与ダメージコリジョンの位置オフセット">;
+
+    FSeek(p + 0x60);
+} EnemyCollisionParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float warpRadius<comment="瞬間移動半径">;
+    FSeek(p + 0x04); float warpHeight<comment="瞬間移動高さ">;
+
+    FSeek(p + 0x08);
+} EnemyComboParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float shotSpeedFV<comment="[両手]弾速[FV]">;
+    FSeek(p + 0x04); float shotSpeedSV<comment="[両手]弾速[SV]">;
+    FSeek(p + 0x08); float bulletScaleFV<comment="[両手]弾丸スケール[FV]">;
+    FSeek(p + 0x0C); float bulletScaleSV<comment="[両手]弾丸スケール[SV]">;
+    FSeek(p + 0x10); float bulletMaxDistanceFV<comment="[両手]弾丸の最大飛距離[FV]">;
+    FSeek(p + 0x14); float bulletMaxDistanceSV<comment="[両手]弾丸の最大飛距離[SV]">;
+    FSeek(p + 0x18); uint32 shotContinuousShotNum<comment="[両手]連続して銃撃できる最大回数">;
+    FSeek(p + 0x1C); uint32 shotContinuousShotNumConst<comment="[両手]連続して銃撃できる最大回数[撃ちっぱなし]">;
+    FSeek(p + 0x20); float shotCoolDownTime<comment="[両手]連続銃撃後クールダウンタイム">;
+    FSeek(p + 0x24); float shotCoolDownTimeConst<comment="[両手]連続銃撃後クールダウンタイム[撃ちっぱなし]">;
+    FSeek(p + 0x28); float damageCoolDownTime<comment="[両手]ダメージを与えた後のクールダウンタイム">;
+    FSeek(p + 0x2C); float shotInterval<comment="[両手]連射性能">;
+    FSeek(p + 0x30); float serachAngleY<comment="[両手]上下方向の索敵角度">;
+    FSeek(p + 0x34); float oneHandShotSpeedFV<comment="[片手]弾速[FV]">;
+    FSeek(p + 0x38); float oneHandShotSpeedSV<comment="[片手]弾速[SV]">;
+    FSeek(p + 0x3C); float oneHandBulletScaleFV<comment="[片手]弾丸スケール[FV]">;
+    FSeek(p + 0x40); float oneHandBulletScaleSV<comment="[片手]弾丸スケール[SV]">;
+    FSeek(p + 0x44); float oneHandBulletMaxDistanceFV<comment="[片手]弾丸の最大飛距離[FV]">;
+    FSeek(p + 0x48); float oneHandBulletMaxDistanceSV<comment="[片手]弾丸の最大飛距離[SV]">;
+    FSeek(p + 0x4C); uint32 oneHandShotContinuousShotNum<comment="[片手]連続して銃撃できる最大回数">;
+    FSeek(p + 0x50); float oneHandShotCoolDownTime<comment="[片手]連続銃撃後クールダウンタイム">;
+    FSeek(p + 0x54); float oneHandDamageCoolDownTime<comment="[片手]ダメージを与えた後のクールダウンタイム">;
+    FSeek(p + 0x58); float oneHandShotInterval<comment="[片手]連射性能">;
+    FSeek(p + 0x5C); float oneHandChargeTime<comment="[片手]チャージ時間">;
+    FSeek(p + 0x60); float oneHandSerachAngleY<comment="[片手]上下方向の索敵角度">;
+    FSeek(p + 0x64); float fallSpeed<comment="重力加速度">;
+    FSeek(p + 0x68); float fallSpeedAppear<comment="落下出現初速">;
+    FSeek(p + 0x6C); float fallDeadTime<comment="落下死判定秒数">;
+    FSeek(p + 0x70); float threadGrassRadius<comment="草踏み半径">;
+    FSeek(p + 0x74); float threadGrassTime<comment="踏み跡が残る時間">;
+    FSeek(p + 0x78); float checkOnGroundUpOffset<comment="接地判定のオフセット">;
+    FSeek(p + 0x7C); float chaosSpearStunTime<comment="カオススピアスタン時間">;
+    FSeek(p + 0x80); float respawnTime<comment="リスポーン時間">;
+    FSeek(p + 0x90); EnemyCollisionParam collisionParam<comment="コリジョンパラメータ">;
+    FSeek(p + 0xF0); EnemyComboParam comboParam<comment="コンボパラメータ">;
+
+    FSeek(p + 0x100);
+} EnemyEggpawnFcConfig;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+EnemyEggpawnFcConfig enemyEggpawnFcConfig;

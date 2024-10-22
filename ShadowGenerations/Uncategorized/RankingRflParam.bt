@@ -1,0 +1,70 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef int32 sint32;
+
+enum<sint32> RankingId
+{
+    ShadowRankingTest = 0,
+    SSpaceColonyArkAct1 = 1,
+    SSpaceColonyArkAct1DWing = 2,
+    SSpaceColonyArkAct2 = 3,
+    SSpaceColonyArkAct2DWing = 4,
+    SRailCanyonAct1 = 5,
+    SRailCanyonAct1DWing = 6,
+    SRailCanyonAct2 = 7,
+    SRailCanyonAct2DWing = 8,
+    SKingdomValleyAct1 = 9,
+    SKingdomValleyAct1DWing = 10,
+    SKingdomValleyAct2 = 11,
+    SKingdomValleyAct2DWing = 12,
+    SCityAct1 = 13,
+    SCityAct1DWing = 14,
+    SCityAct2 = 15,
+    SCityAct2DWing = 16,
+    SChaosIslandAct1 = 17,
+    SChaosIslandAct1DWing = 18,
+    SChaosIslandAct2 = 19,
+    SChaosIslandAct2DWing = 20,
+    SRadicalHighwayAct1 = 21,
+    SRadicalHighwayAct1DWing = 22,
+    SRadicalHighwayAct2 = 23,
+    SRadicalHighwayAct2DWing = 24,
+    RANKINGID_END = 25,
+    RANKINGID_START = 1,
+    RANKINGID_ACT_NUM = 25
+};
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); RankingId rankingId<comment="RankingID">;
+    FSeek(p + 0x04); bool valid<comment="有効か">;
+    FSeek(p + 0x08); uint32 minTime<comment="足切りタイム(不正対策)">;
+
+    FSeek(p + 0x0C);
+} RankingKindParam;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); RankingKindParam rankingKindInfos[25]<comment="ランキング設定",optimize=false>;
+
+    FSeek(p + 0x12C);
+} RankingRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+RankingRflParam rankingRflParam;

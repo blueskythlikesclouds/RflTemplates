@@ -1,0 +1,29 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enableShadow<comment="雲影有効化">;
+    FSeek(p + 0x04); sint32 shadowCoverage<comment="影を落とす範囲[m]">;
+    FSeek(p + 0x08); float shadowValueMin<comment="雲の遮蔽最低値">;
+
+    FSeek(p + 0x0C);
+} FxCloudShadowParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+FxCloudShadowParameter fxCloudShadowParameter;

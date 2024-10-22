@@ -1,0 +1,128 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+enum<byte> bool {
+    False = 0,
+    True = 1,
+};
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blockLNoiseSizeX<comment="低周波ブロックノイズサイズX">;
+    FSeek(p + 0x04); float blockLNoiseSizeY<comment="低周波ブロックノイズサイズY">;
+    FSeek(p + 0x08); float blockHNoiseSizeX<comment="高周波ブロックノイズサイズX">;
+    FSeek(p + 0x0C); float blockHNoiseSizeY<comment="高周波ブロックノイズサイズY">;
+    FSeek(p + 0x10); float bNoiseHighRate<comment="高周波の出やすさ">;
+    FSeek(p + 0x14); float intensity<comment="UVシフトの強さ">;
+    FSeek(p + 0x18); float pixelShiftIntensity<comment="ピクセル単位のUVシフトの強さ">;
+
+    FSeek(p + 0x1C);
+} UVShift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blockLNoiseSize<comment="低周波ブロックノイズサイズ">;
+    FSeek(p + 0x04); float blockHNoiseSize<comment="高周波ブロックノイズサイズ">;
+    FSeek(p + 0x08); float bNoiseHighRate<comment="高周波の出やすさ">;
+    FSeek(p + 0x0C); float intensity<comment="カラーシフトの強さ">;
+
+    FSeek(p + 0x10);
+} ColorShift;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blockLNoiseSize<comment="低周波ブロックノイズサイズ">;
+    FSeek(p + 0x04); float blockHNoiseSize<comment="高周波ブロックノイズサイズ">;
+    FSeek(p + 0x08); float bNoiseHighRate<comment="高周波の出やすさ">;
+    FSeek(p + 0x0C); float intensity<comment="インターレース出現率">;
+    FSeek(p + 0x10); float dropout<comment="インターレース線の途切れやすさ">;
+
+    FSeek(p + 0x14);
+} InterlaceNoise;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blockLNoiseSizeX<comment="低周波ブロックノイズサイズX">;
+    FSeek(p + 0x04); float blockLNoiseSizeY<comment="低周波ブロックノイズサイズY">;
+    FSeek(p + 0x08); float blockHNoiseSizeX<comment="高周波ブロックノイズサイズX">;
+    FSeek(p + 0x0C); float blockHNoiseSizeY<comment="高周波ブロックノイズサイズY">;
+    FSeek(p + 0x10); float bNoiseHighRate<comment="高周波の出やすさ">;
+    FSeek(p + 0x14); float intensity<comment="色減算の強さ">;
+
+    FSeek(p + 0x18);
+} ColorDropout;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blockLNoiseSizeX<comment="低周波ブロックノイズサイズX">;
+    FSeek(p + 0x04); float blockLNoiseSizeY<comment="低周波ブロックノイズサイズY">;
+    FSeek(p + 0x08); float blockHNoiseSizeX<comment="高周波ブロックノイズサイズX">;
+    FSeek(p + 0x0C); float blockHNoiseSizeY<comment="高周波ブロックノイズサイズY">;
+    FSeek(p + 0x10); float bNoiseHighRate<comment="高周波の出やすさ">;
+    FSeek(p + 0x14); float intensity<comment="色が反転する確率">;
+    FSeek(p + 0x18); float invertAllRate<comment="画面全体で色が反転する確率">;
+
+    FSeek(p + 0x1C);
+} InvertColor;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); float blockLNoiseSizeX<comment="低周波ブロックノイズサイズX">;
+    FSeek(p + 0x04); float blockLNoiseSizeY<comment="低周波ブロックノイズサイズY">;
+    FSeek(p + 0x08); float blockHNoiseSizeX<comment="高周波ブロックノイズサイズX">;
+    FSeek(p + 0x0C); float blockHNoiseSizeY<comment="高周波ブロックノイズサイズY">;
+    FSeek(p + 0x10); float bNoiseHighRate<comment="高周波の出やすさ">;
+    FSeek(p + 0x14); float intensity<comment="ブロックレベルでモノクロになる確率">;
+    FSeek(p + 0x18); float invertAllRate<comment="画面全体でモノクロ化する確率">;
+
+    FSeek(p + 0x1C);
+} GlayScaleColor;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); bool enable<comment="有効">;
+    FSeek(p + 0x04); UVShift uvShift<comment="UVシフト">;
+    FSeek(p + 0x20); ColorShift colorShift<comment="RGBずれ">;
+    FSeek(p + 0x30); InterlaceNoise interlaceNoise<comment="インターレースノイズ">;
+    FSeek(p + 0x44); ColorDropout colorDrop<comment="色落ち">;
+    FSeek(p + 0x5C); InvertColor invertColor<comment="色反転">;
+    FSeek(p + 0x78); GlayScaleColor glayscaleColor<comment="モノクロ化">;
+    FSeek(p + 0x94); float noiseSpeed<comment="ノイズの更新速度">;
+    FSeek(p + 0x98); float noiseBias<comment="出現量バイアス">;
+    FSeek(p + 0x9C); float noiseWaveAmplitude<comment="出現量の変化の振れ幅">;
+    FSeek(p + 0xA0); float noiseWaveCycle<comment="出現量変化の周期">;
+
+    FSeek(p + 0xA4);
+} FxCyberSpaceStartNoiseParameter;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); FxCyberSpaceStartNoiseParameter presets[8]<comment="presets",optimize=false>;
+
+    FSeek(p + 0x520);
+} NoisePresetParameters;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+NoisePresetParameters noisePresetParameters;

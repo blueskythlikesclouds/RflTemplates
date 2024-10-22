@@ -1,0 +1,20 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); uint32 intervalMinuntes<comment="[sy1030]発生時間間隔[分]">;
+
+    FSeek(p + 0x04);
+} ScriptParameter;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+ScriptParameter scriptParameter;

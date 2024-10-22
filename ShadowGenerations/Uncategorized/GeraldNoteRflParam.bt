@@ -1,0 +1,57 @@
+local uint64 BASE_OFFSET_VALUE<hidden=true>;
+
+typedef struct {
+    uint64 pointer;
+} cstring<read=ReadCString>;
+
+string ReadCString(cstring& str) {
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    return "(null)";
+}
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring pathName<comment="Path名">;
+    FSeek(p + 0x10); float moveSpeed<comment="移動速度">;
+
+    FSeek(p + 0x18);
+} PathData;
+
+typedef int32 sint32;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); cstring pathName<comment="Path名">;
+    FSeek(p + 0x10); sint32 id<comment="ジェラルドの手記 ID">;
+    FSeek(p + 0x14); float moveSpeed<comment="移動速度">;
+    FSeek(p + 0x18); float respawnTime<comment="復帰時間">;
+
+    FSeek(p + 0x20);
+} FixedNoteData;
+
+typedef struct
+{
+    local uint64 p<hidden=true> = FTell();
+
+    FSeek(p + 0x00); PathData pathList[3]<comment="Path名のリスト",optimize=false>;
+    FSeek(p + 0x48); sint32 idlist[8]<comment="ジェラルドの手記 IDのリスト",optimize=false>;
+    FSeek(p + 0x68); float respawnTime<comment="復帰時間">;
+    FSeek(p + 0x70); FixedNoteData fixedData[3]<comment="固定ジェラルドの手記のリスト",optimize=false>;
+    FSeek(p + 0xD0); FixedNoteData eclipsFixedData[2]<comment="エクリプス固定ジェラルドの手記のリスト",optimize=false>;
+
+    FSeek(p + 0x110);
+} GeraldNoteRflParam;
+
+LittleEndian();
+
+uint32 signature<hidden=true>;
+
+if (signature == 0x414E4942)
+    BASE_OFFSET_VALUE = 0x40;
+
+FSeek(BASE_OFFSET_VALUE);
+GeraldNoteRflParam geraldNoteRflParam;
