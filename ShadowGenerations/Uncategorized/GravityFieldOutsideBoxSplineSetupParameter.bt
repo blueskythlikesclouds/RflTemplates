@@ -23,7 +23,7 @@ typedef struct {
 } cstring<read=ReadCString>;
 
 string ReadCString(cstring& str) {
-    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE + str.pointer);
+    if (str.pointer > 0) return ReadString(BASE_OFFSET_VALUE - 0x10 + str.pointer);
     return "(null)";
 }
 

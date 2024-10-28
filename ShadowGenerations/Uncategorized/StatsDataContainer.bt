@@ -27,7 +27,7 @@ typedef struct {
     if (pointer > 0 && size > 0)
     {
         local uint64 p<hidden=true> = FTell();
-        FSeek(BASE_OFFSET_VALUE + pointer);
+        FSeek(BASE_OFFSET_VALUE - 0x10 + pointer);
         StatsDataValue data[size]<optimize=false>;
         FSeek(p);
     }
