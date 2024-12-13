@@ -44,8 +44,9 @@ typedef struct
 
     FSeek(p + 0x00); WhiteSpaceStageUIModelParam modelParam<comment="通常モデル">;
     FSeek(p + 0x40); WhiteSpaceStageUIModelParam dwingModelParam<comment="Dウィングモデル">;
+    FSeek(p + 0x80); WhiteSpaceStageUIModelParam dlcaddParam<comment="dlcadd専用モデル">;
 
-    FSeek(p + 0x80);
+    FSeek(p + 0xC0);
 } WhiteSpaceStageUI;
 
 enum<byte> bool {
@@ -123,10 +124,10 @@ typedef struct
 
     FSeek(p + 0x00); float itemInfoTimer<comment="アイテムウィンドウを表示するまでの秒数、0なら表示しない">;
     FSeek(p + 0x10); WhiteSpaceStageUI stageUIParam<comment="ステージ開始前画面">;
-    FSeek(p + 0x90); WhiteSpaceQAParamter qaParam<comment="QAリスト">;
-    FSeek(p + 0x33D0); WhiteSpaceMapUI mapParam<comment="MAPパラメータ">;
+    FSeek(p + 0xD0); WhiteSpaceQAParamter qaParam<comment="QAリスト">;
+    FSeek(p + 0x3410); WhiteSpaceMapUI mapParam<comment="MAPパラメータ">;
 
-    FSeek(p + 0x3400);
+    FSeek(p + 0x3440);
 } GameUIWhiteSpaceParam;
 
 typedef struct
@@ -137,7 +138,7 @@ typedef struct
     FSeek(p + 0x08); GameUICursorParam cursorParam<comment="ロックオンカーソルパラメータ">;
     FSeek(p + 0x10); GameUIWhiteSpaceParam whiteSpaceParam<comment="ホワイトスペースパラメータ">;
 
-    FSeek(p + 0x3410);
+    FSeek(p + 0x3450);
 } GameUIParameter;
 
 LittleEndian();
