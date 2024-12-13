@@ -26,7 +26,9 @@ enum<uint8> ChallengeType
     StoneLabyrinth = 10,
     DeathEggRobotPanic = 11,
     GondolaSurveyTeam = 12,
-    Num = 13
+    MovieDLC1 = 13,
+    MovieDLC2 = 14,
+    Num = 15
 };
 
 typedef byte sint8;
@@ -42,8 +44,9 @@ enum<sint8> IconType
     OBJSURFSPIN = 6,
     ENEMYEGGSTINGER = 7,
     ENEMYTWISTER = 8,
-    None = 9,
-    NUM = 10
+    BALLOON = 9,
+    None = 10,
+    NUM = 11
 };
 
 typedef struct
@@ -113,8 +116,9 @@ typedef struct
 
     FSeek(p + 0x00); GameChallengeData datas[32]<comment="チャレンジモードの情報",optimize=false>;
     FSeek(p + 0x2C00); GameChallengeData hardChallenges[11]<comment="ハードチャレンジモードの情報",optimize=false>;
+    FSeek(p + 0x3B20); GameChallengeData dlcChallenges[2]<comment="DLCチャレンジモードの情報",optimize=false>;
 
-    FSeek(p + 0x3B20);
+    FSeek(p + 0x3DE0);
 } GameChallengeParameter;
 
 LittleEndian();

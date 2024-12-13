@@ -12,7 +12,8 @@ enum<sint32> OpenState
     Locked = 0,
     LockedCollectionBox = 1,
     Opened = 2,
-    DLC_DDX = 3
+    DLC_DDX = 3,
+    DLC_ADD = 4
 };
 
 typedef struct
@@ -201,22 +202,22 @@ typedef struct
 
     FSeek(p + 0x00); CollectionArtInfo artInfos[121]<comment="イラスト",optimize=false>;
     FSeek(p + 0x978); CollectionSoundInfo soundInfos[100]<comment="サウンド",optimize=false>;
-    FSeek(p + 0x1C38); CollectionMovieInfo movieInfos[30]<comment="ムービー",optimize=false>;
-    FSeek(p + 0x22C8); CollectionCharacterInfo charaInfos[7]<comment="キャラクタ",optimize=false>;
-    FSeek(p + 0x2370); CollectionHistoryInfo historyInfos[11]<comment="ヒストリー",optimize=false>;
-    FSeek(p + 0x244C); CollectionGeraldNoteInfo noteInfos[28]<comment="手記",optimize=false>;
-    FSeek(p + 0x2680); CollectionCharacterMenuParam charaMenuParam<comment="キャラクタメニューパラメータ">;
-    FSeek(p + 0x2850); CollectionRoomPlayerAction roomActionParam<comment="プレイヤアクションパラメータ">;
-    FSeek(p + 0x2894); CollectionGeraldNotePlayer notePlayerParam<comment="手記プレイヤーパラメータ">;
-    FSeek(p + 0x2898); CollectionRoomCamera artCamera<comment="イラストカメラ">;
-    FSeek(p + 0x28A0); CollectionRoomCamera soundCamera<comment="サウンドカメラ">;
-    FSeek(p + 0x28A8); CollectionRoomCamera movieCamera<comment="ムービーカメラ">;
-    FSeek(p + 0x28B0); CollectionRoomCamera charaCamera<comment="キャラクタカメラ">;
-    FSeek(p + 0x28B8); CollectionRoomCamera historyCamera<comment="ヒストリーカメラ">;
-    FSeek(p + 0x28C0); CollectionRoomCamera noteCamera<comment="手記カメラ">;
-    FSeek(p + 0x28C8); CollectionSoundMenuParam soundMenuParam<comment="サウンドメニューパラメータ">;
+    FSeek(p + 0x1C38); CollectionMovieInfo movieInfos[33]<comment="ムービー",optimize=false>;
+    FSeek(p + 0x2370); CollectionCharacterInfo charaInfos[7]<comment="キャラクタ",optimize=false>;
+    FSeek(p + 0x2418); CollectionHistoryInfo historyInfos[11]<comment="ヒストリー",optimize=false>;
+    FSeek(p + 0x24F4); CollectionGeraldNoteInfo noteInfos[28]<comment="手記",optimize=false>;
+    FSeek(p + 0x2730); CollectionCharacterMenuParam charaMenuParam<comment="キャラクタメニューパラメータ">;
+    FSeek(p + 0x2900); CollectionRoomPlayerAction roomActionParam<comment="プレイヤアクションパラメータ">;
+    FSeek(p + 0x2944); CollectionGeraldNotePlayer notePlayerParam<comment="手記プレイヤーパラメータ">;
+    FSeek(p + 0x2948); CollectionRoomCamera artCamera<comment="イラストカメラ">;
+    FSeek(p + 0x2950); CollectionRoomCamera soundCamera<comment="サウンドカメラ">;
+    FSeek(p + 0x2958); CollectionRoomCamera movieCamera<comment="ムービーカメラ">;
+    FSeek(p + 0x2960); CollectionRoomCamera charaCamera<comment="キャラクタカメラ">;
+    FSeek(p + 0x2968); CollectionRoomCamera historyCamera<comment="ヒストリーカメラ">;
+    FSeek(p + 0x2970); CollectionRoomCamera noteCamera<comment="手記カメラ">;
+    FSeek(p + 0x2978); CollectionSoundMenuParam soundMenuParam<comment="サウンドメニューパラメータ">;
 
-    FSeek(p + 0x28D0);
+    FSeek(p + 0x2980);
 } CollectionParamter;
 
 LittleEndian();

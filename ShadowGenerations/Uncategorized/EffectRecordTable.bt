@@ -25,9 +25,9 @@ typedef struct
     local uint64 p<hidden=true> = FTell();
 
     FSeek(p + 0); Record record;
-    FSeek(p + 0x08); cstring emitterSetName[3]<comment="シーン名",optimize=false>;
+    FSeek(p + 0x08); cstring emitterSetName[4]<comment="シーン名",optimize=false>;
 
-    FSeek(p + 0x38);
+    FSeek(p + 0x48);
 } EffectRecord;
 
 typedef struct
@@ -36,7 +36,7 @@ typedef struct
 
     FSeek(p + 0x00); EffectRecord data[255]<comment="data",optimize=false>;
 
-    FSeek(p + 0x37C8);
+    FSeek(p + 0x47B8);
 } EffectRecordTable;
 
 LittleEndian();
